@@ -1,0 +1,43 @@
+{
+    "name": "@dnpm-dip/core",
+    "version": "0.0.0",
+    "description": "Package containing global constants, types & interfaces.",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.cjs"
+        }
+    },
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist/"
+    ],
+    "scripts": {
+        "build:types": "tsc --emitDeclarationOnly -p tsconfig.build.json",
+        "build:js": "rollup -c",
+        "build": "rimraf ./dist && cross-env NODE_ENV=production npm run build:js && npm run build:types"
+    },
+    "keywords": [],
+    "author": {
+        "name": "Peter Placzek",
+        "email": "peter.placzek1996@gmail.com",
+        "url": "https://github.com/tada5hi"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/KohlbacherLab/dnpm-dip.git",
+        "directory": "packages/core"
+    },
+    "bugs": {
+        "url": "https://github.com/KohlbacherLab/dnpm-dip/issues"
+    },
+    "homepage": "https://github.com/KohlbacherLab/dnpm-dip#readme",
+    "publishConfig": {
+        "access": "public"
+    }
+}

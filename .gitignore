@@ -1,0 +1,12 @@
+.DS_Store
+dist
+node_modules
+*.log
+npm-debug.log*
+.idea
+.env
+.nuxt
+.output
+.temp
+.swc
+.vitepress/cache
