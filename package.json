@@ -49,7 +49,7 @@
         "build": "lerna run build",
         "test": "lerna run test",
         "pub": "npm run build && lerna publish",
-        "lint": "eslint",
+        "lint": "eslint packages/",
         "lint:fix": "npm run lint -- --fix",
         "prepare": "husky install"
     },
