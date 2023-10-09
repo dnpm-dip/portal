@@ -1,16 +1,23 @@
 {
     "name": "@dnpm-dip/portal",
-    "private": true,
     "type": "module",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Portal of DNPM DIP.",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/KohlbacherLab/dnpm-dip.git",
+        "directory": "packages/portal"
+    },
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "nuxt prepare"
+        "start": "nuxi start"
     },
     "devDependencies": {
-        "@dnpm-dip/rare-diseases": "^1.0.0",
+        "@dnpm-dip/rare-diseases": "^0.0.0",
         "@nuxt/devtools": "latest",
         "@fortawesome/fontawesome-free": "^6.4.2",
         "bootstrap": "^5.3.2",

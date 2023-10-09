@@ -2,7 +2,6 @@
 import path from 'node:path';
 
 export default defineNuxtConfig({
-    devtools: { enabled: true },
     modules: [
         '@dnpm-dip/rare-diseases',
     ],
