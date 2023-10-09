@@ -1,7 +1,2 @@
-function foo() {
-    return 'bar';
-}
-
-export {
-    foo
-};
+export * from './domains';
+export * from './http';
