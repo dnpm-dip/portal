@@ -13,13 +13,11 @@ export default defineNuxtModule<ModuleOptions>({
     setup(options, nuxt) {
         const resolver = createResolver(import.meta.url);
 
-        addPlugin(resolver.resolve('./runtime/plugin'));
-
         nuxt.hook('pages:extend', (pages) => {
             pages.push({
                 name: 'rd/index',
                 path: '/rd/',
-                file: resolver.resolve('./runtime/pages/index.vue'),
+                file: resolver.resolve('./pages/index.vue'),
                 children: [],
             });
         });

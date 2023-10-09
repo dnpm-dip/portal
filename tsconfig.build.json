@@ -1,4 +1,5 @@
 {
+    "extends": "@tada5hi/tsconfig",
     "compilerOptions": {
         "sourceMap": true,
 
