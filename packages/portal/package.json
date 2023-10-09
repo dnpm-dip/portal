@@ -5,8 +5,7 @@
         "build": "nuxt build",
         "dev": "nuxt dev",
         "generate": "nuxt generate",
-        "preview": "nuxt preview",
-        "prepare": "nuxt prepare"
+        "preview": "nuxt preview"
     },
     "devDependencies": {
         "@dnpm-dip/rare-diseases": "^1.0.0",
