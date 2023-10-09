@@ -1,4 +1,4 @@
-import { addPlugin, createResolver, defineNuxtModule } from '@nuxt/kit';
+import { createResolver, defineNuxtModule } from '@nuxt/kit';
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {}
@@ -17,7 +17,7 @@ export default defineNuxtModule<ModuleOptions>({
             pages.push({
                 name: 'rd/index',
                 path: '/rd/',
-                file: resolver.resolve('./pages/index.vue'),
+                file: resolver.resolve('./runtime/pages/index.vue'),
                 children: [],
             });
         });

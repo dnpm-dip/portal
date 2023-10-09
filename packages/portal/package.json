@@ -1,11 +1,17 @@
 {
     "name": "@dnpm-dip/portal",
     "private": true,
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/KohlbacherLab/dnpm-dip.git",
+        "directory": "packages/portal"
+    },
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev",
         "generate": "nuxt generate",
-        "preview": "nuxt preview"
+        "preview": "nuxt preview",
+        "start": "nuxi start"
     },
     "devDependencies": {
         "@dnpm-dip/rare-diseases": "^1.0.0",
