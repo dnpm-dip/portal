@@ -18,6 +18,5 @@ export default defineNuxtConfig({
     ],
     alias: {
         '@dnpm-dip/core': path.join(__dirname, '..', 'core', 'src'),
-        '@dnpm-dip/rare-diseases': path.join(__dirname, '..', 'rare-diseases'),
     },
 });
