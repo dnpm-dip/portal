@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import path from 'node:path';
+
 export default defineNuxtConfig({
     devtools: { enabled: true },
     modules: [
@@ -14,4 +16,8 @@ export default defineNuxtConfig({
         '@/assets/css/core/footer.css',
         '@/assets/css/root.css',
     ],
+    alias: {
+        '@dnpm-dip/core': path.join(__dirname, '..', 'core', 'src'),
+        '@dnpm-dip/rare-diseases': path.join(__dirname, '..', 'rare-diseases', 'src'),
+    },
 });

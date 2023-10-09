@@ -4,6 +4,7 @@
         "commitlint.config.js",
         "rollup.config.mjs",
         "packages/**/*.d.ts",
-        "packages/**/*.ts"
+        "packages/**/*.ts",
+        "packages/**/*.vue"
     ]
 }
