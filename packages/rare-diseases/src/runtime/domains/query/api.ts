@@ -1,5 +1,5 @@
-import { BaseAPI } from '../api';
-import type { PatientRecord } from '../patient/types';
+import { BaseAPI } from '@dnpm-dip/core';
+import type { PatientRecord } from '@dnpm-dip/core';
 import type {
     QueryPatientsResponse, QuerySession, QuerySessionCreate, QuerySummary,
 } from './types';

@@ -1,4 +1,4 @@
-import { createResolver, defineNuxtModule } from '@nuxt/kit';
+import { addImportsSources, createResolver, defineNuxtModule } from '@nuxt/kit';
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {}
@@ -20,6 +20,11 @@ export default defineNuxtModule<ModuleOptions>({
                 file: resolver.resolve('./runtime/pages/index.vue'),
                 children: [],
             });
+        });
+
+        addImportsSources({
+            from: resolver.resolve('./runtime/composables/index'),
+            imports: ['useAPIClient', 'useRDAPIClient'],
         });
     },
 });

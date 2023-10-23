@@ -18,4 +18,9 @@ export default defineNuxtConfig({
     alias: {
         '@dnpm-dip/core': path.join(__dirname, '..', 'core', 'src'),
     },
+    runtimeConfig: {
+        public: {
+            apiUrl: process.env.API_URL || 'https://bwhealthcloud.de/api/',
+        },
+    },
 });

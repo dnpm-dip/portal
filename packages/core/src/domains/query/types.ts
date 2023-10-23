@@ -1,11 +1,11 @@
-import type { Patient } from '../patient/types';
+import type { ObjectLiteral } from '../../types';
+import type { Patient } from '../patient';
 import type { QueryRequestMode } from './constants';
 
 export type QueryRequestBodyCriteria = {
     code: string
 };
 
-// todo: criteria value could be record instead of array.
 export type QueryRequestBody = Record<string, Record<string, QueryRequestBodyCriteria>[]>;
 
 export type QuerySessionCreate = {
@@ -13,7 +13,10 @@ export type QuerySessionCreate = {
     body: QueryRequestBody
 };
 
-export type QuerySession = {
+export type QueryBase<
+    CRITERIA extends ObjectLiteral = ObjectLiteral,
+    FILTERS extends ObjectLiteral = ObjectLiteral,
+> = {
     id: string,
     submittedAt: string,
     querier: string,
@@ -22,7 +25,8 @@ export type QuerySession = {
         display: string,
         system: string
     },
-    criteria: QueryRequestBody,
+    criteria: CRITERIA,
+    filters: FILTERS
     /**
      * Validity period (seconds) for the query.
      */
