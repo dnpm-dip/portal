@@ -3,7 +3,9 @@ import path from 'node:path';
 
 export default defineNuxtConfig({
     modules: [
-        '@dnpm-dip/rare-diseases',
+        // todo: change to package name on publish
+        // '@dnpm-dip/rare-diseases',
+        '../rare-diseases/src/module',
     ],
     css: [
         '@fortawesome/fontawesome-free/css/all.css',
