@@ -37,7 +37,7 @@
         "@dnpm-dip/core": "^0.0.0"
     },
     "devDependencies": {
-        "@types/node": "^20.8.7",
+        "@types/node": "^20.8.8",
         "@nuxt/devtools": "latest",
         "@nuxt/eslint-config": "^0.2.0",
         "@nuxt/module-builder": "^0.5.2",
