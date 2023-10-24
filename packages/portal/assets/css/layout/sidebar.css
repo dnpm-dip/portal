@@ -1,14 +1,6 @@
-/*
- * Copyright (c) 2021-2021.
- * Author Peter Placzek (tada5hi)
- * For the full copyright and license information,
- * view the LICENSE file that was distributed with this source code.
- */
-
 .page-sidebar {
     height: 100%;
     width:240px;
-    background-color: #424242;
     color: #fff;
     transition: all 0.3s;
     display: flex;
@@ -36,6 +28,11 @@
     .page-sidebar .nav-separator,
     .page-sidebar .nav-link-text {
         display: none !important;
+    }
+
+    .nav-items .nav-link,
+    .nav-items .nav-item .nav-sub-title {
+        text-align: center;
     }
 
     .page-sidebar .nav-item {

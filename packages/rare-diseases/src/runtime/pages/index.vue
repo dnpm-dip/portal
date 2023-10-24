@@ -16,9 +16,9 @@ export default defineNuxtComponent({
 </script>
 <template>
     <div>
-        <div>Rare Diseases</div>
+        <h1>Home</h1>
         <pre>
-        {{ codings }}
+          {{ codings }}
         </pre>
     </div>
 </template>

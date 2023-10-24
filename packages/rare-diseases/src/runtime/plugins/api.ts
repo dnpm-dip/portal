@@ -1,6 +1,6 @@
 import { APIClient } from '@dnpm-dip/core';
 import { defineNuxtPlugin } from '#app';
-import { useAPIClient } from '../composables/api-client';
+import { useAPIClient } from '../composables';
 
 export default defineNuxtPlugin({
     name: 'rdApi',

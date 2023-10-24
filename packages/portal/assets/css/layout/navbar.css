@@ -1,10 +1,3 @@
-/*
- * Copyright (c) 2021-2021.
- * Author Peter Placzek (tada5hi)
- * For the full copyright and license information,
- * view the LICENSE file that was distributed with this source code.
- */
-
 .page-navbar.navbar-fixed-top {
     z-index: 9999999;
 }
@@ -24,26 +17,6 @@
     clear:both;
 }
 
-.page-navbar .navbar-toggler {
-    border-color: #333;
-    padding: 9px 10px;
-    margin: 8px 15px 8px 0px;
-}
-
-.page-navbar .navbar-toggler > .icon-bar {
-    display: block;
-    width: 22px;
-    height: 2px;
-    border-radius: 1px;
-    margin-top:4px;
-    background:#fff;
-}
-
-.page-navbar > .navbar-content {
-    padding: 0 20px 0 20px;
-}
-
-
 .page-navbar .navbar-content li:not(:last-child) .nav-item {
     padding-right: 0.25rem;
 }
@@ -53,7 +26,7 @@
     font-weight: 500;
     letter-spacing: 1px;
     border-radius: 4px;
-    color: #f2f2f2;
+    color: #463539;
 }
 
 .page-navbar .navbar-content .dropdown-menu > .dropdown-item:hover,
@@ -100,29 +73,14 @@
     color: #9d9d9d;
 }
 
-@media (max-width: 1024px) {
-    .page-navbar > .navbar-content {
-        padding: 0px 50px;
-    }
-}
 
 @media (max-width: 768px) {
-    .page-navbar > .navbar-content {
-        padding: 0px;
-    }
-
     .page-navbar .navbar-content .navbar-gadgets {
         flex-direction: row;
     }
 
     .page-header {
         flex-wrap: wrap;
-    }
-}
-
-@media (max-width: 768px) {
-    .page-navbar > .navbar-content {
-        padding: 0px;
     }
 
     .page-navbar .navbar-content > ul:not(:last-child) {
