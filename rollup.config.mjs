@@ -6,31 +6,17 @@
  */
 
 import resolve from '@rollup/plugin-node-resolve';
-
-import { merge } from 'smob';
+import swc from "@rollup/plugin-swc";
 
 import { builtinModules } from 'node:module';
-import { transform } from "@swc/core";
+
+import vue from "@vitejs/plugin-vue";
+
+import postcss from 'rollup-plugin-postcss';
 
 const extensions = [
     '.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'
 ];
-
-const swcOptions = {
-    jsc: {
-        target: 'es2020',
-        parser: {
-            syntax: 'typescript',
-            decorators: true
-        },
-        transform: {
-            decoratorMetadata: true,
-            legacyDecorator: true
-        },
-        loose: true
-    },
-    sourceMaps: true
-}
 
 export function createConfig(
     {
@@ -38,8 +24,7 @@ export function createConfig(
         pluginsPre = [],
         pluginsPost = [],
         external = [],
-        defaultExport = false,
-        swc = {}
+        defaultExport = false
     }
 ) {
     external = Object.keys(pkg.dependencies || {})
@@ -70,13 +55,13 @@ export function createConfig(
             // Allows node_modules resolution
             resolve({ extensions}),
 
-            // Compile TypeScript/JavaScript files
-            {
-                name: 'swc',
-                transform(code) {
-                    return transform(code, merge({}, swc, swcOptions));
-                }
-            },
+            postcss({
+                extract: true,
+            }),
+
+            vue(),
+
+            swc(),
 
             ...pluginsPost
         ]

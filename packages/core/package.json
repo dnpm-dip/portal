@@ -17,7 +17,7 @@
         "dist/"
     ],
     "scripts": {
-        "build:types": "tsc --emitDeclarationOnly -p tsconfig.build.json",
+        "build:types": "vue-tsc --declaration --emitDeclarationOnly -p tsconfig.build.json",
         "build:js": "rollup -c",
         "build": "rimraf ./dist && cross-env NODE_ENV=production npm run build:js && npm run build:types"
     },
@@ -42,5 +42,12 @@
     },
     "dependencies": {
         "hapic": "^2.3.0"
+    },
+    "devDependencies": {
+        "vue": "^3.3.6",
+        "vue-tsc": "^1.8.20"
+    },
+    "peerDependencies": {
+        "vue": "^3.3.x"
     }
 }

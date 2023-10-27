@@ -5,6 +5,6 @@ export class RDAPIClient {
     readonly query : QueryAPI;
 
     constructor(client: APIClient) {
-        this.query = new QueryAPI(client);
+        this.query = new QueryAPI({ client });
     }
 }

@@ -1,14 +1,13 @@
-import { APIClient } from '@dnpm-dip/core';
+import { RDAPIClient } from '../core/api-client';
 import { defineNuxtPlugin } from '#app';
 import { useAPIClient } from '../composables';
 
 export default defineNuxtPlugin({
-    name: 'rdApi',
-    enforce: 'pre',
-    async setup() {
+    enforce: 'post',
+    async setup(nuxt) {
         const baseClient = useAPIClient();
 
-        const client = new APIClient(baseClient);
+        const client = new RDAPIClient(baseClient);
 
         return {
             provide: {

@@ -2,17 +2,6 @@ import type { ObjectLiteral } from '../../types';
 import type { Patient } from '../patient';
 import type { QueryRequestMode } from './constants';
 
-export type QueryRequestBodyCriteria = {
-    code: string
-};
-
-export type QueryRequestBody = Record<string, Record<string, QueryRequestBodyCriteria>[]>;
-
-export type QuerySessionCreate = {
-    mode?: `${QueryRequestMode}`,
-    body: QueryRequestBody
-};
-
 export type QueryBase<
     CRITERIA extends ObjectLiteral = ObjectLiteral,
     FILTERS extends ObjectLiteral = ObjectLiteral,

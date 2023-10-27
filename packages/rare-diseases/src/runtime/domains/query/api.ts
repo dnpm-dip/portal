@@ -1,5 +1,6 @@
 import { BaseAPI } from '@dnpm-dip/core';
 import type { PatientRecord } from '@dnpm-dip/core';
+import { QueryRequestMode } from './constants';
 import type {
     QueryPatientsResponse, QuerySession, QuerySessionCreate, QuerySummary,
 } from './types';
@@ -14,6 +15,9 @@ export class QueryAPI extends BaseAPI {
         let uri = 'rd/query';
         if (query.mode) {
             uri += `?mode=${query.mode}`;
+            delete query.mode;
+        } else {
+            uri += `?mode=${QueryRequestMode.LOCAL}`;
         }
         const response = await this.client.post(uri, query);
         return response.data;

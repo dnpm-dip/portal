@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     css: [
         '@fortawesome/fontawesome-free/css/all.css',
         'bootstrap/dist/css/bootstrap.css',
+        '@/assets/css/bootstrap-override.css',
         '@/assets/css/layout/body.css',
         '@/assets/css/layout/footer.css',
         '@/assets/css/layout/header.css',

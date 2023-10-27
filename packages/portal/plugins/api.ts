@@ -1,9 +1,10 @@
-import { APIClient } from '@dnpm-dip/core';
+import { APIClient, install } from '@dnpm-dip/core';
 import type { APIClientConfigInput } from '@dnpm-dip/core';
 import { defineNuxtPlugin, useRuntimeConfig } from '#app';
 
 export default defineNuxtPlugin({
-    async setup() {
+    enforce: 'pre',
+    async setup(nuxt) {
         const runtimeConfig = useRuntimeConfig();
 
         const { apiUrl: baseURL } = runtimeConfig.public;
@@ -13,6 +14,10 @@ export default defineNuxtPlugin({
         };
 
         const client = new APIClient(config);
+
+        install(nuxt.vueApp, {
+            apiClient: client,
+        });
 
         return {
             provide: {

@@ -2,7 +2,7 @@ import type { HookResult } from '@nuxt/schema';
 import type { NavigationElement, NavigationStore } from '@vue-layout/navigation';
 import installNavigation from '@vue-layout/navigation';
 import { defineNuxtPlugin, useRoute } from '#app';
-import { Navigation } from '../core/navigation/module';
+import { Navigation } from '../core';
 
 declare module '#app' {
     interface RuntimeNuxtHooks {
