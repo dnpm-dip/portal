@@ -1,6 +1,5 @@
 import type { ObjectLiteral } from '../../types';
 import type { Patient } from '../patient';
-import type { QueryRequestMode } from './constants';
 
 export type QueryBase<
     CRITERIA extends ObjectLiteral = ObjectLiteral,
