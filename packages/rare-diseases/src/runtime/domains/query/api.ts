@@ -51,6 +51,7 @@ export class QueryAPI extends BaseAPI {
     /**
      * Get all patients in the context of a specific query.
      * @param id
+     * @throws ClientError
      */
     async getPatients(id: string) : Promise<QueryPatientsResponse> {
         const response = await this.client.get(`rd/query/${id}/patients`);
@@ -64,7 +65,7 @@ export class QueryAPI extends BaseAPI {
      * @param patientId
      */
     async getPatientRecord(queryId: string, patientId: string) : Promise<PatientRecord> {
-        const response = await this.client.get(`rd/query/${queryId}/patients/${patientId}`);
+        const response = await this.client.get(`rd/query/${queryId}/patient-record/${patientId}`);
         return response.data;
     }
 }

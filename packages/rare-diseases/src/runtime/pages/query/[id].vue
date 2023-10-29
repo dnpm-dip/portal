@@ -1,13 +1,19 @@
 <script lang="ts">
+import { PageMetaKey } from '@dnpm-dip/core';
 import { ref } from 'vue';
 import {
     createError, defineNuxtComponent, navigateTo, useRoute,
 } from '#app';
-import { useRDAPIClient } from '#imports';
+import { definePageMeta, useRDAPIClient } from '#imports';
 import type { QuerySession } from '../../domains/query';
 
 export default defineNuxtComponent({
     async setup() {
+        definePageMeta({
+            [PageMetaKey.NAVIGATION_TOP_ID]: 'rd',
+            [PageMetaKey.NAVIGATION_SIDE_ID]: 'rd-search',
+        });
+
         const api = useRDAPIClient();
         const route = useRoute();
 

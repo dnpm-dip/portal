@@ -2,10 +2,10 @@ import { defineComponent, h } from 'vue';
 import type { APIClient } from '../../core';
 import { injectAPIClient } from '../../core';
 import { AlertError } from '../alert';
-import { renderContent, renderError } from '../utils';
+import { renderDefault, renderError } from '../utils';
 
 export default defineComponent({
-    name: 'CodeSystemEntity',
+    name: 'ValueSetEntity',
     props: {
         code: {
             type: String,
@@ -16,14 +16,14 @@ export default defineComponent({
         const apiClient : APIClient = injectAPIClient();
 
         try {
-            const data = await apiClient.codeSystem.getOne(props.code);
+            const data = await apiClient.valueSet.getOne(props.code);
 
-            return () => renderContent({ setup, data });
+            return () => renderDefault({ setup, data });
         } catch (e) {
             return () => renderError({
                 setup,
                 error: e as Error,
-                alt: (error) => h(AlertError, { error }),
+                template: () => h(AlertError, { error: e as Error }),
             });
         }
     },

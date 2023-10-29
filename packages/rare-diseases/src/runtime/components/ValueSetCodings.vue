@@ -8,6 +8,7 @@ export default defineComponent({
     props: {
         entity: {
             type: Object as PropType<ValueSet>,
+            required: true,
         },
         transform: {
             type: Function,
@@ -15,13 +16,19 @@ export default defineComponent({
     },
     emits: ['update:modelValue'],
     setup(props, { emit, slots }) {
-        const codings = computed(() => props.entity.codings.map((coding) => {
-            if (typeof props.transform === 'function') {
-                return props.transform(coding);
+        const codings = computed(() => {
+            if (!props.entity.codings) {
+                return [];
             }
 
-            return coding;
-        }));
+            return props.entity.codings.map((coding) => {
+                if (typeof props.transform === 'function') {
+                    return props.transform(coding);
+                }
+
+                return coding;
+            });
+        });
 
         if (hasNormalizedSlot('default', slots)) {
             return () => normalizeSlot('default', codings.value, slots);

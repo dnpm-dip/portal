@@ -1,5 +1,4 @@
 <script lang="ts">
-import { isClientError } from 'hapic';
 import { FormInput, FormSelect } from '@vue-layout/form-controls';
 import { defineComponent, reactive } from 'vue';
 import type { ValueSetCoding } from '@dnpm-dip/core';
@@ -99,10 +98,6 @@ export default defineComponent({
                 });
                 emit('created', data);
             } catch (e) {
-                if (isClientError(e)) {
-                    console.log(e.response);
-                }
-
                 if (e instanceof Error) {
                     emit('failed', e);
                 }
@@ -139,12 +134,12 @@ export default defineComponent({
                 <div class="col">
                     <h6>Diagnosis</h6>
                     <ValueSetEntity :code="'dnpm-dip/rd/diagnosis/category'">
-                        <template #default="props">
+                        <template #default="{ data }">
                             <div class="form-group">
                                 <label>Category</label>
 
                                 <ValueSetCodings
-                                    :entity="props"
+                                    :entity="data"
                                     :transform="transformCodingsForSelect"
                                 >
                                     <template #default="options">
@@ -164,12 +159,12 @@ export default defineComponent({
                     <h6>Variant</h6>
 
                     <ValueSetEntity :code="'https://www.genenames.org/'">
-                        <template #default="props">
+                        <template #default="{ data }">
                             <div class="form-group">
                                 <label>Gene</label>
 
                                 <ValueSetCodings
-                                    :entity="props"
+                                    :entity="data"
                                     :transform="transformCodingsForSelect"
                                 >
                                     <template #default="options">
@@ -188,12 +183,12 @@ export default defineComponent({
                 <h6>Others</h6>
                 <div class="col">
                     <ValueSetEntity :code="'dnpm-dip/patient/vital-status'">
-                        <template #default="props">
+                        <template #default="{ data }">
                             <div class="form-group">
                                 <label>Status</label>
 
                                 <ValueSetCodings
-                                    :entity="props"
+                                    :entity="data"
                                     :transform="transformCodingsForSelect"
                                 >
                                     <template #default="options">

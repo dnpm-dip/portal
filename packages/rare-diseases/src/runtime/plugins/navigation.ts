@@ -17,12 +17,14 @@ export default defineNuxtPlugin({
             url: '/rd/',
             children: [
                 {
+                    id: 'rd-home',
                     name: 'Home',
                     icon: 'fa fa-home',
                     url: '/rd/',
                     rootLink: true,
                 },
                 {
+                    id: 'rd-search',
                     name: 'Search',
                     icon: 'fa fa-search',
                     url: '/rd/search',

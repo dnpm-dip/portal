@@ -1,22 +1,23 @@
 import type { SetupContext, VNodeChild } from 'vue';
 import { hasNormalizedSlot, normalizeSlot } from './slot';
 
-type RenderContext<T> = {
-    alt?: VNodeChild | ((data: T) => VNodeChild),
+type RenderContext = {
+    template?: VNodeChild | (() => VNodeChild),
     setup?: SetupContext,
     slotName?: string,
-    slotProps: T
+    slotProps: Record<string, any>
 };
 
-export type ContentRenderContext<T = Record<string, any>> = Omit<RenderContext<T>, 'slotName' | 'slotProps'> & {
-    data: T
+export type ContentRenderContext = Omit<RenderContext, 'slotName' | 'slotProps'> & {
+    data: Record<string, any>,
+    busy?: boolean
 };
 
-export type ErrorRenderContext<T = Error> = Omit<RenderContext<T>, 'slotName' | 'slotProps'> & {
-    error: T
+export type ErrorRenderContext = Omit<RenderContext, 'slotName' | 'slotProps'> & {
+    error: Error
 };
 
-function render<T>(context: RenderContext<T>) : VNodeChild {
+function render(context: RenderContext) : VNodeChild {
     const slotName = context.slotName || 'default';
 
     if (context.setup) {
@@ -25,23 +26,35 @@ function render<T>(context: RenderContext<T>) : VNodeChild {
         }
     }
 
-    return typeof context.alt === 'function' ?
-        context.alt(context.slotProps) :
-        context.alt;
+    return typeof context.template === 'function' ?
+        context.template() :
+        context.template;
 }
 
-export function renderContent<T>(context: ContentRenderContext<T>) : VNodeChild {
+export function renderDefault(context: ContentRenderContext) : VNodeChild {
     return render({
         ...context,
-        slotProps: context.data,
+        slotProps: {
+            data: context.data,
+            busy: context.busy,
+        },
         slotName: 'default',
     });
 }
 
-export function renderError<T>(context: ErrorRenderContext<T>) : VNodeChild {
+export function renderLoading(context: RenderContext) : VNodeChild {
     return render({
         ...context,
-        slotProps: context.error,
+        slotName: 'loading',
+    });
+}
+
+export function renderError(context: ErrorRenderContext) : VNodeChild {
+    return render({
+        ...context,
+        slotProps: {
+            error: context.error,
+        },
         slotName: 'error',
     });
 }
