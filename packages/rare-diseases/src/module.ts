@@ -1,5 +1,6 @@
+import { generateNuxtPages } from '@dnpm-dip/core';
 import {
-    addImportsSources, addPlugin, createResolver, defineNuxtModule,
+    addImportsSources, addPlugin, createResolver, defineNuxtModule, resolveFiles,
 } from '@nuxt/kit';
 
 // Module options TypeScript interface definition
@@ -12,24 +13,20 @@ export default defineNuxtModule<ModuleOptions>({
     },
     // Default configuration options of the Nuxt module
     defaults: {},
-    setup(options, nuxt) {
+    async setup(options, nuxt) {
         const resolver = createResolver(import.meta.url);
 
-        nuxt.hook('pages:extend', (pages) => {
-            // todo: there should be a helper function to register pages
-            pages.push({
-                name: 'rd/index',
-                path: '/rd/',
-                file: resolver.resolve('./runtime/pages/index.vue'),
-                children: [],
-            });
+        const directory = resolver.resolve('./runtime/pages');
+        const files = await resolveFiles(directory, '**/*{.vue,.ts}');
 
-            pages.push({
-                name: 'rd/search',
-                path: '/rd/search',
-                file: resolver.resolve('./runtime/pages/search.vue'),
-                children: [],
-            });
+        const pages = await generateNuxtPages({
+            directory,
+            files,
+            prefix: '/rd',
+        });
+
+        nuxt.hook('pages:extend', (items) => {
+            items.push(...pages);
         });
 
         addImportsSources({

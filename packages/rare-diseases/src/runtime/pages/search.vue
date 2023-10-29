@@ -2,7 +2,7 @@
 import { APIClientErrorBox } from '@dnpm-dip/core';
 import type { ClientError } from 'hapic';
 import { ref } from 'vue';
-import { defineNuxtComponent } from '#app';
+import { defineNuxtComponent, navigateTo } from '#app';
 import SearchForm from '../components/SearchForm.vue';
 import type { QuerySession } from '../domains/query';
 
@@ -17,11 +17,10 @@ export default defineNuxtComponent({
             error.value = e;
         };
 
-        const handleCreated = (data: QuerySession) => {
+        const handleCreated = async (data: QuerySession) => {
             error.value = null;
 
-            // todo: redirect to query overview page
-            console.log(data);
+            await navigateTo({ path: `/rd/query/${data.id}` });
         };
 
         return {

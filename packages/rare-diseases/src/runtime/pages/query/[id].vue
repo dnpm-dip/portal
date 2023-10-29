@@ -1,0 +1,31 @@
+<script lang="ts">
+import { ref } from 'vue';
+import {
+    createError, defineNuxtComponent, navigateTo, useRoute,
+} from '#app';
+import { useRDAPIClient } from '#imports';
+import type { QuerySession } from '../../domains/query';
+
+export default defineNuxtComponent({
+    async setup() {
+        const api = useRDAPIClient();
+        const route = useRoute();
+
+        const entity = ref<QuerySession>(null) as any;
+
+        try {
+            entity.value = await api.query.getOne(route.params.id);
+        } catch (e) {
+            await navigateTo({ path: '/rd/search' });
+            throw createError({});
+        }
+
+        return {
+            entity,
+        };
+    },
+});
+</script>
+<template>
+    <NuxtPage :entity="entity" />
+</template>

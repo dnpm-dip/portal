@@ -23,6 +23,11 @@ export class QueryAPI extends BaseAPI {
         return response.data;
     }
 
+    async getOne(id: string) : Promise<QuerySession> {
+        const response = await this.client.get(`rd/query/${id}`);
+        return response.data;
+    }
+
     /**
      * Refresh the query session.
      *
