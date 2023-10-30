@@ -2,7 +2,7 @@
 import { Nav } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
-import type { RDQuerySession } from '../../../domains/query';
+import type { RDQuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {

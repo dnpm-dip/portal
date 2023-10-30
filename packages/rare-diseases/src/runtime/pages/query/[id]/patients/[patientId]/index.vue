@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { PropType } from 'vue/dist/vue';
+import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import type { RDPatientRecord, RDQuerySession } from '../../../../../domains';
 
@@ -10,6 +10,7 @@ export default defineNuxtComponent({
         },
         record: {
             type: Object as PropType<RDPatientRecord>,
+            required: true,
         },
     },
 });
@@ -23,7 +24,9 @@ export default defineNuxtComponent({
                 <div><strong><i class="fas fa-birthday-cake" /> Birthdate</strong> {{ record.patient.birthDate }}</div>
             </div>
             <div class="col">
-                <div><strong>Therapy</strong> {{ record.therapy.notes }}</div>
+                <template v-if="record.therapy">
+                    <div><strong>Therapy</strong> {{ record.therapy.notes }}</div>
+                </template>
                 <div>
                     <strong>HPO Terms</strong>
                     <template
@@ -42,8 +45,12 @@ export default defineNuxtComponent({
                 <div>
                     <div><strong><i class="fa fa-user" /> Referrer</strong> {{ record.case.referrer.name }}</div>
                     <div><strong><i class="fa fa-clock" /> Recorded</strong> {{ record.case.recordedOn }}</div>
-                    <div><strong><i class="fa fa-id-card" /> GestaltMatcherID</strong> {{ record.case.gestaltMatcherId.value }}</div>
-                    <div><strong><i class="fa fa-id-card" /> Face2GeneID</strong> {{ record.case.face2geneId.value }}</div>
+                    <template v-if="record.case.gestaltMatcherId">
+                        <div><strong><i class="fa fa-id-card" /> GestaltMatcherID</strong> {{ record.case.gestaltMatcherId.value }}</div>
+                    </template>
+                    <template v-if="record.case.face2geneId">
+                        <div><strong><i class="fa fa-id-card" /> Face2GeneID</strong> {{ record.case.face2geneId.value }}</div>
+                    </template>
                 </div>
             </div>
             <div class="col">

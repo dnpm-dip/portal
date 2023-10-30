@@ -5,7 +5,7 @@ import {
     createError, defineNuxtComponent, navigateTo, useRoute,
 } from '#app';
 import { definePageMeta, useRDAPIClient } from '#imports';
-import type { RDQuerySession } from '../../domains/query';
+import type { RDQuerySession } from '../../domains';
 
 export default defineNuxtComponent({
     async setup() {

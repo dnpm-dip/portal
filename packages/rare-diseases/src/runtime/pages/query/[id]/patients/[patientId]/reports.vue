@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { PropType } from 'vue/dist/vue';
+import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import type { RDPatientRecord, RDQuerySession } from '../../../../../domains';
 
@@ -10,6 +10,7 @@ export default defineNuxtComponent({
         },
         record: {
             type: Object as PropType<RDPatientRecord>,
+            required: true,
         },
     },
 });
@@ -37,7 +38,9 @@ export default defineNuxtComponent({
                         <div>
                             <div><strong><i class="fa fa-dna" /> Sequencing Type</strong> {{ item.metaInfo.sequencingType }}</div>
                             <div><strong><i class="fas fa-toolbox" /> Kit</strong> {{ item.metaInfo.kit }}</div>
-                            <div><strong><i class="fa fa-retweet" /> Autozygosity</strong> {{ item.autozygosity.value }}</div>
+                            <template v-if="item.autozygosity">
+                                <div><strong><i class="fa fa-retweet" /> Autozygosity</strong> {{ item.autozygosity.value }}</div>
+                            </template>
                         </div>
                     </div>
                 </div>
