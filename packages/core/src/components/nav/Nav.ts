@@ -17,7 +17,7 @@ export default defineComponent({
             type: String as PropType<'vertical' | 'horizontal'>,
         },
         prevLink: {
-            type: Object as PropType<string | boolean>,
+            type: [String, Boolean],
         },
     },
     setup(props) {

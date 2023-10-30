@@ -39,6 +39,7 @@ export default defineNuxtComponent({
             <Nav
                 :items="navItems"
                 :path="'/rd/query/' + entity.id"
+                :prev-link="'/rd/search'"
             />
         </div>
 

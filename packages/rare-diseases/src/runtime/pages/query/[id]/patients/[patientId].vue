@@ -62,9 +62,11 @@ export default defineNuxtComponent({
             />
         </div>
 
-        <NuxtPage
-            :entity="entity"
-            :record="record"
-        />
+        <template v-if="record">
+            <NuxtPage
+                :entity="entity"
+                :record="record"
+            />
+        </template>
     </div>
 </template>
