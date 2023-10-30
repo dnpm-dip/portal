@@ -19,6 +19,11 @@ export default defineNuxtComponent({
 
         const entity = ref<RDQuerySession>(null) as any;
 
+        if (typeof route.params.id !== 'string') {
+            await navigateTo({ path: '/rd/search' });
+            throw createError({});
+        }
+
         try {
             entity.value = await api.query.getOne(route.params.id);
         } catch (e) {

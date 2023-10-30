@@ -1,10 +1,10 @@
 <script lang="ts">
-import { FormInput, FormSelect } from '@vue-layout/form-controls';
-import { defineComponent, reactive } from 'vue';
+import { FormInput, FormInputCheckbox, FormSelect } from '@vue-layout/form-controls';
+import { defineComponent, reactive, ref } from 'vue';
 import type { ValueSetCoding } from '@dnpm-dip/core';
-import { ValueSetEntity } from '@dnpm-dip/core';
+import { QueryRequestMode, ValueSetEntity } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
-import type { RDQueryCriteriaScopeValue, RDQueryCriteriaScopes } from '../domains/query';
+import type { RDQueryCriteriaScopeValue, RDQueryCriteriaScopes } from '../domains';
 import FormSelectSearch from './FormSelectSearch.vue';
 import ValueSetCodings from './ValueSetCodings.vue';
 
@@ -12,6 +12,7 @@ export default defineComponent({
     components: {
         ValueSetCodings,
         FormInput,
+        FormInputCheckbox,
         FormSelect,
         FormSelectSearch,
         ValueSetEntity,
@@ -19,6 +20,8 @@ export default defineComponent({
     emits: ['failed', 'created'],
     async setup(props, { emit }) {
         // todo: how to know what is a hpo, diagnosis or variant scope ?
+
+        const federated = ref(true);
 
         // todo: how to know the key of the query request body?
         const form = reactive({
@@ -95,6 +98,9 @@ export default defineComponent({
             try {
                 const data = await apiClient.query.submit({
                     criteria,
+                    mode: federated.value ?
+                        QueryRequestMode.FEDERATED :
+                        QueryRequestMode.LOCAL,
                 });
                 emit('created', data);
             } catch (e) {
@@ -110,6 +116,7 @@ export default defineComponent({
         });
 
         return {
+            federated,
             form,
             submit,
             transformCodingsForSelect,
@@ -154,6 +161,7 @@ export default defineComponent({
                     </ValueSetEntity>
                 </div>
             </div>
+            <hr>
             <div class="row mb-2">
                 <div class="col">
                     <h6>Variant</h6>
@@ -179,6 +187,7 @@ export default defineComponent({
                     </ValueSetEntity>
                 </div>
             </div>
+            <hr>
             <div class="row">
                 <h6>Others</h6>
                 <div class="col">
@@ -203,13 +212,25 @@ export default defineComponent({
                     </ValueSetEntity>
                 </div>
             </div>
+            <hr>
+            <div class="form-group">
+                <FormInputCheckbox
+                    v-model="federated"
+                    :label="true"
+                    :label-content="'Federated?'"
+                />
+                <div class="alert alert-sm alert-info">
+                    If this option is enabled, the search will be federated across all sites instead of just the local site.
+                </div>
+            </div>
+            <hr>
             <div class="form-group">
                 <button
                     type="button"
-                    class="btn btn-xs btn-primary"
+                    class="btn btn-sm btn-block btn-primary"
                     @click.prevent="submit"
                 >
-                    <i class="fa fa-search" /> Search
+                    <i class="fa fa-play me-1" /> Search
                 </button>
             </div>
         </form>

@@ -4,7 +4,7 @@ import type { ClientError } from 'hapic';
 import { ref } from 'vue';
 import { defineNuxtComponent, navigateTo } from '#app';
 import SearchForm from '../components/SearchForm.vue';
-import type { RDQuerySession } from '../domains/query';
+import type { RDQuerySession } from '../domains';
 
 export default defineNuxtComponent({
     components: {
@@ -34,7 +34,9 @@ export default defineNuxtComponent({
 
 <template>
     <div>
-        <h1><i class="fa fa-search" /> Search</h1>
+        <h1 class="mb-3">
+            <i class="fa fa-search" /> Search
+        </h1>
 
         <SearchForm
             @created="handleCreated"

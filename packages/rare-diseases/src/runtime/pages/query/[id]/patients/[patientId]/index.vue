@@ -7,6 +7,7 @@ export default defineNuxtComponent({
     props: {
         entity: {
             type: Object as PropType<RDQuerySession>,
+            required: true,
         },
         record: {
             type: Object as PropType<RDPatientRecord>,
@@ -60,8 +61,8 @@ export default defineNuxtComponent({
                     <div>
                         <strong><i class="fa-solid fa-tags" /> Categories</strong>
                         <template
-                            v-for="(item, key) in record.diagnosis.categories"
-                            :key="key"
+                            v-for="item in record.diagnosis.categories"
+                            :key="item.code"
                         >
                             <span class="ms-1 badge bg-dark">{{ item.display }}</span>
                         </template>
@@ -70,7 +71,5 @@ export default defineNuxtComponent({
                 </div>
             </div>
         </div>
-
-        <pre>{{ record }}</pre>
     </div>
 </template>

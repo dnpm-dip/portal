@@ -25,6 +25,11 @@ export default defineNuxtComponent({
 
         const entity = ref<RDPatientRecord>(null) as any;
 
+        if (typeof route.params.patientId !== 'string') {
+            await navigateTo({ path: `/rd/query/${props.entity.id}` });
+            throw createError({});
+        }
+
         try {
             entity.value = await api.query.getPatientRecord(props.entity.id, route.params.patientId);
         } catch (e) {
