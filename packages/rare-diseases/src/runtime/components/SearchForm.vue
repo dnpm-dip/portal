@@ -4,7 +4,7 @@ import { defineComponent, reactive } from 'vue';
 import type { ValueSetCoding } from '@dnpm-dip/core';
 import { ValueSetEntity } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
-import type { QueryCriteriaScopeValue, QueryCriteriaScopes } from '../domains/query';
+import type { RDQueryCriteriaScopeValue, RDQueryCriteriaScopes } from '../domains/query';
 import FormSelectSearch from './FormSelectSearch.vue';
 import ValueSetCodings from './ValueSetCodings.vue';
 
@@ -41,9 +41,9 @@ export default defineComponent({
         const apiClient = useRDAPIClient();
 
         const submit = async () => {
-            let diagnosis : Record<string, QueryCriteriaScopeValue> | undefined;
-            let hpoTerms : QueryCriteriaScopeValue | undefined;
-            let variants : Record<string, QueryCriteriaScopeValue> | undefined;
+            let diagnosis : Record<string, RDQueryCriteriaScopeValue> | undefined;
+            let hpoTerms : RDQueryCriteriaScopeValue | undefined;
+            let variants : Record<string, RDQueryCriteriaScopeValue> | undefined;
 
             const keys = Object.keys(form);
             for (let i = 0; i < keys.length; i++) {
@@ -81,7 +81,7 @@ export default defineComponent({
                 }
             }
 
-            const criteria : QueryCriteriaScopes = {};
+            const criteria : RDQueryCriteriaScopes = {};
             if (diagnosis) {
                 criteria.diagnosis = [diagnosis];
             }

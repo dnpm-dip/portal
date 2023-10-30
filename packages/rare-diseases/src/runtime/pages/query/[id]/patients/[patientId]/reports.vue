@@ -1,16 +1,15 @@
 <script lang="ts">
-import type { PatientRecord } from '@dnpm-dip/core';
 import type { PropType } from 'vue/dist/vue';
 import { defineNuxtComponent } from '#app';
-import type { QuerySession } from '../../../../../domains/query';
+import type { RDPatientRecord, RDQuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
     props: {
         entity: {
-            type: Object as PropType<QuerySession>,
+            type: Object as PropType<RDQuerySession>,
         },
         record: {
-            type: Object as PropType<PatientRecord>,
+            type: Object as PropType<RDPatientRecord>,
         },
     },
 });

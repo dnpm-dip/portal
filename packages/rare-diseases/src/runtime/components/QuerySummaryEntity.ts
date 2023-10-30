@@ -2,8 +2,8 @@ import {
     AlertError, renderDefault, renderError, renderLoading,
 } from '@dnpm-dip/core';
 import { defineComponent, h, ref } from 'vue';
-import type { QuerySummary } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
+import type { RDQuerySummary } from '../domains';
 
 export default defineComponent({
     props: {
@@ -21,7 +21,7 @@ export default defineComponent({
 
         const error = ref<null | Error>(null);
         const busy = ref(false);
-        const data = ref<null | QuerySummary>(null);
+        const data = ref<null | RDQuerySummary>(null);
 
         const load = async () => {
             try {

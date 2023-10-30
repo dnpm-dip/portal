@@ -2,8 +2,8 @@ import {
     AlertError, renderDefault, renderError, renderLoading,
 } from '@dnpm-dip/core';
 import { defineComponent, h, ref } from 'vue';
-import type { PatientRecord } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
+import type { RDPatientRecord } from '../domains';
 
 export default defineComponent({
     props: {
@@ -25,7 +25,7 @@ export default defineComponent({
 
         const error = ref<null | Error>(null);
         const busy = ref(false);
-        const data = ref<null | PatientRecord>(null);
+        const data = ref<null | RDPatientRecord>(null);
 
         const load = async () => {
             try {

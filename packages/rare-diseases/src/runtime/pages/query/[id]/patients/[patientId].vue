@@ -1,13 +1,12 @@
 <script lang="ts">
 import { Nav } from '@dnpm-dip/core';
-import type { PatientRecord } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { ref } from 'vue';
 import {
     createError, defineNuxtComponent, navigateTo, useRoute,
 } from '#app';
 import { useRDAPIClient } from '../../../../composables';
-import type { QuerySession } from '../../../../domains/query';
+import type { RDPatientRecord, RDQuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
     components: {
@@ -15,7 +14,7 @@ export default defineNuxtComponent({
     },
     props: {
         entity: {
-            type: Object as PropType<QuerySession>,
+            type: Object as PropType<RDQuerySession>,
             required: true,
         },
     },
@@ -24,7 +23,7 @@ export default defineNuxtComponent({
         const api = useRDAPIClient();
         const route = useRoute();
 
-        const entity = ref<PatientRecord>(null) as any;
+        const entity = ref<RDPatientRecord>(null) as any;
 
         try {
             entity.value = await api.query.getPatientRecord(props.entity.id, route.params.patientId);

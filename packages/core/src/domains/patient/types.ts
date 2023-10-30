@@ -1,51 +1,37 @@
+import type { Coding } from '../coding';
+
+/**
+ * @see https://github.com/KohlbacherLab/dnpm-dip-core/blob/main/src/main/scala/de/dnpm/dip/model/Patient.scala
+ */
 export type Patient = {
     id: string,
-    age: number,
-    gender: {
-        code: string,
-        display: string,
-        system: string,
-    },
-    vitalStatus: {
-        code: string,
-        display: string,
-        system: string
-    },
-    matchingCriteria: unknown // todo: type must be defined
+    /**
+     * @see https://github.com/KohlbacherLab/dnpm-dip-core/blob/main/src/main/scala/de/dnpm/dip/model/Gender.scala
+     */
+    gender: Coding<'male' | 'female' | 'other' | 'unknown'>
+    birthDate: string,
+    dateOfDeath?: string,
+    managingSite?: Coding,
+    healthInsurance?: unknown // todo: type is not defined ?!
 };
 
-export type PatientRecord = {
-    case: {
-        externalId: {
-            value: string
-        },
-        face2geneId: {
-            system: string,
-            value: string
-        },
-        gestaltMatcherId: {
-            system: string,
-            value: string,
-        },
-        id: string,
-        patient: {
-            id: string
-        },
-        reason: {
-            id: string
-        },
-        recordedOn: string,
-        referrer: {
-            name: string
-        }
-    },
-    diagnosis: unknown, // todo: grab type from doc
-    hpoTerms: unknown, // todo: grab type from doc
-    ngsReport: unknown, // todo: grab type from doc
-    patient: unknown, // todo: other type than Patient?!
-    therapy: {
-        id: string,
-        notes: string,
-        patient: unknown // todo: same type than patient ?
-    }
+/**
+ * @see https://github.com/KohlbacherLab/dnpm-dip-service-base/blob/main/src/main/scala/de/dnpm/dip/service/query/PatientMatch.scala
+ */
+export type PatientMatch<Criteria = any> = {
+    id: string,
+    managingSite?: Coding,
+    gender: Coding<'male' | 'female' | 'other' | 'unknown'>,
+    age: number,
+    vitalStatus: Coding<'alive' | 'deceased'>,
+    matchingCriteria: Criteria
+};
+
+/**
+ * @see https://github.com/KohlbacherLab/dnpm-dip-service-base/blob/main/src/main/scala/de/dnpm/dip/service/query/PatientFilter.scala
+ */
+export type PatientFilter = {
+    genders: unknown,
+    ageRange: unknown,
+    vitalStatus: unknown
 };

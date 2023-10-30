@@ -1,28 +1,24 @@
-import type { Patient, QueryBase } from '@dnpm-dip/core';
+import type { PatientMatch, QueryBase } from '@dnpm-dip/core';
 import type { QueryRequestMode } from './constants';
 
-export type QueryCriteriaScopeValue = {
+export type RDQueryCriteriaScopeValue = {
     code: string
 };
 
-export type QueryCriteriaScopes = {
-    diagnosis?: Record<string, QueryCriteriaScopeValue>[],
-    hpoTerms?: QueryCriteriaScopeValue[],
-    variants?: Record<string, QueryCriteriaScopeValue>[]
+export type RDQueryCriteriaScopes = {
+    diagnosis?: Record<string, RDQueryCriteriaScopeValue>[],
+    hpoTerms?: RDQueryCriteriaScopeValue[],
+    variants?: Record<string, RDQueryCriteriaScopeValue>[]
 };
 
-export type QuerySessionCreate = {
+export type RDQuerySessionCreate = {
     mode?: `${QueryRequestMode}`,
-    criteria: QueryCriteriaScopes
+    criteria: RDQueryCriteriaScopes
 };
 
-export type QuerySession = QueryBase<QueryCriteriaScopes>;
+export type RDQuerySession = QueryBase<RDQueryCriteriaScopes>;
 
-export type QuerySummary = {
+export type RDQuerySummary = {
     id: string,
     numPatients: number
-};
-
-export type QueryPatientsResponse = {
-    entries: Patient[]
 };

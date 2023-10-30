@@ -2,13 +2,13 @@
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import QuerySummaryEntity from '../../../../components/QuerySummaryEntity';
-import type { QuerySession } from '../../../../domains/query';
+import type { RDQuerySession } from '../../../../domains/query';
 
 export default defineNuxtComponent({
     components: { QuerySummaryEntity },
     props: {
         entity: {
-            type: Object as PropType<QuerySession>,
+            type: Object as PropType<RDQuerySession>,
             required: true,
         },
     },

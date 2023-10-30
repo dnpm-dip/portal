@@ -4,7 +4,7 @@ import type { ClientError } from 'hapic';
 import { ref } from 'vue';
 import { defineNuxtComponent, navigateTo } from '#app';
 import SearchForm from '../components/SearchForm.vue';
-import type { QuerySession } from '../domains/query';
+import type { RDQuerySession } from '../domains/query';
 
 export default defineNuxtComponent({
     components: {
@@ -17,7 +17,7 @@ export default defineNuxtComponent({
             error.value = e;
         };
 
-        const handleCreated = async (data: QuerySession) => {
+        const handleCreated = async (data: RDQuerySession) => {
             error.value = null;
 
             await navigateTo({ path: `/rd/query/${data.id}` });

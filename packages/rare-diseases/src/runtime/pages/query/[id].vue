@@ -5,7 +5,7 @@ import {
     createError, defineNuxtComponent, navigateTo, useRoute,
 } from '#app';
 import { definePageMeta, useRDAPIClient } from '#imports';
-import type { QuerySession } from '../../domains/query';
+import type { RDQuerySession } from '../../domains/query';
 
 export default defineNuxtComponent({
     async setup() {
@@ -17,7 +17,7 @@ export default defineNuxtComponent({
         const api = useRDAPIClient();
         const route = useRoute();
 
-        const entity = ref<QuerySession>(null) as any;
+        const entity = ref<RDQuerySession>(null) as any;
 
         try {
             entity.value = await api.query.getOne(route.params.id);

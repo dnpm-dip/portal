@@ -2,7 +2,7 @@
 import { Nav } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
-import type { QuerySession } from '../../../domains/query';
+import type { RDQuerySession } from '../../../domains/query';
 
 export default defineNuxtComponent({
     components: {
@@ -10,7 +10,7 @@ export default defineNuxtComponent({
     },
     props: {
         entity: {
-            type: Object as PropType<QuerySession>,
+            type: Object as PropType<RDQuerySession>,
             required: true,
         },
     },

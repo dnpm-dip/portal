@@ -1,18 +1,18 @@
 import type { ObjectLiteral } from '../../types';
-import type { Patient } from '../patient';
+import type { Coding } from '../coding';
+import type { PatientFilter } from '../patient';
 
+/**
+ * @see https://github.com/KohlbacherLab/dnpm-dip-service-base/blob/main/src/main/scala/de/dnpm/dip/service/query/Query.scala
+ */
 export type QueryBase<
     CRITERIA extends ObjectLiteral = ObjectLiteral,
-    FILTERS extends ObjectLiteral = ObjectLiteral,
+    FILTERS extends PatientFilter = PatientFilter,
 > = {
     id: string,
     submittedAt: string,
     querier: string,
-    mode: {
-        code: string,
-        display: string,
-        system: string
-    },
+    mode: Coding,
     criteria: CRITERIA,
     filters: FILTERS
     /**
@@ -20,13 +20,4 @@ export type QueryBase<
      */
     expiresAfter: number,
     lastUpdate: string
-};
-
-export type QuerySummary = {
-    id: string,
-    numPatients: number
-};
-
-export type QueryPatientsResponse = {
-    entries: Patient[]
 };
