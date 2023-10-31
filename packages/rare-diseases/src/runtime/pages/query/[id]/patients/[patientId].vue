@@ -67,6 +67,8 @@ export default defineNuxtComponent({
             />
         </div>
 
+        <hr>
+
         <template v-if="record">
             <NuxtPage
                 :entity="entity"

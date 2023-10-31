@@ -16,9 +16,12 @@ export default defineNuxtComponent({
 </script>
 <template>
     <div>
-        <h1>Home</h1>
-        <pre>
-          {{ codings }}
-        </pre>
+        <h1 class="mb-3">
+            <i class="fa fa-home" /> Overview
+        </h1>
+
+        <p>
+            The Rare Disease module within the DNPM:dip platform is designed to tackle the unique demands linked to rare medical conditions.
+        </p>
     </div>
 </template>
