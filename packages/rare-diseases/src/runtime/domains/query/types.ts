@@ -6,7 +6,7 @@ export type RDQueryCriteriaScopeValue = {
 };
 
 export type RDQueryCriteriaScopes = {
-    diagnosis?: Record<string, RDQueryCriteriaScopeValue>[],
+    diagnoses?: Record<string, RDQueryCriteriaScopeValue>[],
     hpoTerms?: RDQueryCriteriaScopeValue[],
     variants?: Record<string, RDQueryCriteriaScopeValue>[]
 };

@@ -58,6 +58,9 @@ export default defineNuxtComponent({
                     <template #cell(vitalStatus)="data">
                         {{ data.item.vitalStatus.display }}
                     </template>
+                    <template #cell(age)="data">
+                        {{ data.item.age.value }}
+                    </template>
                     <template #cell(options)="data">
                         <NuxtLink
                             :to="'/rd/query/'+ entity.id + '/patients/' +data.item.id"

@@ -13,7 +13,7 @@ export class QueryAPI extends BaseAPI {
      * @param query
      */
     async submit(query: RDQuerySessionCreate) : Promise<RDQuerySession> {
-        let uri = 'rd/query';
+        let uri = 'rd/queries';
         if (query.mode) {
             uri += `?mode=${query.mode}`;
             delete query.mode;
@@ -25,7 +25,7 @@ export class QueryAPI extends BaseAPI {
     }
 
     async getOne(id: string) : Promise<RDQuerySession> {
-        const response = await this.client.get(`rd/query/${id}`);
+        const response = await this.client.get(`rd/queries/${id}`);
         return response.data;
     }
 
@@ -35,7 +35,7 @@ export class QueryAPI extends BaseAPI {
      * @param id
      */
     async refresh(id: string) : Promise<RDQuerySession> {
-        const response = await this.client.put(`rd/query/${id}`);
+        const response = await this.client.put(`rd/queries/${id}`);
         return response.data;
     }
 
@@ -45,7 +45,7 @@ export class QueryAPI extends BaseAPI {
      * @param id
      */
     async getSummary(id: string) : Promise<RDQuerySummary> {
-        const response = await this.client.get(`rd/query/${id}/summary`);
+        const response = await this.client.get(`rd/queries/${id}/summary`);
         return response.data;
     }
 
@@ -55,7 +55,7 @@ export class QueryAPI extends BaseAPI {
      * @throws ClientError
      */
     async getPatients(id: string) : Promise<CollectionResponse<PatientMatch>> {
-        const response = await this.client.get(`rd/query/${id}/patients`);
+        const response = await this.client.get(`rd/queries/${id}/patients`);
         return response.data;
     }
 
@@ -66,7 +66,7 @@ export class QueryAPI extends BaseAPI {
      * @param patientId
      */
     async getPatientRecord(queryId: string, patientId: string) : Promise<RDPatientRecord> {
-        const response = await this.client.get(`rd/query/${queryId}/patient-record/${patientId}`);
+        const response = await this.client.get(`rd/queries/${queryId}/patient-record/${patientId}`);
         return response.data;
     }
 }

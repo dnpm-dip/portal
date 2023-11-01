@@ -5,7 +5,7 @@ type RenderContext = {
     template?: VNodeChild | (() => VNodeChild),
     setup?: SetupContext,
     slotName?: string,
-    slotProps: Record<string, any>
+    slotProps?: Record<string, any>
 };
 
 export type ContentRenderContext = Omit<RenderContext, 'slotName' | 'slotProps'> & {

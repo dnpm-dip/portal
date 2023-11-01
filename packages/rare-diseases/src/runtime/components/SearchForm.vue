@@ -1,8 +1,8 @@
 <script lang="ts">
 import { FormInput, FormInputCheckbox, FormSelect } from '@vue-layout/form-controls';
 import { defineComponent, reactive, ref } from 'vue';
-import type { ValueSetCoding } from '@dnpm-dip/core';
-import { QueryRequestMode, ValueSetEntity } from '@dnpm-dip/core';
+import type { QueryRequestMode, ValueSetCoding } from '@dnpm-dip/core';
+import { ValueSetEntity } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
 import type { RDQueryCriteriaScopeValue, RDQueryCriteriaScopes } from '../domains';
 import FormSelectSearch from './FormSelectSearch.vue';
@@ -19,10 +19,6 @@ export default defineComponent({
     },
     emits: ['failed', 'created'],
     async setup(props, { emit }) {
-        // todo: how to know what is a hpo, diagnosis or variant scope ?
-
-        const federated = ref(true);
-
         // todo: how to know the key of the query request body?
         const form = reactive({
             // hpoTerms
@@ -43,8 +39,8 @@ export default defineComponent({
 
         const apiClient = useRDAPIClient();
 
-        const submit = async () => {
-            let diagnosis : Record<string, RDQueryCriteriaScopeValue> | undefined;
+        const submit = async (mode: `${QueryRequestMode}`) => {
+            let diagnoses : Record<string, RDQueryCriteriaScopeValue> | undefined;
             let hpoTerms : RDQueryCriteriaScopeValue | undefined;
             let variants : Record<string, RDQueryCriteriaScopeValue> | undefined;
 
@@ -62,7 +58,7 @@ export default defineComponent({
                         break;
                     }
                     case 'category': {
-                        diagnosis = {
+                        diagnoses = {
                             category: {
                                 code: form.category,
                             },
@@ -85,8 +81,8 @@ export default defineComponent({
             }
 
             const criteria : RDQueryCriteriaScopes = {};
-            if (diagnosis) {
-                criteria.diagnosis = [diagnosis];
+            if (diagnoses) {
+                criteria.diagnoses = [diagnoses];
             }
             if (hpoTerms) {
                 criteria.hpoTerms = [hpoTerms];
@@ -98,10 +94,9 @@ export default defineComponent({
             try {
                 const data = await apiClient.query.submit({
                     criteria,
-                    mode: federated.value ?
-                        QueryRequestMode.FEDERATED :
-                        QueryRequestMode.LOCAL,
+                    mode,
                 });
+
                 emit('created', data);
             } catch (e) {
                 if (e instanceof Error) {
@@ -116,7 +111,6 @@ export default defineComponent({
         });
 
         return {
-            federated,
             form,
             submit,
             transformCodingsForSelect,
@@ -129,33 +123,66 @@ export default defineComponent({
         <form @submit.prevent="submit">
             <div class="row mb-2">
                 <div class="col">
-                    <h6>HPO</h6>
-
-                    <FormInput
-                        v-model="form.hpo_term"
-                        :label="true"
-                        :label-content="'Term'"
-                        placeholder="..."
-                    />
-                </div>
-                <div class="col">
-                    <h6>Diagnosis</h6>
-                    <ValueSetEntity :code="'dnpm-dip/rd/diagnosis/category'">
+                    <h6>Diagnoses</h6>
+                    <ValueSetEntity
+                        :code="'https://www.orpha.net'"
+                        :lazy-load="true"
+                    >
                         <template #default="{ data }">
                             <div class="form-group">
                                 <label>Category</label>
-
                                 <ValueSetCodings
                                     :entity="data"
                                     :transform="transformCodingsForSelect"
                                 >
                                     <template #default="options">
-                                        <FormSelect
+                                        <FormSelectSearch
                                             v-model="form.category"
                                             :options="options"
                                         />
                                     </template>
                                 </ValueSetCodings>
+                            </div>
+                        </template>
+                        <template #loading>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <FormSelectSearch
+                                    :options="[]"
+                                />
+                            </div>
+                        </template>
+                    </ValueSetEntity>
+                </div>
+                <div class="col">
+                    <h6>HPO</h6>
+
+                    <ValueSetEntity
+                        :code="'https://hpo.jax.org'"
+                        :lazy-load="true"
+                    >
+                        <template #default="{ data }">
+                            <div class="form-group">
+                                <label>Terms</label>
+                                <ValueSetCodings
+                                    :entity="data"
+                                    :transform="transformCodingsForSelect"
+                                >
+                                    <template #default="options">
+                                        <FormSelectSearch
+                                            v-model="form.hpo_term"
+                                            :options="options"
+                                        />
+                                    </template>
+                                </ValueSetCodings>
+                            </div>
+                        </template>
+                        <template #loading>
+                            <div class="form-group">
+                                <label>Terms</label>
+                                <FormSelectSearch
+                                    :options="[]"
+                                />
                             </div>
                         </template>
                     </ValueSetEntity>
@@ -166,11 +193,13 @@ export default defineComponent({
                 <div class="col">
                     <h6>Variant</h6>
 
-                    <ValueSetEntity :code="'https://www.genenames.org/'">
+                    <ValueSetEntity
+                        :code="'https://www.genenames.org/'"
+                        :lazy-load="true"
+                    >
                         <template #default="{ data }">
                             <div class="form-group">
                                 <label>Gene</label>
-
                                 <ValueSetCodings
                                     :entity="data"
                                     :transform="transformCodingsForSelect"
@@ -184,29 +213,12 @@ export default defineComponent({
                                 </ValueSetCodings>
                             </div>
                         </template>
-                    </ValueSetEntity>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <h6>Others</h6>
-                <div class="col">
-                    <ValueSetEntity :code="'dnpm-dip/patient/vital-status'">
-                        <template #default="{ data }">
+                        <template #loading>
                             <div class="form-group">
-                                <label>Status</label>
-
-                                <ValueSetCodings
-                                    :entity="data"
-                                    :transform="transformCodingsForSelect"
-                                >
-                                    <template #default="options">
-                                        <FormSelect
-                                            v-model="form.vital_status"
-                                            :options="options"
-                                        />
-                                    </template>
-                                </ValueSetCodings>
+                                <label>Gene</label>
+                                <FormSelectSearch
+                                    :options="[]"
+                                />
                             </div>
                         </template>
                     </ValueSetEntity>
@@ -224,14 +236,29 @@ export default defineComponent({
                 </div>
             </div>
             <hr>
-            <div class="form-group">
-                <button
-                    type="button"
-                    class="btn btn-sm btn-block btn-primary"
-                    @click.prevent="submit"
-                >
-                    <i class="fa fa-play me-1" /> Search
-                </button>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-block btn-primary"
+                            @click.prevent="submit('local')"
+                        >
+                            <i class="fa fa-play me-1" /> Local
+                        </button>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-block btn-primary"
+                            @click.prevent="submit('federated')"
+                        >
+                            <i class="fa fa-play me-1" /> Federated
+                        </button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

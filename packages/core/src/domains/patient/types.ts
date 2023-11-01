@@ -22,7 +22,13 @@ export type PatientMatch<Criteria = any> = {
     id: string,
     managingSite?: Coding,
     gender: Coding<'male' | 'female' | 'other' | 'unknown'>,
-    age: number,
+    age: {
+        value: number,
+        /**
+         * @see https://github.com/KohlbacherLab/dnpm-dip-core/blob/main/src/main/scala/de/dnpm/dip/model/Quantity.scala
+         */
+        unit: string
+    },
     vitalStatus: Coding<'alive' | 'deceased'>,
     matchingCriteria: Criteria
 };
