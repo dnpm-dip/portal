@@ -1,6 +1,6 @@
 <script lang="ts">
 import { FormInput, FormInputCheckbox, FormSelect } from '@vue-layout/form-controls';
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import type { QueryRequestMode, ValueSetCoding } from '@dnpm-dip/core';
 import { ValueSetEntity } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
@@ -120,17 +120,17 @@ export default defineComponent({
 </script>
 <template>
     <div>
-        <form @submit.prevent="submit">
-            <div class="row mb-2">
+        <form>
+            <div class="row mb-3">
                 <div class="col">
-                    <h6>Diagnoses</h6>
+                    <h6>Diagnose</h6>
                     <ValueSetEntity
                         :code="'https://www.orpha.net'"
                         :lazy-load="true"
                     >
                         <template #default="{ data }">
                             <div class="form-group">
-                                <label>Category</label>
+                                <label>Kategorie</label>
                                 <ValueSetCodings
                                     :entity="data"
                                     :transform="transformCodingsForSelect"
@@ -146,7 +146,7 @@ export default defineComponent({
                         </template>
                         <template #loading>
                             <div class="form-group">
-                                <label>Category</label>
+                                <label>Kategorie</label>
                                 <FormSelectSearch
                                     :options="[]"
                                 />
@@ -163,7 +163,7 @@ export default defineComponent({
                     >
                         <template #default="{ data }">
                             <div class="form-group">
-                                <label>Terms</label>
+                                <label>Begriff</label>
                                 <ValueSetCodings
                                     :entity="data"
                                     :transform="transformCodingsForSelect"
@@ -188,10 +188,9 @@ export default defineComponent({
                     </ValueSetEntity>
                 </div>
             </div>
-            <hr>
             <div class="row mb-2">
                 <div class="col">
-                    <h6>Variant</h6>
+                    <h6>Variante</h6>
 
                     <ValueSetEntity
                         :code="'https://www.genenames.org/'"
@@ -223,16 +222,22 @@ export default defineComponent({
                         </template>
                     </ValueSetEntity>
                 </div>
-            </div>
-            <hr>
-            <div class="form-group">
-                <FormInputCheckbox
-                    v-model="federated"
-                    :label="true"
-                    :label-content="'Federated?'"
-                />
-                <div class="alert alert-sm alert-info">
-                    If this option is enabled, the search will be federated across all sites instead of just the local site.
+                <div>
+                    <FormInput
+                        :label="true"
+                        :label-content="'kodierende DNA-Änderung'"
+                        placeholder="..."
+                    />
+                    <FormInput
+                        :label="true"
+                        :label-content="'genomische DNA-Änderung'"
+                        placeholder="..."
+                    />
+                    <FormInput
+                        :label="true"
+                        :label-content="'Proteinänderung'"
+                        placeholder="..."
+                    />
                 </div>
             </div>
             <hr>
@@ -241,10 +246,10 @@ export default defineComponent({
                     <div class="form-group">
                         <button
                             type="button"
-                            class="btn btn-sm btn-block btn-primary"
+                            class="btn btn-sm btn-block btn-dark"
                             @click.prevent="submit('local')"
                         >
-                            <i class="fa fa-play me-1" /> Local
+                            Lokal
                         </button>
                     </div>
                 </div>
@@ -252,10 +257,10 @@ export default defineComponent({
                     <div class="form-group">
                         <button
                             type="button"
-                            class="btn btn-sm btn-block btn-primary"
+                            class="btn btn-sm btn-block btn-dark"
                             @click.prevent="submit('federated')"
                         >
-                            <i class="fa fa-play me-1" /> Federated
+                            Förderiert
                         </button>
                     </div>
                 </div>

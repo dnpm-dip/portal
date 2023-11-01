@@ -35,7 +35,7 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h1 class="mb-3">
-            <i class="fa fa-search" /> Search
+            <i class="fa fa-search" /> Suche
         </h1>
 
         <SearchForm
