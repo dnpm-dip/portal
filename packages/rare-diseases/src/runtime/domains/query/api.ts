@@ -1,6 +1,6 @@
-import type { CollectionResponse, PatientMatch } from '@dnpm-dip/core';
+import type { CollectionResponse } from '@dnpm-dip/core';
 import { BaseAPI } from '@dnpm-dip/core';
-import type { RDPatientRecord } from '../patient-record';
+import type { RDPatientMatch, RDPatientRecord } from '../patient';
 import { QueryRequestMode } from './constants';
 import type {
     RDQuerySession, RDQuerySessionCreate, RDQuerySummary,
@@ -13,14 +13,9 @@ export class QueryAPI extends BaseAPI {
      * @param query
      */
     async submit(query: RDQuerySessionCreate) : Promise<RDQuerySession> {
-        let uri = 'rd/queries';
-        if (query.mode) {
-            uri += `?mode=${query.mode}`;
-            delete query.mode;
-        } else {
-            uri += `?mode=${QueryRequestMode.LOCAL}`;
-        }
-        const response = await this.client.post(uri, query);
+        query.mode = query.mode || QueryRequestMode.LOCAL;
+
+        const response = await this.client.post('rd/queries', query);
         return response.data;
     }
 
@@ -54,7 +49,7 @@ export class QueryAPI extends BaseAPI {
      * @param id
      * @throws ClientError
      */
-    async getPatients(id: string) : Promise<CollectionResponse<PatientMatch>> {
+    async getPatients(id: string) : Promise<CollectionResponse<RDPatientMatch>> {
         const response = await this.client.get(`rd/queries/${id}/patients`);
         return response.data;
     }

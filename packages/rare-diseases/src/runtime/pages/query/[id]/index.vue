@@ -2,11 +2,13 @@
 import { Nav } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
+import PatientMatchtEntity from '../../../components/PatientMatchtEntity.vue';
 import QueryPatientList from '../../../components/QueryPatientList';
 import type { RDQuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        PatientMatchtEntity,
         QueryPatientList,
         Nav,
     },
@@ -75,36 +77,11 @@ export default defineNuxtComponent({
                             :key="item.id"
                         >
                             <li class="list-item flex-row">
-                                <div class="list-card">
-                                    <div class="d-flex flex-row">
-                                        <div>
-                                            <strong># {{ index + 1 }}</strong>
-
-                                            {{ item.gender.display }}, {{ item.age.value }} Jahre
-                                            (<template v-if="item.vitalStatus.code === 'alive'">
-                                                <span class="text-success">{{ item.vitalStatus.display }}</span>
-                                            </template>
-                                            <template v-else-if="item.vitalStatus.code === 'deceased'">
-                                                <span class="text-danger">{{ item.vitalStatus.display }}</span>
-                                            </template>
-                                            <template v-else>
-                                                {{ item.vitalStatus.display }}
-                                            </template>)
-                                        </div>
-                                        <div class="ms-auto">
-                                            <button class="btn btn-dark btn-xs">
-                                                <i class="fa fa-chevron-down" />
-                                            </button>
-
-                                            <NuxtLink
-                                                :to="'/rd/query/'+ entity.id + '/patients/' +item.id"
-                                                class="btn btn-xs btn-outline-primary ms-1"
-                                            >
-                                                <i class="fa-solid fa-bars" />
-                                            </NuxtLink>
-                                        </div>
-                                    </div>
-                                </div>
+                                <PatientMatchtEntity
+                                    :entity="item"
+                                    :query-id="entity.id"
+                                    :index="index"
+                                />
                             </li>
                         </template>
                     </ul>

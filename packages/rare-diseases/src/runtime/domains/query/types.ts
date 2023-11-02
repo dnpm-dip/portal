@@ -1,22 +1,31 @@
-import type { PatientMatch, QueryBase } from '@dnpm-dip/core';
+import type { CodeRecord, QueryBase } from '@dnpm-dip/core';
 import type { QueryRequestMode } from './constants';
 
-export type RDQueryCriteriaScopeValue = {
-    code: string
-};
+export type RDVariantCriteria = 'gene' |
+'cDNAChange' |
+'gDNAChange' |
+'proteinChange' |
+'acmgClass' |
+'acmgCriteria' |
+'zygosity' |
+'segregationAnalysis' |
+'modeOfInheritance' |
+'significance';
 
-export type RDQueryCriteriaScopes = {
-    diagnoses?: RDQueryCriteriaScopeValue[],
-    hpoTerms?: RDQueryCriteriaScopeValue[],
-    variants?: Record<string, RDQueryCriteriaScopeValue>[]
+export type RDQueryCriteria = {
+    diagnoses?: CodeRecord[],
+    hpoTerms?: CodeRecord[],
+    variants?: {
+        [K in RDVariantCriteria]?: CodeRecord[]
+    }[]
 };
 
 export type RDQuerySessionCreate = {
-    mode?: `${QueryRequestMode}`,
-    criteria: RDQueryCriteriaScopes
+    mode?: CodeRecord<`${QueryRequestMode}`>,
+    criteria: RDQueryCriteria
 };
 
-export type RDQuerySession = QueryBase<RDQueryCriteriaScopes>;
+export type RDQuerySession = QueryBase<RDQueryCriteria>;
 
 export type RDQuerySummary = {
     id: string,

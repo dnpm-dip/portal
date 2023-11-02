@@ -1,11 +1,12 @@
 <script lang="ts">
+import type { CodeRecord } from '@dnpm-dip/core/src';
 import type { FormSelectOption } from '@vue-layout/form-controls';
 import { FormInput } from '@vue-layout/form-controls';
 import { defineComponent, reactive, ref } from 'vue';
 import type { QueryRequestMode, ValueSetCoding } from '@dnpm-dip/core';
 import { ValueSetEntity } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
-import type { RDQueryCriteriaScopeValue, RDQueryCriteriaScopes } from '../domains';
+import type { RDQueryCriteria, RDQueryCriteriaScopeValue } from '../domains';
 import FormSelectSearch from './FormSelectSearch.vue';
 import Tags from './Tags.vue';
 import ValueSetCodings from './ValueSetCodings.vue';
@@ -47,11 +48,11 @@ export default defineComponent({
         const apiClient = useRDAPIClient();
 
         const submit = async (mode: `${QueryRequestMode}`) => {
-            const criteria : RDQueryCriteriaScopes = {};
+            const criteria : RDQueryCriteria = {};
             const keys = Object.keys(variants);
             if (keys.length > 0) {
                 let isValid = false;
-                const group : Record<string, RDQueryCriteriaScopeValue> = {};
+                const group : Record<string, CodeRecord> = {};
                 for (let i = 0; i < keys.length; i++) {
                     const code = variants[keys[i] as keyof typeof variants];
                     if (code.length > 0) {
@@ -90,7 +91,9 @@ export default defineComponent({
             try {
                 const data = await apiClient.query.submit({
                     criteria,
-                    mode,
+                    mode: {
+                        code: mode,
+                    },
                 });
 
                 emit('created', data);
@@ -170,7 +173,7 @@ export default defineComponent({
                     >
                         <template #default="{ data }">
                             <div class="form-group">
-                                <label>Begriff</label>
+                                <label>Term</label>
                                 <ValueSetCodings
                                     :entity="data"
                                     :transform="transformCodingsForSelect"

@@ -1,7 +1,8 @@
-import type { Coding, Patient } from '@dnpm-dip/core';
+import type { Coding, Patient, PatientMatch } from '@dnpm-dip/core';
 import type { RDCase } from '../case';
 import type { RDDiagnosis } from '../diagnosis';
 import type { RDNGSReport } from '../ngs-report';
+import type { RDQueryCriteria } from '../query';
 import type { RDTherapy } from '../therapy';
 
 /**
@@ -24,3 +25,5 @@ export type RDPatientRecord = {
     patient: Patient,
     therapy?: RDTherapy
 };
+
+export type RDPatientMatch = PatientMatch<RDQueryCriteria>;

@@ -7,3 +7,7 @@ export type BaseAPIContext = {
 export type CollectionResponse<T> = {
     entries: T[]
 };
+
+export type CodeRecord<V extends string = string> = {
+    code: V
+};
