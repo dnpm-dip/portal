@@ -1,94 +1,90 @@
 <script lang="ts">
-import { FormInput, FormInputCheckbox, FormSelect } from '@vue-layout/form-controls';
-import { defineComponent, reactive } from 'vue';
+import type { FormSelectOption } from '@vue-layout/form-controls';
+import { FormInput } from '@vue-layout/form-controls';
+import { defineComponent, reactive, ref } from 'vue';
 import type { QueryRequestMode, ValueSetCoding } from '@dnpm-dip/core';
 import { ValueSetEntity } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
 import type { RDQueryCriteriaScopeValue, RDQueryCriteriaScopes } from '../domains';
 import FormSelectSearch from './FormSelectSearch.vue';
+import Tags from './Tags.vue';
 import ValueSetCodings from './ValueSetCodings.vue';
 
 export default defineComponent({
     components: {
+        Tags,
         ValueSetCodings,
         FormInput,
-        FormInputCheckbox,
-        FormSelect,
         FormSelectSearch,
         ValueSetEntity,
     },
     emits: ['failed', 'created'],
     async setup(props, { emit }) {
-        // todo: how to know the key of the query request body?
-        const form = reactive({
-            // hpoTerms
-            hpo_term: '',
+        const categories = ref<FormSelectOption[]>([]);
+        const hpoTerms = ref<FormSelectOption[]>([]);
 
-            // diagnosis
-            category: '',
+        const selectCategory = (item: FormSelectOption) => {
+            const index = categories.value.findIndex((el) => el.id === item.id);
+            if (index === -1) {
+                categories.value.push(item);
+            }
+        };
 
-            // variants
+        const selectHPOTerm = (item: FormSelectOption) => {
+            const index = hpoTerms.value.findIndex((el) => el.id === item.id);
+            if (index === -1) {
+                hpoTerms.value.push(item);
+            }
+        };
+
+        const variants = reactive({
             gene: '',
             cDNAChange: '',
             gDNAChange: '',
             proteinChange: '',
-
-            // todo: what scope?!
-            vital_status: '',
         });
 
         const apiClient = useRDAPIClient();
 
         const submit = async (mode: `${QueryRequestMode}`) => {
-            let diagnoses : Record<string, RDQueryCriteriaScopeValue> | undefined;
-            let hpoTerms : RDQueryCriteriaScopeValue | undefined;
-            let variants : Record<string, RDQueryCriteriaScopeValue> | undefined;
-
-            const keys = Object.keys(form);
-            for (let i = 0; i < keys.length; i++) {
-                if (form[keys[i]].length === 0) {
-                    continue;
-                }
-
-                switch (keys[i]) {
-                    case 'hpo_term': {
-                        hpoTerms = {
-                            code: form.hpo_term,
-                        };
-                        break;
-                    }
-                    case 'category': {
-                        diagnoses = {
-                            category: {
-                                code: form.category,
-                            },
-                        };
-                        break;
-                    }
-                    case 'vital_status': {
-                        break;
-                    }
-                    default: {
-                        if (typeof variants === 'undefined') {
-                            variants = {};
-                        }
-                        variants[keys[i]] = {
-                            code: form[keys[i]] as string,
-                        };
-                        break;
-                    }
-                }
-            }
-
             const criteria : RDQueryCriteriaScopes = {};
-            if (diagnoses) {
-                criteria.diagnoses = [diagnoses];
+            const keys = Object.keys(variants);
+            if (keys.length > 0) {
+                let isValid = false;
+                const group : Record<string, RDQueryCriteriaScopeValue> = {};
+                for (let i = 0; i < keys.length; i++) {
+                    const code = variants[keys[i] as keyof typeof variants];
+                    if (code.length > 0) {
+                        group[keys[i]] = {
+                            code,
+                        };
+                        isValid = true;
+                    }
+                }
+
+                if (isValid) {
+                    criteria.variants = [group];
+                }
             }
-            if (hpoTerms) {
-                criteria.hpoTerms = [hpoTerms];
+
+            if (hpoTerms.value.length > 0) {
+                criteria.hpoTerms = [];
+
+                for (let i = 0; i < hpoTerms.value.length; i++) {
+                    criteria.hpoTerms.push({
+                        code: `${hpoTerms.value[i].id}`,
+                    });
+                }
             }
-            if (variants) {
-                criteria.variants = [variants];
+
+            if (categories.value.length > 0) {
+                criteria.diagnoses = [];
+
+                for (let i = 0; i < categories.value.length; i++) {
+                    criteria.diagnoses.push({
+                        code: `${categories.value[i].id}`,
+                    });
+                }
             }
 
             try {
@@ -111,7 +107,13 @@ export default defineComponent({
         });
 
         return {
-            form,
+            hpoTerms,
+            categories,
+
+            selectCategory,
+            selectHPOTerm,
+
+            form: variants,
             submit,
             transformCodingsForSelect,
         };
@@ -137,8 +139,8 @@ export default defineComponent({
                                 >
                                     <template #default="options">
                                         <FormSelectSearch
-                                            v-model="form.category"
                                             :options="options"
+                                            @changed="selectCategory"
                                         />
                                     </template>
                                 </ValueSetCodings>
@@ -153,6 +155,11 @@ export default defineComponent({
                             </div>
                         </template>
                     </ValueSetEntity>
+
+                    <Tags
+                        v-model="categories"
+                        tag-variant="dark"
+                    />
                 </div>
                 <div class="col">
                     <h6>HPO</h6>
@@ -170,8 +177,8 @@ export default defineComponent({
                                 >
                                     <template #default="options">
                                         <FormSelectSearch
-                                            v-model="form.hpo_term"
                                             :options="options"
+                                            @changed="selectHPOTerm"
                                         />
                                     </template>
                                 </ValueSetCodings>
@@ -186,6 +193,11 @@ export default defineComponent({
                             </div>
                         </template>
                     </ValueSetEntity>
+
+                    <Tags
+                        v-model="hpoTerms"
+                        tag-variant="dark"
+                    />
                 </div>
             </div>
             <div class="row mb-2">

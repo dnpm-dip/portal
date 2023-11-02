@@ -1,7 +1,8 @@
 <script lang="ts">
-import { APIClientErrorBox } from '@dnpm-dip/core';
+import { APIClientErrorBox, PageMetaKey } from '@dnpm-dip/core';
 import type { ClientError } from 'hapic';
 import { ref } from 'vue';
+import { definePageMeta } from '#imports';
 import { defineNuxtComponent, navigateTo } from '#app';
 import SearchForm from '../components/SearchForm.vue';
 import type { RDQuerySession } from '../domains';
@@ -12,6 +13,11 @@ export default defineNuxtComponent({
         SearchForm,
     },
     setup() {
+        definePageMeta({
+            [PageMetaKey.NAVIGATION_TOP_ID]: 'rd',
+            [PageMetaKey.NAVIGATION_SIDE_ID]: 'rd-search',
+        });
+
         const error = ref<null | ClientError>(null);
         const handleFailed = (e: ClientError) => {
             error.value = e;

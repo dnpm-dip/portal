@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     css: [
         '@fortawesome/fontawesome-free/css/all.css',
         'bootstrap/dist/css/bootstrap.css',
+        'bootstrap-vue-next/dist/bootstrap-vue-next.css',
         '@/assets/css/bootstrap-override.css',
         '@/assets/css/layout/body.css',
         '@/assets/css/layout/footer.css',
@@ -18,6 +19,7 @@ export default defineNuxtConfig({
         '@/assets/css/layout/shared.css',
         '@/assets/css/layout/sidebar.css',
         '@/assets/css/vue-layout-navigation.css',
+        '@/assets/css/list.css',
     ],
     alias: {
         '@dnpm-dip/core': path.join(__dirname, '..', 'core', 'src'),

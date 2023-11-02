@@ -61,7 +61,7 @@ export default defineComponent({
             default: 6,
         },
     },
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'changed'],
     async setup(props, { emit }) {
         const q = ref('');
         q.value = props.modelValue;
@@ -100,6 +100,7 @@ export default defineComponent({
             q.value = option.value;
 
             emit('update:modelValue', option.id);
+            emit('changed', option);
         };
 
         const display = () => {
