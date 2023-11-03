@@ -19,7 +19,7 @@ export default defineNuxtComponent({
 <template>
     <div>
         <div class="row mb-3">
-            <h6>General</h6>
+            <h6>Allgemein</h6>
             <div class="col">
                 <div><strong><i class="fas fa-user" /> Geschlecht</strong> {{ record.patient.gender.display }}</div>
                 <div><strong><i class="fas fa-birthday-cake" /> Geburtstag</strong> {{ record.patient.birthDate }}</div>

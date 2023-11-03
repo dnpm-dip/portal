@@ -28,7 +28,6 @@ export default defineNuxtComponent({
                 <h5>Bericht <small class="text-muted">{{ item.id }}</small></h5>
             </div>
             <div class="mb-3">
-                <h6>Allgemein</h6>
                 <div class="row">
                     <div class="col">
                         <div>
@@ -50,7 +49,7 @@ export default defineNuxtComponent({
             </div>
 
             <div>
-                <h6>Variants</h6>
+                <h6>Varianten</h6>
                 <div class="list">
                     <ul class="list-body list-unstyled">
                         <template

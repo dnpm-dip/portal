@@ -56,13 +56,18 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h4 class="title">
+            <NuxtLink
+                class="btn btn-xs btn-dark me-1"
+                :to="'/rd/query/'+ entity.id"
+            >
+                <i class="fa fa-arrow-left" />
+            </NuxtLink>
             Patient <small class="sub-title text-muted"> {{ record.patient.id }}</small>
         </h4>
 
         <div class="mb-2">
             <Nav
                 :items="navItems"
-                :prev-link="'/rd/query/'+ entity.id"
                 :path="'/rd/query/'+ entity.id + '/patients/' + record.patient.id"
             />
         </div>
