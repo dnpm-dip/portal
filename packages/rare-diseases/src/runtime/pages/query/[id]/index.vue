@@ -42,10 +42,11 @@ export default defineNuxtComponent({
                 Die Anfrage wurde <strong>{{ entity.mode.display.toLowerCase() }}</strong> ausgeführt und umfasst
                 Patienten mit folgenden Eigenschaften
             </div>
-            <div>
-                <strong>Alter:</strong> {{ entity.filters.patientFilter.ageRange.min }} - {{ entity.filters.patientFilter.ageRange.max }}
+            <div v-if="entity.filters.patientFilter.ageRange.min || entity.filters.patientFilter.ageRange.max">
+                <strong>Alter:</strong>
+                {{ entity.filters.patientFilter.ageRange.min }} - {{ entity.filters.patientFilter.ageRange.max }}
             </div>
-            <div>
+            <div v-if="entity.filters.patientFilter.genders?.length">
                 <strong>Geschlecht:</strong>
                 <template
                     v-for="(item, index) in entity.filters.patientFilter.genders"
@@ -54,7 +55,7 @@ export default defineNuxtComponent({
                     {{ index > 0 ? ', ' : '' }} {{ item.display }}
                 </template>
             </div>
-            <div>
+            <div v-if="entity.filters.patientFilter.vitalStatus?.length">
                 <strong>Vital Status:</strong>
                 <template
                     v-for="(item, index) in entity.filters.patientFilter.vitalStatus"
@@ -70,22 +71,29 @@ export default defineNuxtComponent({
         <h6>Patienten</h6>
         <QueryPatientMatchList :query-id="entity.id">
             <template #default="props">
-                <div class="list">
-                    <ul class="list-body list-unstyled">
-                        <template
-                            v-for="(item, index) in props.data"
-                            :key="item.id"
-                        >
-                            <li class="list-item flex-row">
-                                <QueryPatientMatchEntity
-                                    :entity="item"
-                                    :query-id="entity.id"
-                                    :index="index"
-                                />
-                            </li>
-                        </template>
-                    </ul>
-                </div>
+                <template v-if="props.data.length > 0">
+                    <div class="list">
+                        <ul class="list-body list-unstyled">
+                            <template
+                                v-for="(item, index) in props.data"
+                                :key="item.id"
+                            >
+                                <li class="list-item flex-row">
+                                    <QueryPatientMatchEntity
+                                        :entity="item"
+                                        :query-id="entity.id"
+                                        :index="index"
+                                    />
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </template>
+                <template v-else>
+                    <div class="alert alert-sm alert-info">
+                        Es wurden keine Patienten gefunden, die die Suchkriterien erfüllen.
+                    </div>
+                </template>
             </template>
         </QueryPatientMatchList>
     </div>
