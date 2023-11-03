@@ -25,7 +25,7 @@ export default defineNuxtPlugin({
                 },
                 {
                     id: 'rd-search',
-                    name: 'Search',
+                    name: 'Suche',
                     icon: 'fa fa-search',
                     url: '/rd/search',
                 },

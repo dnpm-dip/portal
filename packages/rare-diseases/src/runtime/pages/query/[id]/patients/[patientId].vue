@@ -39,10 +39,10 @@ export default defineNuxtComponent({
 
         const navItems = [
             {
-                name: 'Overview', icon: 'fas fa-bars', urlSuffix: '',
+                name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
             },
             {
-                name: 'Reports', icon: 'fa-solid fa-newspaper', urlSuffix: '/reports',
+                name: 'Berichte', icon: 'fa-solid fa-newspaper', urlSuffix: '/reports',
             },
         ];
 

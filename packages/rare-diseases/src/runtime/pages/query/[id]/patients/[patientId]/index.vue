@@ -21,15 +21,15 @@ export default defineNuxtComponent({
         <div class="row mb-3">
             <h6>General</h6>
             <div class="col">
-                <div><strong><i class="fas fa-user" /> Gender</strong> {{ record.patient.gender.display }}</div>
-                <div><strong><i class="fas fa-birthday-cake" /> Birthdate</strong> {{ record.patient.birthDate }}</div>
+                <div><strong><i class="fas fa-user" /> Geschlecht</strong> {{ record.patient.gender.display }}</div>
+                <div><strong><i class="fas fa-birthday-cake" /> Geburtstag</strong> {{ record.patient.birthDate }}</div>
             </div>
             <div class="col">
                 <template v-if="record.therapy">
-                    <div><strong>Therapy</strong> {{ record.therapy.notes }}</div>
+                    <div><strong>Therapie</strong> {{ record.therapy.notes }}</div>
                 </template>
                 <div>
-                    <strong>HPO Terms</strong>
+                    <strong>HPO Terme</strong>
                     <template
                         v-for="(item, key) in record.hpoTerms"
                         :key="key"
@@ -42,10 +42,10 @@ export default defineNuxtComponent({
 
         <div class="row mb-2">
             <div class="col">
-                <h6>Case</h6>
+                <h6>Fall</h6>
                 <div>
-                    <div><strong><i class="fa fa-user" /> Referrer</strong> {{ record.case.referrer.name }}</div>
-                    <div><strong><i class="fa fa-clock" /> Recorded</strong> {{ record.case.recordedOn }}</div>
+                    <div><strong><i class="fa fa-user" /> Arzt</strong> {{ record.case.referrer.name }}</div>
+                    <div><strong><i class="fa fa-clock" /> Aufgenommen</strong> {{ record.case.recordedOn }}</div>
                     <template v-if="record.case.gestaltMatcherId">
                         <div><strong><i class="fa fa-id-card" /> GestaltMatcherID</strong> {{ record.case.gestaltMatcherId.value }}</div>
                     </template>
@@ -55,11 +55,11 @@ export default defineNuxtComponent({
                 </div>
             </div>
             <div class="col">
-                <h6>Diagnosis</h6>
+                <h6>Diagnose</h6>
                 <div>
-                    <div><strong><i class="fa fa-clock" /> Recorded</strong> {{ record.diagnosis.recordedOn }}</div>
+                    <div><strong><i class="fa fa-clock" /> Aufgenommen</strong> {{ record.diagnosis.recordedOn }}</div>
                     <div>
-                        <strong><i class="fa-solid fa-tags" /> Categories</strong>
+                        <strong><i class="fa-solid fa-tags" /> Kategorien</strong>
                         <template
                             v-for="item in record.diagnosis.categories"
                             :key="item.code"

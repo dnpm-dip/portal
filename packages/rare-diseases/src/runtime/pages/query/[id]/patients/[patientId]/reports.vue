@@ -1,12 +1,15 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
+import VariantEntity from '../../../../../components/VariantEntity.vue';
 import type { RDPatientRecord, RDQuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
+    components: { VariantEntity },
     props: {
         entity: {
             type: Object as PropType<RDQuerySession>,
+            required: true,
         },
         record: {
             type: Object as PropType<RDPatientRecord>,
@@ -22,21 +25,21 @@ export default defineNuxtComponent({
             :key="key"
         >
             <div>
-                <h5>Report <small class="text-muted">{{ item.id }}</small></h5>
+                <h5>Bericht <small class="text-muted">{{ item.id }}</small></h5>
             </div>
             <div class="mb-3">
-                <h6>General</h6>
+                <h6>Allgemein</h6>
                 <div class="row">
                     <div class="col">
                         <div>
-                            <div><strong><i class="fa fa-clock" /> Recorded</strong> {{ item.recordedOn }}</div>
-                            <div><strong><i class="fa fa-microscope" /> Lab</strong> {{ item.performingLab.name }}</div>
+                            <div><strong><i class="fa fa-clock" /> Aufgenommen</strong> {{ item.recordedOn }}</div>
+                            <div><strong><i class="fa fa-microscope" /> Labor</strong> {{ item.performingLab.name }}</div>
                             <div><strong><i class="fa fa-keyboard" /> Type</strong> {{ item.type.display }}</div>
                         </div>
                     </div>
                     <div class="col">
                         <div>
-                            <div><strong><i class="fa fa-dna" /> Sequencing Type</strong> {{ item.metaInfo.sequencingType }}</div>
+                            <div><strong><i class="fa fa-dna" /> Sequenzierungs-Type</strong> {{ item.metaInfo.sequencingType }}</div>
                             <div><strong><i class="fas fa-toolbox" /> Kit</strong> {{ item.metaInfo.kit }}</div>
                             <template v-if="item.autozygosity">
                                 <div><strong><i class="fa fa-retweet" /> Autozygosity</strong> {{ item.autozygosity.value }}</div>
@@ -48,12 +51,21 @@ export default defineNuxtComponent({
 
             <div>
                 <h6>Variants</h6>
-                <template
-                    v-for="variant in item.variants"
-                    :key="variant.id"
-                >
-                    <pre>{{ variant }}</pre>
-                </template>
+                <div class="list">
+                    <ul class="list-body list-unstyled">
+                        <template
+                            v-for="variant in item.variants"
+                            :key="variant.id"
+                        >
+                            <li class="list-item flex-row">
+                                <VariantEntity
+                                    :query-id="entity.id"
+                                    :entity="variant"
+                                />
+                            </li>
+                        </template>
+                    </ul>
+                </div>
             </div>
         </template>
     </div>

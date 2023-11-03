@@ -17,11 +17,11 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h1 class="mb-3">
-            <i class="fa fa-home" /> Overview
+            <i class="fa fa-home" /> Überblick
         </h1>
 
         <p>
-            The Rare Disease module within the DNPM:dip platform is designed to tackle the unique demands linked to rare medical conditions.
+            Das Modul "Seltene Krankheiten" innerhalb der DNPM:dip-Plattform wurde entwickelt, um den besonderen Anforderungen im Zusammenhang mit seltenen Krankheiten gerecht zu werden.
         </p>
     </div>
 </template>

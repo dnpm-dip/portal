@@ -2,14 +2,14 @@
 import { Nav } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
-import PatientMatchtEntity from '../../../components/PatientMatchtEntity.vue';
-import QueryPatientList from '../../../components/QueryPatientList';
+import QueryPatientMatchEntity from '../../../components/QueryPatientMatchEntity.vue';
+import QueryPatientMatchList from '../../../components/QueryPatientMatchList';
 import type { RDQuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
-        PatientMatchtEntity,
-        QueryPatientList,
+        QueryPatientMatchEntity,
+        QueryPatientMatchList,
         Nav,
     },
     props: {
@@ -68,7 +68,7 @@ export default defineNuxtComponent({
         <hr>
 
         <h6>Patienten</h6>
-        <QueryPatientList :query-id="entity.id">
+        <QueryPatientMatchList :query-id="entity.id">
             <template #default="props">
                 <div class="list">
                     <ul class="list-body list-unstyled">
@@ -77,7 +77,7 @@ export default defineNuxtComponent({
                             :key="item.id"
                         >
                             <li class="list-item flex-row">
-                                <PatientMatchtEntity
+                                <QueryPatientMatchEntity
                                     :entity="item"
                                     :query-id="entity.id"
                                     :index="index"
@@ -87,6 +87,6 @@ export default defineNuxtComponent({
                     </ul>
                 </div>
             </template>
-        </QueryPatientList>
+        </QueryPatientMatchList>
     </div>
 </template>
