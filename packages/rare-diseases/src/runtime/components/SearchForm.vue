@@ -1,22 +1,24 @@
 <script lang="ts">
-import type { CodeRecord } from '@dnpm-dip/core/src';
+import type {
+    CodeRecord, CodeSystemConcept, QueryRequestMode, ValueSetCoding,
+} from '@dnpm-dip/core';
 import type { FormSelectOption } from '@vue-layout/form-controls';
 import { FormInput } from '@vue-layout/form-controls';
 import { defineComponent, reactive, ref } from 'vue';
-import type { QueryRequestMode, ValueSetCoding } from '@dnpm-dip/core';
-import { ValueSetEntity } from '@dnpm-dip/core';
+import { CodeSystemEntity, ValueSetEntity } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
 import type { RDQueryCriteria, RDQueryCriteriaScopeValue } from '../domains';
 import FormSelectSearch from './FormSelectSearch.vue';
 import Tags from './Tags.vue';
-import ValueSetCodings from './ValueSetCodings.vue';
+import CollectionTransform from './CollectionTransform.vue';
 
 export default defineComponent({
     components: {
         Tags,
-        ValueSetCodings,
+        CollectionTransform,
         FormInput,
         FormSelectSearch,
+        CodeSystemEntity,
         ValueSetEntity,
     },
     emits: ['failed', 'created'],
@@ -104,9 +106,14 @@ export default defineComponent({
             }
         };
 
-        const transformCodingsForSelect = (coding: ValueSetCoding) => ({
+        const transformCodings = (coding: ValueSetCoding) => ({
             id: coding.code,
             value: coding.display,
+        });
+
+        const transformConcepts = (concept: CodeSystemConcept) => ({
+            id: concept.code,
+            value: `${concept.properties.Symbol}: ${concept.display}`,
         });
 
         return {
@@ -118,7 +125,9 @@ export default defineComponent({
 
             form: variants,
             submit,
-            transformCodingsForSelect,
+
+            transformCodings,
+            transformConcepts,
         };
     },
 });
@@ -136,9 +145,9 @@ export default defineComponent({
                         <template #default="{ data }">
                             <div class="form-group">
                                 <label>Kategorie</label>
-                                <ValueSetCodings
-                                    :entity="data"
-                                    :transform="transformCodingsForSelect"
+                                <CollectionTransform
+                                    :items="data.codings"
+                                    :transform="transformCodings"
                                 >
                                     <template #default="options">
                                         <FormSelectSearch
@@ -146,7 +155,7 @@ export default defineComponent({
                                             @changed="selectCategory"
                                         />
                                     </template>
-                                </ValueSetCodings>
+                                </CollectionTransform>
                             </div>
                         </template>
                         <template #loading>
@@ -174,9 +183,9 @@ export default defineComponent({
                         <template #default="{ data }">
                             <div class="form-group">
                                 <label>Term</label>
-                                <ValueSetCodings
-                                    :entity="data"
-                                    :transform="transformCodingsForSelect"
+                                <CollectionTransform
+                                    :items="data.codings"
+                                    :transform="transformCodings"
                                 >
                                     <template #default="options">
                                         <FormSelectSearch
@@ -184,7 +193,7 @@ export default defineComponent({
                                             @changed="selectHPOTerm"
                                         />
                                     </template>
-                                </ValueSetCodings>
+                                </CollectionTransform>
                             </div>
                         </template>
                         <template #loading>
@@ -207,16 +216,16 @@ export default defineComponent({
                 <div class="col">
                     <h6>Variante</h6>
 
-                    <ValueSetEntity
+                    <CodeSystemEntity
                         :code="'https://www.genenames.org/'"
                         :lazy-load="true"
                     >
                         <template #default="{ data }">
                             <div class="form-group">
                                 <label>Gene</label>
-                                <ValueSetCodings
-                                    :entity="data"
-                                    :transform="transformCodingsForSelect"
+                                <CollectionTransform
+                                    :items="data.concepts"
+                                    :transform="transformConcepts"
                                 >
                                     <template #default="options">
                                         <FormSelectSearch
@@ -224,7 +233,7 @@ export default defineComponent({
                                             :options="options"
                                         />
                                     </template>
-                                </ValueSetCodings>
+                                </CollectionTransform>
                             </div>
                         </template>
                         <template #loading>
@@ -235,7 +244,7 @@ export default defineComponent({
                                 />
                             </div>
                         </template>
-                    </ValueSetEntity>
+                    </CodeSystemEntity>
                 </div>
                 <div>
                     <FormInput

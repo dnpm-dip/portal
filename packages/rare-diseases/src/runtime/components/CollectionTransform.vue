@@ -1,13 +1,12 @@
 <script lang="ts">
 import { hasNormalizedSlot, normalizeSlot } from '@dnpm-dip/core';
-import type { ValueSet } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { computed, defineComponent, h } from 'vue';
 
 export default defineComponent({
     props: {
-        entity: {
-            type: Object as PropType<ValueSet>,
+        items: {
+            type: Array as PropType<Record<string, any>[]>,
             required: true,
         },
         transform: {
@@ -17,11 +16,11 @@ export default defineComponent({
     emits: ['update:modelValue'],
     setup(props, { emit, slots }) {
         const codings = computed(() => {
-            if (!props.entity.codings) {
+            if (!props.items.length) {
                 return [];
             }
 
-            return props.entity.codings.map((coding) => {
+            return props.items.map((coding) => {
                 if (typeof props.transform === 'function') {
                     return props.transform(coding);
                 }
