@@ -260,16 +260,19 @@ export default defineComponent({
                 </div>
                 <div>
                     <FormInput
+                        v-model="form.cDNAChange"
                         :label="true"
                         :label-content="'kodierende DNA-Änderung'"
                         placeholder="..."
                     />
                     <FormInput
+                        v-model="form.gDNAChange"
                         :label="true"
                         :label-content="'genomische DNA-Änderung'"
                         placeholder="..."
                     />
                     <FormInput
+                        v-model="form.proteinChange"
                         :label="true"
                         :label-content="'Proteinänderung'"
                         placeholder="..."
