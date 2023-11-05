@@ -30,6 +30,8 @@ export default defineComponent({
             const index = categories.value.findIndex((el) => el.id === item.id);
             if (index === -1) {
                 categories.value.push(item);
+            } else {
+                categories.value.splice(index, 1);
             }
         };
 
@@ -37,6 +39,8 @@ export default defineComponent({
             const index = hpoTerms.value.findIndex((el) => el.id === item.id);
             if (index === -1) {
                 hpoTerms.value.push(item);
+            } else {
+                hpoTerms.value.splice(index, 1);
             }
         };
 
@@ -151,9 +155,18 @@ export default defineComponent({
                                 >
                                     <template #default="options">
                                         <FormSelectSearch
+                                            v-model="categories"
+                                            :multiple="true"
                                             :options="options"
-                                            @changed="selectCategory"
-                                        />
+                                        >
+                                            <template #selected="{ items, toggle }">
+                                                <Tags
+                                                    :items="items"
+                                                    tag-variant="dark"
+                                                    @deleted="toggle"
+                                                />
+                                            </template>
+                                        </FormSelectSearch>
                                     </template>
                                 </CollectionTransform>
                             </div>
@@ -167,11 +180,6 @@ export default defineComponent({
                             </div>
                         </template>
                     </ValueSetEntity>
-
-                    <Tags
-                        v-model="categories"
-                        tag-variant="dark"
-                    />
                 </div>
                 <div class="col">
                     <h6>HPO</h6>
@@ -189,9 +197,18 @@ export default defineComponent({
                                 >
                                     <template #default="options">
                                         <FormSelectSearch
+                                            v-model="hpoTerms"
+                                            :multiple="true"
                                             :options="options"
-                                            @changed="selectHPOTerm"
-                                        />
+                                        >
+                                            <template #selected="{ items, toggle }">
+                                                <Tags
+                                                    :items="items"
+                                                    tag-variant="dark"
+                                                    @deleted="toggle"
+                                                />
+                                            </template>
+                                        </FormSelectSearch>
                                     </template>
                                 </CollectionTransform>
                             </div>
@@ -205,11 +222,6 @@ export default defineComponent({
                             </div>
                         </template>
                     </ValueSetEntity>
-
-                    <Tags
-                        v-model="hpoTerms"
-                        tag-variant="dark"
-                    />
                 </div>
             </div>
             <div class="row mb-2">

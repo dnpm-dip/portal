@@ -5,22 +5,52 @@
             class="dropdown-input"
             :disabled="disabled"
             :placeholder="placeholder"
-            @focus="display()"
-            @keyup="keyup"
+            @focus="onFocus"
+            @keyup="onKeyUp"
+            @keydown="onKeyDown"
         >
 
         <div
             v-show="isDisplayed"
             class="dropdown-content"
         >
-            <div
+            <template
                 v-for="(option, index) in items"
-                :key="index"
-                class="dropdown-item"
-                @mousedown="select(option)"
+                :key="option.id"
             >
-                {{ option.value }}
-            </div>
+                <FormSelectSearchEntry
+                    :entry="option"
+                    :selected="selected"
+                >
+                    <template #default="{ entry, active }">
+                        <div
+                            class="dropdown-item"
+                            :class="{
+                                'active': active,
+                                'current': index === currentIndex || (index === 0 && currentIndex === -1)
+                            }"
+                            @mousedown="toggleHide(entry)"
+                        >
+                            {{ entry.value }}
+                        </div>
+                    </template>
+                </FormSelectSearchEntry>
+            </template>
+        </div>
+
+        <div
+            v-if="isMulti"
+            class="dropdown-selected"
+        >
+            <slot
+                name="selected"
+                :items="selected"
+                :toggle="toggle"
+            >
+                <template v-for="item in selected">
+                    {{ item.value }}
+                </template>
+            </slot>
         </div>
     </div>
 </template>
@@ -28,17 +58,19 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import {
-    computed, defineComponent, ref, toRef, watch,
+    computed, defineComponent, ref, watch,
 } from 'vue';
+import FormSelectSearchEntry from './FormSelectSearchEntry.vue';
 
 type Option = {
     id: string | number,
     value: string
 };
 export default defineComponent({
+    components: { FormSelectSearchEntry },
     props: {
         modelValue: {
-            type: String,
+            type: [String, Array] as PropType<string | Option[]>,
             default: '',
         },
         options: {
@@ -64,9 +96,10 @@ export default defineComponent({
     emits: ['update:modelValue', 'changed'],
     async setup(props, { emit }) {
         const q = ref('');
-        q.value = props.modelValue;
+        const currentIndex = ref(-1);
 
-        const current = ref<null | Option>(null);
+        const selected = ref<Option[]>([]);
+        const isMulti = computed(() => typeof props.modelValue !== 'string');
 
         const items = computed(() => {
             const output = [];
@@ -83,56 +116,154 @@ export default defineComponent({
 
             return output;
         });
+        const itemsLength = computed(() => items.value.length);
 
-        watch(q, () => {
-            if (items.value.length === 0) {
-                current.value = null;
-                return;
+        watch(itemsLength, (val, oldValue) => {
+            if (val !== oldValue) {
+                currentIndex.value = -1;
             }
-
-            [current.value] = items.value;
         });
 
         const isDisplayed = ref(false);
-        const select = (option: Option) => {
-            current.value = option;
+
+        const toggle = (option: Option) => {
+            if (isMulti.value) {
+                const index = selected.value.findIndex((el) => el.id === option.id);
+                if (index === -1) {
+                    selected.value.push(option);
+                } else {
+                    selected.value.splice(index, 1);
+                }
+
+                emit('update:modelValue', selected.value);
+                return;
+            }
+
+            if (selected.value.length === 0 || selected.value[0].id !== option.id) {
+                selected.value = [option];
+                q.value = option.value;
+            } else {
+                selected.value.length = 0;
+                q.value = '';
+            }
+
             isDisplayed.value = false;
-            q.value = option.value;
 
             emit('update:modelValue', option.id);
-            emit('changed', option);
         };
 
         const display = () => {
             if (props.disabled) return;
 
-            q.value = '';
             isDisplayed.value = true;
         };
 
-        const exit = () => {
-            if (!current.value) {
-                return;
+        const hide = () => {
+            if (
+                !isMulti.value &&
+                selected.value.length === 1
+            ) {
+                q.value = selected.value[0].value;
             }
-            isDisplayed.value = false;
-            q.value = current.value.value;
 
-            // emit selected
+            isDisplayed.value = false;
         };
 
-        const keyup = (ev: any) => {
-            if (ev.key === 'Enter' && items.value[0]) {
-                select(items.value[0]);
+        const toggleHide = (option: Option) => {
+            isDisplayed.value = false;
+            toggle(option);
+        };
+
+        const onFocus = () => {
+            q.value = '';
+            display();
+        };
+
+        const onKeyUp = (ev: any) => {
+            if (ev.key === 'Enter') {
+                if (!isDisplayed.value) {
+                    return;
+                }
+
+                if (
+                    currentIndex.value !== -1 &&
+                    items.value[currentIndex.value]
+                ) {
+                    const selectIndex = selected.value.findIndex(
+                        (el) => el.id === items.value[currentIndex.value].id,
+                    );
+                    if (selectIndex === -1) {
+                        selected.value.length = 0;
+                        toggleHide(items.value[currentIndex.value]);
+                    } else {
+                        hide();
+                    }
+
+                    return;
+                }
+
+                if (selected.value.length === 0) {
+                    if (items.value[0]) {
+                        toggleHide(items.value[0]);
+                    }
+
+                    return;
+                }
+
+                hide();
+
+                return;
             }
+
+            if (ev.key === 'ArrowUp' || ev.key === 'ArrowDown') {
+                display();
+
+                if (ev.key === 'ArrowUp') {
+                    if (currentIndex.value > 0) {
+                        currentIndex.value--;
+                    }
+                    return;
+                }
+
+                if (currentIndex.value < items.value.length - 1) {
+                    currentIndex.value++;
+                }
+            }
+
+            display();
+        };
+
+        const onKeyDown = (ev: any) => {
+            if (ev.key === ' ') {
+                if (
+                    isDisplayed.value &&
+                    currentIndex.value >= 0 &&
+                    items.value[currentIndex.value]
+                ) {
+                    ev.preventDefault();
+                    toggle(items.value[currentIndex.value]);
+                }
+            }
+        };
+
+        const onMouseLeave = (event: any) => {
+            event.preventDefault();
+            hide();
         };
 
         return {
+            isMulti,
+            toggle,
+            toggleHide,
+            currentIndex,
             q,
             items,
-            select,
+            selected,
             display,
-            exit,
-            keyup,
+            onFocus,
+            onKeyUp,
+            onKeyDown,
+            onMouseLeave,
             isDisplayed,
         };
     },
@@ -144,44 +275,57 @@ export default defineComponent({
   position: relative;
   display: block;
   margin: auto;
-  .dropdown-input {
-    cursor: pointer;
-    border: 1px solid #e7ecf5;
-    display: block;
-    padding: 0.375rem 0.75rem;
-    width: 100%;
-    color: var(--bs-body-color);
-    /* -webkit-appearance: none; */
-    -moz-appearance: none;
-    appearance: none;
-    background-color: var(--bs-body-bg);
-    background-clip: padding-box;
-    border: var(--bs-border-width) solid var(--bs-border-color);
-    border-radius: var(--bs-border-radius);
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
-  .dropdown-content {
-    position: absolute;
-    background-color: #fff;
-    width:100%;
-    max-height: 248px;
-    border: var(--bs-border-width) solid var(--bs-border-color);
-    box-shadow: 0px -8px 34px 0px rgba(0,0,0,0.05);
-    overflow: auto;
-    z-index: 1;
-    .dropdown-item {
-      color: black;
-      padding: 8px;
-      text-decoration: none;
-      display: block;
-      cursor: pointer;
-      &:hover {
-        background-color: #e7ecf5;
-      }
-    }
-  }
-  .dropdown:hover .dropdowncontent {
-    display: block;
-  }
+}
+
+.dropdown .dropdown-input {
+  cursor: pointer;
+  border: 1px solid #e7ecf5;
+  display: block;
+  padding: 0.375rem 0.75rem;
+  width: 100%;
+  color: var(--bs-body-color);
+  /* -webkit-appearance: none; */
+  -moz-appearance: none;
+  appearance: none;
+  background-color: var(--bs-body-bg);
+  background-clip: padding-box;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.dropdown .dropdown-content {
+  position: absolute;
+  background-color: #fff;
+  width:100%;
+  max-height: 248px;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  box-shadow: 0px -8px 34px 0px rgba(0,0,0,0.05);
+  overflow: auto;
+  z-index: 1;
+}
+
+.dropdown .dropdown-content .dropdown-item {
+  color: black;
+  padding: 8px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown .dropdown-content .dropdown-item:hover,
+.dropdown .dropdown-content .dropdown-item.current {
+  background-color: #e7ecf5;
+}
+
+.dropdown .dropdown-content .dropdown-item.active {
+  background-color: #a2b1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown .dropdown-selected {
+    margin-top: 0.25rem;
 }
 </style>

@@ -15,7 +15,9 @@ export default defineComponent({
     props: {
         modelValue: {
             type: Array as PropType<Tag[]>,
-            required: true,
+        },
+        items: {
+            type: Array as PropType<Tag[]>,
         },
         tagClass: {
             type: String as PropType<any>,
@@ -30,22 +32,30 @@ export default defineComponent({
             type: String as PropType<ColorVariant>,
         },
     },
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'deleted'],
     setup(props, { emit }) {
-        const items = ref<Tag[]>([]);
-        items.value = props.modelValue;
+        const tags = ref<Tag[]>([]);
+        if (props.modelValue) {
+            tags.value = props.modelValue;
+        }
+
+        if (props.items) {
+            tags.value = props.items;
+        }
 
         const drop = (value: string) => {
-            const index = items.value.findIndex((el) => el.value === value);
+            const index = tags.value.findIndex((el) => el.value === value);
             if (index !== -1) {
-                items.value.splice(index, 1);
+                emit('deleted', tags.value[index]);
+
+                tags.value.splice(index, 1);
             }
 
-            emit('update:modelValue', items);
+            emit('update:modelValue', tags);
         };
 
         return {
-            items,
+            tags,
             drop,
         };
     },
@@ -55,7 +65,7 @@ export default defineComponent({
     <slot>
         <ul class="list-unstyled mb-0 d-flex flex-wrap align-items-center">
             <template
-                v-for="(item, index) in items"
+                v-for="(item, index) in tags"
                 :key="index"
             >
                 <slot
