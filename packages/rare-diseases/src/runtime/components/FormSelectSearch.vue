@@ -8,11 +8,13 @@
             @focus="onFocus"
             @keyup="onKeyUp"
             @keydown="onKeyDown"
+            @blur="onBlur"
         >
 
         <div
             v-show="isDisplayed"
             class="dropdown-content"
+            @mouseleave="onMouseLeave"
         >
             <template
                 v-for="(option, index) in items"
@@ -174,6 +176,10 @@ export default defineComponent({
             toggle(option);
         };
 
+        const onBlur = () => {
+            hide();
+        };
+
         const onFocus = () => {
             q.value = '';
             display();
@@ -187,11 +193,11 @@ export default defineComponent({
 
                 if (
                     currentIndex.value !== -1 &&
-                    items.value[currentIndex.value]
+            items.value[currentIndex.value]
                 ) {
                     if (
                         isMulti.value &&
-                        selected.value.length > 0
+              selected.value.length > 0
                     ) {
                         hide();
                         return;
@@ -237,8 +243,8 @@ export default defineComponent({
             if (ev.key === ' ') {
                 if (
                     isDisplayed.value &&
-                    currentIndex.value >= 0 &&
-                    items.value[currentIndex.value]
+            currentIndex.value >= 0 &&
+            items.value[currentIndex.value]
                 ) {
                     ev.preventDefault();
                     toggle(items.value[currentIndex.value]);
@@ -264,6 +270,7 @@ export default defineComponent({
             items,
             selected,
             display,
+            onBlur,
             onFocus,
             onKeyUp,
             onKeyDown,
@@ -278,7 +285,6 @@ export default defineComponent({
 .dropdown {
   position: relative;
   display: block;
-  margin: auto;
 }
 
 .dropdown .dropdown-input {
@@ -288,8 +294,6 @@ export default defineComponent({
   padding: 0.375rem 0.75rem;
   width: 100%;
   color: var(--bs-body-color);
-  /* -webkit-appearance: none; */
-  -moz-appearance: none;
   appearance: none;
   background-color: var(--bs-body-bg);
   background-clip: padding-box;
@@ -298,38 +302,32 @@ export default defineComponent({
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 .dropdown .dropdown-content {
+  display: block;
   position: absolute;
   background-color: #fff;
   width:100%;
-  max-height: 248px;
   border: var(--bs-border-width) solid var(--bs-border-color);
-  box-shadow: 0px -8px 34px 0px rgba(0,0,0,0.05);
   overflow: auto;
-  z-index: 1;
+  z-index: 999;
 }
 
 .dropdown .dropdown-content .dropdown-item {
   color: black;
-  padding: 8px;
-  text-decoration: none;
-  display: block;
   cursor: pointer;
+  display: block;
+  padding: 0.35rem;
 }
 
 .dropdown .dropdown-content .dropdown-item:hover,
 .dropdown .dropdown-content .dropdown-item.current {
-  background-color: #e7ecf5;
+  background-color: #e7ecf5 !important;
 }
 
 .dropdown .dropdown-content .dropdown-item.active {
   background-color: #a2b1f1;
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
 .dropdown .dropdown-selected {
-    margin-top: 0.25rem;
+   margin-top: 0.25rem;
 }
 </style>

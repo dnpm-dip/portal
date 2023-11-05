@@ -142,13 +142,14 @@ export default defineComponent({
             <div class="row mb-3">
                 <div class="col">
                     <h6>Diagnose</h6>
-                    <ValueSetEntity
-                        :code="'https://www.orpha.net'"
-                        :lazy-load="true"
-                    >
-                        <template #default="{ data }">
-                            <div class="form-group">
-                                <label>Kategorie</label>
+
+                    <div class="form-group">
+                        <label>Kategorie</label>
+                        <ValueSetEntity
+                            :code="'https://www.orpha.net'"
+                            :lazy-load="true"
+                        >
+                            <template #default="{ data }">
                                 <CollectionTransform
                                     :items="data.codings"
                                     :transform="transformCodings"
@@ -158,6 +159,7 @@ export default defineComponent({
                                             v-model="categories"
                                             :multiple="true"
                                             :options="options"
+                                            placeholder="..."
                                         >
                                             <template #selected="{ items, toggle }">
                                                 <Tags
@@ -169,28 +171,27 @@ export default defineComponent({
                                         </FormSelectSearch>
                                     </template>
                                 </CollectionTransform>
-                            </div>
-                        </template>
-                        <template #loading>
-                            <div class="form-group">
-                                <label>Kategorie</label>
+                            </template>
+                            <template #loading>
                                 <FormSelectSearch
                                     :options="[]"
+                                    :disabled="true"
+                                    placeholder="..."
                                 />
-                            </div>
-                        </template>
-                    </ValueSetEntity>
+                            </template>
+                        </ValueSetEntity>
+                    </div>
                 </div>
                 <div class="col">
                     <h6>HPO</h6>
 
-                    <ValueSetEntity
-                        :code="'https://hpo.jax.org'"
-                        :lazy-load="true"
-                    >
-                        <template #default="{ data }">
-                            <div class="form-group">
-                                <label>Term</label>
+                    <div class="form-group">
+                        <label>Term</label>
+                        <ValueSetEntity
+                            :code="'https://hpo.jax.org'"
+                            :lazy-load="true"
+                        >
+                            <template #default="{ data }">
                                 <CollectionTransform
                                     :items="data.codings"
                                     :transform="transformCodings"
@@ -200,6 +201,7 @@ export default defineComponent({
                                             v-model="hpoTerms"
                                             :multiple="true"
                                             :options="options"
+                                            placeholder="..."
                                         >
                                             <template #selected="{ items, toggle }">
                                                 <Tags
@@ -211,30 +213,29 @@ export default defineComponent({
                                         </FormSelectSearch>
                                     </template>
                                 </CollectionTransform>
-                            </div>
-                        </template>
-                        <template #loading>
-                            <div class="form-group">
-                                <label>Terms</label>
+                            </template>
+                            <template #loading>
                                 <FormSelectSearch
+                                    :disabled="true"
                                     :options="[]"
+                                    placeholder="..."
                                 />
-                            </div>
-                        </template>
-                    </ValueSetEntity>
+                            </template>
+                        </ValueSetEntity>
+                    </div>
                 </div>
             </div>
             <div class="row mb-2">
                 <div class="col">
                     <h6>Variante</h6>
 
-                    <CodeSystemEntity
-                        :code="'https://www.genenames.org/'"
-                        :lazy-load="true"
-                    >
-                        <template #default="{ data }">
-                            <div class="form-group">
-                                <label>Gene</label>
+                    <div class="form-group">
+                        <label>Gene</label>
+                        <CodeSystemEntity
+                            :code="'https://www.genenames.org/'"
+                            :lazy-load="true"
+                        >
+                            <template #default="{ data }">
                                 <CollectionTransform
                                     :items="data.concepts"
                                     :transform="transformConcepts"
@@ -243,20 +244,19 @@ export default defineComponent({
                                         <FormSelectSearch
                                             v-model="form.gene"
                                             :options="options"
+                                            placeholder="..."
                                         />
                                     </template>
                                 </CollectionTransform>
-                            </div>
-                        </template>
-                        <template #loading>
-                            <div class="form-group">
-                                <label>Gene</label>
+                            </template>
+                            <template #loading>
                                 <FormSelectSearch
                                     :options="[]"
+                                    placeholder="..."
                                 />
-                            </div>
-                        </template>
-                    </CodeSystemEntity>
+                            </template>
+                        </CodeSystemEntity>
+                    </div>
                 </div>
                 <div>
                     <FormInput
