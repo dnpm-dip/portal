@@ -45,7 +45,7 @@ export default defineNuxtComponent({
                 <h6>Fall</h6>
                 <div>
                     <div><strong><i class="fa fa-user" /> Arzt</strong> {{ record.case.referrer.name }}</div>
-                    <div><strong><i class="fa fa-clock" /> Aufgenommen</strong> {{ record.case.recordedOn }}</div>
+                    <div><strong><i class="fa fa-clock" /> Datum</strong> {{ record.case.recordedOn }}</div>
                     <template v-if="record.case.gestaltMatcherId">
                         <div><strong><i class="fa fa-id-card" /> GestaltMatcherID</strong> {{ record.case.gestaltMatcherId.value }}</div>
                     </template>
@@ -57,7 +57,7 @@ export default defineNuxtComponent({
             <div class="col">
                 <h6>Diagnose</h6>
                 <div>
-                    <div><strong><i class="fa fa-clock" /> Aufgenommen</strong> {{ record.diagnosis.recordedOn }}</div>
+                    <div><strong><i class="fa fa-clock" /> Datum</strong> {{ record.diagnosis.recordedOn }}</div>
                     <div>
                         <strong><i class="fa-solid fa-tags" /> Kategorien</strong>
                         <template

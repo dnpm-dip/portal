@@ -31,14 +31,14 @@ export default defineNuxtComponent({
                 <div class="row">
                     <div class="col">
                         <div>
-                            <div><strong><i class="fa fa-clock" /> Aufgenommen</strong> {{ item.recordedOn }}</div>
+                            <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.recordedOn }}</div>
                             <div><strong><i class="fa fa-microscope" /> Labor</strong> {{ item.performingLab.name }}</div>
                             <div><strong><i class="fa fa-keyboard" /> Type</strong> {{ item.type.display }}</div>
                         </div>
                     </div>
                     <div class="col">
                         <div>
-                            <div><strong><i class="fa fa-dna" /> Sequenzierungs-Type</strong> {{ item.metaInfo.sequencingType }}</div>
+                            <div><strong><i class="fa fa-dna" /> Sequenzierungs-Typ</strong> {{ item.metaInfo.sequencingType }}</div>
                             <div><strong><i class="fas fa-toolbox" /> Kit</strong> {{ item.metaInfo.kit }}</div>
                             <template v-if="item.autozygosity">
                                 <div><strong><i class="fa fa-retweet" /> Autozygosity</strong> {{ item.autozygosity.value }}</div>
