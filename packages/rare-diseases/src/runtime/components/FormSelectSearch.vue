@@ -189,15 +189,15 @@ export default defineComponent({
                     currentIndex.value !== -1 &&
                     items.value[currentIndex.value]
                 ) {
-                    const selectIndex = selected.value.findIndex(
-                        (el) => el.id === items.value[currentIndex.value].id,
-                    );
-                    if (selectIndex === -1) {
-                        selected.value.length = 0;
-                        toggleHide(items.value[currentIndex.value]);
-                    } else {
+                    if (
+                        isMulti.value &&
+                        selected.value.length > 0
+                    ) {
                         hide();
+                        return;
                     }
+
+                    toggleHide(items.value[currentIndex.value]);
 
                     return;
                 }
@@ -243,6 +243,10 @@ export default defineComponent({
                     ev.preventDefault();
                     toggle(items.value[currentIndex.value]);
                 }
+            }
+
+            if (ev.key === 'Tab') {
+                hide();
             }
         };
 
