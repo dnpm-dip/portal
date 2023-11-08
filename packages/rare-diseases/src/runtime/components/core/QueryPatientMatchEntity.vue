@@ -59,6 +59,18 @@ export default defineComponent({
                 :class="{'flex-row': !extended, 'flex-column': extended}"
             >
                 <div
+                    v-if="entity.managingSite"
+                    class="d-flex flex-grow-1 align-items-center"
+                    :class="{'flex-row': extended, 'flex-column': !extended}"
+                >
+                    <div>
+                        <strong>Standort</strong>
+                    </div>
+                    <div :class="{'ms-1': extended}">
+                        {{ entity.managingSite.display }}
+                    </div>
+                </div>
+                <div
                     class="d-flex flex-grow-1 align-items-center"
                     :class="{'flex-row': extended, 'flex-column': !extended}"
                 >
