@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineComponent, ref } from 'vue';
-import type { RDPatientMatch } from '../domains';
+import type { RDPatientMatch } from '../../domains';
 
 export default defineComponent({
     props: {

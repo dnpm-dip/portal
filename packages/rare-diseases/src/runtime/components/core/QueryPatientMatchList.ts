@@ -2,7 +2,7 @@ import { renderDefault, renderError } from '@dnpm-dip/core';
 import type { Patient } from '@dnpm-dip/core';
 import type { Ref } from 'vue';
 import { defineComponent, h, ref } from 'vue';
-import { useRDAPIClient } from '../composables';
+import { useRDAPIClient } from '../../composables';
 
 export default defineComponent({
     props: {

@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
-import VariantEntity from '../../../../../components/VariantEntity.vue';
+import VariantEntity from '../../../../../components/core/VariantEntity.vue';
 import type { RDPatientRecord, RDQuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({

@@ -2,14 +2,10 @@
 import { Nav } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
-import QueryPatientMatchEntity from '../../../components/QueryPatientMatchEntity.vue';
-import QueryPatientMatchList from '../../../components/QueryPatientMatchList';
 import type { RDQuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
-        QueryPatientMatchEntity,
-        QueryPatientMatchList,
         Nav,
     },
     props: {
@@ -19,13 +15,24 @@ export default defineNuxtComponent({
         },
     },
     setup() {
+        const navItems = [
+            {
+                name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
+            },
+            {
+                name: 'Patienten', icon: 'fa-solid fa-newspaper', urlSuffix: '/patients',
+            },
+        ];
 
+        return {
+            navItems,
+        };
     },
 });
 </script>
 <template>
     <div>
-        <div class="d-flex flex-row">
+        <div class="d-flex flex-row mb-3">
             <h4>
                 <NuxtLink
                     class="btn btn-xs btn-dark me-1"
@@ -38,63 +45,16 @@ export default defineNuxtComponent({
         </div>
 
         <div class="mb-2">
-            <div>
-                Die Anfrage wurde <strong>{{ entity.mode.display.toLowerCase() }}</strong> ausgeführt und umfasst
-                Patienten mit folgenden Eigenschaften
-            </div>
-            <div v-if="entity.filters.patientFilter.ageRange.min || entity.filters.patientFilter.ageRange.max">
-                <strong>Alter:</strong>
-                {{ entity.filters.patientFilter.ageRange.min }} - {{ entity.filters.patientFilter.ageRange.max }}
-            </div>
-            <div v-if="entity.filters.patientFilter.genders?.length">
-                <strong>Geschlecht:</strong>
-                <template
-                    v-for="(item, index) in entity.filters.patientFilter.genders"
-                    :key="item.code"
-                >
-                    {{ index > 0 ? ', ' : '' }} {{ item.display }}
-                </template>
-            </div>
-            <div v-if="entity.filters.patientFilter.vitalStatus?.length">
-                <strong>Vital Status:</strong>
-                <template
-                    v-for="(item, index) in entity.filters.patientFilter.vitalStatus"
-                    :key="item.code"
-                >
-                    {{ index > 0 ? ', ' : '' }} {{ item.display }}
-                </template>
-            </div>
+            <Nav
+                :items="navItems"
+                :path="'/rd/query/'+ entity.id"
+            />
         </div>
 
         <hr>
 
-        <h6>Patienten</h6>
-        <QueryPatientMatchList :query-id="entity.id">
-            <template #default="props">
-                <template v-if="props.data.length > 0">
-                    <div class="list">
-                        <ul class="list-body list-unstyled">
-                            <template
-                                v-for="(item, index) in props.data"
-                                :key="item.id"
-                            >
-                                <li class="list-item flex-row">
-                                    <QueryPatientMatchEntity
-                                        :entity="item"
-                                        :query-id="entity.id"
-                                        :index="index"
-                                    />
-                                </li>
-                            </template>
-                        </ul>
-                    </div>
-                </template>
-                <template v-else>
-                    <div class="alert alert-sm alert-info">
-                        Es wurden keine Patienten gefunden, die die Suchkriterien erfüllen.
-                    </div>
-                </template>
-            </template>
-        </QueryPatientMatchList>
+        <template v-if="entity">
+            <NuxtPage :entity="entity" />
+        </template>
     </div>
 </template>

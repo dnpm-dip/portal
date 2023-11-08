@@ -35,6 +35,7 @@ export default defineNuxtModule<ModuleOptions>({
         });
 
         addPlugin(resolver.resolve('./runtime/plugins/api'));
+        addPlugin(resolver.resolve('./runtime/plugins/chartjs'));
         addPlugin(resolver.resolve('./runtime/plugins/navigation'));
     },
 });

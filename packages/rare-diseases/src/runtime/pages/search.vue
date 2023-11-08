@@ -4,7 +4,7 @@ import type { ClientError } from 'hapic';
 import { ref } from 'vue';
 import { definePageMeta } from '#imports';
 import { defineNuxtComponent, navigateTo } from '#app';
-import SearchForm from '../components/SearchForm.vue';
+import SearchForm from '../components/core/SearchForm.vue';
 import type { RDQuerySession } from '../domains';
 
 export default defineNuxtComponent({

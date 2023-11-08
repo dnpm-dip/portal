@@ -7,10 +7,10 @@ import { FormInput } from '@vue-layout/form-controls';
 import { defineComponent, reactive, ref } from 'vue';
 import { CodeSystemEntity, ValueSetEntity } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
-import type { RDQueryCriteria, RDQueryCriteriaScopeValue } from '../domains';
-import FormSelectSearch from './FormSelectSearch.vue';
-import Tags from './Tags.vue';
-import CollectionTransform from './CollectionTransform.vue';
+import type { RDQueryCriteria, RDQueryCriteriaScopeValue } from '../../domains';
+import FormSelectSearch from '../utility/FormSelectSearch.vue';
+import Tags from '../utility/Tags.vue';
+import CollectionTransform from '../utility/CollectionTransform.vue';
 
 export default defineComponent({
     components: {

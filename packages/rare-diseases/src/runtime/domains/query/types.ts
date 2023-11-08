@@ -1,4 +1,4 @@
-import type { CodeRecord, QueryBase } from '@dnpm-dip/core';
+import type { CodeRecord, Coding, QueryBase } from '@dnpm-dip/core';
 import type { QueryRequestMode } from './constants';
 
 export type RDVariantCriteria = 'gene' |
@@ -27,7 +27,16 @@ export type RDQuerySessionCreate = {
 
 export type RDQuerySession = QueryBase<RDQueryCriteria>;
 
+export type RDQuerySummaryDistributionItem = {
+    concept: Coding,
+    count: number
+};
+
+export type RDQuerySummaryDistribution = RDQuerySummaryDistributionItem[];
+
 export type RDQuerySummary = {
     id: string,
-    numPatients: number
+    numPatients: number,
+    siteDistribution: RDQuerySummaryDistribution,
+    hpoTermDistribution: RDQuerySummaryDistribution
 };

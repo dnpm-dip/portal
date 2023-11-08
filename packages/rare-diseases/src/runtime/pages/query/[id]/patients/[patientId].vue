@@ -55,15 +55,17 @@ export default defineNuxtComponent({
 </script>
 <template>
     <div>
-        <h4 class="title">
-            <NuxtLink
-                class="btn btn-xs btn-dark me-1"
-                :to="'/rd/query/'+ entity.id"
-            >
-                <i class="fa fa-arrow-left" />
-            </NuxtLink>
-            Patient <small class="sub-title text-muted"> {{ record.patient.id }}</small>
-        </h4>
+        <div class="mb-3">
+            <h4>
+                <NuxtLink
+                    class="btn btn-xs btn-dark me-1"
+                    :to="'/rd/query/'+ entity.id"
+                >
+                    <i class="fa fa-arrow-left" />
+                </NuxtLink>
+                Patient <small class="text-muted"> {{ record.patient.id }}</small>
+            </h4>
+        </div>
 
         <div class="mb-2">
             <Nav

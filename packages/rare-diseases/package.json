@@ -33,25 +33,27 @@
         "test:watch": "vitest watch"
     },
     "dependencies": {
-        "@nuxt/kit": "^3.8.0",
-        "@dnpm-dip/core": "^0.0.0"
+        "@dnpm-dip/core": "^0.0.0",
+        "@nuxt/kit": "^3.8.0"
     },
     "devDependencies": {
-        "@types/node": "^20.8.9",
         "@nuxt/devtools": "latest",
         "@nuxt/eslint-config": "^0.2.0",
         "@nuxt/module-builder": "^0.5.2",
         "@nuxt/schema": "^3.8.0",
         "@nuxt/test-utils": "^3.8.0",
-        "@vue-layout/navigation": "^3.4.0",
+        "@types/node": "^20.8.9",
         "@vue-layout/form-controls": "^3.4.0",
+        "@vue-layout/navigation": "^3.4.0",
         "@vuelidate/core": "^2.0.3",
         "@vuelidate/validators": "^2.0.4",
         "bootstrap-vue-next": "^0.14.10",
+        "chart.js": "^4.4.0",
         "eslint": "^8.52.0",
         "nuxt": "^3.8.0",
+        "vitest": "^0.34.6",
         "vue": "^3.3.7",
-        "vitest": "^0.34.6"
+        "vue-chartjs": "^5.2.0"
     },
     "peerDependencies": {
         "vue": "^3.3.7"

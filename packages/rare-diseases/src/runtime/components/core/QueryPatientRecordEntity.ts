@@ -3,7 +3,7 @@ import {
 } from '@dnpm-dip/core';
 import { defineComponent, h, ref } from 'vue';
 import { useRDAPIClient } from '#imports';
-import type { RDPatientRecord } from '../domains';
+import type { RDPatientRecord } from '../../domains';
 
 export default defineComponent({
     props: {

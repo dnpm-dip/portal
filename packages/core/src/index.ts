@@ -3,3 +3,4 @@ export * from './components';
 export * from './domains';
 export * from './install';
 export * from './types';
+export * from './utils';
