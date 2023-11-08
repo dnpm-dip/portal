@@ -30,8 +30,9 @@
 }
 
 .page-header .logo {
-    font-size: 24px;
-    color: #463539;
+    font-size: 22px;
+    color: #8ca7ed;
+    font-weight: 600;
     flex: auto;
 }
 
@@ -57,9 +58,10 @@
     cursor: pointer;
     padding: 10px;
     background-color: transparent;
-    border: 1px solid #333;
+    border: none;
     border-radius: .25rem;
     margin: 0 10px;
+    box-shadow: 0 4px 25px 0 rgba(0,0,0,.4);
 }
 
 .page-header .toggle-box .toggle-trigger .icon-bar {
