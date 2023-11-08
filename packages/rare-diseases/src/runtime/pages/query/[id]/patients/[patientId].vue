@@ -55,7 +55,7 @@ export default defineNuxtComponent({
 </script>
 <template>
     <div>
-        <div class="mb-3">
+        <div class="mb-2">
             <h4>
                 <NuxtLink
                     class="btn btn-xs btn-dark me-1"

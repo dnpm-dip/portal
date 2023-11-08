@@ -32,7 +32,7 @@ export default defineNuxtComponent({
 </script>
 <template>
     <div>
-        <div class="d-flex flex-row mb-3">
+        <div class="mb-2">
             <h4>
                 <NuxtLink
                     class="btn btn-xs btn-dark me-1"
@@ -40,7 +40,7 @@ export default defineNuxtComponent({
                 >
                     <i class="fa fa-arrow-left" />
                 </NuxtLink>
-                Query <small class="text-muted">{{ entity.id }}</small>
+                Abfrage <small class="text-muted">{{ entity.id }}</small>
             </h4>
         </div>
 
