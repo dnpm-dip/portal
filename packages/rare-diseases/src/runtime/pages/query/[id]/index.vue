@@ -20,7 +20,7 @@ export default defineNuxtComponent({
                 name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
             },
             {
-                name: 'Patienten', icon: 'fa-solid fa-newspaper', urlSuffix: '/patients',
+                name: 'Patienten', icon: 'fas fa-user-injured', urlSuffix: '/patients',
             },
         ];
 

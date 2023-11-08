@@ -19,6 +19,7 @@ export default defineNuxtConfig({
         '@/assets/css/layout/shared.css',
         '@/assets/css/layout/sidebar.css',
         '@/assets/css/vue-layout-navigation.css',
+        '@/assets/css/card.css',
         '@/assets/css/list.css',
     ],
     alias: {
