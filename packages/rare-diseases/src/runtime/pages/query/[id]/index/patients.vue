@@ -26,6 +26,7 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h6>Patienten</h6>
+
         <QueryPatientMatchList :query-id="entity.id">
             <template #default="props">
                 <template v-if="props.data.length > 0">

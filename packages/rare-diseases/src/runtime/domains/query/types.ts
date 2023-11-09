@@ -38,5 +38,6 @@ export type RDQuerySummary = {
     id: string,
     numPatients: number,
     siteDistribution: RDQuerySummaryDistribution,
-    hpoTermDistribution: RDQuerySummaryDistribution
+    hpoTermDistribution: RDQuerySummaryDistribution,
+    diagnosisCategoryDistribution: RDQuerySummaryDistribution
 };

@@ -21,7 +21,7 @@ export default defineNuxtComponent({
         <QuerySummaryEntity :query-id="entity.id">
             <template #default="props">
                 <div class="row">
-                    <div class="col-12 col-xxl-4 col-lg-6">
+                    <div class="col-12 col-xl-6">
                         <div class="entity-card text-center mb-3 w-100">
                             <h6>
                                 Patienten pro Standort
@@ -32,12 +32,18 @@ export default defineNuxtComponent({
                             />
                         </div>
                     </div>
-                    <div class="col-12 col-xxl-4 col-lg-6">
+                    <div class="col-12 col-xl-6">
                         <div class="entity-card text-center mb-3 w-100">
                             <h6 class="text-center">
                                 Verteilung von HPOTermen
                             </h6>
                             <QuerySummaryDistributionBar :items="props.data.hpoTermDistribution" />
+                        </div>
+                        <div class="entity-card text-center mb-3 w-100">
+                            <h6 class="text-center">
+                                Verteilung von Diagnose Kategorien
+                            </h6>
+                            <QuerySummaryDistributionBar :items="props.data.diagnosisCategoryDistribution" />
                         </div>
                     </div>
                 </div>
