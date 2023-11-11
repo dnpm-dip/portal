@@ -4,6 +4,6 @@
 export type Coding<S extends string = string> = {
     code: S,
     display?: string,
-    system: string,
+    system?: string,
     version?: string
 };

@@ -1,5 +1,7 @@
 import { renderDefault, renderError } from '@dnpm-dip/core';
-import type { Patient } from '@dnpm-dip/core';
+import type {
+    PatientFilterInput, PatientMatch,
+} from '@dnpm-dip/core';
 import type { Ref } from 'vue';
 import { defineComponent, h, ref } from 'vue';
 import { useRDAPIClient } from '../../composables';
@@ -15,14 +17,15 @@ export default defineComponent({
         const api = useRDAPIClient();
 
         const busy : Ref<boolean> = ref(false);
-        const data : Ref<Patient[]> = ref([]);
+        const data : Ref<PatientMatch[]> = ref([]);
         const error : Ref<Error | null> = ref(null);
+        const load = async (filters?: PatientFilterInput) => {
+            if (busy.value) return;
 
-        const load = async () => {
             busy.value = true;
 
             try {
-                const { entries } = await api.query.getPatients(props.queryId);
+                const { entries } = await api.query.getPatients(props.queryId, filters);
                 data.value = entries;
             } catch (e) {
                 if (e instanceof Error) {
@@ -33,6 +36,10 @@ export default defineComponent({
             }
         };
 
+        setup.expose({
+            load,
+        });
+
         Promise.resolve()
             .then(() => load());
 
@@ -42,6 +49,7 @@ export default defineComponent({
             }
 
             return renderDefault({
+                load,
                 setup,
                 data: data.value,
                 busy: busy.value,

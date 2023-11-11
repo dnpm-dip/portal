@@ -38,7 +38,9 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <template v-if="entity">
-        <NuxtPage :entity="entity" />
-    </template>
+    <div class="container">
+        <template v-if="entity">
+            <NuxtPage :entity="entity" />
+        </template>
+    </div>
 </template>

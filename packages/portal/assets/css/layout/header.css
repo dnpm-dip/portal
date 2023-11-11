@@ -31,7 +31,8 @@
 
 .page-header .logo {
     font-size: 22px;
-    color: #8ca7ed;
+    /* monochromatisches farbschema */
+    color: #829dc5;
     font-weight: 600;
     flex: auto;
 }

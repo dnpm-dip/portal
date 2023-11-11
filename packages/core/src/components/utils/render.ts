@@ -10,7 +10,8 @@ type RenderContext = {
 
 export type ContentRenderContext = Omit<RenderContext, 'slotName' | 'slotProps'> & {
     data: Record<string, any>,
-    busy?: boolean
+    busy?: boolean,
+    load?: () => Promise<any>
 };
 
 export type ErrorRenderContext = Omit<RenderContext, 'slotName' | 'slotProps'> & {
@@ -37,6 +38,7 @@ export function renderDefault(context: ContentRenderContext) : VNodeChild {
         slotProps: {
             data: context.data,
             busy: context.busy,
+            load: context.load,
         },
         slotName: 'default',
     });

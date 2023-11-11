@@ -21,7 +21,7 @@ export type RDQueryCriteria = {
 };
 
 export type RDQuerySessionCreate = {
-    mode?: CodeRecord<`${QueryRequestMode}`>,
+    mode?: CodeRecord<`${QueryRequestMode}` | QueryRequestMode>,
     criteria: RDQueryCriteria
 };
 

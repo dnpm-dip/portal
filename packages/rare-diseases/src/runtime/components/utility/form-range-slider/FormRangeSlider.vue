@@ -2,7 +2,6 @@
 import {
     defineComponent, onMounted, onUnmounted, ref, toRef, watch,
 } from 'vue';
-import { debounce } from '@dnpm-dip/core';
 import { FormRangeSlider } from './module';
 
 export default defineComponent({
@@ -52,13 +51,11 @@ export default defineComponent({
         });
 
         const handleChanged = () => {
-            debounce(() => {
-                if (!instance) return;
+            if (!instance) return;
 
-                emit('change', {
-                    min: instance.min,
-                    max: instance.max,
-                });
+            emit('change', {
+                min: instance.min,
+                max: instance.max,
             });
         };
 

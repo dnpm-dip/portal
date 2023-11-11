@@ -99,8 +99,9 @@ export class FormRangeSlider {
     public change(): void {
         if (!this.sliderMin || !this.sliderMax) return;
 
-        const newMin = this.sliderMin.getPercent(); const
-            newMax = this.sliderMax.getPercent();
+        const newMin = this.sliderMin.getPercent();
+        const newMax = this.sliderMax.getPercent();
+
         if (newMax - newMin - 1 <= 0) {
             this.sliderMin.setPercent(this._min, false);
             this.sliderMax.setPercent(this._max, false);

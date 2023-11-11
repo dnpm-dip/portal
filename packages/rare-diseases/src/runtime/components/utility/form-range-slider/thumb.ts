@@ -1,4 +1,3 @@
-import type { ReturnType } from 'birpc';
 import type { FormRangeSlider } from './module';
 
 export class FormRangeSliderThumb {

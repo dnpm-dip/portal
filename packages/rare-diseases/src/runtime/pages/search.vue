@@ -5,10 +5,12 @@ import { ref } from 'vue';
 import { definePageMeta } from '#imports';
 import { defineNuxtComponent, navigateTo } from '#app';
 import SearchForm from '../components/core/SearchForm.vue';
+import SearchSVG from '../components/svg/SearchSVG';
 import type { RDQuerySession } from '../domains';
 
 export default defineNuxtComponent({
     components: {
+        SearchSVG,
         APIClientErrorBox,
         SearchForm,
     },
@@ -39,10 +41,10 @@ export default defineNuxtComponent({
 </script>
 
 <template>
-    <div>
-        <h1 class="mb-3">
-            <i class="fa fa-search" /> Suche
-        </h1>
+    <div class="container">
+        <div class="text-center">
+            <SearchSVG :height="'250px'" />
+        </div>
 
         <SearchForm
             @created="handleCreated"

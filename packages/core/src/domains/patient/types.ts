@@ -33,14 +33,24 @@ export type PatientMatch<Criteria = any> = {
     matchingCriteria: Criteria
 };
 
+export type PatientFilterGender = Coding<'male' | 'female' | 'other' | 'unknown'>[];
+export type PatientFilterAgeRange = {
+    min: number,
+    max: number
+};
+export type PatientFilterVitalStatus = Coding<'alive' | 'deceased'>[];
+
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-service-base/blob/main/src/main/scala/de/dnpm/dip/service/query/PatientFilter.scala
  */
 export type PatientFilter = {
-    genders: Coding<'male' | 'female' | 'other' | 'unknown'>[],
-    ageRange: {
-        min: number,
-        max: number
-    },
-    vitalStatus: Coding<'alive' | 'deceased'>[]
+    gender: PatientFilterGender,
+    ageRange: PatientFilterAgeRange,
+    vitalStatus: PatientFilterVitalStatus
+};
+
+export type PatientFilterInput = {
+    gender?: PatientFilterGender,
+    ageRange?: Partial<PatientFilterAgeRange>,
+    vitalStatus?: PatientFilterVitalStatus
 };
