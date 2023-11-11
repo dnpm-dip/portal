@@ -5,7 +5,10 @@ export type BaseAPIContext = {
 };
 
 export type CollectionResponse<T> = {
-    entries: T[]
+    entries: T[],
+    size?: number,
+    limit?: number,
+    offset?: number,
 };
 
 export type CodeRecord<V extends string = string> = {

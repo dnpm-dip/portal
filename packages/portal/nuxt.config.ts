@@ -21,6 +21,7 @@ export default defineNuxtConfig({
         '@/assets/css/vue-layout-navigation.css',
         '@/assets/css/card.css',
         '@/assets/css/list.css',
+        '@/assets/css/pagination.css',
     ],
     alias: {
         '@dnpm-dip/core': path.join(__dirname, '..', 'core', 'src'),

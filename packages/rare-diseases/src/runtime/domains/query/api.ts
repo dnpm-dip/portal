@@ -1,4 +1,6 @@
-import type { CollectionResponse, PatientFilter, PatientFilterInput } from '@dnpm-dip/core';
+import type {
+    CollectionResponse, ListLoadMeta, PatientFilterInput,
+} from '@dnpm-dip/core';
 import { BaseAPI } from '@dnpm-dip/core';
 import type { RDPatientMatch, RDPatientRecord } from '../patient';
 import { QueryRequestMode } from './constants';
@@ -47,37 +49,49 @@ export class QueryAPI extends BaseAPI {
     /**
      * Get all patients in the context of a specific query.
      * @param id
-     * @param filters
+     * @param meta
      * @throws ClientError
      */
-    async getPatients(id: string, filters?: PatientFilterInput) : Promise<CollectionResponse<RDPatientMatch>> {
+    async getPatients(id: string, meta?: ListLoadMeta<PatientFilterInput>) : Promise<CollectionResponse<RDPatientMatch>> {
         const parts : string[] = [];
-        if (typeof filters !== 'undefined') {
-            if (filters.ageRange) {
-                if (typeof filters.ageRange.min !== 'undefined') {
-                    parts.push(`age[min]=${filters.ageRange.min}`);
-                }
+        if (typeof meta !== 'undefined') {
+            const { filters, limit, offset } = meta;
 
-                if (typeof filters.ageRange.max !== 'undefined') {
-                    parts.push(`age[max]=${filters.ageRange.max}`);
-                }
+            if (typeof limit !== 'undefined') {
+                parts.push(`limit=${limit}`);
             }
 
-            if (
-                filters.gender &&
-                filters.gender.length > 0
-            ) {
-                for (let i = 0; i < filters.gender.length; i++) {
-                    parts.push(`gender=${filters.gender[i].code}`);
-                }
+            if (typeof offset !== 'undefined') {
+                parts.push(`offset=${offset}`);
             }
 
-            if (
-                filters.vitalStatus &&
-                filters.vitalStatus.length > 0
-            ) {
-                for (let i = 0; i < filters.vitalStatus.length; i++) {
-                    parts.push(`vitalStatus=${filters.vitalStatus[i].code}`);
+            if (typeof filters !== 'undefined') {
+                if (filters.ageRange) {
+                    if (typeof filters.ageRange.min !== 'undefined') {
+                        parts.push(`age[min]=${filters.ageRange.min}`);
+                    }
+
+                    if (typeof filters.ageRange.max !== 'undefined') {
+                        parts.push(`age[max]=${filters.ageRange.max}`);
+                    }
+                }
+
+                if (
+                    filters.gender &&
+                    filters.gender.length > 0
+                ) {
+                    for (let i = 0; i < filters.gender.length; i++) {
+                        parts.push(`gender=${filters.gender[i].code}`);
+                    }
+                }
+
+                if (
+                    filters.vitalStatus &&
+                    filters.vitalStatus.length > 0
+                ) {
+                    for (let i = 0; i < filters.vitalStatus.length; i++) {
+                        parts.push(`vitalStatus=${filters.vitalStatus[i].code}`);
+                    }
                 }
             }
         }

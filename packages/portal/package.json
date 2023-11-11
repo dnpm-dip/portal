@@ -23,6 +23,7 @@
         "@fortawesome/fontawesome-free": "^6.4.2",
         "@vue-layout/navigation": "^4.0.0",
         "@vue-layout/form-controls": "^4.1.0",
+        "@vue-layout/pagination": "^4.0.0",
         "@vue-layout/preset-bootstrap-v5": "^4.0.0",
         "@vue-layout/preset-font-awesome": "^3.0.1",
         "@vuelidate/core": "^2.0.3",

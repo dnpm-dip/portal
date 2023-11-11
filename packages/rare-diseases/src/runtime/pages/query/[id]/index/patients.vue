@@ -1,4 +1,6 @@
 <script lang="ts">
+import type { PaginationMeta } from '@vue-layout/pagination';
+import { Pagination } from '@vue-layout/pagination';
 import type { PatientFilterInput } from '@dnpm-dip/core';
 import { Nav } from '@dnpm-dip/core';
 import type { PropType, Ref } from 'vue';
@@ -15,6 +17,7 @@ export default defineNuxtComponent({
         QueryPatientMatchEntity,
         QueryPatientMatchList,
         Nav,
+        Pagination,
     },
     props: {
         entity: {
@@ -24,15 +27,22 @@ export default defineNuxtComponent({
     },
     setup() {
         const listRef = ref(null) as Ref<typeof QueryPatientMatchList | null>;
-        const submit = (input: PatientFilterInput) => {
+        const applyFilters = (input: PatientFilterInput) => {
             if (listRef.value) {
                 listRef.value.load(input);
             }
         };
 
+        const applyPagination = ({ limit, offset } : PaginationMeta) => {
+            if (listRef.value) {
+                listRef.value.load({ limit, offset });
+            }
+        };
+
         return {
             listRef,
-            submit,
+            applyFilters,
+            applyPagination,
         };
     },
 });
@@ -59,7 +69,7 @@ export default defineNuxtComponent({
                                             <QueryPatientMatchEntity
                                                 :entity="item"
                                                 :query-id="entity.id"
-                                                :index="index"
+                                                :index="props.offset + index"
                                             />
                                         </li>
                                     </template>
@@ -71,16 +81,23 @@ export default defineNuxtComponent({
                                 Es wurden keine Patienten gefunden, die die Suchkriterien erfüllen.
                             </div>
                         </template>
+                        <Pagination
+                            :busy="props.busy"
+                            :total="props.total"
+                            :limit="props.limit"
+                            :offset="props.offset"
+                            @load="applyPagination"
+                        />
                     </div>
                     <div class="col-3">
                         <QueryPatientMatchFilters
                             :busy="props.busy"
                             :available-filters="entity.filters.patientFilter"
-                            @submit="submit"
+                            @submit="applyFilters"
                         />
                     </div>
                 </div>
             </template>
-        </QueryPatientMatchList>
+        </querypatientmatchlist>
     </div>
 </template>
