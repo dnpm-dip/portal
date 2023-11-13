@@ -1,5 +1,5 @@
 import type {
-    CollectionResponse, ListLoadMeta, PatientFilterInput,
+    CollectionResponse, PatientFilterInput, ResourceCollectionLoadMeta,
 } from '@dnpm-dip/core';
 import { BaseAPI } from '@dnpm-dip/core';
 import type { RDPatientMatch, RDPatientRecord } from '../patient';
@@ -52,7 +52,7 @@ export class QueryAPI extends BaseAPI {
      * @param meta
      * @throws ClientError
      */
-    async getPatients(id: string, meta?: ListLoadMeta<PatientFilterInput>) : Promise<CollectionResponse<RDPatientMatch>> {
+    async getPatients(id: string, meta?: ResourceCollectionLoadMeta<PatientFilterInput>) : Promise<CollectionResponse<RDPatientMatch>> {
         const parts : string[] = [];
         if (typeof meta !== 'undefined') {
             const { filters, limit, offset } = meta;

@@ -3,7 +3,7 @@ import type { APIClient } from '../../core';
 import { injectAPIClient } from '../../core';
 import type { CodeSystem } from '../../domains';
 import { AlertError } from '../alert';
-import { renderDefault, renderError, renderLoading } from '../utils';
+import { renderDefault, renderError, renderLoading } from '../../core/utils';
 
 export default defineComponent({
     name: 'CodeSystemEntity',

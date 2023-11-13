@@ -29,7 +29,7 @@ export default defineNuxtComponent({
         const listRef = ref(null) as Ref<typeof QueryPatientMatchList | null>;
         const applyFilters = (input: PatientFilterInput) => {
             if (listRef.value) {
-                listRef.value.load(input);
+                listRef.value.load({ filters: input });
             }
         };
 
