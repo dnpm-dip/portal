@@ -1,9 +1,9 @@
 import { isEqual } from 'smob';
 import type { Ref, VNodeArrayChildren, VNodeChild } from 'vue';
 import { ref } from 'vue';
-import { hasNormalizedSlot, normalizeSlot } from '../utils';
-import type { ObjectLiteral } from '../../types';
-import { ResourceCollectionSlotName } from './constants';
+import { hasNormalizedSlot, normalizeSlot } from '../../utils';
+import type { ObjectLiteral } from '../../../types';
+import { ResourceSlotName } from '../constants';
 import type {
     ResourceCollectionDefaultSlotProps,
     ResourceCollectionLoadFn,
@@ -88,24 +88,25 @@ export function createResourceCollectionManager<
         }
 
         if (error.value) {
-            if (hasNormalizedSlot(ResourceCollectionSlotName.ERROR, context.slots)) {
-                return normalizeSlot(ResourceCollectionSlotName.ERROR, { error: error.value }, context.slots);
+            if (hasNormalizedSlot(ResourceSlotName.ERROR, context.slots)) {
+                return normalizeSlot(ResourceSlotName.ERROR, { error: error.value }, context.slots);
             }
 
+            // todo: render (general or api-client) error.
             return undefined;
         }
 
         const elements : VNodeArrayChildren = [];
 
         if (busy.value) {
-            if (hasNormalizedSlot(ResourceCollectionSlotName.LOADING, context.slots)) {
-                elements.push(normalizeSlot(ResourceCollectionSlotName.LOADING, {}, context.slots));
+            if (hasNormalizedSlot(ResourceSlotName.LOADING, context.slots)) {
+                elements.push(normalizeSlot(ResourceSlotName.LOADING, {}, context.slots));
             }
         }
 
-        if (hasNormalizedSlot(ResourceCollectionSlotName.DEFAULT, context.slots)) {
+        if (hasNormalizedSlot(ResourceSlotName.DEFAULT, context.slots)) {
             elements.push(normalizeSlot(
-                ResourceCollectionSlotName.DEFAULT,
+                ResourceSlotName.DEFAULT,
                 {
                     data: data.value,
                     busy: busy.value,

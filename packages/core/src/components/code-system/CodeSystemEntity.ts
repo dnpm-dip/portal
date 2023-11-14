@@ -1,9 +1,6 @@
-import { defineComponent, h, ref } from 'vue';
+import { defineComponent } from 'vue';
 import type { APIClient } from '../../core';
-import { injectAPIClient } from '../../core';
-import type { CodeSystem } from '../../domains';
-import { AlertError } from '../alert';
-import { renderDefault, renderError, renderLoading } from '../../core/utils';
+import { createResourceRecordManager, injectAPIClient } from '../../core';
 
 export default defineComponent({
     name: 'CodeSystemEntity',
@@ -19,47 +16,18 @@ export default defineComponent({
     async setup(props, setup) {
         const apiClient : APIClient = injectAPIClient();
 
-        const error = ref<null | Error>(null);
-        const busy = ref(false);
-        const data = ref<null | CodeSystem>(null);
-
-        const load = async () => {
-            try {
-                data.value = await apiClient.codeSystem.getOne(props.code);
-            } catch (e) {
-                if (e instanceof Error) {
-                    error.value = e;
-                }
-            }
-        };
+        const manager = createResourceRecordManager({
+            load: () => apiClient.codeSystem.getOne(props.code),
+            slots: setup.slots,
+        });
 
         if (props.lazyLoad) {
             Promise.resolve()
-                .then(() => load());
+                .then(() => manager.load());
         } else {
-            await load();
+            await manager.load();
         }
 
-        return () => {
-            if (error.value) {
-                return renderError({
-                    setup,
-                    error: error.value,
-                    template: () => h(AlertError, { error: error.value as Error }),
-                });
-            }
-
-            if (data.value) {
-                return renderDefault({
-                    setup,
-                    data: data.value,
-                    busy: busy.value,
-                });
-            }
-
-            return renderLoading({
-                setup,
-            });
-        };
+        return () => manager.render();
     },
 });

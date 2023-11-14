@@ -1,7 +1,9 @@
+import type { ResourceRecordSlots } from '@dnpm-dip/core';
 import {
-    AlertError, renderDefault, renderError, renderLoading,
+    createResourceRecordManager,
 } from '@dnpm-dip/core';
-import { defineComponent, h, ref } from 'vue';
+import type { SlotsType } from 'vue';
+import { defineComponent } from 'vue';
 import { useRDAPIClient } from '#imports';
 import type { RDPatientRecord } from '../../domains';
 
@@ -15,55 +17,28 @@ export default defineComponent({
             type: String,
             required: true,
         },
+        // todo: rename to lazyLoad
         lazy: {
             type: Boolean,
             default: false,
         },
     },
+    slots: Object as SlotsType<ResourceRecordSlots<RDPatientRecord>>,
     async setup(props, setup) {
         const apiClient = useRDAPIClient();
 
-        const error = ref<null | Error>(null);
-        const busy = ref(false);
-        const data = ref<null | RDPatientRecord>(null);
-
-        const load = async () => {
-            try {
-                data.value = await apiClient.query.getPatientRecord(props.queryId, props.patientId);
-            } catch (e) {
-                if (e instanceof Error) {
-                    error.value = e;
-                }
-            }
-        };
+        const manager = createResourceRecordManager({
+            load: () => apiClient.query.getPatientRecord(props.queryId, props.patientId),
+            slots: setup.slots,
+        });
 
         if (props.lazy) {
             Promise.resolve()
-                .then(() => load());
+                .then(() => manager.load());
         } else {
-            await load();
+            await manager.load();
         }
 
-        return () => {
-            if (error.value) {
-                return renderError({
-                    setup,
-                    error: error.value,
-                    template: () => h(AlertError, { error: error.value }),
-                });
-            }
-
-            if (data.value) {
-                return renderDefault({
-                    setup,
-                    data: data.value,
-                    busy: busy.value,
-                });
-            }
-
-            return renderLoading({
-                setup,
-            });
-        };
+        return () => manager.render();
     },
 });

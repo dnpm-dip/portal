@@ -1,6 +1,6 @@
 import type { Slots, VNodeChild } from 'vue';
-import type { ObjectLiteral } from '../../types';
-import type { ResourceCollectionSlotName } from './constants';
+import type { ObjectLiteral } from '../../../types';
+import type { ResourceSlotName } from '../constants';
 
 export type ResourceCollectionLoadMeta = {
     limit?: number,
@@ -51,7 +51,7 @@ export type ResourceCollectionErrorSlotProps = {
 };
 
 export type ResourceCollectionSlots<T> = {
-    [ResourceCollectionSlotName.DEFAULT]: ResourceCollectionDefaultSlotProps<T>,
-    [ResourceCollectionSlotName.ERROR]: ResourceCollectionErrorSlotProps,
-    [ResourceCollectionSlotName.LOADING]: undefined
+    [ResourceSlotName.DEFAULT]: ResourceCollectionDefaultSlotProps<T>,
+    [ResourceSlotName.ERROR]: ResourceCollectionErrorSlotProps,
+    [ResourceSlotName.LOADING]: undefined
 };
