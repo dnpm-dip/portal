@@ -59,10 +59,22 @@ export class Navigation implements NavigationProvider {
         const keys = Object.keys(this.sideElements);
         for (let i = 0; i < keys.length; i++) {
             const items = flattenNestedNavigationElements(this.sideElements[keys[i]])
-                .sort((a: NavigationElement, b: NavigationElement) => (b.url?.length ?? 0) - (a.url?.length ?? 0))
+                .sort((a: NavigationElement, b: NavigationElement) => {
+                    if (a.rootLink && !b.rootLink) {
+                        return -1;
+                    }
+
+                    if (!a.rootLink && b.rootLink) {
+                        return 1;
+                    }
+
+                    return (b.url?.length ?? 0) - (a.url?.length ?? 0);
+                })
                 .filter((item) => {
-                    if (sideId && item.id === sideId) {
-                        return true;
+                    if (sideId) {
+                        if (item.id === sideId) {
+                            return true;
+                        }
                     }
 
                     if (!item.url) return false;

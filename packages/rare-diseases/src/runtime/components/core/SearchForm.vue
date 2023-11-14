@@ -251,6 +251,7 @@ export default defineComponent({
                             </template>
                             <template #loading>
                                 <FormSelectSearch
+                                    :disabled="true"
                                     :options="[]"
                                     placeholder="..."
                                 />

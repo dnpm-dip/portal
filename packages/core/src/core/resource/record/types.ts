@@ -1,5 +1,6 @@
 import type { Slots, VNodeChild } from 'vue';
 import type { ObjectLiteral } from '../../../types';
+import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
 import type { ResourceSlotName } from '../constants';
 
 export type ResourceRecordManagerLoadFn<
@@ -28,12 +29,9 @@ export type ResourceRecordDefaultSlotProps<T> = {
     load: ResourceRecordLoadFn
 };
 
-export type ResourceRecordErrorSlotProps = {
-    error: Error
-};
-
 export type ResourceRecordSlots<T> = {
     [ResourceSlotName.DEFAULT]: ResourceRecordDefaultSlotProps<T>,
-    [ResourceSlotName.ERROR]: ResourceRecordErrorSlotProps,
+    [ResourceSlotName.ERROR]: ErrorSlotProps,
+    [ResourceSlotName.ERRORS]: ErrorCollectionSlotProps,
     [ResourceSlotName.LOADING]: undefined
 };

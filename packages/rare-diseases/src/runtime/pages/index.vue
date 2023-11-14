@@ -1,16 +1,13 @@
 <script>
-import { defineNuxtComponent } from '#app';
-import { useAPIClient } from '#imports';
+import { PageMetaKey } from '@dnpm-dip/core';
+import { defineNuxtComponent, definePageMeta } from '#imports';
 
 export default defineNuxtComponent({
     async setup() {
-        const api = useAPIClient();
-
-        const codings = await api.codeSystem.getMany();
-
-        return {
-            codings,
-        };
+        definePageMeta({
+            [PageMetaKey.NAVIGATION_TOP_ID]: 'rd',
+            [PageMetaKey.NAVIGATION_SIDE_ID]: 'rd-home',
+        });
     },
 });
 </script>

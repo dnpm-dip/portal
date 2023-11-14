@@ -1,9 +1,7 @@
 import type { RequestBaseOptions } from 'hapic';
+import type { APIClientErrorIssueSeverity } from './constants';
 
 export type APIClientConfigInput = RequestBaseOptions;
-
-// todo: what options are there?
-export type APIClientErrorIssueSeverity = 'error' | 'warning';
 
 export type APIClientErrorIssue = {
     severity: APIClientErrorIssueSeverity,

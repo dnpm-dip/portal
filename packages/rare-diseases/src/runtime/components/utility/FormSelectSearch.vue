@@ -301,6 +301,12 @@ export default defineComponent({
   border-radius: var(--bs-border-radius);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+.dropdown .dropdown-input:disabled {
+  background-color: var(--bs-secondary-bg);
+  opacity: 1;
+}
+
 .dropdown .dropdown-content {
   display: block;
   position: absolute;

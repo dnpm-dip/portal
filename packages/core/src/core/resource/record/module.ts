@@ -1,5 +1,6 @@
 import type { Ref, VNodeChild } from 'vue';
 import { ref } from 'vue';
+import { renderError } from '../../error';
 import { hasNormalizedSlot, normalizeSlot } from '../../utils';
 import type { ObjectLiteral } from '../../../types';
 import { ResourceSlotName } from '../constants';
@@ -49,12 +50,12 @@ export function createResourceRecordManager<
         }
 
         if (error.value) {
-            if (hasNormalizedSlot(ResourceSlotName.ERROR, context.slots)) {
-                return normalizeSlot(ResourceSlotName.ERROR, { error: error.value }, context.slots);
-            }
-
-            // todo: render (general or api-client) error.
-            return undefined;
+            return renderError({
+                error: error.value,
+                slots: context.slots,
+                slotName: ResourceSlotName.ERROR,
+                slotCollectionName: ResourceSlotName.ERRORS,
+            });
         }
 
         if (busy.value) {
