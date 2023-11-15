@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/core",
     "private": true,
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "Core Library of DNPM DIP with global constants, types & interfaces.",
     "exports": {
         "./package.json": "./package.json",
