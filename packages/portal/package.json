@@ -14,7 +14,7 @@
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "start": "nuxi start"
+        "start": "node .output/server/index.mjs"
     },
     "devDependencies": {
         "@dnpm-dip/core": "^0.0.0",

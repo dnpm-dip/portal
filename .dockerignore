@@ -1,0 +1,9 @@
+**/node_modules/
+**/dist
+**/.nuxt
+.nuxt
+docker
+dist
+node_modules
+**/.env
+.nx
