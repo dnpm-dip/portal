@@ -1,5 +1,11 @@
 # @dnpm-dip/core
 
+## 0.0.2
+
+### Patch Changes
+
+- [`f7b1347`](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f7b1347b936dbf2c81e58b6dd8f9938fbfeeec75) Thanks [@tada5hi](https://github.com/tada5hi)! - docker release
+
 ## 0.0.1
 
 ### Patch Changes
