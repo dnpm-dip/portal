@@ -1,5 +1,11 @@
 # @dnpm-dip/portal
 
+## 0.0.3
+
+### Patch Changes
+
+- [`3a3421f`](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/3a3421f3ba2a685ce3bb320a76dfbad577aa755b) Thanks [@tada5hi](https://github.com/tada5hi)! - force publish
+
 ## 0.0.1
 
 ### Patch Changes
