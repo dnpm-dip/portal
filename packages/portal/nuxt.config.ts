@@ -28,7 +28,7 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         public: {
-            apiUrl: process.env.API_URL || 'https://bwhealthcloud.de/api/',
+            apiUrl: process.env.API_URL || 'https://dnpm.bwhealthcloud.de/api/',
         },
     },
 });
