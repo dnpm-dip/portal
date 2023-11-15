@@ -24,6 +24,8 @@
         "node": ">=16.0.0"
     },
     "devDependencies": {
+        "@changesets/changelog-github": "^0.4.8",
+        "@changesets/cli": "^2.26.2",
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-swc": "^0.3.0",
         "@rollup/plugin-terser": "^0.4.4",
@@ -55,7 +57,8 @@
         "pub": "npm run build && lerna publish",
         "lint": "eslint packages/",
         "lint:fix": "npm run lint -- --fix",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "release": "changeset publish"
     },
     "lint-staged": {
         "*.ts": "eslint --fix"
