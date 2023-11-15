@@ -1,5 +1,12 @@
 # @dnpm-dip/rare-diseases
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`f7b1347`](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f7b1347b936dbf2c81e58b6dd8f9938fbfeeec75)]:
+  - @dnpm-dip/core@0.0.2
+
 ## 0.0.1
 
 ### Patch Changes
