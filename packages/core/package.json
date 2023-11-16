@@ -43,7 +43,7 @@
     "dependencies": {
         "hapic": "^2.3.0",
         "smob": "^1.4.1",
-        "ufo": "^1.3.1"
+        "ufo": "^1.3.2"
     },
     "devDependencies": {
         "@nuxt/schema": "^3.8.0",
