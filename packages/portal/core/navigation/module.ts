@@ -1,11 +1,11 @@
 import { PageMetaKey } from '@dnpm-dip/core';
-import { findNavigationElementForTier, flattenNestedNavigationElements } from '@vue-layout/navigation';
-import type { NavigationElement, NavigationProvider } from '@vue-layout/navigation';
+import { flattenNestedNavigationItems } from '@vue-layout/navigation';
+import type { NavigationItem, NavigationProvider } from '@vue-layout/navigation';
 
 export class Navigation implements NavigationProvider {
-    protected topElements: NavigationElement[];
+    protected topElements: NavigationItem[];
 
-    protected sideElements : Record<string, NavigationElement[]>;
+    protected sideElements : Record<string, NavigationItem[]>;
 
     constructor() {
         this.topElements = [{
@@ -28,44 +28,50 @@ export class Navigation implements NavigationProvider {
         };
     }
 
-    addTopElement(element: NavigationElement) {
+    addTopElement(element: NavigationItem) {
         this.topElements.push(element);
     }
 
-    addSideElements(id: string, elements: NavigationElement[]) {
+    addSideElements(id: string, elements: NavigationItem[]) {
         this.sideElements[id] = elements;
     }
 
-    async getElements(tier: number, items: NavigationElement[]): Promise<NavigationElement[]> {
-        if ([0, 1].indexOf(tier) === -1) {
-            return [];
+    async getItems(tier: number, items: NavigationItem[]) {
+        if (tier > 1) {
+            return undefined;
         }
 
         if (tier === 0) {
             return this.topElements;
         }
 
-        const component: NavigationElement = findNavigationElementForTier(items, 0) || { id: 'default' };
+        let component : NavigationItem;
+        if (items.length > 0) {
+            [component] = items;
+        } else {
+            component = { id: 'default' };
+        }
         return this.sideElements[component.id || 'default'] || [];
     }
 
-    async getElementsActive(url: string): Promise<NavigationElement[]> {
-        const route = useRoute();
+    async getItemsActiveByRoute(route) {
         const {
             [PageMetaKey.NAVIGATION_TOP_ID]: topId,
             [PageMetaKey.NAVIGATION_SIDE_ID]: sideId,
         } = route.meta;
 
+        const url = route.fullPath;
+
         const keys = Object.keys(this.sideElements);
         for (let i = 0; i < keys.length; i++) {
-            const items = flattenNestedNavigationElements(this.sideElements[keys[i]])
-                .sort((a: NavigationElement, b: NavigationElement) => {
-                    if (a.rootLink && !b.rootLink) {
-                        return -1;
+            const items = flattenNestedNavigationItems(this.sideElements[keys[i]])
+                .sort((a: NavigationItem, b: NavigationItem) => {
+                    if (a.root && !b.root) {
+                        return 1;
                     }
 
-                    if (!a.rootLink && b.rootLink) {
-                        return 1;
+                    if (!a.root && b.root) {
+                        return -1;
                     }
 
                     return (b.url?.length ?? 0) - (a.url?.length ?? 0);
@@ -114,9 +120,5 @@ export class Navigation implements NavigationProvider {
         }
 
         return [];
-    }
-
-    async hasTier(tier: number): Promise<boolean> {
-        return Promise.resolve([0, 1].indexOf(tier) !== -1);
     }
 }

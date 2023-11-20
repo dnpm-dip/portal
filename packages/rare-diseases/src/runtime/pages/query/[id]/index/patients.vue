@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { PaginationMeta } from '@vue-layout/pagination';
-import { Pagination } from '@vue-layout/pagination';
+import { VCPagination } from '@vue-layout/pagination';
 import type { PatientFilterInput } from '@dnpm-dip/core';
 import { Nav } from '@dnpm-dip/core';
 import type { PropType, Ref } from 'vue';
@@ -17,7 +17,7 @@ export default defineNuxtComponent({
         QueryPatientMatchEntity,
         QueryPatientMatchList,
         Nav,
-        Pagination,
+        VCPagination,
     },
     props: {
         entity: {
@@ -81,7 +81,7 @@ export default defineNuxtComponent({
                                 Es wurden keine Patienten gefunden, die die Suchkriterien erfüllen.
                             </div>
                         </template>
-                        <Pagination
+                        <VCPagination
                             :busy="props.busy"
                             :total="props.total"
                             :limit="props.limit"

@@ -1,4 +1,4 @@
-import { MyLink } from '@vue-layout/navigation';
+import { VCLink } from '@vue-layout/link';
 import { h } from 'vue';
 import type { VNodeChild } from 'vue';
 import type { NavItem, NavOptions } from './types';
@@ -32,7 +32,7 @@ export function buildNav(
 
         prevLink = h('li', { class: 'nav-item' }, [
             h(
-                MyLink,
+                VCLink,
                 {
                     class: 'nav-link',
                     to: baseLink,
@@ -65,7 +65,7 @@ export function buildNav(
             prevLink,
             ...items.map((item) => h('li', { class: 'nav-item' }, [
                 h(
-                    MyLink,
+                    VCLink,
                     {
                         class: 'nav-link',
                         to: buildLink(item.urlSuffix),

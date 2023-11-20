@@ -3,7 +3,7 @@ import type {
     CodeRecord, CodeSystemConcept, QueryRequestMode, ValueSetCoding,
 } from '@dnpm-dip/core';
 import type { FormSelectOption } from '@vue-layout/form-controls';
-import { FormInput } from '@vue-layout/form-controls';
+import { VCFormGroup, VCFormInput } from '@vue-layout/form-controls';
 import { defineComponent, reactive, ref } from 'vue';
 import { CodeSystemEntity, ValueSetEntity } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
@@ -16,7 +16,8 @@ export default defineComponent({
     components: {
         Tags,
         CollectionTransform,
-        FormInput,
+        VCFormGroup,
+        VCFormInput,
         FormSelectSearch,
         CodeSystemEntity,
         ValueSetEntity,
@@ -260,27 +261,27 @@ export default defineComponent({
                     </div>
                 </div>
                 <div>
-                    <FormGroup>
+                    <VCFormGroup>
                         <label>kodierende DNA-Änderung</label>
-                        <FormInput
+                        <VCFormInput
                             v-model="form.cDNAChange"
                             placeholder="..."
                         />
-                    </FormGroup>
-                    <FormGroup>
+                    </VCFormGroup>
+                    <VCFormGroup>
                         <label>genomische DNA-Änderung</label>
-                        <FormInput
+                        <VCFormInput
                             v-model="form.gDNAChange"
                             placeholder="..."
                         />
-                    </FormGroup>
-                    <FormGroup>
+                    </VCFormGroup>
+                    <VCFormGroup>
                         <label>Proteinänderung</label>
-                        <FormInput
+                        <VCFormInput
                             v-model="form.proteinChange"
                             placeholder="..."
                         />
-                    </FormGroup>
+                    </VCFormGroup>
                 </div>
             </div>
             <hr>

@@ -1,11 +1,11 @@
 <script>
 import { ref } from 'vue';
-import { NavigationComponents } from '@vue-layout/navigation';
+import { VCNavItems } from '@vue-layout/navigation';
 import { defineNuxtComponent, useNuxtApp } from '#app';
 
 export default defineNuxtComponent({
     components: {
-        NavigationComponents,
+        VCNavItems,
     },
     setup() {
         const displayNav = ref(false);
@@ -47,7 +47,7 @@ export default defineNuxtComponent({
                     class="navbar-content navbar-collapse collapse"
                     :class="{'show': displayNav}"
                 >
-                    <navigation-components
+                    <VCNavItems
                         class="navbar-nav"
                         :tier="0"
                     />

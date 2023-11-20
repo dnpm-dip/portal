@@ -1,17 +1,17 @@
 import type { HookResult } from '@nuxt/schema';
-import type { NavigationElement } from '@vue-layout/navigation';
+import type { NavigationItem } from '@vue-layout/navigation';
 import { defineNuxtPlugin } from '#app';
 
 declare module '#app' {
     interface RuntimeNuxtHooks {
-        'navigation': (element: NavigationElement) => HookResult
+        'navigation': (element: NavigationItem) => HookResult
     }
 }
 
 export default defineNuxtPlugin({
     enforce: 'post',
     async setup(nuxt) {
-        const elements : NavigationElement = {
+        const elements : NavigationItem = {
             id: 'rd',
             name: 'RD',
             url: '/rd/',
@@ -21,7 +21,7 @@ export default defineNuxtPlugin({
                     name: 'Home',
                     icon: 'fa fa-home',
                     url: '/rd/',
-                    rootLink: true,
+                    root: true,
                 },
                 {
                     id: 'rd-search',
