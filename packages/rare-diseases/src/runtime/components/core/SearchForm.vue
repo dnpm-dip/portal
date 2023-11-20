@@ -160,7 +160,7 @@ export default defineComponent({
                                             v-model="categories"
                                             :multiple="true"
                                             :options="options"
-                                            placeholder="..."
+                                            placeholder="Orphanet Ontology"
                                         >
                                             <template #selected="{ items, toggle }">
                                                 <Tags
@@ -177,7 +177,7 @@ export default defineComponent({
                                 <FormSelectSearch
                                     :options="[]"
                                     :disabled="true"
-                                    placeholder="..."
+                                    placeholder="Orphanet Ontology"
                                 />
                             </template>
                         </ValueSetEntity>
@@ -202,7 +202,7 @@ export default defineComponent({
                                             v-model="hpoTerms"
                                             :multiple="true"
                                             :options="options"
-                                            placeholder="..."
+                                            placeholder="Human Phenotype Ontology"
                                         >
                                             <template #selected="{ items, toggle }">
                                                 <Tags
@@ -219,7 +219,7 @@ export default defineComponent({
                                 <FormSelectSearch
                                     :disabled="true"
                                     :options="[]"
-                                    placeholder="..."
+                                    placeholder="Human Phenotype Ontology"
                                 />
                             </template>
                         </ValueSetEntity>
@@ -245,7 +245,7 @@ export default defineComponent({
                                         <FormSelectSearch
                                             v-model="form.gene"
                                             :options="options"
-                                            placeholder="..."
+                                            placeholder="HGNC"
                                         />
                                     </template>
                                 </CollectionTransform>
@@ -254,7 +254,7 @@ export default defineComponent({
                                 <FormSelectSearch
                                     :disabled="true"
                                     :options="[]"
-                                    placeholder="..."
+                                    placeholder="HGNC"
                                 />
                             </template>
                         </CodeSystemEntity>
@@ -265,29 +265,30 @@ export default defineComponent({
                         <label>kodierende DNA-Änderung</label>
                         <VCFormInput
                             v-model="form.cDNAChange"
-                            placeholder="..."
+                            placeholder="HGVS"
                         />
                     </VCFormGroup>
                     <VCFormGroup>
                         <label>genomische DNA-Änderung</label>
                         <VCFormInput
                             v-model="form.gDNAChange"
-                            placeholder="..."
+                            placeholder="HGVS"
                         />
                     </VCFormGroup>
                     <VCFormGroup>
                         <label>Proteinänderung</label>
                         <VCFormInput
                             v-model="form.proteinChange"
-                            placeholder="..."
+                            placeholder="HGVS"
                         />
                     </VCFormGroup>
                 </div>
             </div>
-            <hr>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
+
+            <div>
+                <h6>Suchmodus</h6>
+                <div class="row">
+                    <div class="col">
                         <button
                             type="button"
                             class="btn btn-sm btn-block btn-dark"
@@ -296,15 +297,13 @@ export default defineComponent({
                             Lokal
                         </button>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
+                    <div class="col">
                         <button
                             type="button"
                             class="btn btn-sm btn-block btn-dark"
                             @click.prevent="submit('federated')"
                         >
-                            Förderiert
+                            Föderiert
                         </button>
                     </div>
                 </div>

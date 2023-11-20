@@ -91,3 +91,8 @@ export default defineComponent({
         </ul>
     </slot>
 </template>
+<style>
+.btn-close {
+    color: #eee !important;
+}
+</style>
