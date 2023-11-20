@@ -1,9 +1,9 @@
 <script lang="ts">
-import type { ColorVariant } from 'bootstrap-vue-next';
 import { BFormTag } from 'bootstrap-vue-next';
 import type { PropType } from 'vue';
 import { defineComponent, ref } from 'vue';
 
+type ColorVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | null;
 type Tag = {
     id: string | number,
     value: string
@@ -91,8 +91,3 @@ export default defineComponent({
         </ul>
     </slot>
 </template>
-<style>
-.btn-close {
-    color: #eee !important;
-}
-</style>

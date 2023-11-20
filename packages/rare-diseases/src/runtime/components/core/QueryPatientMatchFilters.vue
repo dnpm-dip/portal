@@ -177,10 +177,10 @@ export default defineComponent({
                     :key="item.code"
                 >
                     <div class="form-check">
-                        <FormInputCheckbox
+                        <VCFormInputCheckbox
                             v-model="gender"
                             :label="true"
-                            :label-content="item.display"
+                            :label-content="(item.display || item.code)"
                             :value="item.code"
                         />
                     </div>
@@ -196,10 +196,10 @@ export default defineComponent({
                     :key="item.code"
                 >
                     <div class="form-check">
-                        <FormInputCheckbox
+                        <VCFormInputCheckbox
                             v-model="vitalStatus"
                             :label="true"
-                            :label-content="item.display"
+                            :label-content="(item.display || item.code)"
                             :value="item.code"
                         />
                     </div>
