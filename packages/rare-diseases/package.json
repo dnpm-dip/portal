@@ -48,7 +48,7 @@
         "@vue-layout/pagination": "^5.0.0",
         "@vuelidate/core": "^2.0.3",
         "@vuelidate/validators": "^2.0.4",
-        "bootstrap-vue-next": "^0.15.0",
+        "bootstrap-vue-next": "^0.15.1",
         "chart.js": "^4.4.0",
         "eslint": "^8.54.0",
         "nuxt": "^3.8.0",
