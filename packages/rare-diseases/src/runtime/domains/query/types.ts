@@ -12,12 +12,16 @@ export type RDVariantCriteria = 'gene' |
 'modeOfInheritance' |
 'significance';
 
+export type RDQueryCriteriaVariant<
+    V = CodeRecord,
+> = {
+    [K in RDVariantCriteria]?: V
+};
+
 export type RDQueryCriteria = {
     diagnoses?: CodeRecord[],
     hpoTerms?: CodeRecord[],
-    variants?: {
-        [K in RDVariantCriteria]?: CodeRecord[]
-    }[]
+    variants?: RDQueryCriteriaVariant[]
 };
 
 export type RDQuerySessionCreate = {

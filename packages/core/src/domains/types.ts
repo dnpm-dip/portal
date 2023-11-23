@@ -12,5 +12,6 @@ export type CollectionResponse<T> = {
 };
 
 export type CodeRecord<V extends string = string> = {
-    code: V
+    code: V,
+    display?: string
 };

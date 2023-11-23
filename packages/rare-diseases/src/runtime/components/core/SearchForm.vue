@@ -4,10 +4,16 @@ import type {
 } from '@dnpm-dip/core';
 import type { FormSelectOption } from '@vue-layout/form-controls';
 import { VCFormGroup, VCFormInput } from '@vue-layout/form-controls';
+import type { PropType } from 'vue';
 import { defineComponent, reactive, ref } from 'vue';
-import { CodeSystemEntity, ValueSetEntity } from '@dnpm-dip/core';
+import { CodeSystemEntity, ValueSetEntity, createResourceRecordManager } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
-import type { RDQueryCriteria, RDQueryCriteriaScopeValue } from '../../domains';
+import type {
+    RDQueryCriteria,
+    RDQueryCriteriaVariant,
+    RDQuerySession,
+    RDVariantCriteria,
+} from '../../domains';
 import FormSelectSearch from '../utility/FormSelectSearch.vue';
 import Tags from '../utility/Tags.vue';
 import CollectionTransform from '../utility/CollectionTransform.vue';
@@ -22,10 +28,78 @@ export default defineComponent({
         CodeSystemEntity,
         ValueSetEntity,
     },
-    emits: ['failed', 'created'],
+    props: {
+        entity: {
+            type: Object as PropType<RDQuerySession>,
+        },
+        entityId: {
+            type: String,
+        },
+    },
+    emits: ['failed', 'created', 'updated'],
     async setup(props, { emit }) {
+        const apiClient = useRDAPIClient();
+
+        const manager = createResourceRecordManager<RDQuerySession>({
+            data: props.entity,
+            async load() {
+                if (props.entityId) {
+                    return apiClient.query.getOne(props.entityId);
+                }
+
+                return undefined;
+            },
+        });
+
         const categories = ref<FormSelectOption[]>([]);
         const hpoTerms = ref<FormSelectOption[]>([]);
+
+        const variants = reactive<RDQueryCriteriaVariant<string>>({
+            gene: '',
+            cDNAChange: '',
+            gDNAChange: '',
+            proteinChange: '',
+        });
+
+        const parse = () => {
+            if (!manager.data.value || !manager.data.value.criteria) {
+                return;
+            }
+
+            const criteria = manager.data.value?.criteria;
+            if (
+                criteria?.variants &&
+                criteria.variants.length > 0
+            ) {
+                const keys = Object.keys(criteria.variants[0]) as RDVariantCriteria[];
+                for (let i = 0; i < keys.length; i++) {
+                    const key = keys[i];
+                    variants[key] = (criteria.variants[0] as RDQueryCriteriaVariant)[key]?.code;
+                }
+            }
+
+            if (criteria?.hpoTerms) {
+                for (let i = 0; i < criteria.hpoTerms.length; i++) {
+                    hpoTerms.value.push({
+                        id: criteria.hpoTerms[i].code,
+                        value: criteria.hpoTerms[i].display || criteria.hpoTerms[i].code,
+                    });
+                }
+            }
+
+            if (criteria?.diagnoses) {
+                for (let i = 0; i < criteria.diagnoses.length; i++) {
+                    categories.value.push({
+                        id: criteria.diagnoses[i].code,
+                        value: criteria.diagnoses[i].display || criteria.diagnoses[i].code,
+                    });
+                }
+            }
+        };
+
+        Promise.resolve()
+            .then(() => manager.load())
+            .then(() => parse());
 
         const selectCategory = (item: FormSelectOption) => {
             const index = categories.value.findIndex((el) => el.id === item.id);
@@ -45,16 +119,11 @@ export default defineComponent({
             }
         };
 
-        const variants = reactive({
-            gene: '',
-            cDNAChange: '',
-            gDNAChange: '',
-            proteinChange: '',
-        });
-
-        const apiClient = useRDAPIClient();
-
         const submit = async (mode: `${QueryRequestMode}`) => {
+            if (manager.busy.value) return;
+
+            manager.busy.value = true;
+
             const criteria : RDQueryCriteria = {};
             const keys = Object.keys(variants);
             if (keys.length > 0) {
@@ -62,7 +131,7 @@ export default defineComponent({
                 const group : Record<string, CodeRecord> = {};
                 for (let i = 0; i < keys.length; i++) {
                     const code = variants[keys[i] as keyof typeof variants];
-                    if (code.length > 0) {
+                    if (code && code.length > 0) {
                         group[keys[i]] = {
                             code,
                         };
@@ -96,18 +165,33 @@ export default defineComponent({
             }
 
             try {
-                const data = await apiClient.query.submit({
-                    criteria,
-                    mode: {
-                        code: mode,
-                    },
-                });
+                let data : RDQuerySession;
 
-                emit('created', data);
+                if (manager.data.value) {
+                    data = await apiClient.query.update(manager.data.value.id, {
+                        criteria,
+                        mode: {
+                            code: mode,
+                        },
+                    });
+
+                    emit('created', data);
+                } else {
+                    data = await apiClient.query.submit({
+                        criteria,
+                        mode: {
+                            code: mode,
+                        },
+                    });
+
+                    emit('created', data);
+                }
             } catch (e) {
                 if (e instanceof Error) {
                     emit('failed', e);
                 }
+            } finally {
+                manager.busy.value = false;
             }
         };
 
@@ -122,6 +206,7 @@ export default defineComponent({
         });
 
         return {
+            busy: manager.busy,
             hpoTerms,
             categories,
 
@@ -290,6 +375,7 @@ export default defineComponent({
                 <div class="row">
                     <div class="col">
                         <button
+                            :disabled="busy"
                             type="button"
                             class="btn btn-sm btn-block btn-dark"
                             @click.prevent="submit('local')"
@@ -299,6 +385,7 @@ export default defineComponent({
                     </div>
                     <div class="col">
                         <button
+                            :disabled="busy"
                             type="button"
                             class="btn btn-sm btn-block btn-dark"
                             @click.prevent="submit('federated')"

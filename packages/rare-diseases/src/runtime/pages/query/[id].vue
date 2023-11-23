@@ -1,10 +1,11 @@
 <script lang="ts">
 import { PageMetaKey } from '@dnpm-dip/core';
+import type { Ref } from 'vue';
 import { ref } from 'vue';
 import {
-    createError, defineNuxtComponent, navigateTo, useRoute,
-} from '#app';
-import { definePageMeta, useRDAPIClient } from '#imports';
+    createError, defineNuxtComponent, definePageMeta, navigateTo,
+    useRDAPIClient, useRoute,
+} from '#imports';
 import type { RDQuerySession } from '../../domains';
 
 export default defineNuxtComponent({
@@ -17,7 +18,7 @@ export default defineNuxtComponent({
         const api = useRDAPIClient();
         const route = useRoute();
 
-        const entity = ref<RDQuerySession>(null) as any;
+        const entity = ref(null) as unknown as Ref<RDQuerySession>;
 
         if (typeof route.params.id !== 'string') {
             await navigateTo({ path: '/rd/search' });
@@ -31,8 +32,17 @@ export default defineNuxtComponent({
             throw createError({});
         }
 
+        const handleUpdated = (data: RDQuerySession) => {
+            const keys = Object.keys(data);
+            for (let i = 0; i < keys.length; i++) {
+                const key = keys[i] as keyof RDQuerySession;
+                (entity.value as RDQuerySession)[key] = data[key];
+            }
+        };
+
         return {
             entity,
+            handleUpdated,
         };
     },
 });
@@ -40,7 +50,10 @@ export default defineNuxtComponent({
 <template>
     <div class="container">
         <template v-if="entity">
-            <NuxtPage :entity="entity" />
+            <NuxtPage
+                :entity="entity"
+                @updated="handleUpdated"
+            />
         </template>
     </div>
 </template>

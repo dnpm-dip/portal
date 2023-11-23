@@ -15,7 +15,9 @@ export class QueryAPI extends BaseAPI {
      * @param query
      */
     async submit(query: RDQuerySessionCreate) : Promise<RDQuerySession> {
-        query.mode = query.mode || QueryRequestMode.LOCAL;
+        query.mode = query.mode || {
+            code: QueryRequestMode.LOCAL,
+        };
 
         const response = await this.client.post('rd/queries', query);
         return response.data;
@@ -30,9 +32,10 @@ export class QueryAPI extends BaseAPI {
      * Refresh the query session.
      *
      * @param id
+     * @param query
      */
-    async refresh(id: string) : Promise<RDQuerySession> {
-        const response = await this.client.put(`rd/queries/${id}`);
+    async update(id: string, query?: RDQuerySessionCreate) : Promise<RDQuerySession> {
+        const response = await this.client.put(`rd/queries/${id}`, query);
         return response.data;
     }
 
@@ -52,7 +55,7 @@ export class QueryAPI extends BaseAPI {
      * @param meta
      * @throws ClientError
      */
-    async getPatients(id: string, meta?: ResourceCollectionLoadMeta<PatientFilterInput>) : Promise<CollectionResponse<RDPatientMatch>> {
+    async getPatients(id: string, meta?: ResourceCollectionLoadMeta) : Promise<CollectionResponse<RDPatientMatch>> {
         const parts : string[] = [];
         if (typeof meta !== 'undefined') {
             const { filters, limit, offset } = meta;

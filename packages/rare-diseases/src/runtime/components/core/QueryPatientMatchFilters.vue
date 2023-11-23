@@ -42,12 +42,19 @@ export default defineComponent({
         const isSubmitted = ref(true);
 
         const reset = () => {
-            gender.value = props.availableFilters.gender.map((el) => el.code);
-            vitalStatus.value = props.availableFilters.vitalStatus.map((el) => el.code);
-            age.value = {
-                min: props.availableFilters.ageRange.min,
-                max: props.availableFilters.ageRange.max,
-            };
+            if (props.availableFilters.gender) {
+                gender.value = props.availableFilters.gender.map((el) => el.code);
+            }
+            if (props.availableFilters.vitalStatus) {
+                vitalStatus.value = props.availableFilters.vitalStatus.map((el) => el.code);
+            }
+
+            if (props.availableFilters.ageRange) {
+                age.value = {
+                    min: props.availableFilters.ageRange.min,
+                    max: props.availableFilters.ageRange.max,
+                };
+            }
 
             genderChanged.value = false;
             vitalStatusChanged.value = false;
@@ -58,6 +65,9 @@ export default defineComponent({
         reset();
 
         const handleAgeRangeChanged = (ctx: { min: number, max: number}) => {
+            if (!props.availableFilters.ageRange) {
+                return;
+            }
             age.value.min = Math.round(ctx.min);
             age.value.max = Math.round(ctx.max);
 
@@ -71,6 +81,10 @@ export default defineComponent({
         };
 
         watch(gender, (value) => {
+            if (!props.availableFilters.gender) {
+                return;
+            }
+
             if (value.length !== props.availableFilters.gender.length) {
                 genderChanged.value = true;
                 isSubmitted.value = false;
@@ -94,6 +108,9 @@ export default defineComponent({
         }, { deep: true });
 
         watch(vitalStatus, (value) => {
+            if (!props.availableFilters.vitalStatus) {
+                return;
+            }
             if (value.length !== props.availableFilters.vitalStatus.length) {
                 vitalStatusChanged.value = true;
                 isSubmitted.value = false;
@@ -126,12 +143,14 @@ export default defineComponent({
             if (ageChanged.value) {
                 data.ageRange = {};
 
-                if (age.value.min !== props.availableFilters.ageRange.min) {
-                    data.ageRange.min = age.value.min;
-                }
+                if (props.availableFilters.ageRange) {
+                    if (age.value.min !== props.availableFilters.ageRange.min) {
+                        data.ageRange.min = age.value.min;
+                    }
 
-                if (age.value.max !== props.availableFilters.ageRange.max) {
-                    data.ageRange.max = age.value.max;
+                    if (age.value.max !== props.availableFilters.ageRange.max) {
+                        data.ageRange.max = age.value.max;
+                    }
                 }
             }
 
@@ -168,7 +187,10 @@ export default defineComponent({
 </script>
 <template>
     <div class="entity-card">
-        <div class="mb-3">
+        <div
+            v-if="availableFilters.gender"
+            class="mb-3"
+        >
             <h6><i class="fas fa-transgender-alt" /> Geschlecht</h6>
 
             <div>
@@ -187,7 +209,10 @@ export default defineComponent({
                 </template>
             </div>
         </div>
-        <div class="mb-3">
+        <div
+            v-if="availableFilters.vitalStatus"
+            class="mb-3"
+        >
             <h6><i class="fas fa-heartbeat" /> Vital Status</h6>
 
             <div>
@@ -206,7 +231,10 @@ export default defineComponent({
                 </template>
             </div>
         </div>
-        <div class="mb-3">
+        <div
+            v-if="availableFilters.ageRange"
+            class="mb-3"
+        >
             <h6><i class="fas fa-users" /> Alter <small class="text-muted">({{ age.min }} - {{ age.max }})</small></h6>
 
             <div class="mt-3">

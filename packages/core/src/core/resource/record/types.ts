@@ -1,11 +1,11 @@
-import type { Slots, VNodeChild } from 'vue';
+import type { Ref, Slots, VNodeChild } from 'vue';
 import type { ObjectLiteral } from '../../../types';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
 import type { ResourceSlotName } from '../constants';
 
 export type ResourceRecordManagerLoadFn<
     DATA extends ObjectLiteral = ObjectLiteral,
-> = () => Promise<DATA>;
+> = () => Promise<DATA | undefined>;
 
 export type ResourceRecordManagerContext<
     T extends ObjectLiteral = ObjectLiteral,
@@ -16,9 +16,13 @@ export type ResourceRecordManagerContext<
     expose?: (exposed?: Record<string, any>) => void
 };
 
-export type ResourceRecordManagerOutput = {
+export type ResourceRecordManagerOutput<
+T extends ObjectLiteral = ObjectLiteral,
+> = {
     load: ResourceRecordLoadFn,
-    render: () => VNodeChild
+    render: () => VNodeChild,
+    data: Ref<T | undefined>,
+    busy: Ref<boolean>
 };
 
 export type ResourceRecordLoadFn = () => Promise<any>;

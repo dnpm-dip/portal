@@ -1,11 +1,14 @@
 <script lang="ts">
 import { Nav } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
-import { defineNuxtComponent } from '#app';
+import { ref } from 'vue';
+import { defineNuxtComponent } from '#imports';
+import SearchForm from '../../../components/core/SearchForm.vue';
 import type { RDQuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        SearchForm,
         Nav,
     },
     props: {
@@ -14,7 +17,7 @@ export default defineNuxtComponent({
             required: true,
         },
     },
-    setup() {
+    setup(props, { emit }) {
         const navItems = [
             {
                 name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
@@ -22,17 +25,32 @@ export default defineNuxtComponent({
             {
                 name: 'Patienten', icon: 'fas fa-user-injured', urlSuffix: '/patients',
             },
+            {
+                name: 'Einstellungen', icon: 'fa fa-cog', urlSuffix: '/settings',
+            },
         ];
 
+        const displayed = ref(false);
+        const toggleDisplay = () => {
+            displayed.value = !displayed.value;
+        };
+
+        const handleUpdated = (entity: RDQuerySession) => {
+            emit('updated', entity);
+        };
+
         return {
+            handleUpdated,
             navItems,
+            displayed,
+            toggleDisplay,
         };
     },
 });
 </script>
 <template>
-    <div>
-        <div class="mb-2">
+    <div class="d-flex flex-row mb-2">
+        <div>
             <h4>
                 <NuxtLink
                     class="btn btn-xs btn-dark me-1"
@@ -43,18 +61,40 @@ export default defineNuxtComponent({
                 Abfrage <small class="text-muted">{{ entity.id }}</small>
             </h4>
         </div>
+        <div class="ms-auto">
+            <button
+                type="button"
+                class="btn btn-secondary btn-xs"
+                @click.prevent="toggleDisplay"
+            >
+                <i class="fa fa-cog" />
+            </button>
+        </div>
+    </div>
 
-        <div class="mb-2">
-            <Nav
-                :items="navItems"
-                :path="'/rd/query/'+ entity.id"
+    <div class="mb-2">
+        <Nav
+            :items="navItems"
+            :path="'/rd/query/'+ entity.id"
+        />
+    </div>
+
+    <hr>
+
+    <template v-if="displayed">
+        <div class="entity-card">
+            <SearchForm
+                :entity="entity"
+                @updated="handleUpdated"
             />
         </div>
-
         <hr>
+    </template>
 
-        <template v-if="entity">
-            <NuxtPage :entity="entity" />
-        </template>
-    </div>
+    <template v-if="entity">
+        <NuxtPage
+            :entity="entity"
+            @updated="handleUpdated"
+        />
+    </template>
 </template>

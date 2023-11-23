@@ -44,9 +44,9 @@ export type PatientFilterVitalStatus = Coding<'alive' | 'deceased'>[];
  * @see https://github.com/KohlbacherLab/dnpm-dip-service-base/blob/main/src/main/scala/de/dnpm/dip/service/query/PatientFilter.scala
  */
 export type PatientFilter = {
-    gender: PatientFilterGender,
-    ageRange: PatientFilterAgeRange,
-    vitalStatus: PatientFilterVitalStatus
+    gender?: PatientFilterGender,
+    ageRange?: PatientFilterAgeRange,
+    vitalStatus?: PatientFilterVitalStatus
 };
 
 export type PatientFilterInput = {

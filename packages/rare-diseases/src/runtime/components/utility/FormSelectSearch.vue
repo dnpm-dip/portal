@@ -60,7 +60,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import {
-    computed, defineComponent, ref, watch,
+    computed, defineComponent, ref, toRef, watch,
 } from 'vue';
 import FormSelectSearchEntry from './FormSelectSearchEntry.vue';
 
@@ -101,6 +101,19 @@ export default defineComponent({
         const currentIndex = ref(-1);
 
         const selected = ref<Option[]>([]);
+
+        if (Array.isArray(props.modelValue)) {
+            selected.value = props.modelValue;
+        } else {
+            const index = props.options.findIndex(
+                (el) => el.id === props.modelValue,
+            );
+            if (index !== -1) {
+                selected.value = [props.options[index]];
+                q.value = props.options[index].value;
+            }
+        }
+
         const isMulti = computed(() => typeof props.modelValue !== 'string');
 
         const items = computed(() => {

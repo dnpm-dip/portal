@@ -13,7 +13,7 @@ import type {
 
 export function createResourceRecordManager<
     T extends ObjectLiteral = ObjectLiteral,
->(context: ResourceRecordManagerContext<T>) : ResourceRecordManagerOutput {
+>(context: ResourceRecordManagerContext<T>) : ResourceRecordManagerOutput<T> {
     const busy : Ref<boolean> = ref(false);
     const data : Ref<T | undefined> = ref(undefined);
     const error : Ref<Error | undefined> = ref(undefined);
@@ -24,6 +24,10 @@ export function createResourceRecordManager<
 
     const load : ResourceRecordLoadFn = async () => {
         if (busy.value) return;
+
+        if (context.data) {
+            return;
+        }
 
         busy.value = true;
 
@@ -82,6 +86,8 @@ export function createResourceRecordManager<
     };
 
     return {
+        data,
+        busy,
         load,
         render,
     };

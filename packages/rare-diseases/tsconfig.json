@@ -7,6 +7,14 @@
             ],
             "@dnpm-dip/core/*": [
                 "../core/src/*"
+            ],
+            "#imports": [
+                "./.nuxt/imports",
+                "./imports"
+            ],
+            "#components": [
+                "./nuxt/components",
+                "./components"
             ]
         }
     }
