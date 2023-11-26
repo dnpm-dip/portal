@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { PropType } from 'vue';
-import { defineNuxtComponent } from '#imports';
+import { defineNuxtComponent, useRoute } from '#imports';
 import SearchForm from '../../../../components/core/SearchForm.vue';
 import type { RDQuerySession } from '../../../../domains';
 
@@ -13,11 +13,13 @@ export default defineNuxtComponent({
         },
     },
     setup(_props, { emit }) {
+        const route = useRoute();
         const handleUpdated = (entity: RDQuerySession) => {
             emit('updated', entity);
         };
 
         return {
+            preparedQueryId: route.query.preparedQueryId,
             handleUpdated,
         };
     },
@@ -25,7 +27,9 @@ export default defineNuxtComponent({
 </script>
 <template>
     <SearchForm
-        :entity="entity"
+        :criteria="entity.criteria"
+        :query-id="entity.id"
+        :prepared-query-id="preparedQueryId"
         @updated="handleUpdated"
     />
 </template>

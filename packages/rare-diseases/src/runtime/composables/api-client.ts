@@ -1,5 +1,5 @@
 import type { APIClient } from '@dnpm-dip/core';
-import { useNuxtApp } from '#app';
+import { useNuxtApp } from '#imports';
 import type { RDAPIClient } from '../core/api-client';
 
 export function useAPIClient() {

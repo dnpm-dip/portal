@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue';
+import { defineComponent, toRef } from 'vue';
 import type { APIClient } from '../../core';
 import { createResourceRecordManager, injectAPIClient } from '../../core';
 
@@ -15,10 +15,12 @@ export default defineComponent({
     },
     async setup(props, setup) {
         const apiClient : APIClient = injectAPIClient();
+        const id = toRef(props, 'code');
 
         const manager = createResourceRecordManager({
-            load: () => apiClient.codeSystem.getOne(props.code),
+            load: (id) => apiClient.codeSystem.getOne(id),
             slots: setup.slots,
+            id,
         });
 
         if (props.lazyLoad) {

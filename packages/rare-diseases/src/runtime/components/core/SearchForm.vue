@@ -5,10 +5,13 @@ import type {
 import type { FormSelectOption } from '@vue-layout/form-controls';
 import { VCFormGroup, VCFormInput } from '@vue-layout/form-controls';
 import type { PropType } from 'vue';
-import { defineComponent, reactive, ref } from 'vue';
-import { CodeSystemEntity, ValueSetEntity, createResourceRecordManager } from '@dnpm-dip/core';
+import {
+    defineComponent, reactive, ref, toRef, watch,
+} from 'vue';
+import { CodeSystemEntity, ValueSetEntity } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
 import type {
+    RDPreparedQuery,
     RDQueryCriteria,
     RDQueryCriteriaVariant,
     RDQuerySession,
@@ -29,27 +32,33 @@ export default defineComponent({
         ValueSetEntity,
     },
     props: {
-        entity: {
-            type: Object as PropType<RDQuerySession>,
+        criteria: {
+            type: Object as PropType<RDQueryCriteria>,
         },
-        entityId: {
+        queryId: {
+            type: String,
+        },
+        preparedQuery: {
+            type: Object as PropType<RDPreparedQuery>,
+        },
+        preparedQueryId: {
             type: String,
         },
     },
-    emits: ['failed', 'created', 'updated'],
-    async setup(props, { emit }) {
+    emits: [
+        'failed',
+
+        'preparedQueryCreated',
+        'preparedQueryUpdated',
+
+        'queryCreated',
+        'queryUpdated',
+    ],
+    async setup(props, { emit, expose }) {
         const apiClient = useRDAPIClient();
 
-        const manager = createResourceRecordManager<RDQuerySession>({
-            data: props.entity,
-            async load() {
-                if (props.entityId) {
-                    return apiClient.query.getOne(props.entityId);
-                }
-
-                return undefined;
-            },
-        });
+        const busy = ref(false);
+        const criteria = ref<RDQueryCriteria>({});
 
         const categories = ref<FormSelectOption[]>([]);
         const hpoTerms = ref<FormSelectOption[]>([]);
@@ -61,45 +70,100 @@ export default defineComponent({
             proteinChange: '',
         });
 
-        const parse = () => {
-            if (!manager.data.value || !manager.data.value.criteria) {
+        const preparedQueryId = ref<string | undefined>(undefined);
+        const preparedQueryEnabled = ref(false);
+        const preparedQueryName = ref('');
+
+        if (preparedQueryId.value) {
+            preparedQueryEnabled.value = true;
+        }
+
+        watch(preparedQueryId, (value) => {
+            preparedQueryEnabled.value = !!value;
+        });
+
+        const reset = async () => {
+            if (busy.value) return;
+
+            busy.value = true;
+
+            criteria.value = {};
+            categories.value = [];
+            hpoTerms.value = [];
+
+            variants.gene = '';
+            variants.cDNAChange = '';
+            variants.gDNAChange = '';
+            variants.proteinChange = '';
+
+            try {
+                if (props.criteria) {
+                    criteria.value = props.criteria;
+                }
+
+                if (props.preparedQuery) {
+                    preparedQueryId.value = props.preparedQuery.id;
+                    preparedQueryName.value = props.preparedQuery.name;
+                    if (!props.criteria) {
+                        criteria.value = props.preparedQuery.criteria;
+                    }
+                } else if (preparedQueryId.value) {
+                    const response = await apiClient.preparedQuery.getOne(preparedQueryId.value);
+                    if (!props.criteria) {
+                        criteria.value = response.criteria;
+                    }
+
+                    preparedQueryName.value = response.name;
+                } else if (props.queryId) {
+                    const response = await apiClient.query.getOne(props.queryId);
+                    criteria.value = response.criteria;
+                }
+            } catch (e) {
+                if (e instanceof Error) {
+                    emit('failed');
+                }
+
                 return;
             }
 
-            const criteria = manager.data.value?.criteria;
             if (
-                criteria?.variants &&
-                criteria.variants.length > 0
+                criteria.value.variants &&
+              criteria.value.variants.length > 0
             ) {
-                const keys = Object.keys(criteria.variants[0]) as RDVariantCriteria[];
+                const keys = Object.keys(criteria.value.variants[0]) as RDVariantCriteria[];
                 for (let i = 0; i < keys.length; i++) {
                     const key = keys[i];
-                    variants[key] = (criteria.variants[0] as RDQueryCriteriaVariant)[key]?.code;
+                    variants[key] = (criteria.value.variants[0] as RDQueryCriteriaVariant)[key]?.code;
                 }
             }
 
-            if (criteria?.hpoTerms) {
-                for (let i = 0; i < criteria.hpoTerms.length; i++) {
+            if (criteria.value.hpoTerms) {
+                for (let i = 0; i < criteria.value.hpoTerms.length; i++) {
                     hpoTerms.value.push({
-                        id: criteria.hpoTerms[i].code,
-                        value: criteria.hpoTerms[i].display || criteria.hpoTerms[i].code,
+                        id: criteria.value.hpoTerms[i].code,
+                        value: criteria.value.hpoTerms[i].display || criteria.value.hpoTerms[i].code,
                     });
                 }
             }
 
-            if (criteria?.diagnoses) {
-                for (let i = 0; i < criteria.diagnoses.length; i++) {
+            if (criteria.value.diagnoses) {
+                for (let i = 0; i < criteria.value.diagnoses.length; i++) {
                     categories.value.push({
-                        id: criteria.diagnoses[i].code,
-                        value: criteria.diagnoses[i].display || criteria.diagnoses[i].code,
+                        id: criteria.value.diagnoses[i].code,
+                        value: criteria.value.diagnoses[i].display || criteria.value.diagnoses[i].code,
                     });
                 }
             }
+
+            busy.value = false;
         };
 
+        expose({
+            reset,
+        });
+
         Promise.resolve()
-            .then(() => manager.load())
-            .then(() => parse());
+            .then(() => reset());
 
         const selectCategory = (item: FormSelectOption) => {
             const index = categories.value.findIndex((el) => el.id === item.id);
@@ -120,11 +184,11 @@ export default defineComponent({
         };
 
         const submit = async (mode: `${QueryRequestMode}`) => {
-            if (manager.busy.value) return;
+            if (busy.value) return;
 
-            manager.busy.value = true;
+            busy.value = true;
 
-            const criteria : RDQueryCriteria = {};
+            const payload : RDQueryCriteria = {};
             const keys = Object.keys(variants);
             if (keys.length > 0) {
                 let isValid = false;
@@ -140,58 +204,92 @@ export default defineComponent({
                 }
 
                 if (isValid) {
-                    criteria.variants = [group];
+                    payload.variants = [group];
                 }
             }
 
             if (hpoTerms.value.length > 0) {
-                criteria.hpoTerms = [];
+                payload.hpoTerms = [];
 
                 for (let i = 0; i < hpoTerms.value.length; i++) {
-                    criteria.hpoTerms.push({
+                    payload.hpoTerms.push({
                         code: `${hpoTerms.value[i].id}`,
                     });
                 }
             }
 
             if (categories.value.length > 0) {
-                criteria.diagnoses = [];
+                payload.diagnoses = [];
 
                 for (let i = 0; i < categories.value.length; i++) {
-                    criteria.diagnoses.push({
+                    payload.diagnoses.push({
                         code: `${categories.value[i].id}`,
                     });
                 }
             }
 
             try {
-                let data : RDQuerySession;
+                let preparedQuery : RDPreparedQuery | undefined;
 
-                if (manager.data.value) {
-                    data = await apiClient.query.update(manager.data.value.id, {
-                        criteria,
+                if (preparedQueryEnabled.value) {
+                    if (preparedQueryId.value) {
+                        preparedQuery = await apiClient.preparedQuery.update(
+                            preparedQueryId.value,
+                            {
+                                name: preparedQueryName.value,
+                                criteria: payload,
+                            },
+                        );
+
+                        emit('preparedQueryUpdated', preparedQuery);
+                    } else {
+                        preparedQuery = await apiClient.preparedQuery.create({
+                            name: preparedQueryName.value,
+                            criteria: payload,
+                        });
+
+                        preparedQueryId.value = preparedQuery.id;
+
+                        emit('preparedQueryCreated', preparedQuery);
+                    }
+                }
+            } catch (e) {
+                if (e instanceof Error) {
+                    emit('failed', e);
+                }
+
+                busy.value = false;
+                return;
+            }
+
+            try {
+                let query : RDQuerySession;
+
+                if (props.queryId) {
+                    query = await apiClient.query.update(props.queryId, {
+                        criteria: payload,
                         mode: {
                             code: mode,
                         },
                     });
 
-                    emit('created', data);
+                    emit('queryUpdated', query);
                 } else {
-                    data = await apiClient.query.submit({
-                        criteria,
+                    query = await apiClient.query.submit({
+                        criteria: payload,
                         mode: {
                             code: mode,
                         },
                     });
 
-                    emit('created', data);
+                    emit('queryCreated', query);
                 }
             } catch (e) {
                 if (e instanceof Error) {
                     emit('failed', e);
                 }
             } finally {
-                manager.busy.value = false;
+                busy.value = false;
             }
         };
 
@@ -206,7 +304,7 @@ export default defineComponent({
         });
 
         return {
-            busy: manager.busy,
+            busy,
             hpoTerms,
             categories,
 
@@ -218,6 +316,9 @@ export default defineComponent({
 
             transformCodings,
             transformConcepts,
+
+            preparedQueryEnabled,
+            preparedQueryName,
         };
     },
 });
@@ -364,11 +465,41 @@ export default defineComponent({
                         <label>Proteinänderung</label>
                         <VCFormInput
                             v-model="form.proteinChange"
+                            :disabled="busy"
                             placeholder="HGVS"
                         />
                     </VCFormGroup>
                 </div>
             </div>
+
+            <hr>
+
+            <div>
+                <VCFormInputCheckbox
+                    v-model="preparedQueryEnabled"
+                    class="form-switch"
+                    :group="true"
+                    :label="true"
+                >
+                    <template #label="{id}">
+                        <label
+                            :for="id"
+                            class="ms-1"
+                        >Speichern?</label>
+                    </template>
+                </VCFormInputCheckbox>
+                <template v-if="preparedQueryEnabled">
+                    <VCFormGroup>
+                        <label>Name</label>
+                        <VCFormInput
+                            v-model="preparedQueryName"
+                            placeholder="..."
+                        />
+                    </VCFormGroup>
+                </template>
+            </div>
+
+            <hr>
 
             <div>
                 <h6>Suchmodus</h6>
