@@ -1,7 +1,7 @@
 import {
     createResourceRecordManager,
 } from '@dnpm-dip/core';
-import { defineComponent } from 'vue';
+import { defineComponent, toRef } from 'vue';
 import { useRDAPIClient } from '#imports';
 
 export default defineComponent({
@@ -17,10 +17,12 @@ export default defineComponent({
     },
     async setup(props, setup) {
         const apiClient = useRDAPIClient();
+        const id = toRef(props, 'queryId');
 
         const manager = createResourceRecordManager({
-            load: () => apiClient.query.getSummary(props.queryId),
+            load: (id) => apiClient.query.getSummary(id),
             slots: setup.slots,
+            id,
         });
 
         if (props.lazy) {

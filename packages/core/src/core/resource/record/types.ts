@@ -1,36 +1,54 @@
-import type { Ref, Slots, VNodeChild } from 'vue';
+import type {
+    EmitsOptions, MaybeRef, Ref, SetupContext, Slots, VNodeChild,
+} from 'vue';
 import type { ObjectLiteral } from '../../../types';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
 import type { ResourceSlotName } from '../constants';
 
 export type ResourceRecordManagerLoadFn<
     DATA extends ObjectLiteral = ObjectLiteral,
-> = () => Promise<DATA | undefined>;
+> = (id: string) => Promise<DATA | undefined>;
+
+export type EmitFn<T = EmitsOptions> = SetupContext<T>['emit'];
+
+export type ResourceRecordEventsType<T> = {
+    failed: (data: Error) => true,
+    created: (data: T) => true,
+    deleted: (data: T) => true,
+    updated: (data: T) => true,
+    resolved: (_data?: T) => true
+};
 
 export type ResourceRecordManagerContext<
     T extends ObjectLiteral = ObjectLiteral,
 > = {
-    data?: T,
+    id?: MaybeRef<string | undefined>,
+    data?: MaybeRef<T | undefined>,
     load: ResourceRecordManagerLoadFn<T>,
+    delete?: ((id: string) => Promise<T>),
     slots?: Slots,
-    expose?: (exposed?: Record<string, any>) => void
+    expose?: (exposed?: Record<string, any>) => void,
+    emit?: EmitFn<ResourceRecordEventsType<T>>
 };
 
 export type ResourceRecordManagerOutput<
 T extends ObjectLiteral = ObjectLiteral,
 > = {
-    load: ResourceRecordLoadFn,
+    load: ResourceRecordFn,
+    delete : ResourceRecordFn,
     render: () => VNodeChild,
     data: Ref<T | undefined>,
-    busy: Ref<boolean>
+    busy: Ref<boolean>,
+    loading: Ref<boolean>
 };
 
-export type ResourceRecordLoadFn = () => Promise<any>;
+export type ResourceRecordFn = () => Promise<any>;
 
 export type ResourceRecordDefaultSlotProps<T> = {
     data: T,
     busy: boolean,
-    load: ResourceRecordLoadFn
+    load: ResourceRecordFn,
+    delete: ResourceRecordFn
 };
 
 export type ResourceRecordSlots<T> = {

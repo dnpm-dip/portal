@@ -1,4 +1,6 @@
-import type { MaybeRef, Slots, VNodeChild } from 'vue';
+import type {
+    MaybeRef, Ref, Slots, VNodeChild,
+} from 'vue';
 import type { ObjectLiteral } from '../../../types';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
 import type { ResourceSlotName } from '../constants';
@@ -30,7 +32,10 @@ export type ResourceCollectionManagerOutput<
     T extends ObjectLiteral = ObjectLiteral,
 > = {
     load: ResourceCollectionManagerLoadFn<T>,
-    render: () => VNodeChild
+    render: () => VNodeChild,
+    data: Ref<T[]>,
+    busy: Ref<boolean>,
+    error: Ref<Error | null>
 };
 
 export type ResourceCollectionManagerLoadFn<
@@ -45,7 +50,8 @@ export type ResourceCollectionDefaultSlotProps<T> = {
     total?: number,
     limit?: number,
     offset?: number,
-    load: ResourceCollectionLoadFn
+    load: ResourceCollectionLoadFn,
+    deleted: (data: T) => void
 };
 
 export type ResourceCollectionSlots<T> = {

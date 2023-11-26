@@ -11,6 +11,7 @@ import type {
     ResourceCollectionManagerContext,
     ResourceCollectionManagerOutput,
 } from './types';
+import { hasOwnProperty } from '../../../utils';
 
 export function createResourceCollectionManager<
     T extends ObjectLiteral = ObjectLiteral,
@@ -87,6 +88,24 @@ export function createResourceCollectionManager<
         }
     };
 
+    const handleDeleted = (entity: T) => {
+        if (!hasOwnProperty(entity, 'id') || typeof entity.id !== 'string') {
+            return;
+        }
+
+        const index = data.value.findIndex((el) => {
+            if (hasOwnProperty(el, 'id')) {
+                return el.id === entity.id;
+            }
+            return false;
+        });
+
+        if (index !== -1) {
+            data.value.splice(index, 1);
+            total.value--;
+        }
+    };
+
     if (typeof context.expose !== 'undefined') {
         context.expose({
             load,
@@ -128,6 +147,7 @@ export function createResourceCollectionManager<
                     limit: limit.value,
                     offset: offset.value,
                     load,
+                    deleted: handleDeleted,
                 } satisfies ResourceCollectionDefaultSlotProps<T>,
                 context.slots,
             ));
@@ -137,6 +157,9 @@ export function createResourceCollectionManager<
     };
 
     return {
+        error,
+        data,
+        busy,
         load,
         render,
     };
