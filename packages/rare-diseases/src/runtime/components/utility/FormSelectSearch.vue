@@ -49,7 +49,10 @@
                 :items="selected"
                 :toggle="toggle"
             >
-                <template v-for="item in selected">
+                <template
+                    v-for="item in selected"
+                    :key="item.id"
+                >
                     {{ item.value }}
                 </template>
             </slot>
@@ -102,17 +105,27 @@ export default defineComponent({
 
         const selected = ref<Option[]>([]);
 
-        if (Array.isArray(props.modelValue)) {
-            selected.value = props.modelValue;
-        } else {
-            const index = props.options.findIndex(
-                (el) => el.id === props.modelValue,
-            );
-            if (index !== -1) {
-                selected.value = [props.options[index]];
-                q.value = props.options[index].value;
+        const modelValue = toRef(props, 'modelValue');
+
+        const reset = () => {
+            if (Array.isArray(props.modelValue)) {
+                selected.value = props.modelValue;
+            } else {
+                const index = props.options.findIndex(
+                    (el) => el.id === props.modelValue,
+                );
+                if (index !== -1) {
+                    selected.value = [props.options[index]];
+                    q.value = props.options[index].value;
+                }
             }
-        }
+        };
+
+        reset();
+
+        watch(modelValue, () => {
+            reset();
+        }, { deep: true });
 
         const isMulti = computed(() => typeof props.modelValue !== 'string');
 
