@@ -6,10 +6,11 @@ import {
 import SearchForm from './SearchForm.vue';
 import PreparedQueryList from './PreparedQueryList';
 import PreparedQueryEntity from './PreparedQueryEntity';
-import type { RDPreparedQuery, RDQueryCriteria } from '../../domains';
+import type { RDPreparedQuery, RDQueryCriteria, RDQuerySession } from '../../domains';
 
 export default defineComponent({
     components: { PreparedQueryEntity, PreparedQueryList, SearchForm },
+    emits: ['submitted'],
     setup(props, setup) {
         const searchEl = ref(null) as Ref<null | typeof SearchForm>;
         const preparedQuery = ref<RDPreparedQuery | undefined>(undefined);
@@ -48,7 +49,27 @@ export default defineComponent({
             reset();
         };
 
-        const handleDeleted = (data: RDPreparedQuery) => {
+        const handleQueryCreated = (data: RDQuerySession) => {
+            setup.emit('submitted', {
+                queryId: data.id,
+                criteria: data.criteria,
+                ...(preparedQuery.value ? { preparedQueryId: preparedQueryId.value } : {}),
+            });
+        };
+
+        const handleQueryUpdated = (data: RDQuerySession) => {
+            setup.emit('submitted', {
+                queryId: data.id,
+                criteria: data.criteria,
+                ...(preparedQuery.value ? { preparedQueryId: preparedQueryId.value } : {}),
+            });
+        };
+
+        const handlePreparedQueryCreated = (data: RDPreparedQuery) => {
+            preparedQuery.value = data;
+        };
+
+        const handlePreparedQueryDeleted = (data: RDPreparedQuery) => {
             if (
                 preparedQuery.value &&
                 preparedQuery.value.id === data.id
@@ -62,7 +83,10 @@ export default defineComponent({
 
         return {
             criteria,
-            handleDeleted,
+            handleQueryCreated,
+            handleQueryUpdated,
+            handlePreparedQueryCreated,
+            handlePreparedQueryDeleted,
             searchEl,
             togglePreparedQuery,
             preparedQuery,
@@ -78,11 +102,14 @@ export default defineComponent({
                 ref="searchEl"
                 :criteria="criteria"
                 :prepared-query="preparedQuery"
+                @prepared-query-created="handlePreparedQueryCreated"
+                @query-created="handleQueryCreated"
+                @query-updated="handleQueryUpdated"
             />
         </div>
         <div class="col-4">
             <h6><i class="fa fa-history" /> Verlauf</h6>
-            <PreparedQueryList @deleted="handleDeleted">
+            <PreparedQueryList @deleted="handlePreparedQueryDeleted">
                 <template #default="props">
                     <template v-if="props.data.length > 0">
                         <div class="list">

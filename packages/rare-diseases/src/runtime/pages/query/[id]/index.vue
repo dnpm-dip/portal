@@ -3,7 +3,7 @@ import type { URLQueryRecord } from '@dnpm-dip/core';
 import { Nav } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { provide, ref } from 'vue';
-import { defineNuxtComponent } from '#imports';
+import { defineNuxtComponent, useRoute } from '#imports';
 import SearchForm from '../../../components/core/SearchForm.vue';
 import type { RDQuerySession } from '../../../domains';
 
@@ -19,6 +19,8 @@ export default defineNuxtComponent({
         },
     },
     setup(props, { emit }) {
+        const route = useRoute();
+
         const navItems = [
             {
                 name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
@@ -49,6 +51,7 @@ export default defineNuxtComponent({
             navItems,
             displayed,
             toggleDisplay,
+            preparedQueryId: route.query.preparedQueryId,
         };
     },
 });
@@ -89,8 +92,10 @@ export default defineNuxtComponent({
     <template v-if="displayed">
         <div class="entity-card">
             <SearchForm
-                :entity="entity"
-                @updated="handleUpdated"
+                :query-id="entity.id"
+                :criteria="entity.criteria"
+                :prepared-query-id="preparedQueryId"
+                @query-updated="handleUpdated"
             />
         </div>
         <hr>

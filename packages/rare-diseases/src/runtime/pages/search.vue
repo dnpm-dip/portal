@@ -5,7 +5,7 @@ import { ref } from 'vue';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/SearchForm.vue';
 import SearchSVG from '../components/svg/SearchSVG';
-import type { RDPreparedQuery, RDQuerySession } from '../domains';
+import type { RDQueryCriteria } from '../domains';
 import PreparedQueryForm from '../components/core/PreparedQueryForm.vue';
 
 export default defineNuxtComponent({
@@ -26,23 +26,26 @@ export default defineNuxtComponent({
             error.value = e;
         };
 
-        const handleCreated = async (data : {query: RDQuerySession, preparedQuery?: RDPreparedQuery}) => {
+        const handleSubmitted = async (data : {
+            criteria: RDQueryCriteria,
+            queryId: string,
+            preparedQueryId?: string
+        }) => {
             error.value = null;
 
             let query : Record<string, any> | undefined;
-            if (data.preparedQuery) {
+            if (data.preparedQueryId) {
                 query = {
-                    preparedQueryId: data.preparedQuery.id,
+                    preparedQueryId: data.preparedQueryId,
                 };
             }
 
-            await navigateTo({ path: `/rd/query/${data.query.id}`, query });
+            await navigateTo({ path: `/rd/query/${data.queryId}`, query });
         };
 
         return {
             error,
-            handleCreated,
-            handleFailed,
+            handleSubmitted,
         };
     },
 });
@@ -55,8 +58,7 @@ export default defineNuxtComponent({
         </div>
 
         <PreparedQueryForm
-            @created="handleCreated"
-            @failed="handleFailed"
+            @submitted="handleSubmitted"
         />
 
         <template v-if="error">
