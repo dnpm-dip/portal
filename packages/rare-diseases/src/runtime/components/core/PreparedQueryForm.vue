@@ -108,7 +108,7 @@ export default defineComponent({
             />
         </div>
         <div class="col-4">
-            <h6><i class="fa fa-history" /> Verlauf</h6>
+            <h6><i class="fa fa-history" /> Vordefinierte Anfragen</h6>
             <PreparedQueryList @deleted="handlePreparedQueryDeleted">
                 <template #default="props">
                     <template v-if="props.data.length > 0">
