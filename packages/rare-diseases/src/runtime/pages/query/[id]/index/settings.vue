@@ -27,9 +27,9 @@ export default defineNuxtComponent({
 </script>
 <template>
     <SearchForm
-        :criteria="entity.criteria"
         :query-id="entity.id"
+        :criteria="entity.criteria"
         :prepared-query-id="preparedQueryId"
-        @updated="handleUpdated"
+        @query-updated="handleUpdated"
     />
 </template>
