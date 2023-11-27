@@ -101,7 +101,7 @@ export class QueryAPI extends BaseAPI {
 
         const qs = parts.length > 0 ? `?${parts.join('&')}` : '';
 
-        const response = await this.client.get(`rd/queries/${id}/patients${qs}`);
+        const response = await this.client.get(`rd/queries/${id}/patient-matches${qs}`);
         return response.data;
     }
 
