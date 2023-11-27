@@ -1,4 +1,5 @@
 import type { Coding } from '../coding';
+import type { MinMaxRange } from '../utility';
 
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-core/blob/main/src/main/scala/de/dnpm/dip/model/Patient.scala
@@ -34,10 +35,7 @@ export type PatientMatch<Criteria = any> = {
 };
 
 export type PatientFilterGender = Coding<'male' | 'female' | 'other' | 'unknown'>[];
-export type PatientFilterAgeRange = {
-    min: number,
-    max: number
-};
+export type PatientFilterAgeRange = MinMaxRange;
 export type PatientFilterVitalStatus = Coding<'alive' | 'deceased'>[];
 
 /**
