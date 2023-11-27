@@ -48,8 +48,21 @@ export default defineComponent({
             reset();
         };
 
+        const handleDeleted = (data: RDPreparedQuery) => {
+            if (
+                preparedQuery.value &&
+                preparedQuery.value.id === data.id
+            ) {
+                preparedQuery.value = undefined;
+                criteria.value = undefined;
+
+                reset();
+            }
+        };
+
         return {
             criteria,
+            handleDeleted,
             searchEl,
             togglePreparedQuery,
             preparedQuery,
@@ -66,11 +79,10 @@ export default defineComponent({
                 :criteria="criteria"
                 :prepared-query="preparedQuery"
             />
-            {{ preparedQuery }}
         </div>
         <div class="col-4">
-            <h6>History</h6>
-            <PreparedQueryList>
+            <h6><i class="fa fa-history" /> Verlauf</h6>
+            <PreparedQueryList @deleted="handleDeleted">
                 <template #default="props">
                     <template v-if="props.data.length > 0">
                         <div class="list">

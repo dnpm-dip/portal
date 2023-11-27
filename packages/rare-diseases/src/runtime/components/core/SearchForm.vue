@@ -96,6 +96,9 @@ export default defineComponent({
             variants.gDNAChange = '';
             variants.proteinChange = '';
 
+            preparedQueryId.value = undefined;
+            preparedQueryName.value = '';
+
             try {
                 if (props.criteria) {
                     criteria.value = props.criteria;
@@ -107,12 +110,13 @@ export default defineComponent({
                     if (!props.criteria) {
                         criteria.value = props.preparedQuery.criteria;
                     }
-                } else if (preparedQueryId.value) {
-                    const response = await apiClient.preparedQuery.getOne(preparedQueryId.value);
+                } else if (props.preparedQueryId) {
+                    const response = await apiClient.preparedQuery.getOne(props.preparedQueryId);
                     if (!props.criteria) {
                         criteria.value = response.criteria;
                     }
 
+                    preparedQueryId.value = props.preparedQueryId;
                     preparedQueryName.value = response.name;
                 } else if (props.queryId) {
                     const response = await apiClient.query.getOne(props.queryId);
