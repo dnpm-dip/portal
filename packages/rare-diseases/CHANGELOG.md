@@ -1,5 +1,14 @@
 # @dnpm-dip/rare-diseases
 
+## 0.0.5
+
+### Patch Changes
+
+- [`c03fb9e`](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/c03fb9e3388bef2c6098044b23d5a229e8d88e49) Thanks [@tada5hi](https://github.com/tada5hi)! - next patch release
+
+- Updated dependencies [[`c03fb9e`](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/c03fb9e3388bef2c6098044b23d5a229e8d88e49)]:
+  - @dnpm-dip/core@0.0.5
+
 ## 0.0.4
 
 ### Patch Changes
