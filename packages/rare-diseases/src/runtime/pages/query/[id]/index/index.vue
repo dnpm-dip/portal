@@ -16,13 +16,6 @@ export default defineNuxtComponent({
         },
     },
     setup() {
-        const handleLabelClicked = (label: LegendItem) => {
-            console.log(label);
-        };
-
-        return {
-            handleLabelClicked,
-        };
     },
 });
 </script>
@@ -39,7 +32,7 @@ export default defineNuxtComponent({
                             </h6>
                             <QuerySummaryDistributionDoughnut
                                 style="max-height: 390px"
-                                :items="props.data.siteDistribution"
+                                :items="props.data.distributions.site"
                             />
                         </div>
                     </div>
@@ -50,7 +43,7 @@ export default defineNuxtComponent({
                             </h6>
                             <QuerySummaryDistributionDoughnut
                                 style="max-height: 390px"
-                                :items="props.data.genderDistribution"
+                                :items="props.data.distributions.gender"
                             />
                         </div>
                     </div>
@@ -61,7 +54,7 @@ export default defineNuxtComponent({
                             </h6>
                             <QuerySummaryDistributionBar
                                 style="max-height: 390px"
-                                :items="props.data.ageDistribution"
+                                :items="props.data.distributions.age"
                             />
                         </div>
                     </div>
@@ -75,7 +68,7 @@ export default defineNuxtComponent({
                                 Verteilung von HPOTermen
                             </h6>
                             <QuerySummaryDistributionBar
-                                :items="props.data.hpoTermDistribution"
+                                :items="props.data.distributions.hpoTerm"
                             />
                         </div>
                     </div>
@@ -84,18 +77,10 @@ export default defineNuxtComponent({
                             <h6 class="text-center">
                                 Verteilung von Diagnose Kategorien
                             </h6>
-                            <QuerySummaryDistributionBar :items="props.data.diagnosisCategoryDistribution" />
+                            <QuerySummaryDistributionBar :items="props.data.distributions.diseaseCategory" />
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <h5>Diagnose Kategorien pro Variante</h5>
-                <div class="row" />
-            </div>
-            <div>
-                <h5>HPO Terme pro Variante</h5>
-                <div class="row" />
             </div>
         </template>
     </QuerySummaryEntity>

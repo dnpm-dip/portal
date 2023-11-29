@@ -43,11 +43,11 @@ export type ConceptsCount<CONCEPT = any> = ConceptCount<CONCEPT>[];
 export type RDQuerySummary = {
     id: string,
     numPatients: number,
-    siteDistribution: ConceptsCount<Coding>,
-    genderDistribution: ConceptsCount<Coding>,
-    ageDistribution: ConceptsCount<MinMaxRange>,
-
-    hpoTermDistribution: ConceptsCount<Coding>,
-    diagnosisCategoryDistribution: ConceptsCount<Coding>
-
+    distributions: {
+        site: ConceptsCount<Coding>,
+        gender: ConceptsCount<Coding>,
+        age: ConceptsCount<MinMaxRange>,
+        hpoTerm: ConceptsCount<Coding>,
+        diseaseCategory: ConceptsCount<Coding>
+    }
 };
