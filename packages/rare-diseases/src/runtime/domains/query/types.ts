@@ -40,6 +40,14 @@ export type ConceptCount<CONCEPT = any> = {
 
 export type ConceptsCount<CONCEPT = any> = ConceptCount<CONCEPT>[];
 
+export type VariantDistribution = {
+    key: Coding,
+    value: {
+        diseaseCategory: ConceptsCount<Coding>,
+        hpoTerm: ConceptsCount<Coding>
+    }
+};
+
 export type RDQuerySummary = {
     id: string,
     numPatients: number,
@@ -49,5 +57,8 @@ export type RDQuerySummary = {
         age: ConceptsCount<MinMaxRange>,
         hpoTerm: ConceptsCount<Coding>,
         diseaseCategory: ConceptsCount<Coding>
+    },
+    groupedDistributions: {
+        variant: VariantDistribution[]
     }
 };

@@ -1,4 +1,5 @@
 export type NavItem = {
+    id?: string,
     name: string,
     icon: string,
     urlSuffix: string

@@ -96,6 +96,15 @@ export class QueryAPI extends BaseAPI {
                         parts.push(`vitalStatus=${filters.vitalStatus[i].code}`);
                     }
                 }
+
+                if (
+                    filters.site &&
+                    filters.site.length > 0
+                ) {
+                    for (let i = 0; i < filters.site.length; i++) {
+                        parts.push(`site=${filters.site[i].code}`);
+                    }
+                }
             }
         }
 

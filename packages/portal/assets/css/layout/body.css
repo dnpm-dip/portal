@@ -76,7 +76,7 @@ Content
     width: 100%;
 }
 
-.content-container {
+.content-main {
     flex-grow: 3;
     height: 100%;
 }

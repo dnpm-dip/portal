@@ -28,6 +28,9 @@ export default defineComponent({
         const vitalStatus = ref<string[]>([]);
         const vitalStatusChanged = ref(false);
 
+        const site = ref<string[]>([]);
+        const siteChanged = ref(false);
+
         const age = ref({
             min: 0,
             max: 100,
@@ -56,8 +59,13 @@ export default defineComponent({
                 };
             }
 
+            if (props.availableFilters.site) {
+                site.value = props.availableFilters.site.map((el) => el.code);
+            }
+
             genderChanged.value = false;
             vitalStatusChanged.value = false;
+            siteChanged.value = false;
             ageChanged.value = false;
             isSubmitted.value = false;
         };
@@ -133,6 +141,32 @@ export default defineComponent({
             }
         }, { deep: true });
 
+        watch(site, (value) => {
+            if (!props.availableFilters.site) {
+                return;
+            }
+            if (value.length !== props.availableFilters.site.length) {
+                siteChanged.value = true;
+                isSubmitted.value = false;
+                return;
+            }
+
+            let changed : boolean = false;
+            let index : number;
+            for (let i = 0; i < value.length; i++) {
+                index = props.availableFilters.site.findIndex((el) => el.code === value[i]);
+                if (index === -1) {
+                    changed = true;
+                    break;
+                }
+            }
+
+            siteChanged.value = changed;
+            if (changed) {
+                isSubmitted.value = false;
+            }
+        }, { deep: true });
+
         const submit = () => {
             if (props.busy) return;
 
@@ -166,6 +200,12 @@ export default defineComponent({
                 }));
             }
 
+            if (siteChanged.value) {
+                data.site = site.value.map((el) => ({
+                    code: el,
+                }));
+            }
+
             emit('submit', data);
         };
 
@@ -173,6 +213,7 @@ export default defineComponent({
             age,
             gender,
             vitalStatus,
+            site,
 
             hasChanged,
             isSubmitted,
@@ -223,6 +264,28 @@ export default defineComponent({
                     <div class="form-check">
                         <VCFormInputCheckbox
                             v-model="vitalStatus"
+                            :label="true"
+                            :label-content="(item.display || item.code)"
+                            :value="item.code"
+                        />
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div
+            v-if="availableFilters.site"
+            class="mb-3"
+        >
+            <h6><i class="fas fa-hospital" /> Standort</h6>
+
+            <div>
+                <template
+                    v-for="item in availableFilters.site"
+                    :key="item.code"
+                >
+                    <div class="form-check">
+                        <VCFormInputCheckbox
+                            v-model="site"
                             :label="true"
                             :label-content="(item.display || item.code)"
                             :value="item.code"
