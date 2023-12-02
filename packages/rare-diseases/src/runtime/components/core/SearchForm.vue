@@ -197,7 +197,7 @@ export default defineComponent({
 
         const transformCodings = (coding: ValueSetCoding) => ({
             id: coding.code,
-            value: coding.display,
+            value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
         const transformConcepts = (concept: CodeSystemConcept) => ({
