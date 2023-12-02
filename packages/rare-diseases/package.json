@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/rare-diseases",
     "type": "module",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "private": true,
     "description": "Rare Diseases module for the portal of DNPM DIP.",
     "repository": {
@@ -33,7 +33,7 @@
         "test:watch": "vitest watch"
     },
     "dependencies": {
-        "@dnpm-dip/core": "^0.0.5",
+        "@dnpm-dip/core": "^0.0.6",
         "@nuxt/kit": "^3.8.0"
     },
     "devDependencies": {

@@ -17,8 +17,8 @@
         "start": "node .output/server/index.mjs"
     },
     "devDependencies": {
-        "@dnpm-dip/core": "^0.0.5",
-        "@dnpm-dip/rare-diseases": "^0.0.5",
+        "@dnpm-dip/core": "^0.0.6",
+        "@dnpm-dip/rare-diseases": "^0.0.6",
         "@nuxt/devtools": "latest",
         "@fortawesome/fontawesome-free": "^6.4.2",
         "@vue-layout/navigation": "^5.0.0",
