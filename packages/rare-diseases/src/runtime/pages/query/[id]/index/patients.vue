@@ -1,19 +1,23 @@
 <script lang="ts">
 import type { PaginationMeta } from '@vue-layout/pagination';
 import { VCPagination } from '@vue-layout/pagination';
-import type { PatientFilterInput } from '@dnpm-dip/core';
+import type { PatientFilterInput, URLQueryRecord } from '@dnpm-dip/core';
 import { Nav } from '@dnpm-dip/core';
 import type { PropType, Ref } from 'vue';
 import { ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
+import QueryDiagnosisFilter from '../../../../components/core/QueryDiagnosisFilter.vue';
+import QueryHPOFilter from '../../../../components/core/QueryHPOFilter.vue';
 import QueryPatientMatchEntity from '../../../../components/core/QueryPatientMatchEntity.vue';
 import QueryPatientMatchList from '../../../../components/core/QueryPatientMatchList';
 import type { RDQuerySession } from '../../../../domains';
-import QueryPatientMatchFilters from '../../../../components/core/QueryPatientMatchFilters.vue';
+import QueryPatientFilters from '../../../../components/core/QueryPatientFilters.vue';
 
 export default defineNuxtComponent({
     components: {
-        QueryPatientMatchFilters,
+        QueryHPOFilter,
+        QueryDiagnosisFilter,
+        QueryPatientFilters,
         QueryPatientMatchEntity,
         QueryPatientMatchList,
         Nav,
@@ -27,9 +31,15 @@ export default defineNuxtComponent({
     },
     setup() {
         const listRef = ref(null) as Ref<typeof QueryPatientMatchList | null>;
-        const applyFilters = (input: PatientFilterInput) => {
+        let filterStack : URLQueryRecord = {};
+        const applyFilters = (input: URLQueryRecord) => {
+            filterStack = {
+                ...filterStack,
+                ...input,
+            };
+
             if (listRef.value) {
-                listRef.value.load({ filters: input });
+                listRef.value.load({ filters: filterStack });
             }
         };
 
@@ -90,9 +100,24 @@ export default defineNuxtComponent({
                         />
                     </div>
                     <div class="col-3">
-                        <QueryPatientMatchFilters
+                        <QueryPatientFilters
+                            class="mb-3"
                             :busy="props.busy"
                             :available-filters="entity.filters.patientFilter"
+                            @submit="applyFilters"
+                        />
+
+                        <QueryDiagnosisFilter
+                            class="mb-3"
+                            :busy="props.busy"
+                            :available-filters="entity.filters.diagnosisFilter"
+                            @submit="applyFilters"
+                        />
+
+                        <QueryHPOFilter
+                            class="mb-3"
+                            :busy="props.busy"
+                            :available-filters="entity.filters.hpoFilter"
                             @submit="applyFilters"
                         />
                     </div>

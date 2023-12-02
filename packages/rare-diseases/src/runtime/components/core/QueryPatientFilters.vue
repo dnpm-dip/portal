@@ -3,7 +3,7 @@ import type { PropType } from 'vue';
 import {
     computed, defineComponent, ref, watch,
 } from 'vue';
-import type { PatientFilter, PatientFilterInput } from '@dnpm-dip/core';
+import type { PatientFilter, URLQueryRecord } from '@dnpm-dip/core';
 import FormRangeSlider from '../utility/form-range-slider/FormRangeSlider.vue';
 
 export default defineComponent({
@@ -172,38 +172,38 @@ export default defineComponent({
 
             isSubmitted.value = true;
 
-            const data : PatientFilterInput = {};
+            const data : URLQueryRecord = {};
 
             if (ageChanged.value) {
-                data.ageRange = {};
+                data.age = {};
 
                 if (props.availableFilters.ageRange) {
                     if (age.value.min !== props.availableFilters.ageRange.min) {
-                        data.ageRange.min = age.value.min;
+                        data.age.min = age.value.min;
                     }
 
                     if (age.value.max !== props.availableFilters.ageRange.max) {
-                        data.ageRange.max = age.value.max;
+                        data.age.max = age.value.max;
                     }
                 }
             }
 
             if (vitalStatusChanged.value) {
-                data.vitalStatus = vitalStatus.value.map((el) => ({
-                    code: el,
-                }));
+                data.vitalStatus = vitalStatus.value;
+            } else {
+                data.vitalStatus = [];
             }
 
             if (genderChanged.value) {
-                data.gender = gender.value.map((el) => ({
-                    code: el,
-                }));
+                data.gender = gender.value;
+            } else {
+                data.gender = [];
             }
 
             if (siteChanged.value) {
-                data.site = site.value.map((el) => ({
-                    code: el,
-                }));
+                data.site = site.value;
+            } else {
+                data.site = [];
             }
 
             emit('submit', data);
@@ -228,6 +228,11 @@ export default defineComponent({
 </script>
 <template>
     <div class="entity-card">
+        <div class="text-center">
+            <h5 class="text-muted">
+                Patient
+            </h5>
+        </div>
         <div
             v-if="availableFilters.gender"
             class="mb-3"

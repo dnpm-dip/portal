@@ -58,7 +58,7 @@ export default defineNuxtComponent({
                 >
                     <i class="fa fa-arrow-left" />
                 </NuxtLink>
-                Abfrage <small class="text-muted">{{ entity.id }}</small>
+                Abfrage
             </h4>
         </div>
         <div class="ms-auto">
