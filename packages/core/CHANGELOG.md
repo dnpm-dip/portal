@@ -1,5 +1,11 @@
 # @dnpm-dip/core
 
+## 0.0.6
+
+### Patch Changes
+
+- [`a0792b2`](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a0792b2919811f48b5b5a493fe40d863eef276d9) Thanks [@tada5hi](https://github.com/tada5hi)! - next patch release
+
 ## 0.0.5
 
 ### Patch Changes
