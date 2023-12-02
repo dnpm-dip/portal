@@ -13,6 +13,7 @@ export type Patient = {
     birthDate: string,
     dateOfDeath?: string,
     managingSite?: Coding,
+    vitalStatus?: Coding,
     healthInsurance?: unknown // todo: type is not defined ?!
 };
 
