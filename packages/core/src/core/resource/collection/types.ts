@@ -1,4 +1,4 @@
-import type { Slots, VNodeChild } from 'vue';
+import type { MaybeRef, Slots, VNodeChild } from 'vue';
 import type { ObjectLiteral } from '../../../types';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
 import type { ResourceSlotName } from '../constants';
@@ -22,7 +22,8 @@ export type ResourceCollectionManagerContext<
 > = {
     load: ResourceCollectionManagerLoadFn<T>,
     slots?: Slots,
-    expose?: (exposed?: Record<string, any>) => void
+    expose?: (exposed?: Record<string, any>) => void,
+    filters?: MaybeRef<ObjectLiteral | undefined>
 };
 
 export type ResourceCollectionManagerOutput<

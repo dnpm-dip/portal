@@ -1,6 +1,6 @@
 import { isEqual } from 'smob';
 import type { Ref, VNodeArrayChildren, VNodeChild } from 'vue';
-import { ref } from 'vue';
+import { isRef, ref, watch } from 'vue';
 import { renderError } from '../../error';
 import { hasNormalizedSlot, normalizeSlot } from '../../utils';
 import type { ObjectLiteral } from '../../../types';
@@ -23,6 +23,17 @@ export function createResourceCollectionManager<
     const data : Ref<T[]> = ref([]);
     const error : Ref<Error | null> = ref(null);
     const filters : Ref<ObjectLiteral | undefined> = ref(undefined);
+    if (context.filters) {
+        if (isRef(context.filters)) {
+            watch(context.filters, (value: ObjectLiteral) => {
+                filters.value = value;
+            }, { deep: true });
+
+            filters.value = context.filters.value as ObjectLiteral;
+        } else {
+            filters.value = context.filters;
+        }
+    }
 
     const load : ResourceCollectionLoadFn = async (record = {}) => {
         if (busy.value) return;
@@ -41,7 +52,9 @@ export function createResourceCollectionManager<
         if (typeof record.filters === 'undefined') {
             record.filters = filters.value;
         } else {
-            filters.value = record.filters;
+            filters.value = {
+                ...record.filters,
+            };
         }
 
         if (typeof record.limit === 'number') {

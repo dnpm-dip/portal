@@ -1,7 +1,7 @@
-import type { PatientMatch, ResourceCollectionSlots } from '@dnpm-dip/core';
+import type { ObjectLiteral, PatientMatch, ResourceCollectionSlots } from '@dnpm-dip/core';
 import { createResourceCollectionManager } from '@dnpm-dip/core';
-import type { SlotsType } from 'vue';
-import { defineComponent } from 'vue';
+import type { PropType, SlotsType } from 'vue';
+import { defineComponent, toRef } from 'vue';
 import { useRDAPIClient } from '../../composables';
 
 export default defineComponent({
@@ -10,10 +10,15 @@ export default defineComponent({
             type: String,
             required: true,
         },
+        filters: {
+            type: Object as PropType<ObjectLiteral>,
+        },
     },
     slots: Object as SlotsType<ResourceCollectionSlots<PatientMatch>>,
     setup(props, setup) {
         const api = useRDAPIClient();
+
+        const filters = toRef(props, 'filters');
 
         const manager = createResourceCollectionManager({
             load: async (meta) => {
@@ -26,6 +31,7 @@ export default defineComponent({
             },
             slots: setup.slots,
             expose: setup.expose,
+            filters,
         });
 
         return () => manager.render();

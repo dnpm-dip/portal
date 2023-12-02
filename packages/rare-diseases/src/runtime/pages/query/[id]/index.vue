@@ -1,7 +1,8 @@
 <script lang="ts">
+import type { URLQueryRecord } from '@dnpm-dip/core';
 import { Nav } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
-import { ref } from 'vue';
+import { provide, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import SearchForm from '../../../components/core/SearchForm.vue';
 import type { RDQuerySession } from '../../../domains';
@@ -29,6 +30,10 @@ export default defineNuxtComponent({
                 name: 'Einstellungen', icon: 'fa fa-cog', urlSuffix: '/settings',
             },
         ];
+
+        const queryFilters = ref<URLQueryRecord>({});
+
+        provide('queryFilters', queryFilters);
 
         const displayed = ref(false);
         const toggleDisplay = () => {

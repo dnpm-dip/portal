@@ -1,8 +1,8 @@
 <script lang="ts">
 import { Nav } from '@dnpm-dip/core';
-import type { NavItem } from '@dnpm-dip/core';
+import type { NavItem, URLQueryRecord } from '@dnpm-dip/core';
 import type { PropType, Ref } from 'vue';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import QuerySummaryEntity from '../../../../components/core/QuerySummaryEntity';
 import QuerySummaryDistributionBar from '../../../../components/core/QuerySummaryDistributionBar.vue';
@@ -36,6 +36,8 @@ export default defineNuxtComponent({
             },
         ];
 
+        const queryFilters = inject('queryFilters') as Ref<URLQueryRecord>;
+
         const navItemId = ref('default');
 
         const setNavItem = (item: NavItem) => {
@@ -43,6 +45,7 @@ export default defineNuxtComponent({
         };
 
         return {
+            queryFilters,
             navItems,
             navItemId,
             setNavItem,

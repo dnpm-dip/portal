@@ -1,10 +1,10 @@
 <script lang="ts">
 import type { PaginationMeta } from '@vue-layout/pagination';
 import { VCPagination } from '@vue-layout/pagination';
-import type { PatientFilterInput, URLQueryRecord } from '@dnpm-dip/core';
+import type { URLQueryRecord } from '@dnpm-dip/core';
 import { Nav } from '@dnpm-dip/core';
 import type { PropType, Ref } from 'vue';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import QueryDiagnosisFilter from '../../../../components/core/QueryDiagnosisFilter.vue';
 import QueryHPOFilter from '../../../../components/core/QueryHPOFilter.vue';
@@ -31,15 +31,15 @@ export default defineNuxtComponent({
     },
     setup() {
         const listRef = ref(null) as Ref<typeof QueryPatientMatchList | null>;
-        let filterStack : URLQueryRecord = {};
+        const queryFilters = inject('queryFilters') as Ref<URLQueryRecord>;
         const applyFilters = (input: URLQueryRecord) => {
-            filterStack = {
-                ...filterStack,
+            queryFilters.value = {
+                ...queryFilters.value,
                 ...input,
             };
 
             if (listRef.value) {
-                listRef.value.load({ filters: filterStack });
+                listRef.value.load({ filters: queryFilters.value });
             }
         };
 
@@ -61,13 +61,13 @@ export default defineNuxtComponent({
     <div>
         <h6>Patienten</h6>
 
-        <QueryPatientMatchList
-            ref="listRef"
-            :query-id="entity.id"
-        >
-            <template #default="props">
-                <div class="row">
-                    <div class="col-9">
+        <div class="row">
+            <div class="col-9">
+                <QueryPatientMatchList
+                    ref="listRef"
+                    :query-id="entity.id"
+                >
+                    <template #default="props">
                         <template v-if="props.data.length > 0">
                             <div class="list">
                                 <ul class="list-body list-unstyled">
@@ -98,31 +98,28 @@ export default defineNuxtComponent({
                             :offset="props.offset"
                             @load="applyPagination"
                         />
-                    </div>
-                    <div class="col-3">
-                        <QueryPatientFilters
-                            class="mb-3"
-                            :busy="props.busy"
-                            :available-filters="entity.filters.patientFilter"
-                            @submit="applyFilters"
-                        />
+                    </template>
+                </querypatientmatchlist>
+            </div>
+            <div class="col-3">
+                <QueryPatientFilters
+                    class="mb-3"
+                    :available-filters="entity.filters.patientFilter"
+                    @submit="applyFilters"
+                />
 
-                        <QueryDiagnosisFilter
-                            class="mb-3"
-                            :busy="props.busy"
-                            :available-filters="entity.filters.diagnosisFilter"
-                            @submit="applyFilters"
-                        />
+                <QueryDiagnosisFilter
+                    class="mb-3"
+                    :available-filters="entity.filters.diagnosisFilter"
+                    @submit="applyFilters"
+                />
 
-                        <QueryHPOFilter
-                            class="mb-3"
-                            :busy="props.busy"
-                            :available-filters="entity.filters.hpoFilter"
-                            @submit="applyFilters"
-                        />
-                    </div>
-                </div>
-            </template>
-        </querypatientmatchlist>
+                <QueryHPOFilter
+                    class="mb-3"
+                    :available-filters="entity.filters.hpoFilter"
+                    @submit="applyFilters"
+                />
+            </div>
+        </div>
     </div>
 </template>
