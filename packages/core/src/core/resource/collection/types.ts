@@ -1,5 +1,6 @@
 import type {
-    MaybeRef, Ref, Slots, VNodeChild,
+    EmitsOptions, MaybeRef, Ref, SetupContext,
+    Slots, VNodeChild,
 } from 'vue';
 import type { ObjectLiteral } from '../../../types';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
@@ -19,12 +20,22 @@ DATA extends ObjectLiteral = ObjectLiteral,
     total?: number,
 };
 
+type EmitFn<T = EmitsOptions> = SetupContext<T>['emit'];
+
+export type ResourceCollectionEventsType<T> = {
+    failed: (data: Error) => true,
+    created: (data: T) => true,
+    deleted: (data: T) => true,
+    updated: (data: T) => true
+};
+
 export type ResourceCollectionManagerContext<
     T extends ObjectLiteral = ObjectLiteral,
 > = {
     load: ResourceCollectionManagerLoadFn<T>,
     slots?: Slots,
     expose?: (exposed?: Record<string, any>) => void,
+    emit?: EmitFn<ResourceCollectionEventsType<T>>
     filters?: MaybeRef<ObjectLiteral | undefined>
 };
 
