@@ -1,5 +1,11 @@
 # @dnpm-dip/portal
 
+## 0.0.8
+
+### Patch Changes
+
+- [`55662f4`](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/55662f4c4d9c8c80743626bd51ff157fc33eb8cd) Thanks [@tada5hi](https://github.com/tada5hi)! - release docker image
+
 ## 0.0.5
 
 ### Patch Changes
