@@ -111,7 +111,14 @@ export default defineComponent({
             <h6><i class="fa fa-history" /> Vordefinierte Anfragen</h6>
             <PreparedQueryList @deleted="handlePreparedQueryDeleted">
                 <template #default="props">
-                    <template v-if="props.data.length > 0">
+                    <template
+                        v-if="!props.busy && props.data.length === 0"
+                    >
+                        <div class="alert alert-sm alert-secondary">
+                            Es existieren keine vordefinierten Anfragen.
+                        </div>
+                    </template>
+                    <template v-if="!props.busy && props.data.length > 0">
                         <div class="list">
                             <ul class="list-body list-unstyled">
                                 <template

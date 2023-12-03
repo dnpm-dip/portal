@@ -1,14 +1,12 @@
 <script lang="ts">
-import type {
-    CodeRecord, CodeSystemConcept, QueryRequestMode, ValueSetCoding,
-} from '@dnpm-dip/core';
+import type { CodeRecord, CodeSystemConcept, ValueSetCoding } from '@dnpm-dip/core';
+import { CodeSystemEntity, QueryRequestMode, ValueSetEntity } from '@dnpm-dip/core';
 import type { FormSelectOption } from '@vue-layout/form-controls';
 import { VCFormGroup, VCFormInput } from '@vue-layout/form-controls';
 import type { PropType } from 'vue';
 import {
-    defineComponent, reactive, ref, toRef, watch,
+    defineComponent, reactive, ref,
 } from 'vue';
-import { CodeSystemEntity, ValueSetEntity } from '@dnpm-dip/core';
 import { useRDAPIClient } from '#imports';
 import type {
     RDPreparedQuery,
@@ -17,9 +15,9 @@ import type {
     RDQuerySession,
     RDVariantCriteria,
 } from '../../domains';
+import CollectionTransform from '../utility/CollectionTransform.vue';
 import FormSelectSearch from '../utility/FormSelectSearch.vue';
 import Tags from '../utility/Tags.vue';
-import CollectionTransform from '../utility/CollectionTransform.vue';
 
 export default defineComponent({
     components: {
@@ -37,6 +35,9 @@ export default defineComponent({
         },
         queryId: {
             type: String,
+        },
+        queryMode: {
+            type: String as PropType<QueryRequestMode>,
         },
         preparedQuery: {
             type: Object as PropType<RDPreparedQuery>,
@@ -57,6 +58,12 @@ export default defineComponent({
     async setup(props, { emit, expose }) {
         const apiClient = useRDAPIClient();
 
+        const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
+        const modeOptions : FormSelectOption[] = [
+            { id: QueryRequestMode.LOCAL, value: 'Lokal' },
+            { id: QueryRequestMode.FEDERATED, value: 'Föderiert' },
+        ];
+
         const busy = ref(false);
         const criteria = ref<RDQueryCriteria>({});
 
@@ -71,16 +78,7 @@ export default defineComponent({
         });
 
         const preparedQueryId = ref<string | undefined>(undefined);
-        const preparedQueryEnabled = ref(false);
         const preparedQueryName = ref('');
-
-        if (preparedQueryId.value) {
-            preparedQueryEnabled.value = true;
-        }
-
-        watch(preparedQueryId, (value) => {
-            preparedQueryEnabled.value = !!value;
-        });
 
         const reset = async () => {
             if (busy.value) return;
@@ -98,6 +96,10 @@ export default defineComponent({
 
             preparedQueryId.value = undefined;
             preparedQueryName.value = '';
+
+            if (props.queryMode) {
+                mode.value = props.queryMode;
+            }
 
             try {
                 if (props.criteria) {
@@ -187,11 +189,7 @@ export default defineComponent({
             }
         };
 
-        const submit = async (mode: `${QueryRequestMode}`) => {
-            if (busy.value) return;
-
-            busy.value = true;
-
+        const buildCriteria = () : RDQueryCriteria => {
             const payload : RDQueryCriteria = {};
             const keys = Object.keys(variants);
             if (keys.length > 0) {
@@ -232,39 +230,54 @@ export default defineComponent({
                 }
             }
 
+            return payload;
+        };
+
+        const save = async () => {
+            if (busy.value) return;
+
+            busy.value = true;
+
+            const payload = buildCriteria();
+
             try {
                 let preparedQuery : RDPreparedQuery | undefined;
 
-                if (preparedQueryEnabled.value) {
-                    if (preparedQueryId.value) {
-                        preparedQuery = await apiClient.preparedQuery.update(
-                            preparedQueryId.value,
-                            {
-                                name: preparedQueryName.value,
-                                criteria: payload,
-                            },
-                        );
-
-                        emit('preparedQueryUpdated', preparedQuery);
-                    } else {
-                        preparedQuery = await apiClient.preparedQuery.create({
+                if (preparedQueryId.value) {
+                    preparedQuery = await apiClient.preparedQuery.update(
+                        preparedQueryId.value,
+                        {
                             name: preparedQueryName.value,
                             criteria: payload,
-                        });
+                        },
+                    );
 
-                        preparedQueryId.value = preparedQuery.id;
+                    emit('preparedQueryUpdated', preparedQuery);
+                } else {
+                    preparedQuery = await apiClient.preparedQuery.create({
+                        name: preparedQueryName.value,
+                        criteria: payload,
+                    });
 
-                        emit('preparedQueryCreated', preparedQuery);
-                    }
+                    preparedQueryId.value = preparedQuery.id;
+
+                    emit('preparedQueryCreated', preparedQuery);
                 }
             } catch (e) {
                 if (e instanceof Error) {
                     emit('failed', e);
                 }
-
+            } finally {
                 busy.value = false;
-                return;
             }
+        };
+
+        const submit = async () => {
+            if (busy.value) return;
+
+            busy.value = true;
+
+            const payload = buildCriteria();
 
             try {
                 let query : RDQuerySession;
@@ -273,7 +286,7 @@ export default defineComponent({
                     query = await apiClient.query.update(props.queryId, {
                         criteria: payload,
                         mode: {
-                            code: mode,
+                            code: mode.value,
                         },
                     });
 
@@ -282,7 +295,7 @@ export default defineComponent({
                     query = await apiClient.query.submit({
                         criteria: payload,
                         mode: {
-                            code: mode,
+                            code: mode.value,
                         },
                     });
 
@@ -308,6 +321,9 @@ export default defineComponent({
         });
 
         return {
+            mode,
+            modeOptions,
+
             busy,
             hpoTerms,
             categories,
@@ -316,12 +332,13 @@ export default defineComponent({
             selectHPOTerm,
 
             form: variants,
+            save,
             submit,
 
             transformCodings,
             transformConcepts,
 
-            preparedQueryEnabled,
+            preparedQueryId,
             preparedQueryName,
         };
     },
@@ -479,53 +496,38 @@ export default defineComponent({
             <hr>
 
             <div>
-                <VCFormInputCheckbox
-                    v-model="preparedQueryEnabled"
-                    class="form-switch"
-                    :group="true"
-                    :label="true"
-                >
-                    <template #label="{id}">
-                        <label
-                            :for="id"
-                            class="ms-1"
-                        >Speichern?</label>
-                    </template>
-                </VCFormInputCheckbox>
-                <template v-if="preparedQueryEnabled">
-                    <VCFormGroup>
-                        <label>Name</label>
-                        <VCFormInput
-                            v-model="preparedQueryName"
-                            placeholder="..."
-                        />
-                    </VCFormGroup>
-                </template>
+                <h6>Suchmodus</h6>
+
+                <VCFormSelect
+                    v-model="mode"
+                    :options="modeOptions"
+                    :option-default="false"
+                />
             </div>
 
             <hr>
 
             <div>
-                <h6>Suchmodus</h6>
                 <div class="row">
                     <div class="col">
                         <button
                             :disabled="busy"
                             type="button"
-                            class="btn btn-sm btn-block btn-dark"
-                            @click.prevent="submit('local')"
+                            class="btn btn-block btn-dark"
+                            @click.prevent="submit()"
                         >
-                            Lokal
+                            <i class="fa fa-search me-1" /> Suchen
                         </button>
                     </div>
+
                     <div class="col">
                         <button
                             :disabled="busy"
                             type="button"
-                            class="btn btn-sm btn-block btn-dark"
-                            @click.prevent="submit('federated')"
+                            class="btn btn-block btn-primary"
+                            @click.prevent="save()"
                         >
-                            Föderiert
+                            <i class="fa fa-save me-1" /> {{ preparedQueryId ? 'Aktualisieren' : 'Speichern' }}
                         </button>
                     </div>
                 </div>
