@@ -1,5 +1,14 @@
 # @dnpm-dip/rare-diseases
 
+## 0.0.8
+
+### Patch Changes
+
+- [`55662f4`](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/55662f4c4d9c8c80743626bd51ff157fc33eb8cd) Thanks [@tada5hi](https://github.com/tada5hi)! - release docker image
+
+- Updated dependencies [[`55662f4`](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/55662f4c4d9c8c80743626bd51ff157fc33eb8cd)]:
+  - @dnpm-dip/core@0.0.8
+
 ## 0.0.7
 
 ### Patch Changes
