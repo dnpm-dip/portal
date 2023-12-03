@@ -1,5 +1,11 @@
 # @dnpm-dip/rare-diseases
 
+## 0.0.7
+
+### Patch Changes
+
+- [`299ef49`](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/299ef49d7099d46dfbbe5958052c9ae84d4f80c1) Thanks [@tada5hi](https://github.com/tada5hi)! - patch version
+
 ## 0.0.6
 
 ### Patch Changes
