@@ -13,9 +13,10 @@ export default defineComponent({
     emits: ['submitted'],
     setup(props, setup) {
         const searchEl = ref(null) as Ref<null | typeof SearchForm>;
-        const preparedQuery = ref<RDPreparedQuery | undefined>(undefined);
         const criteria = ref<RDQueryCriteria | undefined>(undefined);
 
+        const preparedQueryNode = ref(null) as Ref<null | typeof PreparedQueryList>;
+        const preparedQuery = ref<RDPreparedQuery | undefined>(undefined);
         const preparedQueryId = computed(() => {
             if (preparedQuery.value) {
                 return preparedQuery.value.id;
@@ -67,9 +68,20 @@ export default defineComponent({
 
         const handlePreparedQueryCreated = (data: RDPreparedQuery) => {
             preparedQuery.value = data;
+            if (preparedQueryNode.value) {
+                preparedQueryNode.value.created(data);
+            }
+        };
+
+        const handlePreparedQueryUpdated = (data: RDPreparedQuery) => {
+            preparedQuery.value = data;
+            if (preparedQueryNode.value) {
+                preparedQueryNode.value.updated(data);
+            }
         };
 
         const handlePreparedQueryDeleted = (data: RDPreparedQuery) => {
+            console.log(data, preparedQuery.value);
             if (
                 preparedQuery.value &&
                 preparedQuery.value.id === data.id
@@ -86,11 +98,13 @@ export default defineComponent({
             handleQueryCreated,
             handleQueryUpdated,
             handlePreparedQueryCreated,
+            handlePreparedQueryUpdated,
             handlePreparedQueryDeleted,
             searchEl,
             togglePreparedQuery,
             preparedQuery,
             preparedQueryId,
+            preparedQueryNode,
         };
     },
 });
@@ -103,13 +117,17 @@ export default defineComponent({
                 :criteria="criteria"
                 :prepared-query="preparedQuery"
                 @prepared-query-created="handlePreparedQueryCreated"
+                @prepared-query-updated="handlePreparedQueryUpdated"
                 @query-created="handleQueryCreated"
                 @query-updated="handleQueryUpdated"
             />
         </div>
         <div class="col-4">
             <h6><i class="fa fa-history" /> Vordefinierte Anfragen</h6>
-            <PreparedQueryList @deleted="handlePreparedQueryDeleted">
+            <PreparedQueryList
+                ref="preparedQueryNode"
+                @deleted="handlePreparedQueryDeleted"
+            >
                 <template #default="props">
                     <template
                         v-if="!props.busy && props.data.length === 0"

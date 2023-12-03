@@ -83,6 +83,10 @@ export function createResourceCollectionManager<
         } catch (e) {
             error.value = e as Error;
             data.value = [];
+
+            if (context.emit) {
+                context.emit('failed', error.value as Error);
+            }
         } finally {
             busy.value = false;
         }
@@ -106,6 +110,10 @@ export function createResourceCollectionManager<
         if (index !== -1) {
             data.value.splice(index, 1);
             total.value--;
+
+            if (context.emit) {
+                context.emit('deleted', entity);
+            }
         }
     };
 
@@ -119,6 +127,10 @@ export function createResourceCollectionManager<
         if (index === -1) {
             data.value.push(entity);
             total.value++;
+
+            if (context.emit) {
+                context.emit('created', entity);
+            }
         }
     };
 
@@ -131,6 +143,10 @@ export function createResourceCollectionManager<
 
         if (index !== -1) {
             data.value[index] = entity; // todo: maybe merge props
+
+            if (context.emit) {
+                context.emit('updated', entity);
+            }
         }
     };
 

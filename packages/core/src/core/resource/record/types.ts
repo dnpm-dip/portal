@@ -9,7 +9,7 @@ export type ResourceRecordManagerLoadFn<
     DATA extends ObjectLiteral = ObjectLiteral,
 > = (id: string) => Promise<DATA | undefined>;
 
-export type EmitFn<T = EmitsOptions> = SetupContext<T>['emit'];
+type EmitFn<T = EmitsOptions> = SetupContext<T>['emit'];
 
 export type ResourceRecordEventsType<T> = {
     failed: (data: Error) => true,
