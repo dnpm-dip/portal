@@ -37,11 +37,6 @@ export default defineNuxtComponent({
 
         provide('queryFilters', queryFilters);
 
-        const displayed = ref(false);
-        const toggleDisplay = () => {
-            displayed.value = !displayed.value;
-        };
-
         const handleUpdated = (entity: RDQuerySession) => {
             emit('updated', entity);
         };
@@ -49,8 +44,6 @@ export default defineNuxtComponent({
         return {
             handleUpdated,
             navItems,
-            displayed,
-            toggleDisplay,
             preparedQueryId: route.query.preparedQueryId,
         };
     },
@@ -69,15 +62,6 @@ export default defineNuxtComponent({
                 Abfrage
             </h4>
         </div>
-        <div class="ms-auto">
-            <button
-                type="button"
-                class="btn btn-secondary btn-xs"
-                @click.prevent="toggleDisplay"
-            >
-                <i class="fa fa-cog" />
-            </button>
-        </div>
     </div>
 
     <div class="mb-2">
@@ -88,18 +72,6 @@ export default defineNuxtComponent({
     </div>
 
     <hr>
-
-    <template v-if="displayed">
-        <div class="entity-card">
-            <SearchForm
-                :query-id="entity.id"
-                :criteria="entity.criteria"
-                :prepared-query-id="preparedQueryId"
-                @query-updated="handleUpdated"
-            />
-        </div>
-        <hr>
-    </template>
 
     <template v-if="entity">
         <NuxtPage

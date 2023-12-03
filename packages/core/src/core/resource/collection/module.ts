@@ -88,27 +88,58 @@ export function createResourceCollectionManager<
         }
     };
 
+    const findIndexInCollection = (
+        entity: T,
+    ) : number => data.value.findIndex((el) => {
+        if (hasOwnProperty(el, 'id')) {
+            return el.id === entity.id;
+        }
+        return false;
+    });
+
     const handleDeleted = (entity: T) => {
         if (!hasOwnProperty(entity, 'id') || typeof entity.id !== 'string') {
             return;
         }
 
-        const index = data.value.findIndex((el) => {
-            if (hasOwnProperty(el, 'id')) {
-                return el.id === entity.id;
-            }
-            return false;
-        });
-
+        const index = findIndexInCollection(entity);
         if (index !== -1) {
             data.value.splice(index, 1);
             total.value--;
         }
     };
 
+    const handleCreated = (entity: T) => {
+        if (!hasOwnProperty(entity, 'id') || typeof entity.id !== 'string') {
+            return;
+        }
+
+        const index = findIndexInCollection(entity);
+
+        if (index === -1) {
+            data.value.push(entity);
+            total.value++;
+        }
+    };
+
+    const handleUpdated = (entity: T) => {
+        if (!hasOwnProperty(entity, 'id') || typeof entity.id !== 'string') {
+            return;
+        }
+
+        const index = findIndexInCollection(entity);
+
+        if (index !== -1) {
+            data.value[index] = entity; // todo: maybe merge props
+        }
+    };
+
     if (typeof context.expose !== 'undefined') {
         context.expose({
             load,
+            created: handleCreated,
+            deleted: handleDeleted,
+            updated: handleUpdated,
         });
     }
 
@@ -148,6 +179,8 @@ export function createResourceCollectionManager<
                     offset: offset.value,
                     load,
                     deleted: handleDeleted,
+                    created: handleCreated,
+                    updated: handleUpdated,
                 } satisfies ResourceCollectionDefaultSlotProps<T>,
                 context.slots,
             ));

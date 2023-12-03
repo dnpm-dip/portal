@@ -51,7 +51,9 @@ export type ResourceCollectionDefaultSlotProps<T> = {
     limit?: number,
     offset?: number,
     load: ResourceCollectionLoadFn,
-    deleted: (data: T) => void
+    deleted: (data: T) => void,
+    created: (data: T) => void,
+    updated: (data: T) => void
 };
 
 export type ResourceCollectionSlots<T> = {
