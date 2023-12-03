@@ -76,7 +76,10 @@ export default defineNuxtComponent({
             </ul>
         </div>
         <div class="content-main">
-            <QuerySummaryEntity :query-id="entity.id">
+            <QuerySummaryEntity
+                :query-id="entity.id"
+                :query-record="queryFilters"
+            >
                 <template #default="props">
                     <template v-if="navItemId === 'default'">
                         <div>

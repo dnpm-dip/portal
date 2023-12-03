@@ -43,9 +43,18 @@ export class QueryAPI extends BaseAPI {
      * Get a summary/overview in the context of a specific query.
      *
      * @param id
+     * @param query
      */
-    async getSummary(id: string) : Promise<RDQuerySummary> {
-        const response = await this.client.get(`rd/queries/${id}/summary`);
+    async getSummary(id: string, query?: URLQueryRecord) : Promise<RDQuerySummary> {
+        let qs : string = '';
+        if (typeof query !== 'undefined') {
+            qs = serializeURLQueryRecord(query);
+            if (qs.length > 0) {
+                qs = `?${qs}`;
+            }
+        }
+
+        const response = await this.client.get(`rd/queries/${id}/summary${qs}`);
         return response.data;
     }
 
