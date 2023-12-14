@@ -1,5 +1,4 @@
 <script lang="ts">
-import { max } from '@floating-ui/utils';
 import {
     type PropType, defineComponent, ref, toRef, watch,
 } from 'vue';
