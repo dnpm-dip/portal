@@ -17,10 +17,14 @@ import type {
 } from '../../domains';
 import CollectionTransform from '../utility/CollectionTransform.vue';
 import FormSelectSearch from '../utility/FormSelectSearch.vue';
+import FormTabGroups from '../utility/FormTabGroups.vue';
 import Tags from '../utility/Tags.vue';
+import VariantFormTabGroup from './VariantFormTabGroup.vue';
 
 export default defineComponent({
     components: {
+        VariantFormTabGroup,
+        FormTabGroups,
         Tags,
         CollectionTransform,
         VCFormGroup,
@@ -70,12 +74,7 @@ export default defineComponent({
         const categories = ref<FormSelectOption[]>([]);
         const hpoTerms = ref<FormSelectOption[]>([]);
 
-        const variants = reactive<RDQueryCriteriaVariant<string>>({
-            gene: '',
-            cDNAChange: '',
-            gDNAChange: '',
-            proteinChange: '',
-        });
+        const variants = ref<RDQueryCriteriaVariant<string>[]>([]);
 
         const preparedQueryId = ref<string | undefined>(undefined);
         const preparedQueryName = ref('');
@@ -89,10 +88,7 @@ export default defineComponent({
             categories.value = [];
             hpoTerms.value = [];
 
-            variants.gene = '';
-            variants.cDNAChange = '';
-            variants.gDNAChange = '';
-            variants.proteinChange = '';
+            variants.value = [];
 
             preparedQueryId.value = undefined;
             preparedQueryName.value = '';
@@ -132,14 +128,17 @@ export default defineComponent({
                 return;
             }
 
-            if (
-                criteria.value.variants &&
-              criteria.value.variants.length > 0
-            ) {
-                const keys = Object.keys(criteria.value.variants[0]) as RDVariantCriteria[];
-                for (let i = 0; i < keys.length; i++) {
-                    const key = keys[i];
-                    variants[key] = (criteria.value.variants[0] as RDQueryCriteriaVariant)[key]?.code;
+            if (criteria.value.variants) {
+                for (let i = 0; i < criteria.value.variants.length; i++) {
+                    const variant = criteria.value.variants[i] as RDQueryCriteriaVariant;
+                    const data : RDQueryCriteriaVariant<string> = {};
+
+                    const keys = Object.keys(variant);
+                    for (let j = 0; j < keys.length; j++) {
+                        data[keys[j] as keyof typeof data] = variant[keys[j] as keyof RDQueryCriteriaVariant]?.code;
+                    }
+
+                    variants.value.push(data);
                 }
             }
 
@@ -191,22 +190,30 @@ export default defineComponent({
 
         const buildCriteria = () : RDQueryCriteria => {
             const payload : RDQueryCriteria = {};
-            const keys = Object.keys(variants);
-            if (keys.length > 0) {
-                let isValid = false;
-                const group : Record<string, CodeRecord> = {};
-                for (let i = 0; i < keys.length; i++) {
-                    const code = variants[keys[i] as keyof typeof variants];
-                    if (code && code.length > 0) {
-                        group[keys[i]] = {
-                            code,
-                        };
-                        isValid = true;
-                    }
-                }
+            if (variants.value.length > 0) {
+                for (let i = 0; i < variants.value.length; i++) {
+                    const variant = variants.value[i];
+                    const keys = Object.keys(variant);
+                    let isValid = false;
+                    const group : Record<string, CodeRecord> = {};
 
-                if (isValid) {
-                    payload.variants = [group];
+                    for (let j = 0; j < keys.length; j++) {
+                        const code = variant[keys[j] as keyof typeof variant];
+                        if (code && code.length > 0) {
+                            group[keys[j]] = {
+                                code,
+                            };
+                            isValid = true;
+                        }
+                    }
+
+                    if (isValid) {
+                        if (!payload.variants) {
+                            payload.variants = [];
+                        }
+
+                        payload.variants.push(group);
+                    }
                 }
             }
 
@@ -331,7 +338,7 @@ export default defineComponent({
             selectCategory,
             selectHPOTerm,
 
-            form: variants,
+            variants,
             save,
             submit,
 
@@ -433,64 +440,26 @@ export default defineComponent({
                     </div>
                 </div>
             </div>
+
+            <hr>
+
             <div class="row mb-2">
                 <div class="col">
-                    <h6>Variante</h6>
+                    <h6>Varianten</h6>
+                </div>
 
-                    <div class="form-group">
-                        <label>Gene</label>
-                        <CodeSystemEntity
-                            :code="'https://www.genenames.org/'"
-                            :lazy-load="true"
-                        >
-                            <template #default="{ data }">
-                                <CollectionTransform
-                                    :items="data.concepts"
-                                    :transform="transformConcepts"
-                                >
-                                    <template #default="options">
-                                        <FormSelectSearch
-                                            v-model="form.gene"
-                                            :options="options"
-                                            placeholder="HGNC"
-                                        />
-                                    </template>
-                                </CollectionTransform>
-                            </template>
-                            <template #loading>
-                                <FormSelectSearch
-                                    :disabled="true"
-                                    :options="[]"
-                                    placeholder="HGNC"
-                                />
-                            </template>
-                        </CodeSystemEntity>
-                    </div>
-                </div>
-                <div>
-                    <VCFormGroup>
-                        <label>kodierende DNA-Änderung</label>
-                        <VCFormInput
-                            v-model="form.cDNAChange"
-                            placeholder="HGVS"
+                <FormTabGroups
+                    v-model="variants"
+                    :min-items="1"
+                    :max-items="6"
+                >
+                    <template #default="props">
+                        <VariantFormTabGroup
+                            :entity="props.item"
+                            @updated="props.updated"
                         />
-                    </VCFormGroup>
-                    <VCFormGroup>
-                        <label>genomische DNA-Änderung</label>
-                        <VCFormInput
-                            v-model="form.gDNAChange"
-                            placeholder="HGVS"
-                        />
-                    </VCFormGroup>
-                    <VCFormGroup>
-                        <label>Proteinänderung</label>
-                        <VCFormInput
-                            v-model="form.proteinChange"
-                            :disabled="busy"
-                            placeholder="HGVS"
-                        />
-                    </VCFormGroup>
-                </div>
+                    </template>
+                </FormTabGroups>
             </div>
 
             <hr>
