@@ -1,5 +1,20 @@
 # @dnpm-dip/portal
 
+## 1.0.0 (2023-12-21)
+
+
+### Features
+
+* multi variant select support ([6671243](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6671243d0ee349f6933b8a172a1fec3a8a338278))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^0.0.8 to ^1.0.0
+    * @dnpm-dip/rare-diseases bumped from ^0.0.8 to ^1.0.0
+
 ## 0.0.8
 
 ### Patch Changes
