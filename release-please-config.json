@@ -1,0 +1,34 @@
+{
+    "bootstrap-sha": "c66e8053a0789224db60e8cc853c6b030466752a",
+    "include-component-in-tag": true,
+    "release-type": "node",
+    "bump-minor-pre-major": true,
+    "bump-patch-for-minor-pre-major": true,
+    "packages": {
+        "packages/core": {
+            "component": "core"
+        },
+        "packages/portal": {
+            "component": "portal"
+        },
+        "packages/rare-diseases": {
+            "component": "rare-diseases"
+        }
+    },
+    "plugins": [
+        {
+            "type": "node-workspace",
+            "updatePeerDependencies": true
+        },
+        {
+            "type": "linked-versions",
+            "groupName": "main",
+            "components": [
+                "core",
+                "portal",
+                "rare-diseases"
+            ]
+        }
+    ],
+    "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+}
