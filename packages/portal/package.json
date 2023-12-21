@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/portal",
     "type": "module",
-    "version": "0.0.8",
+    "version": "1.0.0",
     "private": true,
     "description": "Portal of DNPM DIP.",
     "repository": {
@@ -17,8 +17,8 @@
         "start": "node .output/server/index.mjs"
     },
     "devDependencies": {
-        "@dnpm-dip/core": "^0.0.8",
-        "@dnpm-dip/rare-diseases": "^0.0.8",
+        "@dnpm-dip/core": "^1.0.0",
+        "@dnpm-dip/rare-diseases": "^1.0.0",
         "@nuxt/devtools": "latest",
         "@fortawesome/fontawesome-free": "^6.4.2",
         "@vue-layout/navigation": "^5.0.1",

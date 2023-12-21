@@ -1,5 +1,27 @@
 # @dnpm-dip/rare-diseases
 
+## 1.0.0 (2023-12-21)
+
+
+### Features
+
+* multi variant select support ([805259e](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/805259e75f21ff60492f4a5b1bfe955906f91f4a))
+* multi variant select support ([6671243](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6671243d0ee349f6933b8a172a1fec3a8a338278))
+
+
+### Bug Fixes
+
+* form-tab-groups component ([17f2994](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/17f2994792c1ea089ab4cd2819d3f6a3e17cbc2a))
+* minor changes for query summary ([4355b8c](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/4355b8c91944631226be4a2da39bb6e792f56196))
+* summary view ([a917572](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a917572275187d76a30f431ece2d4859f02a81a1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^0.0.8 to ^1.0.0
+
 ## 0.0.8
 
 ### Patch Changes
