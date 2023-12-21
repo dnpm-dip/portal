@@ -29,10 +29,10 @@ export default defineNuxtComponent({
     setup() {
         const navItems = [
             {
-                id: 'default', name: 'Allgemein', icon: 'fas fa-globe', urlSuffix: '',
+                id: 'default', name: 'Demographie', icon: 'fas fa-globe', urlSuffix: '',
             },
             {
-                id: 'variant', name: 'Varianten', icon: 'fas fa-puzzle-piece', urlSuffix: '/patients',
+                id: 'variant', name: 'Diagnostik', icon: 'fas fa-puzzle-piece', urlSuffix: '/patients',
             },
         ];
 
@@ -120,7 +120,11 @@ export default defineNuxtComponent({
                                 </div>
                             </div>
                         </div>
+                    </template>
+                    <template v-else>
                         <div>
+                            <h5>Insgesamt</h5>
+
                             <div class="row">
                                 <div class="col-12 col-xl-6">
                                     <div class="entity-card text-center mb-3 w-100">
@@ -141,11 +145,11 @@ export default defineNuxtComponent({
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </template>
-                    <template v-else>
-                        <div>
+
+                            <hr>
+
                             <h5>Varianten</h5>
+
                             <QuerySummaryGroupedVariants :items="props.data.groupedDistributions.variant" />
                         </div>
                     </template>

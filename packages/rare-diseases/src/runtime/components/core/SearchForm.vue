@@ -453,6 +453,7 @@ export default defineComponent({
                     :min-items="1"
                     :max-items="6"
                 >
+                    <!-- todo: label; max 15 zeichen; {{Gene}} ({{dnaÄnderung}} || {{proteinänderung}}) || proteinänderung precedence vorrang dnaÄnderung -->
                     <template #default="props">
                         <VariantFormTabGroup
                             :entity="props.item"
