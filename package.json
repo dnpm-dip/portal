@@ -51,14 +51,11 @@
         "workspaces-publish": "^1.1.0"
     },
     "scripts": {
-        "clean": "lerna run clean",
-        "build": "lerna run build",
-        "test": "lerna run test",
-        "pub": "npm run build && lerna publish",
-        "lint": "eslint packages/",
+        "build": "npx nx run-many -t build",
+        "test": "npx nx run-many -t test",
+        "lint": "npx eslint packages/",
         "lint:fix": "npm run lint -- --fix",
-        "prepare": "husky install",
-        "release": "changeset publish"
+        "prepare": "husky install"
     },
     "lint-staged": {
         "*.ts": "eslint --fix"
