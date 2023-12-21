@@ -1,6 +1,6 @@
 <script lang="ts">
-import type { PaginationMeta } from '@vue-layout/pagination';
-import { VCPagination } from '@vue-layout/pagination';
+import type { PaginationMeta } from '@vuecs/pagination';
+import { VCPagination } from '@vuecs/pagination';
 import type { URLQueryRecord } from '@dnpm-dip/core';
 import { Nav } from '@dnpm-dip/core';
 import type { PropType, Ref } from 'vue';

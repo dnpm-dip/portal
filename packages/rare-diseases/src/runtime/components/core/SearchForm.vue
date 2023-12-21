@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { CodeRecord, CodeSystemConcept, ValueSetCoding } from '@dnpm-dip/core';
 import { CodeSystemEntity, QueryRequestMode, ValueSetEntity } from '@dnpm-dip/core';
-import type { FormSelectOption } from '@vue-layout/form-controls';
-import { VCFormGroup, VCFormInput } from '@vue-layout/form-controls';
+import type { FormSelectOption } from '@vuecs/form-controls';
+import { VCFormGroup, VCFormInput } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
 import {
     defineComponent, reactive, ref,

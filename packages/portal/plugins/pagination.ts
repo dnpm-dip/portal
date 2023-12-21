@@ -1,21 +1,23 @@
-import bootstrap from '@vue-layout/preset-bootstrap-v5';
-import fontAwesome from '@vue-layout/preset-font-awesome';
+import bootstrap from '@vuecs/preset-bootstrap-v5';
+import fontAwesome from '@vuecs/preset-font-awesome';
 
-import install from '@vue-layout/pagination';
+import install from '@vuecs/pagination';
 import { defineNuxtPlugin } from '#app';
 
 export default defineNuxtPlugin({
     enforce: 'pre',
     async setup(nuxt) {
         nuxt.vueApp.use(install, {
-            presets: {
-                bootstrap,
-                fontAwesome,
-            },
-            defaults: {
-                pagination: {
-                    class: 'pagination',
-                    itemClass: 'page-item',
+            storeManager: {
+                presets: {
+                    bootstrap,
+                    fontAwesome,
+                },
+                defaults: {
+                    pagination: {
+                        class: 'pagination',
+                        itemClass: 'page-item',
+                    },
                 },
             },
         });

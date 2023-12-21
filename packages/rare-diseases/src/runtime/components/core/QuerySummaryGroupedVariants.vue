@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { FormSelectOption } from '@vue-layout/form-controls';
+import type { FormSelectOption } from '@vuecs/form-controls';
 import type { PropType, Ref } from 'vue';
 import {
     computed, defineComponent, ref, watch,
@@ -18,8 +18,6 @@ export default defineComponent({
     setup(props) {
         const variantId = ref(null) as Ref<string | null>;
         const variant = ref(null) as Ref<VariantDistribution | null>;
-
-        console.log(props.items);
 
         const options = computed<FormSelectOption[]>(() => props.items.map((el) => ({
             id: el.key.code,

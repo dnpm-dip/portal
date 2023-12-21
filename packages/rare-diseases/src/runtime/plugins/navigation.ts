@@ -1,5 +1,5 @@
 import type { HookResult } from '@nuxt/schema';
-import type { NavigationItem } from '@vue-layout/navigation';
+import type { NavigationItem } from '@vuecs/navigation';
 import { defineNuxtPlugin } from '#app';
 
 declare module '#app' {

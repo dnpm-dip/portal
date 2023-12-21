@@ -1,4 +1,4 @@
-import { VCLink } from '@vue-layout/link';
+import { VCLink } from '@vuecs/link';
 import { h } from 'vue';
 import type { VNodeChild } from 'vue';
 import type { NavItem, NavOptions } from './types';

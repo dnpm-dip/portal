@@ -1,6 +1,6 @@
 <script>
 import { ref } from 'vue';
-import { VCNavItems } from '@vue-layout/navigation';
+import { VCNavItems } from '@vuecs/navigation';
 import { defineNuxtComponent, useNuxtApp } from '#app';
 
 export default defineNuxtComponent({

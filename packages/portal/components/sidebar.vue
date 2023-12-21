@@ -9,7 +9,7 @@
     </div>
 </template>
 <script>
-import { VCNavItems } from '@vue-layout/navigation';
+import { VCNavItems } from '@vuecs/navigation';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
