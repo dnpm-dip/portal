@@ -1,8 +1,9 @@
 <script lang="ts">
+import type { URLQueryRecord } from '@dnpm-dip/core';
 import { Nav } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
-import { ref } from 'vue';
-import { defineNuxtComponent } from '#imports';
+import { provide, ref } from 'vue';
+import { defineNuxtComponent, useRoute } from '#imports';
 import SearchForm from '../../../components/core/SearchForm.vue';
 import type { RDQuerySession } from '../../../domains';
 
@@ -18,6 +19,8 @@ export default defineNuxtComponent({
         },
     },
     setup(props, { emit }) {
+        const route = useRoute();
+
         const navItems = [
             {
                 name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
@@ -30,10 +33,9 @@ export default defineNuxtComponent({
             },
         ];
 
-        const displayed = ref(false);
-        const toggleDisplay = () => {
-            displayed.value = !displayed.value;
-        };
+        const queryFilters = ref<URLQueryRecord>({});
+
+        provide('queryFilters', queryFilters);
 
         const handleUpdated = (entity: RDQuerySession) => {
             emit('updated', entity);
@@ -42,8 +44,7 @@ export default defineNuxtComponent({
         return {
             handleUpdated,
             navItems,
-            displayed,
-            toggleDisplay,
+            preparedQueryId: route.query.preparedQueryId,
         };
     },
 });
@@ -58,17 +59,8 @@ export default defineNuxtComponent({
                 >
                     <i class="fa fa-arrow-left" />
                 </NuxtLink>
-                Abfrage <small class="text-muted">{{ entity.id }}</small>
+                Abfrage
             </h4>
-        </div>
-        <div class="ms-auto">
-            <button
-                type="button"
-                class="btn btn-secondary btn-xs"
-                @click.prevent="toggleDisplay"
-            >
-                <i class="fa fa-cog" />
-            </button>
         </div>
     </div>
 
@@ -80,16 +72,6 @@ export default defineNuxtComponent({
     </div>
 
     <hr>
-
-    <template v-if="displayed">
-        <div class="entity-card">
-            <SearchForm
-                :entity="entity"
-                @updated="handleUpdated"
-            />
-        </div>
-        <hr>
-    </template>
 
     <template v-if="entity">
         <NuxtPage

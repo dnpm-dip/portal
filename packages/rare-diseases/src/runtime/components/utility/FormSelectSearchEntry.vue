@@ -8,7 +8,7 @@
     </slot>
 </template>
 <script lang="ts">
-import type { FormSelectOption } from '@vue-layout/form-controls';
+import type { FormSelectOption } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 

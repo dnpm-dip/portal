@@ -1,5 +1,24 @@
 # @dnpm-dip/core
 
+## 1.0.0 (2023-12-21)
+
+
+### Bug Fixes
+
+* **deps:** bump hapic from 2.3.0 to 2.4.0 ([#141](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/141)) ([87ff43b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/87ff43bd9501e638e91deede6dab8af68f2a84fb))
+
+## 0.0.8
+
+### Patch Changes
+
+- [`55662f4`](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/55662f4c4d9c8c80743626bd51ff157fc33eb8cd) Thanks [@tada5hi](https://github.com/tada5hi)! - release docker image
+
+## 0.0.6
+
+### Patch Changes
+
+- [`a0792b2`](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a0792b2919811f48b5b5a493fe40d863eef276d9) Thanks [@tada5hi](https://github.com/tada5hi)! - next patch release
+
 ## 0.0.5
 
 ### Patch Changes

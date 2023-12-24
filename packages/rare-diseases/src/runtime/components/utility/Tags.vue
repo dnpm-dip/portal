@@ -1,7 +1,9 @@
 <script lang="ts">
 import { BFormTag } from 'bootstrap-vue-next';
 import type { PropType } from 'vue';
-import { defineComponent, ref } from 'vue';
+import {
+    defineComponent, ref, toRef, watch,
+} from 'vue';
 
 type ColorVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | null;
 type Tag = {
@@ -35,13 +37,29 @@ export default defineComponent({
     emits: ['update:modelValue', 'deleted'],
     setup(props, { emit }) {
         const tags = ref<Tag[]>([]);
-        if (props.modelValue) {
-            tags.value = props.modelValue;
-        }
 
-        if (props.items) {
-            tags.value = props.items;
-        }
+        const modelValue = toRef(props, 'modelValue');
+        const value = toRef(props, 'items');
+
+        const reset = () => {
+            if (props.modelValue) {
+                tags.value = props.modelValue;
+            }
+
+            if (props.items) {
+                tags.value = props.items;
+            }
+        };
+
+        reset();
+
+        watch(modelValue, () => {
+            reset();
+        }, { deep: true });
+
+        watch(value, () => {
+            reset();
+        }, { deep: true });
 
         const drop = (value: string) => {
             const index = tags.value.findIndex((el) => el.value === value);

@@ -1,7 +1,7 @@
 import type {
-    CollectionResponse, PatientFilterInput, ResourceCollectionLoadMeta,
+    CollectionResponse, ResourceCollectionLoadMeta, URLQueryRecord,
 } from '@dnpm-dip/core';
-import { BaseAPI } from '@dnpm-dip/core';
+import { BaseAPI, serializeURLQueryRecord } from '@dnpm-dip/core';
 import type { RDPatientMatch, RDPatientRecord } from '../patient';
 import { QueryRequestMode } from './constants';
 import type {
@@ -43,9 +43,18 @@ export class QueryAPI extends BaseAPI {
      * Get a summary/overview in the context of a specific query.
      *
      * @param id
+     * @param query
      */
-    async getSummary(id: string) : Promise<RDQuerySummary> {
-        const response = await this.client.get(`rd/queries/${id}/summary`);
+    async getSummary(id: string, query?: URLQueryRecord) : Promise<RDQuerySummary> {
+        let qs : string = '';
+        if (typeof query !== 'undefined') {
+            qs = serializeURLQueryRecord(query);
+            if (qs.length > 0) {
+                qs = `?${qs}`;
+            }
+        }
+
+        const response = await this.client.get(`rd/queries/${id}/summary${qs}`);
         return response.data;
     }
 
@@ -56,59 +65,26 @@ export class QueryAPI extends BaseAPI {
      * @throws ClientError
      */
     async getPatients(id: string, meta?: ResourceCollectionLoadMeta) : Promise<CollectionResponse<RDPatientMatch>> {
-        const parts : string[] = [];
+        let qs : string = '';
         if (typeof meta !== 'undefined') {
             const { filters, limit, offset } = meta;
 
+            const queryRecord : URLQueryRecord = {
+                ...(filters || {}),
+            };
             if (typeof limit !== 'undefined') {
-                parts.push(`limit=${limit}`);
+                queryRecord.limit = limit;
             }
 
             if (typeof offset !== 'undefined') {
-                parts.push(`offset=${offset}`);
+                queryRecord.offset = offset;
             }
 
-            if (typeof filters !== 'undefined') {
-                if (filters.ageRange) {
-                    if (typeof filters.ageRange.min !== 'undefined') {
-                        parts.push(`age[min]=${filters.ageRange.min}`);
-                    }
-
-                    if (typeof filters.ageRange.max !== 'undefined') {
-                        parts.push(`age[max]=${filters.ageRange.max}`);
-                    }
-                }
-
-                if (
-                    filters.gender &&
-                    filters.gender.length > 0
-                ) {
-                    for (let i = 0; i < filters.gender.length; i++) {
-                        parts.push(`gender=${filters.gender[i].code}`);
-                    }
-                }
-
-                if (
-                    filters.vitalStatus &&
-                    filters.vitalStatus.length > 0
-                ) {
-                    for (let i = 0; i < filters.vitalStatus.length; i++) {
-                        parts.push(`vitalStatus=${filters.vitalStatus[i].code}`);
-                    }
-                }
-
-                if (
-                    filters.site &&
-                    filters.site.length > 0
-                ) {
-                    for (let i = 0; i < filters.site.length; i++) {
-                        parts.push(`site=${filters.site[i].code}`);
-                    }
-                }
+            qs = serializeURLQueryRecord(queryRecord);
+            if (qs.length > 0) {
+                qs = `?${qs}`;
             }
         }
-
-        const qs = parts.length > 0 ? `?${parts.join('&')}` : '';
 
         const response = await this.client.get(`rd/queries/${id}/patient-matches${qs}`);
         return response.data;

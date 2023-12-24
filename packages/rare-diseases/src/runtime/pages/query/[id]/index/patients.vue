@@ -1,19 +1,23 @@
 <script lang="ts">
-import type { PaginationMeta } from '@vue-layout/pagination';
-import { VCPagination } from '@vue-layout/pagination';
-import type { PatientFilterInput } from '@dnpm-dip/core';
+import type { PaginationMeta } from '@vuecs/pagination';
+import { VCPagination } from '@vuecs/pagination';
+import type { URLQueryRecord } from '@dnpm-dip/core';
 import { Nav } from '@dnpm-dip/core';
 import type { PropType, Ref } from 'vue';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
+import QueryDiagnosisFilter from '../../../../components/core/QueryDiagnosisFilter.vue';
+import QueryHPOFilter from '../../../../components/core/QueryHPOFilter.vue';
 import QueryPatientMatchEntity from '../../../../components/core/QueryPatientMatchEntity.vue';
 import QueryPatientMatchList from '../../../../components/core/QueryPatientMatchList';
 import type { RDQuerySession } from '../../../../domains';
-import QueryPatientMatchFilters from '../../../../components/core/QueryPatientMatchFilters.vue';
+import QueryPatientFilters from '../../../../components/core/QueryPatientFilters.vue';
 
 export default defineNuxtComponent({
     components: {
-        QueryPatientMatchFilters,
+        QueryHPOFilter,
+        QueryDiagnosisFilter,
+        QueryPatientFilters,
         QueryPatientMatchEntity,
         QueryPatientMatchList,
         Nav,
@@ -27,9 +31,15 @@ export default defineNuxtComponent({
     },
     setup() {
         const listRef = ref(null) as Ref<typeof QueryPatientMatchList | null>;
-        const applyFilters = (input: PatientFilterInput) => {
+        const queryFilters = inject('queryFilters') as Ref<URLQueryRecord>;
+        const applyFilters = (input: URLQueryRecord) => {
+            queryFilters.value = {
+                ...queryFilters.value,
+                ...input,
+            };
+
             if (listRef.value) {
-                listRef.value.load({ filters: input });
+                listRef.value.load({ filters: queryFilters.value });
             }
         };
 
@@ -51,13 +61,13 @@ export default defineNuxtComponent({
     <div>
         <h6>Patienten</h6>
 
-        <QueryPatientMatchList
-            ref="listRef"
-            :query-id="entity.id"
-        >
-            <template #default="props">
-                <div class="row">
-                    <div class="col-9">
+        <div class="row">
+            <div class="col-9">
+                <QueryPatientMatchList
+                    ref="listRef"
+                    :query-id="entity.id"
+                >
+                    <template #default="props">
                         <template v-if="props.data.length > 0">
                             <div class="list">
                                 <ul class="list-body list-unstyled">
@@ -88,16 +98,28 @@ export default defineNuxtComponent({
                             :offset="props.offset"
                             @load="applyPagination"
                         />
-                    </div>
-                    <div class="col-3">
-                        <QueryPatientMatchFilters
-                            :busy="props.busy"
-                            :available-filters="entity.filters.patientFilter"
-                            @submit="applyFilters"
-                        />
-                    </div>
-                </div>
-            </template>
-        </querypatientmatchlist>
+                    </template>
+                </querypatientmatchlist>
+            </div>
+            <div class="col-3">
+                <QueryPatientFilters
+                    class="mb-3"
+                    :available-filters="entity.filters.patientFilter"
+                    @submit="applyFilters"
+                />
+
+                <QueryDiagnosisFilter
+                    class="mb-3"
+                    :available-filters="entity.filters.diagnosisFilter"
+                    @submit="applyFilters"
+                />
+
+                <QueryHPOFilter
+                    class="mb-3"
+                    :available-filters="entity.filters.hpoFilter"
+                    @submit="applyFilters"
+                />
+            </div>
+        </div>
     </div>
 </template>

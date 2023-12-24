@@ -2,14 +2,15 @@
 import { APIClientErrorBox, PageMetaKey } from '@dnpm-dip/core';
 import type { ClientError } from 'hapic';
 import { ref } from 'vue';
-import { definePageMeta } from '#imports';
-import { defineNuxtComponent, navigateTo } from '#app';
+import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/SearchForm.vue';
 import SearchSVG from '../components/svg/SearchSVG';
-import type { RDQuerySession } from '../domains';
+import type { RDQueryCriteria } from '../domains';
+import PreparedQueryForm from '../components/core/PreparedQueryForm.vue';
 
 export default defineNuxtComponent({
     components: {
+        PreparedQueryForm,
         SearchSVG,
         APIClientErrorBox,
         SearchForm,
@@ -25,16 +26,26 @@ export default defineNuxtComponent({
             error.value = e;
         };
 
-        const handleCreated = async (data: RDQuerySession) => {
+        const handleSubmitted = async (data : {
+            criteria: RDQueryCriteria,
+            queryId: string,
+            preparedQueryId?: string
+        }) => {
             error.value = null;
 
-            await navigateTo({ path: `/rd/query/${data.id}` });
+            let query : Record<string, any> | undefined;
+            if (data.preparedQueryId) {
+                query = {
+                    preparedQueryId: data.preparedQueryId,
+                };
+            }
+
+            await navigateTo({ path: `/rd/query/${data.queryId}`, query });
         };
 
         return {
             error,
-            handleCreated,
-            handleFailed,
+            handleSubmitted,
         };
     },
 });
@@ -46,9 +57,8 @@ export default defineNuxtComponent({
             <SearchSVG :height="'250px'" />
         </div>
 
-        <SearchForm
-            @created="handleCreated"
-            @failed="handleFailed"
+        <PreparedQueryForm
+            @submitted="handleSubmitted"
         />
 
         <template v-if="error">

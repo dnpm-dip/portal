@@ -1,25 +1,30 @@
 <script lang="ts">
-import type {
-    CodeRecord, CodeSystemConcept, QueryRequestMode, ValueSetCoding,
-} from '@dnpm-dip/core';
-import type { FormSelectOption } from '@vue-layout/form-controls';
-import { VCFormGroup, VCFormInput } from '@vue-layout/form-controls';
+import type { CodeRecord, CodeSystemConcept, ValueSetCoding } from '@dnpm-dip/core';
+import { CodeSystemEntity, QueryRequestMode, ValueSetEntity } from '@dnpm-dip/core';
+import type { FormSelectOption } from '@vuecs/form-controls';
+import { VCFormGroup, VCFormInput } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
-import { defineComponent, reactive, ref } from 'vue';
-import { CodeSystemEntity, ValueSetEntity, createResourceRecordManager } from '@dnpm-dip/core';
+import {
+    defineComponent, reactive, ref,
+} from 'vue';
 import { useRDAPIClient } from '#imports';
 import type {
+    RDPreparedQuery,
     RDQueryCriteria,
     RDQueryCriteriaVariant,
     RDQuerySession,
     RDVariantCriteria,
 } from '../../domains';
-import FormSelectSearch from '../utility/FormSelectSearch.vue';
-import Tags from '../utility/Tags.vue';
 import CollectionTransform from '../utility/CollectionTransform.vue';
+import FormSelectSearch from '../utility/FormSelectSearch.vue';
+import FormTabGroups from '../utility/FormTabGroups.vue';
+import Tags from '../utility/Tags.vue';
+import VariantFormTabGroup from './VariantFormTabGroup.vue';
 
 export default defineComponent({
     components: {
+        VariantFormTabGroup,
+        FormTabGroups,
         Tags,
         CollectionTransform,
         VCFormGroup,
@@ -29,77 +34,141 @@ export default defineComponent({
         ValueSetEntity,
     },
     props: {
-        entity: {
-            type: Object as PropType<RDQuerySession>,
+        criteria: {
+            type: Object as PropType<RDQueryCriteria>,
         },
-        entityId: {
+        queryId: {
+            type: String,
+        },
+        queryMode: {
+            type: String as PropType<QueryRequestMode>,
+        },
+        preparedQuery: {
+            type: Object as PropType<RDPreparedQuery>,
+        },
+        preparedQueryId: {
             type: String,
         },
     },
-    emits: ['failed', 'created', 'updated'],
-    async setup(props, { emit }) {
+    emits: [
+        'failed',
+
+        'preparedQueryCreated',
+        'preparedQueryUpdated',
+
+        'queryCreated',
+        'queryUpdated',
+    ],
+    async setup(props, { emit, expose }) {
         const apiClient = useRDAPIClient();
 
-        const manager = createResourceRecordManager<RDQuerySession>({
-            data: props.entity,
-            async load() {
-                if (props.entityId) {
-                    return apiClient.query.getOne(props.entityId);
-                }
+        const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
+        const modeOptions : FormSelectOption[] = [
+            { id: QueryRequestMode.LOCAL, value: 'Lokal' },
+            { id: QueryRequestMode.FEDERATED, value: 'Föderiert' },
+        ];
 
-                return undefined;
-            },
-        });
+        const busy = ref(false);
+        const criteria = ref<RDQueryCriteria>({});
 
         const categories = ref<FormSelectOption[]>([]);
         const hpoTerms = ref<FormSelectOption[]>([]);
 
-        const variants = reactive<RDQueryCriteriaVariant<string>>({
-            gene: '',
-            cDNAChange: '',
-            gDNAChange: '',
-            proteinChange: '',
-        });
+        const variants = ref<RDQueryCriteriaVariant<string>[]>([]);
 
-        const parse = () => {
-            if (!manager.data.value || !manager.data.value.criteria) {
+        const preparedQueryId = ref<string | undefined>(undefined);
+        const preparedQueryName = ref('');
+
+        const reset = async () => {
+            if (busy.value) return;
+
+            busy.value = true;
+
+            criteria.value = {};
+            categories.value = [];
+            hpoTerms.value = [];
+
+            variants.value = [];
+
+            preparedQueryId.value = undefined;
+            preparedQueryName.value = '';
+
+            if (props.queryMode) {
+                mode.value = props.queryMode;
+            }
+
+            try {
+                if (props.criteria) {
+                    criteria.value = props.criteria;
+                }
+
+                if (props.preparedQuery) {
+                    preparedQueryId.value = props.preparedQuery.id;
+                    preparedQueryName.value = props.preparedQuery.name;
+                    if (!props.criteria) {
+                        criteria.value = props.preparedQuery.criteria;
+                    }
+                } else if (props.preparedQueryId) {
+                    const response = await apiClient.preparedQuery.getOne(props.preparedQueryId);
+                    if (!props.criteria) {
+                        criteria.value = response.criteria;
+                    }
+
+                    preparedQueryId.value = props.preparedQueryId;
+                    preparedQueryName.value = response.name;
+                } else if (props.queryId) {
+                    const response = await apiClient.query.getOne(props.queryId);
+                    criteria.value = response.criteria;
+                }
+            } catch (e) {
+                if (e instanceof Error) {
+                    emit('failed');
+                }
+
                 return;
             }
 
-            const criteria = manager.data.value?.criteria;
-            if (
-                criteria?.variants &&
-                criteria.variants.length > 0
-            ) {
-                const keys = Object.keys(criteria.variants[0]) as RDVariantCriteria[];
-                for (let i = 0; i < keys.length; i++) {
-                    const key = keys[i];
-                    variants[key] = (criteria.variants[0] as RDQueryCriteriaVariant)[key]?.code;
+            if (criteria.value.variants) {
+                for (let i = 0; i < criteria.value.variants.length; i++) {
+                    const variant = criteria.value.variants[i] as RDQueryCriteriaVariant;
+                    const data : RDQueryCriteriaVariant<string> = {};
+
+                    const keys = Object.keys(variant);
+                    for (let j = 0; j < keys.length; j++) {
+                        data[keys[j] as keyof typeof data] = variant[keys[j] as keyof RDQueryCriteriaVariant]?.code;
+                    }
+
+                    variants.value.push(data);
                 }
             }
 
-            if (criteria?.hpoTerms) {
-                for (let i = 0; i < criteria.hpoTerms.length; i++) {
+            if (criteria.value.hpoTerms) {
+                for (let i = 0; i < criteria.value.hpoTerms.length; i++) {
                     hpoTerms.value.push({
-                        id: criteria.hpoTerms[i].code,
-                        value: criteria.hpoTerms[i].display || criteria.hpoTerms[i].code,
+                        id: criteria.value.hpoTerms[i].code,
+                        value: criteria.value.hpoTerms[i].display || criteria.value.hpoTerms[i].code,
                     });
                 }
             }
 
-            if (criteria?.diagnoses) {
-                for (let i = 0; i < criteria.diagnoses.length; i++) {
+            if (criteria.value.diagnoses) {
+                for (let i = 0; i < criteria.value.diagnoses.length; i++) {
                     categories.value.push({
-                        id: criteria.diagnoses[i].code,
-                        value: criteria.diagnoses[i].display || criteria.diagnoses[i].code,
+                        id: criteria.value.diagnoses[i].code,
+                        value: criteria.value.diagnoses[i].display || criteria.value.diagnoses[i].code,
                     });
                 }
             }
+
+            busy.value = false;
         };
 
+        expose({
+            reset,
+        });
+
         Promise.resolve()
-            .then(() => manager.load())
-            .then(() => parse());
+            .then(() => reset());
 
         const selectCategory = (item: FormSelectOption) => {
             const index = categories.value.findIndex((el) => el.id === item.id);
@@ -119,85 +188,138 @@ export default defineComponent({
             }
         };
 
-        const submit = async (mode: `${QueryRequestMode}`) => {
-            if (manager.busy.value) return;
+        const buildCriteria = () : RDQueryCriteria => {
+            const payload : RDQueryCriteria = {};
+            if (variants.value.length > 0) {
+                for (let i = 0; i < variants.value.length; i++) {
+                    const variant = variants.value[i];
+                    const keys = Object.keys(variant);
+                    let isValid = false;
+                    const group : Record<string, CodeRecord> = {};
 
-            manager.busy.value = true;
-
-            const criteria : RDQueryCriteria = {};
-            const keys = Object.keys(variants);
-            if (keys.length > 0) {
-                let isValid = false;
-                const group : Record<string, CodeRecord> = {};
-                for (let i = 0; i < keys.length; i++) {
-                    const code = variants[keys[i] as keyof typeof variants];
-                    if (code && code.length > 0) {
-                        group[keys[i]] = {
-                            code,
-                        };
-                        isValid = true;
+                    for (let j = 0; j < keys.length; j++) {
+                        const code = variant[keys[j] as keyof typeof variant];
+                        if (code && code.length > 0) {
+                            group[keys[j]] = {
+                                code,
+                            };
+                            isValid = true;
+                        }
                     }
-                }
 
-                if (isValid) {
-                    criteria.variants = [group];
+                    if (isValid) {
+                        if (!payload.variants) {
+                            payload.variants = [];
+                        }
+
+                        payload.variants.push(group);
+                    }
                 }
             }
 
             if (hpoTerms.value.length > 0) {
-                criteria.hpoTerms = [];
+                payload.hpoTerms = [];
 
                 for (let i = 0; i < hpoTerms.value.length; i++) {
-                    criteria.hpoTerms.push({
+                    payload.hpoTerms.push({
                         code: `${hpoTerms.value[i].id}`,
                     });
                 }
             }
 
             if (categories.value.length > 0) {
-                criteria.diagnoses = [];
+                payload.diagnoses = [];
 
                 for (let i = 0; i < categories.value.length; i++) {
-                    criteria.diagnoses.push({
+                    payload.diagnoses.push({
                         code: `${categories.value[i].id}`,
                     });
                 }
             }
 
+            return payload;
+        };
+
+        const save = async () => {
+            if (busy.value) return;
+
+            busy.value = true;
+
+            const payload = buildCriteria();
+
             try {
-                let data : RDQuerySession;
+                let preparedQuery : RDPreparedQuery | undefined;
 
-                if (manager.data.value) {
-                    data = await apiClient.query.update(manager.data.value.id, {
-                        criteria,
-                        mode: {
-                            code: mode,
+                if (preparedQueryId.value) {
+                    preparedQuery = await apiClient.preparedQuery.update(
+                        preparedQueryId.value,
+                        {
+                            name: preparedQueryName.value,
+                            criteria: payload,
                         },
-                    });
+                    );
 
-                    emit('created', data);
+                    emit('preparedQueryUpdated', preparedQuery);
                 } else {
-                    data = await apiClient.query.submit({
-                        criteria,
-                        mode: {
-                            code: mode,
-                        },
+                    preparedQuery = await apiClient.preparedQuery.create({
+                        name: preparedQueryName.value,
+                        criteria: payload,
                     });
 
-                    emit('created', data);
+                    preparedQueryId.value = preparedQuery.id;
+
+                    emit('preparedQueryCreated', preparedQuery);
                 }
             } catch (e) {
                 if (e instanceof Error) {
                     emit('failed', e);
                 }
             } finally {
-                manager.busy.value = false;
+                busy.value = false;
+            }
+        };
+
+        const submit = async () => {
+            if (busy.value) return;
+
+            busy.value = true;
+
+            const payload = buildCriteria();
+
+            try {
+                let query : RDQuerySession;
+
+                if (props.queryId) {
+                    query = await apiClient.query.update(props.queryId, {
+                        criteria: payload,
+                        mode: {
+                            code: mode.value,
+                        },
+                    });
+
+                    emit('queryUpdated', query);
+                } else {
+                    query = await apiClient.query.submit({
+                        criteria: payload,
+                        mode: {
+                            code: mode.value,
+                        },
+                    });
+
+                    emit('queryCreated', query);
+                }
+            } catch (e) {
+                if (e instanceof Error) {
+                    emit('failed', e);
+                }
+            } finally {
+                busy.value = false;
             }
         };
 
         const transformCodings = (coding: ValueSetCoding) => ({
             id: coding.code,
-            value: coding.display,
+            value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
         const transformConcepts = (concept: CodeSystemConcept) => ({
@@ -206,18 +328,25 @@ export default defineComponent({
         });
 
         return {
-            busy: manager.busy,
+            mode,
+            modeOptions,
+
+            busy,
             hpoTerms,
             categories,
 
             selectCategory,
             selectHPOTerm,
 
-            form: variants,
+            variants,
+            save,
             submit,
 
             transformCodings,
             transformConcepts,
+
+            preparedQueryId,
+            preparedQueryName,
         };
     },
 });
@@ -311,86 +440,64 @@ export default defineComponent({
                     </div>
                 </div>
             </div>
+
+            <hr>
+
             <div class="row mb-2">
                 <div class="col">
-                    <h6>Variante</h6>
+                    <h6>Varianten</h6>
+                </div>
 
-                    <div class="form-group">
-                        <label>Gene</label>
-                        <CodeSystemEntity
-                            :code="'https://www.genenames.org/'"
-                            :lazy-load="true"
-                        >
-                            <template #default="{ data }">
-                                <CollectionTransform
-                                    :items="data.concepts"
-                                    :transform="transformConcepts"
-                                >
-                                    <template #default="options">
-                                        <FormSelectSearch
-                                            v-model="form.gene"
-                                            :options="options"
-                                            placeholder="HGNC"
-                                        />
-                                    </template>
-                                </CollectionTransform>
-                            </template>
-                            <template #loading>
-                                <FormSelectSearch
-                                    :disabled="true"
-                                    :options="[]"
-                                    placeholder="HGNC"
-                                />
-                            </template>
-                        </CodeSystemEntity>
-                    </div>
-                </div>
-                <div>
-                    <VCFormGroup>
-                        <label>kodierende DNA-Änderung</label>
-                        <VCFormInput
-                            v-model="form.cDNAChange"
-                            placeholder="HGVS"
+                <FormTabGroups
+                    v-model="variants"
+                    :min-items="1"
+                    :max-items="6"
+                >
+                    <!-- todo: label; max 15 zeichen; {{Gene}} ({{dnaÄnderung}} || {{proteinänderung}}) || proteinänderung precedence vorrang dnaÄnderung -->
+                    <template #default="props">
+                        <VariantFormTabGroup
+                            :entity="props.item"
+                            @updated="props.updated"
                         />
-                    </VCFormGroup>
-                    <VCFormGroup>
-                        <label>genomische DNA-Änderung</label>
-                        <VCFormInput
-                            v-model="form.gDNAChange"
-                            placeholder="HGVS"
-                        />
-                    </VCFormGroup>
-                    <VCFormGroup>
-                        <label>Proteinänderung</label>
-                        <VCFormInput
-                            v-model="form.proteinChange"
-                            placeholder="HGVS"
-                        />
-                    </VCFormGroup>
-                </div>
+                    </template>
+                </FormTabGroups>
             </div>
+
+            <hr>
 
             <div>
                 <h6>Suchmodus</h6>
+
+                <VCFormSelect
+                    v-model="mode"
+                    :options="modeOptions"
+                    :option-default="false"
+                />
+            </div>
+
+            <hr>
+
+            <div>
                 <div class="row">
                     <div class="col">
                         <button
                             :disabled="busy"
                             type="button"
-                            class="btn btn-sm btn-block btn-dark"
-                            @click.prevent="submit('local')"
+                            class="btn btn-block btn-dark"
+                            @click.prevent="submit()"
                         >
-                            Lokal
+                            <i class="fa fa-search me-1" /> Suchen
                         </button>
                     </div>
+
                     <div class="col">
                         <button
                             :disabled="busy"
                             type="button"
-                            class="btn btn-sm btn-block btn-dark"
-                            @click.prevent="submit('federated')"
+                            class="btn btn-block btn-primary"
+                            @click.prevent="save()"
                         >
-                            Föderiert
+                            <i class="fa fa-save me-1" /> {{ preparedQueryId ? 'Aktualisieren' : 'Speichern' }}
                         </button>
                     </div>
                 </div>

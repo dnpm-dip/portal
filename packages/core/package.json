@@ -1,6 +1,6 @@
 {
     "name": "@dnpm-dip/core",
-    "version": "0.0.5",
+    "version": "1.0.0",
     "description": "Core Library of DNPM DIP with global constants, types & interfaces.",
     "exports": {
         "./package.json": "./package.json",
@@ -41,20 +41,20 @@
         "access": "public"
     },
     "dependencies": {
-        "hapic": "^2.3.0",
+        "hapic": "^2.4.0",
         "smob": "^1.4.1",
         "ufo": "^1.3.2"
     },
     "devDependencies": {
         "@nuxt/schema": "^3.8.0",
-        "@nuxt/kit": "^3.8.0",
-        "@vue-layout/link": "^5.0.0",
-        "vue": "^3.3.6",
-        "vue-tsc": "^1.8.22"
+        "@nuxt/kit": "^3.8.2",
+        "@vuecs/link": "^1.0.0",
+        "vue": "^3.3.13",
+        "vue-tsc": "^1.8.25"
     },
     "peerDependencies": {
-        "@nuxt/kit": "^3.8.0",
-        "@vue-layout/link": "^5.0.0",
+        "@nuxt/kit": "^3.8.2",
+        "@vuecs/link": "^1.0.0",
         "vue": "^3.3.x"
     }
 }

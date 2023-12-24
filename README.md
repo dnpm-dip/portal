@@ -10,7 +10,18 @@
 ## Usage
 
 ### Production
-...
+
+**`Prerequirements`**
+
+- **Docker** v.24+ must be installed on the host machine
+
+**`Run`**
+
+```shell
+$ docker run -d -p 3000:3000 \
+    --restart=always \
+    ghcr.io/kohlbacherlab/dnpm-dip-portal:latest
+```
 
 ### Development 
 To start the portal with the associated modules such as rd, mtb, etc, the following steps must be performed in sequence.

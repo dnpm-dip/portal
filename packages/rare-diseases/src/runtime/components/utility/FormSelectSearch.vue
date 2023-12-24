@@ -49,7 +49,10 @@
                 :items="selected"
                 :toggle="toggle"
             >
-                <template v-for="item in selected">
+                <template
+                    v-for="item in selected"
+                    :key="item.id"
+                >
                     {{ item.value }}
                 </template>
             </slot>
@@ -95,24 +98,37 @@ export default defineComponent({
             default: 6,
         },
     },
-    emits: ['update:modelValue', 'changed'],
+    emits: ['update:modelValue', 'change'],
     async setup(props, { emit }) {
         const q = ref('');
         const currentIndex = ref(-1);
 
         const selected = ref<Option[]>([]);
 
-        if (Array.isArray(props.modelValue)) {
-            selected.value = props.modelValue;
-        } else {
-            const index = props.options.findIndex(
-                (el) => el.id === props.modelValue,
-            );
-            if (index !== -1) {
-                selected.value = [props.options[index]];
-                q.value = props.options[index].value;
+        const modelValue = toRef(props, 'modelValue');
+
+        const reset = () => {
+            if (Array.isArray(props.modelValue)) {
+                selected.value = props.modelValue;
+            } else {
+                const index = props.options.findIndex(
+                    (el) => el.id === props.modelValue,
+                );
+                if (index !== -1) {
+                    selected.value = [props.options[index]];
+                    q.value = props.options[index].value;
+                } else {
+                    selected.value = [];
+                    q.value = '';
+                }
             }
-        }
+        };
+
+        reset();
+
+        watch(modelValue, () => {
+            reset();
+        }, { deep: true });
 
         const isMulti = computed(() => typeof props.modelValue !== 'string');
 
@@ -151,6 +167,7 @@ export default defineComponent({
                 }
 
                 emit('update:modelValue', selected.value);
+                emit('change', selected.value);
                 return;
             }
 
@@ -165,6 +182,7 @@ export default defineComponent({
             isDisplayed.value = false;
 
             emit('update:modelValue', option.id);
+            emit('change', option.id);
         };
 
         const display = () => {

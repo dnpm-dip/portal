@@ -3,7 +3,7 @@ import {
     createResourceRecordManager,
 } from '@dnpm-dip/core';
 import type { SlotsType } from 'vue';
-import { defineComponent } from 'vue';
+import { defineComponent, toRef } from 'vue';
 import { useRDAPIClient } from '#imports';
 import type { RDPatientRecord } from '../../domains';
 
@@ -26,10 +26,12 @@ export default defineComponent({
     slots: Object as SlotsType<ResourceRecordSlots<RDPatientRecord>>,
     async setup(props, setup) {
         const apiClient = useRDAPIClient();
+        const id = toRef(props, 'queryId');
 
         const manager = createResourceRecordManager({
             load: () => apiClient.query.getPatientRecord(props.queryId, props.patientId),
             slots: setup.slots,
+            id,
         });
 
         if (props.lazy) {

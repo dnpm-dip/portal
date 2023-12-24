@@ -1,7 +1,9 @@
+import type { URLQueryRecord } from '@dnpm-dip/core';
 import {
     createResourceRecordManager,
 } from '@dnpm-dip/core';
-import { defineComponent } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, toRef } from 'vue';
 import { useRDAPIClient } from '#imports';
 
 export default defineComponent({
@@ -10,6 +12,9 @@ export default defineComponent({
             type: String,
             required: true,
         },
+        queryRecord: {
+            type: Object as PropType<URLQueryRecord>,
+        },
         lazy: {
             type: Boolean,
             default: false,
@@ -17,10 +22,12 @@ export default defineComponent({
     },
     async setup(props, setup) {
         const apiClient = useRDAPIClient();
+        const id = toRef(props, 'queryId');
 
         const manager = createResourceRecordManager({
-            load: () => apiClient.query.getSummary(props.queryId),
+            load: (id) => apiClient.query.getSummary(id, props.queryRecord),
             slots: setup.slots,
+            id,
         });
 
         if (props.lazy) {

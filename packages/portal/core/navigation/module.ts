@@ -1,6 +1,6 @@
 import { PageMetaKey } from '@dnpm-dip/core';
-import { flattenNestedNavigationItems } from '@vue-layout/navigation';
-import type { NavigationItem, NavigationProvider } from '@vue-layout/navigation';
+import { flattenNestedNavigationItems } from '@vuecs/navigation';
+import type { NavigationItem, NavigationProvider } from '@vuecs/navigation';
 
 export class Navigation implements NavigationProvider {
     protected topElements: NavigationItem[];

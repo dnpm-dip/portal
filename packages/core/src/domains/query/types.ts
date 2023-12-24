@@ -2,8 +2,18 @@ import type { ObjectLiteral } from '../../types';
 import type { Coding } from '../coding';
 import type { PatientFilter } from '../patient';
 
+export type DiagnosisFilter = {
+    category?: Coding[],
+};
+
+export type HPOFilter = {
+    value?: Coding[]
+};
+
 export type QueryFilters = {
-    patientFilter: PatientFilter
+    diagnosisFilter: DiagnosisFilter,
+    hpoFilter: HPOFilter,
+    patientFilter: PatientFilter,
 };
 
 /**

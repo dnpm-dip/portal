@@ -1,8 +1,8 @@
 <script lang="ts">
 import { Nav } from '@dnpm-dip/core';
-import type { NavItem } from '@dnpm-dip/core';
+import type { NavItem, URLQueryRecord } from '@dnpm-dip/core';
 import type { PropType, Ref } from 'vue';
-import { ref } from 'vue';
+import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import QuerySummaryEntity from '../../../../components/core/QuerySummaryEntity';
 import QuerySummaryDistributionBar from '../../../../components/core/QuerySummaryDistributionBar.vue';
@@ -29,12 +29,14 @@ export default defineNuxtComponent({
     setup() {
         const navItems = [
             {
-                id: 'default', name: 'Allgemein', icon: 'fas fa-globe', urlSuffix: '',
+                id: 'default', name: 'Demographie', icon: 'fas fa-globe', urlSuffix: '',
             },
             {
-                id: 'variant', name: 'Varianten', icon: 'fas fa-puzzle-piece', urlSuffix: '/patients',
+                id: 'variant', name: 'Diagnostik', icon: 'fas fa-puzzle-piece', urlSuffix: '/patients',
             },
         ];
+
+        const queryFilters = inject('queryFilters') as Ref<URLQueryRecord>;
 
         const navItemId = ref('default');
 
@@ -43,6 +45,7 @@ export default defineNuxtComponent({
         };
 
         return {
+            queryFilters,
             navItems,
             navItemId,
             setNavItem,
@@ -73,7 +76,10 @@ export default defineNuxtComponent({
             </ul>
         </div>
         <div class="content-main">
-            <QuerySummaryEntity :query-id="entity.id">
+            <QuerySummaryEntity
+                :query-id="entity.id"
+                :query-record="queryFilters"
+            >
                 <template #default="props">
                     <template v-if="navItemId === 'default'">
                         <div>
@@ -86,7 +92,7 @@ export default defineNuxtComponent({
                                         </h6>
                                         <QuerySummaryDistributionDoughnut
                                             style="max-height: 390px"
-                                            :items="props.data.distributions.site"
+                                            :items="props.data.demographics.siteDistribution"
                                         />
                                     </div>
                                 </div>
@@ -97,7 +103,7 @@ export default defineNuxtComponent({
                                         </h6>
                                         <QuerySummaryDistributionDoughnut
                                             style="max-height: 390px"
-                                            :items="props.data.distributions.gender"
+                                            :items="props.data.demographics.genderDistribution"
                                         />
                                     </div>
                                 </div>
@@ -108,13 +114,17 @@ export default defineNuxtComponent({
                                         </h6>
                                         <QuerySummaryDistributionBar
                                             style="max-height: 390px"
-                                            :items="props.data.distributions.age"
+                                            :items="props.data.demographics.ageDistribution"
                                         />
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </template>
+                    <template v-else>
                         <div>
+                            <h5>Insgesamt</h5>
+
                             <div class="row">
                                 <div class="col-12 col-xl-6">
                                     <div class="entity-card text-center mb-3 w-100">
@@ -122,7 +132,7 @@ export default defineNuxtComponent({
                                             Verteilung von HPOTermen
                                         </h6>
                                         <QuerySummaryDistributionBar
-                                            :items="props.data.distributions.hpoTerm"
+                                            :items="props.data.diagnostics.overall.hpoTermDistribution"
                                         />
                                     </div>
                                 </div>
@@ -131,16 +141,16 @@ export default defineNuxtComponent({
                                         <h6 class="text-center">
                                             Verteilung von Diagnose Kategorien
                                         </h6>
-                                        <QuerySummaryDistributionBar :items="props.data.distributions.diseaseCategory" />
+                                        <QuerySummaryDistributionBar :items="props.data.diagnostics.overall.diseaseCategoryDistribution" />
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </template>
-                    <template v-else>
-                        <div>
+
+                            <hr>
+
                             <h5>Varianten</h5>
-                            <QuerySummaryGroupedVariants :items="props.data.groupedDistributions.variant" />
+
+                            <QuerySummaryGroupedVariants :items="props.data.diagnostics.variants" />
                         </div>
                     </template>
                 </template>

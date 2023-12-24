@@ -1,6 +1,6 @@
 import { isEqual } from 'smob';
 import type { Ref, VNodeArrayChildren, VNodeChild } from 'vue';
-import { ref } from 'vue';
+import { isRef, ref, watch } from 'vue';
 import { renderError } from '../../error';
 import { hasNormalizedSlot, normalizeSlot } from '../../utils';
 import type { ObjectLiteral } from '../../../types';
@@ -11,6 +11,7 @@ import type {
     ResourceCollectionManagerContext,
     ResourceCollectionManagerOutput,
 } from './types';
+import { hasOwnProperty } from '../../../utils';
 
 export function createResourceCollectionManager<
     T extends ObjectLiteral = ObjectLiteral,
@@ -23,6 +24,17 @@ export function createResourceCollectionManager<
     const data : Ref<T[]> = ref([]);
     const error : Ref<Error | null> = ref(null);
     const filters : Ref<ObjectLiteral | undefined> = ref(undefined);
+    if (context.filters) {
+        if (isRef(context.filters)) {
+            watch(context.filters, (value: ObjectLiteral) => {
+                filters.value = value;
+            }, { deep: true });
+
+            filters.value = context.filters.value as ObjectLiteral;
+        } else {
+            filters.value = context.filters;
+        }
+    }
 
     const load : ResourceCollectionLoadFn = async (record = {}) => {
         if (busy.value) return;
@@ -41,7 +53,9 @@ export function createResourceCollectionManager<
         if (typeof record.filters === 'undefined') {
             record.filters = filters.value;
         } else {
-            filters.value = record.filters;
+            filters.value = {
+                ...record.filters,
+            };
         }
 
         if (typeof record.limit === 'number') {
@@ -69,14 +83,79 @@ export function createResourceCollectionManager<
         } catch (e) {
             error.value = e as Error;
             data.value = [];
+
+            if (context.emit) {
+                context.emit('failed', error.value as Error);
+            }
         } finally {
             busy.value = false;
+        }
+    };
+
+    const findIndexInCollection = (
+        entity: T,
+    ) : number => data.value.findIndex((el) => {
+        if (hasOwnProperty(el, 'id')) {
+            return el.id === entity.id;
+        }
+        return false;
+    });
+
+    const handleDeleted = (entity: T) => {
+        if (!hasOwnProperty(entity, 'id') || typeof entity.id !== 'string') {
+            return;
+        }
+
+        const index = findIndexInCollection(entity);
+        if (index !== -1) {
+            data.value.splice(index, 1);
+            total.value--;
+
+            if (context.emit) {
+                context.emit('deleted', entity);
+            }
+        }
+    };
+
+    const handleCreated = (entity: T) => {
+        if (!hasOwnProperty(entity, 'id') || typeof entity.id !== 'string') {
+            return;
+        }
+
+        const index = findIndexInCollection(entity);
+
+        if (index === -1) {
+            data.value.push(entity);
+            total.value++;
+
+            if (context.emit) {
+                context.emit('created', entity);
+            }
+        }
+    };
+
+    const handleUpdated = (entity: T) => {
+        if (!hasOwnProperty(entity, 'id') || typeof entity.id !== 'string') {
+            return;
+        }
+
+        const index = findIndexInCollection(entity);
+
+        if (index !== -1) {
+            data.value[index] = entity; // todo: maybe merge props
+
+            if (context.emit) {
+                context.emit('updated', entity);
+            }
         }
     };
 
     if (typeof context.expose !== 'undefined') {
         context.expose({
             load,
+            created: handleCreated,
+            deleted: handleDeleted,
+            updated: handleUpdated,
         });
     }
 
@@ -115,6 +194,9 @@ export function createResourceCollectionManager<
                     limit: limit.value,
                     offset: offset.value,
                     load,
+                    deleted: handleDeleted,
+                    created: handleCreated,
+                    updated: handleUpdated,
                 } satisfies ResourceCollectionDefaultSlotProps<T>,
                 context.slots,
             ));
@@ -124,6 +206,9 @@ export function createResourceCollectionManager<
     };
 
     return {
+        error,
+        data,
+        busy,
         load,
         render,
     };

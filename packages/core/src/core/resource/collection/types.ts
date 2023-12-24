@@ -1,4 +1,7 @@
-import type { Slots, VNodeChild } from 'vue';
+import type {
+    EmitsOptions, MaybeRef, Ref, SetupContext,
+    Slots, VNodeChild,
+} from 'vue';
 import type { ObjectLiteral } from '../../../types';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
 import type { ResourceSlotName } from '../constants';
@@ -17,19 +20,33 @@ DATA extends ObjectLiteral = ObjectLiteral,
     total?: number,
 };
 
+type EmitFn<T = EmitsOptions> = SetupContext<T>['emit'];
+
+export type ResourceCollectionEventsType<T> = {
+    failed: (data: Error) => true,
+    created: (data: T) => true,
+    deleted: (data: T) => true,
+    updated: (data: T) => true
+};
+
 export type ResourceCollectionManagerContext<
     T extends ObjectLiteral = ObjectLiteral,
 > = {
     load: ResourceCollectionManagerLoadFn<T>,
     slots?: Slots,
-    expose?: (exposed?: Record<string, any>) => void
+    expose?: (exposed?: Record<string, any>) => void,
+    emit?: EmitFn<ResourceCollectionEventsType<T>>
+    filters?: MaybeRef<ObjectLiteral | undefined>
 };
 
 export type ResourceCollectionManagerOutput<
     T extends ObjectLiteral = ObjectLiteral,
 > = {
     load: ResourceCollectionManagerLoadFn<T>,
-    render: () => VNodeChild
+    render: () => VNodeChild,
+    data: Ref<T[]>,
+    busy: Ref<boolean>,
+    error: Ref<Error | null>
 };
 
 export type ResourceCollectionManagerLoadFn<
@@ -44,7 +61,10 @@ export type ResourceCollectionDefaultSlotProps<T> = {
     total?: number,
     limit?: number,
     offset?: number,
-    load: ResourceCollectionLoadFn
+    load: ResourceCollectionLoadFn,
+    deleted: (data: T) => void,
+    created: (data: T) => void,
+    updated: (data: T) => void
 };
 
 export type ResourceCollectionSlots<T> = {
