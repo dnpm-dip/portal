@@ -61,6 +61,8 @@
         "release": "changeset publish"
     },
     "lint-staged": {
-        "*.ts": "eslint --fix"
+        "*.vue": "npm run lint:fix",
+        "*.js": "npm run lint:fix",
+        "*.ts": "npm run lint:fix"
     }
 }
