@@ -3,7 +3,6 @@ import path from 'node:path';
 
 export default defineNuxtConfig({
     modules: [
-        // todo: change to package name on publish
         // '@dnpm-dip/rare-diseases',
         '../rare-diseases/src/module',
     ],
