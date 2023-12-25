@@ -44,7 +44,7 @@
         "@nuxt/test-utils": "^3.9.0",
         "@types/node": "^20.10.4",
         "@vuecs/form-controls": "^1.2.0",
-        "@vuecs/navigation": "^1.1.0",
+        "@vuecs/navigation": "^1.1.1",
         "@vuecs/pagination": "^1.1.0",
         "@vuelidate/core": "^2.0.3",
         "@vuelidate/validators": "^2.0.4",
