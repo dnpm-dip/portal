@@ -34,7 +34,7 @@
     },
     "dependencies": {
         "@dnpm-dip/core": "^1.0.0",
-        "@nuxt/kit": "^3.8.2"
+        "@nuxt/kit": "^3.9.0"
     },
     "devDependencies": {
         "@nuxt/devtools": "latest",
