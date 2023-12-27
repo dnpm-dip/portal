@@ -50,7 +50,7 @@
         "@nuxt/kit": "^3.8.2",
         "@vuecs/link": "^1.0.0",
         "vue": "^3.3.13",
-        "vue-tsc": "^1.8.25"
+        "vue-tsc": "^1.8.27"
     },
     "peerDependencies": {
         "@nuxt/kit": "^3.8.2",
