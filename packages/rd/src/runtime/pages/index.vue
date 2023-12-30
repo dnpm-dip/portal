@@ -18,7 +18,8 @@ export default defineNuxtComponent({
         </h1>
 
         <p>
-            Das Modul "Seltene Krankheiten" innerhalb der DNPM:dip-Plattform wurde entwickelt, um den besonderen Anforderungen im Zusammenhang mit seltenen Krankheiten gerecht zu werden.
+            Das Modul "Seltene Krankheiten" innerhalb der DNPM:dip-Plattform wurde entwickelt,
+            um den besonderen Anforderungen im Zusammenhang mit seltenen Krankheiten gerecht zu werden.
         </p>
     </div>
 </template>

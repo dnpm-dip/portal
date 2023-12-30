@@ -97,10 +97,10 @@ export default defineComponent({
                     <div v-if="entity.acmgCriteria">
                         <strong>ACMG-Kriterium</strong>
                         <template
-                            v-for="(item, index) in entity.acmgCriteria"
+                            v-for="(item, idx) in entity.acmgCriteria"
                             :key="item.code"
                         >
-                            {{ index > 0 ? ', ' : '' }} {{ item.display }}
+                            {{ idx > 0 ? ', ' : '' }} {{ item.display }}
                         </template>
                     </div>
                     <div>
@@ -134,10 +134,10 @@ export default defineComponent({
                 <div v-if="entity.clinVarAccessionID">
                     <strong>ClinVar Zugangsnummer</strong>
                     <template
-                        v-for="(item, index) in entity.clinVarAccessionID"
+                        v-for="(item, idx) in entity.clinVarAccessionID"
                         :key="item"
                     >
-                        {{ index > 0 ? ', ' : '' }} {{ item }}
+                        {{ idx > 0 ? ', ' : '' }} {{ item }}
                     </template>
                 </div>
             </div>

@@ -1,8 +1,7 @@
 <script lang="ts">
 import type { CodeRecord, CodeSystemConcept, ValueSetCoding } from '@dnpm-dip/core';
-import { CodeSystemEntity, QueryRequestMode, ValueSetEntity } from '@dnpm-dip/core';
+import { QueryRequestMode, ValueSetEntity } from '@dnpm-dip/core';
 import type { FormSelectOption } from '@vuecs/form-controls';
-import { VCFormGroup, VCFormInput } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
 import {
     defineComponent, reactive, ref,
@@ -27,10 +26,7 @@ export default defineComponent({
         FormTabGroups,
         Tags,
         CollectionTransform,
-        VCFormGroup,
-        VCFormInput,
         FormSelectSearch,
-        CodeSystemEntity,
         ValueSetEntity,
     },
     props: {
@@ -345,6 +341,7 @@ export default defineComponent({
             transformCodings,
             transformConcepts,
 
+            // eslint-disable-next-line vue/no-dupe-keys
             preparedQueryId,
             preparedQueryName,
         };
@@ -453,7 +450,8 @@ export default defineComponent({
                     :min-items="1"
                     :max-items="6"
                 >
-                    <!-- todo: label; max 15 zeichen; {{Gene}} ({{dnaÄnderung}} || {{proteinänderung}}) || proteinänderung precedence vorrang dnaÄnderung -->
+                    <!-- todo: label; max 15 zeichen; {{Gene}} ({{dnaÄnderung}} || -->
+                    <!-- todo: {{proteinänderung}}) || proteinänderung precedence vorrang dnaÄnderung -->
                     <template #default="props">
                         <VariantFormTabGroup
                             :entity="props.item"

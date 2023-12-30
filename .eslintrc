@@ -19,7 +19,8 @@
                     "**/test/**/*.spec.ts",
                     "**/rollup.config.mjs",
                     "packages/portal/**",
-                    "packages/rare-diseases/**"
+                    "packages/mtb/**",
+                    "packages/rd/**"
                 ]
             }
         ],
@@ -28,6 +29,7 @@
         "no-shadow": "off",
 
         "vue/no-v-for-template-key": "off",
+        "vue/no-multiple-template-root": "off",
 
         "@typescript-eslint/no-throw-literal": "off",
         "@typescript-eslint/no-unused-vars": "off",

@@ -3,8 +3,8 @@ import path from 'node:path';
 
 export default defineNuxtConfig({
     modules: [
-        // '@dnpm-dip/rare-diseases',
-        '../rare-diseases/src/module',
+        '../mtb/src/module',
+        '../rd/src/module',
     ],
     css: [
         '@fortawesome/fontawesome-free/css/all.css',

@@ -81,7 +81,6 @@ export default defineComponent({
         };
 
         const handlePreparedQueryDeleted = (data: RDPreparedQuery) => {
-            console.log(data, preparedQuery.value);
             if (
                 preparedQuery.value &&
                 preparedQuery.value.id === data.id

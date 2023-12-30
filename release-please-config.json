@@ -8,11 +8,17 @@
         "packages/core": {
             "component": "core"
         },
+        "packages/kit": {
+            "component": "kit"
+        },
+        "packages/mtb": {
+            "component": "mtb"
+        },
         "packages/portal": {
             "component": "portal"
         },
-        "packages/rare-diseases": {
-            "component": "rare-diseases"
+        "packages/rd": {
+            "component": "rd"
         }
     },
     "plugins": [
@@ -25,8 +31,10 @@
             "groupName": "main",
             "components": [
                 "core",
+                "kit",
+                "mtb",
                 "portal",
-                "rare-diseases"
+                "rd"
             ]
         }
     ],

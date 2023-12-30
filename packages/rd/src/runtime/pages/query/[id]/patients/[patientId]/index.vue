@@ -26,10 +26,16 @@ export default defineNuxtComponent({
             </div>
             <div class="col">
                 <template v-if="record.patient.managingSite">
-                    <div><strong><i class="fas fa-hospital" /> Standort</strong> {{ record.patient.managingSite.display || record.patient.managingSite.code }}</div>
+                    <div>
+                        <strong><i class="fas fa-hospital" /> Standort</strong>
+                        {{ record.patient.managingSite.display || record.patient.managingSite.code }}
+                    </div>
                 </template>
                 <template v-if="record.patient.vitalStatus">
-                    <div><strong><i class="fas fa-heartbeat" /> VitalStatus</strong> {{ record.patient.vitalStatus.display || record.patient.vitalStatus.code }}</div>
+                    <div>
+                        <strong><i class="fas fa-heartbeat" /> VitalStatus</strong>
+                        {{ record.patient.vitalStatus.display || record.patient.vitalStatus.code }}
+                    </div>
                 </template>
             </div>
         </div>
