@@ -1,0 +1,18 @@
+{
+    "extends": "../../tsconfig.build.json",
+
+    "compilerOptions": {
+        "outDir": "./dist",
+        "declarationDir": "dist",
+        "declaration": true,
+        "noEmitOnError": false,
+
+        "importHelpers": true,
+        "allowSyntheticDefaultImports": true,
+        "isolatedModules": true
+    },
+    "include": [
+        "types/**/*.d.ts",
+        "src/**/*.ts"
+    ]
+}

@@ -1,13 +1,13 @@
 {
-    "name": "@dnpm-dip/rd",
+    "name": "@dnpm-dip/mtb",
     "type": "module",
-    "version": "1.0.0",
+    "version": "0.0.0",
     "private": true,
-    "description": "Rare Diseases module for the portal of DNPM DIP.",
+    "description": "Molecular Tumor Board module for the portal of DNPM DIP.",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/KohlbacherLab/dnpm-dip.git",
-        "directory": "packages/rare-diseases"
+        "directory": "packages/mtb"
     },
     "license": "MIT",
     "exports": {
@@ -33,7 +33,7 @@
     "dependencies": {
         "@dnpm-dip/core": "^1.0.0",
         "@dnpm-dip/kit": "^0.0.0",
-        "@nuxt/kit": "^3.8.2"
+        "@nuxt/kit": "^3.9.0"
     },
     "devDependencies": {
         "@nuxt/devtools": "latest",

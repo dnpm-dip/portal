@@ -18,20 +18,22 @@
     },
     "devDependencies": {
         "@dnpm-dip/core": "^1.0.0",
-        "@dnpm-dip/rare-diseases": "^1.0.0",
+        "@dnpm-dip/kit": "^0.0.0",
+        "@dnpm-dip/mtb": "^0.0.0",
+        "@dnpm-dip/rd": "^1.0.0",
         "@nuxt/devtools": "latest",
         "@fortawesome/fontawesome-free": "^6.4.2",
         "@vuecs/form-controls": "^1.2.0",
-        "@vuecs/navigation": "^1.1.0",
-        "@vuecs/pagination": "^1.1.0",
+        "@vuecs/navigation": "^1.1.1",
+        "@vuecs/pagination": "^1.1.1",
         "@vuecs/preset-bootstrap-v5": "^1.0.0",
         "@vuecs/preset-font-awesome": "^1.0.0",
         "@vuelidate/core": "^2.0.3",
         "@vuelidate/validators": "^2.0.4",
         "bootstrap-vue-next": "^0.15.5",
         "bootstrap": "^5.3.2",
-        "nuxt": "^3.8.2",
-        "vue": "^3.3.13",
+        "nuxt": "^3.9.0",
+        "vue": "^3.4.1",
         "vue-router": "^4.2.5"
     }
 }

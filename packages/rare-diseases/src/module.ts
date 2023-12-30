@@ -1,6 +1,6 @@
-import { generateNuxtPages } from '@dnpm-dip/core';
+import { register } from '@dnpm-dip/kit';
 import {
-    addImportsSources, addPlugin, createResolver, defineNuxtModule, resolveFiles,
+    addImportsSources, addPlugin, createResolver, defineNuxtModule,
 } from '@nuxt/kit';
 
 // Module options TypeScript interface definition
@@ -9,24 +9,33 @@ export interface ModuleOptions {}
 export default defineNuxtModule<ModuleOptions>({
     meta: {
         name: '@dnpm-dip/rare-diseases',
-        configKey: 'rareDiseases',
+        configKey: 'rd',
     },
     // Default configuration options of the Nuxt module
     defaults: {},
     async setup(options, nuxt) {
         const resolver = createResolver(import.meta.url);
 
-        const directory = resolver.resolve('./runtime/pages');
-        const files = await resolveFiles(directory, '**/*{.vue,.ts}');
-
-        const pages = await generateNuxtPages({
-            directory,
-            files,
-            prefix: '/rd',
-        });
-
-        nuxt.hook('pages:extend', (items) => {
-            items.push(...pages);
+        await register({
+            name: 'RD',
+            baseURL: '/rd/',
+            rootDir: import.meta.url,
+            navigationItems: [
+                {
+                    id: 'rd-home',
+                    name: 'Home',
+                    icon: 'fa fa-home',
+                    url: '',
+                    root: true,
+                },
+                {
+                    id: 'rd-search',
+                    name: 'Suche',
+                    icon: 'fa fa-search',
+                    url: 'search',
+                },
+            ],
+            navigationTopId: 'rd',
         });
 
         addImportsSources({
@@ -36,6 +45,5 @@ export default defineNuxtModule<ModuleOptions>({
 
         addPlugin(resolver.resolve('./runtime/plugins/api'));
         addPlugin(resolver.resolve('./runtime/plugins/chartjs'));
-        addPlugin(resolver.resolve('./runtime/plugins/navigation'));
     },
 });
