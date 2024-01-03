@@ -4,11 +4,11 @@ import {
     computed, defineComponent, ref, watch,
 } from 'vue';
 import type { PatientFilter, URLQueryRecord } from '@dnpm-dip/core';
-import FormRangeSlider from '../utility/form-range-slider/FormRangeSlider.vue';
+import { DFormRangeSlider } from '@dnpm-dip/core';
 
 export default defineComponent({
     components: {
-        FormRangeSlider,
+        DFormRangeSlider,
     },
     props: {
         availableFilters: {
@@ -306,7 +306,7 @@ export default defineComponent({
             <h6><i class="fas fa-users" /> Alter <small class="text-muted">({{ age.min }} - {{ age.max }})</small></h6>
 
             <div class="mt-3">
-                <FormRangeSlider
+                <DFormRangeSlider
                     :min="age.min"
                     :max="age.max"
                     @change="handleAgeRangeChanged"

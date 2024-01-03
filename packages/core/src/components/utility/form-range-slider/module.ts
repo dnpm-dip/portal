@@ -162,7 +162,7 @@ export class FormRangeSlider {
         this.mouseX = event.x;
     }
 
-    protected mouseUpEventHandler(event: MouseEvent) {
+    protected mouseUpEventHandler() {
         if (!this.sliderMin || !this.sliderMax) return;
 
         this.sliderMin.stopDrag();
@@ -173,7 +173,7 @@ export class FormRangeSlider {
         this.mouseX = FormRangeSlider.getTouchPosition(event);
     }
 
-    protected touchEndEventHandler(event: TouchEvent) {
+    protected touchEndEventHandler() {
         if (!this.sliderMin || !this.sliderMax) return;
 
         this.sliderMin.stopDrag();

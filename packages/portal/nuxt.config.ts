@@ -21,6 +21,7 @@ export default defineNuxtConfig({
         '@/assets/css/card.css',
         '@/assets/css/list.css',
         '@/assets/css/pagination.css',
+        '@dnpm-dip/core/../dist/index.css',
     ],
     alias: {
         '@dnpm-dip/core': path.join(__dirname, '..', 'core', 'src'),

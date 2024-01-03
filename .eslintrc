@@ -18,6 +18,7 @@
                     "**/test/**/*.spec.js",
                     "**/test/**/*.spec.ts",
                     "**/rollup.config.mjs",
+                    "packages/core/**",
                     "packages/portal/**",
                     "packages/mtb/**",
                     "packages/rd/**"

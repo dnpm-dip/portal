@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { URLQueryRecord } from '@dnpm-dip/core';
-import { Nav } from '@dnpm-dip/core';
+import { DNav } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { provide, ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
@@ -10,7 +10,7 @@ import type { RDQuerySession } from '../../../domains';
 export default defineNuxtComponent({
     components: {
         SearchForm,
-        Nav,
+        DNav,
     },
     props: {
         entity: {
@@ -65,7 +65,7 @@ export default defineNuxtComponent({
     </div>
 
     <div class="mb-2">
-        <Nav
+        <DNav
             :items="navItems"
             :path="'/rd/query/'+ entity.id"
         />

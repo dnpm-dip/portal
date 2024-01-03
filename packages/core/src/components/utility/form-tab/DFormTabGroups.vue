@@ -59,7 +59,7 @@ export default defineComponent({
 
         init();
 
-        watch(modelValue, (val) => {
+        watch(modelValue, () => {
             init();
         }, { deep: true });
 

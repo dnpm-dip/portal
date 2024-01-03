@@ -1,19 +1,17 @@
 <script lang="ts">
-import { Nav } from '@dnpm-dip/core';
 import type { NavItem, URLQueryRecord } from '@dnpm-dip/core';
 import type { PropType, Ref } from 'vue';
 import { inject, ref } from 'vue';
+import CollectionTransform from '@dnpm-dip/core/components/utility/DCollectionTransform.vue';
 import { defineNuxtComponent } from '#imports';
 import QuerySummaryEntity from '../../../../components/core/QuerySummaryEntity';
 import QuerySummaryDistributionBar from '../../../../components/core/QuerySummaryDistributionBar.vue';
 import QuerySummaryDistributionDoughnut from '../../../../components/core/QuerySummaryDistributionDoughnut.vue';
 import QuerySummaryGroupedVariants from '../../../../components/core/QuerySummaryGroupedVariants.vue';
-import CollectionTransform from '../../../../components/utility/CollectionTransform.vue';
 import type { RDQuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
     components: {
-        Nav,
         QuerySummaryGroupedVariants,
         CollectionTransform,
         QuerySummaryDistributionBar,

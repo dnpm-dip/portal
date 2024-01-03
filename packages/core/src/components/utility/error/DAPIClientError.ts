@@ -1,7 +1,7 @@
 import type { PropType, SlotsType } from 'vue';
 import { defineComponent } from 'vue';
-import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../core';
-import { renderError } from '../../core';
+import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../../core';
+import { renderError } from '../../../core';
 
 export default defineComponent({
     props: {

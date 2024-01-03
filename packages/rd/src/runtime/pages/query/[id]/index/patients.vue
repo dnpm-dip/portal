@@ -2,7 +2,6 @@
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCPagination } from '@vuecs/pagination';
 import type { URLQueryRecord } from '@dnpm-dip/core';
-import { Nav } from '@dnpm-dip/core';
 import type { PropType, Ref } from 'vue';
 import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
@@ -20,7 +19,6 @@ export default defineNuxtComponent({
         QueryPatientFilters,
         QueryPatientMatchEntity,
         QueryPatientMatchList,
-        Nav,
         VCPagination,
     },
     props: {

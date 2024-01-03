@@ -1,14 +1,13 @@
 <script lang="ts">
-import { type CodeSystemConcept, CodeSystemEntity } from '@dnpm-dip/core';
+import { type CodeSystemConcept } from '@dnpm-dip/core';
 import {
     type PropType, defineComponent, reactive, toRef, watch,
 } from 'vue';
+import { DCodeSystem, DCollectionTransform, DFormSelectSearch } from '@dnpm-dip/core';
 import type { RDQueryCriteriaVariant } from '../../domains';
-import CollectionTransform from '../utility/CollectionTransform.vue';
-import FormSelectSearch from '../utility/FormSelectSearch.vue';
 
 export default defineComponent({
-    components: { CollectionTransform, CodeSystemEntity, FormSelectSearch },
+    components: { DCollectionTransform, DCodeSystem, DFormSelectSearch },
     emit: ['updated'],
     props: {
         entity: {
@@ -59,33 +58,33 @@ export default defineComponent({
 <template>
     <div class="form-group">
         <label>Gene</label>
-        <CodeSystemEntity
+        <DCodeSystem
             :code="'https://www.genenames.org/'"
             :lazy-load="true"
         >
             <template #default="{ data }">
-                <CollectionTransform
+                <DCollectionTransform
                     :items="data.concepts"
                     :transform="transformConcepts"
                 >
                     <template #default="options">
-                        <FormSelectSearch
+                        <DFormSelectSearch
                             v-model="form.gene"
                             :options="options"
                             placeholder="HGNC"
                             @change="handleUpdated"
                         />
                     </template>
-                </CollectionTransform>
+                </DCollectionTransform>
             </template>
             <template #loading>
-                <FormSelectSearch
+                <DFormSelectSearch
                     :disabled="true"
                     :options="[]"
                     placeholder="HGNC"
                 />
             </template>
-        </CodeSystemEntity>
+        </DCodeSystem>
     </div>
     <div>
         <VCFormGroup>
@@ -108,7 +107,6 @@ export default defineComponent({
             <label>Proteinänderung</label>
             <VCFormInput
                 v-model="form.proteinChange"
-                :disabled="busy"
                 placeholder="HGVS"
                 @change="handleUpdated"
             />

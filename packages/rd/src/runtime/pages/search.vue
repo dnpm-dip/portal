@@ -1,5 +1,5 @@
 <script lang="ts">
-import { APIClientErrorBox, PageMetaKey } from '@dnpm-dip/core';
+import { DAPIClientError, PageMetaKey } from '@dnpm-dip/core';
 import type { ClientError } from 'hapic';
 import { ref } from 'vue';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
@@ -12,7 +12,7 @@ export default defineNuxtComponent({
     components: {
         PreparedQueryForm,
         SearchSVG,
-        APIClientErrorBox,
+        DAPIClientError,
         SearchForm,
     },
     setup() {
@@ -62,7 +62,7 @@ export default defineNuxtComponent({
         />
 
         <template v-if="error">
-            <APIClientErrorBox :error="error" />
+            <DAPIClientError :error="error" />
         </template>
     </div>
 </template>

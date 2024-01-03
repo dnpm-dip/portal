@@ -41,7 +41,13 @@ export async function register(context: RegistrationContext) {
             url: context.baseURL,
         };
 
-        const sideNavigationItems : NavigationItem[] = context.navigationItems;
+        // todo: enable deeply nested nav items.
+        const sideNavigationItems : NavigationItem[] = context.navigationItems
+            .map((item) => {
+                item.url = context.baseURL + item.url;
+
+                return item;
+            });
 
         addPluginTemplate({
             options: {

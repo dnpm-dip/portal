@@ -1,33 +1,29 @@
 <script lang="ts">
 import type { CodeRecord, CodeSystemConcept, ValueSetCoding } from '@dnpm-dip/core';
-import { QueryRequestMode, ValueSetEntity } from '@dnpm-dip/core';
+import {
+    DCollectionTransform, DFormSelectSearch, DFormTabGroups, DValueSet, QueryRequestMode,
+} from '@dnpm-dip/core';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
 import {
-    defineComponent, reactive, ref,
+    defineComponent, ref,
 } from 'vue';
-import { useRDAPIClient } from '#imports';
 import type {
     RDPreparedQuery,
     RDQueryCriteria,
     RDQueryCriteriaVariant,
     RDQuerySession,
-    RDVariantCriteria,
 } from '../../domains';
-import CollectionTransform from '../utility/CollectionTransform.vue';
-import FormSelectSearch from '../utility/FormSelectSearch.vue';
-import FormTabGroups from '../utility/FormTabGroups.vue';
-import Tags from '../utility/Tags.vue';
+import { useRDAPIClient } from '#imports';
 import VariantFormTabGroup from './VariantFormTabGroup.vue';
 
 export default defineComponent({
     components: {
         VariantFormTabGroup,
-        FormTabGroups,
-        Tags,
-        CollectionTransform,
-        FormSelectSearch,
-        ValueSetEntity,
+        DFormTabGroups,
+        DCollectionTransform,
+        DFormSelectSearch,
+        DValueSet,
     },
     props: {
         criteria: {
@@ -357,17 +353,17 @@ export default defineComponent({
 
                     <div class="form-group">
                         <label>Kategorie</label>
-                        <ValueSetEntity
+                        <DValueSet
                             :code="'https://www.orpha.net'"
                             :lazy-load="true"
                         >
                             <template #default="{ data }">
-                                <CollectionTransform
+                                <DCollectionTransform
                                     :items="data.codings"
                                     :transform="transformCodings"
                                 >
                                     <template #default="options">
-                                        <FormSelectSearch
+                                        <DFormSelectSearch
                                             v-model="categories"
                                             :multiple="true"
                                             :options="options"
@@ -380,18 +376,18 @@ export default defineComponent({
                                                     @deleted="toggle"
                                                 />
                                             </template>
-                                        </FormSelectSearch>
+                                        </DFormSelectSearch>
                                     </template>
-                                </CollectionTransform>
+                                </DCollectionTransform>
                             </template>
                             <template #loading>
-                                <FormSelectSearch
+                                <DFormSelectSearch
                                     :options="[]"
                                     :disabled="true"
                                     placeholder="Orphanet Ontology"
                                 />
                             </template>
-                        </ValueSetEntity>
+                        </DValueSet>
                     </div>
                 </div>
                 <div class="col">
@@ -399,17 +395,17 @@ export default defineComponent({
 
                     <div class="form-group">
                         <label>Term</label>
-                        <ValueSetEntity
+                        <DValueSet
                             :code="'https://hpo.jax.org'"
                             :lazy-load="true"
                         >
                             <template #default="{ data }">
-                                <CollectionTransform
+                                <DCollectionTransform
                                     :items="data.codings"
                                     :transform="transformCodings"
                                 >
                                     <template #default="options">
-                                        <FormSelectSearch
+                                        <DFormSelectSearch
                                             v-model="hpoTerms"
                                             :multiple="true"
                                             :options="options"
@@ -422,18 +418,18 @@ export default defineComponent({
                                                     @deleted="toggle"
                                                 />
                                             </template>
-                                        </FormSelectSearch>
+                                        </DFormSelectSearch>
                                     </template>
-                                </CollectionTransform>
+                                </DCollectionTransform>
                             </template>
                             <template #loading>
-                                <FormSelectSearch
+                                <DFormSelectSearch
                                     :disabled="true"
                                     :options="[]"
                                     placeholder="Human Phenotype Ontology"
                                 />
                             </template>
-                        </ValueSetEntity>
+                        </DValueSet>
                     </div>
                 </div>
             </div>
@@ -445,7 +441,7 @@ export default defineComponent({
                     <h6>Varianten</h6>
                 </div>
 
-                <FormTabGroups
+                <DFormTabGroups
                     v-model="variants"
                     :min-items="1"
                     :max-items="6"
@@ -458,7 +454,7 @@ export default defineComponent({
                             @updated="props.updated"
                         />
                     </template>
-                </FormTabGroups>
+                </DFormTabGroups>
             </div>
 
             <hr>

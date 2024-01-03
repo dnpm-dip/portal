@@ -1,7 +1,7 @@
 <script lang="ts">
-import { hasNormalizedSlot, normalizeSlot } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { computed, defineComponent, h } from 'vue';
+import { hasNormalizedSlot, normalizeSlot } from '../../core';
 
 export default defineComponent({
     props: {
@@ -14,7 +14,7 @@ export default defineComponent({
         },
     },
     emits: ['update:modelValue'],
-    setup(props, { emit, slots }) {
+    setup(props, { slots }) {
         const codings = computed(() => {
             if (!props.items.length) {
                 return [];

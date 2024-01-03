@@ -83,8 +83,8 @@ export default defineComponent({
     <slot>
         <ul class="list-unstyled mb-0 d-flex flex-wrap align-items-center">
             <template
-                v-for="(item, index) in tags"
-                :key="index"
+                v-for="(item) in tags"
+                :key="item.id"
             >
                 <slot
                     name="tag"
