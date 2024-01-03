@@ -1,12 +1,12 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineComponent, ref } from 'vue';
-import type { RDPatientMatch } from '../../domains';
+import type { PatientMatch } from '../../domains';
 
 export default defineComponent({
     props: {
         entity: {
-            type: Object as PropType<RDPatientMatch>,
+            type: Object as PropType<PatientMatch>,
             required: true,
         },
         queryId: {

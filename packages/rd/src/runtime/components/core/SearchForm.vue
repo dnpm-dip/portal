@@ -9,10 +9,10 @@ import {
     defineComponent, ref,
 } from 'vue';
 import type {
+    PreparedQuery,
+    QueryCriteria,
+    QueryCriteriaVariant,
     QuerySession,
-    RDPreparedQuery,
-    RDQueryCriteria,
-    RDQueryCriteriaVariant,
 } from '../../domains';
 import { useRDAPIClient } from '#imports';
 import VariantFormTabGroup from './VariantFormTabGroup.vue';
@@ -27,7 +27,7 @@ export default defineComponent({
     },
     props: {
         criteria: {
-            type: Object as PropType<RDQueryCriteria>,
+            type: Object as PropType<QueryCriteria>,
         },
         queryId: {
             type: String,
@@ -36,7 +36,7 @@ export default defineComponent({
             type: String as PropType<QueryRequestMode>,
         },
         preparedQuery: {
-            type: Object as PropType<RDPreparedQuery>,
+            type: Object as PropType<PreparedQuery>,
         },
         preparedQueryId: {
             type: String,
@@ -61,12 +61,12 @@ export default defineComponent({
         ];
 
         const busy = ref(false);
-        const criteria = ref<RDQueryCriteria>({});
+        const criteria = ref<QueryCriteria>({});
 
         const categories = ref<FormSelectOption[]>([]);
         const hpoTerms = ref<FormSelectOption[]>([]);
 
-        const variants = ref<RDQueryCriteriaVariant<string>[]>([]);
+        const variants = ref<QueryCriteriaVariant<string>[]>([]);
 
         const preparedQueryId = ref<string | undefined>(undefined);
         const preparedQueryName = ref('');
@@ -122,12 +122,12 @@ export default defineComponent({
 
             if (criteria.value.variants) {
                 for (let i = 0; i < criteria.value.variants.length; i++) {
-                    const variant = criteria.value.variants[i] as RDQueryCriteriaVariant;
-                    const data : RDQueryCriteriaVariant<string> = {};
+                    const variant = criteria.value.variants[i] as QueryCriteriaVariant;
+                    const data : QueryCriteriaVariant<string> = {};
 
                     const keys = Object.keys(variant);
                     for (let j = 0; j < keys.length; j++) {
-                        data[keys[j] as keyof typeof data] = variant[keys[j] as keyof RDQueryCriteriaVariant]?.code;
+                        data[keys[j] as keyof typeof data] = variant[keys[j] as keyof QueryCriteriaVariant]?.code;
                     }
 
                     variants.value.push(data);
@@ -180,8 +180,8 @@ export default defineComponent({
             }
         };
 
-        const buildCriteria = () : RDQueryCriteria => {
-            const payload : RDQueryCriteria = {};
+        const buildCriteria = () : QueryCriteria => {
+            const payload : QueryCriteria = {};
             if (variants.value.length > 0) {
                 for (let i = 0; i < variants.value.length; i++) {
                     const variant = variants.value[i];
@@ -240,7 +240,7 @@ export default defineComponent({
             const payload = buildCriteria();
 
             try {
-                let preparedQuery : RDPreparedQuery | undefined;
+                let preparedQuery : PreparedQuery | undefined;
 
                 if (preparedQueryId.value) {
                     preparedQuery = await apiClient.preparedQuery.update(

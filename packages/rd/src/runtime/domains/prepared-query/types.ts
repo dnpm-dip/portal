@@ -1,14 +1,14 @@
-import type { RDQueryCriteria } from '../query';
+import type { QueryCriteria } from '../query';
 
-export type RDPreparedQueryCreate = {
+export type PreparedQueryCreate = {
     name?: string,
-    criteria: RDQueryCriteria
+    criteria: QueryCriteria
 };
 
-export type RDPreparedQueryUpdate = RDPreparedQueryCreate;
+export type PreparedQueryUpdate = PreparedQueryCreate;
 
-export type RDPreparedQuery = {
+export type PreparedQuery = {
     id: string,
     name: string,
-    criteria: RDQueryCriteria
+    criteria: QueryCriteria
 };

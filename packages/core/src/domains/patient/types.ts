@@ -20,7 +20,7 @@ export type Patient = {
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-service-base/blob/main/src/main/scala/de/dnpm/dip/service/query/PatientMatch.scala
  */
-export type PatientMatch<Criteria = any> = {
+export type PatientMatchBase<Criteria = any> = {
     id: string,
     managingSite?: Coding,
     gender: Coding<'male' | 'female' | 'other' | 'unknown'>,

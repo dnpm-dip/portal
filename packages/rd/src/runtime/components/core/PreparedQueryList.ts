@@ -3,11 +3,11 @@ import { createResourceCollectionManager, defineResourceCollectionEvents } from 
 import type { SlotsType } from 'vue';
 import { defineComponent } from 'vue';
 import { useRDAPIClient } from '../../composables';
-import type { RDPreparedQuery } from '../../domains';
+import type { PreparedQuery } from '../../domains';
 
 export default defineComponent({
-    slots: Object as SlotsType<ResourceCollectionSlots<RDPreparedQuery>>,
-    emits: defineResourceCollectionEvents<RDPreparedQuery>(),
+    slots: Object as SlotsType<ResourceCollectionSlots<PreparedQuery>>,
+    emits: defineResourceCollectionEvents<PreparedQuery>(),
     setup(props, setup) {
         const api = useRDAPIClient();
 

@@ -5,7 +5,7 @@ import {
 import type { SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
 import { useRDAPIClient } from '#imports';
-import type { RDPatientRecord } from '../../domains';
+import type { PatientRecord } from '../../domains';
 
 export default defineComponent({
     props: {
@@ -23,7 +23,7 @@ export default defineComponent({
             default: false,
         },
     },
-    slots: Object as SlotsType<ResourceRecordSlots<RDPatientRecord>>,
+    slots: Object as SlotsType<ResourceRecordSlots<PatientRecord>>,
     async setup(props, setup) {
         const apiClient = useRDAPIClient();
         const id = toRef(props, 'queryId');

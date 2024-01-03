@@ -6,17 +6,17 @@ import {
 import SearchForm from './SearchForm.vue';
 import PreparedQueryList from './PreparedQueryList';
 import PreparedQueryEntity from './PreparedQueryEntity';
-import type { QuerySession, RDPreparedQuery, RDQueryCriteria } from '../../domains';
+import type { PreparedQuery, QueryCriteria, QuerySession } from '../../domains';
 
 export default defineComponent({
     components: { PreparedQueryEntity, PreparedQueryList, SearchForm },
     emits: ['submitted'],
     setup(props, setup) {
         const searchEl = ref(null) as Ref<null | typeof SearchForm>;
-        const criteria = ref<RDQueryCriteria | undefined>(undefined);
+        const criteria = ref<QueryCriteria | undefined>(undefined);
 
         const preparedQueryNode = ref(null) as Ref<null | typeof PreparedQueryList>;
-        const preparedQuery = ref<RDPreparedQuery | undefined>(undefined);
+        const preparedQuery = ref<PreparedQuery | undefined>(undefined);
         const preparedQueryId = computed(() => {
             if (preparedQuery.value) {
                 return preparedQuery.value.id;
@@ -33,7 +33,7 @@ export default defineComponent({
             });
         };
 
-        const togglePreparedQuery = (data: RDPreparedQuery) => {
+        const togglePreparedQuery = (data: PreparedQuery) => {
             if (
                 preparedQuery.value &&
                 preparedQuery.value.id === data.id
@@ -66,21 +66,21 @@ export default defineComponent({
             });
         };
 
-        const handlePreparedQueryCreated = (data: RDPreparedQuery) => {
+        const handlePreparedQueryCreated = (data: PreparedQuery) => {
             preparedQuery.value = data;
             if (preparedQueryNode.value) {
                 preparedQueryNode.value.created(data);
             }
         };
 
-        const handlePreparedQueryUpdated = (data: RDPreparedQuery) => {
+        const handlePreparedQueryUpdated = (data: PreparedQuery) => {
             preparedQuery.value = data;
             if (preparedQueryNode.value) {
                 preparedQueryNode.value.updated(data);
             }
         };
 
-        const handlePreparedQueryDeleted = (data: RDPreparedQuery) => {
+        const handlePreparedQueryDeleted = (data: PreparedQuery) => {
             if (
                 preparedQuery.value &&
                 preparedQuery.value.id === data.id

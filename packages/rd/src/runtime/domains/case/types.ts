@@ -1,10 +1,10 @@
 import type { Patient } from '@dnpm-dip/core';
-import type { RDDiagnosis } from '../diagnosis';
+import type { Diagnosis } from '../diagnosis';
 
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-rd-model/blob/main/dto_model/src/main/scala/de/dnpm/dip/rd/model/RDCase.scala
  */
-export type RDCase = {
+export type Case = {
     id: string,
     externalId?: {
         value: string,
@@ -23,5 +23,5 @@ export type RDCase = {
     referrer: {
         name: string
     },
-    reason: RDDiagnosis
+    reason: Diagnosis
 };

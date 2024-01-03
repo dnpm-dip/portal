@@ -3,19 +3,19 @@ import { createResourceRecordManager, defineResourceRecordEvents } from '@dnpm-d
 import type { PropType, SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
 import { useRDAPIClient } from '../../composables';
-import type { RDPreparedQuery } from '../../domains';
+import type { PreparedQuery } from '../../domains';
 
 export default defineComponent({
     props: {
         entity: {
-            type: Object as PropType<RDPreparedQuery>,
+            type: Object as PropType<PreparedQuery>,
         },
         entityId: {
             type: String,
         },
     },
-    emits: defineResourceRecordEvents<RDPreparedQuery>(),
-    slots: Object as SlotsType<ResourceRecordSlots<RDPreparedQuery>>,
+    emits: defineResourceRecordEvents<PreparedQuery>(),
+    slots: Object as SlotsType<ResourceRecordSlots<PreparedQuery>>,
     async setup(props, setup) {
         const api = useRDAPIClient();
         const id = toRef(props, 'entityId');

@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
-import type { QuerySession, RDPatientRecord } from '../../../../../domains';
+import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
     props: {
@@ -10,7 +10,7 @@ export default defineNuxtComponent({
             required: true,
         },
         record: {
-            type: Object as PropType<RDPatientRecord>,
+            type: Object as PropType<PatientRecord>,
             required: true,
         },
     },

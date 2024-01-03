@@ -4,14 +4,14 @@ import {
     type PropType, defineComponent, reactive, toRef, watch,
 } from 'vue';
 import { DCodeSystem, DCollectionTransform, DFormSelectSearch } from '@dnpm-dip/core';
-import type { RDQueryCriteriaVariant } from '../../domains';
+import type { QueryCriteriaVariant } from '../../domains';
 
 export default defineComponent({
     components: { DCollectionTransform, DCodeSystem, DFormSelectSearch },
     emit: ['updated'],
     props: {
         entity: {
-            type: Object as PropType<RDQueryCriteriaVariant<string>>,
+            type: Object as PropType<QueryCriteriaVariant<string>>,
         },
     },
     setup(props, { emit }) {

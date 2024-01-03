@@ -1,9 +1,9 @@
-import type { Coding, Patient, PatientMatch } from '@dnpm-dip/core';
-import type { RDCase } from '../case';
-import type { RDDiagnosis } from '../diagnosis';
-import type { RDNGSReport } from '../ngs-report';
-import type { RDQueryCriteria } from '../query';
-import type { RDTherapy } from '../therapy';
+import type { Coding, Patient, PatientMatchBase } from '@dnpm-dip/core';
+import type { Case } from '../case';
+import type { Diagnosis } from '../diagnosis';
+import type { NGSReport } from '../ngs-report';
+import type { QueryCriteria } from '../query';
+import type { Therapy } from '../therapy';
 
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-rd-model/blob/main/dto_model/src/main/scala/de/dnpm/dip/rd/model/Observations.scala
@@ -17,13 +17,13 @@ type HPOTerm = {
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-rd-model/blob/main/dto_model/src/main/scala/de/dnpm/dip/rd/model/RDPatientRecord.scala
  */
-export type RDPatientRecord = {
-    case: RDCase,
-    diagnosis: RDDiagnosis,
+export type PatientRecord = {
+    case: Case,
+    diagnosis: Diagnosis,
     hpoTerms: HPOTerm[],
-    ngsReports: RDNGSReport[],
+    ngsReports: NGSReport[],
     patient: Patient,
-    therapy?: RDTherapy
+    therapy?: Therapy
 };
 
-export type RDPatientMatch = PatientMatch<RDQueryCriteria>;
+export type PatientMatch = PatientMatchBase<QueryCriteria>;

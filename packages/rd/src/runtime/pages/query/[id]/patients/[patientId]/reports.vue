@@ -2,7 +2,7 @@
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import VariantEntity from '../../../../../components/core/VariantEntity.vue';
-import type { QuerySession, RDPatientRecord } from '../../../../../domains';
+import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
     components: { VariantEntity },
@@ -12,7 +12,7 @@ export default defineNuxtComponent({
             required: true,
         },
         record: {
-            type: Object as PropType<RDPatientRecord>,
+            type: Object as PropType<PatientRecord>,
             required: true,
         },
     },

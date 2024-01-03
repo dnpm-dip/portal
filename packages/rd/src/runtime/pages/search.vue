@@ -5,7 +5,7 @@ import { ref } from 'vue';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/SearchForm.vue';
 import SearchSVG from '../components/svg/SearchSVG';
-import type { RDQueryCriteria } from '../domains';
+import type { QueryCriteria } from '../domains';
 import PreparedQueryForm from '../components/core/PreparedQueryForm.vue';
 
 export default defineNuxtComponent({
@@ -27,7 +27,7 @@ export default defineNuxtComponent({
         };
 
         const handleSubmitted = async (data : {
-            criteria: RDQueryCriteria,
+            criteria: QueryCriteria,
             queryId: string,
             preparedQueryId?: string
         }) => {

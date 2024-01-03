@@ -1,4 +1,4 @@
-import type { ObjectLiteral, PatientMatch, ResourceCollectionSlots } from '@dnpm-dip/core';
+import type { ObjectLiteral, PatientMatchBase, ResourceCollectionSlots } from '@dnpm-dip/core';
 import { createResourceCollectionManager } from '@dnpm-dip/core';
 import type { PropType, SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
@@ -14,7 +14,7 @@ export default defineComponent({
             type: Object as PropType<ObjectLiteral>,
         },
     },
-    slots: Object as SlotsType<ResourceCollectionSlots<PatientMatch>>,
+    slots: Object as SlotsType<ResourceCollectionSlots<PatientMatchBase>>,
     setup(props, setup) {
         const api = useRDAPIClient();
 

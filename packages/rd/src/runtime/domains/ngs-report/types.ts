@@ -37,7 +37,7 @@ export type Variant = {
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-rd-model/blob/main/dto_model/src/main/scala/de/dnpm/dip/rd/model/RDNGSReport.scala
  */
-export type RDNGSReport = {
+export type NGSReport = {
     id: string,
     patient: Patient,
     performingLab: {

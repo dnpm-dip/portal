@@ -2,7 +2,7 @@ import type {
     CollectionResponse, ResourceCollectionLoadMeta, URLQueryRecord,
 } from '@dnpm-dip/core';
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
-import type { RDPatientMatch, RDPatientRecord } from '../patient';
+import type { PatientMatch, PatientRecord } from '../patient';
 import type {
     QuerySession, QuerySessionCreate, QuerySummary,
 } from './types';
@@ -63,7 +63,7 @@ export class QueryAPI extends BaseAPI {
      * @param meta
      * @throws ClientError
      */
-    async getPatients(id: string, meta?: ResourceCollectionLoadMeta) : Promise<CollectionResponse<RDPatientMatch>> {
+    async getPatients(id: string, meta?: ResourceCollectionLoadMeta) : Promise<CollectionResponse<PatientMatch>> {
         let qs : string = '';
         if (typeof meta !== 'undefined') {
             const { filters, limit, offset } = meta;
@@ -95,7 +95,7 @@ export class QueryAPI extends BaseAPI {
      * @param queryId
      * @param patientId
      */
-    async getPatientRecord(queryId: string, patientId: string) : Promise<RDPatientRecord> {
+    async getPatientRecord(queryId: string, patientId: string) : Promise<PatientRecord> {
         const response = await this.client.get(`rd/queries/${queryId}/patient-record/${patientId}`);
         return response.data;
     }

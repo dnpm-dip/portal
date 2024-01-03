@@ -7,7 +7,7 @@ import type {
     QuerySummaryBase,
 } from '@dnpm-dip/core';
 
-export type RDVariantCriteria = 'gene' |
+export type VariantCriteria = 'gene' |
 'cDNAChange' |
 'gDNAChange' |
 'proteinChange' |
@@ -18,24 +18,24 @@ export type RDVariantCriteria = 'gene' |
 'modeOfInheritance' |
 'significance';
 
-export type RDQueryCriteriaVariant<
+export type QueryCriteriaVariant<
     V = CodeRecord,
 > = {
-    [K in RDVariantCriteria]?: V
+    [K in VariantCriteria]?: V
 };
 
-export type RDQueryCriteria = {
+export type QueryCriteria = {
     diagnoses?: CodeRecord[],
     hpoTerms?: CodeRecord[],
-    variants?: RDQueryCriteriaVariant[]
+    variants?: QueryCriteriaVariant[]
 };
 
 export type QuerySessionCreate = {
     mode?: CodeRecord<`${QueryRequestMode}` | QueryRequestMode>,
-    criteria: RDQueryCriteria
+    criteria: QueryCriteria
 };
 
-export type QuerySession = QueryBase<RDQueryCriteria>;
+export type QuerySession = QueryBase<QueryCriteria>;
 
 export type VariantDistribution = {
     key: Coding,

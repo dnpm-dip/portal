@@ -6,7 +6,7 @@ import {
     createError, defineNuxtComponent, navigateTo, useRoute,
 } from '#app';
 import { useRDAPIClient } from '../../../../composables';
-import type { QuerySession, RDPatientRecord } from '../../../../domains';
+import type { PatientRecord, QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
     components: {
@@ -23,7 +23,7 @@ export default defineNuxtComponent({
         const api = useRDAPIClient();
         const route = useRoute();
 
-        const entity = ref<RDPatientRecord>(null) as any;
+        const entity = ref<PatientRecord>(null) as any;
 
         if (typeof route.params.patientId !== 'string') {
             await navigateTo({ path: `/rd/query/${props.entity.id}` });
