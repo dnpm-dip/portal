@@ -4,10 +4,7 @@ import {
     defineNuxtModule,
 } from '@nuxt/kit';
 
-// Module options TypeScript interface definition
-export interface ModuleOptions {}
-
-export default defineNuxtModule<ModuleOptions>({
+export default defineNuxtModule({
     meta: {
         name: '@dnpm-dip/mtb',
         configKey: 'mtb',
@@ -40,7 +37,7 @@ export default defineNuxtModule<ModuleOptions>({
 
         addImportsSources({
             from: resolver.resolve('./runtime/composables/index'),
-            imports: ['useAPIClient', 'useMTBAPIClient'],
+            imports: ['useMTBAPIClient'],
         });
 
         addPlugin(resolver.resolve('./runtime/plugins/api'));

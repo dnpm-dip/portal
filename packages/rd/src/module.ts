@@ -3,12 +3,9 @@ import {
     addImportsSources, addPlugin, createResolver, defineNuxtModule,
 } from '@nuxt/kit';
 
-// Module options TypeScript interface definition
-export interface ModuleOptions {}
-
-export default defineNuxtModule<ModuleOptions>({
+export default defineNuxtModule({
     meta: {
-        name: '@dnpm-dip/rare-diseases',
+        name: '@dnpm-dip/rd',
         configKey: 'rd',
     },
     // Default configuration options of the Nuxt module
@@ -40,7 +37,7 @@ export default defineNuxtModule<ModuleOptions>({
 
         addImportsSources({
             from: resolver.resolve('./runtime/composables/index'),
-            imports: ['useAPIClient', 'useRDAPIClient'],
+            imports: ['useRDAPIClient'],
         });
 
         addPlugin(resolver.resolve('./runtime/plugins/api'));
