@@ -3,32 +3,36 @@ import { PageMetaKey } from '@dnpm-dip/core';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import {
-    createError, defineNuxtComponent, definePageMeta, navigateTo,
-    useRDAPIClient, useRoute,
+    createError,
+    defineNuxtComponent,
+    definePageMeta,
+    navigateTo,
+    useMTBAPIClient,
+    useRoute,
 } from '#imports';
 import type { QuerySession } from '../../domains';
 
 export default defineNuxtComponent({
     async setup() {
         definePageMeta({
-            [PageMetaKey.NAVIGATION_TOP_ID]: 'rd',
-            [PageMetaKey.NAVIGATION_SIDE_ID]: 'rd-search',
+            [PageMetaKey.NAVIGATION_TOP_ID]: 'mtb',
+            [PageMetaKey.NAVIGATION_SIDE_ID]: 'mtb-search',
         });
 
-        const api = useRDAPIClient();
+        const api = useMTBAPIClient();
         const route = useRoute();
 
         const entity = ref(null) as unknown as Ref<QuerySession>;
 
         if (typeof route.params.id !== 'string') {
-            await navigateTo({ path: '/rd/search' });
+            await navigateTo({ path: '/mtb/search' });
             throw createError({});
         }
 
         try {
             entity.value = await api.query.getOne(route.params.id);
         } catch (e) {
-            await navigateTo({ path: '/rd/search' });
+            await navigateTo({ path: '/mtb/search' });
             throw createError({});
         }
 

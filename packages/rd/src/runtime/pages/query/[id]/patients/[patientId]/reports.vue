@@ -2,13 +2,13 @@
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import VariantEntity from '../../../../../components/core/VariantEntity.vue';
-import type { RDPatientRecord, RDQuerySession } from '../../../../../domains';
+import type { QuerySession, RDPatientRecord } from '../../../../../domains';
 
 export default defineNuxtComponent({
     components: { VariantEntity },
     props: {
         entity: {
-            type: Object as PropType<RDQuerySession>,
+            type: Object as PropType<QuerySession>,
             required: true,
         },
         record: {

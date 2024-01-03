@@ -1,0 +1,76 @@
+<script lang="ts">
+import type { NavItem, URLQueryRecord } from '@dnpm-dip/core';
+import type { PropType, Ref } from 'vue';
+import { inject, ref } from 'vue';
+import { defineNuxtComponent } from '#imports';
+import MQuerySummary from '../../../../components/core/MQuerySummary';
+import type { QuerySession } from '../../../../domains';
+
+export default defineNuxtComponent({
+    components: {
+        MQuerySummary,
+    },
+    props: {
+        entity: {
+            type: Object as PropType<QuerySession>,
+            required: true,
+        },
+    },
+    setup() {
+        const navItems = [
+            {
+                id: 'default', name: 'Demographie', icon: 'fas fa-globe', urlSuffix: '',
+            },
+        ];
+
+        const queryFilters = inject('queryFilters') as Ref<URLQueryRecord>;
+
+        const navItemId = ref('default');
+
+        const setNavItem = (item: NavItem) => {
+            navItemId.value = item.id || 'default';
+        };
+
+        return {
+            queryFilters,
+            navItems,
+            navItemId,
+            setNavItem,
+        };
+    },
+});
+</script>
+<template>
+    <div class="content-wrapper">
+        <div class="content-sidebar">
+            <ul class="nav nav-pills flex-column">
+                <template
+                    v-for="item in navItems"
+                    :key="item.id"
+                >
+                    <li class="nav-item">
+                        <a
+                            href="javascript:void(0)"
+                            class="nav-link"
+                            :class="{'router-link-exact-active': navItemId === item.id}"
+                            @click="setNavItem(item)"
+                        >
+                            <i :class="item.icon" />
+                            {{ item.name }}
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </div>
+        <div class="content-main">
+            <MQuerySummary
+                :query-id="entity.id"
+                :query-record="queryFilters"
+            >
+                <template #default="props">
+                    <pre>{{ props }}</pre>
+                </template>
+            </MQuerySummary>
+        </div>
+    </div>
+</template>

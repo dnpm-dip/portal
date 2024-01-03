@@ -9,7 +9,7 @@ import QueryDiagnosisFilter from '../../../../components/core/QueryDiagnosisFilt
 import QueryHPOFilter from '../../../../components/core/QueryHPOFilter.vue';
 import QueryPatientMatchEntity from '../../../../components/core/QueryPatientMatchEntity.vue';
 import QueryPatientMatchList from '../../../../components/core/QueryPatientMatchList';
-import type { RDQuerySession } from '../../../../domains';
+import type { QuerySession } from '../../../../domains';
 import QueryPatientFilters from '../../../../components/core/QueryPatientFilters.vue';
 
 export default defineNuxtComponent({
@@ -23,7 +23,7 @@ export default defineNuxtComponent({
     },
     props: {
         entity: {
-            type: Object as PropType<RDQuerySession>,
+            type: Object as PropType<QuerySession>,
             required: true,
         },
     },

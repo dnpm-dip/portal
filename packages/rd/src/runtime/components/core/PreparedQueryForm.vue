@@ -6,7 +6,7 @@ import {
 import SearchForm from './SearchForm.vue';
 import PreparedQueryList from './PreparedQueryList';
 import PreparedQueryEntity from './PreparedQueryEntity';
-import type { RDPreparedQuery, RDQueryCriteria, RDQuerySession } from '../../domains';
+import type { QuerySession, RDPreparedQuery, RDQueryCriteria } from '../../domains';
 
 export default defineComponent({
     components: { PreparedQueryEntity, PreparedQueryList, SearchForm },
@@ -50,7 +50,7 @@ export default defineComponent({
             reset();
         };
 
-        const handleQueryCreated = (data: RDQuerySession) => {
+        const handleQueryCreated = (data: QuerySession) => {
             setup.emit('submitted', {
                 queryId: data.id,
                 criteria: data.criteria,
@@ -58,7 +58,7 @@ export default defineComponent({
             });
         };
 
-        const handleQueryUpdated = (data: RDQuerySession) => {
+        const handleQueryUpdated = (data: QuerySession) => {
             setup.emit('submitted', {
                 queryId: data.id,
                 criteria: data.criteria,

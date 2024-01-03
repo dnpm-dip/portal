@@ -8,7 +8,7 @@ import QuerySummaryEntity from '../../../../components/core/QuerySummaryEntity';
 import QuerySummaryDistributionBar from '../../../../components/core/QuerySummaryDistributionBar.vue';
 import QuerySummaryDistributionDoughnut from '../../../../components/core/QuerySummaryDistributionDoughnut.vue';
 import QuerySummaryGroupedVariants from '../../../../components/core/QuerySummaryGroupedVariants.vue';
-import type { RDQuerySession } from '../../../../domains';
+import type { QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
     components: {
@@ -20,7 +20,7 @@ export default defineNuxtComponent({
     },
     props: {
         entity: {
-            type: Object as PropType<RDQuerySession>,
+            type: Object as PropType<QuerySession>,
             required: true,
         },
     },

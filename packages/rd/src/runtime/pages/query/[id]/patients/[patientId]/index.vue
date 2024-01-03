@@ -1,12 +1,12 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
-import type { RDPatientRecord, RDQuerySession } from '../../../../../domains';
+import type { QuerySession, RDPatientRecord } from '../../../../../domains';
 
 export default defineNuxtComponent({
     props: {
         entity: {
-            type: Object as PropType<RDQuerySession>,
+            type: Object as PropType<QuerySession>,
             required: true,
         },
         record: {

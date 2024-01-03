@@ -1,11 +1,10 @@
 import type {
     CollectionResponse, ResourceCollectionLoadMeta, URLQueryRecord,
 } from '@dnpm-dip/core';
-import { BaseAPI, serializeURLQueryRecord } from '@dnpm-dip/core';
+import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
 import type { RDPatientMatch, RDPatientRecord } from '../patient';
-import { QueryRequestMode } from './constants';
 import type {
-    RDQuerySession, RDQuerySessionCreate, RDQuerySummary,
+    QuerySession, QuerySessionCreate, QuerySummary,
 } from './types';
 
 export class QueryAPI extends BaseAPI {
@@ -14,7 +13,7 @@ export class QueryAPI extends BaseAPI {
      *
      * @param query
      */
-    async submit(query: RDQuerySessionCreate) : Promise<RDQuerySession> {
+    async submit(query: QuerySessionCreate) : Promise<QuerySession> {
         query.mode = query.mode || {
             code: QueryRequestMode.LOCAL,
         };
@@ -23,7 +22,7 @@ export class QueryAPI extends BaseAPI {
         return response.data;
     }
 
-    async getOne(id: string) : Promise<RDQuerySession> {
+    async getOne(id: string) : Promise<QuerySession> {
         const response = await this.client.get(`rd/queries/${id}`);
         return response.data;
     }
@@ -34,7 +33,7 @@ export class QueryAPI extends BaseAPI {
      * @param id
      * @param query
      */
-    async update(id: string, query?: RDQuerySessionCreate) : Promise<RDQuerySession> {
+    async update(id: string, query?: QuerySessionCreate) : Promise<QuerySession> {
         const response = await this.client.put(`rd/queries/${id}`, query);
         return response.data;
     }
@@ -45,7 +44,7 @@ export class QueryAPI extends BaseAPI {
      * @param id
      * @param query
      */
-    async getSummary(id: string, query?: URLQueryRecord) : Promise<RDQuerySummary> {
+    async getSummary(id: string, query?: URLQueryRecord) : Promise<QuerySummary> {
         let qs : string = '';
         if (typeof query !== 'undefined') {
             qs = serializeURLQueryRecord(query);

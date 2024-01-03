@@ -4,7 +4,7 @@ import { DNav } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { provide, ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
-import SearchForm from '../../../components/core/SearchForm.vue';
+import SearchForm from '../../../components/core/MSearchForm.vue';
 import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
@@ -18,15 +18,12 @@ export default defineNuxtComponent({
             required: true,
         },
     },
-    setup(props, { emit }) {
+    setup(_, { emit }) {
         const route = useRoute();
 
         const navItems = [
             {
                 name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
-            },
-            {
-                name: 'Patienten', icon: 'fas fa-user-injured', urlSuffix: '/patients',
             },
             {
                 name: 'Einstellungen', icon: 'fa fa-cog', urlSuffix: '/settings',
@@ -55,7 +52,7 @@ export default defineNuxtComponent({
             <h4>
                 <NuxtLink
                     class="btn btn-xs btn-dark me-1"
-                    :to="'/rd/search'"
+                    :to="'/mtb/search'"
                 >
                     <i class="fa fa-arrow-left" />
                 </NuxtLink>
@@ -67,7 +64,7 @@ export default defineNuxtComponent({
     <div class="mb-2">
         <DNav
             :items="navItems"
-            :path="'/rd/query/'+ entity.id"
+            :path="'/mtb/query/'+ entity.id"
         />
     </div>
 

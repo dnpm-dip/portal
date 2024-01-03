@@ -6,7 +6,7 @@ import {
     createError, defineNuxtComponent, navigateTo, useRoute,
 } from '#app';
 import { useRDAPIClient } from '../../../../composables';
-import type { RDPatientRecord, RDQuerySession } from '../../../../domains';
+import type { QuerySession, RDPatientRecord } from '../../../../domains';
 
 export default defineNuxtComponent({
     components: {
@@ -14,7 +14,7 @@ export default defineNuxtComponent({
     },
     props: {
         entity: {
-            type: Object as PropType<RDQuerySession>,
+            type: Object as PropType<QuerySession>,
             required: true,
         },
     },

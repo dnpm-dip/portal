@@ -1,14 +1,13 @@
 <script lang="ts">
-import type { Coding, MinMaxRange } from '@dnpm-dip/core';
+import type { Coding, ConceptsCount, MinMaxRange } from '@dnpm-dip/core';
 import { isCoding, stringToColor } from '@dnpm-dip/core';
 import type {
-    ChartData, ChartEvent,
-    ChartOptions, Legend, LegendItem,
+    ChartData,
+    ChartOptions,
 } from 'chart.js';
 import { Doughnut } from 'vue-chartjs';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
-import type { ConceptsCount } from '../../domains';
 
 export default defineComponent({
     components: {

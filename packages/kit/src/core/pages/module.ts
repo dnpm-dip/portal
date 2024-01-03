@@ -4,8 +4,6 @@ import {
     encodePath,
     joinURL,
     withLeadingSlash,
-    withTrailingSlash,
-    withoutLeadingSlash,
     withoutTrailingSlash,
 } from 'ufo';
 import { SegmentTokenType } from './constants';
@@ -32,6 +30,8 @@ export async function generateNuxtPages(context: NuxtPagesGenerateContext) : Pro
             b,
         ) => a.relativePath.localeCompare(b.relativePath));
 
+    const prefix = withoutTrailingSlash(context.prefix);
+
     const routes: NuxtPage[] = [];
 
     for (let i = 0; i < files.length; i++) {
@@ -42,8 +42,8 @@ export async function generateNuxtPages(context: NuxtPagesGenerateContext) : Pro
             .split('/');
 
         const route: NuxtPage = {
-            name: '',
-            path: '',
+            name: prefix,
+            path: prefix,
             file: file.absolutePath,
             children: [],
         };
@@ -78,20 +78,8 @@ export async function generateNuxtPages(context: NuxtPagesGenerateContext) : Pro
         parent.push(route);
     }
 
-    const prefix = withoutTrailingSlash(context.prefix);
-
     return prepareRoutes({
         routes,
-        names: new Set<string>(),
-    }).map((route) => {
-        if (route.name) {
-            route.name = withoutLeadingSlash(withTrailingSlash(context.prefix))
-                .replaceAll('/', '-') + route.name;
-        }
-
-        route.path = `${prefix}/${withoutLeadingSlash(route.path)}`;
-
-        return route;
     });
 }
 
@@ -116,7 +104,6 @@ function prepareRoutes(context : RoutesPrepareContext) {
                 route.children = prepareRoutes({
                     routes: route.children,
                     parent: route,
-                    names: context.names,
                 });
             }
 
@@ -127,10 +114,6 @@ function prepareRoutes(context : RoutesPrepareContext) {
             if (index !== -1) {
                 route.name = undefined;
             }
-        }
-
-        if (route.name) {
-            context.names.add(route.name);
         }
 
         context.routes[i] = route;

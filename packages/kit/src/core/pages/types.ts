@@ -19,6 +19,5 @@ export type NuxtPagesGenerateContext = {
 
 export type RoutesPrepareContext = {
     routes: NuxtPage[],
-    parent?: NuxtPage,
-    names: Set<string>
+    parent?: NuxtPage
 };

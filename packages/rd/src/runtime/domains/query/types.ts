@@ -1,7 +1,11 @@
 import type {
-    CodeRecord, Coding, MinMaxRange, QueryBase,
+    CodeRecord,
+    Coding,
+    ConceptsCount,
+    QueryBase,
+    QueryRequestMode,
+    QuerySummaryBase,
 } from '@dnpm-dip/core';
-import type { QueryRequestMode } from './constants';
 
 export type RDVariantCriteria = 'gene' |
 'cDNAChange' |
@@ -26,19 +30,12 @@ export type RDQueryCriteria = {
     variants?: RDQueryCriteriaVariant[]
 };
 
-export type RDQuerySessionCreate = {
+export type QuerySessionCreate = {
     mode?: CodeRecord<`${QueryRequestMode}` | QueryRequestMode>,
     criteria: RDQueryCriteria
 };
 
-export type RDQuerySession = QueryBase<RDQueryCriteria>;
-
-export type ConceptCount<CONCEPT = any> = {
-    concept: CONCEPT,
-    count: number
-};
-
-export type ConceptsCount<CONCEPT = any> = ConceptCount<CONCEPT>[];
+export type QuerySession = QueryBase<RDQueryCriteria>;
 
 export type VariantDistribution = {
     key: Coding,
@@ -48,14 +45,7 @@ export type VariantDistribution = {
     }
 };
 
-export type RDQuerySummary = {
-    id: string,
-    patientCount: number,
-    demographics: {
-        siteDistribution: ConceptsCount<Coding>,
-        genderDistribution: ConceptsCount<Coding>,
-        ageDistribution: ConceptsCount<MinMaxRange>,
-    },
+export type QuerySummary = QuerySummaryBase & {
     diagnostics: {
         overall: {
             hpoTermDistribution: ConceptsCount<Coding>,

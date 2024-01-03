@@ -9,10 +9,10 @@ import {
     defineComponent, ref,
 } from 'vue';
 import type {
+    QuerySession,
     RDPreparedQuery,
     RDQueryCriteria,
     RDQueryCriteriaVariant,
-    RDQuerySession,
 } from '../../domains';
 import { useRDAPIClient } from '#imports';
 import VariantFormTabGroup from './VariantFormTabGroup.vue';
@@ -279,7 +279,7 @@ export default defineComponent({
             const payload = buildCriteria();
 
             try {
-                let query : RDQuerySession;
+                let query : QuerySession;
 
                 if (props.queryId) {
                     query = await apiClient.query.update(props.queryId, {
