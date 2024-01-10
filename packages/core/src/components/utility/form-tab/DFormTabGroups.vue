@@ -80,7 +80,12 @@ export default defineComponent({
         };
 
         const handleUpdated = (data: Record<string, any>) => {
-            items.value[currentIndex.value] = { ...data };
+            if (currentIndex.value === -1) {
+                items.value.push({ ...data });
+                currentIndex.value = 0;
+            } else {
+                items.value[currentIndex.value] = { ...data };
+            }
 
             emit('update:modelValue', items.value);
         };
@@ -98,10 +103,7 @@ export default defineComponent({
 </script>
 <template>
     <div class="d-flex flex-row">
-        <div
-            v-if="items.length > 0"
-            class="w-100"
-        >
+        <div class="w-100">
             <slot
                 :item="items[currentIndex]"
                 :updated="handleUpdated"

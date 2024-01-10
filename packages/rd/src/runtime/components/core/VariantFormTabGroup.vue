@@ -1,5 +1,5 @@
 <script lang="ts">
-import { type CodeSystemConcept } from '@dnpm-dip/core';
+import { type CodeSystemConcept, transformConceptToFormSelectOption } from '@dnpm-dip/core';
 import {
     type PropType, defineComponent, reactive, toRef, watch,
 } from 'vue';
@@ -42,10 +42,9 @@ export default defineComponent({
         const handleUpdated = () => {
             emit('updated', form);
         };
-        const transformConcepts = (concept: CodeSystemConcept) => ({
-            id: concept.code,
-            value: `${concept.properties.Symbol}: ${concept.display}`,
-        });
+        const transformConcepts = (
+            concept: CodeSystemConcept,
+        ) => transformConceptToFormSelectOption(concept);
 
         return {
             form,

@@ -315,11 +315,6 @@ export default defineComponent({
             value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
-        const transformConcepts = (concept: CodeSystemConcept) => ({
-            id: concept.code,
-            value: `${concept.properties.Symbol}: ${concept.display}`,
-        });
-
         return {
             mode,
             modeOptions,
@@ -336,7 +331,6 @@ export default defineComponent({
             submit,
 
             transformCodings,
-            transformConcepts,
 
             // eslint-disable-next-line vue/no-dupe-keys
             preparedQueryId,

@@ -1,22 +1,29 @@
 <script lang="ts">
 import {
-    type CodeSystemConcept,
     DCollectionTransform,
-    DFormSelectSearch, DFormTabGroups,
+    DFormSelectSearch,
+    DFormTabGroups,
     DTags,
     DValueSet,
-    type ValueSetCoding,
-} from '@dnpm-dip/core';
-import {
     QueryRequestMode,
+    type ValueSetCoding,
+    buildCodingsRecord,
+    extractCodeFromCodingsRecord,
+    transformCodingsToFormSelectOptions,
+    transformFormSelectOptionsToCodings,
 } from '@dnpm-dip/core';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
-import {
-    defineComponent, ref,
-} from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useMTBAPIClient } from '#imports';
-import type { QueryCriteria } from '../../domains';
+import {
+    FormMutationType,
+    type MutationDefinition,
+    type QueryCNVCriteria,
+    type QueryCriteria,
+    type QueryFusionCriteria,
+    type QuerySNVCriteria,
+} from '../../domains';
 import MMutationTabGroup from './MMutationTabGroup.vue';
 
 export default defineComponent({
@@ -57,9 +64,12 @@ export default defineComponent({
         const busy = ref(false);
         const criteria = ref<QueryCriteria>({});
 
-        const mutations = ref([]);
+        // todo: this is complex
+        const mutations = ref<MutationDefinition[]>([]);
+
         const diagnoses = ref<FormSelectOption[]>([]);
         const tumorMorphologies = ref<FormSelectOption[]>([]);
+
         const responses = ref<FormSelectOption[]>([]);
 
         const reset = async () => {
@@ -73,7 +83,128 @@ export default defineComponent({
                 mode.value = props.queryMode;
             }
 
+            if (criteria.value.diagnoses) {
+                diagnoses.value = transformCodingsToFormSelectOptions(criteria.value.diagnoses);
+            }
+
+            if (criteria.value.tumorMorphologies) {
+                tumorMorphologies.value = transformCodingsToFormSelectOptions(criteria.value.tumorMorphologies);
+            }
+
+            if (criteria.value.responses) {
+                responses.value = transformCodingsToFormSelectOptions(criteria.value.responses);
+            }
+
+            mutations.value = [];
+
+            if (criteria.value.simpleVariants) {
+                for (let i = 0; i < criteria.value.simpleVariants.length; i++) {
+                    mutations.value.push({
+                        type: FormMutationType.SNV,
+                        data: extractCodeFromCodingsRecord(criteria.value.simpleVariants[i]),
+                    });
+                }
+            }
+
+            if (criteria.value.copyNumberVariants) {
+                for (let i = 0; i < criteria.value.copyNumberVariants.length; i++) {
+                    mutations.value.push({
+                        type: FormMutationType.SNV,
+                        data: extractCodeFromCodingsRecord(criteria.value.copyNumberVariants[i]),
+                    });
+                }
+            }
+
+            if (criteria.value.dnaFusions) {
+                for (let i = 0; i < criteria.value.dnaFusions.length; i++) {
+                    mutations.value.push({
+                        type: FormMutationType.DNA_FUSION,
+                        data: extractCodeFromCodingsRecord(criteria.value.dnaFusions[i]),
+                    });
+                }
+            }
+
+            if (criteria.value.rnaFusions) {
+                for (let i = 0; i < criteria.value.rnaFusions.length; i++) {
+                    mutations.value.push({
+                        type: FormMutationType.RNA_FUSION,
+                        data: extractCodeFromCodingsRecord(criteria.value.rnaFusions[i]),
+                    });
+                }
+            }
+
             busy.value = false;
+        };
+
+        const buildCriteria = () : QueryCriteria => {
+            const payload : QueryCriteria = {};
+
+            if (
+                diagnoses.value &&
+                diagnoses.value.length > 0
+            ) {
+                payload.diagnoses = transformFormSelectOptionsToCodings(diagnoses.value);
+            }
+
+            if (
+                tumorMorphologies.value &&
+                tumorMorphologies.value.length > 0
+            ) {
+                payload.tumorMorphologies = transformFormSelectOptionsToCodings(tumorMorphologies.value);
+            }
+
+            if (
+                responses.value &&
+                responses.value.length > 0
+            ) {
+                payload.responses = transformFormSelectOptionsToCodings(responses.value);
+            }
+
+            const snv : QuerySNVCriteria[] = [];
+            const cnv : QueryCNVCriteria[] = [];
+            const dnaFusions : QueryFusionCriteria[] = [];
+            const rnaFusions : QueryFusionCriteria[] = [];
+
+            for (let i = 0; i < mutations.value.length; i++) {
+                const mutation = mutations.value[i];
+
+                switch (mutation.type) {
+                    case FormMutationType.CNV: {
+                        cnv.push(buildCodingsRecord(mutation.data));
+                        break;
+                    }
+                    case FormMutationType.SNV: {
+                        snv.push(buildCodingsRecord(mutation.data));
+                        break;
+                    }
+                    case FormMutationType.DNA_FUSION: {
+                        dnaFusions.push(buildCodingsRecord(mutation.data));
+                        break;
+                    }
+                    case FormMutationType.RNA_FUSION: {
+                        rnaFusions.push(buildCodingsRecord(mutation.data));
+                        break;
+                    }
+                }
+            }
+
+            if (cnv.length > 0) {
+                payload.copyNumberVariants = cnv;
+            }
+
+            if (snv.length > 0) {
+                payload.simpleVariants = snv;
+            }
+
+            if (dnaFusions.length > 0) {
+                payload.dnaFusions = dnaFusions;
+            }
+
+            if (rnaFusions.length > 0) {
+                payload.rnaFusions = rnaFusions;
+            }
+
+            return payload;
         };
 
         expose({
@@ -88,7 +219,7 @@ export default defineComponent({
 
             busy.value = true;
 
-            const payload = {};
+            const payload = buildCriteria();
 
             try {
                 let query : any;
@@ -126,11 +257,6 @@ export default defineComponent({
             value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
-        const transformConcepts = (concept: CodeSystemConcept) => ({
-            id: concept.code,
-            value: `${concept.properties.Symbol}: ${concept.display}`,
-        });
-
         return {
             mutations,
             diagnoses,
@@ -145,7 +271,6 @@ export default defineComponent({
             submit,
 
             transformCodings,
-            transformConcepts,
         };
     },
 });
@@ -157,12 +282,12 @@ export default defineComponent({
                 <h6><i class="fa fa-dna" /> Alteration</h6>
                 <DFormTabGroups
                     v-model="mutations"
-                    :min-items="1"
+                    :min-items="0"
                     :max-items="6"
                 >
                     <template #default="props">
                         <MMutationTabGroup
-                            :entity="props.entity"
+                            :entity="props.item"
                             @updated="props.updated"
                         />
                     </template>
@@ -322,7 +447,6 @@ export default defineComponent({
                                     >
                                         <template #default="options">
                                             <DFormSelectSearch
-                                                v-model="responses"
                                                 :multiple="true"
                                                 :options="options"
                                                 placeholder="..."
@@ -366,7 +490,6 @@ export default defineComponent({
                                     >
                                         <template #default="options">
                                             <DFormSelectSearch
-                                                v-model="responses"
                                                 :multiple="true"
                                                 :options="options"
                                                 placeholder="..."

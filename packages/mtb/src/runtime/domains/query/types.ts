@@ -34,8 +34,8 @@ export type QuerySummary = QuerySummaryBase & {
 };
 
 export type QueryFusionCriteria<V = Coding> = {
-    fusionPartner5pr: V,
-    fusionPartner3pr: V
+    fusionPartner5pr?: V,
+    fusionPartner3pr?: V
 };
 
 export type QuerySNVCriteria<V = Coding> = {
@@ -51,8 +51,8 @@ export type QueryCNVCriteria<V = Coding> = {
 
 export type QueryMedicationCriteria<V = Coding> = {
     operator?: 'and' | 'or',
-    medication: V,
-    usage: V[]
+    drugs: V[],
+    usage: V
 };
 
 export type QueryCriteria = {
@@ -62,7 +62,7 @@ export type QueryCriteria = {
     copyNumberVariants?: QueryCNVCriteria[],
     dnaFusions?: QueryFusionCriteria[],
     rnaFusions?: QueryFusionCriteria[],
-    medications?:QueryMedicationCriteria,
+    medication?:QueryMedicationCriteria,
     responses?: Coding<string>[]
 };
 

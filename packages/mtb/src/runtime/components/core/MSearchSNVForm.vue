@@ -1,29 +1,60 @@
 <script lang="ts">
 import {
-    DCollectionTransform, DFormSelectSearch, DTags, DValueSet, type ValueSetCoding,
+    type CodeSystemConcept,
+    DCodeSystem, DCollectionTransform, DFormSelectSearch, DTags, type ValueSetCoding, transformConceptToFormSelectOption,
 } from '@dnpm-dip/core';
-import { defineComponent, reactive } from 'vue';
+import {
+    type PropType, computed, defineComponent, reactive, toRef, watch,
+} from 'vue';
 import type { QuerySNVCriteria } from '../../domains';
 
 export default defineComponent({
     components: {
-        DTags, DValueSet, DCollectionTransform, DFormSelectSearch,
+        DTags, DCodeSystem, DCollectionTransform, DFormSelectSearch,
     },
-    setup() {
+    props: {
+        entity: Object as PropType<QuerySNVCriteria<string>>,
+    },
+    setup(props, { emit }) {
+        const entityRef = toRef(props, 'entity');
         const form = reactive<QuerySNVCriteria<string>>({
             gene: '',
             dnaChange: '',
             proteinChange: '',
         });
 
-        const transformCodings = (coding: ValueSetCoding) => ({
-            id: coding.code,
-            value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
+        const init = () => {
+            if (!props.entity) return;
+
+            form.gene = props.entity?.gene || '';
+            form.dnaChange = props.entity?.dnaChange || '';
+            form.proteinChange = props.entity?.proteinChange || '';
+        };
+
+        init();
+
+        watch(entityRef, () => {
+            init();
         });
+
+        const transformConcepts = (
+            concept: CodeSystemConcept,
+        ) => transformConceptToFormSelectOption(concept);
+
+        const isEditing = computed(() => !!entityRef.value);
+        const submit = () => {
+            emit('updated', {
+                gene: form.gene,
+                dnaChange: form.dnaChange,
+                proteinChange: form.proteinChange,
+            } satisfies QuerySNVCriteria<string>);
+        };
 
         return {
             form,
-            transformCodings,
+            transformConcepts,
+            isEditing,
+            submit,
         };
     },
 });
@@ -31,14 +62,14 @@ export default defineComponent({
 <template>
     <div class="form-group">
         <label>Gene</label>
-        <DValueSet
+        <DCodeSystem
             :code="'https://www.genenames.org/'"
             :lazy-load="true"
         >
             <template #default="{ data }">
                 <DCollectionTransform
-                    :items="data.codings"
-                    :transform="transformCodings"
+                    :items="data.concepts"
+                    :transform="transformConcepts"
                 >
                     <template #default="options">
                         <DFormSelectSearch
@@ -64,7 +95,7 @@ export default defineComponent({
                     placeholder="HGNC"
                 />
             </template>
-        </DValueSet>
+        </DCodeSystem>
     </div>
     <VCFormGroup>
         <template #label>
@@ -88,4 +119,14 @@ export default defineComponent({
             />
         </template>
     </VCFormGroup>
+    <div>
+        <button
+            :disabled="busy"
+            type="button"
+            class="btn btn-secondary btn-xs"
+            @click.prevent="submit()"
+        >
+            {{ isEditing ? 'Aktualisiern' : 'Hinzufügen' }}
+        </button>
+    </div>
 </template>
