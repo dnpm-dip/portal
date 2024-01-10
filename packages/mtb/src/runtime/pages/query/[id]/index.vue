@@ -52,7 +52,7 @@ export default defineNuxtComponent({
             <h4>
                 <NuxtLink
                     class="btn btn-xs btn-dark me-1"
-                    :to="'/mtb/search'"
+                    :to="'/mtb/'"
                 >
                     <i class="fa fa-arrow-left" />
                 </NuxtLink>

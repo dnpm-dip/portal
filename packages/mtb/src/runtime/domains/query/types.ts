@@ -33,9 +33,37 @@ export type QuerySummary = QuerySummaryBase & {
     medication: Medication
 };
 
-// todo: set type
+export type QueryFusionCriteria<V = Coding> = {
+    fusionPartner5pr: V,
+    fusionPartner3pr: V
+};
+
+export type QuerySNVCriteria<V = Coding> = {
+    gene?: V,
+    dnaChange?: V,
+    proteinChange?: V
+};
+
+export type QueryCNVCriteria<V = Coding> = {
+    affectedGenes?: V[],
+    type?: V
+};
+
+export type QueryMedicationCriteria<V = Coding> = {
+    operator?: 'and' | 'or',
+    medication: V,
+    usage: V[]
+};
+
 export type QueryCriteria = {
-    foo: string
+    diagnoses?: Coding<string>[],
+    tumorMorphologies?: Coding<string>[],
+    simpleVariants?: QuerySNVCriteria[],
+    copyNumberVariants?: QueryCNVCriteria[],
+    dnaFusions?: QueryFusionCriteria[],
+    rnaFusions?: QueryFusionCriteria[],
+    medications?:QueryMedicationCriteria,
+    responses?: Coding<string>[]
 };
 
 export type QuerySessionCreate = {

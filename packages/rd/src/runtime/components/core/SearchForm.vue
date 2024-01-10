@@ -349,7 +349,7 @@ export default defineComponent({
         <form>
             <div class="row mb-3">
                 <div class="col">
-                    <h6>Diagnose</h6>
+                    <h6><i class="fa fa-diagnoses" /> Diagnose </h6>
 
                     <div class="form-group">
                         <label>Kategorie</label>
@@ -391,7 +391,7 @@ export default defineComponent({
                     </div>
                 </div>
                 <div class="col">
-                    <h6>HPO</h6>
+                    <h6><i class="fas fa-microscope" /> HPO</h6>
 
                     <div class="form-group">
                         <label>Term</label>
@@ -438,7 +438,7 @@ export default defineComponent({
 
             <div class="row mb-2">
                 <div class="col">
-                    <h6>Varianten</h6>
+                    <h6><i class="fa fa-dna" /> Varianten</h6>
                 </div>
 
                 <DFormTabGroups
@@ -460,7 +460,7 @@ export default defineComponent({
             <hr>
 
             <div>
-                <h6>Suchmodus</h6>
+                <h6><i class="fas fa-filter" /> Suchmodus</h6>
 
                 <VCFormSelect
                     v-model="mode"

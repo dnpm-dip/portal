@@ -55,7 +55,7 @@ export default defineNuxtComponent({
             <h4>
                 <NuxtLink
                     class="btn btn-xs btn-dark me-1"
-                    :to="'/rd/search'"
+                    :to="'/rd/'"
                 >
                     <i class="fa fa-arrow-left" />
                 </NuxtLink>

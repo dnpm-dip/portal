@@ -19,17 +19,10 @@ export default defineNuxtModule({
             rootDir: import.meta.url,
             navigationItems: [
                 {
-                    id: 'mtb-home',
-                    name: 'Home',
-                    icon: 'fa fa-home',
-                    url: '',
-                    root: true,
-                },
-                {
                     id: 'mtb-search',
                     name: 'Suche',
                     icon: 'fa fa-search',
-                    url: 'search',
+                    url: '',
                 },
             ],
             navigationTopId: 'mtb',
