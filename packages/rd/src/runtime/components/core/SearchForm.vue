@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { CodeRecord, CodeSystemConcept, ValueSetCoding } from '@dnpm-dip/core';
 import {
-    DCollectionTransform, DFormSelectSearch, DFormTabGroups, DValueSet, QueryRequestMode,
+    DCollectionTransform, DFormSelectSearch, DFormTabGroups, DTags, DValueSet, QueryRequestMode,
 } from '@dnpm-dip/core';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
@@ -19,6 +19,7 @@ import VariantFormTabGroup from './VariantFormTabGroup.vue';
 
 export default defineComponent({
     components: {
+        DTags,
         VariantFormTabGroup,
         DFormTabGroups,
         DCollectionTransform,
@@ -370,7 +371,7 @@ export default defineComponent({
                                             placeholder="Orphanet Ontology"
                                         >
                                             <template #selected="{ items, toggle }">
-                                                <Tags
+                                                <DTags
                                                     :items="items"
                                                     tag-variant="dark"
                                                     @deleted="toggle"
@@ -412,7 +413,7 @@ export default defineComponent({
                                             placeholder="Human Phenotype Ontology"
                                         >
                                             <template #selected="{ items, toggle }">
-                                                <Tags
+                                                <DTags
                                                     :items="items"
                                                     tag-variant="dark"
                                                     @deleted="toggle"
