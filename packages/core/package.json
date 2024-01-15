@@ -48,7 +48,7 @@
     },
     "devDependencies": {
         "bootstrap-vue-next": "^0.15.5",
-        "@nuxt/schema": "^3.9.0",
+        "@nuxt/schema": "^3.9.1",
         "@nuxt/kit": "^3.9.0",
         "@vuecs/link": "^1.0.0",
         "vue": "^3.4.13",
