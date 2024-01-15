@@ -39,20 +39,20 @@ export type QueryFusionCriteria<V = Coding> = {
 };
 
 export type QuerySNVCriteria<V = Coding> = {
-    gene?: V,
     dnaChange?: V,
+    gene?: V,
     proteinChange?: V
 };
 
-export type QueryCNVCriteria<V = Coding> = {
-    affectedGenes?: V[],
-    type?: V
+export type QueryCNVCriteria<G = Coding, T = Coding> = {
+    affectedGenes?: G[],
+    type?: T
 };
 
 export type QueryMedicationCriteria<V = Coding> = {
     operator?: 'and' | 'or',
-    drugs: V[],
-    usage: V
+    drugs?: V[],
+    usage?: V[]
 };
 
 export type QueryCriteria = {

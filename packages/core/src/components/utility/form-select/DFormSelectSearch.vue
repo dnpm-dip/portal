@@ -75,7 +75,7 @@ export default defineComponent({
     components: { FormSelectSearchEntry },
     props: {
         modelValue: {
-            type: [String, Array] as PropType<string | Option[]>,
+            type: [String, Object, Array] as PropType<string | Option | Option[]>,
             default: '',
         },
         options: {
@@ -110,7 +110,7 @@ export default defineComponent({
         const reset = () => {
             if (Array.isArray(props.modelValue)) {
                 selected.value = props.modelValue;
-            } else {
+            } else if (typeof props.modelValue === 'string') {
                 const index = props.options.findIndex(
                     (el) => el.id === props.modelValue,
                 );
@@ -121,6 +121,9 @@ export default defineComponent({
                     selected.value = [];
                     q.value = '';
                 }
+            } else {
+                selected.value = [props.modelValue];
+                q.value = props.modelValue.value;
             }
         };
 
@@ -130,7 +133,8 @@ export default defineComponent({
             reset();
         }, { deep: true });
 
-        const isMulti = computed(() => typeof props.modelValue !== 'string');
+        const isMulti = computed(() => Array.isArray(modelValue.value));
+        const isSingleString = computed(() => typeof modelValue.value === 'string');
 
         const items = computed(() => {
             const output = [];
@@ -181,8 +185,13 @@ export default defineComponent({
 
             isDisplayed.value = false;
 
-            emit('update:modelValue', option.id);
-            emit('change', option.id);
+            if (isSingleString.value) {
+                emit('update:modelValue', option.id);
+                emit('change', option.id);
+            } else {
+                emit('update:modelValue', option);
+                emit('change', option);
+            }
         };
 
         const display = () => {

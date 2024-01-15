@@ -58,6 +58,13 @@ export function extractCodeFromCodingsRecord(
     return output;
 }
 
+// todo: implement this in form-controls package
+function isFormSelectOption(input: unknown) : input is FormSelectOption {
+    return isObject(input) &&
+        typeof input.id !== 'undefined' &&
+        typeof input.value !== 'undefined';
+}
+
 export function buildCodingsRecord(input: Record<string, any>) : Record<string, any> {
     const output : Record<string, any> = {};
     const keys = Object.keys(input);
@@ -66,11 +73,11 @@ export function buildCodingsRecord(input: Record<string, any>) : Record<string, 
 
         if (Array.isArray(value)) {
             output[keys[i]] = value.map((v) => ({
-                code: v,
+                code: isFormSelectOption(v) ? v.id : v,
             } satisfies Coding));
         } else if (value.length > 0) {
             output[keys[i]] = {
-                code: value,
+                code: isFormSelectOption(value) ? value.id : value,
             } satisfies Coding;
         }
     }

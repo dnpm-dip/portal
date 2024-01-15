@@ -61,7 +61,7 @@ export default defineComponent({
 </script>
 <template>
     <div class="form-group">
-        <label>Gene</label>
+        <label>Gen</label>
         <DCodeSystem
             :code="'https://www.genenames.org/'"
             :lazy-load="true"
@@ -115,8 +115,19 @@ export default defineComponent({
         <template #default>
             <VCFormInput
                 v-model="form.proteinChange"
-                placeholder="HGVS"
+                placeholder="HGVS 3-Buchstaben-Code"
             />
+            <!--
+            <div class="alert alert-sm alert-info mt-1">
+                todo: as tooltip - info icon next to label
+                <VCLink
+                    target="_blank"
+                    href="https://hgvs-nomenclature.org/stable/background/standards/#amino-acid-descriptions"
+                >
+                    AAcode
+                </VCLink>
+            </div>
+            -->
         </template>
     </VCFormGroup>
     <div>

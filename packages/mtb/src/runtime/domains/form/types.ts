@@ -1,3 +1,4 @@
+import type { FormSelectOption } from '@vuecs/form-controls';
 import type { QueryCNVCriteria, QueryFusionCriteria, QuerySNVCriteria } from '../query';
 import type { FormMutationType } from './constants';
 
@@ -7,7 +8,7 @@ export type MutationSNVDefinition = {
 };
 export type MutationCNVDefinition = {
     type: FormMutationType.CNV,
-    data: QueryCNVCriteria<string>
+    data: QueryCNVCriteria<FormSelectOption, string>
 };
 export type MutationDNAFusionDefinition = {
     type: FormMutationType.DNA_FUSION,

@@ -5,12 +5,12 @@ import {
     DFormTabGroups,
     DTags,
     DValueSet,
+    QueryCriteriaOperator,
     QueryRequestMode,
     type ValueSetCoding,
     buildCodingsRecord,
     extractCodeFromCodingsRecord,
-    transformCodingsToFormSelectOptions,
-    transformFormSelectOptionsToCodings,
+    transformCodingsToFormSelectOptions, transformFormSelectOptionsToCodings,
 } from '@dnpm-dip/core';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
@@ -21,7 +21,7 @@ import {
     type MutationDefinition,
     type QueryCNVCriteria,
     type QueryCriteria,
-    type QueryFusionCriteria,
+    type QueryFusionCriteria, type QueryMedicationCriteria,
     type QuerySNVCriteria,
 } from '../../domains';
 import MMutationTabGroup from './MMutationTabGroup.vue';
@@ -64,11 +64,14 @@ export default defineComponent({
         const busy = ref(false);
         const criteria = ref<QueryCriteria>({});
 
-        // todo: this is complex
         const mutations = ref<MutationDefinition[]>([]);
 
         const diagnoses = ref<FormSelectOption[]>([]);
         const tumorMorphologies = ref<FormSelectOption[]>([]);
+
+        const medicationDrugs = ref<FormSelectOption[]>([]);
+        const medicationUsage = ref<FormSelectOption[]>([]);
+        const medicationOperator = ref<`${QueryCriteriaOperator}`>(QueryCriteriaOperator.OR);
 
         const responses = ref<FormSelectOption[]>([]);
 
@@ -89,6 +92,20 @@ export default defineComponent({
 
             if (criteria.value.tumorMorphologies) {
                 tumorMorphologies.value = transformCodingsToFormSelectOptions(criteria.value.tumorMorphologies);
+            }
+
+            if (criteria.value.medication) {
+                if (criteria.value.medication.drugs) {
+                    medicationDrugs.value = transformCodingsToFormSelectOptions(criteria.value.medication.drugs);
+                }
+
+                if (criteria.value.medication.usage) {
+                    medicationDrugs.value = transformCodingsToFormSelectOptions(criteria.value.medication.usage);
+                }
+
+                if (criteria.value.medication.operator) {
+                    medicationOperator.value = criteria.value.medication.operator;
+                }
             }
 
             if (criteria.value.responses) {
@@ -152,6 +169,28 @@ export default defineComponent({
             ) {
                 payload.tumorMorphologies = transformFormSelectOptionsToCodings(tumorMorphologies.value);
             }
+
+            const medication : QueryMedicationCriteria = {};
+
+            if (
+                medicationDrugs.value &&
+                medicationDrugs.value.length > 0
+            ) {
+                medication.drugs = transformFormSelectOptionsToCodings(medicationDrugs.value);
+            }
+
+            if (
+                medicationUsage.value &&
+                medicationUsage.value.length > 0
+            ) {
+                medication.usage = transformFormSelectOptionsToCodings(medicationUsage.value);
+            }
+
+            if (medicationOperator.value) {
+                medication.operator = medicationOperator.value;
+            }
+
+            // payload.medication = medication;
 
             if (
                 responses.value &&
@@ -265,6 +304,10 @@ export default defineComponent({
 
             mode,
             modeOptions,
+
+            medicationDrugs,
+            medicationUsage,
+            medicationOperator,
 
             busy,
 
@@ -447,6 +490,7 @@ export default defineComponent({
                                     >
                                         <template #default="options">
                                             <DFormSelectSearch
+                                                v-model="medicationUsage"
                                                 :multiple="true"
                                                 :options="options"
                                                 placeholder="..."
@@ -490,6 +534,7 @@ export default defineComponent({
                                     >
                                         <template #default="options">
                                             <DFormSelectSearch
+                                                v-model="medicationDrugs"
                                                 :multiple="true"
                                                 :options="options"
                                                 placeholder="..."

@@ -9,6 +9,7 @@ import {
     type ValueSetCoding,
     transformConceptToFormSelectOption,
 } from '@dnpm-dip/core';
+import type { FormSelectOption } from '@vuecs/form-controls';
 import {
     type PropType, computed, defineComponent, reactive, toRef, watch,
 } from 'vue';
@@ -19,12 +20,12 @@ export default defineComponent({
         DTags, DCodeSystem, DValueSet, DCollectionTransform, DFormSelectSearch,
     },
     props: {
-        entity: Object as PropType<QueryCNVCriteria<string>>,
+        entity: Object as PropType<QueryCNVCriteria<FormSelectOption, string>>,
     },
     emits: ['updated'],
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
-        const form = reactive<QueryCNVCriteria<string>>({
+        const form = reactive<QueryCNVCriteria<FormSelectOption, string>>({
             affectedGenes: [],
             type: '',
         });
@@ -56,7 +57,7 @@ export default defineComponent({
             emit('updated', {
                 affectedGenes: form.affectedGenes,
                 type: form.type,
-            } satisfies QueryCNVCriteria<string>);
+            } satisfies QueryCNVCriteria<FormSelectOption, string>);
         };
 
         return {
@@ -160,7 +161,7 @@ export default defineComponent({
             class="btn btn-secondary btn-xs"
             @click.prevent="submit()"
         >
-            {{ isEditing ? 'Aktualisiern' : 'Hinzufügen' }}
+            {{ isEditing ? 'Aktualisieren' : 'Hinzufügen' }}
         </button>
     </div>
 </template>
