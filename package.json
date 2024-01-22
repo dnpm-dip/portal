@@ -42,7 +42,7 @@
         "lint-staged": "^15.2.0",
         "nx": "^17.2.6",
         "rimraf": "^5.0.1",
-        "rollup": "^4.9.1",
+        "rollup": "^4.9.6",
         "rollup-plugin-postcss": "^4.0.2",
         "smob": "^1.4.1",
         "typescript": "5.3.3",
