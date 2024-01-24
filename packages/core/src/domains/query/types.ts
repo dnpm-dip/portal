@@ -44,6 +44,12 @@ export type QueryBase<
     lastUpdate: string
 };
 
+export type QuerySummaryGroupedItem<K = Coding, V = ConceptsCount<Coding>> = {
+    key: K,
+    value: V
+};
+export type QuerySummaryGrouped<K = Coding, V = ConceptsCount> = QuerySummaryGroupedItem<K, V>[];
+
 export type QuerySummaryDemographics = {
     siteDistribution: ConceptsCount<Coding>,
     genderDistribution: ConceptsCount<Coding>,

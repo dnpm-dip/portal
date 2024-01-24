@@ -327,6 +327,7 @@ export default defineComponent({
                     v-model="mutations"
                     :min-items="0"
                     :max-items="6"
+                    :direction="'col'"
                 >
                     <template #default="props">
                         <MMutationTabGroup

@@ -1,4 +1,5 @@
 export * from './alert';
+export * from './chart';
 export * from './error';
 export * from './form-range-slider';
 export * from './form-select';

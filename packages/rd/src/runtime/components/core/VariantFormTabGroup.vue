@@ -25,8 +25,6 @@ export default defineComponent({
         });
 
         const init = () => {
-            if (!props.entity) return;
-
             form.gene = props.entity?.gene || '';
             form.cDNAChange = props.entity?.cDNAChange || '';
             form.gDNAChange = props.entity?.gDNAChange || '';

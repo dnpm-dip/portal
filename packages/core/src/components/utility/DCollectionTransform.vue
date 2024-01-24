@@ -15,7 +15,7 @@ export default defineComponent({
     },
     emits: ['update:modelValue'],
     setup(props, { slots }) {
-        const codings = computed(() => {
+        const items = computed(() => {
             if (!props.items.length) {
                 return [];
             }
@@ -30,7 +30,7 @@ export default defineComponent({
         });
 
         if (hasNormalizedSlot('default', slots)) {
-            return () => normalizeSlot('default', codings.value, slots);
+            return () => normalizeSlot('default', items.value, slots);
         }
 
         return () => h('div', []);

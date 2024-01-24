@@ -52,7 +52,7 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <div class="container">
+    <div>
         <template v-if="entity">
             <NuxtPage
                 :entity="entity"

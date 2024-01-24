@@ -5,7 +5,7 @@ export type MinMaxRange = {
     max: number
 };
 
-export function isMinMaxRange(input: unknown) {
+export function isMinMaxRange(input: unknown): input is MinMaxRange {
     return isObject(input) &&
         typeof input.min === 'number' &&
         typeof input.max === 'number';

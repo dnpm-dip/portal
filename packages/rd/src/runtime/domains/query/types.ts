@@ -4,7 +4,7 @@ import type {
     ConceptsCount,
     QueryBase,
     QueryRequestMode,
-    QuerySummaryBase,
+    QuerySummaryBase, QuerySummaryGrouped,
 } from '@dnpm-dip/core';
 
 export type VariantCriteria = 'gene' |
@@ -37,20 +37,19 @@ export type QuerySessionCreate = {
 
 export type QuerySession = QueryBase<QueryCriteria>;
 
-export type VariantDistribution = {
-    key: Coding,
-    value: {
-        diseaseCategoryDistribution: ConceptsCount<Coding>,
-        hpoTermDistribution: ConceptsCount<Coding>
-    }
+export type VariantDistribution = QuerySummaryGrouped<Coding, {
+    diseaseCategoryDistribution: ConceptsCount<Coding>,
+    hpoTermDistribution: ConceptsCount<Coding>
+}>;
+
+export type QuerySummaryDiagnostics = {
+    overall: {
+        hpoTermDistribution: ConceptsCount<Coding>,
+        diseaseCategoryDistribution: ConceptsCount<Coding>
+    },
+    variant: VariantDistribution[]
 };
 
 export type QuerySummary = QuerySummaryBase & {
-    diagnostics: {
-        overall: {
-            hpoTermDistribution: ConceptsCount<Coding>,
-            diseaseCategoryDistribution: ConceptsCount<Coding>
-        },
-        variant: VariantDistribution[]
-    }
+    diagnostics: QuerySummaryDiagnostics
 };

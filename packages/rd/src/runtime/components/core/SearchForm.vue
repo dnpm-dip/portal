@@ -438,7 +438,7 @@ export default defineComponent({
 
                 <DFormTabGroups
                     v-model="variants"
-                    :min-items="1"
+                    :min-items="0"
                     :max-items="6"
                 >
                     <!-- todo: label; max 15 zeichen; {{Gene}} ({{dnaÄnderung}} || -->

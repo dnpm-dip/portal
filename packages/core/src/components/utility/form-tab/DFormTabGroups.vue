@@ -2,8 +2,10 @@
 import {
     type PropType, defineComponent, ref, toRef, watch,
 } from 'vue';
+import DFormTabGroup from './DFormTabGroup.vue';
 
 export default defineComponent({
+    components: { DFormTabGroup },
     props: {
         modelValue: {
             type: Array as PropType<Record<string, any>[]>,
@@ -18,6 +20,18 @@ export default defineComponent({
         },
         maxItems: {
             type: Number,
+        },
+        createButton: {
+            type: Boolean,
+            default: true,
+        },
+        direction: {
+            type: String as PropType<'row' | 'col'>,
+            default: 'row',
+        },
+        label: {
+            type: String,
+            default: undefined,
         },
     },
     emits: ['update:modelValue'],
@@ -102,15 +116,26 @@ export default defineComponent({
 
 </script>
 <template>
-    <div class="d-flex flex-row">
+    <div
+        class="d-flex"
+        :class="{'flex-row': direction === 'row', 'flex-column': direction === 'col'}"
+    >
         <div class="w-100">
             <slot
                 :item="items[currentIndex]"
                 :updated="handleUpdated"
             />
         </div>
-        <ul class="nav nav-pills flex-column ms-2">
-            <li class="nav-item">
+        <ul
+            class="nav nav-pills"
+            :class="{'flex-column ms-2': direction === 'row', 'flex-row mt-2': direction === 'col'}"
+        >
+            <li
+                v-if="createButton"
+                class="nav-item"
+                :class="{'ms-auto': direction === 'col'}"
+                :style="{'order': direction === 'col' ? '1' : 0}"
+            >
                 <a
                     href="javascript:void(0)"
                     class="nav-link nav-link-dark text-center mb-1"
@@ -121,22 +146,16 @@ export default defineComponent({
                 </a>
             </li>
             <template
-                v-for="(_,index) in items.length"
+                v-for="(item,index) in items"
                 :key="index"
             >
-                <li
-                    class="nav-item"
-                    style="max-width: 150px;"
-                >
-                    <a
-                        href="javascript:void(0)"
-                        class="nav-link text-center"
-                        :class="{'router-link-exact-active': currentIndex === index}"
-                        @click="toggle(index)"
-                    >
-                        {{ index + 1 }}
-                    </a>
-                </li>
+                <DFormTabGroup
+                    :item="item"
+                    :index="index"
+                    :current-index="currentIndex"
+                    :label="label"
+                    @toggle="toggle"
+                />
             </template>
         </ul>
     </div>

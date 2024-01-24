@@ -3,19 +3,18 @@ import type { NavItem, URLQueryRecord } from '@dnpm-dip/core';
 import type { PropType, Ref } from 'vue';
 import { inject, ref } from 'vue';
 import CollectionTransform from '@dnpm-dip/core/components/utility/DCollectionTransform.vue';
+import { DChartBar, DChartDoughnut } from '@dnpm-dip/core';
 import { defineNuxtComponent } from '#imports';
 import QuerySummaryEntity from '../../../../components/core/QuerySummaryEntity';
-import QuerySummaryDistributionBar from '../../../../components/core/QuerySummaryDistributionBar.vue';
-import QuerySummaryDistributionDoughnut from '../../../../components/core/QuerySummaryDistributionDoughnut.vue';
-import QuerySummaryGroupedVariants from '../../../../components/core/QuerySummaryGroupedVariants.vue';
+import RQuerySummaryDiagnostics from '../../../../components/core/RQuerySummaryDiagnostics.vue';
 import type { QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
     components: {
-        QuerySummaryGroupedVariants,
+        RQuerySummaryDiagnostics,
         CollectionTransform,
-        QuerySummaryDistributionBar,
-        QuerySummaryDistributionDoughnut,
+        DChartBar,
+        DChartDoughnut,
         QuerySummaryEntity,
     },
     props: {
@@ -88,7 +87,7 @@ export default defineNuxtComponent({
                                         <h6>
                                             Patienten pro Standort
                                         </h6>
-                                        <QuerySummaryDistributionDoughnut
+                                        <DChartDoughnut
                                             style="max-height: 390px"
                                             :items="props.data.demographics.siteDistribution"
                                         />
@@ -99,7 +98,7 @@ export default defineNuxtComponent({
                                         <h6>
                                             Verteilung von Geschlechtern
                                         </h6>
-                                        <QuerySummaryDistributionDoughnut
+                                        <DChartDoughnut
                                             style="max-height: 390px"
                                             :items="props.data.demographics.genderDistribution"
                                         />
@@ -110,7 +109,7 @@ export default defineNuxtComponent({
                                         <h6>
                                             Verteilung des Alters
                                         </h6>
-                                        <QuerySummaryDistributionBar
+                                        <DChartBar
                                             style="max-height: 390px"
                                             :items="props.data.demographics.ageDistribution"
                                         />
@@ -119,37 +118,9 @@ export default defineNuxtComponent({
                             </div>
                         </div>
                     </template>
+
                     <template v-else>
-                        <div>
-                            <h5>Insgesamt</h5>
-
-                            <div class="row">
-                                <div class="col-12 col-xl-6">
-                                    <div class="entity-card text-center mb-3 w-100">
-                                        <h6 class="text-center">
-                                            Verteilung von HPOTermen
-                                        </h6>
-                                        <QuerySummaryDistributionBar
-                                            :items="props.data.diagnostics.overall.hpoTermDistribution"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="col-12 col-xl-6">
-                                    <div class="entity-card text-center mb-3 w-100">
-                                        <h6 class="text-center">
-                                            Verteilung von Diagnose Kategorien
-                                        </h6>
-                                        <QuerySummaryDistributionBar :items="props.data.diagnostics.overall.diseaseCategoryDistribution" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <h5>Varianten</h5>
-
-                            <QuerySummaryGroupedVariants :items="props.data.diagnostics.variants" />
-                        </div>
+                        <RQuerySummaryDiagnostics :entity="props.data.diagnostics" />
                     </template>
                 </template>
             </QuerySummaryEntity>
