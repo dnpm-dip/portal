@@ -1,22 +1,23 @@
 import type {
     CodeRecord,
-    Coding, ConceptsCount, QueryBase, QueryRequestMode, QuerySummaryBase, QuerySummaryGrouped,
+    Coding, KeyValueRecords, QueryBase, QueryRequestMode, QuerySummaryBase, QuerySummaryGrouped,
 } from '@dnpm-dip/core';
 
 export type QuerySummaryTumorDiagnostics = {
-    tumorEntityDistribution: ConceptsCount<Coding>,
-    tumorEntityDistributionByVariant: QuerySummaryGrouped,
-    tumorMorphologyDistribution: ConceptsCount<Coding>
+    tumorEntityDistribution: KeyValueRecords<Coding>,
+    tumorEntityDistributionByVariant: KeyValueRecords<string, KeyValueRecords<Coding>>,
+    tumorMorphologyDistribution: KeyValueRecords<Coding>
 };
 
 type MedicationRecommendations = {
-    overallDistribution: ConceptsCount<Coding>,
-    distributionbySupportingVariant: QuerySummaryGrouped
+    overallDistribution: KeyValueRecords<Coding>,
+    distributionBySupportingVariant: KeyValueRecords<string, KeyValueRecords<string[]>>
 };
 
 type MedicationTherapies = {
-    overallDistribution: ConceptsCount<Coding>,
-    responseDistributionByTherapy: QuerySummaryGrouped
+    meanDurations: KeyValueRecords<string[]>,
+    overallDistribution: KeyValueRecords<string[]>,
+    responseDistributionByTherapy: KeyValueRecords<string[], KeyValueRecords<Coding>>
 };
 
 export type QuerySummaryMedication = {

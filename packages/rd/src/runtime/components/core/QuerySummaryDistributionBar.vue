@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { Coding, ConceptsCount, MinMaxRange } from '@dnpm-dip/core';
+import type { Coding, KeyValueRecords, MinMaxRange } from '@dnpm-dip/core';
 import { isCoding, stringToColor } from '@dnpm-dip/core';
 import type {
     ChartData, ChartOptions,
@@ -15,23 +15,23 @@ export default defineComponent({
     props: {
         items: {
             required: true,
-            type: Array as PropType<ConceptsCount<MinMaxRange | Coding>>,
+            type: Array as PropType<KeyValueRecords<MinMaxRange | Coding>>,
         },
     },
     setup(props) {
         const data = computed<ChartData<'bar'>>(() => ({
             datasets: [{
-                data: props.items.map((item) => item.count),
+                data: props.items.map((item) => item.value),
                 backgroundColor: props.items.map(
-                    (item) => (isCoding(item.concept) ?
-                        `${stringToColor(item.concept.display || item.concept.code)}` :
-                        `${stringToColor(`${(item.concept.min + item.concept.max) * 10}`)}`),
+                    (item) => (isCoding(item.key) ?
+                        `${stringToColor(item.key.display || item.key.code)}` :
+                        `${stringToColor(`${(item.key.min + item.key.max) * 10}`)}`),
                 ),
             }],
             labels: props.items.map(
-                (item) => (isCoding(item.concept) ?
-                    item.concept.display || item.concept.code :
-                    `${item.concept.min}-${item.concept.max}`),
+                (item) => (isCoding(item.key) ?
+                    item.key.display || item.key.code :
+                    `${item.key.min}-${item.key.max}`),
             ),
         }));
 

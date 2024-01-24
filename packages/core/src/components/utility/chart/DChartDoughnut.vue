@@ -6,9 +6,8 @@ import type {
 import { Doughnut } from 'vue-chartjs';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
-import { stringToColor } from '../../../utils';
-import { isCoding } from '../../../domains';
-import type { Coding, ConceptsCount, MinMaxRange } from '../../../domains';
+import type { Coding, KeyValueRecords, MinMaxRange } from '../../../domains';
+import { generateChartBackgroundColorForKeyValueRecord, generateChartLabelsForKeyValueRecord } from './utils';
 
 export default defineComponent({
     components: {
@@ -17,24 +16,16 @@ export default defineComponent({
     props: {
         items: {
             required: true,
-            type: Array as PropType<ConceptsCount<MinMaxRange | Coding>>,
+            type: Array as PropType<KeyValueRecords<MinMaxRange | Coding>>,
         },
     },
     setup(props) {
         const data = computed<ChartData<'doughnut'>>(() => ({
             datasets: [{
-                data: props.items.map((item) => item.count),
-                backgroundColor: props.items.map(
-                    (item) => (isCoding(item.concept) ?
-                        `${stringToColor(item.concept.display || item.concept.code)}` :
-                        `${stringToColor(`${(item.concept.min + item.concept.max) * 10}`)}`),
-                ),
+                data: props.items.map((item) => item.value),
+                backgroundColor: props.items.map((item) => generateChartBackgroundColorForKeyValueRecord(item)),
             }],
-            labels: props.items.map(
-                (item) => (isCoding(item.concept) ?
-                    item.concept.display || item.concept.code :
-                    `${item.concept.min}-${item.concept.max}`),
-            ),
+            labels: props.items.map((item) => generateChartLabelsForKeyValueRecord(item)),
         }));
 
         const options : ChartOptions<'doughnut'> = {

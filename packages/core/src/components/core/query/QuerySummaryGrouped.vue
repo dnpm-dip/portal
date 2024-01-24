@@ -7,7 +7,8 @@ import type {
 import {
     computed, defineComponent, ref, watch,
 } from 'vue';
-import type { QuerySummaryGrouped, QuerySummaryGroupedItem } from '../../../domains';
+import type { KeyValueRecord, KeyValueRecords } from '../../../domains';
+import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils';
 
 export default defineComponent({
     props: {
@@ -16,17 +17,17 @@ export default defineComponent({
             default: 'Gruppe',
         },
         items: {
-            type: Array as PropType<QuerySummaryGrouped>,
+            type: Array as PropType<KeyValueRecords>,
             required: true,
         },
     },
     setup(props) {
         const id = ref(undefined) as Ref<string | undefined>;
-        const item = ref(null) as Ref<QuerySummaryGroupedItem | null>;
+        const item = ref(null) as Ref<KeyValueRecord | null>;
 
-        const options = computed<FormSelectOption[]>(() => props.items.map((el) => ({
-            id: el.key.code,
-            value: el.key.display || el.key.code,
+        const options = computed<FormSelectOption[]>(() => props.items.map((el, id) => ({
+            id,
+            value: generateChartLabelsForKeyValueRecord(el),
         })));
 
         watch(id, (val) => {
@@ -35,7 +36,7 @@ export default defineComponent({
                 return;
             }
 
-            const index = props.items.findIndex((el) => el.key.code === val);
+            const index = props.items.findIndex((_el, id) => id === parseInt(val, 10));
             if (index !== -1) {
                 item.value = props.items[index];
             }

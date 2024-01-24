@@ -1,14 +1,8 @@
 import type { ObjectLiteral } from '../../types';
 import type { Coding } from '../coding';
 import type { PatientFilter } from '../patient';
+import type { KeyValueRecords } from '../types';
 import type { MinMaxRange } from '../utility';
-
-export type ConceptCount<CONCEPT = any> = {
-    concept: CONCEPT,
-    count: number
-};
-
-export type ConceptsCount<CONCEPT = any> = ConceptCount<CONCEPT>[];
 
 export type DiagnosisFilter = {
     category?: Coding[],
@@ -44,16 +38,16 @@ export type QueryBase<
     lastUpdate: string
 };
 
-export type QuerySummaryGroupedItem<K = Coding, V = ConceptsCount<Coding>> = {
+export type QuerySummaryGroupedItem<K = Coding, V = KeyValueRecords<Coding>> = {
     key: K,
     value: V
 };
-export type QuerySummaryGrouped<K = Coding, V = ConceptsCount> = QuerySummaryGroupedItem<K, V>[];
+export type QuerySummaryGrouped<K = Coding, V = KeyValueRecords> = QuerySummaryGroupedItem<K, V>[];
 
 export type QuerySummaryDemographics = {
-    siteDistribution: ConceptsCount<Coding>,
-    genderDistribution: ConceptsCount<Coding>,
-    ageDistribution: ConceptsCount<MinMaxRange>,
+    siteDistribution: KeyValueRecords<Coding>,
+    genderDistribution: KeyValueRecords<Coding>,
+    ageDistribution: KeyValueRecords<MinMaxRange>,
 };
 
 export type QuerySummaryBase = {

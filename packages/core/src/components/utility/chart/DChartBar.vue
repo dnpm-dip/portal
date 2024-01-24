@@ -5,9 +5,8 @@ import type {
 import { Bar } from 'vue-chartjs';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
-import type { Coding, ConceptsCount, MinMaxRange } from '../../../domains';
-import { isCoding, isMinMaxRange } from '../../../domains';
-import { stringToColor } from '../../../utils';
+import type { Coding, KeyValueRecords, MinMaxRange } from '../../../domains';
+import { generateChartBackgroundColorForKeyValueRecord, generateChartLabelsForKeyValueRecord } from './utils';
 
 export default defineComponent({
     components: {
@@ -16,44 +15,16 @@ export default defineComponent({
     props: {
         items: {
             required: true,
-            type: Array as PropType<ConceptsCount<MinMaxRange | Coding | string[]>>,
+            type: Array as PropType<KeyValueRecords<MinMaxRange | Coding | string[] | string>>,
         },
     },
     setup(props) {
         const data = computed<ChartData<'bar'>>(() => ({
             datasets: [{
-                data: props.items.map((item) => item.count),
-                backgroundColor: props.items.map((item) => {
-                    if (isCoding(item.concept)) {
-                        return `${stringToColor(item.concept.display || item.concept.code)}`;
-                    }
-
-                    if (isMinMaxRange(item.concept)) {
-                        return `${stringToColor(`${(item.concept.min + item.concept.max) * 10}`)}`;
-                    }
-
-                    if (Array.isArray(item.concept)) {
-                        return `${stringToColor(item.concept.join('+'))}`;
-                    }
-
-                    return undefined;
-                }),
+                data: props.items.map((item) => item.value),
+                backgroundColor: props.items.map((item) => generateChartBackgroundColorForKeyValueRecord(item)),
             }],
-            labels: props.items.map((item) => {
-                if (isCoding(item.concept)) {
-                    return item.concept.display || item.concept.code;
-                }
-
-                if (isMinMaxRange(item.concept)) {
-                    return `${item.concept.min}-${item.concept.max}`;
-                }
-
-                if (Array.isArray(item.concept)) {
-                    return `${item.concept.join(', ')}`;
-                }
-
-                return undefined;
-            }),
+            labels: props.items.map((item) => generateChartLabelsForKeyValueRecord(item)),
         }));
 
         const options : ChartOptions<'bar'> = {

@@ -1,7 +1,7 @@
 import type {
     CodeRecord,
     Coding,
-    ConceptsCount,
+    KeyValueRecords,
     QueryBase,
     QueryRequestMode,
     QuerySummaryBase, QuerySummaryGrouped,
@@ -38,14 +38,14 @@ export type QuerySessionCreate = {
 export type QuerySession = QueryBase<QueryCriteria>;
 
 export type VariantDistribution = QuerySummaryGrouped<Coding, {
-    diseaseCategoryDistribution: ConceptsCount<Coding>,
-    hpoTermDistribution: ConceptsCount<Coding>
+    diseaseCategoryDistribution: KeyValueRecords<Coding>,
+    hpoTermDistribution: KeyValueRecords<Coding>
 }>;
 
 export type QuerySummaryDiagnostics = {
     overall: {
-        hpoTermDistribution: ConceptsCount<Coding>,
-        diseaseCategoryDistribution: ConceptsCount<Coding>
+        hpoTermDistribution: KeyValueRecords<Coding>,
+        diseaseCategoryDistribution: KeyValueRecords<Coding>
     },
     variant: VariantDistribution[]
 };

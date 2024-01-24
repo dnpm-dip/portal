@@ -1,11 +1,12 @@
 <script lang="ts">
-import { DChartBar, DQuerySummaryGrouped } from '@dnpm-dip/core';
+import { DChartBar, DChartDoughnut, DQuerySummaryGrouped } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryMedication } from '../../domains';
 
 export default defineComponent({
     components: {
         DChartBar,
+        DChartDoughnut,
         DQuerySummaryGrouped,
     },
     props: {
@@ -32,11 +33,14 @@ export default defineComponent({
                     <h6>Verteilung nach Variante</h6>
 
                     <DQuerySummaryGrouped
-                        :items="entity.recommendations.distributionbySupportingVariant"
+                        :items="entity.recommendations.distributionBySupportingVariant"
                         :label="'Variante'"
                     >
                         <template #default="{ item }">
-                            {{ item }}
+                            <DChartDoughnut
+                                style="max-height: 450px"
+                                :items="item.value"
+                            />
                         </template>
                     </DQuerySummaryGrouped>
                 </div>
@@ -61,7 +65,10 @@ export default defineComponent({
                         :label="'Variante'"
                     >
                         <template #default="{ item }">
-                            {{ item }}
+                            <DChartDoughnut
+                                style="max-height: 450px"
+                                :items="item.value"
+                            />
                         </template>
                     </DQuerySummaryGrouped>
                 </div>

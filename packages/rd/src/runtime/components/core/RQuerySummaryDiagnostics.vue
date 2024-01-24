@@ -24,19 +24,19 @@ export default defineComponent({
             <div class="col-12 col-xl-6">
                 <div class="entity-card text-center mb-3 w-100">
                     <h6 class="text-center">
-                        Verteilung von HPOTermen
+                        Verteilung von Diagnose Kategorien
                     </h6>
-                    <DChartBar
-                        :items="entity.overall.hpoTermDistribution"
-                    />
+                    <DChartBar :items="entity.overall.diseaseCategoryDistribution" />
                 </div>
             </div>
             <div class="col-12 col-xl-6">
                 <div class="entity-card text-center mb-3 w-100">
                     <h6 class="text-center">
-                        Verteilung von Diagnose Kategorien
+                        Verteilung von HPOTermen
                     </h6>
-                    <DChartBar :items="entity.overall.diseaseCategoryDistribution" />
+                    <DChartBar
+                        :items="entity.overall.hpoTermDistribution"
+                    />
                 </div>
             </div>
         </div>
