@@ -1,5 +1,22 @@
 # @dnpm-dip/portal
 
+## [1.1.3](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/portal-v1.1.2...portal-v1.1.3) (2024-01-25)
+
+
+### Miscellaneous Chores
+
+* **portal:** Synchronize main versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.1.2 to ^1.1.3
+    * @dnpm-dip/kit bumped from ^1.1.2 to ^1.1.3
+    * @dnpm-dip/mtb bumped from ^1.1.2 to ^1.1.3
+    * @dnpm-dip/rd bumped from ^1.1.2 to ^1.1.3
+
 ## [1.1.2](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/portal-v1.1.1...portal-v1.1.2) (2024-01-25)
 
 

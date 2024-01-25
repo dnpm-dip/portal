@@ -1,8 +1,8 @@
 {
-    "packages/core": "1.1.2",
-    "packages/portal": "1.1.2",
+    "packages/core": "1.1.3",
+    "packages/portal": "1.1.3",
     "packages/rare-diseases": "1.0.0",
-    "packages/kit": "1.1.2",
-    "packages/mtb": "1.1.2",
-    "packages/rd": "1.1.2"
+    "packages/kit": "1.1.3",
+    "packages/mtb": "1.1.3",
+    "packages/rd": "1.1.3"
 }

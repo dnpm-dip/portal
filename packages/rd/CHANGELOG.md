@@ -1,5 +1,20 @@
 # @dnpm-dip/rare-diseases
 
+## [1.1.3](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.1.2...rd-v1.1.3) (2024-01-25)
+
+
+### Bug Fixes
+
+* change workflow execution steps ([87f397e](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/87f397e9259e512d40970a57ad58caca87148b5e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.1.2 to ^1.1.3
+    * @dnpm-dip/kit bumped from ^1.1.2 to ^1.1.3
+
 ## [1.1.2](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.1.1...rd-v1.1.2) (2024-01-25)
 
 

@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.3](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.1.2...mtb-v1.1.3) (2024-01-25)
+
+
+### Miscellaneous Chores
+
+* **mtb:** Synchronize main versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.1.2 to ^1.1.3
+    * @dnpm-dip/kit bumped from ^1.1.2 to ^1.1.3
+
 ## [1.1.2](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.1.1...mtb-v1.1.2) (2024-01-25)
 
 
