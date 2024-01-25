@@ -3,7 +3,7 @@
     "type": "module",
     "version": "1.1.2",
     "private": true,
-    "description": "Rare Diseases module for the DNPM:DIP Portal.",
+    "description": "Rare Diseases (RD) module for the DNPM:DIP Portal.",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/KohlbacherLab/dnpm-dip.git",
