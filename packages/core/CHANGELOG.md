@@ -1,5 +1,27 @@
 # @dnpm-dip/core
 
+## [1.1.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/core-v1.0.0...core-v1.1.0) (2024-01-25)
+
+
+### Features
+
+* implemented internal mtb form logic and state management ([6197be4](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6197be47515f1efe0a870877baa7c2d3eb704669))
+* initial final summary view for mtb and rd ([f89e085](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f89e08506fd7866d7fc39d1c3b690ecf033c4e63))
+* initial mtb domains, pages etc + initial type refactoring + fix page schema generation ([2befba6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2befba6ed6e169e5c88c8038985ca7d10ed0ded5))
+* initial mtb form elements/components ([8fd3720](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8fd3720fd65ab808307814233e9a184603d23d40))
+* move and prefix core components with letter D ([becfa81](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/becfa815683c284da58d899d5de0efbb36261619))
+* new kit package for registering modules + initial mtb module package ([71a8384](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/71a83848a3aeb5f633fea9172f5b423d3f58df20))
+* refactoring summary logic ([4d41987](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/4d4198738864b7370fc96e18192ec351fc49fe3d))
+* remove RD prefix of rd domains ([8ca6949](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8ca69498ea13bc1e9339d6e0be9af8044e8cafd7))
+* replaced vue-layout with vuecs ([4e1c90d](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/4e1c90d3dea4d7ddbff9f46221f10a4defac7bbb))
+
+
+### Bug Fixes
+
+* better naming for css classes ([c240266](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/c2402662e2becc9c6bee60d63b8d8a8d771906db))
+* **deps:** bump hapic from 2.4.0 to 2.5.0 ([#214](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/214)) ([01f5056](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/01f5056f95bd525bfbe8c515fee4161ea53fb644))
+* mtb (sub-) forms & form-select-search component ([ae1a986](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ae1a986ed7990646e7eeaf95b21e470db1c4dde8))
+
 ## 1.0.0 (2023-12-21)
 
 

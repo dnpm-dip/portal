@@ -1,5 +1,26 @@
 # @dnpm-dip/portal
 
+## [1.1.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/portal-v1.0.0...portal-v1.1.0) (2024-01-25)
+
+
+### Features
+
+* initial final summary view for mtb and rd ([f89e085](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f89e08506fd7866d7fc39d1c3b690ecf033c4e63))
+* initial mtb domains, pages etc + initial type refactoring + fix page schema generation ([2befba6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2befba6ed6e169e5c88c8038985ca7d10ed0ded5))
+* move and prefix core components with letter D ([becfa81](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/becfa815683c284da58d899d5de0efbb36261619))
+* new kit package for registering modules + initial mtb module package ([71a8384](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/71a83848a3aeb5f633fea9172f5b423d3f58df20))
+* replaced vue-layout with vuecs ([4e1c90d](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/4e1c90d3dea4d7ddbff9f46221f10a4defac7bbb))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.0.0 to ^1.1.0
+    * @dnpm-dip/kit bumped from ^0.0.0 to ^1.1.0
+    * @dnpm-dip/mtb bumped from ^0.0.0 to ^1.1.0
+    * @dnpm-dip/rd bumped from ^1.0.0 to ^1.1.0
+
 ## 1.0.0 (2023-12-21)
 
 
