@@ -1,5 +1,32 @@
 # @dnpm-dip/rare-diseases
 
+## 1.1.0 (2024-01-25)
+
+
+### Features
+
+* implemented internal mtb form logic and state management ([6197be4](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6197be47515f1efe0a870877baa7c2d3eb704669))
+* initial final summary view for mtb and rd ([f89e085](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f89e08506fd7866d7fc39d1c3b690ecf033c4e63))
+* initial mtb domains, pages etc + initial type refactoring + fix page schema generation ([2befba6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2befba6ed6e169e5c88c8038985ca7d10ed0ded5))
+* initial mtb form elements/components ([8fd3720](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8fd3720fd65ab808307814233e9a184603d23d40))
+* move and prefix core components with letter D ([becfa81](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/becfa815683c284da58d899d5de0efbb36261619))
+* refactoring summary logic ([4d41987](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/4d4198738864b7370fc96e18192ec351fc49fe3d))
+* remove RD prefix of rd domains ([8ca6949](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8ca69498ea13bc1e9339d6e0be9af8044e8cafd7))
+* simplified api singleton management ([15955cb](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/15955cb28b7cf311510b260d70cc9ade74d9f709))
+
+
+### Bug Fixes
+
+* tags view in rd search form ([a514a77](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a514a773e760c694af7a95d40bc61fbab93b5a76))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.0.0 to ^1.1.0
+    * @dnpm-dip/kit bumped from ^0.0.0 to ^1.1.0
+
 ## 1.0.0 (2023-12-21)
 
 
