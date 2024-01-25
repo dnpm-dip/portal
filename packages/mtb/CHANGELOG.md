@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.2](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.1.1...mtb-v1.1.2) (2024-01-25)
+
+
+### Bug Fixes
+
+* updated lock file ([94b3002](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/94b30028e2d2075a1e3425a4ed4021635311937b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.1.1 to ^1.1.2
+    * @dnpm-dip/kit bumped from ^1.1.1 to ^1.1.2
+
 ## [1.1.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.1.0...mtb-v1.1.1) (2024-01-25)
 
 

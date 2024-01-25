@@ -1,5 +1,20 @@
 # @dnpm-dip/rare-diseases
 
+## [1.1.2](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.1.1...rd-v1.1.2) (2024-01-25)
+
+
+### Miscellaneous Chores
+
+* **rd:** Synchronize main versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.1.1 to ^1.1.2
+    * @dnpm-dip/kit bumped from ^1.1.1 to ^1.1.2
+
 ## [1.1.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.1.0...rd-v1.1.1) (2024-01-25)
 
 
