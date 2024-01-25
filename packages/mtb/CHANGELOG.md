@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.1.0...mtb-v1.1.1) (2024-01-25)
+
+
+### Bug Fixes
+
+* minor changes to bump version ([a716868](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a7168681078dae8550c04fe06475b1561560d718))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.1.0 to ^1.1.1
+    * @dnpm-dip/kit bumped from ^1.1.0 to ^1.1.1
+
 ## 1.1.0 (2024-01-25)
 
 
