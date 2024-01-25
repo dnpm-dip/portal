@@ -1,15 +1,15 @@
-.bs-multi-range {
+.form-range-multi-slider {
     width: 100%;
 }
 
-.bs-multi-range>.track {
+.form-range-multi-slider>.track {
     width: 100%;
     background: #f0f0f0;
     height: 8px;
     border-radius: 1rem;
 }
 
-.bs-multi-range .thumb {
+.form-range-multi-slider .thumb {
     z-index: 1;
     height: 16px;
     width: 16px;
@@ -23,15 +23,15 @@
     cursor: pointer;
 }
 
-.bs-multi-range .upper {
+.form-range-multi-slider .upper {
     bottom: calc(16px / 4);
 }
 
-.bs-multi-range .lower {
+.form-range-multi-slider .lower {
     bottom: calc(calc(16px / 4) + 16px)
 }
 
-.bs-multi-range .track-diff {
+.form-range-multi-slider .track-diff {
     height: 8px;
     position: relative;
     left: 0;

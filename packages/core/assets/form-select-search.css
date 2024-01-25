@@ -1,9 +1,9 @@
-.dropdown {
+.form-select-search {
     position: relative;
     display: block;
 }
 
-.dropdown .dropdown-input {
+.form-select-search .form-select-search-input {
     cursor: pointer;
     border: 1px solid #e7ecf5;
     display: block;
@@ -18,12 +18,12 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.dropdown .dropdown-input:disabled {
+.form-select-search .form-select-search-input:disabled {
     background-color: var(--bs-secondary-bg);
     opacity: 1;
 }
 
-.dropdown .dropdown-content {
+.form-select-search .form-select-search-content {
     display: block;
     position: absolute;
     background-color: #fff;
@@ -33,22 +33,22 @@
     z-index: 999;
 }
 
-.dropdown .dropdown-content .dropdown-item {
+.form-select-search .form-select-search-content .form-select-search-item {
     color: black;
     cursor: pointer;
     display: block;
     padding: 0.35rem;
 }
 
-.dropdown .dropdown-content .dropdown-item:hover,
-.dropdown .dropdown-content .dropdown-item.current {
+.form-select-search .form-select-search-content .form-select-search-item:hover,
+.form-select-search .form-select-search-content .form-select-search-item.current {
     background-color: #e7ecf5 !important;
 }
 
-.dropdown .dropdown-content .dropdown-item.active {
+.form-select-search .form-select-search-content .form-select-search-item.active {
     background-color: #a2b1f1;
 }
 
-.dropdown .dropdown-selected {
+.form-select-search .form-select-search-selected {
     margin-top: 0.25rem;
 }

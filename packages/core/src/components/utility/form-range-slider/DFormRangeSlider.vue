@@ -69,7 +69,7 @@ export default defineComponent({
 <template>
     <div
         ref="el"
-        class="bs-multi-range"
+        class="form-range-multi-slider"
         @change="handleChanged"
     >
         <div class="track">

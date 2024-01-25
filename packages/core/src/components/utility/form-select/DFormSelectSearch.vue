@@ -1,8 +1,8 @@
 <template>
-    <div class="dropdown">
+    <div class="form-select-search">
         <input
             v-model="q"
-            class="dropdown-input"
+            class="form-select-search-input"
             :disabled="disabled"
             :placeholder="placeholder"
             @focus="onFocus"
@@ -13,7 +13,7 @@
 
         <div
             v-show="isDisplayed"
-            class="dropdown-content"
+            class="form-select-search-content"
             @mouseleave="onMouseLeave"
         >
             <template
@@ -26,7 +26,7 @@
                 >
                     <template #default="{ entry, active }">
                         <div
-                            class="dropdown-item"
+                            class="form-select-search-item"
                             :class="{
                                 'active': active,
                                 'current': index === currentIndex || (index === 0 && currentIndex === -1)
@@ -42,7 +42,7 @@
 
         <div
             v-if="isMulti"
-            class="dropdown-selected"
+            class="form-select-search-selected"
         >
             <slot
                 name="selected"
