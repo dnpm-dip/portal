@@ -1,5 +1,12 @@
 # @dnpm-dip/core
 
+## [1.1.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/core-v1.1.0...core-v1.1.1) (2024-01-25)
+
+
+### Miscellaneous Chores
+
+* **core:** Synchronize main versions
+
 ## [1.1.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/core-v1.0.0...core-v1.1.0) (2024-01-25)
 
 
