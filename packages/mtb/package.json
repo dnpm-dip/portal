@@ -3,7 +3,7 @@
     "type": "module",
     "version": "1.1.0",
     "private": true,
-    "description": "Molecular Tumor Board module for the portal of DNPM DIP.",
+    "description": "Molecular Tumor Board module for the DNPM:DIP Portal.",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/KohlbacherLab/dnpm-dip.git",
