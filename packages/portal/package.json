@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/portal",
     "type": "module",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "private": true,
     "description": "Portal of DNPM DIP.",
     "repository": {
@@ -17,10 +17,10 @@
         "start": "node .output/server/index.mjs"
     },
     "devDependencies": {
-        "@dnpm-dip/core": "^1.1.2",
-        "@dnpm-dip/kit": "^1.1.2",
-        "@dnpm-dip/mtb": "^1.1.2",
-        "@dnpm-dip/rd": "^1.1.2",
+        "@dnpm-dip/core": "^1.1.3",
+        "@dnpm-dip/kit": "^1.1.3",
+        "@dnpm-dip/mtb": "^1.1.3",
+        "@dnpm-dip/rd": "^1.1.3",
         "@nuxt/devtools": "latest",
         "@fortawesome/fontawesome-free": "^6.4.2",
         "@vuecs/form-controls": "^1.2.0",
