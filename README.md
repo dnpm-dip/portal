@@ -1,11 +1,24 @@
-# Portal 💊
+# Portal 🩺
+
+This repository contains the Portal of DNPM:DIP.
 
 **Table of Contents**
 
+- [Packages](#packages)
 - [Usage](#usage)
 - [Credits](#credits)
 - [License](#license)
 
+
+## Packages
+
+The repository contains the following packages:
+
+- **@dnpm-dip/core**: This package contains common constants, functions, types, ...
+- **@dnpm-dip/kit**: This package contains utilities to register dnpm dip modules to the portal.
+- **@dnpm-dip/portal**: This package contains the User Interface (UI).
+- **@dnpm-dip/rd**: This package contains the modul for Rare Diseases (RD).
+- **@dnpm-dip/mtb**: This package contains the modul for Molecular Tumor Boards (MTBs).
 
 ## Usage
 
