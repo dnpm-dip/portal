@@ -46,7 +46,7 @@
         "rollup-plugin-postcss": "^4.0.2",
         "smob": "^1.4.1",
         "typescript": "5.3.3",
-        "workspaces-publish": "^1.4.1"
+        "workspaces-publish": "^1.4.2"
     },
     "scripts": {
         "build": "npx nx run-many -t build",
