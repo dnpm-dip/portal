@@ -4,7 +4,6 @@ import {
     resolveFiles,
     useNuxt,
 } from '@nuxt/kit';
-import type { NavigationItem } from '@vuecs/navigation';
 import { generateNuxtPages } from './core';
 import type { RegistrationContext } from './types';
 
@@ -32,49 +31,33 @@ export async function register(context: RegistrationContext) {
     });
 
     if (context.navigationItems) {
-        const topNavigationId = context.navigationTopId ||
-            context.name.toLowerCase();
-
-        const topNavigationItem : NavigationItem = {
-            id: topNavigationId,
-            name: context.name,
-            url: context.baseURL,
-        };
-
-        // todo: enable deeply nested nav items.
-        const sideNavigationItems : NavigationItem[] = context.navigationItems
+        context.navigationItems = context.navigationItems
             .map((item) => {
                 item.url = context.baseURL + item.url;
 
                 return item;
             });
+    }
 
-        addPluginTemplate({
-            options: {
-                items: context.navigationItems,
-            },
-            filename: `${context.name.toLowerCase()}.js`,
-            getContents() {
-                return `
+    addPluginTemplate({
+        options: {
+            items: context.navigationItems,
+        },
+        filename: `${context.name.toLowerCase()}.js`,
+        getContents() {
+            return `
                 import { defineNuxtPlugin } from '#imports'
 
                 export default defineNuxtPlugin({
                     enforce: 'post',
                     async setup(nuxt) {
                         nuxt.callHook(
-                            'navigationTopItem',
-                            JSON.parse('${JSON.stringify(topNavigationItem)}')
-                        );
-
-                        nuxt.callHook(
-                            'navigationSideItems',
-                            '${topNavigationId}',
-                            JSON.parse('${JSON.stringify(sideNavigationItems)}')
+                            'register',
+                            JSON.parse('${JSON.stringify(context)}')
                         );
                     }
                 })
                 `;
-            },
-        });
-    }
+        },
+    });
 }
