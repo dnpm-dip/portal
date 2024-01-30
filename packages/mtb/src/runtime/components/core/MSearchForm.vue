@@ -472,53 +472,38 @@ export default defineComponent({
                     </VCFormGroup>
                 </div>
             </div>
-            <div class="row mb-3">
+
+            <hr>
+
+            <div class="mb-3">
                 <h6><i class="fa fa-pills" /> Medikament</h6>
-                <div class="col">
-                    <VCFormGroup>
-                        <template #label>
-                            Verwendung
-                        </template>
-                        <template #default>
-                            <DValueSet
-                                :code="'dnpm-dip/mtb/query/medication-usage'"
-                                :lazy-load="true"
-                            >
-                                <template #default="{ data }">
-                                    <DCollectionTransform
-                                        :items="data.codings"
-                                        :transform="transformCodings"
-                                    >
-                                        <template #default="options">
-                                            <DFormSelectSearch
-                                                v-model="medicationUsage"
-                                                :multiple="true"
-                                                :options="options"
-                                                placeholder="..."
-                                            >
-                                                <template #selected="{ items, toggle }">
-                                                    <DTags
-                                                        :items="items"
-                                                        tag-variant="dark"
-                                                        @deleted="toggle"
-                                                    />
-                                                </template>
-                                            </DFormSelectSearch>
-                                        </template>
-                                    </DCollectionTransform>
-                                </template>
-                                <template #loading>
-                                    <DFormSelectSearch
-                                        :options="[]"
-                                        :disabled="true"
-                                        placeholder="Orphanet Ontology"
-                                    />
-                                </template>
-                            </DValueSet>
-                        </template>
-                    </VCFormGroup>
+                <div class="d-flex flex-row">
+                    <div>
+                        <VCFormInputCheckbox
+                            v-model="medicationUsage"
+                            :value="'recommended'"
+                            :label="true"
+                            :group="true"
+                        >
+                            <template #label="{id}">
+                                <label :for="id">Empfohlen?</label>
+                            </template>
+                        </VCFormInputCheckbox>
+                    </div>
+                    <div class="ms-3">
+                        <VCFormInputCheckbox
+                            v-model="medicationUsage"
+                            :value="'used'"
+                            :label="true"
+                            :group="true"
+                        >
+                            <template #label="{id}">
+                                <label :for="id">Verabreicht?</label>
+                            </template>
+                        </VCFormInputCheckbox>
+                    </div>
                 </div>
-                <div class="col">
+                <div>
                     <VCFormGroup>
                         <template #label>
                             Name
@@ -541,11 +526,21 @@ export default defineComponent({
                                                 placeholder="..."
                                             >
                                                 <template #selected="{ items, toggle }">
-                                                    <DTags
+                                                    <DCollectionTransform
                                                         :items="items"
-                                                        tag-variant="dark"
-                                                        @deleted="toggle"
-                                                    />
+                                                        :transform="item => ({
+                                                            ...item,
+                                                            value: item.value.split(':').pop()
+                                                        })"
+                                                    >
+                                                        <template #default="tags">
+                                                            <DTags
+                                                                :items="tags"
+                                                                tag-variant="dark"
+                                                                @deleted="toggle"
+                                                            />
+                                                        </template>
+                                                    </DCollectionTransform>
                                                 </template>
                                             </DFormSelectSearch>
                                         </template>

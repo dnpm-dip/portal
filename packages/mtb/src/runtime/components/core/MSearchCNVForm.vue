@@ -114,7 +114,7 @@ export default defineComponent({
     </VCFormGroup>
     <VCFormGroup>
         <template #label>
-            Gene
+            Betroffene Gene
         </template>
         <template #default>
             <DCodeSystem

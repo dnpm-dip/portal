@@ -16,7 +16,7 @@ export default defineComponent({
     emits: ['update:modelValue'],
     setup(props, { slots }) {
         const items = computed(() => {
-            if (!props.items.length) {
+            if (!props.items.length || !Array.isArray(props.items)) {
                 return [];
             }
 

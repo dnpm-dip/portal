@@ -63,7 +63,7 @@ export default defineComponent({
 <template>
     <VCFormGroup>
         <template #label>
-            3'-Gene
+            3'-Gen
         </template>
         <template #default>
             <DCodeSystem
@@ -104,7 +104,7 @@ export default defineComponent({
     </VCFormGroup>
     <VCFormGroup>
         <template #label>
-            5'-Gene
+            5'-Gen
         </template>
         <template #default>
             <DCodeSystem
@@ -150,7 +150,7 @@ export default defineComponent({
             class="btn btn-secondary btn-xs"
             @click.prevent="submit()"
         >
-            {{ isEditing ? 'Aktualisiern' : 'Hinzufügen' }}
+            {{ isEditing ? 'Aktualisieren' : 'Hinzufügen' }}
         </button>
     </div>
 </template>
