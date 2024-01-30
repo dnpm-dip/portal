@@ -1,9 +1,9 @@
-import type { KeyValueRecord } from '../../../domains';
+import type { ConceptCount, KeyValueRecord } from '../../../domains';
 import { isCoding, isMinMaxRange } from '../../../domains';
 import { stringToColor } from '../../../utils';
 
 export function generateChartLabelsForKeyValueRecord(
-    item: KeyValueRecord,
+    item: KeyValueRecord | ConceptCount,
 ) : string | undefined {
     if (isCoding(item.key)) {
         return item.key.display || item.key.code;
@@ -25,7 +25,7 @@ export function generateChartLabelsForKeyValueRecord(
 }
 
 export function generateChartBackgroundColorForKeyValueRecord(
-    item: KeyValueRecord,
+    item: KeyValueRecord | ConceptCount,
 ) : string | undefined {
     if (isCoding(item.key)) {
         return `${stringToColor(item.key.display || item.key.code)}`;

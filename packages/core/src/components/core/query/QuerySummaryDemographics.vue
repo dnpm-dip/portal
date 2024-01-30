@@ -25,7 +25,7 @@ export default defineComponent({
                     </h6>
                     <DChartDoughnut
                         style="max-height: 390px"
-                        :items="entity.siteDistribution"
+                        :items="entity.siteDistribution.elements"
                     />
                 </div>
             </div>
@@ -36,7 +36,7 @@ export default defineComponent({
                     </h6>
                     <DChartDoughnut
                         style="max-height: 390px"
-                        :items="entity.genderDistribution"
+                        :items="entity.genderDistribution.elements"
                     />
                 </div>
             </div>
@@ -47,7 +47,7 @@ export default defineComponent({
                     </h6>
                     <DChartBar
                         style="max-height: 390px"
-                        :items="entity.ageDistribution"
+                        :items="entity.ageDistribution.elements"
                     />
                 </div>
             </div>

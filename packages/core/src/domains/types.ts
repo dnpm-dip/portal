@@ -21,3 +21,18 @@ export type KeyValueRecord<KEY = any, VALUE = number> = {
     value: VALUE
 };
 export type KeyValueRecords<KEY = any, VALUE = number> = KeyValueRecord<KEY, VALUE>[];
+
+export type ConceptCount<KEY = any> = KeyValueRecord<KEY, {
+    count: number,
+    percent: number
+}>;
+
+export type ConceptsCount<KEY = any> = ConceptCount<KEY>[];
+
+export type Quantity<KEY = any> = KeyValueRecord<KEY, number>;
+export type Quantities<KEY = any> = Quantity<KEY>[];
+
+export type Distribution<KEY = any> = {
+    total: number,
+    elements: ConceptsCount<KEY> | Quantities<KEY>
+};

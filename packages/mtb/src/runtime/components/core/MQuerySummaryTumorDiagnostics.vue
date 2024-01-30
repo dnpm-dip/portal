@@ -23,8 +23,8 @@ export default defineComponent({
         <div class="row">
             <div class="col">
                 <div class="entity-card text-center mb-3 w-100">
-                    <h6>Verteilung</h6>
-                    <DChartBar :items="entity.tumorEntityDistribution" />
+                    <h6>Gesamtverteilung ({{ entity.tumorEntityDistribution.total }})</h6>
+                    <DChartBar :items="entity.tumorEntityDistribution.elements" />
                 </div>
             </div>
             <div class="col">
@@ -37,19 +37,19 @@ export default defineComponent({
                         <template #default="{ item }">
                             <DChartDoughnut
                                 style="max-height: 450px"
-                                :items="item.value"
+                                :items="item.value.elements"
                             />
                         </template>
                     </DQuerySummaryGrouped>
                 </div>
             </div>
         </div>
-        <h5>Tumor-Morphologie (IDC-0-3-M)</h5>
+        <h5>Tumor-Morphologie (IDC-O-3-M)</h5>
         <div class="row">
             <div class="col">
                 <div class="entity-card text-center mb-3 w-100">
-                    <h6>Verteilung</h6>
-                    <DChartBar :items="entity.tumorMorphologyDistribution" />
+                    <h6>Gesamtverteilung ({{ entity.tumorMorphologyDistribution.total }})</h6>
+                    <DChartBar :items="entity.tumorMorphologyDistribution.elements" />
                 </div>
             </div>
         </div>

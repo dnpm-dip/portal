@@ -23,9 +23,9 @@ export default defineComponent({
         <div class="row">
             <div class="col">
                 <div class="entity-card text-center mb-3 w-100">
-                    <h6>Verteilung</h6>
+                    <h6>Gesamtverteilung ({{ entity.recommendations.overallDistribution.total }})</h6>
 
-                    <DChartBar :items="entity.recommendations.overallDistribution" />
+                    <DChartBar :items="entity.recommendations.overallDistribution.elements" />
                 </div>
             </div>
             <div class="col">
@@ -39,7 +39,7 @@ export default defineComponent({
                         <template #default="{ item }">
                             <DChartDoughnut
                                 style="max-height: 450px"
-                                :items="item.value"
+                                :items="item.value.elements"
                             />
                         </template>
                     </DQuerySummaryGrouped>
@@ -51,9 +51,9 @@ export default defineComponent({
         <div class="row">
             <div class="col">
                 <div class="entity-card text-center mb-3 w-100">
-                    <h6>Verteilung</h6>
+                    <h6>Gesamtverteilung ({{ entity.therapies.overallDistribution.total }})</h6>
 
-                    <DChartBar :items="entity.therapies.overallDistribution" />
+                    <DChartBar :items="entity.therapies.overallDistribution.elements" />
                 </div>
             </div>
             <div class="col">
@@ -67,12 +67,21 @@ export default defineComponent({
                         <template #default="{ item }">
                             <DChartDoughnut
                                 style="max-height: 450px"
-                                :items="item.value"
+                                :items="item.value.elements"
                             />
                         </template>
                     </DQuerySummaryGrouped>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Durchschnittliche Dauer <small>(in Wochen)</small></h6>
+                    <DChartBar :items="entity.therapies.meanDurations" />
+                </div>
+            </div>
+            <div class="col" />
         </div>
     </div>
 </template>

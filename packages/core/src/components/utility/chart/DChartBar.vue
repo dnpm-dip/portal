@@ -5,9 +5,12 @@ import type {
 import { Bar } from 'vue-chartjs';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
-import type { Coding, KeyValueRecords, MinMaxRange } from '../../../domains';
+import type {
+    Coding, ConceptsCount, MinMaxRange, Quantities,
+} from '../../../domains';
 import { generateChartBackgroundColorForKeyValueRecord, generateChartLabelsForKeyValueRecord } from './utils';
 
+type Key = MinMaxRange | Coding | string[] | string;
 export default defineComponent({
     components: {
         Bar,
@@ -15,16 +18,28 @@ export default defineComponent({
     props: {
         items: {
             required: true,
-            type: Array as PropType<KeyValueRecords<MinMaxRange | Coding | string[] | string>>,
+            type: Array as PropType<ConceptsCount<Key> | Quantities<Key>>,
         },
     },
     setup(props) {
         const data = computed<ChartData<'bar'>>(() => ({
             datasets: [{
-                data: props.items.map((item) => item.value),
+                data: props.items.map((item) => {
+                    if (typeof item.value === 'number') {
+                        return item.value;
+                    }
+
+                    return item.value.count;
+                }),
                 backgroundColor: props.items.map((item) => generateChartBackgroundColorForKeyValueRecord(item)),
             }],
-            labels: props.items.map((item) => generateChartLabelsForKeyValueRecord(item)),
+            labels: props.items.map((item) => {
+                if (typeof item.value === 'number') {
+                    return `${generateChartLabelsForKeyValueRecord(item)}`;
+                }
+
+                return `${generateChartLabelsForKeyValueRecord(item)} (${item.value.percent.toFixed(2)}%)`;
+            }),
         }));
 
         const options : ChartOptions<'bar'> = {

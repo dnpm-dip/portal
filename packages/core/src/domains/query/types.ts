@@ -1,7 +1,7 @@
 import type { ObjectLiteral } from '../../types';
 import type { Coding } from '../coding';
 import type { PatientFilter } from '../patient';
-import type { KeyValueRecords } from '../types';
+import type { Distribution, KeyValueRecords } from '../types';
 import type { MinMaxRange } from '../utility';
 
 export type DiagnosisFilter = {
@@ -45,9 +45,9 @@ export type QuerySummaryGroupedItem<K = Coding, V = KeyValueRecords<Coding>> = {
 export type QuerySummaryGrouped<K = Coding, V = KeyValueRecords> = QuerySummaryGroupedItem<K, V>[];
 
 export type QuerySummaryDemographics = {
-    siteDistribution: KeyValueRecords<Coding>,
-    genderDistribution: KeyValueRecords<Coding>,
-    ageDistribution: KeyValueRecords<MinMaxRange>,
+    siteDistribution: Distribution<Coding>,
+    genderDistribution: Distribution<Coding>,
+    ageDistribution: Distribution<MinMaxRange>,
 };
 
 export type QuerySummaryBase = {

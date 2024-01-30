@@ -34,7 +34,7 @@ export default defineNuxtComponent({
                 id: 'diagnostics', name: 'Diagnose', icon: 'fas fa-stethoscope', urlSuffix: '',
             },
             {
-                id: 'medication', name: 'Medikamente', icon: 'fas fa-pills', urlSuffix: '',
+                id: 'medication', name: 'Medikation', icon: 'fas fa-pills', urlSuffix: '',
             },
         ];
 
