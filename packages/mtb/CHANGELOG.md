@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.2.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.1.3...mtb-v1.2.0) (2024-01-31)
+
+
+### Features
+
+* adjusted mtb search form (labels, checkboxes, ...) ([8bf3d6f](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8bf3d6f55cb77cd355f1646e53495643296361ec))
+* adjusted summary view according to api changes + minor style enhancements ([e1cf350](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/e1cf35086c84a63fbb44168ac4014cf9464adc60))
+* enhanced summary diagnostics view & adjusted type structure ([f72a826](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f72a82646c8af79764d013ce8d6a6324b71c0cd1))
+
+
+### Bug Fixes
+
+* **deps:** bump nuxt and reset lock file ([8de5687](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8de5687a1a170877b15f0e1ec3bd20147b0b72d8))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.1.3 to ^1.2.0
+    * @dnpm-dip/kit bumped from ^1.1.3 to ^1.2.0
+
 ## [1.1.3](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.1.2...mtb-v1.1.3) (2024-01-25)
 
 
