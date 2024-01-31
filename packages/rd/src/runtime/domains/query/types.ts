@@ -1,10 +1,10 @@
 import type {
     CodeRecord,
-    Coding,
+    Coding, Distribution,
     KeyValueRecords,
     QueryBase,
     QueryRequestMode,
-    QuerySummaryBase, QuerySummaryGrouped,
+    QuerySummaryBase,
 } from '@dnpm-dip/core';
 
 export type VariantCriteria = 'gene' |
@@ -37,17 +37,15 @@ export type QuerySessionCreate = {
 
 export type QuerySession = QueryBase<QueryCriteria>;
 
-export type VariantDistribution = QuerySummaryGrouped<Coding, {
-    diseaseCategoryDistribution: KeyValueRecords<Coding>,
-    hpoTermDistribution: KeyValueRecords<Coding>
-}>;
-
 export type QuerySummaryDiagnostics = {
-    overall: {
-        hpoTermDistribution: KeyValueRecords<Coding>,
-        diseaseCategoryDistribution: KeyValueRecords<Coding>
+    overallDistributions: {
+        hpoTerms: Distribution<Coding>,
+        diseaseCategories: Distribution<Coding>
     },
-    variant: VariantDistribution[]
+    distributionsByVariant: KeyValueRecords<Coding, {
+        diseaseCategories: Distribution<Coding>,
+        hpoTerms: Distribution<Coding>
+    }>
 };
 
 export type QuerySummary = QuerySummaryBase & {

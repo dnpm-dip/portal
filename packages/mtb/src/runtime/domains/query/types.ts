@@ -9,9 +9,14 @@ import type {
 } from '@dnpm-dip/core';
 
 export type QuerySummaryTumorDiagnostics = {
-    tumorEntityDistribution: Distribution<Coding>,
-    tumorEntityDistributionByVariant: KeyValueRecords<string, Distribution<Coding>>,
-    tumorMorphologyDistribution: Distribution<Coding>
+    overallDistributions: {
+        tumorEntities: Distribution<Coding>,
+        tumorMorphologies: Distribution<Coding>
+    },
+    distributionsByVariant: KeyValueRecords<string, {
+        tumorEntities: Distribution<Coding>,
+        tumorMorphologies: Distribution<Coding>
+    }>,
 };
 
 type MedicationRecommendations = {

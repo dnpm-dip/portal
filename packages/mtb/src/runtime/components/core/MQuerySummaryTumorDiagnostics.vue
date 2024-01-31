@@ -1,11 +1,10 @@
 <script lang="ts">
-import { DChartBar, DChartDoughnut, DQuerySummaryGrouped } from '@dnpm-dip/core';
+import { DChartBar, DQuerySummaryGrouped } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryTumorDiagnostics } from '../../domains';
 
 export default defineComponent({
     components: {
-        DChartDoughnut,
         DChartBar,
         DQuerySummaryGrouped,
     },
@@ -18,40 +17,51 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div>
-        <h5>Tumor-Entitäten (ICD-10-GM)</h5>
-        <div class="row">
-            <div class="col">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Gesamtverteilung ({{ entity.tumorEntityDistribution.total }})</h6>
-                    <DChartBar :items="entity.tumorEntityDistribution.elements" />
+    <div class="d-flex flex-column">
+        <div>
+            <h5>Gesamtverteilung</h5>
+            <div class="row">
+                <div class="col">
+                    <div class="entity-card text-center mb-3">
+                        <h6>Tumor-Entitäten (ICD-10-GM)</h6>
+                        <DChartBar :items="entity.overallDistributions.tumorEntities.elements" />
+                    </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Verteilung nach Variante</h6>
-                    <DQuerySummaryGrouped
-                        :items="entity.tumorEntityDistributionByVariant"
-                        :label="'Variante'"
-                    >
-                        <template #default="{ item }">
-                            <DChartDoughnut
-                                style="max-height: 450px"
-                                :items="item.value.elements"
-                            />
-                        </template>
-                    </DQuerySummaryGrouped>
+                <div class="col">
+                    <div class="entity-card text-center mb-3">
+                        <h6>Tumor-Morphologie (IDC-O-3-M)</h6>
+                        <DChartBar :items="entity.overallDistributions.tumorMorphologies.elements" />
+                    </div>
                 </div>
             </div>
         </div>
-        <h5>Tumor-Morphologie (IDC-O-3-M)</h5>
-        <div class="row">
-            <div class="col">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Gesamtverteilung ({{ entity.tumorMorphologyDistribution.total }})</h6>
-                    <DChartBar :items="entity.tumorMorphologyDistribution.elements" />
-                </div>
-            </div>
+        <div>
+            <h5>Verteilung nach Variante</h5>
+            <DQuerySummaryGrouped
+                :label="'Variante'"
+                :items="entity.distributionsByVariant"
+            >
+                <template #default="{ item }">
+                    <div class="row">
+                        <div class="col-12 col-xl-6">
+                            <div class="entity-card text-center mb-3 w-100">
+                                <h6 class="text-center">
+                                    Tumor-Entitäten (ICD-10-GM)
+                                </h6>
+                                <DChartBar :items="item.value.tumorEntities.elements" />
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-6">
+                            <div class="entity-card text-center mb-3 w-100">
+                                <h6 class="text-center">
+                                    Tumor-Morphologie (IDC-O-3-M)
+                                </h6>
+                                <DChartBar :items="item.value.tumorMorphologies.elements" />
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </DQuerySummaryGrouped>
         </div>
     </div>
 </template>

@@ -18,24 +18,24 @@ export default defineComponent({
 </script>
 <template>
     <div>
-        <h5>Insgesamt</h5>
+        <h5>Gesamtverteilung</h5>
 
         <div class="row">
             <div class="col-12 col-xl-6">
                 <div class="entity-card text-center mb-3 w-100">
                     <h6 class="text-center">
-                        Verteilung von Diagnose Kategorien
+                        Diagnose Kategorien
                     </h6>
-                    <DChartBar :items="entity.overall.diseaseCategoryDistribution" />
+                    <DChartBar :items="entity.overallDistributions.diseaseCategories.elements" />
                 </div>
             </div>
             <div class="col-12 col-xl-6">
                 <div class="entity-card text-center mb-3 w-100">
                     <h6 class="text-center">
-                        Verteilung von HPOTermen
+                        HPOTermen
                     </h6>
                     <DChartBar
-                        :items="entity.overall.hpoTermDistribution"
+                        :items="entity.overallDistributions.hpoTerms.elements"
                     />
                 </div>
             </div>
@@ -43,28 +43,28 @@ export default defineComponent({
 
         <hr>
 
-        <h5>Varianten</h5>
+        <h5>Verteilung nach Varianten</h5>
 
         <DQuerySummaryGrouped
             :label="'Variante'"
-            :items="entity.variants"
+            :items="entity.distributionsByVariant"
         >
             <template #default="{ item }">
                 <div class="row">
                     <div class="col-12 col-xl-6">
                         <div class="entity-card text-center mb-3 w-100">
                             <h6 class="text-center">
-                                Verteilung von Diagnose Kategorien
+                                Diagnose Kategorien
                             </h6>
-                            <DChartBar :items="item.value.diseaseCategoryDistribution" />
+                            <DChartBar :items="item.value.diseaseCategories.elements" />
                         </div>
                     </div>
                     <div class="col-12 col-xl-6">
                         <div class="entity-card text-center mb-3 w-100">
                             <h6 class="text-center">
-                                Verteilung von HPO Termen
+                                HPO Termen
                             </h6>
-                            <DChartBar :items="item.value.hpoTermDistribution" />
+                            <DChartBar :items="item.value.hpoTerms.elements" />
                         </div>
                     </div>
                 </div>
