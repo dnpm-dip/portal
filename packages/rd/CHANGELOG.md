@@ -1,5 +1,25 @@
 # @dnpm-dip/rare-diseases
 
+## [1.2.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.1.3...rd-v1.2.0) (2024-01-31)
+
+
+### Features
+
+* enhanced summary diagnostics view & adjusted type structure ([f72a826](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f72a82646c8af79764d013ce8d6a6324b71c0cd1))
+
+
+### Bug Fixes
+
+* **deps:** bump nuxt and reset lock file ([8de5687](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8de5687a1a170877b15f0e1ec3bd20147b0b72d8))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.1.3 to ^1.2.0
+    * @dnpm-dip/kit bumped from ^1.1.3 to ^1.2.0
+
 ## [1.1.3](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.1.2...rd-v1.1.3) (2024-01-25)
 
 

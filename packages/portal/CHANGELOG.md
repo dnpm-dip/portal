@@ -1,5 +1,27 @@
 # @dnpm-dip/portal
 
+## [1.2.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/portal-v1.1.3...portal-v1.2.0) (2024-01-31)
+
+
+### Features
+
+* add initial module boxes on home view ([d0e94cd](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d0e94cd019c0c8bbbe7dca7f42db9100b912f546))
+
+
+### Bug Fixes
+
+* **deps:** bump nuxt and reset lock file ([8de5687](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8de5687a1a170877b15f0e1ec3bd20147b0b72d8))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.1.3 to ^1.2.0
+    * @dnpm-dip/kit bumped from ^1.1.3 to ^1.2.0
+    * @dnpm-dip/mtb bumped from ^1.1.3 to ^1.2.0
+    * @dnpm-dip/rd bumped from ^1.1.3 to ^1.2.0
+
 ## [1.1.3](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/portal-v1.1.2...portal-v1.1.3) (2024-01-25)
 
 
