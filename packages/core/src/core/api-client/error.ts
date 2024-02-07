@@ -4,5 +4,5 @@ import { isAPIClientErrorPayload } from './utils';
 export function extractAPIClientErrorIssues(error: ClientError) {
     const data = error?.response?.data;
     return isAPIClientErrorPayload(data) ?
-        data.issues : [];
+        data._issues : [];
 }

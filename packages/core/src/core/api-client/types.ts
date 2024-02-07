@@ -9,5 +9,5 @@ export type APIClientErrorIssue = {
 };
 
 export type APIClientErrorPayload = {
-    issues: APIClientErrorIssue[],
+    _issues: APIClientErrorIssue[],
 };
