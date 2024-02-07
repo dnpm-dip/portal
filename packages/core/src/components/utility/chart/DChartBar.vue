@@ -3,8 +3,8 @@ import type {
     ChartData, ChartOptions,
 } from 'chart.js';
 import { Bar } from 'vue-chartjs';
-import type { PropType } from 'vue';
-import { computed, defineComponent } from 'vue';
+import type { PropType, Ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import type {
     Coding, ConceptsCount, MinMaxRange, Quantities,
 } from '../../../domains';
@@ -22,6 +22,14 @@ export default defineComponent({
         },
     },
     setup(props) {
+        const labels : string[] = props.items.map((item) => {
+            if (typeof item.value === 'number') {
+                return `${generateChartLabelsForKeyValueRecord(item)}`;
+            }
+
+            return `${generateChartLabelsForKeyValueRecord(item)} (${item.value.percent.toFixed(2)}%)`;
+        });
+
         const data = computed<ChartData<'bar'>>(() => ({
             datasets: [{
                 data: props.items.map((item) => {
@@ -33,13 +41,7 @@ export default defineComponent({
                 }),
                 backgroundColor: props.items.map((item) => generateChartBackgroundColorForKeyValueRecord(item)),
             }],
-            labels: props.items.map((item) => {
-                if (typeof item.value === 'number') {
-                    return `${generateChartLabelsForKeyValueRecord(item)}`;
-                }
-
-                return `${generateChartLabelsForKeyValueRecord(item)} (${item.value.percent.toFixed(2)}%)`;
-            }),
+            labels,
         }));
 
         const options : ChartOptions<'bar'> = {
@@ -52,8 +54,33 @@ export default defineComponent({
             },
         };
 
+        const windowWidth : Ref<number | undefined> = ref(undefined);
+        if (typeof window !== 'undefined') {
+            windowWidth.value = document.documentElement.clientWidth;
+
+            window.addEventListener('resize', () => {
+                windowWidth.value = document.documentElement.clientWidth;
+            });
+        }
+
+        const height = computed(() => {
+            if (typeof windowWidth.value === 'number') {
+                if (windowWidth.value <= 1024) {
+                    return 50 + labels.length * 30;
+                }
+
+                if (windowWidth.value >= 1920) {
+                    return 50 + labels.length * 8;
+                }
+            }
+
+            return 50 + labels.length * 10;
+        });
+
         return {
             data,
+            height,
+            labels,
             options,
         };
     },
@@ -63,5 +90,6 @@ export default defineComponent({
     <Bar
         :options="options"
         :data="data"
+        :height="height"
     />
 </template>
