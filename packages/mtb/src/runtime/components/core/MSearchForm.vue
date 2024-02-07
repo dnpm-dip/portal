@@ -190,7 +190,9 @@ export default defineComponent({
                 medication.operator = medicationOperator.value;
             }
 
-            payload.medication = medication;
+            if (medication.drugs) {
+                payload.medication = medication;
+            }
 
             if (
                 responses.value &&
