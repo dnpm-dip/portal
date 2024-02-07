@@ -70,7 +70,7 @@ export default defineComponent({
         const tumorMorphologies = ref<FormSelectOption[]>([]);
 
         const medicationDrugs = ref<FormSelectOption[]>([]);
-        const medicationUsage = ref<FormSelectOption[]>([]);
+        const medicationUsage = ref<string[]>([]);
         const medicationOperator = ref<`${QueryCriteriaOperator}`>(QueryCriteriaOperator.OR);
 
         const responses = ref<FormSelectOption[]>([]);
@@ -183,14 +183,14 @@ export default defineComponent({
                 medicationUsage.value &&
                 medicationUsage.value.length > 0
             ) {
-                medication.usage = transformFormSelectOptionsToCodings(medicationUsage.value);
+                medication.usage = medicationUsage.value.map((item) => ({ code: item }));
             }
 
             if (medicationOperator.value) {
                 medication.operator = medicationOperator.value;
             }
 
-            // payload.medication = medication;
+            payload.medication = medication;
 
             if (
                 responses.value &&
@@ -528,7 +528,7 @@ export default defineComponent({
                                                 <template #selected="{ items, toggle }">
                                                     <DCollectionTransform
                                                         :items="items"
-                                                        :transform="item => ({
+                                                        :transform="(item: Record<string,any>) => ({
                                                             ...item,
                                                             value: item.value.split(':').pop()
                                                         })"

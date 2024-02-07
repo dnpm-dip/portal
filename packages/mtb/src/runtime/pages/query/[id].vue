@@ -25,14 +25,14 @@ export default defineNuxtComponent({
         const entity = ref(null) as unknown as Ref<QuerySession>;
 
         if (typeof route.params.id !== 'string') {
-            await navigateTo({ path: '/mtb/search' });
+            await navigateTo({ path: '/mtb/' });
             throw createError({});
         }
 
         try {
             entity.value = await api.query.getOne(route.params.id);
         } catch (e) {
-            await navigateTo({ path: '/mtb/search' });
+            await navigateTo({ path: '/mtb/' });
             throw createError({});
         }
 
