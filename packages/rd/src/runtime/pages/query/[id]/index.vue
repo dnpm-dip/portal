@@ -1,14 +1,19 @@
 <script lang="ts">
 import type { URLQueryRecord } from '@dnpm-dip/core';
-import { DNav } from '@dnpm-dip/core';
+import { DNav, DQueryPatientFilters } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { provide, ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
+import QueryDiagnosisFilter from '../../../components/core/QueryDiagnosisFilter.vue';
+import QueryHPOFilter from '../../../components/core/QueryHPOFilter.vue';
 import SearchForm from '../../../components/core/SearchForm.vue';
 import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        QueryHPOFilter,
+        QueryDiagnosisFilter,
+        DQueryPatientFilters,
         SearchForm,
         DNav,
     },
@@ -34,14 +39,21 @@ export default defineNuxtComponent({
         ];
 
         const queryFilters = ref<URLQueryRecord>({});
-
         provide('queryFilters', queryFilters);
+
+        const applyFilters = (input: URLQueryRecord) => {
+            queryFilters.value = {
+                ...queryFilters.value,
+                ...input,
+            };
+        };
 
         const handleUpdated = (entity: QuerySession) => {
             emit('updated', entity);
         };
 
         return {
+            applyFilters,
             handleUpdated,
             navItems,
             preparedQueryId: route.query.preparedQueryId,
@@ -74,9 +86,32 @@ export default defineNuxtComponent({
     <hr>
 
     <template v-if="entity">
-        <NuxtPage
-            :entity="entity"
-            @updated="handleUpdated"
-        />
+        <div class="row">
+            <div class="col-9">
+                <NuxtPage
+                    :entity="entity"
+                    @updated="handleUpdated"
+                />
+            </div>
+            <div class="col-3">
+                <DQueryPatientFilters
+                    class="mb-3"
+                    :available-filters="entity.filters.patientFilter"
+                    @submit="applyFilters"
+                />
+
+                <QueryDiagnosisFilter
+                    class="mb-3"
+                    :available-filters="entity.filters.diagnosisFilter"
+                    @submit="applyFilters"
+                />
+
+                <QueryHPOFilter
+                    class="mb-3"
+                    :available-filters="entity.filters.hpoFilter"
+                    @submit="applyFilters"
+                />
+            </div>
+        </div>
     </template>
 </template>

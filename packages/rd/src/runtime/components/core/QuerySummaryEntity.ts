@@ -30,6 +30,10 @@ export default defineComponent({
             id,
         });
 
+        setup.expose({
+            load: (reset?: boolean) => manager.load(reset),
+        });
+
         if (props.lazy) {
             Promise.resolve()
                 .then(() => manager.load());

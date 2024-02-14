@@ -52,10 +52,10 @@ export function createResourceRecordManager<
         return undefined;
     });
 
-    const load : ResourceRecordFn = async () => {
+    const load : ResourceRecordFn = async (reset?: boolean) => {
         if (loading.value || busy.value) return;
 
-        if (data.value) {
+        if (!reset && data.value) {
             if (context.emit) {
                 context.emit('resolved', data.value);
             }

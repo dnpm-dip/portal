@@ -1,6 +1,8 @@
 <script lang="ts">
 import { DQuerySummaryDemographics, type NavItem, type URLQueryRecord } from '@dnpm-dip/core';
-import type { PropType, Ref } from 'vue';
+import {
+    type PropType, type Ref, nextTick, watch,
+} from 'vue';
 import { inject, ref } from 'vue';
 import CollectionTransform from '@dnpm-dip/core/components/utility/DCollectionTransform.vue';
 import { defineNuxtComponent } from '#imports';
@@ -31,7 +33,15 @@ export default defineNuxtComponent({
             },
         ];
 
+        const entityRef = ref(null) as Ref<typeof QuerySummaryEntity | null>;
         const queryFilters = inject('queryFilters') as Ref<URLQueryRecord>;
+        watch(queryFilters, () => {
+            nextTick(() => {
+                if (entityRef.value) {
+                    entityRef.value.load(true);
+                }
+            });
+        }, { deep: true });
 
         const navItemId = ref('default');
 
@@ -40,6 +50,7 @@ export default defineNuxtComponent({
         };
 
         return {
+            entityRef,
             queryFilters,
             navItems,
             navItemId,
@@ -72,6 +83,7 @@ export default defineNuxtComponent({
         </div>
         <div class="content-main">
             <QuerySummaryEntity
+                ref="entityRef"
                 :query-id="entity.id"
                 :query-record="queryFilters"
             >

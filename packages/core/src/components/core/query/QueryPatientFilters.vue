@@ -1,10 +1,22 @@
 <script lang="ts">
-import type { PropType } from 'vue';
+import type { PropType, Ref } from 'vue';
 import {
-    computed, defineComponent, ref, watch,
+    computed,
+    defineComponent, ref, watch,
 } from 'vue';
-import type { PatientFilter, URLQueryRecord } from '@dnpm-dip/core';
-import { DFormRangeSlider } from '@dnpm-dip/core';
+import type { PatientFilter } from '../../../domains';
+import { clone } from '../../../utils';
+import { DFormRangeSlider } from '../../utility';
+
+type QueryRecord = {
+    age?: {
+        min?: number,
+        max?: number
+    },
+    vitalStatus?: string[],
+    gender?: string[],
+    site?: string[],
+};
 
 export default defineComponent({
     components: {
@@ -40,9 +52,9 @@ export default defineComponent({
         const hasChanged = computed(
             () => genderChanged.value ||
                 vitalStatusChanged.value ||
-                ageChanged.value,
+                ageChanged.value ||
+                siteChanged.value,
         );
-        const isSubmitted = ref(true);
 
         const reset = () => {
             if (props.availableFilters.gender) {
@@ -67,42 +79,74 @@ export default defineComponent({
             vitalStatusChanged.value = false;
             siteChanged.value = false;
             ageChanged.value = false;
-            isSubmitted.value = false;
         };
 
         reset();
 
+        const buildQueryRecord = (skipCheck?: boolean) : QueryRecord => {
+            const data : QueryRecord = {};
+
+            if (skipCheck || ageChanged.value) {
+                data.age = {
+                    min: age.value.min,
+                    max: age.value.max,
+                };
+            }
+
+            if (skipCheck || vitalStatusChanged.value) {
+                data.vitalStatus = clone(vitalStatus.value);
+            } else {
+                data.vitalStatus = [];
+            }
+
+            if (skipCheck || genderChanged.value) {
+                data.gender = clone(gender.value);
+            } else {
+                data.gender = [];
+            }
+
+            if (skipCheck || siteChanged.value) {
+                data.site = clone(site.value);
+            } else {
+                data.site = [];
+            }
+
+            return data;
+        };
+
+        const previousQuery : Ref<QueryRecord> = ref(buildQueryRecord(true));
+
         const handleAgeRangeChanged = (ctx: { min: number, max: number}) => {
-            if (!props.availableFilters.ageRange) {
+            if (!previousQuery.value || !previousQuery.value.age) {
                 return;
             }
+
             age.value.min = Math.round(ctx.min);
             age.value.max = Math.round(ctx.max);
 
             if (
-                age.value.min !== props.availableFilters.ageRange.min ||
-                age.value.max !== props.availableFilters.ageRange.max
+                age.value.min !== previousQuery.value.age.min ||
+                age.value.max !== previousQuery.value.age.max
             ) {
                 ageChanged.value = true;
-                isSubmitted.value = false;
             }
         };
 
         watch(gender, (value) => {
-            if (!props.availableFilters.gender) {
+            if (!previousQuery.value.gender) {
+                genderChanged.value = true;
                 return;
             }
 
-            if (value.length !== props.availableFilters.gender.length) {
+            if (value.length !== previousQuery.value.gender.length) {
                 genderChanged.value = true;
-                isSubmitted.value = false;
                 return;
             }
 
             let changed : boolean = false;
             let index : number;
             for (let i = 0; i < value.length; i++) {
-                index = props.availableFilters.gender.findIndex((el) => el.code === value[i]);
+                index = previousQuery.value.gender.findIndex((el) => el === value[i]);
                 if (index === -1) {
                     changed = true;
                     break;
@@ -110,25 +154,22 @@ export default defineComponent({
             }
 
             genderChanged.value = changed;
-            if (changed) {
-                isSubmitted.value = false;
-            }
         }, { deep: true });
 
         watch(vitalStatus, (value) => {
-            if (!props.availableFilters.vitalStatus) {
+            if (!previousQuery.value.vitalStatus) {
+                vitalStatusChanged.value = true;
                 return;
             }
-            if (value.length !== props.availableFilters.vitalStatus.length) {
+            if (value.length !== previousQuery.value.vitalStatus.length) {
                 vitalStatusChanged.value = true;
-                isSubmitted.value = false;
                 return;
             }
 
             let changed : boolean = false;
             let index : number;
             for (let i = 0; i < value.length; i++) {
-                index = props.availableFilters.vitalStatus.findIndex((el) => el.code === value[i]);
+                index = previousQuery.value.vitalStatus.findIndex((el) => el === value[i]);
                 if (index === -1) {
                     changed = true;
                     break;
@@ -136,25 +177,22 @@ export default defineComponent({
             }
 
             vitalStatusChanged.value = changed;
-            if (changed) {
-                isSubmitted.value = false;
-            }
         }, { deep: true });
 
         watch(site, (value) => {
-            if (!props.availableFilters.site) {
+            if (!previousQuery.value.site) {
                 return;
             }
-            if (value.length !== props.availableFilters.site.length) {
+
+            if (value.length !== previousQuery.value.site.length) {
                 siteChanged.value = true;
-                isSubmitted.value = false;
                 return;
             }
 
             let changed : boolean = false;
             let index : number;
             for (let i = 0; i < value.length; i++) {
-                index = props.availableFilters.site.findIndex((el) => el.code === value[i]);
+                index = previousQuery.value.site.findIndex((el) => el === value[i]);
                 if (index === -1) {
                     changed = true;
                     break;
@@ -162,51 +200,19 @@ export default defineComponent({
             }
 
             siteChanged.value = changed;
-            if (changed) {
-                isSubmitted.value = false;
-            }
         }, { deep: true });
 
         const submit = () => {
             if (props.busy) return;
 
-            isSubmitted.value = true;
+            previousQuery.value = buildQueryRecord();
 
-            const data : URLQueryRecord = {};
+            emit('submit', previousQuery.value);
 
-            if (ageChanged.value) {
-                data.age = {};
-
-                if (props.availableFilters.ageRange) {
-                    if (age.value.min !== props.availableFilters.ageRange.min) {
-                        data.age.min = age.value.min;
-                    }
-
-                    if (age.value.max !== props.availableFilters.ageRange.max) {
-                        data.age.max = age.value.max;
-                    }
-                }
-            }
-
-            if (vitalStatusChanged.value) {
-                data.vitalStatus = vitalStatus.value;
-            } else {
-                data.vitalStatus = [];
-            }
-
-            if (genderChanged.value) {
-                data.gender = gender.value;
-            } else {
-                data.gender = [];
-            }
-
-            if (siteChanged.value) {
-                data.site = site.value;
-            } else {
-                data.site = [];
-            }
-
-            emit('submit', data);
+            genderChanged.value = false;
+            vitalStatusChanged.value = false;
+            siteChanged.value = false;
+            ageChanged.value = false;
         };
 
         return {
@@ -216,12 +222,13 @@ export default defineComponent({
             site,
 
             hasChanged,
-            isSubmitted,
 
             handleAgeRangeChanged,
 
             reset,
             submit,
+
+            previousQuery,
         };
     },
 });
@@ -318,7 +325,7 @@ export default defineComponent({
                 <button
                     type="button"
                     class="btn btn-xs btn-primary btn-block"
-                    :disabled="isSubmitted || busy"
+                    :disabled="!hasChanged"
                     @click.prevent="submit"
                 >
                     Anwenden

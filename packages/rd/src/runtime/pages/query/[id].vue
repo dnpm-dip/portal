@@ -48,12 +48,10 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <div class="container">
-        <template v-if="entity">
-            <NuxtPage
-                :entity="entity"
-                @updated="handleUpdated"
-            />
-        </template>
-    </div>
+    <template v-if="entity">
+        <NuxtPage
+            :entity="entity"
+            @updated="handleUpdated"
+        />
+    </template>
 </template>
