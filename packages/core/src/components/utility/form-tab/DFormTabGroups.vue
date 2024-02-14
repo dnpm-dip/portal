@@ -52,7 +52,7 @@ export default defineComponent({
 
             if (
                 items.value.length > 0 &&
-                currentIndex.value < -1
+                currentIndex.value < 0
             ) {
                 currentIndex.value = 0;
             }

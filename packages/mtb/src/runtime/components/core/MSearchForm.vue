@@ -36,6 +36,9 @@ export default defineComponent({
         DCollectionTransform,
     },
     props: {
+        criteria: {
+            type: Object as PropType<QueryCriteria>,
+        },
         queryId: {
             type: String,
         },
@@ -81,6 +84,10 @@ export default defineComponent({
             busy.value = true;
 
             criteria.value = {};
+
+            if (props.criteria) {
+                criteria.value = props.criteria;
+            }
 
             if (props.queryMode) {
                 mode.value = props.queryMode;

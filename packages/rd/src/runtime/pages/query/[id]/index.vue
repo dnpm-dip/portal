@@ -29,7 +29,7 @@ export default defineNuxtComponent({
                 name: 'Patienten', icon: 'fas fa-user-injured', urlSuffix: '/patients',
             },
             {
-                name: 'Einstellungen', icon: 'fa fa-cog', urlSuffix: '/settings',
+                name: 'Anpassen', icon: 'fa fa-cog', urlSuffix: '/settings',
             },
         ];
 

@@ -26,7 +26,10 @@ export default defineNuxtComponent({
                 name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
             },
             {
-                name: 'Einstellungen', icon: 'fa fa-cog', urlSuffix: '/settings',
+                name: 'Patienten', icon: 'fas fa-user-injured', urlSuffix: '/patients',
+            },
+            {
+                name: 'Anpassen', icon: 'fa fa-cog', urlSuffix: '/settings',
             },
         ];
 
