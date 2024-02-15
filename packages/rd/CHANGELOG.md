@@ -1,5 +1,28 @@
 # @dnpm-dip/rare-diseases
 
+## [1.3.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.2.0...rd-v1.3.0) (2024-02-15)
+
+
+### Features
+
+* adjusted and optimized rd query filters for global usage ([90aa6dc](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/90aa6dce69b1adc2799258f68249b2ed9ada79f9))
+* implemented global filter for mtb ([b74ca4f](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b74ca4fe5deb4bc3c48c90390e401ccbc5ff7a5f))
+* initial global filters for query views ([d127ef6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d127ef6f87e420e4c9afd997247f62d6067888a7))
+* initial patient-list & enable modification of query search ([108a3ee](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/108a3eefef45b4b191cb060e391eacdf57976f7a))
+
+
+### Bug Fixes
+
+* redirect in rd query record page ([277f426](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/277f426bed151ce26f82678d4d2ba41f020682e5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.2.0 to ^1.3.0
+    * @dnpm-dip/kit bumped from ^1.2.0 to ^1.3.0
+
 ## [1.2.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.1.3...rd-v1.2.0) (2024-01-31)
 
 

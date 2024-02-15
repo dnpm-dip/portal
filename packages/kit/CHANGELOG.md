@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/kit-v1.2.0...kit-v1.3.0) (2024-02-15)
+
+
+### Bug Fixes
+
+* **deps:** bump ufo from 1.3.2 to 1.4.0 ([#259](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/259)) ([b7a7c9b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b7a7c9b0ca974f23952a014afff6c1b2dd58796a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.2.0 to ^1.3.0
+
 ## [1.2.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/kit-v1.1.3...kit-v1.2.0) (2024-01-31)
 
 

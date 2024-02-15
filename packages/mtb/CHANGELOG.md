@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.3.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.2.0...mtb-v1.3.0) (2024-02-15)
+
+
+### Features
+
+* implemented global filter for mtb ([b74ca4f](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b74ca4fe5deb4bc3c48c90390e401ccbc5ff7a5f))
+* initial patient-list & enable modification of query search ([108a3ee](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/108a3eefef45b4b191cb060e391eacdf57976f7a))
+
+
+### Bug Fixes
+
+* minor adjustment for summary view ([572a5cb](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/572a5cbee163f398594497ae06e93b62e6572e25))
+* passing medication criteria to query endpoint ([12d7087](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/12d7087cca174a5b0e49053a792198347764e41a))
+* rendering api client issues & toast composable for errors and custom data ([ce66cb5](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ce66cb52e5e94d6e44ea43f2c62d8bd560acaea3))
+* require minimal parameters for medication query criteria ([353a956](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/353a9561827b13275874e32dd938e86ba6f7cbd1))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.2.0 to ^1.3.0
+    * @dnpm-dip/kit bumped from ^1.2.0 to ^1.3.0
+
 ## [1.2.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.1.3...mtb-v1.2.0) (2024-01-31)
 
 
