@@ -24,7 +24,7 @@ export default defineComponent({
     setup(props) {
         const items = computed(() => props.items.slice(0, 15));
 
-        const data = computed<ChartData<'bar' | 'doughnut'>>(() => ({
+        const data = computed<ChartData<'bar'>>(() => ({
             datasets: [{
                 data: items.value.map((item) => {
                     if (typeof item.value === 'number') {
@@ -44,7 +44,7 @@ export default defineComponent({
             }),
         }));
 
-        const options : ChartOptions<'bar' | 'doughnut'> = {
+        const options : ChartOptions<'bar'> = {
             responsive: true,
             indexAxis: 'y',
             plugins: {
