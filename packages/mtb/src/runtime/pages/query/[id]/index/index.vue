@@ -2,7 +2,9 @@
 import {
     DChartBar, DChartDoughnut, DQuerySummaryDemographics, type NavItem, type URLQueryRecord,
 } from '@dnpm-dip/core';
-import type { PropType, Ref } from 'vue';
+import {
+    type PropType, type Ref, nextTick, watch,
+} from 'vue';
 import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import MQuerySummary from '../../../../components/core/MQuerySummary';
@@ -38,7 +40,15 @@ export default defineNuxtComponent({
             },
         ];
 
+        const entityRef = ref(null) as Ref<typeof MQuerySummary | null>;
         const queryFilters = inject('queryFilters') as Ref<URLQueryRecord>;
+        watch(queryFilters, () => {
+            nextTick(() => {
+                if (entityRef.value) {
+                    entityRef.value.load(true);
+                }
+            });
+        }, { deep: true });
 
         const navItemId = ref('default');
 
@@ -47,6 +57,7 @@ export default defineNuxtComponent({
         };
 
         return {
+            entityRef,
             queryFilters,
             navItems,
             navItemId,
@@ -79,6 +90,7 @@ export default defineNuxtComponent({
         </div>
         <div class="content-main">
             <MQuerySummary
+                ref="entityRef"
                 :query-id="entity.id"
                 :query-record="queryFilters"
             >

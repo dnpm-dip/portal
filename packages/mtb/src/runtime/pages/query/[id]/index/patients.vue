@@ -2,7 +2,9 @@
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCPagination } from '@vuecs/pagination';
 import type { URLQueryRecord } from '@dnpm-dip/core';
-import type { PropType, Ref } from 'vue';
+import {
+    type PropType, type Ref, nextTick, watch,
+} from 'vue';
 import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import QueryPatientMatchEntity from '../../../../components/core/MQueryPatientMatchEntity.vue';
@@ -24,16 +26,13 @@ export default defineNuxtComponent({
     setup() {
         const listRef = ref(null) as Ref<typeof QueryPatientMatchList | null>;
         const queryFilters = inject('queryFilters') as Ref<URLQueryRecord>;
-        const applyFilters = (input: URLQueryRecord) => {
-            queryFilters.value = {
-                ...queryFilters.value,
-                ...input,
-            };
-
-            if (listRef.value) {
-                listRef.value.load({ filters: queryFilters.value });
-            }
-        };
+        watch(queryFilters, () => {
+            nextTick(() => {
+                if (listRef.value) {
+                    listRef.value.load({ filters: queryFilters.value });
+                }
+            });
+        }, { deep: true });
 
         const applyPagination = ({ limit, offset } : PaginationMeta) => {
             if (listRef.value) {
@@ -43,7 +42,6 @@ export default defineNuxtComponent({
 
         return {
             listRef,
-            applyFilters,
             applyPagination,
         };
     },

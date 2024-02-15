@@ -141,7 +141,7 @@ export default defineComponent({
                     Anwenden
                 </button>
             </div>
-            <div v-if="hasChanged">
+            <div>
                 <button
                     type="button"
                     class="btn btn-xs btn-secondary btn-block"

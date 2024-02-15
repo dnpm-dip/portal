@@ -42,7 +42,7 @@ T extends ObjectLiteral = ObjectLiteral,
     loading: Ref<boolean>
 };
 
-export type ResourceRecordFn = () => Promise<any>;
+export type ResourceRecordFn = (reset?: boolean) => Promise<any>;
 
 export type ResourceRecordDefaultSlotProps<T> = {
     data: T,
