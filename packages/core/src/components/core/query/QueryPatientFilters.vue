@@ -203,8 +203,6 @@ export default defineComponent({
         }, { deep: true });
 
         const submit = () => {
-            if (props.busy) return;
-
             previousQuery.value = buildQueryRecord();
 
             emit('submit', previousQuery.value);

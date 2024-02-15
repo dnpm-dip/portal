@@ -1,9 +1,15 @@
 <script lang="ts">
-import type { PropType } from 'vue';
+import type { PropType, Ref } from 'vue';
 import {
     computed, defineComponent, ref, watch,
 } from 'vue';
-import type { DiagnosisFilter, URLQueryRecord } from '@dnpm-dip/core';
+import { type DiagnosisFilter, clone } from '@dnpm-dip/core';
+
+type QueryRecord = {
+    diagnosis: {
+        category: string[]
+    }
+};
 
 export default defineComponent({
     props: {
@@ -24,34 +30,35 @@ export default defineComponent({
         const hasChanged = computed(
             () => categoryChanged.value,
         );
-        const isSubmitted = ref(true);
+
+        const previousSelection = ref<string[] | null>(null);
 
         const reset = () => {
             if (props.availableFilters.category) {
                 category.value = props.availableFilters.category.map((el) => el.code);
+                previousSelection.value = clone(category.value);
             }
 
             categoryChanged.value = false;
-            isSubmitted.value = false;
         };
 
         reset();
 
         watch(category, (value) => {
-            if (!props.availableFilters.category) {
+            if (!previousSelection.value) {
+                categoryChanged.value = true;
                 return;
             }
 
-            if (value.length !== props.availableFilters.category.length) {
+            if (value.length !== previousSelection.value.length) {
                 categoryChanged.value = true;
-                isSubmitted.value = false;
                 return;
             }
 
             let changed : boolean = false;
             let index : number;
             for (let i = 0; i < value.length; i++) {
-                index = props.availableFilters.category.findIndex((el) => el.code === value[i]);
+                index = previousSelection.value.findIndex((el) => el === value[i]);
                 if (index === -1) {
                     changed = true;
                     break;
@@ -59,34 +66,33 @@ export default defineComponent({
             }
 
             categoryChanged.value = changed;
-            if (changed) {
-                isSubmitted.value = false;
-            }
         }, { deep: true });
 
         const submit = () => {
-            if (props.busy) return;
+            const data : QueryRecord = {
+                diagnosis: {
+                    category: clone(category.value),
+                },
+            };
 
-            isSubmitted.value = true;
+            previousSelection.value = data.diagnosis?.category ?? [];
 
-            const data : URLQueryRecord = {};
-
-            if (category.value) {
-                data.diagnosis = {
-                    category: category.value,
-                };
-            } else {
-                data.diagnosis = [];
+            if (
+                props.availableFilters.category &&
+                data.diagnosis.category.length === props.availableFilters.category.length
+            ) {
+                data.diagnosis.category = [];
             }
 
             emit('submit', data);
+
+            categoryChanged.value = false;
         };
 
         return {
             category,
 
             hasChanged,
-            isSubmitted,
 
             reset,
             submit,
@@ -129,7 +135,7 @@ export default defineComponent({
                 <button
                     type="button"
                     class="btn btn-xs btn-primary btn-block"
-                    :disabled="isSubmitted || busy"
+                    :disabled="!hasChanged"
                     @click.prevent="submit"
                 >
                     Anwenden

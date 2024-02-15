@@ -1,9 +1,15 @@
 <script lang="ts">
-import type { PropType } from 'vue';
+import type { PropType, Ref } from 'vue';
 import {
     computed, defineComponent, ref, watch,
 } from 'vue';
-import type { HPOFilter, URLQueryRecord } from '@dnpm-dip/core';
+import { type HPOFilter, clone } from '@dnpm-dip/core';
+
+type QueryRecord = {
+    hpo: {
+        term: string[]
+    }
+};
 
 export default defineComponent({
     props: {
@@ -24,34 +30,35 @@ export default defineComponent({
         const hasChanged = computed(
             () => termChanged.value,
         );
-        const isSubmitted = ref(true);
+
+        const previousSelection = ref<string[] | null>(null);
 
         const reset = () => {
             if (props.availableFilters.value) {
                 term.value = props.availableFilters.value.map((el) => el.code);
+                previousSelection.value = clone(term.value);
             }
 
             termChanged.value = false;
-            isSubmitted.value = false;
         };
 
         reset();
 
         watch(term, (value) => {
-            if (!props.availableFilters.value) {
+            if (!previousSelection.value) {
+                termChanged.value = true;
                 return;
             }
 
-            if (value.length !== props.availableFilters.value.length) {
+            if (value.length !== previousSelection.value.length) {
                 termChanged.value = true;
-                isSubmitted.value = false;
                 return;
             }
 
             let changed : boolean = false;
             let index : number;
             for (let i = 0; i < value.length; i++) {
-                index = props.availableFilters.value.findIndex((el) => el.code === value[i]);
+                index = previousSelection.value.findIndex((el) => el === value[i]);
                 if (index === -1) {
                     changed = true;
                     break;
@@ -59,34 +66,34 @@ export default defineComponent({
             }
 
             termChanged.value = changed;
-            if (changed) {
-                isSubmitted.value = false;
-            }
         }, { deep: true });
 
         const submit = () => {
-            if (props.busy) return;
+            const data : QueryRecord = {
+                hpo: {
+                    term: clone(term.value),
+                },
+            };
 
-            isSubmitted.value = true;
+            previousSelection.value = data.hpo?.term ?? [];
 
-            const data : URLQueryRecord = {};
-
-            if (term.value) {
-                data.hpo = {
-                    term: term.value,
-                };
-            } else {
-                data.hpo = {};
+            if (
+                props.availableFilters.value &&
+                data.hpo.term.length === props.availableFilters.value.length
+            ) {
+                data.hpo.term = [];
             }
 
             emit('submit', data);
+
+            termChanged.value = false;
         };
 
         return {
             term,
 
             hasChanged,
-            isSubmitted,
+            termChanged,
 
             reset,
             submit,
@@ -129,7 +136,7 @@ export default defineComponent({
                 <button
                     type="button"
                     class="btn btn-xs btn-primary btn-block"
-                    :disabled="isSubmitted || busy"
+                    :disabled="!hasChanged"
                     @click.prevent="submit"
                 >
                     Anwenden
