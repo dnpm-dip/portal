@@ -21,13 +21,13 @@ export default defineComponent({
         <div>
             <h5>Gesamtverteilung</h5>
             <div class="row">
-                <div class="col">
+                <div class="col-12 col-xl-6">
                     <div class="entity-card text-center mb-3">
                         <h6>Tumor-Entitäten (ICD-10-GM)</h6>
                         <DChartBar :items="entity.overallDistributions.tumorEntities.elements" />
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-12 col-xl-6">
                     <div class="entity-card text-center mb-3">
                         <h6>Tumor-Morphologie (IDC-O-3-M)</h6>
                         <DChartBar :items="entity.overallDistributions.tumorMorphologies.elements" />

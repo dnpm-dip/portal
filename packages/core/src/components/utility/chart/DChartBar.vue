@@ -22,9 +22,11 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const data = computed<ChartData<'bar'>>(() => ({
+        const items = computed(() => props.items.slice(0, 15));
+
+        const data = computed<ChartData<'bar' | 'doughnut'>>(() => ({
             datasets: [{
-                data: props.items.map((item) => {
+                data: items.value.map((item) => {
                     if (typeof item.value === 'number') {
                         return item.value;
                     }
@@ -33,7 +35,7 @@ export default defineComponent({
                 }),
                 backgroundColor: props.items.map((item) => generateChartBackgroundColorForKeyValueRecord(item)),
             }],
-            labels: props.items.map((item) => {
+            labels: items.value.map((item) => {
                 if (typeof item.value === 'number') {
                     return `${generateChartLabelsForKeyValueRecord(item)}`;
                 }
@@ -42,7 +44,7 @@ export default defineComponent({
             }),
         }));
 
-        const options : ChartOptions<'bar'> = {
+        const options : ChartOptions<'bar' | 'doughnut'> = {
             responsive: true,
             indexAxis: 'y',
             plugins: {
