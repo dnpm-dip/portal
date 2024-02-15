@@ -1,5 +1,23 @@
 # @dnpm-dip/core
 
+## [1.3.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/core-v1.2.0...core-v1.3.0) (2024-02-15)
+
+
+### Features
+
+* adjusted and optimized rd query filters for global usage ([90aa6dc](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/90aa6dce69b1adc2799258f68249b2ed9ada79f9))
+* implemented global filter for mtb ([b74ca4f](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b74ca4fe5deb4bc3c48c90390e401ccbc5ff7a5f))
+* initial global filters for query views ([d127ef6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d127ef6f87e420e4c9afd997247f62d6067888a7))
+* initial patient-list & enable modification of query search ([108a3ee](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/108a3eefef45b4b191cb060e391eacdf57976f7a))
+
+
+### Bug Fixes
+
+* build error due bar chat typings ([e53c51c](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/e53c51c5923045785d6f8fbe1631bf19bb226e00))
+* **deps:** bump ufo from 1.3.2 to 1.4.0 ([#259](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/259)) ([b7a7c9b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b7a7c9b0ca974f23952a014afff6c1b2dd58796a))
+* minor adjustment for summary view ([572a5cb](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/572a5cbee163f398594497ae06e93b62e6572e25))
+* rendering api client issues & toast composable for errors and custom data ([ce66cb5](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ce66cb52e5e94d6e44ea43f2c62d8bd560acaea3))
+
 ## [1.2.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/core-v1.1.3...core-v1.2.0) (2024-01-31)
 
 

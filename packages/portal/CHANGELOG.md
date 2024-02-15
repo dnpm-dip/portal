@@ -1,5 +1,22 @@
 # @dnpm-dip/portal
 
+## [1.3.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/portal-v1.2.0...portal-v1.3.0) (2024-02-15)
+
+
+### Bug Fixes
+
+* rendering api client issues & toast composable for errors and custom data ([ce66cb5](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ce66cb52e5e94d6e44ea43f2c62d8bd560acaea3))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.2.0 to ^1.3.0
+    * @dnpm-dip/kit bumped from ^1.2.0 to ^1.3.0
+    * @dnpm-dip/mtb bumped from ^1.2.0 to ^1.3.0
+    * @dnpm-dip/rd bumped from ^1.2.0 to ^1.3.0
+
 ## [1.2.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/portal-v1.1.3...portal-v1.2.0) (2024-01-31)
 
 
