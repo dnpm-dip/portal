@@ -1,6 +1,6 @@
 <script lang="ts">
 import {
-    DChartBar, DChartDoughnut, DQuerySummaryDemographics, type NavItem, type URLQueryRecord,
+    DChartBar, DChartDoughnut, DChartLineKM, DQuerySummaryDemographics, type NavItem, type URLQueryRecord,
 } from '@dnpm-dip/core';
 import {
     type PropType, type Ref, nextTick, watch,
@@ -9,16 +9,19 @@ import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import MQuerySummary from '../../../../components/core/MQuerySummary';
 import MQuerySummaryMedication from '../../../../components/core/MQuerySummaryMedication.vue';
+import MQuerySummarySurvivalReport from '../../../../components/core/MQuerySummarySurvivalReport.vue';
 import MQuerySummaryTumorDiagnostics from '../../../../components/core/MQuerySummaryTumorDiagnostics.vue';
 import type { QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        MQuerySummarySurvivalReport,
         DQuerySummaryDemographics,
         MQuerySummaryMedication,
         MQuerySummaryTumorDiagnostics,
         DChartDoughnut,
         DChartBar,
+        DChartLineKM,
         MQuerySummary,
     },
     props: {
@@ -37,6 +40,9 @@ export default defineNuxtComponent({
             },
             {
                 id: 'medication', name: 'Medikation', icon: 'fas fa-pills', urlSuffix: '',
+            },
+            {
+                id: 'survivalReport', name: 'Überlebensbericht', icon: 'fas fa-book-open', urlSuffix: '',
             },
         ];
 
@@ -101,8 +107,11 @@ export default defineNuxtComponent({
                     <template v-else-if="navItemId === 'diagnostics'">
                         <MQuerySummaryTumorDiagnostics :entity="props.data.diagnostics" />
                     </template>
-                    <template v-else>
+                    <template v-else-if="navItemId === 'medication'">
                         <MQuerySummaryMedication :entity="props.data.medication" />
+                    </template>
+                    <template v-else>
+                        <MQuerySummarySurvivalReport :items="props.data.survivalReport" />
                     </template>
                 </template>
             </MQuerySummary>

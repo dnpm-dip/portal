@@ -2,6 +2,7 @@ import type {
     CodeRecord,
     Coding,
     Distribution,
+    KMSurvivalReport,
     KeyValueRecords,
     QueryBase,
     QueryRequestMode,
@@ -37,7 +38,8 @@ export type QuerySummaryMedication = {
 
 export type QuerySummary = QuerySummaryBase & {
     diagnostics: QuerySummaryTumorDiagnostics,
-    medication: QuerySummaryMedication
+    medication: QuerySummaryMedication,
+    survivalReport: KMSurvivalReport[]
 };
 
 export type QueryFusionCriteria<V = Coding> = {
