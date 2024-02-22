@@ -22,7 +22,7 @@ export default defineComponent({
             :key="key"
         >
             <div class="entity-card text-center mb-3 w-100">
-                <h6>{{ item.survivalType.display }} ({{ item.grouping.display }})</h6>
+                <h6>{{ item.survivalType.display }} (Gruppierung: {{ item.grouping.display }})</h6>
 
                 <DChartLineKM :report="item" />
             </div>
