@@ -31,7 +31,7 @@ export default defineComponent({
         })));
 
         watch(id, (val) => {
-            if (!val) {
+            if (val === '') {
                 item.value = null;
                 return;
             }
