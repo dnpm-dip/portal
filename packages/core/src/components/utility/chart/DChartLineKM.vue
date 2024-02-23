@@ -33,7 +33,7 @@ export default defineComponent({
 
             return {
                 type: 'line',
-                label: `${item.key} (n=${item.value.survivalRates.length})`,
+                label: `${item.key} (median: ${item.value.medianSurvivalTime})`,
                 backgroundColor: color,
                 borderColor: color,
                 fill: false,
