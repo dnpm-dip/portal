@@ -1,9 +1,13 @@
 <script lang="ts">
+import { DPatient } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
+    components: {
+        DPatient,
+    },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -18,27 +22,10 @@ export default defineNuxtComponent({
 </script>
 <template>
     <div>
-        <div class="row mb-3">
-            <h6>Allgemein</h6>
-            <div class="col">
-                <div><strong><i class="fas fa-user" /> Geschlecht</strong> {{ record.patient.gender.display }}</div>
-                <div><strong><i class="fas fa-birthday-cake" /> Geburtstag</strong> {{ record.patient.birthDate }}</div>
-            </div>
-            <div class="col">
-                <template v-if="record.patient.managingSite">
-                    <div>
-                        <strong><i class="fas fa-hospital" /> Standort</strong>
-                        {{ record.patient.managingSite.display || record.patient.managingSite.code }}
-                    </div>
-                </template>
-                <template v-if="record.patient.vitalStatus">
-                    <div>
-                        <strong><i class="fas fa-heartbeat" /> VitalStatus</strong>
-                        {{ record.patient.vitalStatus.display || record.patient.vitalStatus.code }}
-                    </div>
-                </template>
-            </div>
-        </div>
+        <DPatient
+            class="mb-3"
+            :entity="record.patient"
+        />
 
         <div class="row mb-2">
             <div class="col">

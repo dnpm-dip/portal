@@ -3,7 +3,7 @@ import type {
     URLQueryRecord,
 } from '@dnpm-dip/core';
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
-import type { PatientMatch } from '../patient';
+import type { PatientMatch, PatientRecord } from '../patient';
 import type {
     QuerySession,
     QuerySessionCreate,
@@ -89,6 +89,11 @@ export class QueryAPI extends BaseAPI {
         }
 
         const response = await this.client.get(`mtb/queries/${id}/patient-matches${qs}`);
+        return response.data;
+    }
+
+    async getPatientRecord(queryId: string, patientId: string) : Promise<PatientRecord> {
+        const response = await this.client.get(`mtb/queries/${queryId}/patient-record/${patientId}`);
         return response.data;
     }
 }
