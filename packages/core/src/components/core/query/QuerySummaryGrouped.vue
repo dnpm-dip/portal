@@ -31,12 +31,12 @@ export default defineComponent({
         })));
 
         watch(id, (val) => {
-            if (typeof val !== 'string' || val === '') {
+            if (typeof val === 'undefined' || val === '') {
                 item.value = null;
                 return;
             }
 
-            const index = props.items.findIndex((_el, id) => id === parseInt(val, 10));
+            const index = props.items.findIndex((_el, id) => id === parseInt(`${val}`, 10));
             if (index !== -1) {
                 item.value = props.items[index];
             }
