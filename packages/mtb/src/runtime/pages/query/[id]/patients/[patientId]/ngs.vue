@@ -1,4 +1,5 @@
 <script lang="ts">
+import { DExpandableContent } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import MNGSReportCNV from '../../../../../components/core/MNGSReportCNV.vue';
@@ -6,7 +7,7 @@ import MNgsReportSNV from '../../../../../components/core/MNGSReportSNV.vue';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
-    components: { MNGSReportCNV, MNgsReportSNV },
+    components: { DExpandableContent, MNGSReportCNV, MNgsReportSNV },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -53,42 +54,57 @@ export default defineNuxtComponent({
                 </div>
             </div>
 
-            <div>
-                <h6>SNV</h6>
-                <template
-                    v-for="snv in item.results.simpleVariants"
-                    :key="snv.id"
-                >
-                    <MNgsReportSNV
-                        :entity="snv"
-                        class="mb-1"
-                    />
+            <DExpandableContent>
+                <template #header>
+                    <h6>SNV</h6>
                 </template>
-            </div>
-            <div>
-                <h6>CNV</h6>
-                <template
-                    v-for="cnv in item.results.copyNumberVariants"
-                    :key="cnv.id"
-                >
-                    <MNGSReportCNV
-                        :entity="cnv"
-                        class="mb-1"
-                    />
+                <template #default>
+                    <template
+                        v-for="snv in item.results.simpleVariants"
+                        :key="snv.id"
+                    >
+                        <MNgsReportSNV
+                            :entity="snv"
+                            class="mb-1"
+                        />
+                    </template>
                 </template>
-            </div>
-            <div>
-                <h6>DNA-Fusions</h6>
-                <pre>
-                {{ item.results.dnaFusions }}
-            </pre>
-            </div>
-            <div>
-                <h6>RNA-Fusions</h6>
-                <pre>
-                {{ item.results.rnaFusions }}
-            </pre>
-            </div>
+            </DExpandableContent>
+
+            <DExpandableContent>
+                <template #header>
+                    <h6>CNV</h6>
+                </template>
+                <template #default>
+                    <template
+                        v-for="cnv in item.results.copyNumberVariants"
+                        :key="cnv.id"
+                    >
+                        <MNGSReportCNV
+                            :entity="cnv"
+                            class="mb-1"
+                        />
+                    </template>
+                </template>
+            </DExpandableContent>
+
+            <DExpandableContent>
+                <template #header>
+                    <h6>DNA Fusions</h6>
+                </template>
+                <template #default>
+                    {{ item.results.dnaFusions }}
+                </template>
+            </DExpandableContent>
+
+            <DExpandableContent>
+                <template #header>
+                    <h6>RNA Fusions</h6>
+                </template>
+                <template #default>
+                    {{ item.results.rnaFusions }}
+                </template>
+            </DExpandableContent>
         </template>
     </template>
     <template v-else>

@@ -25,7 +25,4 @@ export default defineNuxtComponent({
             :entity="record.patient"
         />
     </div>
-    <pre>
-        {{ Object.keys(record.ngsReports[0].results) }}}
-    </pre>
 </template>

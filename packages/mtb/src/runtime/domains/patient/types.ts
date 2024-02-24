@@ -1,6 +1,11 @@
 import type { Coding, Patient, PatientMatchBase } from '@dnpm-dip/core';
 import type { QueryCriteria } from '../query';
 
+type Reference = {
+    id: string,
+    type: string
+};
+
 export type PatientMatch = PatientMatchBase<QueryCriteria>;
 
 export type NGSReportSNV = {
@@ -133,8 +138,27 @@ export type NGSReport = {
     sequencingType: string
 };
 
+export type MedicationTherapy = {
+    id: string,
+    patient: Reference,
+    indication: Reference,
+    therapyLine?: number,
+    basedOn?: Reference,
+    recordedOn: string,
+    status: Coding,
+    statusReason?: Coding,
+    period?: { start: number, end: number },
+    medication?: Coding[],
+    note?: string,
+};
+
+type History<T = any> = {
+    history: T[]
+};
+
 export type PatientRecord = {
     patient: Patient,
     ngsReports?: NGSReport[],
+    medicationTherapies?: History<MedicationTherapy>[],
     [key: string]: any
 };
