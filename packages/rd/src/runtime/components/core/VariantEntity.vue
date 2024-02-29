@@ -32,7 +32,7 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="entity-card">
+    <div class="entity-card w-100">
         <div class="d-flex flex-row">
             <div>
                 <strong>Gene</strong>
