@@ -18,7 +18,7 @@ type HPOTerm = {
  * @see https://github.com/KohlbacherLab/dnpm-dip-rd-model/blob/main/dto_model/src/main/scala/de/dnpm/dip/rd/model/RDPatientRecord.scala
  */
 export type PatientRecord = {
-    case: Case,
+    episodes: Case[],
     diagnosis: Diagnosis,
     hpoTerms: HPOTerm[],
     ngsReports: NGSReport[],

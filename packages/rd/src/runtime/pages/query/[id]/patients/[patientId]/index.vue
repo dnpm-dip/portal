@@ -30,16 +30,27 @@ export default defineNuxtComponent({
         <div class="row mb-2">
             <div class="col">
                 <h6>Fall</h6>
-                <div>
-                    <div><strong><i class="fa fa-user" /> Arzt</strong> {{ record.case.referrer.name }}</div>
-                    <div><strong><i class="fa fa-clock" /> Datum</strong> {{ record.case.recordedOn }}</div>
-                    <template v-if="record.case.gestaltMatcherId">
-                        <div><strong><i class="fa fa-id-card" /> GestaltMatcherID</strong> {{ record.case.gestaltMatcherId.value }}</div>
-                    </template>
-                    <template v-if="record.case.face2geneId">
-                        <div><strong><i class="fa fa-id-card" /> Face2GeneID</strong> {{ record.case.face2geneId.value }}</div>
-                    </template>
-                </div>
+                <template
+                    v-for="(item) in record.episodes"
+                    :key="item.id"
+                >
+                    <div>
+                        <div><strong><i class="fa fa-user" /> Arzt</strong> {{ item.referrer.name }}</div>
+                        <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.recordedOn }}</div>
+                        <template v-if="item.gestaltMatcherId">
+                            <div>
+                                <strong><i class="fa fa-id-card" /> GestaltMatcherID</strong>
+                                {{ item.gestaltMatcherId.value }}
+                            </div>
+                        </template>
+                        <template v-if="item.face2geneId">
+                            <div>
+                                <strong><i class="fa fa-id-card" /> Face2GeneID</strong>
+                                {{ item.face2geneId.value }}
+                            </div>
+                        </template>
+                    </div>
+                </template>
             </div>
             <div class="col">
                 <h6>Diagnose</h6>
