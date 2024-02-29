@@ -83,13 +83,13 @@ export default defineNuxtComponent({
 
     <template v-if="entity">
         <div class="row">
-            <div class="col-9">
+            <div class="col-6 col-md-9 col-lg-10">
                 <NuxtPage
                     :entity="entity"
                     @updated="handleUpdated"
                 />
             </div>
-            <div class="col-3">
+            <div class="col-6 col-md-3 col-lg-2">
                 <DQueryPatientFilters
                     class="mb-3"
                     :available-filters="entity.filters.patientFilter"
