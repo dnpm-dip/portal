@@ -40,7 +40,7 @@ export default defineComponent({
                     return `${generateChartLabelsForKeyValueRecord(item)}`;
                 }
 
-                return `${generateChartLabelsForKeyValueRecord(item)} (${item.value.percent.toFixed(2)}%)`;
+                return `${generateChartLabelsForKeyValueRecord(item)} (${item.value.percent.toFixed(1)}%)`;
             }),
         }));
 
