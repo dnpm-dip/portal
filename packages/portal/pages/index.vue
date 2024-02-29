@@ -9,7 +9,7 @@
                 :key="item.name"
             >
                 <div
-                    class="entity-card"
+                    class="entity-card w-100"
                 >
                     <h3 class="mb-0">
                         <VCLink :to="item.baseURL">
