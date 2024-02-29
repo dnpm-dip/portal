@@ -31,7 +31,7 @@ export default defineNuxtComponent({
 
         <div class="row mb-3">
             <div class="col">
-                <h6>Fall</h6>
+                <h5>Fall</h5>
 
                 <div class="entity-card-group flex-column">
                     <template
@@ -58,7 +58,7 @@ export default defineNuxtComponent({
                 </div>
             </div>
             <div class="col">
-                <h6>Diagnose</h6>
+                <h5>Diagnose</h5>
                 <div class="entity-card">
                     <div><strong><i class="fa fa-clock" /> Datum</strong> {{ record.diagnosis.recordedOn }}</div>
                     <div>
@@ -78,9 +78,9 @@ export default defineNuxtComponent({
         <hr>
 
         <div class="mb-3">
-            <h6>
+            <h5>
                 HPO
-            </h6>
+            </h5>
             <div class="entity-card">
                 <div>
                     <strong><i class="fa fa-tags" /> Terme</strong>
@@ -97,9 +97,9 @@ export default defineNuxtComponent({
         <hr>
 
         <div v-if="record.therapy">
-            <h6 class="mb-0">
+            <h5 class="mb-0">
                 Therapie
-            </h6>
+            </h5>
             <div class="entity-card">
                 {{ record.therapy.notes }}
             </div>

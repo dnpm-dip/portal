@@ -14,7 +14,7 @@ export default defineComponent({
 </script>
 <template>
     <div class="row">
-        <h6>Allgemein</h6>
+        <h5>Allgemein</h5>
         <div class="col">
             <div class="entity-card">
                 <div><strong><i class="fas fa-user" /> Geschlecht</strong> {{ entity.gender.display }}</div>

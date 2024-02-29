@@ -24,8 +24,10 @@ export default defineNuxtComponent({
             class="mb-3"
             :entity="record.patient"
         />
+
         <hr>
-        <h6>Fälle</h6>
+
+        <h5>Fälle</h5>
         <div class="entity-card-group mb-3">
             <template
                 v-for="item in record.episodes"
@@ -47,8 +49,10 @@ export default defineNuxtComponent({
                 </div>
             </template>
         </div>
+
         <hr>
-        <h6>Leitlinien-Therapien</h6>
+
+        <h5>Leitlinien-Therapien</h5>
         <div class="entity-card-group mb-3">
             <template
                 v-for="item in record.guidelineMedicationTherapies"
@@ -94,7 +98,7 @@ export default defineNuxtComponent({
 
         <hr>
 
-        <h6>Leitlinien-Prozeduren</h6>
+        <h5>Leitlinien-Prozeduren</h5>
         <div class="entity-card-group mb-3">
             <template
                 v-for="item in record.guidelineProcedures"
@@ -129,7 +133,7 @@ export default defineNuxtComponent({
 
         <hr>
 
-        <h6>ECOG Performance Status</h6>
+        <h5>ECOG Performance Status</h5>
         <div class="entity-card-group mb-3">
             <template
                 v-for="item in record.performanceStatus"
