@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.4.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.3.0...mtb-v1.4.0) (2024-02-29)
+
+
+### Features
+
+* add expandable-content component & add patient record therapies tab ([05b4056](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/05b4056f75aa21ea80dd33fd4accec8b8392a08c))
+* implemented patient-record view ([ac72d56](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ac72d560bfa23206e816266879210281a62dd6f4))
+* initial mtb patient-record view ([ec58fbc](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ec58fbcfe855546bb8eee80ec86c94a34489c642))
+* kaplan-meier survival statistics ([56de499](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/56de499a739c62c28db06101507b237af3ac1beb))
+
+
+### Bug Fixes
+
+* enhance heading of survival reports ([8b51265](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8b51265f2f9e5523a2e1576ae19c0334c8d77f4a))
+* layout in mtb and rd module ([b968ac9](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b968ac9e58f25fdb294698ee08ad0dea794c07ca))
+* some spelling issues ([e80f430](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/e80f430e65e0f18bc62b1dfd72a52429f6d12db9))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.3.0 to ^1.4.0
+    * @dnpm-dip/kit bumped from ^1.3.0 to ^1.4.0
+
 ## [1.3.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.2.0...mtb-v1.3.0) (2024-02-15)
 
 
