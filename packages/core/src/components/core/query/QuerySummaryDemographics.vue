@@ -32,7 +32,7 @@ export default defineComponent({
             <div class="col-12 col-xl-4">
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>
-                        Verteilung von Geschlechtern
+                        Geschlechterverteilung
                     </h6>
                     <DChartDoughnut
                         style="max-height: 390px"
@@ -43,7 +43,7 @@ export default defineComponent({
             <div class="col-12 col-xl-4">
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>
-                        Verteilung des Alters
+                        Altersverteilung
                     </h6>
                     <DChartBar
                         style="max-height: 390px"

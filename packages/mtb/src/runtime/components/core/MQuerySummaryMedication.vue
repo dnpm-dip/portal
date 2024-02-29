@@ -30,7 +30,7 @@ export default defineComponent({
             </div>
             <div class="col">
                 <div class="entity-card text-center mb-3 w-100">
-                    <h6>Verteilung nach Variante</h6>
+                    <h6>Empfehlungen nach stützender molekularer Alteration</h6>
 
                     <DQuerySummaryGrouped
                         :items="entity.recommendations.distributionBySupportingVariant"
@@ -58,7 +58,7 @@ export default defineComponent({
             </div>
             <div class="col">
                 <div class="entity-card text-center mb-3 w-100">
-                    <h6>Verteilung nach Variante</h6>
+                    <h6>Response-Verteilung nach Medikation</h6>
 
                     <DQuerySummaryGrouped
                         :items="entity.therapies.responseDistributionByTherapy"
