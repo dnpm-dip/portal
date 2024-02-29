@@ -42,7 +42,7 @@ export default defineNuxtComponent({
                 name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
             },
             {
-                name: 'NGS Berichte', icon: 'fa-solid fa-newspaper', urlSuffix: '/reports',
+                name: 'Diagnostik', icon: 'fas fa-stethoscope', urlSuffix: '/diagnostics',
             },
         ];
 

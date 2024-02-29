@@ -52,7 +52,10 @@ export default defineNuxtComponent({
                 </div>
             </template>
         </div>
+
+        <hr>
     </template>
+
     <template v-if="record.histologyReports">
         <h5>Histologie Berichte</h5>
         <div class="entity-card-group mb-3">
@@ -95,7 +98,10 @@ export default defineNuxtComponent({
                 </div>
             </template>
         </div>
+
+        <hr>
     </template>
+
     <template v-if="record.ihcReports">
         <div class="mb-3">
             <h5>IHC Berichte</h5>
@@ -152,6 +158,8 @@ export default defineNuxtComponent({
                 </div>
             </template>
         </div>
+
+        <hr>
     </template>
     <template v-if="record.ngsReports">
         <h5>NGS Berichte</h5>

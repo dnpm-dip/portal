@@ -27,6 +27,8 @@ export default defineNuxtComponent({
             :entity="record.patient"
         />
 
+        <hr>
+
         <div class="row mb-3">
             <div class="col">
                 <h6>Fall</h6>
@@ -72,6 +74,9 @@ export default defineNuxtComponent({
                 </div>
             </div>
         </div>
+
+        <hr>
+
         <div class="mb-3">
             <h6>
                 HPO
@@ -88,6 +93,9 @@ export default defineNuxtComponent({
                 </div>
             </div>
         </div>
+
+        <hr>
+
         <div v-if="record.therapy">
             <h6 class="mb-0">
                 Therapie
