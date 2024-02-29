@@ -42,10 +42,13 @@ export default defineNuxtComponent({
                 name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
             },
             {
-                name: 'NGS', icon: 'fa-solid fa-newspaper', urlSuffix: '/ngs',
+                name: 'Diagnostik', icon: 'fas fa-stethoscope', urlSuffix: '/diagnostics',
             },
             {
-                name: 'Therapien', icon: 'fa fa-pills', urlSuffix: '/therapies',
+                name: 'Beschlüsse', icon: 'fas fa-gavel', urlSuffix: '/plans',
+            },
+            {
+                name: 'Follow-UP', icon: 'fas fa-arrow-circle-up', urlSuffix: '/follow-up',
             },
         ];
 

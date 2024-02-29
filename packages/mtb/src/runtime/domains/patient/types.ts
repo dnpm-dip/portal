@@ -6,6 +6,11 @@ type Reference = {
     type: string
 };
 
+type Period = {
+    start: string,
+    end?: string
+};
+
 export type PatientMatch = PatientMatchBase<QueryCriteria>;
 
 export type NGSReportSNV = {
@@ -138,27 +143,194 @@ export type NGSReport = {
     sequencingType: string
 };
 
-export type MedicationTherapy = {
+type History<T = any> = {
+    history: T[]
+};
+
+type Episode = {
+    id: string,
+    ttan?: string
+    patient: Reference
+    period: Period,
+    status: Coding,
+    diagnoses: Reference[]
+};
+
+type Diagnosis = {
+    id: string,
+    patient: Reference,
+    recordedOn?: string,
+    code: Coding,
+    topography?: Coding,
+    whoGrading?: Coding,
+    stageHistory: Record<string, any>[], // todo fix type
+    guidelineTreatmentStatus?: Coding,
+};
+
+type MedicationTherapy = {
     id: string,
     patient: Reference,
     indication: Reference,
     therapyLine?: number,
     basedOn?: Reference,
     recordedOn: string,
-    status: Coding,
+    status?: Coding,
     statusReason?: Coding,
-    period?: { start: number, end: number },
+    period?: Period,
     medication?: Coding[],
-    note?: string,
+    note?: string
 };
 
-type History<T = any> = {
-    history: T[]
+type OncoProcedure = {
+    id: string,
+    patient: Reference,
+    indication: Reference,
+    code: Coding,
+    status: Coding,
+    statusReason?: Coding,
+    therapyLine?: number,
+    basedOn?: Reference,
+    recordedOn?:string,
+    period: Period,
+    note?: string
+};
+
+type PerformanceStatus = {
+    id: string,
+    patient: Reference,
+    effectiveDate: string,
+    value: Coding
+};
+
+// todo: fix type
+type TumorSpecimenCollection = {
+    date: string,
+    method: Coding,
+    localization: Coding
+};
+
+type TumorSpecimen = {
+    id: string,
+    patient: Reference,
+    diagnosis: Reference,
+    type: Coding,
+    collection?: TumorSpecimenCollection
+};
+
+type HistologyReport = {
+    id: string,
+    patient: Reference,
+    specimen: Reference,
+    value: Coding,
+    notes?: string
+};
+
+type ProteinExpression = {
+    id: string,
+    patient: Reference,
+    protein: Coding,
+    value: Coding,
+    tpsScore?: number,
+    icScore?: Coding,
+    tcScore?: Coding,
+};
+
+type IHCReport = {
+    id: string,
+    patient: Reference,
+    specimen: Reference,
+    date: string,
+    journalId: any, // todo: fix type
+    blockId: any, // todo: fix type
+    proteinExpressionResults: ProteinExpression[],
+    msiMmrResults: ProteinExpression[]
+};
+
+type LevelOfEvidence = {
+    grading?: Coding,
+    addendums?: Coding[],
+    publications?: {pmid: string, doi: string}[]
+};
+
+type MedicationRecommendation = {
+    id: string,
+    patient: Reference,
+    indication: Reference,
+    levelOfEvidence?: LevelOfEvidence,
+    priority: Coding,
+    issuedOn: string,
+    medication: Coding[],
+    supportingEvidence: { id: string, display: string, type: string }[]
+};
+
+type GeneticCounselingRecommendation = {
+    id: string,
+    patient: Reference,
+    issuedOn: string,
+    reason: Coding
+};
+
+type StudyEnrollmentRecommendation = {
+    id: string,
+    patient: Patient,
+    reason: Reference,
+    issuedOn: string,
+    levelOfEvidence?: Coding,
+    supportingEvidence: { id: string, display: string, type: string }[],
+    studyIds: string[]
+};
+
+type CarePlan = {
+    id: string,
+    patient: Reference,
+    indication: Reference,
+    issuedOn: string,
+    statusReason?: Coding,
+    protocol?: string,
+    medicationRecommendations?: MedicationRecommendation[],
+    geneticCounselingRecommendation?: GeneticCounselingRecommendation,
+    studyEnrollmentRecommendations?: StudyEnrollmentRecommendation[]
+};
+
+type Claim = {
+    id: string,
+    patient: Reference,
+    recommendation: Reference,
+    issuedOn: string,
+    status: Coding
+};
+
+type ClaimResponse = {
+    id: string,
+    patient: Reference,
+    claim: Reference,
+    issuedOn: string,
+    status: Coding,
+    statusReason?: Coding
+};
+
+type Response = {
+    id: string,
+    patient: Reference,
+    therapy: Reference,
+    effectiveDate: string,
+    value: Coding
 };
 
 export type PatientRecord = {
     patient: Patient,
+    episodes: Episode[],
+    diagnoses?: Diagnosis[],
+    guidelineMedicationTherapies: MedicationTherapy[],
+    guidelineProcedures: OncoProcedure[],
+    performanceStatus: PerformanceStatus[],
+    specimens?: TumorSpecimen,
+    histologyReports?: HistologyReport[],
+    ihcReports?: IHCReport[],
     ngsReports?: NGSReport[],
+    carePlans?: CarePlan[],
+    claims?: Claim[],
+    claimResponses?: ClaimResponse[],
     medicationTherapies?: History<MedicationTherapy>[],
-    [key: string]: any
+    responses?: Response[]
 };

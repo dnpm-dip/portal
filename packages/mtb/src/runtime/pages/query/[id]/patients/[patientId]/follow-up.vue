@@ -20,6 +20,9 @@ export default defineNuxtComponent({
 </script>
 <template>
     <template v-if="record.medicationTherapies">
+        <div>
+            <h5>Durchgeführte Therpaien</h5>
+        </div>
         <template
             v-for="(history, key) in record.medicationTherapies"
             :key="key"
@@ -28,10 +31,7 @@ export default defineNuxtComponent({
                 v-for="item in history.history"
                 :key="item.id"
             >
-                <div>
-                    <h5>Verlauf <small class="text-muted">#{{ item.id }}</small></h5>
-                </div>
-                <div class="mb-3">
+                <div class="entity-card mb-3">
                     <div class="row">
                         <div class="col">
                             <div>
@@ -71,5 +71,24 @@ export default defineNuxtComponent({
                 </div>
             </template>
         </template>
+    </template>
+
+    <hr>
+
+    <template v-if="record.responses">
+        <div>
+            <h5>Responses</h5>
+        </div>
+        <div class="entity-card-group flex-row justify-content-evenly">
+            <template
+                v-for="(item) in record.responses"
+                :key="item.id"
+            >
+                <div class="entity-card flex-grow-1 mb-3">
+                    <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.effectiveDate }}</div>
+                    <div><strong><i class="fas fa-calculator" /> Code</strong> {{ item.value.display || item.value.code }}</div>
+                </div>
+            </template>
+        </div>
     </template>
 </template>
