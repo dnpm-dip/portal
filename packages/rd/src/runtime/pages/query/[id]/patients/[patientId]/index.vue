@@ -27,34 +27,37 @@ export default defineNuxtComponent({
             :entity="record.patient"
         />
 
-        <div class="row mb-2">
+        <div class="row mb-3">
             <div class="col">
                 <h6>Fall</h6>
-                <template
-                    v-for="(item) in record.episodes"
-                    :key="item.id"
-                >
-                    <div>
-                        <div><strong><i class="fa fa-user" /> Arzt</strong> {{ item.referrer.name }}</div>
-                        <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.recordedOn }}</div>
-                        <template v-if="item.gestaltMatcherId">
-                            <div>
-                                <strong><i class="fa fa-id-card" /> GestaltMatcherID</strong>
-                                {{ item.gestaltMatcherId.value }}
-                            </div>
-                        </template>
-                        <template v-if="item.face2geneId">
-                            <div>
-                                <strong><i class="fa fa-id-card" /> Face2GeneID</strong>
-                                {{ item.face2geneId.value }}
-                            </div>
-                        </template>
-                    </div>
-                </template>
+
+                <div class="entity-card-group flex-column">
+                    <template
+                        v-for="(item) in record.episodes"
+                        :key="item.id"
+                    >
+                        <div class="entity-card">
+                            <div><strong><i class="fa fa-user" /> Arzt</strong> {{ item.referrer.name }}</div>
+                            <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.recordedOn }}</div>
+                            <template v-if="item.gestaltMatcherId">
+                                <div>
+                                    <strong><i class="fa fa-id-card" /> GestaltMatcherID</strong>
+                                    {{ item.gestaltMatcherId.value }}
+                                </div>
+                            </template>
+                            <template v-if="item.face2geneId">
+                                <div>
+                                    <strong><i class="fa fa-id-card" /> Face2GeneID</strong>
+                                    {{ item.face2geneId.value }}
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
             </div>
             <div class="col">
                 <h6>Diagnose</h6>
-                <div>
+                <div class="entity-card">
                     <div><strong><i class="fa fa-clock" /> Datum</strong> {{ record.diagnosis.recordedOn }}</div>
                     <div>
                         <strong><i class="fa-solid fa-tags" /> Kategorien</strong>
@@ -69,11 +72,11 @@ export default defineNuxtComponent({
                 </div>
             </div>
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
             <h6>
                 HPO
             </h6>
-            <div class="col">
+            <div class="entity-card">
                 <div>
                     <strong><i class="fa fa-tags" /> Terme</strong>
                     <template
@@ -89,7 +92,9 @@ export default defineNuxtComponent({
             <h6 class="mb-0">
                 Therapie
             </h6>
-            <div>{{ record.therapy.notes }}</div>
+            <div class="entity-card">
+                {{ record.therapy.notes }}
+            </div>
         </div>
     </div>
 </template>
