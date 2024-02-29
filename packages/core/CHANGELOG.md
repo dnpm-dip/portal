@@ -1,5 +1,25 @@
 # @dnpm-dip/core
 
+## [1.4.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/core-v1.3.0...core-v1.4.0) (2024-02-29)
+
+
+### Features
+
+* add expandable-content component & add patient record therapies tab ([05b4056](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/05b4056f75aa21ea80dd33fd4accec8b8392a08c))
+* implemented patient-record view ([ac72d56](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ac72d560bfa23206e816266879210281a62dd6f4))
+* initial mtb patient-record view ([ec58fbc](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ec58fbcfe855546bb8eee80ec86c94a34489c642))
+* kaplan-meier survival statistics ([56de499](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/56de499a739c62c28db06101507b237af3ac1beb))
+* round percent values in charts to 1 fraction ([b9233b8](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b9233b8145cacc275848edaae1e4e9141bae03ee))
+
+
+### Bug Fixes
+
+* dispaly median survival time on kp charts ([16f6f93](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/16f6f93ff2f0d21c455184ea48dc9867bf262acd))
+* dropdown selection in summary grouped component ([cf9082a](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/cf9082aee60bbb64444d49acdc7950376f3581a8))
+* from select listener ([604ce41](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/604ce411a471f4a5c8d1c3468988750f3ba73700))
+* selection of first element in summary-grouped component ([#279](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/279)) ([5e9b122](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/5e9b122e0c4f1dc18309538717c0fc2e1a9d3229))
+* some spelling issues ([e80f430](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/e80f430e65e0f18bc62b1dfd72a52429f6d12db9))
+
 ## [1.3.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/core-v1.2.0...core-v1.3.0) (2024-02-15)
 
 

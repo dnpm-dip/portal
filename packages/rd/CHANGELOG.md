@@ -1,5 +1,27 @@
 # @dnpm-dip/rare-diseases
 
+## [1.4.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.3.0...rd-v1.4.0) (2024-02-29)
+
+
+### Features
+
+* initial mtb patient-record view ([ec58fbc](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ec58fbcfe855546bb8eee80ec86c94a34489c642))
+* kaplan-meier survival statistics ([56de499](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/56de499a739c62c28db06101507b237af3ac1beb))
+
+
+### Bug Fixes
+
+* layout in mtb and rd module ([b968ac9](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b968ac9e58f25fdb294698ee08ad0dea794c07ca))
+* patient record episodes rendering ([63363d3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/63363d30f68628ba358b89f58ca90a9fc3fdacf5))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.3.0 to ^1.4.0
+    * @dnpm-dip/kit bumped from ^1.3.0 to ^1.4.0
+
 ## [1.3.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.2.0...rd-v1.3.0) (2024-02-15)
 
 

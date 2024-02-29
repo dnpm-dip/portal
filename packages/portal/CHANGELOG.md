@@ -1,5 +1,29 @@
 # @dnpm-dip/portal
 
+## [1.4.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/portal-v1.3.0...portal-v1.4.0) (2024-02-29)
+
+
+### Features
+
+* implemented patient-record view ([ac72d56](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ac72d560bfa23206e816266879210281a62dd6f4))
+* kaplan-meier survival statistics ([56de499](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/56de499a739c62c28db06101507b237af3ac1beb))
+
+
+### Bug Fixes
+
+* layout in mtb and rd module ([b968ac9](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b968ac9e58f25fdb294698ee08ad0dea794c07ca))
+* modules grid view on overview page ([d73ed64](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d73ed64b43d0d6a6832c3b3ac457e61ce09c2901))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.3.0 to ^1.4.0
+    * @dnpm-dip/kit bumped from ^1.3.0 to ^1.4.0
+    * @dnpm-dip/mtb bumped from ^1.3.0 to ^1.4.0
+    * @dnpm-dip/rd bumped from ^1.3.0 to ^1.4.0
+
 ## [1.3.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/portal-v1.2.0...portal-v1.3.0) (2024-02-15)
 
 
