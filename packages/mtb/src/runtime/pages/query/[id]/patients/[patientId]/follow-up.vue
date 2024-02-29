@@ -21,7 +21,7 @@ export default defineNuxtComponent({
 <template>
     <template v-if="record.medicationTherapies">
         <div>
-            <h5>Durchgeführte Therpaien</h5>
+            <h5>Durchgeführte Therapien</h5>
         </div>
         <template
             v-for="(history, key) in record.medicationTherapies"
