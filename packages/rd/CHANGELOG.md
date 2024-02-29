@@ -1,5 +1,27 @@
 # @dnpm-dip/rare-diseases
 
+## [1.5.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.4.0...rd-v1.5.0) (2024-02-29)
+
+
+### Features
+
+* align rd and mtb view ([4443732](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/44437321700e0fcd25c99e239066209fd7d25c9e))
+
+
+### Bug Fixes
+
+* align headings ([63815a7](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/63815a787356eef720d06dadecbf6c565d6d88a7))
+* rd patient record overview view ([fb3d88c](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/fb3d88cc9a2280e53c90d31fab832ef6d98fe50f))
+* set rd ngs-report list item width to 100% ([2884ddc](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2884ddcf2d856cb03c81764bffa028fe407a30be))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.4.0 to ^1.5.0
+    * @dnpm-dip/kit bumped from ^1.4.0 to ^1.5.0
+
 ## [1.4.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.3.0...rd-v1.4.0) (2024-02-29)
 
 

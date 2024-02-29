@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.5.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.4.0...mtb-v1.5.0) (2024-02-29)
+
+
+### Features
+
+* align rd and mtb view ([4443732](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/44437321700e0fcd25c99e239066209fd7d25c9e))
+
+
+### Bug Fixes
+
+* align headings ([63815a7](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/63815a787356eef720d06dadecbf6c565d6d88a7))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.4.0 to ^1.5.0
+    * @dnpm-dip/kit bumped from ^1.4.0 to ^1.5.0
+
 ## [1.4.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.3.0...mtb-v1.4.0) (2024-02-29)
 
 
