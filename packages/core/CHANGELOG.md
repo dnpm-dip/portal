@@ -1,5 +1,12 @@
 # @dnpm-dip/core
 
+## [1.5.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/core-v1.4.0...core-v1.5.0) (2024-02-29)
+
+
+### Bug Fixes
+
+* align headings ([63815a7](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/63815a787356eef720d06dadecbf6c565d6d88a7))
+
 ## [1.4.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/core-v1.3.0...core-v1.4.0) (2024-02-29)
 
 
