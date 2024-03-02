@@ -17,5 +17,6 @@ export default defineNuxtPlugin((ctx) => {
         apiClient: ctx.$authupApi as APIClient,
         store,
         components: false,
+        translatorLocale: 'de',
     });
 });

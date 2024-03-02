@@ -8,7 +8,8 @@ import {
     ARealms,
     ASearch,
     ATitle,
-    injectAPIClient, useValidationTranslator,
+    injectAPIClient,
+    useValidationTranslator,
 } from '@authup/client-vue';
 import useVuelidate from '@vuelidate/core';
 import { maxLength, minLength, required } from '@vuelidate/validators';
