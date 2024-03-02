@@ -1,6 +1,7 @@
-import { PageMetaKey } from '@dnpm-dip/core';
-import { flattenNestedNavigationItems } from '@vuecs/navigation';
+import { PermissionName } from '@authup/core';
+import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
 import type { NavigationItem, NavigationProvider } from '@vuecs/navigation';
+import { flattenNestedNavigationItems } from '@vuecs/navigation';
 import { reduceNavigationElementsByRestriction } from './utils';
 
 type NavigationContext = {
@@ -18,12 +19,20 @@ export class Navigation implements NavigationProvider {
     constructor(context: NavigationContext) {
         this.context = context;
 
-        this.topElements = [{
-            id: 'default',
-            name: 'Home',
-            url: '/',
-            rootLink: true,
-        }];
+        this.topElements = [
+            {
+                id: PageNavigationTopID.DEFAULT,
+                name: 'Home',
+                url: '/',
+                rootLink: true,
+            },
+            {
+                id: PageNavigationTopID.ADMIN,
+                name: 'Admin',
+                rootLink: true,
+                [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+            },
+        ];
 
         this.sideElements = {
             default: [
@@ -49,11 +58,39 @@ export class Navigation implements NavigationProvider {
                     [PageMetaKey.REQUIRED_LOGGED_IN]: true,
                 },
             ],
+            admin: [
+                {
+                    name: 'Benutzer',
+                    type: 'link',
+                    url: '/admin/users',
+                    icon: 'fas fa-user',
+                    [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                    [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                        PermissionName.USER_ADD,
+                        PermissionName.USER_EDIT,
+                        PermissionName.USER_DROP,
+                    ],
+                },
+                {
+                    name: 'Rollen',
+                    type: 'link',
+                    url: '/admin/roles',
+                    icon: 'fa-solid fa-theater-masks',
+                    [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                    [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                        PermissionName.ROLE_ADD,
+                        PermissionName.ROLE_EDIT,
+                        PermissionName.ROLE_DROP,
+                        PermissionName.ROLE_PERMISSION_ADD,
+                        PermissionName.ROLE_PERMISSION_DROP,
+                    ],
+                },
+            ],
         };
     }
 
     addTopElement(element: NavigationItem) {
-        this.topElements.push(element);
+        this.topElements.splice(this.topElements.length - 1, 0, element);
     }
 
     addSideElements(id: string, elements: NavigationItem[]) {

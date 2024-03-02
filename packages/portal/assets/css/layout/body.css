@@ -27,6 +27,40 @@ h1, h2, h3, h4, h5, h6 {
     color: #829dc5;
 }
 
+h1.title,
+h2.title,
+h3.title,
+h4.title,
+h5.title {
+    /* font-weight: 700; */
+    color: rgba(0,0,0,0.7);
+}
+
+h1.title:before,
+h2.title:before,
+h3.title:before,
+h4.title:before,
+h5.title:before {
+    content: "";
+    width: 4px;
+    padding-right: 4px;
+    background: #baa875;
+    margin-right: 4px;
+}
+
+.title.no-border:before {
+    content: none;
+    width:0;
+    height: 0;
+    padding-right: 0;
+    margin-right: 0;
+}
+
+.title .sub-title {
+    font-size: .65em;
+    color: #829dc5;
+}
+
 #__nuxt,
 #__layout,
 #app {

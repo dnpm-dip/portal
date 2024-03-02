@@ -10,4 +10,5 @@ export enum PageMetaKey {
 
 export enum PageNavigationTopID {
     DEFAULT = 'default',
+    ADMIN = 'admin',
 }
