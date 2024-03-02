@@ -19,6 +19,7 @@ export default defineNuxtConfig({
         '@/assets/css/layout/sidebar.css',
         '@/assets/css/vue-layout-navigation.css',
         '@/assets/css/card.css',
+        '@/assets/css/form.css',
         '@/assets/css/list.css',
         '@/assets/css/pagination.css',
         '@dnpm-dip/core/../dist/index.css',
@@ -30,6 +31,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             apiUrl: process.env.API_URL || 'https://dnpm.bwhealthcloud.de/api/',
+            authupUrl: process.env.AUTHUP_URL || 'https://dnpm.bwhealthcloud.de/auth/',
         },
     },
 });

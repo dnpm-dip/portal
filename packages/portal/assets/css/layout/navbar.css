@@ -17,6 +17,10 @@
     clear:both;
 }
 
+.page-navbar>.navbar-content {
+    padding: 0 20px;
+}
+
 .page-navbar .navbar-content li:not(:last-child) .nav-item {
     padding-right: 0.25rem;
 }
@@ -80,6 +84,10 @@
 
     .page-header {
         flex-wrap: wrap;
+    }
+
+    .page-navbar > .navbar-content {
+        padding: 0px;
     }
 
     .page-navbar .navbar-content > ul:not(:last-child) {

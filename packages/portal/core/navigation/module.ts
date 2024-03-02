@@ -1,13 +1,23 @@
 import { PageMetaKey } from '@dnpm-dip/core';
 import { flattenNestedNavigationItems } from '@vuecs/navigation';
 import type { NavigationItem, NavigationProvider } from '@vuecs/navigation';
+import { reduceNavigationElementsByRestriction } from './utils';
+
+type NavigationContext = {
+    hasPermission: (name: string) => boolean,
+    isLoggedIn: () => boolean
+};
 
 export class Navigation implements NavigationProvider {
     protected topElements: NavigationItem[];
 
     protected sideElements : Record<string, NavigationItem[]>;
 
-    constructor() {
+    protected context : NavigationContext;
+
+    constructor(context: NavigationContext) {
+        this.context = context;
+
         this.topElements = [{
             id: 'default',
             name: 'Home',
@@ -23,6 +33,20 @@ export class Navigation implements NavigationProvider {
                     icon: 'fa fa-home',
                     url: '/',
                     rootLink: true,
+                },
+                {
+                    name: 'Login',
+                    type: 'link',
+                    url: '/login',
+                    icon: 'fas fa-sign',
+                    [PageMetaKey.REQUIRED_LOGGED_OUT]: true,
+                },
+                {
+                    name: 'Logout',
+                    type: 'link',
+                    url: '/logout',
+                    icon: 'fa fa-power-off',
+                    [PageMetaKey.REQUIRED_LOGGED_IN]: true,
                 },
             ],
         };
@@ -42,7 +66,10 @@ export class Navigation implements NavigationProvider {
         }
 
         if (tier === 0) {
-            return this.topElements;
+            return reduceNavigationElementsByRestriction(this.topElements, {
+                hasPermission: (name: string) => this.context.hasPermission(name),
+                isLoggedIn: () => this.context.isLoggedIn(),
+            });
         }
 
         let component : NavigationItem;
@@ -51,7 +78,11 @@ export class Navigation implements NavigationProvider {
         } else {
             component = { id: 'default' };
         }
-        return this.sideElements[component.id || 'default'] || [];
+
+        return reduceNavigationElementsByRestriction(this.sideElements[component.id || 'default'] || [], {
+            hasPermission: (name: string) => this.context.hasPermission(name),
+            isLoggedIn: () => this.context.isLoggedIn(),
+        });
     }
 
     async getItemsActiveByRoute(route) {

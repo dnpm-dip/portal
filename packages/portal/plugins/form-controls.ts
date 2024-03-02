@@ -1,3 +1,5 @@
+import { applyStoreManagerOptions, installStoreManager } from '@vuecs/form-controls/core';
+
 import bootstrap from '@vuecs/preset-bootstrap-v5';
 import fontAwesome from '@vuecs/preset-font-awesome';
 
@@ -7,13 +9,14 @@ import { defineNuxtPlugin } from '#app';
 export default defineNuxtPlugin({
     enforce: 'pre',
     async setup(nuxt) {
-        nuxt.vueApp.use(install, {
-            storeManager: {
-                presets: {
-                    bootstrap,
-                    fontAwesome,
-                },
+        const storeManager = installStoreManager(nuxt.vueApp);
+        applyStoreManagerOptions(storeManager, {
+            presets: {
+                bootstrap,
+                fontAwesome,
             },
         });
+
+        nuxt.vueApp.use(install);
     },
 });

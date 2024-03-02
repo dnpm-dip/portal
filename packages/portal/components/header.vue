@@ -1,13 +1,18 @@
 <script>
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { VCNavItems } from '@vuecs/navigation';
 import { defineNuxtComponent, useNuxtApp } from '#app';
+import { useAuthStore } from '../stores/auth';
 
 export default defineNuxtComponent({
     components: {
         VCNavItems,
     },
     setup() {
+        const store = useAuthStore();
+        const { loggedIn, user } = storeToRefs(store);
+
         const displayNav = ref(false);
 
         const toggleNav = () => {
@@ -15,6 +20,8 @@ export default defineNuxtComponent({
         };
 
         return {
+            loggedIn,
+            user,
             toggleNav,
             displayNav,
         };
@@ -51,6 +58,28 @@ export default defineNuxtComponent({
                         class="navbar-nav"
                         :tier="0"
                     />
+
+                    <ul
+                        v-if="loggedIn && user"
+                        class="navbar-nav nav-items navbar-gadgets"
+                    >
+                        <li class="nav-item">
+                            <a
+                                href="javascript:void(0)"
+                                class="nav-link"
+                            >
+                                <span>{{ user.display_name ? user.display_name : user.name }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <NuxtLink
+                                :to="'/logout'"
+                                class="nav-link"
+                            >
+                                <i class="fa fa-power-off" />
+                            </NuxtLink>
+                        </li>
+                    </ul>
                 </div>
             </nav>
         </header>
