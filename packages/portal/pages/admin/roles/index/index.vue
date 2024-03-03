@@ -50,10 +50,10 @@ export default defineNuxtComponent({
                 key: 'name', label: 'Name', thClass: 'text-left', tdClass: 'text-left',
             },
             {
-                key: 'created_at', label: 'Created at', thClass: 'text-center', tdClass: 'text-center',
+                key: 'created_at', label: 'Erstelldatum', thClass: 'text-center', tdClass: 'text-center',
             },
             {
-                key: 'updated_at', label: 'Updated at', thClass: 'text-left', tdClass: 'text-left',
+                key: 'updated_at', label: 'Aktualisierungsdatum', thClass: 'text-left', tdClass: 'text-left',
             },
             { key: 'options', label: '', tdClass: 'text-left' },
         ];

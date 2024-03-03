@@ -1,16 +1,15 @@
 <script lang="ts">
 
+import { VCTimeago } from '@vuecs/timeago';
 import { BTable } from 'bootstrap-vue-next';
-import type { User } from '@authup/core';
+import type { IdentityProvider } from '@authup/core';
+import { PermissionName, isRealmResourceWritable } from '@authup/core';
 import {
-    PermissionName, isRealmResourceWritable,
-} from '@authup/core';
-import {
-    AEntityDelete, APagination, ASearch, ATitle, AUsers,
+    AEntityDelete, AIdentityProviders, APagination, ASearch, ATitle,
 } from '@authup/client-vue';
 import { storeToRefs } from 'pinia';
 import type { BuildInput } from 'rapiq';
-import { defineNuxtComponent } from '#imports';
+import { defineNuxtComponent } from '#app';
 import { useAuthStore } from '../../../../stores/auth';
 
 export default defineNuxtComponent({
@@ -19,30 +18,31 @@ export default defineNuxtComponent({
         APagination,
         ASearch,
         BTable,
-        AUsers,
+        AIdentityProviders,
         AEntityDelete,
+        VCTimeago,
     },
     emits: ['deleted'],
     setup(props, { emit }) {
-        const handleDeleted = (e: User) => {
+        const handleDeleted = (e: IdentityProvider) => {
             emit('deleted', e);
         };
 
         const store = useAuthStore();
         const { realm, realmManagementId } = storeToRefs(store);
 
-        const query : BuildInput<User> = {
+        const query : BuildInput<IdentityProvider> = {
             filter: {
                 realm_id: [realmManagementId.value, null],
             },
         };
 
         const isResourceWritable = (
-            resource: User,
+            resource: IdentityProvider,
         ) => isRealmResourceWritable(realm.value, resource.realm_id);
 
-        const hasEditPermission = store.has(PermissionName.USER_EDIT);
-        const hasDropPermission = store.has(PermissionName.USER_DROP);
+        const hasEditPermission = store.has(PermissionName.PROVIDER_EDIT);
+        const hasDropPermission = store.has(PermissionName.PROVIDER_DROP);
 
         const fields = [
             {
@@ -57,7 +57,9 @@ export default defineNuxtComponent({
             {
                 key: 'updated_at', label: 'Aktualisierungsdatum', thClass: 'text-left', tdClass: 'text-left',
             },
-            { key: 'options', label: '', tdClass: 'text-left' },
+            {
+                key: 'options', label: '', tdClass: 'text-left',
+            },
         ];
 
         return {
@@ -72,10 +74,8 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <AUsers
+    <AIdentityProviders
         :query="query"
-        :body="{tag: 'div'}"
-        :footer="true"
         @deleted="handleDeleted"
     >
         <template #header="props">
@@ -108,7 +108,7 @@ export default defineNuxtComponent({
                 </template>
                 <template #cell(options)="data">
                     <NuxtLink
-                        :to="'/admin/users/'+ data.item.id"
+                        :to="'/admin/identity-providers/'+ data.item.id"
                         class="btn btn-xs btn-outline-primary me-1"
                         :disabled="!hasEditPermission || !isResourceWritable(data.item)"
                     >
@@ -117,7 +117,7 @@ export default defineNuxtComponent({
                     <AEntityDelete
                         class="btn btn-xs btn-outline-danger"
                         :entity-id="data.item.id"
-                        entity-type="user"
+                        entity-type="identityProvider"
                         :with-text="false"
                         :disabled="!hasDropPermission || !isResourceWritable(data.item)"
                         @deleted="props.deleted"
@@ -125,5 +125,5 @@ export default defineNuxtComponent({
                 </template>
             </BTable>
         </template>
-    </AUsers>
+    </AIdentityProviders>
 </template>

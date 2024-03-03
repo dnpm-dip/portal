@@ -60,6 +60,18 @@ export class Navigation implements NavigationProvider {
             ],
             admin: [
                 {
+                    name: 'Identity Providers',
+                    type: 'link',
+                    url: '/admin/identity-providers',
+                    icon: 'fa-solid fa-atom',
+                    [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                    [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                        PermissionName.PROVIDER_ADD,
+                        PermissionName.PROVIDER_EDIT,
+                        PermissionName.PROVIDER_DROP,
+                    ],
+                },
+                {
                     name: 'Benutzer',
                     type: 'link',
                     url: '/admin/users',
