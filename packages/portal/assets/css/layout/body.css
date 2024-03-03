@@ -44,8 +44,8 @@ h5.title:before {
     content: "";
     width: 4px;
     padding-right: 4px;
-    background: #baa875;
-    margin-right: 4px;
+    background: #829dc5;
+    margin-right: 0.75rem;
 }
 
 .title.no-border:before {

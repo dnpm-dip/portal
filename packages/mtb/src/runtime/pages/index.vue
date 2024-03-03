@@ -34,7 +34,10 @@ export default defineNuxtComponent({
 </script>
 
 <template>
-    <div class="container">
+    <div class="">
+        <h1 class="title no-border mb-3">
+            <i class="fa fa-search" /> Suche
+        </h1>
         <SearchForm
             @query-created="handleSubmitted"
             @failed="handleFailed"
