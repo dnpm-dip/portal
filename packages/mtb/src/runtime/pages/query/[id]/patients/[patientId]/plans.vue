@@ -28,113 +28,126 @@ export default defineNuxtComponent({
                 <div class="entity-card flex-grow-1 mb-3">
                     <div class="row mb-3">
                         <div class="col">
-                            <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.issuedOn }}</div>
-                            <div><strong><i class="fas fa-calculator" /> Indikation</strong> {{ item.indication.type }}</div>
+                            <div>
+                                <strong><i class="fas fa-calculator" /> Indikation</strong>
+                                {{ item.indication.display || item.indication.type }}
+                            </div>
+                            <div><strong><i class="fas fa-shield" /> Protokoll</strong> {{ item.protocol }}</div>
                         </div>
                         <div class="col">
+                            <div><strong><i class="fa fa-clock" /> Erfassungsdatum</strong> {{ item.issuedOn }}</div>
                             <div v-if="item.statusReason">
                                 <div>
                                     <strong><i class="fas fa-info-circle" /> Status Grund</strong>
                                     {{ item.statusReason.display || item.statusReason.code }}
                                 </div>
                             </div>
-
-                            <div><strong><i class="fas fa-shield" /> Protokoll</strong> {{ item.protocol }}</div>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col">
-                            <div class="text-center mb-3">
-                                <strong>Medikationen-Empfehlung</strong>
-                            </div>
-                            <template
-                                v-for="(recommendation, recommendationKey) in item.medicationRecommendations"
-                                :key="recommendationKey"
-                            >
-                                <div class="mb-2">
-                                    <template v-if="recommendationKey > 0">
-                                        <hr>
-                                    </template>
-                                    <div><strong><i class="fa fa-clock" /> Datum</strong> {{ recommendation.issuedOn }}</div>
-                                    <div v-if="recommendation.medication">
-                                        <strong><i class="fa fa-pills" /> Medikation</strong>
-                                        <template
-                                            v-for="(el, idx) in recommendation.medication"
-                                            :key="el"
-                                        >
-                                            {{ idx > 0 ? ', ' : '' }} {{ el.display || el.code }}
+                            <div class="entity-card">
+                                <div class="text-center mb-3">
+                                    <strong>Therapie-Empfehlungen</strong>
+                                </div>
+                                <template
+                                    v-for="(recommendation, recommendationKey) in item.medicationRecommendations"
+                                    :key="recommendationKey"
+                                >
+                                    <div class="mb-2">
+                                        <template v-if="recommendationKey > 0">
+                                            <hr>
                                         </template>
-                                    </div>
-                                    <div v-if="recommendation.supportingEvidence">
-                                        <strong><i class="fas fa-check-circle" /> Stützende Evidenz</strong><br>
-                                        <template
-                                            v-for="(el, idx) in recommendation.supportingEvidence"
-                                            :key="el"
-                                        >
-                                            &bull; {{ idx > 0 ? ', ' : '' }} {{ el.type }}: {{ el.display }}
-                                        </template>
-                                    </div>
-                                    <div v-if="recommendation.priority">
-                                        <strong><i class="fa fa-clock" /> Priorität</strong>
-                                        {{ recommendation.priority.display || recommendation.priority.code }}
-                                    </div>
-                                    <template v-if="recommendation.levelOfEvidence">
-                                        <div v-if="recommendation.levelOfEvidence.grading">
-                                            <strong><i class="fas fa-chart-line" /> Evidenz-Grad</strong>
-                                            {{ recommendation.levelOfEvidence.grading.display || recommendation.levelOfEvidence.grading.code }}
-                                        </div>
-                                        <div v-if="recommendation.levelOfEvidence.addendums">
-                                            <strong><i class="fas fa-plus-square" /> Evidenz-Addendums</strong>
+                                        <div><strong><i class="fa fa-clock" /> Datum</strong> {{ recommendation.issuedOn }}</div>
+                                        <div v-if="recommendation.medication">
+                                            <strong><i class="fa fa-pills" /> Medikation</strong>
                                             <template
-                                                v-for="(el, idx) in recommendation.levelOfEvidence?.addendums"
+                                                v-for="(el, idx) in recommendation.medication"
                                                 :key="el"
                                             >
                                                 {{ idx > 0 ? ', ' : '' }} {{ el.display || el.code }}
                                             </template>
                                         </div>
-                                    </template>
-                                </div>
-                            </template>
-                        </div>
-                        <div class="col">
-                            <div class="text-center mb-3">
-                                <strong>Genetische-Empfehlung</strong>
+                                        <div v-if="recommendation.supportingEvidence">
+                                            <strong><i class="fas fa-check-circle" /> Stützende molekulare Alterationen</strong><br>
+                                            <template
+                                                v-for="(el, idx) in recommendation.supportingEvidence"
+                                                :key="el"
+                                            >
+                                                &bull; {{ idx > 0 ? ', ' : '' }} {{ el.type }}: {{ el.display }}
+                                            </template>
+                                        </div>
+                                        <div v-if="recommendation.priority">
+                                            <strong><i class="fa fa-clock" /> Priorität</strong>
+                                            {{ recommendation.priority.display || recommendation.priority.code }}
+                                        </div>
+                                        <template v-if="recommendation.levelOfEvidence">
+                                            <div v-if="recommendation.levelOfEvidence.grading">
+                                                <strong><i class="fas fa-chart-line" /> Evidenzlevel</strong>
+                                                {{ recommendation.levelOfEvidence.grading.display || recommendation.levelOfEvidence.grading.code }}
+
+                                                (<template v-if="recommendation.levelOfEvidence.addendums">
+                                                    <template
+                                                        v-for="(el, idx) in recommendation.levelOfEvidence?.addendums"
+                                                        :key="el"
+                                                    >
+                                                        {{ idx > 0 ? ', ' : '' }} {{ el.display || el.code }}
+                                                    </template>
+                                                </template>)
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
                             </div>
-                            <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.geneticCounselingRecommendation.issuedOn }}</div>
-                            <div>
-                                <strong><i class="fas fa-lightbulb" /> Grund</strong>
-                                {{ item.geneticCounselingRecommendation.reason.display || item.geneticCounselingRecommendation.reason.code }}
+                        </div>
+                        <div
+                            v-if="item.geneticCounselingRecommendation"
+                            class="col"
+                        >
+                            <div class="entity-card">
+                                <div class="text-center mb-3">
+                                    <strong>Humangenetische-Empfehlungen</strong>
+                                </div>
+                                <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.geneticCounselingRecommendation.issuedOn }}</div>
+                                <div>
+                                    <strong><i class="fas fa-lightbulb" /> Grund</strong>
+                                    {{ item.geneticCounselingRecommendation.reason.display || item.geneticCounselingRecommendation.reason.code }}
+                                </div>
                             </div>
                         </div>
                         <div
                             v-if="item.studyEnrollmentRecommendations"
                             class="col"
                         >
-                            <div class="text-center mb-3">
-                                <strong>Studien-Empfehlung</strong>
-                            </div>
-
-                            <template
-                                v-for="(recommendation) in item.studyEnrollmentRecommendations"
-                                :key="recommendation.id"
-                            >
-                                <div class="mb-2">
-                                    <div><strong><i class="fa fa-clock" /> Datum</strong> {{ recommendation.issuedOn }}</div>
-                                    <div v-if="recommendation.supportingEvidence">
-                                        <strong><i class="fas fa-check-circle" /> Stützende Evidenz</strong><br>
-                                        <template
-                                            v-for="(el, idx) in recommendation.supportingEvidence"
-                                            :key="el"
-                                        >
-                                            &bull; {{ idx > 0 ? ', ' : '' }} {{ el.type }}: {{ el.display }}
-                                        </template>
-                                    </div>
-                                    <div v-if="recommendation.levelOfEvidence">
-                                        <strong><i class="fas fa-chart-line" /> Evidenz-Grad</strong>
-                                        {{ recommendation.levelOfEvidence.display || recommendation.levelOfEvidence.code }}
-                                    </div>
+                            <div class="entity-card">
+                                <div class="text-center mb-3">
+                                    <strong>Studien-Einschlussempfehlungen</strong>
                                 </div>
-                            </template>
+
+                                <template
+                                    v-for="(recommendation) in item.studyEnrollmentRecommendations"
+                                    :key="recommendation.id"
+                                >
+                                    <div class="mb-2">
+                                        <div><strong><i class="fa fa-clock" /> Datum</strong> {{ recommendation.issuedOn }}</div>
+                                        <div v-if="recommendation.supportingEvidence">
+                                            <strong><i class="fas fa-check-circle" /> Stützende Evidenz</strong><br>
+                                            <template
+                                                v-for="(el, idx) in recommendation.supportingEvidence"
+                                                :key="el"
+                                            >
+                                                &bull; {{ idx > 0 ? ', ' : '' }} {{ el.type }}: {{ el.display }}
+                                            </template>
+                                        </div>
+                                        <div v-if="recommendation.levelOfEvidence">
+                                            <strong><i class="fas fa-chart-line" /> Evidenz-Grad</strong>
+                                            {{ recommendation.levelOfEvidence.display || recommendation.levelOfEvidence.code }}
+                                        </div>
+
+                                    <!-- todo: studien anzeigen -->
+                                    </div>
+                                </template>
+                            </div>
                         </div>
                     </div>
                 </div>

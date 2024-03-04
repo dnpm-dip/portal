@@ -40,8 +40,14 @@ export default defineNuxtComponent({
                     <div class="row">
                         <div class="col">
                             <div>
-                                <div><strong><i class="fas fa-calculator" /> TAN</strong> {{ item.ttan }}</div>
-                                <div><strong><i class="fas fa-calendar-alt" /> Period</strong> {{ item.period.start }}</div>
+                                <!-- <div><strong><i class="fas fa-calculator" /> TAN</strong> {{ item.ttan }}</div> -->
+                                <div>
+                                    <strong><i class="fas fa-calendar-alt" /> Zeitraum</strong>
+                                    {{ item.period.start }}
+                                    <template v-if="item.period.end">
+                                        - {{ item.period.end }}
+                                    </template>
+                                </div>
                                 <div><strong><i class="fas fa-check-circle" /> Status</strong> {{ item.status.display || item.status.code }}</div>
                             </div>
                         </div>
@@ -73,16 +79,19 @@ export default defineNuxtComponent({
                                     {{ idx > 0 ? ', ' : '' }} {{ el.display || el.code }}
                                 </template>
                             </div>
-                            <div><strong><i class="fas fa-calculator" /> Indikation</strong> {{ item.indication.type }}</div>
                             <div>
-                                <strong><i class="fas fa-calendar-alt" /> Period</strong>
+                                <strong><i class="fas fa-calculator" /> Indikation</strong>
+                                {{ item.indication.display || item.indication.type }}
+                            </div>
+                            <div v-if="item.period">
+                                <strong><i class="fas fa-calendar-alt" /> Zeitraum</strong>
                                 {{ item.period.start }} - {{ item.period.end }}
                             </div>
-                            <div>
+                            <div v-if="item.status">
                                 <strong><i class="fas fa-check-circle" /> Status</strong>
                                 {{ item.status.display || item.status.code }}
                             </div>
-                            <div>
+                            <div v-if="item.statusReason">
                                 <strong><i class="fas fa-info-circle" /> Status Grund</strong>
                                 {{ item.statusReason.display || item.statusReason.code }}
                             </div>
@@ -98,6 +107,8 @@ export default defineNuxtComponent({
 
         <hr>
 
+        <!-- todo: add diagnosis -->
+
         <h5>Leitlinien-Prozeduren</h5>
         <div class="entity-card-group mb-3">
             <template
@@ -108,18 +119,24 @@ export default defineNuxtComponent({
                     class="entity-card"
                     style="max-width: 350px"
                 >
-                    <div><strong><i class="fas fa-calculator" /> Indikation</strong> {{ item.indication.type }}</div>
-                    <div><strong><i class="fa fa-code" /> Code</strong> {{ item.code.display }}</div>
-                    <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.recordedOn }}</div>
                     <div>
-                        <strong><i class="fas fa-calendar-alt" /> Period</strong>
-                        {{ item.period.start }} - {{ item.period.end }}
+                        <strong><i class="fas fa-calculator" /> Indikation</strong>
+                        {{ item.indication.display || item.indication.type }}
+                    </div>
+                    <div><strong><i class="fa fa-code" /> Code</strong> {{ item.code.display }}</div>
+                    <div><strong><i class="fa fa-clock" /> Erfassungsdatum</strong> {{ item.recordedOn }}</div>
+                    <div>
+                        <strong><i class="fas fa-calendar-alt" /> Zeitraum</strong>
+                        {{ item.period.start }}
+                        <template v-if="item.period.end">
+                            - {{ item.period.end }}
+                        </template>
                     </div>
                     <div>
                         <strong><i class="fas fa-check-circle" /> Status</strong>
                         {{ item.status.display || item.status.code }}
                     </div>
-                    <div>
+                    <div v-if="item.statusReason">
                         <strong><i class="fas fa-info-circle" /> Status Grund</strong>
                         {{ item.statusReason.display || item.statusReason.code }}
                     </div>
@@ -133,6 +150,7 @@ export default defineNuxtComponent({
 
         <hr>
 
+        <!-- todo maybe visualisation ?? -->
         <h5>ECOG Performance Status</h5>
         <div class="entity-card-group mb-3">
             <template

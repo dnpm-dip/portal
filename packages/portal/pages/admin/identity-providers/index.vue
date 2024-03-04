@@ -27,12 +27,12 @@ export default defineNuxtComponent({
 
         const items = [
             {
-                name: 'overview',
+                name: 'Übersicht',
                 urlSuffix: '',
                 icon: 'fa fa-bars',
             },
             {
-                name: 'add',
+                name: 'Hinzufügen',
                 urlSuffix: 'add',
                 icon: 'fa fa-plus',
             },

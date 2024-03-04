@@ -11,6 +11,7 @@ export type Patient = {
      */
     gender: Coding<'male' | 'female' | 'other' | 'unknown'>
     birthDate: string,
+    age: { value: number, unit: string },
     dateOfDeath?: string,
     managingSite?: Coding,
     vitalStatus?: Coding,

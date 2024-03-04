@@ -14,11 +14,11 @@ export default defineComponent({
 </script>
 <template>
     <div class="row">
-        <h5>Allgemein</h5>
+        <h5>Stammdaten</h5>
         <div class="col">
             <div class="entity-card">
                 <div><strong><i class="fas fa-user" /> Geschlecht</strong> {{ entity.gender.display }}</div>
-                <div><strong><i class="fas fa-birthday-cake" /> Geburtstag</strong> {{ entity.birthDate }}</div>
+                <div><strong><i class="fas fa-birthday-cake" /> Geburtstag</strong> {{ entity.birthDate }} ({{ entity.age.value }} Jahre)</div>
             </div>
         </div>
         <div class="col">

@@ -3,7 +3,8 @@ import type { QueryCriteria } from '../query';
 
 type Reference = {
     id: string,
-    type: string
+    type: string,
+    display?: string
 };
 
 type Period = {

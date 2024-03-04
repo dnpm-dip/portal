@@ -39,7 +39,7 @@ export default defineNuxtComponent({
 
         const navItems = [
             {
-                name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
+                name: 'Anamnese', icon: 'fas fa-bars', urlSuffix: '',
             },
             {
                 name: 'Diagnostik', icon: 'fas fa-stethoscope', urlSuffix: '/diagnostics',

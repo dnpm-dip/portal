@@ -25,22 +25,22 @@ export default defineNuxtComponent({
         <h5>Tumorproben</h5>
         <div class="entity-card-group mb-3">
             <template
-                v-for="(item) in record.specimens"
+                v-for="item in record.specimens"
                 :key="item.id"
             >
                 <div class="entity-card">
                     <div class="mb-3">
                         <div>
-                            <div>
-                                <strong><i class="fas fa-shield" /> Type</strong>
+                            <div v-if="item.type">
+                                <strong><i class="fas fa-shield" /> Art</strong>
                                 {{ item.type.display || item.type.code }}
                             </div>
                             <div>
-                                <strong><i class="fa fa-clock" /> Datum</strong>
+                                <strong><i class="fa fa-clock" /> Entnahmedatum</strong>
                                 {{ item.collection.date }}
                             </div>
                             <div>
-                                <strong><i class="fas fa-flask" /> Methode</strong>
+                                <strong><i class="fas fa-flask" /> Entnahmemethode</strong>
                                 {{ item.collection.method.display || item.collection.method.code }}
                             </div>
                             <div>
@@ -73,7 +73,7 @@ export default defineNuxtComponent({
                         <div class="row mt-2">
                             <div class="col">
                                 <div class="text-center mb-1">
-                                    Tumor-Morphologie
+                                    <strong>Tumor-Morphologie</strong>
                                 </div>
 
                                 <div><strong><i class="fa fa-code" /> Code</strong> {{ item.results.tumorMorphology.value.display }}</div>
@@ -81,7 +81,7 @@ export default defineNuxtComponent({
                             </div>
                             <div class="col">
                                 <div class="text-center">
-                                    Tumor-Zellinhalt
+                                    <strong>Tumor-Zellgehalt</strong>
                                 </div>
 
                                 <div>
@@ -127,8 +127,12 @@ export default defineNuxtComponent({
                                         <div><strong><i class="fa fa-code" /> Code</strong> {{ per.protein.display || per.protein.code }}</div>
                                         <div><strong><i class="fa fa-code" /> Wert</strong> {{ per.value.display || per.value.code }}</div>
                                         <div><strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.tpsScore }}</div>
-                                        <div><strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.icScore.display || per.icScore.code }}</div>
-                                        <div><strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.tcScore.display || per.tcScore.code }}</div>
+                                        <div v-if="per.icScore">
+                                            <strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.icScore.display || per.icScore.code }}
+                                        </div>
+                                        <div v-if="per.tcScore">
+                                            <strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.tcScore.display || per.tcScore.code }}
+                                        </div>
                                     </div>
                                 </template>
                             </div>
@@ -148,8 +152,12 @@ export default defineNuxtComponent({
                                         <div><strong><i class="fa fa-code" /> Code</strong> {{ per.protein.display || per.protein.code }}</div>
                                         <div><strong><i class="fa fa-code" /> Wert</strong> {{ per.value.display || per.value.code }}</div>
                                         <div><strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.tpsScore }}</div>
-                                        <div><strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.icScore.display || per.icScore.code }}</div>
-                                        <div><strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.tcScore.display || per.tcScore.code }}</div>
+                                        <div v-if="per.icScore">
+                                            <strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.icScore.display || per.icScore.code }}
+                                        </div>
+                                        <div v-if="per.tcScore">
+                                            <strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.tcScore.display || per.tcScore.code }}
+                                        </div>
                                     </div>
                                 </template>
                             </div>
@@ -178,7 +186,7 @@ export default defineNuxtComponent({
                         </div>
                         <div class="col">
                             <template v-if="item.results.tumorCellContent">
-                                <div><strong>Tumorzellinhalt</strong> {{ (item.results.tumorCellContent.value * 100).toFixed(2) }}%</div>
+                                <div><strong>Tumorzellgehalt</strong> {{ (item.results.tumorCellContent.value * 100).toFixed(2) }}%</div>
                             </template>
                             <template v-if="item.results.brcaness">
                                 <div><strong>Brcaness</strong> {{ (item.results.brcaness.value * 100).toFixed(2) }}%</div>
