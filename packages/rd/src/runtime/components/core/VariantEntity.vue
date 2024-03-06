@@ -18,7 +18,7 @@ export default defineComponent({
         },
     },
     setup() {
-        const extended = ref(false);
+        const extended = ref(true);
 
         const toggleExtended = () => {
             extended.value = !extended.value;
@@ -36,7 +36,12 @@ export default defineComponent({
         <div class="d-flex flex-row">
             <div>
                 <strong>Gene</strong>
-                {{ entity.gene.display }}
+                <template
+                    v-for="(item, idx) in entity.genes"
+                    :key="item.code"
+                >
+                    {{ idx > 0 ? ', ' : '' }} {{ item.display }}
+                </template>
             </div>
             <div class="ms-auto">
                 <button
@@ -124,12 +129,6 @@ export default defineComponent({
                 </div>
                 <div v-if="entity.significance">
                     <strong>Signifikanz</strong> {{ entity.significance.display }}
-                </div>
-                <div>
-                    <strong>Beweisniveau</strong> {{ entity.levelOfEvidence }}
-                </div>
-                <div>
-                    <strong>ISCN Beschreibung</strong> {{ entity.iscnDescription }}
                 </div>
                 <div v-if="entity.clinVarAccessionID">
                     <strong>ClinVar Zugangsnummer</strong>

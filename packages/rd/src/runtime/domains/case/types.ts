@@ -10,6 +10,8 @@ export type Case = {
         value: string,
         system?: string
     },
+    patient: Patient,
+    transferTan?: string,
     gestaltMatcherId?: {
         value: string,
         system?: string
@@ -18,10 +20,5 @@ export type Case = {
         value: string,
         system?: string
     },
-    patient: Patient,
-    recordedOn?: string,
-    referrer: {
-        name: string
-    },
-    reason: Diagnosis
+    diagnoses: Diagnosis[]
 };

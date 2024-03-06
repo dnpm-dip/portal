@@ -1,5 +1,11 @@
 import type { Coding, Patient } from '@dnpm-dip/core';
 
+type Reference = {
+    id: string,
+    type: string,
+    display?: string
+};
+
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-rd-model/blob/main/dto_model/src/main/scala/de/dnpm/dip/rd/model/Observations.scala
  */
@@ -15,23 +21,36 @@ export type Autozygosity = {
 export type Variant = {
     id: string,
     patient: Patient,
-    gene: Coding,
-    levelOfEvidence?: string,
-    iscnDescription?: string,
-    pubMedID?: {
-        value: string,
-        system?: string
-    },
+    genes: Coding[],
     cDNAChange?: Coding,
     gDNAChange?: Coding,
     proteinChange?: Coding,
     acmgClass: Coding,
-    acmgCriteria?: Coding[], // todo: is appropriate type for set
+    acmgCriteria?: Coding[],
     zygosity: Coding,
     segregationAnalysis?: Coding,
     modeOfInheritance?: Coding,
     significance?: Coding,
-    clinVarAccessionID?: string[]
+    clinVarID?: string[],
+    publications?: Reference[]
+};
+
+export type SmallVariant = Variant & {
+    chromosome: Coding,
+    position: number,
+    ref: string,
+    alt: string,
+};
+
+export type StructuralVariant = Variant & {
+    iscnDescription?: Coding,
+};
+
+export type CopyNumberVariant = Variant & {
+    chromosome: Coding,
+    startPosition: number,
+    endPosition: number,
+    type?: Coding,
 };
 
 /**
@@ -46,10 +65,13 @@ export type NGSReport = {
     recordedOn?: string,
     type: Coding<'panel' | 'exome' | 'genome' | 'array'>,
     familyControls: Coding,
-    metaInfo: {
-        sequencingType: string,
+    sequencingInfo: {
+        platform: Coding,
         kit: string
     },
     autozygosity?: Pick<Autozygosity, 'value'>,
-    variants?: Variant[]
+
+    smallVariants?: SmallVariant[],
+    copyNumberVariants?: CopyNumberVariant[],
+    structuralVariants?: StructuralVariant[],
 };

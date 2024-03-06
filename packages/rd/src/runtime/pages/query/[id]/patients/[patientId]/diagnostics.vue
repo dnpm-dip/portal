@@ -37,8 +37,11 @@ export default defineNuxtComponent({
                         </div>
                         <div class="col">
                             <div>
-                                <div><strong><i class="fa fa-dna" /> Sequenzierungs-Typ</strong> {{ item.metaInfo.sequencingType }}</div>
-                                <div><strong><i class="fas fa-toolbox" /> Kit</strong> {{ item.metaInfo.kit }}</div>
+                                <div>
+                                    <strong><i class="fa fa-dna" /> Sequenzierungs-Typ</strong>
+                                    {{ item.sequencingInfo.platform.display || item.sequencingInfo.platform.code }}
+                                </div>
+                                <div><strong><i class="fas fa-toolbox" /> Kit</strong> {{ item.sequencingInfo.kit }}</div>
                                 <template v-if="item.autozygosity">
                                     <div><strong><i class="fa fa-retweet" /> Autozygosity</strong> {{ item.autozygosity.value }}</div>
                                 </template>
@@ -47,22 +50,60 @@ export default defineNuxtComponent({
                     </div>
                 </div>
 
-                <div>
-                    <h6>Varianten</h6>
-                    <div class="list">
-                        <ul class="list-body list-unstyled">
-                            <template
-                                v-for="variant in item.variants"
-                                :key="variant.id"
-                            >
-                                <li class="list-item flex-row">
-                                    <VariantEntity
-                                        :query-id="entity.id"
-                                        :entity="variant"
-                                    />
-                                </li>
-                            </template>
-                        </ul>
+                <div class="row">
+                    <div class="col">
+                        <h6>Small Variants</h6>
+                        <div class="list">
+                            <ul class="list-body list-unstyled">
+                                <template
+                                    v-for="variant in item.smallVariants"
+                                    :key="variant.id"
+                                >
+                                    <li class="list-item flex-row">
+                                        <VariantEntity
+                                            :query-id="entity.id"
+                                            :entity="variant"
+                                        />
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h6>Copy Number Variants</h6>
+                        <div class="list">
+                            <ul class="list-body list-unstyled">
+                                <template
+                                    v-for="variant in item.copyNumberVariants"
+                                    :key="variant.id"
+                                >
+                                    <li class="list-item flex-row">
+                                        <VariantEntity
+                                            :query-id="entity.id"
+                                            :entity="variant"
+                                        />
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h6>Structural Variants</h6>
+                        <div class="list">
+                            <ul class="list-body list-unstyled">
+                                <template
+                                    v-for="variant in item.structuralVariants"
+                                    :key="variant.id"
+                                >
+                                    <li class="list-item flex-row">
+                                        <VariantEntity
+                                            :query-id="entity.id"
+                                            :entity="variant"
+                                        />
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -39,8 +39,6 @@ export default defineNuxtComponent({
                         :key="item.id"
                     >
                         <div class="entity-card">
-                            <div><strong><i class="fa fa-user" /> Arzt</strong> {{ item.referrer.name }}</div>
-                            <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.recordedOn }}</div>
                             <template v-if="item.gestaltMatcherId">
                                 <div>
                                     <strong><i class="fa fa-id-card" /> GestaltMatcherID</strong>
