@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.6.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.5.0...mtb-v1.6.0) (2024-03-07)
+
+
+### Features
+
+* minor adjustments to patient-record view ([91bde67](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/91bde67e52b6bf7984f74090b4d00bc41dcd0f3a))
+* set search form to full width ([1302025](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1302025255f466dad9a32ff4a9348e30a1ae9af6))
+
+
+### Bug Fixes
+
+* typo in follow-up tab view ([f135f8a](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f135f8abe425fb96b1531505cf510e10e567b984))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.5.0 to ^1.6.0
+    * @dnpm-dip/kit bumped from ^1.5.0 to ^1.6.0
+
 ## [1.5.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/mtb-v1.4.0...mtb-v1.5.0) (2024-02-29)
 
 

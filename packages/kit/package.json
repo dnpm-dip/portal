@@ -1,6 +1,6 @@
 {
     "name": "@dnpm-dip/kit",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "description": "Kit for DNPM:DIP apps and packages.",
     "exports": {
         "./package.json": "./package.json",
@@ -41,7 +41,7 @@
         "access": "public"
     },
     "dependencies": {
-        "@dnpm-dip/core": "^1.5.0",
+        "@dnpm-dip/core": "^1.6.0",
         "@nuxt/schema": "^3.10.0",
         "@nuxt/kit": "^3.10.0",
         "ufo": "^1.4.0"

@@ -1,5 +1,22 @@
 # @dnpm-dip/rare-diseases
 
+## [1.6.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.5.0...rd-v1.6.0) (2024-03-07)
+
+
+### Features
+
+* adjusted rd dtos and variant view ([d3b0c66](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d3b0c667a3c782c3818454f0582f45df1dd3687f))
+* create component for {small,structural,copyNumber}-variant ([d963f8c](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d963f8c6c2ce73e9721f843b45ba303c7d9153fc))
+* set search form to full width ([1302025](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1302025255f466dad9a32ff4a9348e30a1ae9af6))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.5.0 to ^1.6.0
+    * @dnpm-dip/kit bumped from ^1.5.0 to ^1.6.0
+
 ## [1.5.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.4.0...rd-v1.5.0) (2024-02-29)
 
 
