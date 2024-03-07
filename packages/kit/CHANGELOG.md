@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.6.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/kit-v1.5.0...kit-v1.6.0) (2024-03-07)
+
+
+### Miscellaneous Chores
+
+* **kit:** Synchronize main versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.5.0 to ^1.6.0
+
 ## [1.5.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/kit-v1.4.0...kit-v1.5.0) (2024-02-29)
 
 

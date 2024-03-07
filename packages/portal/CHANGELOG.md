@@ -1,5 +1,31 @@
 # @dnpm-dip/portal
 
+## [1.6.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/portal-v1.5.0...portal-v1.6.0) (2024-03-07)
+
+
+### Features
+
+* add admin area with user- & role-management ([49ba49c](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/49ba49c1e18c95121e49ee8ea68dd099a6fe13be))
+* implemented identity-provider management ([a7dcfdd](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a7dcfddf7fbc705cc72e4803004f4de261ebf6f4))
+* integrated authup in portal (store,components,pages,...) ([42937a8](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/42937a8a41685f0e83b88d578db013fc5ed527e0))
+* minor adjustments to patient-record view ([91bde67](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/91bde67e52b6bf7984f74090b4d00bc41dcd0f3a))
+* set search form to full width ([1302025](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1302025255f466dad9a32ff4a9348e30a1ae9af6))
+
+
+### Bug Fixes
+
+* set default authup locale to to de ([fc5f604](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/fc5f604ef2d6b78ab5aa615980bec51637bdb56d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.5.0 to ^1.6.0
+    * @dnpm-dip/kit bumped from ^1.5.0 to ^1.6.0
+    * @dnpm-dip/mtb bumped from ^1.5.0 to ^1.6.0
+    * @dnpm-dip/rd bumped from ^1.5.0 to ^1.6.0
+
 ## [1.5.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/portal-v1.4.0...portal-v1.5.0) (2024-02-29)
 
 

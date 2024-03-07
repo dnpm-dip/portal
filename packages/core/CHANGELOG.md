@@ -1,5 +1,14 @@
 # @dnpm-dip/core
 
+## [1.6.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/core-v1.5.0...core-v1.6.0) (2024-03-07)
+
+
+### Features
+
+* add admin area with user- & role-management ([49ba49c](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/49ba49c1e18c95121e49ee8ea68dd099a6fe13be))
+* integrated authup in portal (store,components,pages,...) ([42937a8](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/42937a8a41685f0e83b88d578db013fc5ed527e0))
+* minor adjustments to patient-record view ([91bde67](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/91bde67e52b6bf7984f74090b4d00bc41dcd0f3a))
+
 ## [1.5.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/core-v1.4.0...core-v1.5.0) (2024-02-29)
 
 
