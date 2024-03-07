@@ -1,11 +1,16 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
-import VariantEntity from '../../../../../components/core/VariantEntity.vue';
+import RCopyNumberVariant from '../../../../../components/core/RCopyNumberVariant.vue';
+import RSmallVariant from '../../../../../components/core/RSmallVariant.vue';
+import RStructuralVariant from '../../../../../components/core/RStructuralVariant.vue';
+import VariantEntity from '../../../../../components/core/RVariant.vue';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
-    components: { VariantEntity },
+    components: {
+        RStructuralVariant, RCopyNumberVariant, RSmallVariant, VariantEntity,
+    },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -31,21 +36,21 @@ export default defineNuxtComponent({
                         <div class="col">
                             <div>
                                 <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.recordedOn }}</div>
-                                <div><strong><i class="fa fa-microscope" /> Labor</strong> {{ item.performingLab.name }}</div>
-                                <div><strong><i class="fa fa-keyboard" /> Type</strong> {{ item.type.display }}</div>
+                                <div><strong><i class="fa fa-microscope" /> Labor</strong> {{ item.performingLab.display }}</div>
                             </div>
                         </div>
                         <div class="col">
+                            <div><strong><i class="fa fa-keyboard" /> Type</strong> {{ item.type.display }}</div>
                             <div>
-                                <div>
-                                    <strong><i class="fa fa-dna" /> Sequenzierungs-Typ</strong>
-                                    {{ item.sequencingInfo.platform.display || item.sequencingInfo.platform.code }}
-                                </div>
-                                <div><strong><i class="fas fa-toolbox" /> Kit</strong> {{ item.sequencingInfo.kit }}</div>
-                                <template v-if="item.autozygosity">
-                                    <div><strong><i class="fa fa-retweet" /> Autozygosity</strong> {{ item.autozygosity.value }}</div>
-                                </template>
+                                <strong><i class="fa fa-dna" /> Sequenzierungs-Typ</strong>
+                                {{ item.sequencingInfo.platform.display || item.sequencingInfo.platform.code }}
                             </div>
+                        </div>
+                        <div class="col">
+                            <div><strong><i class="fas fa-toolbox" /> Kit</strong> {{ item.sequencingInfo.kit }}</div>
+                            <template v-if="item.autozygosity">
+                                <div><strong><i class="fa fa-retweet" /> Autozygosity</strong> {{ item.autozygosity.value }}</div>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -60,7 +65,7 @@ export default defineNuxtComponent({
                                     :key="variant.id"
                                 >
                                     <li class="list-item flex-row">
-                                        <VariantEntity
+                                        <RSmallVariant
                                             :query-id="entity.id"
                                             :entity="variant"
                                         />
@@ -78,7 +83,7 @@ export default defineNuxtComponent({
                                     :key="variant.id"
                                 >
                                     <li class="list-item flex-row">
-                                        <VariantEntity
+                                        <RCopyNumberVariant
                                             :query-id="entity.id"
                                             :entity="variant"
                                         />
@@ -96,7 +101,7 @@ export default defineNuxtComponent({
                                     :key="variant.id"
                                 >
                                     <li class="list-item flex-row">
-                                        <VariantEntity
+                                        <RStructuralVariant
                                             :query-id="entity.id"
                                             :entity="variant"
                                         />

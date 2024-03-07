@@ -3,6 +3,7 @@ import type { Coding, Patient } from '@dnpm-dip/core';
 type Reference = {
     id: string,
     type: string,
+    extId?: { value: string, system: string },
     display?: string
 };
 
@@ -60,7 +61,7 @@ export type NGSReport = {
     id: string,
     patient: Patient,
     performingLab: {
-        name: string
+        display: string
     },
     recordedOn?: string,
     type: Coding<'panel' | 'exome' | 'genome' | 'array'>,
