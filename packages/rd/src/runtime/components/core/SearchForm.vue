@@ -1,8 +1,9 @@
 <script lang="ts">
 import type { CodeRecord, CodeSystemConcept, ValueSetCoding } from '@dnpm-dip/core';
 import {
-    DCollectionTransform, DFormSelectSearch, DFormTabGroups, DTags, DValueSet, QueryRequestMode,
+    DCollectionTransform, DFormTabGroups, DTags, DValueSet, QueryRequestMode,
 } from '@dnpm-dip/core';
+import { VCFormSelectSearch } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
 import {
@@ -23,7 +24,7 @@ export default defineComponent({
         VariantFormTabGroup,
         DFormTabGroups,
         DCollectionTransform,
-        DFormSelectSearch,
+        VCFormSelectSearch,
         DValueSet,
     },
     props: {
@@ -358,7 +359,7 @@ export default defineComponent({
                                     :transform="transformCodings"
                                 >
                                     <template #default="options">
-                                        <DFormSelectSearch
+                                        <VCFormSelectSearch
                                             v-model="categories"
                                             :multiple="true"
                                             :options="options"
@@ -371,12 +372,12 @@ export default defineComponent({
                                                     @deleted="toggle"
                                                 />
                                             </template>
-                                        </DFormSelectSearch>
+                                        </VCFormSelectSearch>
                                     </template>
                                 </DCollectionTransform>
                             </template>
                             <template #loading>
-                                <DFormSelectSearch
+                                <VCFormSelectSearch
                                     :options="[]"
                                     :disabled="true"
                                     placeholder="Orphanet Ontology"
@@ -400,7 +401,7 @@ export default defineComponent({
                                     :transform="transformCodings"
                                 >
                                     <template #default="options">
-                                        <DFormSelectSearch
+                                        <VCFormSelectSearch
                                             v-model="hpoTerms"
                                             :multiple="true"
                                             :options="options"
@@ -413,12 +414,12 @@ export default defineComponent({
                                                     @deleted="toggle"
                                                 />
                                             </template>
-                                        </DFormSelectSearch>
+                                        </VCFormSelectSearch>
                                     </template>
                                 </DCollectionTransform>
                             </template>
                             <template #loading>
-                                <DFormSelectSearch
+                                <VCFormSelectSearch
                                     :disabled="true"
                                     :options="[]"
                                     placeholder="Human Phenotype Ontology"

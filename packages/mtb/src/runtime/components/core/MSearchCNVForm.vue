@@ -3,12 +3,12 @@ import {
     type CodeSystemConcept,
     DCodeSystem,
     DCollectionTransform,
-    DFormSelectSearch,
     DTags,
     DValueSet,
     type ValueSetCoding,
     transformConceptToFormSelectOption,
 } from '@dnpm-dip/core';
+import { VCFormSelectSearch } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import {
     type PropType, computed, defineComponent, reactive, toRef, watch,
@@ -17,7 +17,7 @@ import type { QueryCNVCriteria } from '../../domains';
 
 export default defineComponent({
     components: {
-        DTags, DCodeSystem, DValueSet, DCollectionTransform, DFormSelectSearch,
+        DTags, DCodeSystem, DValueSet, DCollectionTransform, VCFormSelectSearch,
     },
     props: {
         entity: Object as PropType<QueryCNVCriteria<FormSelectOption, string>>,
@@ -86,7 +86,7 @@ export default defineComponent({
                         :transform="transformCodings"
                     >
                         <template #default="options">
-                            <DFormSelectSearch
+                            <VCFormSelectSearch
                                 v-model="form.type"
                                 :options="options"
                                 placeholder="CNV Type"
@@ -98,12 +98,12 @@ export default defineComponent({
                                         @deleted="toggle"
                                     />
                                 </template>
-                            </DFormSelectSearch>
+                            </VCFormSelectSearch>
                         </template>
                     </DCollectionTransform>
                 </template>
                 <template #loading>
-                    <DFormSelectSearch
+                    <VCFormSelectSearch
                         :options="[]"
                         :disabled="true"
                         placeholder="CNV Type"
@@ -127,7 +127,7 @@ export default defineComponent({
                         :transform="transformConcepts"
                     >
                         <template #default="options">
-                            <DFormSelectSearch
+                            <VCFormSelectSearch
                                 v-model="form.affectedGenes"
                                 :multiple="true"
                                 :options="options"
@@ -140,12 +140,12 @@ export default defineComponent({
                                         @deleted="toggle"
                                     />
                                 </template>
-                            </DFormSelectSearch>
+                            </VCFormSelectSearch>
                         </template>
                     </DCollectionTransform>
                 </template>
                 <template #loading>
-                    <DFormSelectSearch
+                    <VCFormSelectSearch
                         :options="[]"
                         :disabled="true"
                         placeholder="HGNC"

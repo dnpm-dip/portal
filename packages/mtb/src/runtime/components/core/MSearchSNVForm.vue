@@ -1,16 +1,17 @@
 <script lang="ts">
 import {
     type CodeSystemConcept,
-    DCodeSystem, DCollectionTransform, DFormSelectSearch, DTags, type ValueSetCoding, transformConceptToFormSelectOption,
+    DCodeSystem, DCollectionTransform, DTags, transformConceptToFormSelectOption,
 } from '@dnpm-dip/core';
 import {
     type PropType, computed, defineComponent, reactive, toRef, watch,
 } from 'vue';
+import { VCFormSelectSearch } from '@vuecs/form-controls';
 import type { QuerySNVCriteria } from '../../domains';
 
 export default defineComponent({
     components: {
-        DTags, DCodeSystem, DCollectionTransform, DFormSelectSearch,
+        DTags, DCodeSystem, DCollectionTransform, VCFormSelectSearch,
     },
     props: {
         entity: Object as PropType<QuerySNVCriteria<string>>,
@@ -72,7 +73,7 @@ export default defineComponent({
                     :transform="transformConcepts"
                 >
                     <template #default="options">
-                        <DFormSelectSearch
+                        <VCFormSelectSearch
                             v-model="form.gene"
                             :options="options"
                             placeholder="HGNC"
@@ -84,12 +85,12 @@ export default defineComponent({
                                     @deleted="toggle"
                                 />
                             </template>
-                        </DFormSelectSearch>
+                        </VCFormSelectSearch>
                     </template>
                 </DCollectionTransform>
             </template>
             <template #loading>
-                <DFormSelectSearch
+                <VCFormSelectSearch
                     :options="[]"
                     :disabled="true"
                     placeholder="HGNC"

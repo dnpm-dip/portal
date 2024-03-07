@@ -4,9 +4,9 @@ import {
     computed,
     defineComponent, ref, watch,
 } from 'vue';
+import { VCFormRangeMultiSlider } from '@vuecs/form-controls';
 import type { PatientFilter } from '../../../domains';
 import { clone } from '../../../utils';
-import { DFormRangeSlider } from '../../utility';
 
 type QueryRecord = {
     age?: {
@@ -20,7 +20,7 @@ type QueryRecord = {
 
 export default defineComponent({
     components: {
-        DFormRangeSlider,
+        VCFormRangeMultiSlider,
     },
     props: {
         availableFilters: {
@@ -311,7 +311,7 @@ export default defineComponent({
             <h6><i class="fas fa-users" /> Alter <small class="text-muted">({{ age.min }} - {{ age.max }})</small></h6>
 
             <div class="mt-3">
-                <DFormRangeSlider
+                <VCFormRangeMultiSlider
                     :min="age.min"
                     :max="age.max"
                     @change="handleAgeRangeChanged"

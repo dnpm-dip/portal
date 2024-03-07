@@ -3,11 +3,12 @@ import { type CodeSystemConcept, transformConceptToFormSelectOption } from '@dnp
 import {
     type PropType, defineComponent, reactive, toRef, watch,
 } from 'vue';
-import { DCodeSystem, DCollectionTransform, DFormSelectSearch } from '@dnpm-dip/core';
+import { VCFormSelectSearch } from '@vuecs/form-controls';
+import { DCodeSystem, DCollectionTransform } from '@dnpm-dip/core';
 import type { QueryCriteriaVariant } from '../../domains';
 
 export default defineComponent({
-    components: { DCollectionTransform, DCodeSystem, DFormSelectSearch },
+    components: { DCollectionTransform, DCodeSystem, VCFormSelectSearch },
     emit: ['updated'],
     props: {
         entity: {
@@ -65,7 +66,7 @@ export default defineComponent({
                     :transform="transformConcepts"
                 >
                     <template #default="options">
-                        <DFormSelectSearch
+                        <VCFormSelectSearch
                             v-model="form.gene"
                             :options="options"
                             placeholder="HGNC"
@@ -75,7 +76,7 @@ export default defineComponent({
                 </DCollectionTransform>
             </template>
             <template #loading>
-                <DFormSelectSearch
+                <VCFormSelectSearch
                     :disabled="true"
                     :options="[]"
                     placeholder="HGNC"

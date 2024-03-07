@@ -1,5 +1,5 @@
 <script lang="ts">
-import { DFormSelectSearch } from '@dnpm-dip/core';
+import { VCFormSelect } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import {
     type PropType, type Ref, computed, watch,
@@ -13,7 +13,7 @@ import MSearchFusionForm from './MSearchFusionForm.vue';
 import MSearchSNVForm from './MSearchSNVForm.vue';
 
 export default defineComponent({
-    components: { DFormSelectSearch },
+    components: { VCFormSelect },
     emit: ['updated'],
     props: {
         entity: {

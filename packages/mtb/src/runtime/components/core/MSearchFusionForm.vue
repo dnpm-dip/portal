@@ -3,10 +3,10 @@ import {
     type CodeSystemConcept,
     DCodeSystem,
     DCollectionTransform,
-    DFormSelectSearch,
     DTags,
     transformConceptToFormSelectOption,
 } from '@dnpm-dip/core';
+import { VCFormSelectSearch } from '@vuecs/form-controls';
 import {
     type PropType, computed, defineComponent, reactive, toRef, watch,
 } from 'vue';
@@ -14,7 +14,7 @@ import type { QueryFusionCriteria } from '../../domains';
 
 export default defineComponent({
     components: {
-        DTags, DCodeSystem, DCollectionTransform, DFormSelectSearch,
+        DTags, DCodeSystem, DCollectionTransform, VCFormSelectSearch,
     },
     props: {
         entity: Object as PropType<QueryFusionCriteria<string>>,
@@ -76,7 +76,7 @@ export default defineComponent({
                         :transform="transformConcepts"
                     >
                         <template #default="options">
-                            <DFormSelectSearch
+                            <VCFormSelectSearch
                                 v-model="form.fusionPartner3pr"
                                 :options="options"
                                 placeholder="HGNC"
@@ -88,12 +88,12 @@ export default defineComponent({
                                         @deleted="toggle"
                                     />
                                 </template>
-                            </DFormSelectSearch>
+                            </VCFormSelectSearch>
                         </template>
                     </DCollectionTransform>
                 </template>
                 <template #loading>
-                    <DFormSelectSearch
+                    <VCFormSelectSearch
                         :options="[]"
                         :disabled="true"
                         placeholder="HGNC"
@@ -117,7 +117,7 @@ export default defineComponent({
                         :transform="transformConcepts"
                     >
                         <template #default="options">
-                            <DFormSelectSearch
+                            <VCFormSelectSearch
                                 v-model="form.fusionPartner5pr"
                                 :options="options"
                                 placeholder="HGNC"
@@ -129,12 +129,12 @@ export default defineComponent({
                                         @deleted="toggle"
                                     />
                                 </template>
-                            </DFormSelectSearch>
+                            </VCFormSelectSearch>
                         </template>
                     </DCollectionTransform>
                 </template>
                 <template #loading>
-                    <DFormSelectSearch
+                    <VCFormSelectSearch
                         :options="[]"
                         :disabled="true"
                         placeholder="HGNC"

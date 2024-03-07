@@ -22,7 +22,7 @@ export default defineNuxtConfig({
         '@/assets/css/form.css',
         '@/assets/css/list.css',
         '@/assets/css/pagination.css',
-        '@dnpm-dip/core/../dist/index.css',
+        '@vuecs/form-controls/dist/index.css',
     ],
     alias: {
         '@dnpm-dip/core': path.join(__dirname, '..', 'core', 'src'),

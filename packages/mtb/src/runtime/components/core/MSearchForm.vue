@@ -1,7 +1,6 @@
 <script lang="ts">
 import {
     DCollectionTransform,
-    DFormSelectSearch,
     DFormTabGroups,
     DTags,
     DValueSet,
@@ -10,8 +9,12 @@ import {
     type ValueSetCoding,
     buildCodingsRecord,
     extractCodeFromCodingsRecord,
-    transformCodingsToFormSelectOptions, transformFormSelectOptionsToCodings,
+    transformCodingsToFormSelectOptions,
+    transformFormSelectOptionsToCodings,
 } from '@dnpm-dip/core';
+import {
+    VCFormSelectSearch,
+} from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
 import { defineComponent, ref } from 'vue';
@@ -32,7 +35,7 @@ export default defineComponent({
         DFormTabGroups,
         DTags,
         DValueSet,
-        DFormSelectSearch,
+        VCFormSelectSearch,
         DCollectionTransform,
     },
     props: {
@@ -364,7 +367,7 @@ export default defineComponent({
                                         :transform="transformCodings"
                                     >
                                         <template #default="options">
-                                            <DFormSelectSearch
+                                            <VCFormSelectSearch
                                                 v-model="diagnoses"
                                                 :multiple="true"
                                                 :options="options"
@@ -377,12 +380,12 @@ export default defineComponent({
                                                         @deleted="toggle"
                                                     />
                                                 </template>
-                                            </DFormSelectSearch>
+                                            </VCFormSelectSearch>
                                         </template>
                                     </DCollectionTransform>
                                 </template>
                                 <template #loading>
-                                    <DFormSelectSearch
+                                    <VCFormSelectSearch
                                         :options="[]"
                                         :disabled="true"
                                         placeholder="Orphanet Ontology"
@@ -405,7 +408,7 @@ export default defineComponent({
                                         :transform="transformCodings"
                                     >
                                         <template #default="options">
-                                            <DFormSelectSearch
+                                            <VCFormSelectSearch
                                                 v-model="tumorMorphologies"
                                                 :multiple="true"
                                                 :options="options"
@@ -418,12 +421,12 @@ export default defineComponent({
                                                         @deleted="toggle"
                                                     />
                                                 </template>
-                                            </DFormSelectSearch>
+                                            </VCFormSelectSearch>
                                         </template>
                                     </DCollectionTransform>
                                 </template>
                                 <template #loading>
-                                    <DFormSelectSearch
+                                    <VCFormSelectSearch
                                         :options="[]"
                                         :disabled="true"
                                         placeholder="Tumormorphologie oder ICD-0-3-M"
@@ -452,7 +455,7 @@ export default defineComponent({
                                         :transform="transformCodings"
                                     >
                                         <template #default="options">
-                                            <DFormSelectSearch
+                                            <VCFormSelectSearch
                                                 v-model="responses"
                                                 :multiple="true"
                                                 :options="options"
@@ -465,12 +468,12 @@ export default defineComponent({
                                                         @deleted="toggle"
                                                     />
                                                 </template>
-                                            </DFormSelectSearch>
+                                            </VCFormSelectSearch>
                                         </template>
                                     </DCollectionTransform>
                                 </template>
                                 <template #loading>
-                                    <DFormSelectSearch
+                                    <VCFormSelectSearch
                                         :options="[]"
                                         :disabled="true"
                                         placeholder="RECIST"
@@ -528,7 +531,7 @@ export default defineComponent({
                                         :transform="transformCodings"
                                     >
                                         <template #default="options">
-                                            <DFormSelectSearch
+                                            <VCFormSelectSearch
                                                 v-model="medicationDrugs"
                                                 :multiple="true"
                                                 :options="options"
@@ -551,12 +554,12 @@ export default defineComponent({
                                                         </template>
                                                     </DCollectionTransform>
                                                 </template>
-                                            </DFormSelectSearch>
+                                            </VCFormSelectSearch>
                                         </template>
                                     </DCollectionTransform>
                                 </template>
                                 <template #loading>
-                                    <DFormSelectSearch
+                                    <VCFormSelectSearch
                                         :options="[]"
                                         :disabled="true"
                                         placeholder="Orphanet Ontology"
