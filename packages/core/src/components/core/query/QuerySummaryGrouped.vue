@@ -1,4 +1,5 @@
 <script lang="ts">
+import { VCFormSelectSearch } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import type {
     PropType,
@@ -11,6 +12,9 @@ import type { KeyValueRecord, KeyValueRecords } from '../../../domains';
 import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils';
 
 export default defineComponent({
+    components: {
+        VCFormSelectSearch,
+    },
     props: {
         label: {
             type: String,
@@ -56,7 +60,7 @@ export default defineComponent({
             {{ label }}
         </template>
 
-        <VCFormSelect
+        <VCFormSelectSearch
             v-model="id"
             :options="options"
         />

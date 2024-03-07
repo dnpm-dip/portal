@@ -155,3 +155,7 @@ a:focus{
 .b-form-tag {
     margin-bottom: 0.25rem;
 }
+
+.form-select-search .form-select-search-content {
+    text-align: left !important;
+}
