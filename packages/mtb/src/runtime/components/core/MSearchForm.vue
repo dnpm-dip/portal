@@ -359,6 +359,7 @@ export default defineComponent({
                         <template #default>
                             <DValueSet
                                 :code="'http://fhir.de/CodeSystem/bfarm/icd-10-gm'"
+                                :filter="['is-a-category']"
                                 :lazy-load="true"
                             >
                                 <template #default="{ data }">

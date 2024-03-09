@@ -1,9 +1,9 @@
+import type { PropType } from 'vue';
 import { defineComponent, toRef } from 'vue';
 import type { APIClient } from '../../../core';
 import { createResourceRecordManager, injectAPIClient } from '../../../core';
 
 export default defineComponent({
-    name: 'CodeSystemEntity',
     props: {
         code: {
             type: String,
@@ -12,13 +12,17 @@ export default defineComponent({
         lazyLoad: {
             type: Boolean,
         },
+        filter: {
+            type: Array as PropType<string[]>,
+            default: undefined,
+        },
     },
     async setup(props, setup) {
         const apiClient : APIClient = injectAPIClient();
         const id = toRef(props, 'code');
 
         const manager = createResourceRecordManager({
-            load: (id) => apiClient.codeSystem.getOne(id),
+            load: (id) => apiClient.codeSystem.getOne(id, props.filter),
             slots: setup.slots,
             id,
         });

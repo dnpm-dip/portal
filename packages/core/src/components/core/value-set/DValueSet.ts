@@ -1,4 +1,4 @@
-import type { SlotsType } from 'vue';
+import type { PropType, SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
 import type { APIClient, ResourceRecordSlots } from '../../../core';
 import {
@@ -16,6 +16,13 @@ export default defineComponent({
         lazyLoad: {
             type: Boolean,
         },
+        version: {
+            type: String,
+        },
+        filter: {
+            type: Array as PropType<string[]>,
+            default: undefined,
+        },
     },
     slots: Object as SlotsType<ResourceRecordSlots<ValueSet>>,
     async setup(props, setup) {
@@ -23,7 +30,7 @@ export default defineComponent({
         const id = toRef(props, 'code');
 
         const manager = createResourceRecordManager({
-            load: (id) => apiClient.valueSet.getOne(id),
+            load: (id) => apiClient.valueSet.getOne(id, props.version, props.filter),
             slots: setup.slots,
             id,
         });
