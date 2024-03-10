@@ -95,6 +95,10 @@ export default defineNuxtComponent({
                                 <strong><i class="fas fa-info-circle" /> Status Grund</strong>
                                 {{ item.statusReason.display || item.statusReason.code }}
                             </div>
+                            <div v-if="item.therapyLine">
+                                <strong><i class="fas fa-stethoscope" /> Therapie Linie</strong>
+                                {{ item.therapyLine }}
+                            </div>
                             <div>
                                 <strong><i class="far fa-sticky-note" /> Notiz</strong>
                                 {{ item.note }}
@@ -139,6 +143,10 @@ export default defineNuxtComponent({
                     <div v-if="item.statusReason">
                         <strong><i class="fas fa-info-circle" /> Status Grund</strong>
                         {{ item.statusReason.display || item.statusReason.code }}
+                    </div>
+                    <div v-if="item.therapyLine">
+                        <strong><i class="fas fa-stethoscope" /> Therapie Linie</strong>
+                        {{ item.therapyLine }}
                     </div>
                     <div>
                         <strong><i class="far fa-sticky-note" /> Notiz</strong>
