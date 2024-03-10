@@ -1,5 +1,5 @@
 import type {
-    CollectionResponse, ResourceCollectionLoadMeta,
+    ResourceCollectionLoadMeta, ResourceCollectionResponse,
     URLQueryRecord,
 } from '@dnpm-dip/core';
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
@@ -66,7 +66,7 @@ export class QueryAPI extends BaseAPI {
      * @param meta
      * @throws ClientError
      */
-    async getPatients(id: string, meta?: ResourceCollectionLoadMeta) : Promise<CollectionResponse<PatientMatch>> {
+    async getPatients(id: string, meta?: ResourceCollectionLoadMeta) : Promise<ResourceCollectionResponse<PatientMatch>> {
         let qs : string = '';
         if (typeof meta !== 'undefined') {
             const { filters, limit, offset } = meta;

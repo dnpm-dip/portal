@@ -1,14 +1,14 @@
 import { BaseAPI } from '../api';
-import type { CollectionResponse } from '../types';
+import type { ResourceCollectionResponse, ResourceRecordResponse } from '../types';
 import type { CodeSystem } from './types';
 
 export class CodeSystemAPI extends BaseAPI {
-    async getMany() : Promise<CollectionResponse<CodeSystem>> {
+    async getMany() : Promise<ResourceCollectionResponse<CodeSystem>> {
         const response = await this.client.get('coding/codesystems');
         return response.data;
     }
 
-    async getOne(id: string, filter?: string[]) : Promise<CodeSystem> {
+    async getOne(id: string, filter?: string[]) : Promise<ResourceRecordResponse<CodeSystem>> {
         let queryString : string = '';
         if (filter && filter.length > 0) {
             const searchParams = new URLSearchParams();

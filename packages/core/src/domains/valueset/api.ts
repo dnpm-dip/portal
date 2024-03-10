@@ -1,14 +1,18 @@
 import { BaseAPI } from '../api';
-import type { CollectionResponse } from '../types';
+import type { ResourceCollectionResponse } from '../types';
 import type { ValueSet } from './types';
 
 export class ValueSetAPI extends BaseAPI {
-    async getMany() : Promise<CollectionResponse<ValueSet>> {
+    async getMany() : Promise<ResourceCollectionResponse<ValueSet>> {
         const response = await this.client.get('coding/valuesets');
         return response.data;
     }
 
-    async getOne(id: string, version?: string, filter?: string[]) : Promise<ValueSet> {
+    async getOne(
+        id: string,
+        version?: string,
+        filter?: string[],
+    ) : Promise<ValueSet> {
         const query : string[] = [
             `uri=${id}`,
         ];

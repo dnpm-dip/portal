@@ -4,12 +4,14 @@ export type BaseAPIContext = {
     client?: Client | RequestBaseOptions
 };
 
-export type CollectionResponse<T> = {
+export type ResourceCollectionResponse<T> = {
     entries: T[],
     size?: number,
     limit?: number,
     offset?: number,
 };
+
+export type ResourceRecordResponse<T> = T;
 
 export type CodeRecord<V extends string = string> = {
     code: V,
