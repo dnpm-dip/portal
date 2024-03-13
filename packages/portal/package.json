@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/portal",
     "type": "module",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "private": true,
     "description": "Portal of DNPM DIP.",
     "repository": {
@@ -19,10 +19,10 @@
     "devDependencies": {
         "@authup/client-vue": "^1.0.0-beta.7",
         "@authup/core": "^1.0.0-beta.7",
-        "@dnpm-dip/core": "^1.6.0",
-        "@dnpm-dip/kit": "^1.6.0",
-        "@dnpm-dip/mtb": "^1.6.0",
-        "@dnpm-dip/rd": "^1.6.0",
+        "@dnpm-dip/core": "^1.7.0",
+        "@dnpm-dip/kit": "^1.7.0",
+        "@dnpm-dip/mtb": "^1.7.0",
+        "@dnpm-dip/rd": "^1.7.0",
         "@fortawesome/fontawesome-free": "^6.4.2",
         "@nuxt/devtools": "latest",
         "@vuecs/countdown": "^1.0.0",

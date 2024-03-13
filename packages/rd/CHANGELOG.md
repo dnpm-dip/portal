@@ -1,5 +1,21 @@
 # @dnpm-dip/rare-diseases
 
+## [1.7.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.6.0...rd-v1.7.0) (2024-03-13)
+
+
+### Features
+
+* consistent component naming + minor style and component issues ([#323](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/323)) ([2ed563e](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2ed563ed71ce36551852bcd57b7909fb9dd2690e))
+* remove components & upgraded vuecs/form-controls ([ff634f2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ff634f20283f743c79a3938e4878210e64b56b20))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.6.0 to ^1.7.0
+    * @dnpm-dip/kit bumped from ^1.6.0 to ^1.7.0
+
 ## [1.6.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/rd-v1.5.0...rd-v1.6.0) (2024-03-07)
 
 

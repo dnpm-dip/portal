@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.7.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/kit-v1.6.0...kit-v1.7.0) (2024-03-13)
+
+
+### Features
+
+* consistent component naming + minor style and component issues ([#323](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/323)) ([2ed563e](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2ed563ed71ce36551852bcd57b7909fb9dd2690e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.6.0 to ^1.7.0
+
 ## [1.6.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/kit-v1.5.0...kit-v1.6.0) (2024-03-07)
 
 
