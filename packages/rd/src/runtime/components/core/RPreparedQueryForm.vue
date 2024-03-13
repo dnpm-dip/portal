@@ -4,18 +4,18 @@ import {
     computed, defineComponent, nextTick, ref,
 } from 'vue';
 import SearchForm from './SearchForm.vue';
-import PreparedQueryList from './PreparedQueryList';
-import PreparedQueryEntity from './PreparedQueryEntity';
+import RPreparedQueries from './RPreparedQueries';
+import RPreparedQuery from './RPreparedQuery';
 import type { PreparedQuery, QueryCriteria, QuerySession } from '../../domains';
 
 export default defineComponent({
-    components: { PreparedQueryEntity, PreparedQueryList, SearchForm },
+    components: { RPreparedQuery, RPreparedQueries, SearchForm },
     emits: ['submitted'],
     setup(props, setup) {
         const searchEl = ref(null) as Ref<null | typeof SearchForm>;
         const criteria = ref<QueryCriteria | undefined>(undefined);
 
-        const preparedQueryNode = ref(null) as Ref<null | typeof PreparedQueryList>;
+        const preparedQueryNode = ref(null) as Ref<null | typeof RPreparedQueries>;
         const preparedQuery = ref<PreparedQuery | undefined>(undefined);
         const preparedQueryId = computed(() => {
             if (preparedQuery.value) {
@@ -123,7 +123,7 @@ export default defineComponent({
         </div>
         <div class="col-4">
             <h6><i class="fa fa-history" /> Vordefinierte Anfragen</h6>
-            <PreparedQueryList
+            <RPreparedQueries
                 ref="preparedQueryNode"
                 @deleted="handlePreparedQueryDeleted"
             >
@@ -143,12 +143,12 @@ export default defineComponent({
                                     :key="item.id"
                                 >
                                     <li class="list-item flex-row">
-                                        <PreparedQueryEntity
+                                        <RPreparedQuery
                                             :entity="item"
                                             @deleted="props.deleted"
                                         >
                                             <template #default="entityProps">
-                                                <div class="entity-card d-flex flex-row">
+                                                <div class="entity-card d-flex flex-row w-100">
                                                     <div>
                                                         {{ entityProps.data.name || entityProps.data.id }}
                                                     </div>
@@ -180,14 +180,14 @@ export default defineComponent({
                                                     </div>
                                                 </div>
                                             </template>
-                                        </PreparedQueryEntity>
+                                        </RPreparedQuery>
                                     </li>
                                 </template>
                             </ul>
                         </div>
                     </template>
                 </template>
-            </PreparedQueryList>
+            </RPreparedQueries>
         </div>
     </div>
 </template>

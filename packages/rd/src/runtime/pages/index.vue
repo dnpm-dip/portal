@@ -5,7 +5,7 @@ import { ref } from 'vue';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/SearchForm.vue';
 import type { QueryCriteria } from '../domains';
-import PreparedQueryForm from '../components/core/PreparedQueryForm.vue';
+import PreparedQueryForm from '../components/core/RPreparedQueryForm.vue';
 
 export default defineNuxtComponent({
     components: {

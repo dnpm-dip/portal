@@ -1,4 +1,4 @@
-import type { CollectionResponse, ResourceCollectionLoadResponse } from '@dnpm-dip/core';
+import type { ResourceCollectionLoadResponse, ResourceCollectionResponse } from '@dnpm-dip/core';
 import { BaseAPI } from '@dnpm-dip/core';
 import type {
     PreparedQuery,
@@ -17,7 +17,7 @@ export class PreparedQueryAPI extends BaseAPI {
         return response.data;
     }
 
-    async getMany() : Promise<CollectionResponse<PreparedQuery>> {
+    async getMany() : Promise<ResourceCollectionResponse<PreparedQuery>> {
         const response = await this.client.get('rd/prepared-queries');
         return response.data;
     }
