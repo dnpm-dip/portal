@@ -6,7 +6,7 @@ import {
 import { inject, ref } from 'vue';
 import CollectionTransform from '@dnpm-dip/core/components/utility/DCollectionTransform.vue';
 import { defineNuxtComponent } from '#imports';
-import QuerySummaryEntity from '../../../../components/core/QuerySummaryEntity';
+import QuerySummaryEntity from '../../../../components/core/RQuerySummary';
 import RQuerySummaryDiagnostics from '../../../../components/core/RQuerySummaryDiagnostics.vue';
 import type { QuerySession } from '../../../../domains';
 

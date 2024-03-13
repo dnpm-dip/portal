@@ -4,8 +4,8 @@ import { DNav, DQueryPatientFilters } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { provide, ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
-import QueryDiagnosisFilter from '../../../components/core/QueryDiagnosisFilter.vue';
-import QueryHPOFilter from '../../../components/core/QueryHPOFilter.vue';
+import QueryDiagnosisFilter from '../../../components/core/RQueryDiagnosisFilter.vue';
+import QueryHPOFilter from '../../../components/core/RQueryHPOFilter.vue';
 import SearchForm from '../../../components/core/SearchForm.vue';
 import type { QuerySession } from '../../../domains';
 

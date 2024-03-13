@@ -1,6 +1,6 @@
 <script lang="ts">
 
-import { AIdentityProviderLdapForm } from '@authup/client-vue';
+import { AIdentityProviderLdapForm, AIdentityProviderOAuth2Form } from '@authup/client-vue';
 import type { IdentityProvider } from '@authup/core';
 import { PermissionName } from '@authup/core';
 import { PageMetaKey } from '@dnpm-dip/core';
@@ -11,6 +11,7 @@ import { defineNuxtComponent, definePageMeta } from '#imports';
 export default defineNuxtComponent({
     components: {
         AIdentityProviderLdapForm,
+        AIdentityProviderOAuth2Form,
     },
     props: {
         entity: {
