@@ -7,8 +7,8 @@ import {
 } from 'vue';
 import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
-import QueryPatientMatchEntity from '../../../../components/core/MQueryPatientMatchEntity.vue';
-import QueryPatientMatchList from '../../../../components/core/MQueryPatientMatchList';
+import QueryPatientMatchEntity from '../../../../components/core/MQueryPatientMatch.vue';
+import QueryPatientMatchList from '../../../../components/core/MQueryPatientMatches';
 import type { QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
