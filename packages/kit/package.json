@@ -42,7 +42,7 @@
     },
     "dependencies": {
         "@dnpm-dip/core": "^1.7.0",
-        "@nuxt/schema": "^3.10.0",
+        "@nuxt/schema": "^3.11.1",
         "@nuxt/kit": "^3.10.0",
         "ufo": "^1.4.0"
     },
