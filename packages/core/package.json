@@ -43,7 +43,7 @@
     "dependencies": {
         "hapic": "^2.5.0",
         "smob": "^1.4.1",
-        "ufo": "^1.4.0"
+        "ufo": "^1.5.3"
     },
     "devDependencies": {
         "bootstrap-vue-next": "^0.16.6",
