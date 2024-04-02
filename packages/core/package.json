@@ -41,7 +41,7 @@
         "access": "public"
     },
     "dependencies": {
-        "hapic": "^2.5.0",
+        "hapic": "^2.5.1",
         "smob": "^1.5.0",
         "ufo": "^1.4.0"
     },
