@@ -44,7 +44,7 @@
         "rimraf": "^5.0.1",
         "rollup": "^4.13.2",
         "rollup-plugin-postcss": "^4.0.2",
-        "smob": "^1.4.1",
+        "smob": "^1.5.0",
         "typescript": "5.4.3",
         "workspaces-publish": "^1.4.2"
     },
