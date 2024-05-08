@@ -1,7 +1,7 @@
 <script lang="ts">
 
-import { ARoleForm } from '@authup/client-vue';
-import type { Role } from '@authup/core';
+import { ARoleForm } from '@authup/client-web-kit';
+import type { Role } from '@authup/core-kit';
 import { PageMetaKey } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent, definePageMeta } from '#imports';

@@ -1,8 +1,8 @@
 <script lang="ts">
 
-import { AIdentityProviderLdapForm, AIdentityProviderOAuth2Form } from '@authup/client-vue';
-import type { IdentityProvider } from '@authup/core';
-import { PermissionName } from '@authup/core';
+import { AIdentityProviderLdapForm, AIdentityProviderOAuth2Form } from '@authup/client-web-kit';
+import type { IdentityProvider } from '@authup/core-kit';
+import { PermissionName } from '@authup/core-kit';
 import { PageMetaKey } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { useRuntimeConfig } from '#app';

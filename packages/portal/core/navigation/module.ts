@@ -1,4 +1,4 @@
-import { PermissionName } from '@authup/core';
+import { PermissionName } from '@authup/core-kit';
 import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
 import type { NavigationItem, NavigationProvider } from '@vuecs/navigation';
 import { flattenNestedNavigationItems } from '@vuecs/navigation';
@@ -60,7 +60,7 @@ export class Navigation implements NavigationProvider {
             ],
             admin: [
                 {
-                    name: 'Identity Providers',
+                    name: 'Identitätsanbieter',
                     type: 'link',
                     url: '/admin/identity-providers',
                     icon: 'fa-solid fa-atom',

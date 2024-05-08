@@ -2,8 +2,8 @@
 import {
     DNav, PageMetaKey, PageNavigationTopID, useToast,
 } from '@dnpm-dip/core';
-import type { User } from '@authup/core';
-import { PermissionName } from '@authup/core';
+import type { User } from '@authup/core-kit';
+import { PermissionName } from '@authup/core-kit';
 import { definePageMeta } from '#imports';
 import { defineNuxtComponent } from '#app';
 

@@ -9,8 +9,8 @@ import {
     ASearch,
     ATitle,
     injectAPIClient,
-    useValidationTranslator,
-} from '@authup/client-vue';
+} from '@authup/client-web-kit';
+import { IVuelidate } from '@ilingo/vuelidate';
 import useVuelidate from '@vuelidate/core';
 import { maxLength, minLength, required } from '@vuelidate/validators';
 import {
@@ -19,7 +19,7 @@ import {
     ref,
 } from '#imports';
 import {
-    defineNuxtComponent, navigateTo, useRoute, useRuntimeConfig,
+    defineNuxtComponent, navigateTo, useRoute,
 } from '#app';
 import { useAuthStore } from '../stores/auth';
 
@@ -31,6 +31,7 @@ export default defineNuxtComponent({
         AIdentityProviders,
         AIdentityProviderIcon,
         ARealms,
+        IVuelidate,
     },
     setup() {
         definePageMeta({
@@ -64,7 +65,6 @@ export default defineNuxtComponent({
         }, form);
 
         const store = useAuthStore();
-        const runtimeConfig = useRuntimeConfig();
 
         const busy = ref(false);
 
@@ -95,7 +95,6 @@ export default defineNuxtComponent({
 
         return {
             vuelidate,
-            translator: useValidationTranslator(),
             form,
             submit,
             busy,
@@ -110,38 +109,46 @@ export default defineNuxtComponent({
             Login
         </h4>
         <form @submit.prevent="submit">
-            <VCFormGroup
-                :validation-result="vuelidate.name"
-                :validation-translator="translator"
-            >
-                <template #label>
-                    Name
+            <IVuelidate :validation="vuelidate.name">
+                <template #default="props">
+                    <VCFormGroup
+                        :validation-messages="props.data"
+                        :validation-severity="props.severity"
+                    >
+                        <template #label>
+                            Name
+                        </template>
+                        <template #default>
+                            <VCFormInput
+                                v-model="vuelidate.name.$model"
+                            />
+                        </template>
+                    </VCFormGroup>
                 </template>
-                <template #default>
-                    <VCFormInput
-                        v-model="form.name"
-                    />
-                </template>
-            </VCFormGroup>
+            </IVuelidate>
 
-            <VCFormGroup
-                :validation-result="vuelidate.password"
-                :validation-translator="translator"
-            >
-                <template #label>
-                    Password
+            <IVuelidate :validation="vuelidate.password">
+                <template #default="props">
+                    <VCFormGroup
+                        :validation-messages="props.data"
+                        :validation-severity="props.severity"
+                    >
+                        <template #label>
+                            Password
+                        </template>
+                        <template #default>
+                            <VCFormInput
+                                v-model="vuelidate.password.$model"
+                                type="password"
+                            />
+                        </template>
+                    </VCFormGroup>
                 </template>
-                <template #default>
-                    <VCFormInput
-                        v-model="form.password"
-                        type="password"
-                    />
-                </template>
-            </VCFormGroup>
+            </IVuelidate>
 
             <VCFormSubmit
                 v-model="busy"
-                :validation-result="vuelidate"
+                :invalid="vuelidate.$invalid"
                 :create-text="'Login'"
                 :create-button-class="{value: 'btn btn-sm btn-dark btn-block', presets: { bootstrap: false }}"
                 :create-icon-class="'fa-solid fa-right-to-bracket'"

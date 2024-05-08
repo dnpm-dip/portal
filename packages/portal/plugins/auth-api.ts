@@ -6,11 +6,11 @@
  */
 
 import type { APIClient as DNPMAPIClient } from '@dnpm-dip/core';
-import type { ClientAPIConfigInput, ClientResponseErrorTokenHookOptions } from '@authup/core';
+import type { ClientOptions, ClientResponseErrorTokenHookOptions } from '@authup/core-http-kit';
 import {
-    APIClient as AuthupAPIClient,
+    Client as AuthupAPIClient,
     ClientResponseErrorTokenHook,
-} from '@authup/core';
+} from '@authup/core-http-kit';
 import type { Pinia } from 'pinia';
 import { storeToRefs } from 'pinia';
 import { defineNuxtPlugin, useRuntimeConfig } from '#app';
@@ -34,7 +34,7 @@ export default defineNuxtPlugin({
 
         const { authupUrl: baseURL } = runtimeConfig.public;
 
-        const config: ClientAPIConfigInput = {
+        const config: ClientOptions = {
             baseURL,
         };
         const authupAPIClient = new AuthupAPIClient(config);

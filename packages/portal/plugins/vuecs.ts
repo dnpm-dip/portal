@@ -1,10 +1,11 @@
+import installTimeago from '@vuecs/timeago';
+import de from 'date-fns/locale/de';
 import { applyStoreManagerOptions, installStoreManager } from '@vuecs/form-controls/core';
 
 import bootstrap from '@vuecs/preset-bootstrap-v5';
 import fontAwesome from '@vuecs/preset-font-awesome';
 
 import installFormControls from '@vuecs/form-controls';
-import installTimeago from '@vuecs/timeago';
 import { defineNuxtPlugin } from '#app';
 
 export default defineNuxtPlugin({
@@ -34,6 +35,10 @@ export default defineNuxtPlugin({
         });
 
         nuxt.vueApp.use(installFormControls);
-        nuxt.vueApp.use(installTimeago);
+        nuxt.vueApp.use(installTimeago, {
+            locales: {
+                de,
+            },
+        });
     },
 });

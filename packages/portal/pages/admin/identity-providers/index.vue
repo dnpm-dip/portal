@@ -1,7 +1,7 @@
 <script lang="ts">
 
-import type { IdentityProvider } from '@authup/core';
-import { PermissionName } from '@authup/core';
+import type { IdentityProvider } from '@authup/core-kit';
+import { PermissionName } from '@authup/core-kit';
 import {
     DNav, PageMetaKey, PageNavigationTopID, useToast,
 } from '@dnpm-dip/core';
@@ -61,7 +61,7 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h1 class="title no-border mb-3">
-            <i class="fa-solid fa-atom me-1" /> Identity Providers
+            <i class="fa-solid fa-atom me-1" /> Identitätsanbieter
             <span class="sub-title ms-1">Verwaltung</span>
         </h1>
         <div class="content-wrapper">

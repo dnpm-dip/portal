@@ -2,8 +2,8 @@
 import {
     DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
 } from '@dnpm-dip/core';
-import type { User } from '@authup/core';
-import { PermissionName, isRealmResourceWritable } from '@authup/core';
+import type { User } from '@authup/core-kit';
+import { PermissionName, isRealmResourceWritable } from '@authup/core-kit';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
