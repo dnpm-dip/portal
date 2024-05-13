@@ -17,7 +17,7 @@
         "start": "node .output/server/index.mjs"
     },
     "devDependencies": {
-        "@authup/client-web-kit": "^1.0.0-beta.10",
+        "@authup/client-web-kit": "^1.0.0-beta.12",
         "@authup/core-http-kit": "^1.0.0-beta.10",
         "@authup/core-kit": "^1.0.0-beta.10",
         "@dnpm-dip/core": "^1.8.0",
