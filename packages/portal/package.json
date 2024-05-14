@@ -18,7 +18,7 @@
     },
     "devDependencies": {
         "@authup/client-web-kit": "^1.0.0-beta.10",
-        "@authup/core-http-kit": "^1.0.0-beta.10",
+        "@authup/core-http-kit": "^1.0.0-beta.13",
         "@authup/core-kit": "^1.0.0-beta.10",
         "@dnpm-dip/core": "^1.8.0",
         "@dnpm-dip/kit": "^1.8.0",
