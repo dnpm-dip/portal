@@ -1,5 +1,5 @@
 <script lang="ts">
-import { useStore } from '@authup/client-web-kit';
+import { injectHTTPClient, useStore } from '@authup/client-web-kit';
 import {
     DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
 } from '@dnpm-dip/core';
@@ -14,7 +14,6 @@ import {
 import {
     createError, defineNuxtComponent, navigateTo, useRoute,
 } from '#app';
-import { useAuthupAPIClient } from '../../../composables';
 
 export default defineNuxtComponent({
     components: { DNav },
@@ -45,11 +44,12 @@ export default defineNuxtComponent({
         const toast = useToast();
         const store = useStore();
         const route = useRoute();
+        const authup = injectHTTPClient();
 
         const entity : Ref<User> = ref(null) as any;
 
         try {
-            entity.value = await useAuthupAPIClient()
+            entity.value = await authup
                 .user
                 .getOne(route.params.id as string, { fields: ['+email'] });
         } catch (e) {

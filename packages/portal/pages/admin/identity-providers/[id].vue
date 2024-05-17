@@ -42,11 +42,12 @@ export default defineNuxtComponent({
         const toast = useToast();
         const store = useStore();
         const route = useRoute();
+        const authup = injectHTTPClient();
 
         const entity: Ref<IdentityProvider> = ref(null) as any;
 
         try {
-            entity.value = await injectHTTPClient()
+            entity.value = await authup
                 .identityProvider
                 .getOne(route.params.id as string);
         } catch (e) {
