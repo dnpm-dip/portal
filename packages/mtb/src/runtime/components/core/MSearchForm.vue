@@ -402,6 +402,7 @@ export default defineComponent({
                             <DValueSet
                                 :code="'urn:oid:2.16.840.1.113883.6.43.1'"
                                 :lazy-load="true"
+                                :filter="['morphology', 'is-a-category']"
                             >
                                 <template #default="{ data }">
                                     <DCollectionTransform
