@@ -1,5 +1,6 @@
 {
     "bootstrap-sha": "c66e8053a0789224db60e8cc853c6b030466752a",
+    "include-component-in-tag": false,
     "release-type": "node",
     "bump-minor-pre-major": true,
     "bump-patch-for-minor-pre-major": true,
@@ -26,7 +27,8 @@
     "plugins": [
         {
             "type": "node-workspace",
-            "updatePeerDependencies": true
+            "updatePeerDependencies": true,
+            "merge": false
         },
         {
             "type": "linked-versions",

@@ -133,7 +133,6 @@ export default defineComponent({
     </VCFormGroup>
     <div>
         <button
-            :disabled="busy"
             type="button"
             class="btn btn-secondary btn-xs"
             @click.prevent="submit()"
