@@ -25,7 +25,7 @@
         "@dnpm-dip/mtb": "^1.8.0",
         "@dnpm-dip/rd": "^1.8.0",
         "@fortawesome/fontawesome-free": "^6.5.2",
-        "@ilingo/vuelidate": "^5.0.0",
+        "@ilingo/vuelidate": "^5.0.2",
         "@nuxt/devtools": "latest",
         "@vuecs/countdown": "^1.0.0",
         "@vuecs/form-controls": "^2.2.0",
