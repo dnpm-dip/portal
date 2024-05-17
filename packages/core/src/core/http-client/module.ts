@@ -1,14 +1,14 @@
 import { Client as BaseClient } from 'hapic';
 import { CodeSystemAPI, ValueSetAPI } from '../../domains';
-import type { APIClientConfigInput } from './types';
+import type { HTTPClientOptions } from './types';
 
-export class APIClient extends BaseClient {
+export class HTTPClient extends BaseClient {
     readonly codeSystem: CodeSystemAPI;
 
     readonly valueSet : ValueSetAPI;
 
-    constructor(config?: APIClientConfigInput) {
-        super(config);
+    constructor(options: HTTPClientOptions = {}) {
+        super(options);
 
         this.codeSystem = new CodeSystemAPI({ client: this });
         this.valueSet = new ValueSetAPI({ client: this });

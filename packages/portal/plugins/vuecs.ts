@@ -1,4 +1,5 @@
-import installTimeago from '@vuecs/timeago';
+import { injectTranslatorLocale } from '@authup/client-web-kit';
+import installTimeago, { injectLocale as injectTimeagoLocale } from '@vuecs/timeago';
 import de from 'date-fns/locale/de';
 import { applyStoreManagerOptions, installStoreManager } from '@vuecs/form-controls/core';
 
@@ -39,6 +40,15 @@ export default defineNuxtPlugin({
             locales: {
                 de,
             },
+        });
+
+        const locale = injectTranslatorLocale();
+        locale.value = 'de';
+
+        const timeagoLocale = injectTimeagoLocale();
+        timeagoLocale.value = locale.value;
+        watch(locale, (val) => {
+            timeagoLocale.value = val;
         });
     },
 });

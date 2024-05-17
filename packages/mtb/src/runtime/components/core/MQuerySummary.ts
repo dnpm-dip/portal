@@ -4,7 +4,7 @@ import {
 } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineComponent, toRef } from 'vue';
-import { useMTBAPIClient } from '#imports';
+import { injectHTTPClient } from '../../core/http-client';
 
 export default defineComponent({
     props: {
@@ -21,7 +21,7 @@ export default defineComponent({
         },
     },
     async setup(props, setup) {
-        const apiClient = useMTBAPIClient();
+        const apiClient = injectHTTPClient();
         const id = toRef(props, 'queryId');
 
         const manager = createResourceRecordManager({

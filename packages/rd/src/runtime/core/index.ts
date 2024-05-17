@@ -5,9 +5,4 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import type { APIClient } from '@authup/core';
-
-export function useAuthupAPIClient() : APIClient {
-    const nuxt = useNuxtApp();
-    return nuxt.$authupApi as APIClient;
-}
+export * from './http-client';

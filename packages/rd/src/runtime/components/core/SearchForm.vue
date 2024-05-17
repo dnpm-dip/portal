@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { CodeRecord, CodeSystemConcept, ValueSetCoding } from '@dnpm-dip/core';
+import type { CodeRecord, ValueSetCoding } from '@dnpm-dip/core';
 import {
     DCollectionTransform, DFormTabGroups, DTags, DValueSet, QueryRequestMode,
 } from '@dnpm-dip/core';
@@ -9,13 +9,13 @@ import type { PropType } from 'vue';
 import {
     defineComponent, ref,
 } from 'vue';
+import { injectHTTPClient } from '../../core';
 import type {
     PreparedQuery,
     QueryCriteria,
     QueryCriteriaVariant,
     QuerySession,
 } from '../../domains';
-import { useRDAPIClient } from '#imports';
 import VariantFormTabGroup from './VariantFormTabGroup.vue';
 
 export default defineComponent({
@@ -54,7 +54,7 @@ export default defineComponent({
         'queryUpdated',
     ],
     async setup(props, { emit, expose }) {
-        const apiClient = useRDAPIClient();
+        const apiClient = injectHTTPClient();
 
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
         const modeOptions : FormSelectOption[] = [

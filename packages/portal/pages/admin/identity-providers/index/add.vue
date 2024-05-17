@@ -1,12 +1,11 @@
 <script lang="ts">
-import { AIdentityProviderForm } from '@authup/client-web-kit';
+import { AIdentityProviderForm, useStore } from '@authup/client-web-kit';
 import type { IdentityProvider } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
 import { storeToRefs } from 'pinia';
 import { defineNuxtComponent, navigateTo } from '#app';
 import { definePageMeta } from '#imports';
-import { useAuthStore } from '../../../../stores/auth';
 
 export default defineNuxtComponent({
     components: {
@@ -22,6 +21,9 @@ export default defineNuxtComponent({
             ],
         });
 
+        const store = useStore();
+        const { realmManagementId } = storeToRefs(store);
+
         const handleCreated = (e: IdentityProvider) => {
             navigateTo({ path: `/admin/identity-providers/${e.id}` });
         };
@@ -29,9 +31,6 @@ export default defineNuxtComponent({
         const handleFailed = (e: Error) => {
             emit('failed', e);
         };
-
-        const store = useAuthStore();
-        const { realmManagementId } = storeToRefs(store);
 
         return {
             realmManagementId,

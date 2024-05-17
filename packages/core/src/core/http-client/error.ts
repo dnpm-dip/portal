@@ -1,5 +1,5 @@
 import type { ClientError } from 'hapic';
-import { isAPIClientErrorPayload } from './utils';
+import { isAPIClientErrorPayload } from './helper';
 
 export function extractAPIClientErrorIssues(error: ClientError) {
     const data = error?.response?.data;

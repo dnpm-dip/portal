@@ -1,6 +1,7 @@
 import { register } from '@dnpm-dip/kit';
 import {
-    addImportsSources, addPlugin, createResolver,
+    addPlugin,
+    createResolver,
     defineNuxtModule,
 } from '@nuxt/kit';
 
@@ -26,11 +27,6 @@ export default defineNuxtModule({
                 },
             ],
             navigationTopId: 'mtb',
-        });
-
-        addImportsSources({
-            from: resolver.resolve('./runtime/composables/index'),
-            imports: ['useMTBAPIClient'],
         });
 
         addPlugin(resolver.resolve('./runtime/plugins/api'));

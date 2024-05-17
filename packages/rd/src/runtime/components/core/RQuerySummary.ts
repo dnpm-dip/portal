@@ -4,7 +4,7 @@ import {
 } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineComponent, toRef } from 'vue';
-import { useRDAPIClient } from '#imports';
+import { injectHTTPClient } from '../../core';
 
 export default defineComponent({
     props: {
@@ -21,7 +21,7 @@ export default defineComponent({
         },
     },
     async setup(props, setup) {
-        const apiClient = useRDAPIClient();
+        const apiClient = injectHTTPClient();
         const id = toRef(props, 'queryId');
 
         const manager = createResourceRecordManager({
