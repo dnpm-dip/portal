@@ -389,7 +389,7 @@ export default defineComponent({
                                     <VCFormSelectSearch
                                         :options="[]"
                                         :disabled="true"
-                                        placeholder="Orphanet Ontology"
+                                        placeholder="ICD-10"
                                     />
                                 </template>
                             </DValueSet>
@@ -537,7 +537,7 @@ export default defineComponent({
                                                 v-model="medicationDrugs"
                                                 :multiple="true"
                                                 :options="options"
-                                                placeholder="..."
+                                                placeholder="ATC"
                                             >
                                                 <template #selected="{ items, toggle }">
                                                     <DCollectionTransform
@@ -564,7 +564,7 @@ export default defineComponent({
                                     <VCFormSelectSearch
                                         :options="[]"
                                         :disabled="true"
-                                        placeholder="Orphanet Ontology"
+                                        placeholder="ATC"
                                     />
                                 </template>
                             </DValueSet>
