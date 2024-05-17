@@ -2,11 +2,24 @@ import type { ConceptCount, KeyValueRecord } from '../../../domains';
 import { isCoding, isMinMaxRange } from '../../../domains';
 import { stringToColor } from '../../../utils';
 
+type ChartLabelsGenerateOptions = {
+    codingVerbose?: boolean
+};
+
 export function generateChartLabelsForKeyValueRecord(
     item: KeyValueRecord | ConceptCount,
+    options: ChartLabelsGenerateOptions = {},
 ) : string | undefined {
     if (isCoding(item.key)) {
-        return item.key.display || item.key.code;
+        if (item.key.display) {
+            if (options.codingVerbose) {
+                return `${item.key.code}: ${item.key.display}`;
+            }
+
+            return item.key.display;
+        }
+
+        return item.key.code;
     }
 
     if (isMinMaxRange(item.key)) {

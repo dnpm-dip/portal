@@ -24,13 +24,19 @@ export default defineComponent({
                 <div class="col-12 col-xl-6">
                     <div class="entity-card text-center mb-3">
                         <h6>Tumor-Entitäten (ICD-10-GM)</h6>
-                        <DChartBar :items="entity.overallDistributions.tumorEntities.elements" />
+                        <DChartBar
+                            :coding-verbose-label="true"
+                            :items="entity.overallDistributions.tumorEntities.elements"
+                        />
                     </div>
                 </div>
                 <div class="col-12 col-xl-6">
                     <div class="entity-card text-center mb-3">
                         <h6>Tumor-Morphologie (ICD-O-3-M)</h6>
-                        <DChartBar :items="entity.overallDistributions.tumorMorphologies.elements" />
+                        <DChartBar
+                            :coding-verbose-label="true"
+                            :items="entity.overallDistributions.tumorMorphologies.elements"
+                        />
                     </div>
                 </div>
             </div>
@@ -48,7 +54,10 @@ export default defineComponent({
                                 <h6 class="text-center">
                                     Tumor-Entitäten (ICD-10-GM)
                                 </h6>
-                                <DChartBar :items="item.value.tumorEntities.elements" />
+                                <DChartBar
+                                    :coding-verbose-label="true"
+                                    :items="item.value.tumorEntities.elements"
+                                />
                             </div>
                         </div>
                         <div class="col-12 col-xl-6">
@@ -56,7 +65,10 @@ export default defineComponent({
                                 <h6 class="text-center">
                                     Tumor-Morphologie (IDC-O-3-M)
                                 </h6>
-                                <DChartBar :items="item.value.tumorMorphologies.elements" />
+                                <DChartBar
+                                    :coding-verbose-label="true"
+                                    :items="item.value.tumorMorphologies.elements"
+                                />
                             </div>
                         </div>
                     </div>

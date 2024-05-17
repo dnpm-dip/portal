@@ -20,6 +20,9 @@ export default defineComponent({
             required: true,
             type: Array as PropType<ConceptsCount<Key> | Quantities<Key>>,
         },
+        codingVerboseLabel: {
+            type: Boolean,
+        },
     },
     setup(props) {
         const items = computed(() => props.items.slice(0, 15));
@@ -40,7 +43,9 @@ export default defineComponent({
                     return `${generateChartLabelsForKeyValueRecord(item)}`;
                 }
 
-                return `${generateChartLabelsForKeyValueRecord(item)} (${item.value.percent.toFixed(1)}%)`;
+                return `${generateChartLabelsForKeyValueRecord(item, {
+                    codingVerbose: props.codingVerboseLabel,
+                })} (${item.value.percent.toFixed(1)}%)`;
             }),
         }));
 

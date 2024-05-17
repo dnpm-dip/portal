@@ -19,7 +19,7 @@ export default defineComponent({
 </script>
 <template>
     <div>
-        <h5>Empfehlungen</h5>
+        <h5>Therapie Empfehlungen</h5>
         <div class="row">
             <div class="col">
                 <div class="entity-card text-center mb-3 w-100">
@@ -47,7 +47,7 @@ export default defineComponent({
             </div>
         </div>
 
-        <h5>Therapien</h5>
+        <h5>Umgesetzte Therapien</h5>
         <div class="row">
             <div class="col">
                 <div class="entity-card text-center mb-3 w-100">
