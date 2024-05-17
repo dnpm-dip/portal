@@ -8,10 +8,10 @@
 import { PageMetaKey } from '@dnpm-dip/core';
 import { storeToRefs } from 'pinia';
 import type { RouteLocationNormalized } from 'vue-router';
+import { useStore } from '@authup/client-web-kit';
 import {
     navigateTo,
 } from '#app';
-import { useAuthStore } from '../stores/auth';
 
 function checkAbilityOrPermission(route: RouteLocationNormalized, has: (name: string) => boolean) {
     const layoutKeys : string[] = [
@@ -55,7 +55,7 @@ function checkAbilityOrPermission(route: RouteLocationNormalized, has: (name: st
 }
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-    const store = useAuthStore();
+    const store = useStore();
 
     let redirectPath = '/';
 
@@ -66,7 +66,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     try {
         await store.resolve();
     } catch (e) {
-        await store.logout();
+        store.logout();
 
         if (!to.fullPath.startsWith('/logout') && !to.fullPath.startsWith('/login')) {
             return navigateTo({
@@ -99,7 +99,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         }
 
         try {
-            checkAbilityOrPermission(to, (name) => store.has(name));
+            checkAbilityOrPermission(to, (name) => store.abilities.has(name));
         } catch (e) {
             return navigateTo({
                 path: redirectPath,

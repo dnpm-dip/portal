@@ -1,12 +1,11 @@
 <script lang="ts">
-import { ARoleForm } from '@authup/client-web-kit';
+import { ARoleForm, useStore } from '@authup/client-web-kit';
 import type { Role } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
 import { storeToRefs } from 'pinia';
 import { defineNuxtComponent, navigateTo } from '#app';
 import { definePageMeta } from '#imports';
-import { useAuthStore } from '../../../../stores/auth';
 
 export default defineNuxtComponent({
     components: {
@@ -22,6 +21,8 @@ export default defineNuxtComponent({
             ],
         });
 
+        const store = useStore();
+
         const handleCreated = (e: Role) => {
             navigateTo({ path: `/admin/roles/${e.id}` });
         };
@@ -30,7 +31,6 @@ export default defineNuxtComponent({
             emit('failed', e);
         };
 
-        const store = useAuthStore();
         const { realmManagementId } = storeToRefs(store);
 
         return {

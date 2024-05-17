@@ -1,9 +1,9 @@
 <script lang="ts">
 
+import { useStore } from '@authup/client-web-kit';
 import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
 import { defineNuxtComponent, useRouter } from '#app';
 import { definePageMeta } from '#imports';
-import { useAuthStore } from '../stores/auth';
 
 export default defineNuxtComponent({
     async setup() {
@@ -13,6 +13,7 @@ export default defineNuxtComponent({
         });
 
         const router = useRouter();
+        const store = useStore();
 
         const query = {
             redirect: '',
@@ -28,7 +29,6 @@ export default defineNuxtComponent({
             query.redirect = redirect;
         }
 
-        const store = useAuthStore();
         await store.logout();
 
         await router.push({ path: '/login', query });

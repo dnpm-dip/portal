@@ -1,4 +1,5 @@
 <script lang="ts">
+import { useStore } from '@authup/client-web-kit';
 import {
     DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
 } from '@dnpm-dip/core';
@@ -14,7 +15,6 @@ import {
     createError, defineNuxtComponent, navigateTo, useRoute,
 } from '#app';
 import { useAuthupAPIClient } from '../../../composables';
-import { useAuthStore } from '../../../stores/auth';
 
 export default defineNuxtComponent({
     components: { DNav },
@@ -43,7 +43,7 @@ export default defineNuxtComponent({
         ];
 
         const toast = useToast();
-
+        const store = useStore();
         const route = useRoute();
 
         const entity : Ref<User> = ref(null) as any;
@@ -57,7 +57,6 @@ export default defineNuxtComponent({
             throw createError({});
         }
 
-        const store = useAuthStore();
         const { realmManagement } = storeToRefs(store);
 
         if (!isRealmResourceWritable(realmManagement.value, entity.value.realm_id)) {

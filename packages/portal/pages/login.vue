@@ -8,7 +8,7 @@ import {
     ARealms,
     ASearch,
     ATitle,
-    injectAPIClient,
+    useStore,
 } from '@authup/client-web-kit';
 import { IVuelidate } from '@ilingo/vuelidate';
 import useVuelidate from '@vuelidate/core';
@@ -21,7 +21,6 @@ import {
 import {
     defineNuxtComponent, navigateTo, useRoute,
 } from '#app';
-import { useAuthStore } from '../stores/auth';
 
 export default defineNuxtComponent({
     components: {
@@ -39,7 +38,7 @@ export default defineNuxtComponent({
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.DEFAULT,
         });
 
-        const apiClient = injectAPIClient();
+        const store = useStore();
         const toast = useToast();
 
         const form = reactive({
@@ -63,8 +62,6 @@ export default defineNuxtComponent({
 
             },
         }, form);
-
-        const store = useAuthStore();
 
         const busy = ref(false);
 

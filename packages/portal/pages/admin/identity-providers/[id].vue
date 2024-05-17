@@ -8,15 +8,14 @@ import {
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
+import { injectHTTPClient, useStore } from '@authup/client-web-kit';
 import {
     createError,
     defineNuxtComponent,
     definePageMeta,
     navigateTo,
-    useAuthupAPIClient,
     useRoute,
 } from '#imports';
-import { useAuthStore } from '../../../stores/auth';
 
 export default defineNuxtComponent({
     components: {
@@ -41,13 +40,13 @@ export default defineNuxtComponent({
         ];
 
         const toast = useToast();
-
+        const store = useStore();
         const route = useRoute();
 
         const entity: Ref<IdentityProvider> = ref(null) as any;
 
         try {
-            entity.value = await useAuthupAPIClient()
+            entity.value = await injectHTTPClient()
                 .identityProvider
                 .getOne(route.params.id as string);
         } catch (e) {
@@ -55,7 +54,6 @@ export default defineNuxtComponent({
             throw createError({});
         }
 
-        const store = useAuthStore();
         const { realmManagement } = storeToRefs(store);
 
         if (!isRealmResourceWritable(realmManagement.value, entity.value.realm_id)) {
