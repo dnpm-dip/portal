@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.9.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/kit-v1.8.0...kit-v1.9.0) (2024-05-17)
+
+
+### Features
+
+* add initial module boxes on home view ([d0e94cd](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d0e94cd019c0c8bbbe7dca7f42db9100b912f546))
+* bump authup & vuecs dependencies ([f9fc12b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f9fc12bcb427e2fb1a4eff0f31dd52ba19a5d410))
+* consistent component naming + minor style and component issues ([#323](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/323)) ([2ed563e](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2ed563ed71ce36551852bcd57b7909fb9dd2690e))
+* initial mtb domains, pages etc + initial type refactoring + fix page schema generation ([2befba6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2befba6ed6e169e5c88c8038985ca7d10ed0ded5))
+* move and prefix core components with letter D ([becfa81](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/becfa815683c284da58d899d5de0efbb36261619))
+* new kit package for registering modules + initial mtb module package ([71a8384](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/71a83848a3aeb5f633fea9172f5b423d3f58df20))
+
+
+### Bug Fixes
+
+* **deps:** bump @nuxt/schema from 3.11.1 to 3.11.2 ([#367](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/367)) ([605c375](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/605c37531fbbd94b7fe204b742afd1c10a6d9a1d))
+* **deps:** bump nuxt and reset lock file ([8de5687](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8de5687a1a170877b15f0e1ec3bd20147b0b72d8))
+* **deps:** bump nuxt to v3.11.1 ([56b6c82](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/56b6c82db62519db6edc40ebb33cfceb10e9dedf))
+* **deps:** bump ufo from 1.3.2 to 1.4.0 ([#259](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/259)) ([b7a7c9b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b7a7c9b0ca974f23952a014afff6c1b2dd58796a))
+
 ## [1.8.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.7.0...v1.8.0) (2024-05-09)
 
 
