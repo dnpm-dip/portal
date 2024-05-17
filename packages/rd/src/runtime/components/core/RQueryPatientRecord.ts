@@ -4,7 +4,7 @@ import {
 } from '@dnpm-dip/core';
 import type { SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
-import { useRDAPIClient } from '#imports';
+import { injectHTTPClient } from '../../core';
 import type { PatientRecord } from '../../domains';
 
 export default defineComponent({
@@ -25,7 +25,7 @@ export default defineComponent({
     },
     slots: Object as SlotsType<ResourceRecordSlots<PatientRecord>>,
     async setup(props, setup) {
-        const apiClient = useRDAPIClient();
+        const apiClient = injectHTTPClient();
         const id = toRef(props, 'queryId');
 
         const manager = createResourceRecordManager({

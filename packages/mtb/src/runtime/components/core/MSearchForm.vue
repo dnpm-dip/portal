@@ -18,7 +18,7 @@ import {
 import type { FormSelectOption } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
 import { defineComponent, ref } from 'vue';
-import { useMTBAPIClient } from '#imports';
+import { injectHTTPClient } from '../../core/http-client';
 import {
     FormMutationType,
     type MutationDefinition,
@@ -59,7 +59,7 @@ export default defineComponent({
         'queryUpdated',
     ],
     async setup(props, { emit, expose }) {
-        const apiClient = useMTBAPIClient();
+        const apiClient = injectHTTPClient();
 
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
         const modeOptions : FormSelectOption[] = [

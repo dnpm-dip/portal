@@ -10,7 +10,7 @@ import { defineNuxtPlugin, useCookie, useRuntimeConfig } from '#imports';
 
 export default defineNuxtPlugin({
     enforce: 'pre',
-    async setup(nuxt) {
+    async setup(ctx) {
         const runtimeConfig = useRuntimeConfig();
         const { authupUrl: baseURL } = runtimeConfig.public;
 

@@ -4,7 +4,7 @@ import {
     QueryAPI,
 } from '../../domains';
 
-export class RDAPIClient {
+export class RDHTTPClient {
     readonly query : QueryAPI;
 
     readonly preparedQuery : PreparedQueryAPI;

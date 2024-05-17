@@ -1,16 +1,13 @@
-import type { HTTPClient } from '@dnpm-dip/core';
-import { RDAPIClient } from '../core/api-client';
+import { injectHTTPClient } from '@dnpm-dip/core';
+import { RDHTTPClient, provideHTTPClient } from '../core';
 import { defineNuxtPlugin } from '#app';
 
 export default defineNuxtPlugin({
     enforce: 'post',
     async setup(nuxt) {
-        const client = new RDAPIClient(nuxt.$api as HTTPClient);
+        const baseClient = injectHTTPClient();
+        const client = new RDHTTPClient(baseClient);
 
-        return {
-            provide: {
-                rdApi: client,
-            },
-        };
+        provideHTTPClient(client, nuxt.vueApp);
     },
 });

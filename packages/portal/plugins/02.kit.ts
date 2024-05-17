@@ -3,11 +3,11 @@ import { defineNuxtPlugin, useRuntimeConfig } from '#app';
 
 export default defineNuxtPlugin({
     enforce: 'pre',
-    async setup(nuxt) {
+    async setup(ctx) {
         const runtimeConfig = useRuntimeConfig();
         const { apiUrl: baseURL } = runtimeConfig.public;
 
-        install(nuxt.vueApp, {
+        install(ctx.vueApp, {
             baseURL,
         });
     },

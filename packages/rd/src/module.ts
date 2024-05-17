@@ -1,6 +1,8 @@
 import { register } from '@dnpm-dip/kit';
 import {
-    addImportsSources, addPlugin, createResolver, defineNuxtModule,
+    addPlugin,
+    createResolver,
+    defineNuxtModule,
 } from '@nuxt/kit';
 
 export default defineNuxtModule({
@@ -26,11 +28,6 @@ export default defineNuxtModule({
                 },
             ],
             navigationTopId: 'rd',
-        });
-
-        addImportsSources({
-            from: resolver.resolve('./runtime/composables/index'),
-            imports: ['useRDAPIClient'],
         });
 
         addPlugin(resolver.resolve('./runtime/plugins/api'));

@@ -1,16 +1,13 @@
-import type { HTTPClient } from '@dnpm-dip/core';
-import { MTBAPIClient } from '../core/api-client';
+import { injectHTTPClient } from '@dnpm-dip/core';
+import { MTBAPIClient, provideHTTPClient } from '../core/http-client';
 import { defineNuxtPlugin } from '#app';
 
 export default defineNuxtPlugin({
     enforce: 'post',
     async setup(nuxt) {
-        const client = new MTBAPIClient(nuxt.$api as HTTPClient);
+        const baseClient = injectHTTPClient();
+        const client = new MTBAPIClient(baseClient);
 
-        return {
-            provide: {
-                mtbApi: client,
-            },
-        };
+        provideHTTPClient(client, nuxt.vueApp);
     },
 });

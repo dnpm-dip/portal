@@ -5,7 +5,7 @@ import { ref } from 'vue';
 import {
     createError, defineNuxtComponent, navigateTo, useRoute,
 } from '#app';
-import { useRDAPIClient } from '../../../../composables';
+import { injectHTTPClient } from '../../../../core';
 import type { PatientRecord, QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
@@ -20,7 +20,7 @@ export default defineNuxtComponent({
     },
 
     async setup(props) {
-        const api = useRDAPIClient();
+        const api = injectHTTPClient();
         const route = useRoute();
 
         const entity = ref<PatientRecord>(null) as any;

@@ -8,7 +8,7 @@
 import type { App } from 'vue';
 import { HTTPClient as Client } from './module';
 import { setupBaseHTTPClient } from './setup';
-import { isAPIClientInjected, provideAPIClient } from './di';
+import { isAPIClientInjected, provideHTTPClient } from './di';
 import type { BaseHTTPClientInstallOptions } from './types';
 
 export function installHTTPClient(app: App, options: BaseHTTPClientInstallOptions) {
@@ -20,5 +20,5 @@ export function installHTTPClient(app: App, options: BaseHTTPClientInstallOption
 
     setupBaseHTTPClient(app, client);
 
-    provideAPIClient(client, app);
+    provideHTTPClient(client, app);
 }

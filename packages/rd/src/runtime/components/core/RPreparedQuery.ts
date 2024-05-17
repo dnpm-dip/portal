@@ -2,7 +2,7 @@ import type { ResourceRecordSlots } from '@dnpm-dip/core';
 import { createResourceRecordManager, defineResourceRecordEvents } from '@dnpm-dip/core';
 import type { PropType, SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
-import { useRDAPIClient } from '../../composables';
+import { injectHTTPClient } from '../../core';
 import type { PreparedQuery } from '../../domains';
 
 export default defineComponent({
@@ -17,7 +17,7 @@ export default defineComponent({
     emits: defineResourceRecordEvents<PreparedQuery>(),
     slots: Object as SlotsType<ResourceRecordSlots<PreparedQuery>>,
     async setup(props, setup) {
-        const api = useRDAPIClient();
+        const api = injectHTTPClient();
         const id = toRef(props, 'entityId');
         const data = toRef(props, 'entity');
 

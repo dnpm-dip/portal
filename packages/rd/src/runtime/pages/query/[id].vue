@@ -3,9 +3,13 @@ import { PageMetaKey } from '@dnpm-dip/core';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import {
-    createError, defineNuxtComponent, definePageMeta, navigateTo,
-    useRDAPIClient, useRoute,
+    createError,
+    defineNuxtComponent,
+    definePageMeta,
+    navigateTo,
+    useRoute,
 } from '#imports';
+import { injectHTTPClient } from '../../core';
 import type { QuerySession } from '../../domains';
 
 export default defineNuxtComponent({
@@ -15,7 +19,7 @@ export default defineNuxtComponent({
             [PageMetaKey.NAVIGATION_SIDE_ID]: 'rd-search',
         });
 
-        const api = useRDAPIClient();
+        const api = injectHTTPClient();
         const route = useRoute();
 
         const entity = ref(null) as unknown as Ref<QuerySession>;

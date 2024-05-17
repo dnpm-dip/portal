@@ -7,9 +7,9 @@ import {
     defineNuxtComponent,
     definePageMeta,
     navigateTo,
-    useMTBAPIClient,
     useRoute,
 } from '#imports';
+import { injectHTTPClient } from '../../core/http-client';
 import type { QuerySession } from '../../domains';
 
 export default defineNuxtComponent({
@@ -19,7 +19,7 @@ export default defineNuxtComponent({
             [PageMetaKey.NAVIGATION_SIDE_ID]: 'mtb-search',
         });
 
-        const api = useMTBAPIClient();
+        const api = injectHTTPClient();
         const route = useRoute();
 
         const entity = ref(null) as unknown as Ref<QuerySession>;

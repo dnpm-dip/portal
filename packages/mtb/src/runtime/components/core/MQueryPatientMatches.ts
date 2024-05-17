@@ -2,7 +2,7 @@ import type { ObjectLiteral, PatientMatchBase, ResourceCollectionSlots } from '@
 import { createResourceCollectionManager } from '@dnpm-dip/core';
 import type { PropType, SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
-import { useMTBAPIClient } from '../../composables';
+import { injectHTTPClient } from '../../core/http-client';
 
 export default defineComponent({
     props: {
@@ -16,7 +16,7 @@ export default defineComponent({
     },
     slots: Object as SlotsType<ResourceCollectionSlots<PatientMatchBase>>,
     setup(props, setup) {
-        const api = useMTBAPIClient();
+        const api = injectHTTPClient();
 
         const filters = toRef(props, 'filters');
 
