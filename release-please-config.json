@@ -1,10 +1,12 @@
 {
     "bootstrap-sha": "c66e8053a0789224db60e8cc853c6b030466752a",
-    "include-component-in-tag": false,
     "release-type": "node",
     "bump-minor-pre-major": true,
     "bump-patch-for-minor-pre-major": true,
     "packages": {
+        ".": {
+            "component": "root"
+        },
         "packages/core": {
             "component": "core"
         },
@@ -30,6 +32,7 @@
             "type": "linked-versions",
             "groupName": "main",
             "components": [
+                "root",
                 "core",
                 "kit",
                 "mtb",

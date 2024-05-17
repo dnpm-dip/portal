@@ -1,5 +1,6 @@
 {
     "name": "@dnpm-dip/root",
+    "version": "1.8.0",
     "private": true,
     "author": {
         "name": "Peter Placzek",
@@ -7,7 +8,6 @@
         "url": "https://github.com/tada5hi"
     },
     "license": "MIT",
-    "version": "1.0.0",
     "workspaces": [
         "packages/*"
     ],

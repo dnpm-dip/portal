@@ -1,4 +1,5 @@
 {
+    ".": "1.8.0",
     "packages/core": "1.8.0",
     "packages/portal": "1.8.0",
     "packages/rare-diseases": "1.0.0",
