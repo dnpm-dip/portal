@@ -1,6 +1,6 @@
 import type { PropType } from 'vue';
 import { defineComponent, toRef } from 'vue';
-import type { APIClient } from '../../../core';
+import type { HTTPClient } from '../../../core';
 import { createResourceRecordManager, injectAPIClient } from '../../../core';
 
 export default defineComponent({
@@ -18,7 +18,7 @@ export default defineComponent({
         },
     },
     async setup(props, setup) {
-        const apiClient : APIClient = injectAPIClient();
+        const apiClient : HTTPClient = injectAPIClient();
         const id = toRef(props, 'code');
 
         const manager = createResourceRecordManager({

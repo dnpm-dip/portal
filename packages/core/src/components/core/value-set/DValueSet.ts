@@ -1,6 +1,6 @@
 import type { PropType, SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
-import type { APIClient, ResourceRecordSlots } from '../../../core';
+import type { HTTPClient, ResourceRecordSlots } from '../../../core';
 import {
     createResourceRecordManager,
     injectAPIClient,
@@ -26,7 +26,7 @@ export default defineComponent({
     },
     slots: Object as SlotsType<ResourceRecordSlots<ValueSet>>,
     async setup(props, setup) {
-        const apiClient : APIClient = injectAPIClient();
+        const apiClient : HTTPClient = injectAPIClient();
         const id = toRef(props, 'code');
 
         const manager = createResourceRecordManager({

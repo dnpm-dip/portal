@@ -1,7 +1,7 @@
 import { hasOwnProperty, isObject } from '../../utils';
-import type { APIClientErrorPayload } from './types';
+import type { HTTPClientErrorPayload } from './types';
 
-export function isAPIClientErrorPayload(input: unknown) : input is APIClientErrorPayload {
+export function isAPIClientErrorPayload(input: unknown) : input is HTTPClientErrorPayload {
     if (
         !isObject(input) ||
         !hasOwnProperty(input, '_issues') ||

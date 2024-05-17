@@ -1,7 +1,7 @@
 import { isClientError } from 'hapic';
 import { h } from 'vue';
 import type { VNodeArrayChildren, VNodeChild } from 'vue';
-import { APIClientErrorIssueSeverity, extractAPIClientErrorIssues } from '../api-client';
+import { APIClientErrorIssueSeverity, extractAPIClientErrorIssues } from '../http-client';
 import { hasNormalizedSlot, normalizeSlot } from '../utils';
 import type {
     ErrorCollectionSlotProps, ErrorRenderContext, ErrorRenderElement, ErrorSlotProps,

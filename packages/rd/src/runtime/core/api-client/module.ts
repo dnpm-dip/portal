@@ -1,4 +1,4 @@
-import type { APIClient } from '@dnpm-dip/core';
+import type { HTTPClient } from '@dnpm-dip/core';
 import {
     PreparedQueryAPI,
     QueryAPI,
@@ -9,7 +9,7 @@ export class RDAPIClient {
 
     readonly preparedQuery : PreparedQueryAPI;
 
-    constructor(client: APIClient) {
+    constructor(client: HTTPClient) {
         this.query = new QueryAPI({ client });
         this.preparedQuery = new PreparedQueryAPI({ client });
     }
