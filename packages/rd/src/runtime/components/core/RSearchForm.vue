@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { CodeRecord, ValueSetCoding } from '@dnpm-dip/core';
+import type { CodeRecord, Coding, ValueSetCoding } from '@dnpm-dip/core';
 import {
     DCollectionTransform, DFormTabGroups, DTags, DValueSet, QueryRequestMode,
 } from '@dnpm-dip/core';
@@ -72,6 +72,11 @@ export default defineComponent({
 
         const preparedQueryId = ref<string | undefined>(undefined);
         const preparedQueryName = ref('');
+
+        const parseCategory = (coding: Coding) => ({
+            id: `${coding.system}:::${coding.code}`,
+            value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
+        });
 
         const reset = async () => {
             if (busy.value) return;
@@ -147,10 +152,7 @@ export default defineComponent({
 
             if (criteria.value.diagnoses) {
                 for (let i = 0; i < criteria.value.diagnoses.length; i++) {
-                    categories.value.push({
-                        id: `${criteria.value.diagnoses[i].system}:::${criteria.value.diagnoses[i].code}`,
-                        value: criteria.value.diagnoses[i].display || criteria.value.diagnoses[i].code,
-                    });
+                    categories.value.push(parseCategory(criteria.value.diagnoses[i]));
                 }
             }
 
@@ -230,7 +232,7 @@ export default defineComponent({
 
                     payload.diagnoses.push({
                         system: id.substring(0, index),
-                        code: id.substring(index + 1),
+                        code: id.substring(index + 3),
                     });
                 }
             }
@@ -315,11 +317,6 @@ export default defineComponent({
             }
         };
 
-        const transformCategories = (coding: ValueSetCoding) => ({
-            id: `${coding.system}:::${coding.code}`,
-            value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
-        });
-
         const transformCodings = (coding: ValueSetCoding) => ({
             id: coding.code,
             value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
@@ -340,7 +337,7 @@ export default defineComponent({
             save,
             submit,
 
-            transformCategories,
+            parseCategory,
             transformCodings,
 
             // eslint-disable-next-line vue/no-dupe-keys
@@ -366,14 +363,14 @@ export default defineComponent({
                             <template #default="{ data }">
                                 <DCollectionTransform
                                     :items="data.codings"
-                                    :transform="transformCategories"
+                                    :transform="parseCategory"
                                 >
                                     <template #default="options">
                                         <VCFormSelectSearch
                                             v-model="categories"
                                             :multiple="true"
                                             :options="options"
-                                            placeholder="Orphanet Ontology"
+                                            placeholder="..."
                                         >
                                             <template #selected="{ items, toggle }">
                                                 <DTags
@@ -390,7 +387,7 @@ export default defineComponent({
                                 <VCFormSelectSearch
                                     :options="[]"
                                     :disabled="true"
-                                    placeholder="Orphanet Ontology"
+                                    placeholder="..."
                                 />
                             </template>
                         </DValueSet>
