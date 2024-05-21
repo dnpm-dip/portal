@@ -41,6 +41,7 @@ export default defineNuxtComponent({
         };
 
         return {
+            queryFilters,
             listRef,
             applyPagination,
         };
@@ -54,6 +55,7 @@ export default defineNuxtComponent({
         <QueryPatientMatchList
             ref="listRef"
             :query-id="entity.id"
+            :filters="queryFilters"
         >
             <template #default="props">
                 <template v-if="props.data.length > 0">
