@@ -16,12 +16,12 @@ import type {
     QueryCriteriaVariant,
     QuerySession,
 } from '../../domains';
-import VariantFormTabGroup from './VariantFormTabGroup.vue';
+import RVariantFormTabGroup from './RVariantFormTabGroup.vue';
 
 export default defineComponent({
     components: {
         DTags,
-        VariantFormTabGroup,
+        RVariantFormTabGroup,
         DFormTabGroups,
         DCollectionTransform,
         VCFormSelectSearch,
@@ -445,7 +445,7 @@ export default defineComponent({
                     <!-- todo: label; max 15 zeichen; {{Gene}} ({{dnaÄnderung}} || -->
                     <!-- todo: {{proteinänderung}}) || proteinänderung precedence vorrang dnaÄnderung -->
                     <template #default="props">
-                        <VariantFormTabGroup
+                        <RVariantFormTabGroup
                             :entity="props.item"
                             @updated="props.updated"
                         />

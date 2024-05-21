@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
-import SearchForm from '../../../../components/core/SearchForm.vue';
+import SearchForm from '../../../../components/core/RSearchForm.vue';
 import type { QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({

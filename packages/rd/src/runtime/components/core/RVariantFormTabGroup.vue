@@ -1,8 +1,5 @@
 <script lang="ts">
-import {
-    type CodeSystemConcept,
-    DCodeSystem, DCollectionTransform, DTags, HGVS_CODE_REGEX, transformConceptToFormSelectOption,
-} from '@dnpm-dip/core';
+import { type CodeSystemConcept, HGVS_CODE_REGEX, transformConceptToFormSelectOption } from '@dnpm-dip/core';
 import { IVuelidate } from '@ilingo/vuelidate';
 import useVuelidate from '@vuelidate/core';
 import { helpers } from '@vuelidate/validators';
@@ -10,28 +7,46 @@ import {
     type PropType, computed, defineComponent, reactive, toRef, watch,
 } from 'vue';
 import { VCFormSelectSearch } from '@vuecs/form-controls';
-import type { QuerySNVCriteria } from '../../domains';
+import { DCodeSystem, DCollectionTransform } from '@dnpm-dip/core';
+import type { QueryCriteriaVariant } from '../../domains';
 
 export default defineComponent({
     components: {
-        DTags, DCodeSystem, DCollectionTransform, IVuelidate, VCFormSelectSearch,
+        IVuelidate, DCollectionTransform, DCodeSystem, VCFormSelectSearch,
     },
+    emit: ['updated'],
     props: {
-        entity: Object as PropType<QuerySNVCriteria<string>>,
+        entity: {
+            type: Object as PropType<QueryCriteriaVariant<string>>,
+        },
     },
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
-        const form = reactive<QuerySNVCriteria<string>>({
+
+        const form = reactive({
             gene: '',
-            dnaChange: '',
+            cDNAChange: '',
+            gDNAChange: '',
             proteinChange: '',
         });
+
+        const init = () => {
+            form.gene = props.entity?.gene || '';
+            form.cDNAChange = props.entity?.cDNAChange || '';
+            form.gDNAChange = props.entity?.gDNAChange || '';
+            form.proteinChange = props.entity?.proteinChange || '';
+        };
+
+        init();
 
         const vuelidate = useVuelidate({
             gene: {
 
             },
-            dnaChange: {
+            cDNAChange: {
+
+            },
+            gDNAChange: {
 
             },
             proteinChange: {
@@ -39,19 +54,9 @@ export default defineComponent({
             },
         }, form);
 
-        const init = () => {
-            if (!props.entity) return;
-
-            form.gene = props.entity?.gene || '';
-            form.dnaChange = props.entity?.dnaChange || '';
-            form.proteinChange = props.entity?.proteinChange || '';
-        };
-
-        init();
-
         watch(entityRef, () => {
             init();
-        });
+        }, { deep: true });
 
         const transformConcepts = (
             concept: CodeSystemConcept,
@@ -59,26 +64,24 @@ export default defineComponent({
 
         const isEditing = computed(() => !!entityRef.value);
         const submit = () => {
-            emit('updated', {
-                gene: form.gene,
-                dnaChange: form.dnaChange,
-                proteinChange: form.proteinChange,
-            } satisfies QuerySNVCriteria<string>);
+            if (vuelidate.value.$invalid) return;
+
+            emit('updated', form);
         };
 
         return {
             form,
             transformConcepts,
+            vuelidate,
             isEditing,
             submit,
-            vuelidate,
         };
     },
 });
 </script>
 <template>
     <div class="form-group">
-        <label>Gen</label>
+        <label>Gene</label>
         <DCodeSystem
             :code="'https://www.genenames.org/'"
             :lazy-load="true"
@@ -93,37 +96,32 @@ export default defineComponent({
                             v-model="form.gene"
                             :options="options"
                             placeholder="HGNC"
-                        >
-                            <template #selected="{ items, toggle }">
-                                <DTags
-                                    :items="items"
-                                    tag-variant="dark"
-                                    @deleted="toggle"
-                                />
-                            </template>
-                        </VCFormSelectSearch>
+                        />
                     </template>
                 </DCollectionTransform>
             </template>
             <template #loading>
                 <VCFormSelectSearch
-                    :options="[]"
                     :disabled="true"
+                    :options="[]"
                     placeholder="HGNC"
                 />
             </template>
         </DCodeSystem>
     </div>
     <VCFormGroup>
-        <template #label>
-            DNA-Änderung
-        </template>
-        <template #default>
-            <VCFormInput
-                v-model="form.dnaChange"
-                placeholder="HGVS"
-            />
-        </template>
+        <label>kodierende DNA-Änderung</label>
+        <VCFormInput
+            v-model="form.cDNAChange"
+            placeholder="HGVS"
+        />
+    </VCFormGroup>
+    <VCFormGroup>
+        <label>genomische DNA-Änderung</label>
+        <VCFormInput
+            v-model="form.gDNAChange"
+            placeholder="HGVS"
+        />
     </VCFormGroup>
     <IVuelidate :validation="vuelidate.proteinChange">
         <template #default="props">
@@ -140,20 +138,20 @@ export default defineComponent({
                         placeholder="HGVS 3-Buchstaben-Code"
                     />
                     <!--
-                        <div class="alert alert-sm alert-info mt-1">
-                            todo: as tooltip - info icon next to label
-                            <VCLink
-                                target="_blank"
-                                href="https://hgvs-nomenclature.org/stable/background/standards/#amino-acid-descriptions"
-                            >
-                                code
-                            </VCLink>
-                        </div>
-                        -->
+                            <div class="alert alert-sm alert-info mt-1">
+                                todo: as tooltip - info icon next to label
+                                <VCLink
+                                    target="_blank"
+                                    href="https://hgvs-nomenclature.org/stable/background/standards/#amino-acid-descriptions"
+                                >
+                                    code
+                                </VCLink>
+                            </div>
+                            -->
                 </template>
             </VCFormGroup>
         </template>
-    </ivuelidate>
+    </Ivuelidate>
     <div>
         <button
             :disabled="vuelidate.$invalid"

@@ -6,7 +6,7 @@ import { provide, ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
 import QueryDiagnosisFilter from '../../../components/core/RQueryDiagnosisFilter.vue';
 import QueryHPOFilter from '../../../components/core/RQueryHPOFilter.vue';
-import SearchForm from '../../../components/core/SearchForm.vue';
+import SearchForm from '../../../components/core/RSearchForm.vue';
 import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
