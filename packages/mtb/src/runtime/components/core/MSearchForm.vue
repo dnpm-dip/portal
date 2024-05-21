@@ -136,7 +136,7 @@ export default defineComponent({
             if (criteria.value.copyNumberVariants) {
                 for (let i = 0; i < criteria.value.copyNumberVariants.length; i++) {
                     mutations.value.push({
-                        type: FormMutationType.SNV,
+                        type: FormMutationType.CNV,
                         data: extractCodeFromCodingsRecord(criteria.value.copyNumberVariants[i]),
                     });
                 }
