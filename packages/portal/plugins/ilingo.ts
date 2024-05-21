@@ -8,7 +8,7 @@ export default defineNuxtPlugin({
             data: {
                 de: {
                     vuelidate: {
-                        hgvs: 'Es muss einer oder mehrere gültige HGVS Codes in der Eingabe vorkommen',
+                        hgvs: 'Es müssen ein oder mehrere HGVS-Codes in 3-Buchstaben-Format in der Eingabe vorkommen',
                     },
                 },
             },
