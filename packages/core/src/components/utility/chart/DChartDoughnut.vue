@@ -9,7 +9,7 @@ import { computed, defineComponent } from 'vue';
 import type {
     Coding, ConceptsCount, MinMaxRange, Quantities,
 } from '../../../domains';
-import { generateRandomColor, getColorInRange, rgbToHex } from '../../../utils';
+import { generateRandomColorTuple, getColorInRange, rgbToHex } from '../../../utils';
 import { generateChartLabelsForKeyValueRecord } from './utils';
 
 type Key = MinMaxRange | Coding | string[] | string;
@@ -31,8 +31,7 @@ export default defineComponent({
     setup(props) {
         const items = computed(() => props.items.slice(0, props.limit));
 
-        const colorStart = generateRandomColor();
-        const colorEnd = generateRandomColor();
+        const [start, end] = generateRandomColorTuple(items.value.length);
 
         const data = computed<ChartData<'doughnut'>>(() => ({
             datasets: [{
@@ -44,8 +43,8 @@ export default defineComponent({
                     return item.value.count;
                 }),
                 backgroundColor: items.value.map((_, key) => rgbToHex(getColorInRange({
-                    start: colorStart,
-                    end: colorEnd,
+                    start,
+                    end,
                     rangeMax: items.value.length,
                     rangeValue: key,
                 }))),
