@@ -69,7 +69,7 @@ export default defineNuxtComponent({
                                     <QueryPatientMatchEntity
                                         :entity="item"
                                         :query-id="entity.id"
-                                        :index="props.offset + index"
+                                        :index="props.offset ? props.offset + index : index"
                                     />
                                 </li>
                             </template>

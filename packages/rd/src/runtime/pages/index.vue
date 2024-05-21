@@ -1,7 +1,6 @@
 <script lang="ts">
-import { DAPIClientError, PageMetaKey } from '@dnpm-dip/core';
+import { PageMetaKey, useToast } from '@dnpm-dip/core';
 import type { ClientError } from 'hapic';
-import { ref } from 'vue';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/RSearchForm.vue';
 import type { QueryCriteria } from '../domains';
@@ -10,7 +9,6 @@ import PreparedQueryForm from '../components/core/RPreparedQueryForm.vue';
 export default defineNuxtComponent({
     components: {
         PreparedQueryForm,
-        DAPIClientError,
         SearchForm,
     },
     setup() {
@@ -19,9 +17,13 @@ export default defineNuxtComponent({
             [PageMetaKey.NAVIGATION_SIDE_ID]: 'rd-search',
         });
 
-        const error = ref<null | ClientError>(null);
+        const toast = useToast();
+
         const handleFailed = (e: ClientError) => {
-            error.value = e;
+            toast.show({
+                body: e.message,
+                variant: 'warning',
+            });
         };
 
         const handleSubmitted = async (data : {
@@ -29,8 +31,6 @@ export default defineNuxtComponent({
             queryId: string,
             preparedQueryId?: string
         }) => {
-            error.value = null;
-
             let query : Record<string, any> | undefined;
             if (data.preparedQueryId) {
                 query = {
@@ -42,7 +42,7 @@ export default defineNuxtComponent({
         };
 
         return {
-            error,
+            handleFailed,
             handleSubmitted,
         };
     },
@@ -57,10 +57,7 @@ export default defineNuxtComponent({
 
         <PreparedQueryForm
             @submitted="handleSubmitted"
+            @failed="handleFailed"
         />
-
-        <template v-if="error">
-            <DAPIClientError :error="error" />
-        </template>
     </div>
 </template>

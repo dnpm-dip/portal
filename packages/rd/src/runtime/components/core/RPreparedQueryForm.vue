@@ -10,7 +10,7 @@ import type { PreparedQuery, QueryCriteria, QuerySession } from '../../domains';
 
 export default defineComponent({
     components: { RPreparedQuery, RPreparedQueries, SearchForm },
-    emits: ['submitted'],
+    emits: ['submitted', 'failed'],
     setup(props, setup) {
         const searchEl = ref(null) as Ref<null | typeof SearchForm>;
         const criteria = ref<QueryCriteria | undefined>(undefined);
@@ -48,6 +48,10 @@ export default defineComponent({
             preparedQuery.value = data;
             criteria.value = data.criteria;
             reset();
+        };
+
+        const handleFailed = (e: Error) => {
+            setup.emit('failed', e);
         };
 
         const handleQueryCreated = (data: QuerySession) => {
@@ -94,6 +98,7 @@ export default defineComponent({
 
         return {
             criteria,
+            handleFailed,
             handleQueryCreated,
             handleQueryUpdated,
             handlePreparedQueryCreated,
@@ -115,6 +120,7 @@ export default defineComponent({
                 ref="searchEl"
                 :criteria="criteria"
                 :prepared-query="preparedQuery"
+                @failed="handleFailed"
                 @prepared-query-created="handlePreparedQueryCreated"
                 @prepared-query-updated="handlePreparedQueryUpdated"
                 @query-created="handleQueryCreated"

@@ -1,4 +1,5 @@
 <script lang="ts">
+import { useToast } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
 import SearchForm from '../../../../components/core/RSearchForm.vue';
@@ -14,12 +15,27 @@ export default defineNuxtComponent({
     },
     setup(_props, { emit }) {
         const route = useRoute();
+        const toast = useToast();
+
         const handleUpdated = (entity: QuerySession) => {
             emit('updated', entity);
+
+            toast.show({
+                body: 'Die Suche wurde erfolgreich aktualisiert.',
+                variant: 'success',
+            });
+        };
+
+        const handleFailed = (err: Error) => {
+            toast.show({
+                body: err.message,
+                variant: 'warning',
+            });
         };
 
         return {
             preparedQueryId: route.query.preparedQueryId,
+            handleFailed,
             handleUpdated,
         };
     },
@@ -32,5 +48,6 @@ export default defineNuxtComponent({
         :criteria="entity.criteria"
         :prepared-query-id="preparedQueryId"
         @query-updated="handleUpdated"
+        @failed="handleFailed"
     />
 </template>

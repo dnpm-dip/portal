@@ -15,6 +15,7 @@ export type ResourceRecordResponse<T> = T;
 
 export type CodeRecord<V extends string = string> = {
     code: V,
+    system?: string,
     display?: string
 };
 

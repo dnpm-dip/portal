@@ -148,7 +148,7 @@ export default defineComponent({
             if (criteria.value.diagnoses) {
                 for (let i = 0; i < criteria.value.diagnoses.length; i++) {
                     categories.value.push({
-                        id: criteria.value.diagnoses[i].code,
+                        id: `${criteria.value.diagnoses[i].system}:::${criteria.value.diagnoses[i].code}`,
                         value: criteria.value.diagnoses[i].display || criteria.value.diagnoses[i].code,
                     });
                 }
@@ -225,8 +225,12 @@ export default defineComponent({
                 payload.diagnoses = [];
 
                 for (let i = 0; i < categories.value.length; i++) {
+                    const id = `${categories.value[i].id}`;
+                    const index = id.indexOf(':::');
+
                     payload.diagnoses.push({
-                        code: `${categories.value[i].id}`,
+                        system: id.substring(0, index),
+                        code: id.substring(index + 1),
                     });
                 }
             }
@@ -311,6 +315,11 @@ export default defineComponent({
             }
         };
 
+        const transformCategories = (coding: ValueSetCoding) => ({
+            id: `${coding.system}:::${coding.code}`,
+            value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
+        });
+
         const transformCodings = (coding: ValueSetCoding) => ({
             id: coding.code,
             value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
@@ -331,6 +340,7 @@ export default defineComponent({
             save,
             submit,
 
+            transformCategories,
             transformCodings,
 
             // eslint-disable-next-line vue/no-dupe-keys
@@ -350,13 +360,13 @@ export default defineComponent({
                     <div class="form-group">
                         <label>Kategorie</label>
                         <DValueSet
-                            :code="'https://www.orpha.net'"
+                            :code="'dnpm-dip/rd/disease-category'"
                             :lazy-load="true"
                         >
                             <template #default="{ data }">
                                 <DCollectionTransform
                                     :items="data.codings"
-                                    :transform="transformCodings"
+                                    :transform="transformCategories"
                                 >
                                     <template #default="options">
                                         <VCFormSelectSearch
