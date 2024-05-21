@@ -3,7 +3,7 @@ import { DAPIClientError, PageMetaKey } from '@dnpm-dip/core';
 import type { ClientError } from 'hapic';
 import { ref } from 'vue';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
-import SearchForm from '../components/core/SearchForm.vue';
+import SearchForm from '../components/core/RSearchForm.vue';
 import type { QueryCriteria } from '../domains';
 import PreparedQueryForm from '../components/core/RPreparedQueryForm.vue';
 

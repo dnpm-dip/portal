@@ -3,7 +3,7 @@ import type { Ref } from 'vue';
 import {
     computed, defineComponent, nextTick, ref,
 } from 'vue';
-import SearchForm from './SearchForm.vue';
+import SearchForm from './RSearchForm.vue';
 import RPreparedQueries from './RPreparedQueries';
 import RPreparedQuery from './RPreparedQuery';
 import type { PreparedQuery, QueryCriteria, QuerySession } from '../../domains';
