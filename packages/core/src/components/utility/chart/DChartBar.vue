@@ -8,7 +8,10 @@ import { computed, defineComponent } from 'vue';
 import type {
     Coding, ConceptsCount, MinMaxRange, Quantities,
 } from '../../../domains';
-import { generateChartBackgroundColorForKeyValueRecord, generateChartLabelsForKeyValueRecord } from './utils';
+import {
+    generateRandomColorTuple, getColorInRange, rgbToHex,
+} from '../../../utils';
+import { generateChartLabelsForKeyValueRecord } from './utils';
 
 type Key = MinMaxRange | Coding | string[] | string;
 export default defineComponent({
@@ -23,9 +26,15 @@ export default defineComponent({
         codingVerboseLabel: {
             type: Boolean,
         },
+        limit: {
+            type: Number,
+            default: 15,
+        },
     },
     setup(props) {
-        const items = computed(() => props.items.slice(0, 15));
+        const items = computed(() => props.items.slice(0, props.limit));
+
+        const [start, end] = generateRandomColorTuple(items.value.length);
 
         const data = computed<ChartData<'bar'>>(() => ({
             datasets: [{
@@ -36,7 +45,12 @@ export default defineComponent({
 
                     return item.value.count;
                 }),
-                backgroundColor: props.items.map((item) => generateChartBackgroundColorForKeyValueRecord(item)),
+                backgroundColor: items.value.map((_, key) => rgbToHex(getColorInRange({
+                    start,
+                    end,
+                    rangeMax: items.value.length,
+                    rangeValue: key,
+                }))),
             }],
             labels: items.value.map((item) => {
                 if (typeof item.value === 'number') {

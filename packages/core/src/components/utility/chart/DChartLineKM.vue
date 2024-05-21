@@ -5,7 +5,11 @@ import type {
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 import { Line } from 'vue-chartjs';
-import { stringToColor } from '../../../utils';
+import {
+    generateRandomColorTuple,
+    getColorInRange,
+    rgbToHex,
+} from '../../../utils';
 import type { KMSurvivalReport } from './types';
 
 export default defineComponent({
@@ -19,7 +23,9 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const datasets = computed<ChartDataset<'line'>[]>(() => props.report.data.map((item) => {
+        const [start, end] = generateRandomColorTuple(props.report.data.length);
+
+        const datasets = computed<ChartDataset<'line'>[]>(() => props.report.data.map((item, key) => {
             const data : Point[] = [];
 
             for (let i = 0; i < item.value.survivalRates.length; i++) {
@@ -29,7 +35,12 @@ export default defineComponent({
                 });
             }
 
-            const color = stringToColor(item.key);
+            const color = rgbToHex(getColorInRange({
+                start,
+                end,
+                rangeMax: props.report.data.length,
+                rangeValue: key,
+            }));
 
             return {
                 type: 'line',

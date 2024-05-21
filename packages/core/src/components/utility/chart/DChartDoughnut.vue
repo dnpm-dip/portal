@@ -9,7 +9,8 @@ import { computed, defineComponent } from 'vue';
 import type {
     Coding, ConceptsCount, MinMaxRange, Quantities,
 } from '../../../domains';
-import { generateChartBackgroundColorForKeyValueRecord, generateChartLabelsForKeyValueRecord } from './utils';
+import { generateRandomColorTuple, getColorInRange, rgbToHex } from '../../../utils';
+import { generateChartLabelsForKeyValueRecord } from './utils';
 
 type Key = MinMaxRange | Coding | string[] | string;
 
@@ -22,20 +23,33 @@ export default defineComponent({
             required: true,
             type: Array as PropType<ConceptsCount<Key> | Quantities<Key>>,
         },
+        limit: {
+            type: Number,
+            default: 15,
+        },
     },
     setup(props) {
+        const items = computed(() => props.items.slice(0, props.limit));
+
+        const [start, end] = generateRandomColorTuple(items.value.length);
+
         const data = computed<ChartData<'doughnut'>>(() => ({
             datasets: [{
-                data: props.items.map((item) => {
+                data: items.value.map((item) => {
                     if (typeof item.value === 'number') {
                         return item.value;
                     }
 
                     return item.value.count;
                 }),
-                backgroundColor: props.items.map((item) => generateChartBackgroundColorForKeyValueRecord(item)),
+                backgroundColor: items.value.map((_, key) => rgbToHex(getColorInRange({
+                    start,
+                    end,
+                    rangeMax: items.value.length,
+                    rangeValue: key,
+                }))),
             }],
-            labels: props.items.map((item) => {
+            labels: items.value.map((item) => {
                 if (typeof item.value === 'number') {
                     return `${generateChartLabelsForKeyValueRecord(item)}`;
                 }
