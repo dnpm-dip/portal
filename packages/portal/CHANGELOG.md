@@ -1,5 +1,21 @@
 # @dnpm-dip/portal
 
+## [1.10.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.10.0...v1.10.1) (2024-05-21)
+
+
+### Bug Fixes
+
+* better convention for hgvs 3-letter validation message ([3f71bed](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/3f71bed7a636212b14724ee825f9387df7c0e4e9))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.10.0 to ^1.11.0
+    * @dnpm-dip/mtb bumped from ^1.10.0 to ^1.10.1
+    * @dnpm-dip/rd bumped from ^1.10.0 to ^1.10.1
+
 ## [1.10.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.9.0...v1.10.0) (2024-05-21)
 
 

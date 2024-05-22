@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.11.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.10.0...v1.11.0) (2024-05-21)
+
+
+### Features
+
+* generate colors in close range for charts ([#477](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/477)) ([1735768](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/17357688f8c0b04e3773cab177256ae8c8f8b892))
+
+
+### Bug Fixes
+
+* better convention for hgvs 3-letter validation message ([3f71bed](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/3f71bed7a636212b14724ee825f9387df7c0e4e9))
+* disease category submission in rd modul ([4b623fb](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/4b623fb85978ca3918af730dea4cea69a627dfaf))
+
 ## [1.10.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.9.0...v1.10.0) (2024-05-21)
 
 

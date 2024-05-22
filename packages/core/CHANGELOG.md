@@ -1,5 +1,12 @@
 # @dnpm-dip/core
 
+## [1.11.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.10.0...v1.11.0) (2024-05-21)
+
+
+### Features
+
+* generate colors in close range for charts ([#477](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/477)) ([1735768](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/17357688f8c0b04e3773cab177256ae8c8f8b892))
+
 ## [1.10.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.9.0...v1.10.0) (2024-05-21)
 
 
