@@ -186,17 +186,17 @@ export default defineComponent({
 
                             <ul class="list-unstyled">
                                 <li v-if="item.gene">
-                                    <strong>&bull; Gen</strong>: <DCodingText
+                                    <strong>&bull; Gen</strong> <DCodingText
                                         :entity="item.gene"
                                     />
                                 </li>
                                 <li v-if="item.dnaChange">
-                                    <strong>&bull; DNA-Änderung</strong>: <DCodingText
+                                    <strong>&bull; DNA-Änderung</strong> <DCodingText
                                         :entity="item.dnaChange"
                                     />
                                 </li>
                                 <li v-if="item.proteinChange">
-                                    <strong>&bull; Proteinänderung</strong>: <DCodingText
+                                    <strong>&bull; Proteinänderung</strong> <DCodingText
                                         :entity="item.proteinChange"
                                     />
                                 </li>
@@ -214,11 +214,11 @@ export default defineComponent({
 
                             <ul class="list-unstyled">
                                 <li v-if="item.type">
-                                    <strong>&bull; Type</strong>:
+                                    <strong>&bull; Type</strong>
                                     {{ item.type.display || item.type.code }}
                                 </li>
                                 <li v-if="item.affectedGenes">
-                                    <strong>&bull; Betroffene Gene</strong>:
+                                    <strong>&bull; Betroffene Gene</strong>
                                     <template
                                         v-for="el in item.affectedGenes"
                                         :key="el.code"
@@ -240,10 +240,10 @@ export default defineComponent({
 
                             <ul class="list-unstyled">
                                 <li v-if="item.fusionPartner3pr">
-                                    <strong>&bull; 3'-Gen</strong>: {{ item.fusionPartner3pr }}
+                                    <strong>&bull; 3'-Gen</strong> {{ item.fusionPartner3pr }}
                                 </li>
                                 <li v-if="item.fusionPartner5pr">
-                                    <strong>&bull; 5'-Gen</strong>: {{ item.fusionPartner5pr }}
+                                    <strong>&bull; 5'-Gen</strong> {{ item.fusionPartner5pr }}
                                 </li>
                             </ul>
                         </div>
@@ -259,10 +259,10 @@ export default defineComponent({
 
                             <ul class="list-unstyled">
                                 <li v-if="item.fusionPartner3pr">
-                                    <strong>&bull; 3'-Gen</strong>: {{ item.fusionPartner3pr }}
+                                    <strong>&bull; 3'-Gen</strong> {{ item.fusionPartner3pr }}
                                 </li>
                                 <li v-if="item.fusionPartner5pr">
-                                    <strong>&bull; 5'-Gen</strong>: {{ item.fusionPartner5pr }}
+                                    <strong>&bull; 5'-Gen</strong> {{ item.fusionPartner5pr }}
                                 </li>
                             </ul>
                         </div>
