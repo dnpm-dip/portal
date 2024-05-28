@@ -1,9 +1,13 @@
 <script lang="ts">
+import { DCodingText } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineComponent, ref } from 'vue';
 import type { PatientMatch } from '../../domains';
 
 export default defineComponent({
+    components: {
+        DCodingText,
+    },
     props: {
         entity: {
             type: Object as PropType<PatientMatch>,
@@ -123,7 +127,7 @@ export default defineComponent({
                         v-for="item in entity.matchingCriteria.diagnoses"
                         :key="item.code"
                     >
-                        <span class="badge bg-dark ms-1">{{ item.code }}</span>
+                        <span class="badge bg-dark ms-1"><DCodingText :entity="item" /></span>
                     </template>
                 </div>
 
@@ -134,7 +138,7 @@ export default defineComponent({
                         v-for="item in entity.matchingCriteria.tumorMorphologies"
                         :key="item.code"
                     >
-                        <span class="badge bg-dark ms-1">{{ item.display || item.code }}</span>
+                        <span class="badge bg-dark ms-1"><DCodingText :entity="item" /></span>
                     </template>
                 </div>
 
@@ -176,13 +180,13 @@ export default defineComponent({
 
                             <ul class="list-unstyled">
                                 <li v-if="item.gene">
-                                    <strong>Gen</strong>: {{ item.gene }}
+                                    <strong>Gen</strong>: <DCodingText :entity="item.gene" />
                                 </li>
                                 <li v-if="item.dnaChange">
-                                    <strong>DNA-Änderung</strong>: {{ item.dnaChange }}
+                                    <strong>DNA-Änderung</strong>: <DCodingText :entity="item.dnaChange" />
                                 </li>
                                 <li v-if="item.proteinChange">
-                                    <strong>Proteinänderung</strong>: {{ item.proteinChange }}
+                                    <strong>Proteinänderung</strong>: <DCodingText :entity="item.proteinChange" />
                                 </li>
                             </ul>
                         </div>

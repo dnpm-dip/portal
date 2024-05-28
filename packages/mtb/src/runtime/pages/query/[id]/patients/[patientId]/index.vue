@@ -48,7 +48,6 @@ export default defineNuxtComponent({
                                         - {{ item.period.end }}
                                     </template>
                                 </div>
-                                <div><strong><i class="fas fa-check-circle" /> Status</strong> {{ item.status.display || item.status.code }}</div>
                             </div>
                         </div>
                     </div>

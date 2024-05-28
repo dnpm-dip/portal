@@ -180,8 +180,14 @@ export default defineNuxtComponent({
                     <div class="row">
                         <div class="col">
                             <div>
-                                <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.issuedOn }}</div>
-                                <div><strong><i class="fa fa-dna" /> Sequenzierungs-Typ</strong> {{ item.sequencingType }}</div>
+                                <div>
+                                    <strong><i class="fa fa-clock" /> Datum</strong> {{ item.issuedOn }}
+                                </div>
+                                <div>
+                                    <strong>
+                                        <i class="fa fa-dna" /> Sequenzierungs-Typ</strong>
+                                    {{ item.sequencingType.display || item.sequencingType.code }}
+                                </div>
                             </div>
                         </div>
                         <div class="col">

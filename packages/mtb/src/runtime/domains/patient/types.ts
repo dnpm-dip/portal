@@ -141,7 +141,7 @@ export type NGSReport = {
     metadata: Record<string, any>[],
     patient: { id: string, type: string },
     results: NgsReportResults,
-    sequencingType: string
+    sequencingType: Coding<string>
 };
 
 type History<T = any> = {

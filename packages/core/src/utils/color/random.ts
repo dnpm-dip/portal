@@ -8,15 +8,22 @@
 import { hslToRgb } from './hsl-to-rgb';
 import type { RGB } from './types';
 
-export function generateRandomColorTuple(distance: number) : [RGB, RGB] {
-    const section = Math.round(Math.random() * 6);
-    const angle = 60 * section;
+export function generateRandomColorTuple(slices = 6) : [RGB, RGB] {
+    const sectionSize = Math.floor(360 / slices);
+    let section : number;
+    if (slices === 1) {
+        section = 0;
+    } else {
+        section = Math.round(Math.random() * slices);
+    }
+    const sectionMin = sectionSize * section;
+    const sectionMax = Math.min(sectionMin + sectionSize, 360);
 
-    const left = angle / 360;
-    const right = (angle + (60 / distance)) / 360;
+    const left = sectionMin / 360;
+    const right = sectionMax / 360;
 
     return [
-        hslToRgb({ h: left, l: 0.5, s: 0.1 }),
-        hslToRgb({ h: right, l: 0.5, s: 1.0 }),
+        hslToRgb({ h: left, s: 0.4, l: 0.4 }),
+        hslToRgb({ h: right, s: 1.0, l: 0.8 }),
     ];
 }

@@ -23,7 +23,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const [start, end] = generateRandomColorTuple(props.report.data.length);
+        const [start, end] = generateRandomColorTuple(2);
 
         const datasets = computed<ChartDataset<'line'>[]>(() => props.report.data.map((item, key) => {
             const data : Point[] = [];

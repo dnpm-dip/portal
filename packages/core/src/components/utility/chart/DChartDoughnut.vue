@@ -31,7 +31,7 @@ export default defineComponent({
     setup(props) {
         const items = computed(() => props.items.slice(0, props.limit));
 
-        const [start, end] = generateRandomColorTuple(items.value.length);
+        const [start, end] = generateRandomColorTuple();
 
         const data = computed<ChartData<'doughnut'>>(() => ({
             datasets: [{

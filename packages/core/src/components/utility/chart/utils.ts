@@ -3,6 +3,7 @@ import { isCoding, isMinMaxRange } from '../../../domains';
 
 type ChartLabelsGenerateOptions = {
     codingVerbose?: boolean
+    codingCodeOnly?: boolean
 };
 
 export function generateChartLabelsForKeyValueRecord(
@@ -10,6 +11,10 @@ export function generateChartLabelsForKeyValueRecord(
     options: ChartLabelsGenerateOptions = {},
 ) : string | undefined {
     if (isCoding(item.key)) {
+        if (options.codingCodeOnly) {
+            return item.key.code;
+        }
+
         if (item.key.display) {
             if (options.codingVerbose) {
                 return `${item.key.code}: ${item.key.display}`;
