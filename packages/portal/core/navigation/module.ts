@@ -2,6 +2,7 @@ import { PermissionName } from '@authup/core-kit';
 import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
 import type { NavigationItem, NavigationProvider } from '@vuecs/navigation';
 import { flattenNestedNavigationItems } from '@vuecs/navigation';
+import type { RouteLocationNormalized } from 'vue-router';
 import { reduceNavigationElementsByRestriction } from './utils';
 
 type NavigationContext = {
@@ -29,6 +30,7 @@ export class Navigation implements NavigationProvider {
             {
                 id: PageNavigationTopID.ADMIN,
                 name: 'Admin',
+                url: '/admin/',
                 rootLink: true,
                 [PageMetaKey.REQUIRED_LOGGED_IN]: true,
             },
@@ -59,6 +61,12 @@ export class Navigation implements NavigationProvider {
                 },
             ],
             admin: [
+                {
+                    name: 'Overview',
+                    type: 'link',
+                    url: '/admin',
+                    icon: 'fa fa-home',
+                },
                 {
                     name: 'Identitätsanbieter',
                     type: 'link',
@@ -134,7 +142,7 @@ export class Navigation implements NavigationProvider {
         });
     }
 
-    async getItemsActiveByRoute(route) {
+    async getItemsActiveByRoute(route: RouteLocationNormalized) {
         const {
             [PageMetaKey.NAVIGATION_TOP_ID]: topId,
             [PageMetaKey.NAVIGATION_SIDE_ID]: sideId,
