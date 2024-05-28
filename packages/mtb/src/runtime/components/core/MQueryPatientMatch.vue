@@ -121,7 +121,7 @@ export default defineComponent({
                 class="ms-3 d-flex flex-column justify-content-between mb-2 mt-2"
             >
                 <div v-if="entity.matchingCriteria.diagnoses">
-                    <strong>Diagnose Kategorien</strong>
+                    <strong>Diagnose</strong>
 
                     <template
                         v-for="item in entity.matchingCriteria.diagnoses"
