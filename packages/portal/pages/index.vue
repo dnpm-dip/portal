@@ -3,16 +3,17 @@
         <h1>DNPM:DIP</h1>
         <WorldHealth :style="{'width': '800px'}" />
 
-        <div class="d-flex flex-row">
+        <div class="d-flex flex-row gap-2">
             <template
                 v-for="(item) in items"
                 :key="item.name"
             >
-                <div
-                    class="entity-card w-100"
-                >
+                <div class="entity-card w-100 ratio-1x1">
                     <h3 class="mb-0">
-                        <VCLink :to="item.baseURL">
+                        <VCLink
+                            :to="item.baseURL"
+                            class="stretched-link"
+                        >
                             {{ item.name }}
                         </VCLink>
                     </h3>
