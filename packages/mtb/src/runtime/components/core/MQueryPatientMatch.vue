@@ -127,7 +127,10 @@ export default defineComponent({
                         v-for="item in entity.matchingCriteria.diagnoses"
                         :key="item.code"
                     >
-                        <span class="badge bg-dark ms-1"><DCodingText :entity="item" /></span>
+                        <span class="badge bg-dark ms-1"><DCodingText
+                            :composite="true"
+                            :entity="item"
+                        /></span>
                     </template>
                 </div>
 
@@ -138,7 +141,10 @@ export default defineComponent({
                         v-for="item in entity.matchingCriteria.tumorMorphologies"
                         :key="item.code"
                     >
-                        <span class="badge bg-dark ms-1"><DCodingText :entity="item" /></span>
+                        <span class="badge bg-dark ms-1"><DCodingText
+                            :composite="true"
+                            :entity="item"
+                        /></span>
                     </template>
                 </div>
 
@@ -180,13 +186,19 @@ export default defineComponent({
 
                             <ul class="list-unstyled">
                                 <li v-if="item.gene">
-                                    <strong>Gen</strong>: <DCodingText :entity="item.gene" />
+                                    <strong>&bull; Gen</strong>: <DCodingText
+                                        :entity="item.gene"
+                                    />
                                 </li>
                                 <li v-if="item.dnaChange">
-                                    <strong>DNA-Änderung</strong>: <DCodingText :entity="item.dnaChange" />
+                                    <strong>&bull; DNA-Änderung</strong>: <DCodingText
+                                        :entity="item.dnaChange"
+                                    />
                                 </li>
                                 <li v-if="item.proteinChange">
-                                    <strong>Proteinänderung</strong>: <DCodingText :entity="item.proteinChange" />
+                                    <strong>&bull; Proteinänderung</strong>: <DCodingText
+                                        :entity="item.proteinChange"
+                                    />
                                 </li>
                             </ul>
                         </div>
@@ -202,11 +214,11 @@ export default defineComponent({
 
                             <ul class="list-unstyled">
                                 <li v-if="item.type">
-                                    <strong>Type</strong>:
+                                    <strong>&bull; Type</strong>:
                                     {{ item.type.display || item.type.code }}
                                 </li>
                                 <li v-if="item.affectedGenes">
-                                    <strong>Betroffene Gene</strong>:
+                                    <strong>&bull; Betroffene Gene</strong>:
                                     <template
                                         v-for="el in item.affectedGenes"
                                         :key="el.code"
@@ -228,10 +240,10 @@ export default defineComponent({
 
                             <ul class="list-unstyled">
                                 <li v-if="item.fusionPartner3pr">
-                                    <strong>3'-Gen</strong>: {{ item.fusionPartner3pr }}
+                                    <strong>&bull; 3'-Gen</strong>: {{ item.fusionPartner3pr }}
                                 </li>
                                 <li v-if="item.fusionPartner5pr">
-                                    <strong>5'-Gen</strong>: {{ item.fusionPartner5pr }}
+                                    <strong>&bull; 5'-Gen</strong>: {{ item.fusionPartner5pr }}
                                 </li>
                             </ul>
                         </div>
@@ -247,10 +259,10 @@ export default defineComponent({
 
                             <ul class="list-unstyled">
                                 <li v-if="item.fusionPartner3pr">
-                                    <strong>3'-Gen</strong>: {{ item.fusionPartner3pr }}
+                                    <strong>&bull; 3'-Gen</strong>: {{ item.fusionPartner3pr }}
                                 </li>
                                 <li v-if="item.fusionPartner5pr">
-                                    <strong>5'-Gen</strong>: {{ item.fusionPartner5pr }}
+                                    <strong>&bull; 5'-Gen</strong>: {{ item.fusionPartner5pr }}
                                 </li>
                             </ul>
                         </div>
