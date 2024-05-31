@@ -5,7 +5,7 @@ import {
     createResolver,
     defineNuxtModule,
 } from '@nuxt/kit';
-import { PermissionName } from './runtime/domains';
+import type { PermissionName } from './runtime/domains';
 
 export default defineNuxtModule({
     meta: {
@@ -27,7 +27,9 @@ export default defineNuxtModule({
                     name: 'Suche',
                     icon: 'fa fa-search',
                     url: '',
-                    [PageMetaKey.REQUIRED_PERMISSIONS]: PermissionName.QUERY_SUBMIT,
+                    [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                        'mtb_query_submit',
+                    ] satisfies `${PermissionName}`[],
                 },
             ],
             navigationTopId: 'mtb',
