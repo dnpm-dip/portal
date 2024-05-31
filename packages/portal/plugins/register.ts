@@ -31,10 +31,12 @@ export default defineNuxtPlugin<Record<string, any>>({
             if (context.navigationItems) {
                 const topNavigationId = context.navigationTopId ||
                     context.name.toLowerCase();
+
                 const topNavigationItem: NavigationItem = {
                     id: topNavigationId,
                     name: context.name,
                     url: context.baseURL,
+                    requireLoggedIn: context.requireLoggedIn,
                 };
 
                 provider.addTopElement(topNavigationItem);

@@ -3,7 +3,7 @@ import { PageMetaKey, useToast } from '@dnpm-dip/core';
 import type { ClientError } from 'hapic';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/RSearchForm.vue';
-import type { QueryCriteria } from '../domains';
+import { PermissionName, type QueryCriteria } from '../domains';
 import PreparedQueryForm from '../components/core/RPreparedQueryForm.vue';
 
 export default defineNuxtComponent({
@@ -15,6 +15,9 @@ export default defineNuxtComponent({
         definePageMeta({
             [PageMetaKey.NAVIGATION_TOP_ID]: 'rd',
             [PageMetaKey.NAVIGATION_SIDE_ID]: 'rd-search',
+            [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                PermissionName.QUERY_SUBMIT,
+            ],
         });
 
         const toast = useToast();

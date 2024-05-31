@@ -1,9 +1,11 @@
+import { PageMetaKey } from '@dnpm-dip/core';
 import { register } from '@dnpm-dip/kit';
 import {
     addPlugin,
     createResolver,
     defineNuxtModule,
 } from '@nuxt/kit';
+import { PermissionName } from './runtime/domains';
 
 export default defineNuxtModule({
     meta: {
@@ -19,12 +21,16 @@ export default defineNuxtModule({
             name: 'RD',
             baseURL: '/rd/',
             rootDir: import.meta.url,
+            requireLoggedIn: true,
             navigationItems: [
                 {
                     id: 'rd-search',
                     name: 'Suche',
                     icon: 'fa fa-search',
                     url: '',
+                    [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                        PermissionName.QUERY_SUBMIT,
+                    ],
                 },
             ],
             navigationTopId: 'rd',

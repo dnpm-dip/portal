@@ -27,9 +27,10 @@
     </div>
 </template>
 <script lang="ts">
+import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
 import { VCLink } from '@vuecs/link';
 import { storeToRefs } from 'pinia';
-import { defineNuxtComponent } from '#imports';
+import { defineNuxtComponent, definePageMeta } from '#imports';
 import WorldHealth from '../components/svg/WorldHealth';
 import { useModuleStore } from '../stores/modules';
 
@@ -39,6 +40,11 @@ export default defineNuxtComponent({
         VCLink,
     },
     setup() {
+        definePageMeta({
+            [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+            [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.DEFAULT,
+        });
+
         const moduleStore = useModuleStore();
         const refs = storeToRefs(moduleStore);
         return {

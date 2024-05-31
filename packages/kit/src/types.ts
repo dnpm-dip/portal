@@ -6,5 +6,7 @@ export type RegistrationContext = {
     baseURL: string,
     navigationItems?: NavigationItem[]
     navigationTopId?: string,
-    rootDir?: string | URL
+    rootDir?: string | URL,
+    requireLoggedIn?: boolean,
+    requirePermissions?: string[]
 };

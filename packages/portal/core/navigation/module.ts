@@ -44,6 +44,7 @@ export class Navigation implements NavigationProvider {
                     icon: 'fa fa-home',
                     url: '/',
                     rootLink: true,
+                    [PageMetaKey.REQUIRED_LOGGED_IN]: true,
                 },
                 {
                     name: 'Login',

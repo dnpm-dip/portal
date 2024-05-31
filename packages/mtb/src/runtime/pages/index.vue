@@ -3,7 +3,7 @@ import { PageMetaKey, useToast } from '@dnpm-dip/core';
 import type { ClientError } from 'hapic';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/MSearchForm.vue';
-import type { QuerySession } from '../domains';
+import { PermissionName, type QuerySession } from '../domains';
 
 export default defineNuxtComponent({
     components: {
@@ -13,6 +13,9 @@ export default defineNuxtComponent({
         definePageMeta({
             [PageMetaKey.NAVIGATION_TOP_ID]: 'mtb',
             [PageMetaKey.NAVIGATION_SIDE_ID]: 'mtb-search',
+            [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                PermissionName.QUERY_SUBMIT,
+            ],
         });
 
         const { showError } = useToast();

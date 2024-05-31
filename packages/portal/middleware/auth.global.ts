@@ -5,7 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { PageMetaKey } from '@dnpm-dip/core';
+import { PageMetaKey, hasOwnProperty } from '@dnpm-dip/core';
 import { storeToRefs } from 'pinia';
 import type { RouteLocationNormalized } from 'vue-router';
 import { useStore } from '@authup/client-web-kit';
@@ -26,7 +26,7 @@ function checkAbilityOrPermission(route: RouteLocationNormalized, has: (name: st
         for (let j = 0; j < route.matched.length; j++) {
             const matchedRecord = route.matched[j];
 
-            if (!Object.prototype.hasOwnProperty.call(matchedRecord.meta, layoutKey)) {
+            if (!hasOwnProperty(matchedRecord.meta, layoutKey)) {
                 continue;
             }
 
@@ -88,7 +88,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         if (!loggedIn.value) {
             const query : Record<string, any> = {};
 
-            if (!to.fullPath.startsWith('/logout')) {
+            if (
+                !to.fullPath.startsWith('/logout') &&
+                !to.fullPath.startsWith('/login')
+            ) {
                 query.redirect = to.fullPath;
             }
 
