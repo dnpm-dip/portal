@@ -1,0 +1,44 @@
+{
+    "name": "@dnpm-dip/admin",
+    "type": "module",
+    "version": "1.10.1",
+    "private": true,
+    "description": "Admin module for the DNPM:DIP Portal.",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/KohlbacherLab/dnpm-dip.git",
+        "directory": "packages/admin"
+    },
+    "license": "MIT",
+    "exports": {
+        ".": {
+            "types": "./dist/types.d.ts",
+            "import": "./dist/module.mjs",
+            "require": "./dist/module.cjs"
+        }
+    },
+    "main": "./dist/module.cjs",
+    "module": "./dist/module.mjs",
+    "types": "./dist/types.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "nuxt-module-build prepare && nuxt-module-build build",
+        "prepack": "nuxt-module-build build",
+        "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+        "lint": "eslint .",
+        "test:watch": "vitest watch"
+    },
+    "dependencies": {
+        "@authup/client-web-kit": "^1.0.0-beta.15",
+        "@dnpm-dip/core": "^1.11.0",
+        "@dnpm-dip/kit": "^1.10.0",
+        "@nuxt/kit": "^3.11.1"
+    },
+    "devDependencies": {
+        "@nuxt/module-builder": "^0.6.0",
+        "nuxt": "^3.11.2",
+        "vue": "^3.4.27"
+    }
+}
