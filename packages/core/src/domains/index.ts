@@ -1,4 +1,4 @@
-export * from './admin';
+export * from './connection-peer';
 export * from './codesystem';
 export * from './coding';
 export * from './patient';

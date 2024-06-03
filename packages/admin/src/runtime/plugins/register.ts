@@ -5,7 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { PermissionName } from '@authup/core-kit';
+import { PermissionName as AuthupPermissionName } from '@authup/core-kit';
 import { type ModuleMeta, PageMetaKey } from '@dnpm-dip/core';
 import type { HookResult } from '@nuxt/schema';
 import { defineNuxtPlugin } from '#imports';
@@ -42,9 +42,9 @@ export default defineNuxtPlugin({
                         icon: 'fa-solid fa-atom',
                         [PageMetaKey.REQUIRED_LOGGED_IN]: true,
                         [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                            PermissionName.PROVIDER_ADD,
-                            PermissionName.PROVIDER_EDIT,
-                            PermissionName.PROVIDER_DROP,
+                            AuthupPermissionName.PROVIDER_ADD,
+                            AuthupPermissionName.PROVIDER_EDIT,
+                            AuthupPermissionName.PROVIDER_DROP,
                         ],
                     },
                     {
@@ -54,9 +54,9 @@ export default defineNuxtPlugin({
                         icon: 'fas fa-user',
                         [PageMetaKey.REQUIRED_LOGGED_IN]: true,
                         [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                            PermissionName.USER_ADD,
-                            PermissionName.USER_EDIT,
-                            PermissionName.USER_DROP,
+                            AuthupPermissionName.USER_ADD,
+                            AuthupPermissionName.USER_EDIT,
+                            AuthupPermissionName.USER_DROP,
                         ],
                     },
                     {
@@ -66,11 +66,11 @@ export default defineNuxtPlugin({
                         icon: 'fa-solid fa-theater-masks',
                         [PageMetaKey.REQUIRED_LOGGED_IN]: true,
                         [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                            PermissionName.ROLE_ADD,
-                            PermissionName.ROLE_EDIT,
-                            PermissionName.ROLE_DROP,
-                            PermissionName.ROLE_PERMISSION_ADD,
-                            PermissionName.ROLE_PERMISSION_DROP,
+                            AuthupPermissionName.ROLE_ADD,
+                            AuthupPermissionName.ROLE_EDIT,
+                            AuthupPermissionName.ROLE_DROP,
+                            AuthupPermissionName.ROLE_PERMISSION_ADD,
+                            AuthupPermissionName.ROLE_PERMISSION_DROP,
                         ],
                     },
                 ],

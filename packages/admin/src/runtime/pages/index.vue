@@ -6,13 +6,15 @@
   -->
 <script lang="ts">
 import { useAbilityCheck } from '@authup/client-web-kit';
-import { AdminPermissionName, DAdminConnectionReport, DConnectionPeerCard } from '@dnpm-dip/core';
+import { DConnectionPeerCard } from '@dnpm-dip/core';
 import { defineNuxtComponent } from '#imports';
+import AConnectionReport from '../components/AConnectionReport';
+import { PermissionName } from '../domains';
 
 export default defineNuxtComponent({
-    components: { DConnectionPeerCard, DAdminConnectionReport },
+    components: { AConnectionReport, DConnectionPeerCard },
     setup() {
-        const connectionReportRead = useAbilityCheck(AdminPermissionName.CONNECTION_REPORT_READ);
+        const connectionReportRead = useAbilityCheck(PermissionName.CONNECTION_REPORT_READ);
 
         return {
             connectionReportRead,
@@ -28,7 +30,7 @@ export default defineNuxtComponent({
             </h1>
         </div>
         <div class="d-flex flex-row gap-2">
-            <DAdminConnectionReport>
+            <AConnectionReport>
                 <template #default="{ data }">
                     <template
                         v-for="(item, key) in data.peers"
@@ -40,7 +42,7 @@ export default defineNuxtComponent({
                 <template #loading>
                     <DConnectionPeerCard />
                 </template>
-            </DAdminConnectionReport>
+            </AConnectionReport>
         </div>
     </template>
 </template>

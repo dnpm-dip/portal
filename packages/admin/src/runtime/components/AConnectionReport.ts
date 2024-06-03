@@ -1,11 +1,11 @@
 import type { SlotsType } from 'vue';
 import { defineComponent } from 'vue';
-import type { ResourceRecordSlots } from '../../../core';
+import type { ResourceRecordSlots } from '@dnpm-dip/core';
 import {
     createResourceRecordManager,
-    injectHTTPClient,
-} from '../../../core';
-import type { AdminConnectionReport } from '../../../domains';
+} from '@dnpm-dip/core';
+import { injectHTTPClient } from '../core';
+import type { ConnectionReport } from '../domains';
 
 export default defineComponent({
     props: {
@@ -13,12 +13,12 @@ export default defineComponent({
             type: Boolean,
         },
     },
-    slots: Object as SlotsType<ResourceRecordSlots<AdminConnectionReport>>,
+    slots: Object as SlotsType<ResourceRecordSlots<ConnectionReport>>,
     async setup(props, setup) {
         const apiClient = injectHTTPClient();
 
         const manager = createResourceRecordManager({
-            load: () => apiClient.admin.getConnectionReport(),
+            load: () => apiClient.getConnectionReport(),
             slots: setup.slots,
             id: 'connection-report',
         });

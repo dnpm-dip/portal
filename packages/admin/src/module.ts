@@ -20,6 +20,7 @@ export default defineNuxtModule({
             rootDir: import.meta.url,
         });
 
+        addPlugin(resolver.resolve('./runtime/plugins/api'));
         addPlugin(resolver.resolve('./runtime/plugins/register'));
     },
 });

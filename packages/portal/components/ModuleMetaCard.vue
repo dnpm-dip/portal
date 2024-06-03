@@ -8,9 +8,13 @@
 <script lang="ts">
 import { useAbilityCheck } from '@authup/client-web-kit';
 import { type ModuleMeta, PageMetaKey } from '@dnpm-dip/core';
+import { VCLink } from '@vuecs/link';
 import { type PropType, computed, defineComponent } from 'vue';
 
 export default defineComponent({
+    components: {
+        VCLink,
+    },
     props: {
         entity: {
             type: Object as PropType<ModuleMeta>,

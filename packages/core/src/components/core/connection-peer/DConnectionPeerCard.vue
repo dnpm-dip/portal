@@ -8,12 +8,12 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineComponent } from 'vue';
-import type { AdminConnectionPeer } from '../../../domains';
+import type { ConnectionPeer } from '../../../domains';
 
 export default defineComponent({
     props: {
         entity: {
-            type: Object as PropType<AdminConnectionPeer>,
+            type: Object as PropType<ConnectionPeer>,
         },
     },
 });

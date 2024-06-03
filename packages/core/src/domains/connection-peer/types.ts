@@ -6,15 +6,10 @@
  */
 
 import type { Coding } from '../coding';
-import type { AdminConnectionPeerStatus } from './constants';
+import type { ConnectionPeerStatus } from './constants';
 
-export type AdminConnectionPeer = {
+export type ConnectionPeer = {
     site: Coding<string>,
-    status: `${AdminConnectionPeerStatus}`,
+    status: `${ConnectionPeerStatus}`,
     details: string
-};
-
-export type AdminConnectionReport = {
-    peers: AdminConnectionPeer[],
-    createdAt: string
 };
