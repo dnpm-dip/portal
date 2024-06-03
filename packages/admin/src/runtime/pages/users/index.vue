@@ -1,9 +1,16 @@
+<!--
+  - Copyright (c) 2024.
+  - Author Peter Placzek (tada5hi)
+  - For the full copyright and license information,
+  - view the LICENSE file that was distributed with this source code.
+  -->
+
 <script lang="ts">
-import type { Role } from '@authup/core-kit';
-import { PermissionName } from '@authup/core-kit';
 import {
     DNav, PageMetaKey, PageNavigationTopID, useToast,
 } from '@dnpm-dip/core';
+import type { User } from '@authup/core-kit';
+import { PermissionName } from '@authup/core-kit';
 import { definePageMeta } from '#imports';
 import { defineNuxtComponent } from '#app';
 
@@ -13,12 +20,12 @@ export default defineNuxtComponent({
     },
     setup() {
         definePageMeta({
-            [PageMetaKey.REQUIRED_LOGGED_IN]: true,
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.ADMIN,
+            [PageMetaKey.REQUIRED_LOGGED_IN]: true,
             [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                PermissionName.ROLE_EDIT,
-                PermissionName.ROLE_DROP,
-                PermissionName.ROLE_ADD,
+                PermissionName.USER_EDIT,
+                PermissionName.USER_ADD,
+                PermissionName.USER_DROP,
             ],
         });
 
@@ -37,9 +44,9 @@ export default defineNuxtComponent({
             },
         ];
 
-        const handleDeleted = (e: Role) => {
+        const handleDeleted = (e: User) => {
             if (toast) {
-                toast.show({ variant: 'success', body: `The role ${e.name} was successfully deleted.` });
+                toast.show({ variant: 'success', body: `The user ${e.name} was successfully deleted.` });
             }
         };
 
@@ -50,9 +57,9 @@ export default defineNuxtComponent({
         };
 
         return {
-            handleDeleted,
-            handleFailed,
             items,
+            handleFailed,
+            handleDeleted,
         };
     },
 });
@@ -60,14 +67,16 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h1 class="title no-border mb-3">
-            <i class="fa-solid fa-theater-masks me-1" /> Rollen
-            <span class="sub-title ms-1">Verwaltung</span>
+            <i class="fa fa-user me-1" /> Benutzer
+            <span class="sub-title ms-1">
+                Verwaltung
+            </span>
         </h1>
         <div class="content-wrapper">
             <div class="content-sidebar flex-column">
                 <DNav
                     :items="items"
-                    path="/admin/roles"
+                    path="/admin/users"
                     direction="vertical"
                 />
             </div>

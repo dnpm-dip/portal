@@ -1,6 +1,12 @@
-<script lang="ts">
+<!--
+  - Copyright (c) 2024.
+  - Author Peter Placzek (tada5hi)
+  - For the full copyright and license information,
+  - view the LICENSE file that was distributed with this source code.
+  -->
 
-import type { IdentityProvider } from '@authup/core-kit';
+<script lang="ts">
+import type { Role } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import {
     DNav, PageMetaKey, PageNavigationTopID, useToast,
@@ -17,9 +23,9 @@ export default defineNuxtComponent({
             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.ADMIN,
             [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                PermissionName.PROVIDER_EDIT,
-                PermissionName.PROVIDER_DROP,
-                PermissionName.PROVIDER_ADD,
+                PermissionName.ROLE_EDIT,
+                PermissionName.ROLE_DROP,
+                PermissionName.ROLE_ADD,
             ],
         });
 
@@ -33,14 +39,14 @@ export default defineNuxtComponent({
             },
             {
                 name: 'Hinzufügen',
-                urlSuffix: 'add',
+                urlSuffix: '/add',
                 icon: 'fa fa-plus',
             },
         ];
 
-        const handleDeleted = (e: IdentityProvider) => {
+        const handleDeleted = (e: Role) => {
             if (toast) {
-                toast.show({ variant: 'success', body: `The identity-provider ${e.name} was successfully deleted.` });
+                toast.show({ variant: 'success', body: `The role ${e.name} was successfully deleted.` });
             }
         };
 
@@ -61,14 +67,14 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h1 class="title no-border mb-3">
-            <i class="fa-solid fa-atom me-1" /> Identitätsanbieter
+            <i class="fa-solid fa-theater-masks me-1" /> Rollen
             <span class="sub-title ms-1">Verwaltung</span>
         </h1>
         <div class="content-wrapper">
             <div class="content-sidebar flex-column">
                 <DNav
                     :items="items"
-                    path="/admin/identity-providers"
+                    path="/admin/roles"
                     direction="vertical"
                 />
             </div>

@@ -1,31 +1,35 @@
-<script lang="ts">
+<!--
+  - Copyright (c) 2024.
+  - Author Peter Placzek (tada5hi)
+  - For the full copyright and license information,
+  - view the LICENSE file that was distributed with this source code.
+  -->
 
-import { injectHTTPClient, useStore } from '@authup/client-web-kit';
-import type { Role } from '@authup/core-kit';
-import { PermissionName, isRealmResourceWritable } from '@authup/core-kit';
+<script lang="ts">
+import { injectHTTPClient, storeToRefs, useStore } from '@authup/client-web-kit';
 import {
     DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
 } from '@dnpm-dip/core';
-import { storeToRefs } from 'pinia';
+import type { User } from '@authup/core-kit';
+import { PermissionName, isRealmResourceWritable } from '@authup/core-kit';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import {
+    createError,
+    defineNuxtComponent,
     definePageMeta,
+    navigateTo,
+    useRoute,
 } from '#imports';
-import {
-    createError, defineNuxtComponent, navigateTo, useRoute,
-} from '#app';
 
 export default defineNuxtComponent({
-    components: {
-        DNav,
-    },
+    components: { DNav },
     async setup() {
         definePageMeta({
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.ADMIN,
             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
             [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                PermissionName.ROLE_EDIT,
+                PermissionName.USER_EDIT,
                 PermissionName.USER_ROLE_ADD,
                 PermissionName.USER_ROLE_EDIT,
                 PermissionName.USER_ROLE_DROP,
@@ -40,7 +44,7 @@ export default defineNuxtComponent({
                 name: 'Berechtigungen', icon: 'fas fa-user-secret', urlSuffix: 'permissions',
             },
             {
-                name: 'Benutzer', icon: 'fas fa-users', urlSuffix: 'users',
+                name: 'Rollen', icon: 'fa-solid fa-user-group', urlSuffix: 'roles',
             },
         ];
 
@@ -49,27 +53,27 @@ export default defineNuxtComponent({
         const route = useRoute();
         const authup = injectHTTPClient();
 
-        const entity : Ref<Role> = ref(null) as any;
+        const entity : Ref<User> = ref(null) as any;
 
         try {
             entity.value = await authup
-                .role
-                .getOne(route.params.id as string);
+                .user
+                .getOne(route.params.id as string, { fields: ['+email'] });
         } catch (e) {
-            await navigateTo({ path: '/admin/roles' });
+            await navigateTo({ path: '/admin/users' });
             throw createError({});
         }
 
         const { realmManagement } = storeToRefs(store);
 
         if (!isRealmResourceWritable(realmManagement.value, entity.value.realm_id)) {
-            await navigateTo({ path: '/admin/roles' });
+            await navigateTo({ path: '/admin/users' });
             throw createError({});
         }
 
-        const handleUpdated = (e: Role) => {
+        const handleUpdated = (e: User) => {
             if (toast) {
-                toast.show({ variant: 'success', body: 'The role was successfully updated.' });
+                toast.show({ variant: 'success', body: 'The user was successfully updated.' });
             }
 
             extendRefRecord(entity, e);
@@ -82,8 +86,8 @@ export default defineNuxtComponent({
         };
 
         return {
-            entity,
             items,
+            entity,
             handleUpdated,
             handleFailed,
         };
@@ -93,16 +97,20 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h1 class="title no-border mb-3">
-            <i class="fa-solid fa-theater-masks me-1" /> {{ entity.name }}
-            <span class="sub-title ms-1">Details</span>
+            <i class="fa fa-user me-1" />
+            {{ entity.name }}
+            <span class="sub-title ms-1">
+                Details
+            </span>
         </h1>
         <div class="mb-2">
             <DNav
-                :path="'/admin/roles/'+entity.id"
                 :items="items"
+                :path="`/admin/users/${entity.id}`"
                 :prev-link="true"
             />
         </div>
+
         <div>
             <NuxtPage
                 :entity="entity"

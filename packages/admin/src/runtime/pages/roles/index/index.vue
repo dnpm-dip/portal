@@ -1,15 +1,14 @@
 <script lang="ts">
 
-import { VCTimeago } from '@vuecs/timeago';
 import { BTable } from 'bootstrap-vue-next';
-import type { IdentityProvider } from '@authup/core-kit';
+import type { Role } from '@authup/core-kit';
 import { PermissionName, isRealmResourceWritable } from '@authup/core-kit';
 import {
-    AEntityDelete, AIdentityProviders, APagination, ASearch, ATitle, useAbilityCheck, useStore,
+    AEntityDelete, APagination, ARoles, ASearch, ATitle, storeToRefs, useAbilityCheck,
+    useStore,
 } from '@authup/client-web-kit';
-import { storeToRefs } from 'pinia';
 import type { BuildInput } from 'rapiq';
-import { defineNuxtComponent } from '#app';
+import { defineNuxtComponent } from '#imports';
 
 export default defineNuxtComponent({
     components: {
@@ -17,31 +16,30 @@ export default defineNuxtComponent({
         APagination,
         ASearch,
         BTable,
-        AIdentityProviders,
+        ARoles,
         AEntityDelete,
-        VCTimeago,
     },
     emits: ['deleted'],
     setup(props, { emit }) {
-        const handleDeleted = (e: IdentityProvider) => {
+        const handleDeleted = (e: Role) => {
             emit('deleted', e);
         };
 
         const store = useStore();
         const { realm, realmManagementId } = storeToRefs(store);
 
-        const query : BuildInput<IdentityProvider> = {
+        const query : BuildInput<Role> = {
             filter: {
                 realm_id: [realmManagementId.value, null],
             },
         };
 
         const isResourceWritable = (
-            resource: IdentityProvider,
+            resource: Role,
         ) => isRealmResourceWritable(realm.value, resource.realm_id);
 
-        const hasEditPermission = useAbilityCheck(PermissionName.PROVIDER_EDIT);
-        const hasDropPermission = useAbilityCheck(PermissionName.PROVIDER_DROP);
+        const hasEditPermission = useAbilityCheck(PermissionName.ROLE_EDIT);
+        const hasDropPermission = useAbilityCheck(PermissionName.ROLE_DROP);
 
         const fields = [
             {
@@ -56,9 +54,7 @@ export default defineNuxtComponent({
             {
                 key: 'updated_at', label: 'Aktualisierungsdatum', thClass: 'text-left', tdClass: 'text-left',
             },
-            {
-                key: 'options', label: '', tdClass: 'text-left',
-            },
+            { key: 'options', label: '', tdClass: 'text-left' },
         ];
 
         return {
@@ -73,7 +69,7 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <AIdentityProviders
+    <ARoles
         :query="query"
         @deleted="handleDeleted"
     >
@@ -107,7 +103,7 @@ export default defineNuxtComponent({
                 </template>
                 <template #cell(options)="data">
                     <NuxtLink
-                        :to="'/admin/identity-providers/'+ data.item.id"
+                        :to="'/admin/roles/'+ data.item.id"
                         class="btn btn-xs btn-outline-primary me-1"
                         :disabled="!hasEditPermission || !isResourceWritable(data.item)"
                     >
@@ -116,7 +112,7 @@ export default defineNuxtComponent({
                     <AEntityDelete
                         class="btn btn-xs btn-outline-danger"
                         :entity-id="data.item.id"
-                        entity-type="identityProvider"
+                        entity-type="role"
                         :with-text="false"
                         :disabled="!hasDropPermission || !isResourceWritable(data.item)"
                         @deleted="props.deleted"
@@ -124,5 +120,5 @@ export default defineNuxtComponent({
                 </template>
             </BTable>
         </template>
-    </AIdentityProviders>
+    </ARoles>
 </template>

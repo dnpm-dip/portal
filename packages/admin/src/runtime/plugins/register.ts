@@ -5,8 +5,8 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { PageMetaKey } from '@dnpm-dip/core';
-import type { ModuleMeta } from '@dnpm-dip/core';
+import { PermissionName } from '@authup/core-kit';
+import { type ModuleMeta, PageMetaKey } from '@dnpm-dip/core';
 import type { HookResult } from '@nuxt/schema';
 import { defineNuxtPlugin } from '#imports';
 
@@ -25,7 +25,55 @@ export default defineNuxtPlugin({
                 name: 'Admin',
                 baseURL: '/admin/',
                 requireLoggedIn: true,
-                navigationItems: [],
+                navigationItems: [
+                    {
+                        name: 'Overview',
+                        type: 'link',
+                        url: '',
+                        icon: 'fa fa-home',
+                        [PageMetaKey.REQUIRED_PERMISSIONS]: [
+
+                        ],
+                    },
+                    {
+                        name: 'Identitätsanbieter',
+                        type: 'link',
+                        url: 'identity-providers',
+                        icon: 'fa-solid fa-atom',
+                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                        [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                            PermissionName.PROVIDER_ADD,
+                            PermissionName.PROVIDER_EDIT,
+                            PermissionName.PROVIDER_DROP,
+                        ],
+                    },
+                    {
+                        name: 'Benutzer',
+                        type: 'link',
+                        url: 'users',
+                        icon: 'fas fa-user',
+                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                        [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                            PermissionName.USER_ADD,
+                            PermissionName.USER_EDIT,
+                            PermissionName.USER_DROP,
+                        ],
+                    },
+                    {
+                        name: 'Rollen',
+                        type: 'link',
+                        url: 'roles',
+                        icon: 'fa-solid fa-theater-masks',
+                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                        [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                            PermissionName.ROLE_ADD,
+                            PermissionName.ROLE_EDIT,
+                            PermissionName.ROLE_DROP,
+                            PermissionName.ROLE_PERMISSION_ADD,
+                            PermissionName.ROLE_PERMISSION_DROP,
+                        ],
+                    },
+                ],
                 navigationTopId: 'admin',
             },
         );

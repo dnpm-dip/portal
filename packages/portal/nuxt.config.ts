@@ -3,6 +3,7 @@ import path from 'node:path';
 
 export default defineNuxtConfig({
     modules: [
+        '../admin/src/module',
         '../mtb/src/module',
         '../rd/src/module',
     ],

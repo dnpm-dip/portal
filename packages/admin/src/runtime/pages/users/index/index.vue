@@ -1,12 +1,13 @@
 <script lang="ts">
-
 import { BTable } from 'bootstrap-vue-next';
-import type { Role } from '@authup/core-kit';
-import { PermissionName, isRealmResourceWritable } from '@authup/core-kit';
+import type { User } from '@authup/core-kit';
 import {
-    AEntityDelete, APagination, ARoles, ASearch, ATitle, useAbilityCheck, useStore,
+    PermissionName, isRealmResourceWritable,
+} from '@authup/core-kit';
+import {
+    AEntityDelete, APagination, ASearch, ATitle, AUsers, storeToRefs, useAbilityCheck,
+    useStore,
 } from '@authup/client-web-kit';
-import { storeToRefs } from 'pinia';
 import type { BuildInput } from 'rapiq';
 import { defineNuxtComponent } from '#imports';
 
@@ -16,30 +17,30 @@ export default defineNuxtComponent({
         APagination,
         ASearch,
         BTable,
-        ARoles,
+        AUsers,
         AEntityDelete,
     },
     emits: ['deleted'],
     setup(props, { emit }) {
-        const handleDeleted = (e: Role) => {
+        const handleDeleted = (e: User) => {
             emit('deleted', e);
         };
 
         const store = useStore();
         const { realm, realmManagementId } = storeToRefs(store);
 
-        const query : BuildInput<Role> = {
+        const query : BuildInput<User> = {
             filter: {
                 realm_id: [realmManagementId.value, null],
             },
         };
 
         const isResourceWritable = (
-            resource: Role,
+            resource: User,
         ) => isRealmResourceWritable(realm.value, resource.realm_id);
 
-        const hasEditPermission = useAbilityCheck(PermissionName.ROLE_EDIT);
-        const hasDropPermission = useAbilityCheck(PermissionName.ROLE_DROP);
+        const hasEditPermission = useAbilityCheck(PermissionName.USER_EDIT);
+        const hasDropPermission = useAbilityCheck(PermissionName.USER_DROP);
 
         const fields = [
             {
@@ -69,8 +70,10 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <ARoles
+    <AUsers
         :query="query"
+        :body="{tag: 'div'}"
+        :footer="true"
         @deleted="handleDeleted"
     >
         <template #header="props">
@@ -103,7 +106,7 @@ export default defineNuxtComponent({
                 </template>
                 <template #cell(options)="data">
                     <NuxtLink
-                        :to="'/admin/roles/'+ data.item.id"
+                        :to="'/admin/users/'+ data.item.id"
                         class="btn btn-xs btn-outline-primary me-1"
                         :disabled="!hasEditPermission || !isResourceWritable(data.item)"
                     >
@@ -112,7 +115,7 @@ export default defineNuxtComponent({
                     <AEntityDelete
                         class="btn btn-xs btn-outline-danger"
                         :entity-id="data.item.id"
-                        entity-type="role"
+                        entity-type="user"
                         :with-text="false"
                         :disabled="!hasDropPermission || !isResourceWritable(data.item)"
                         @deleted="props.deleted"
@@ -120,5 +123,5 @@ export default defineNuxtComponent({
                 </template>
             </BTable>
         </template>
-    </ARoles>
+    </AUsers>
 </template>

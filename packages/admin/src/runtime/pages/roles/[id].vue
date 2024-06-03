@@ -1,21 +1,26 @@
+<!--
+  - Copyright (c) 2024.
+  - Author Peter Placzek (tada5hi)
+  - For the full copyright and license information,
+  - view the LICENSE file that was distributed with this source code.
+  -->
+
 <script lang="ts">
 
-import type { IdentityProvider } from '@authup/core-kit';
+import { injectHTTPClient, storeToRefs, useStore } from '@authup/client-web-kit';
+import type { Role } from '@authup/core-kit';
 import { PermissionName, isRealmResourceWritable } from '@authup/core-kit';
 import {
     DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
 } from '@dnpm-dip/core';
-import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
-import { injectHTTPClient, useStore } from '@authup/client-web-kit';
 import {
-    createError,
-    defineNuxtComponent,
     definePageMeta,
-    navigateTo,
-    useRoute,
 } from '#imports';
+import {
+    createError, defineNuxtComponent, navigateTo, useRoute,
+} from '#app';
 
 export default defineNuxtComponent({
     components: {
@@ -26,16 +31,22 @@ export default defineNuxtComponent({
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.ADMIN,
             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
             [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                PermissionName.PROVIDER_EDIT,
+                PermissionName.ROLE_EDIT,
+                PermissionName.USER_ROLE_ADD,
+                PermissionName.USER_ROLE_EDIT,
+                PermissionName.USER_ROLE_DROP,
             ],
         });
 
         const items = [
             {
-                name: 'General', icon: 'fas fa-bars', urlSuffix: '',
+                name: 'Allgemein', icon: 'fas fa-bars', urlSuffix: '',
             },
             {
-                name: 'Roles', icon: 'fa-solid fa-theater-masks', urlSuffix: 'roles',
+                name: 'Berechtigungen', icon: 'fas fa-user-secret', urlSuffix: 'permissions',
+            },
+            {
+                name: 'Benutzer', icon: 'fas fa-users', urlSuffix: 'users',
             },
         ];
 
@@ -44,32 +55,36 @@ export default defineNuxtComponent({
         const route = useRoute();
         const authup = injectHTTPClient();
 
-        const entity: Ref<IdentityProvider> = ref(null) as any;
+        const entity : Ref<Role> = ref(null) as any;
 
         try {
             entity.value = await authup
-                .identityProvider
+                .role
                 .getOne(route.params.id as string);
         } catch (e) {
-            await navigateTo({ path: '/admin/identity-providers' });
+            await navigateTo({ path: '/admin/roles' });
             throw createError({});
         }
 
         const { realmManagement } = storeToRefs(store);
 
         if (!isRealmResourceWritable(realmManagement.value, entity.value.realm_id)) {
-            await navigateTo({ path: '/admin/identity-providers' });
+            await navigateTo({ path: '/admin/roles' });
             throw createError({});
         }
 
-        const handleUpdated = (e: IdentityProvider) => {
-            toast.show({ variant: 'success', body: 'The identity-provider was successfully updated.' });
+        const handleUpdated = (e: Role) => {
+            if (toast) {
+                toast.show({ variant: 'success', body: 'The role was successfully updated.' });
+            }
 
             extendRefRecord(entity, e);
         };
 
         const handleFailed = (e: Error) => {
-            toast.show({ variant: 'warning', body: e.message });
+            if (toast) {
+                toast.show({ variant: 'warning', body: e.message });
+            }
         };
 
         return {
@@ -84,12 +99,12 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h1 class="title no-border mb-3">
-            <i class="fa-solid fa-atom me-1" /> {{ entity.name }}
+            <i class="fa-solid fa-theater-masks me-1" /> {{ entity.name }}
             <span class="sub-title ms-1">Details</span>
         </h1>
         <div class="mb-2">
             <DNav
-                :path="'/admin/identity-providers/'+entity.id"
+                :path="'/admin/roles/'+entity.id"
                 :items="items"
                 :prev-link="true"
             />
