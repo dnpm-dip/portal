@@ -5,7 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { PageMetaKey } from '@dnpm-dip/core';
+import { ModuleType, PageMetaKey } from '@dnpm-dip/core';
 import type { ModuleMeta } from '@dnpm-dip/core';
 import type { HookResult } from '@nuxt/schema';
 import { defineNuxtPlugin } from '#imports';
@@ -23,6 +23,7 @@ export default defineNuxtPlugin({
         await nuxt.callHook(
             'register',
             {
+                type: ModuleType.USE_CASE,
                 name: 'RD',
                 baseURL: '/rd/',
                 requireLoggedIn: true,

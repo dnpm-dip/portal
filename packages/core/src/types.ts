@@ -6,6 +6,7 @@
  */
 
 import type { NavigationItem } from '@vuecs/navigation';
+import type { ModuleType } from './constants';
 import type { PageMetaKey } from './core';
 
 export type ObjectLiteral = Record<string, any>;
@@ -14,6 +15,7 @@ export type InstallOptions = {
 };
 
 export type ModuleMeta = {
+    type?: `${ModuleType}`,
     name: string,
     description?: string,
     baseURL: string,

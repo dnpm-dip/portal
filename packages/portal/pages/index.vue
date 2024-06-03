@@ -14,9 +14,10 @@
     </div>
 </template>
 <script lang="ts">
-import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
+import { computed } from 'vue';
+import { ModuleType, PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
 import { VCLink } from '@vuecs/link';
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from '@authup/client-web-kit';
 import { defineNuxtComponent, definePageMeta } from '#imports';
 import ModuleMetaCard from '../components/ModuleMetaCard.vue';
 import WorldHealth from '../components/svg/WorldHealth';
@@ -36,8 +37,11 @@ export default defineNuxtComponent({
 
         const moduleStore = useModuleStore();
         const refs = storeToRefs(moduleStore);
+
+        const items = computed(() => refs.items.value.filter((item) => item.type === ModuleType.USE_CASE));
+
         return {
-            items: refs.items,
+            items,
         };
     },
 });
