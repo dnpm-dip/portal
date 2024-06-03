@@ -8,20 +8,7 @@
                 v-for="(item) in items"
                 :key="item.name"
             >
-                <div class="entity-card w-100 ratio-1x1">
-                    <h3 class="mb-0">
-                        <VCLink
-                            :to="item.baseURL"
-                            class="stretched-link"
-                        >
-                            {{ item.name }}
-                        </VCLink>
-                    </h3>
-
-                    <template v-if="item.description">
-                        <p>{{ item.description }}</p>
-                    </template>
-                </div>
+                <ModuleMetaCard :entity="item" />
             </template>
         </div>
     </div>
@@ -31,11 +18,13 @@ import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
 import { VCLink } from '@vuecs/link';
 import { storeToRefs } from 'pinia';
 import { defineNuxtComponent, definePageMeta } from '#imports';
+import ModuleMetaCard from '../components/ModuleMetaCard.vue';
 import WorldHealth from '../components/svg/WorldHealth';
 import { useModuleStore } from '../stores/modules';
 
 export default defineNuxtComponent({
     components: {
+        ModuleMetaCard,
         WorldHealth,
         VCLink,
     },

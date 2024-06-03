@@ -1,3 +1,11 @@
+import type { NuxtPage } from '@nuxt/schema';
+import type { SegmentTokenType } from './constants';
+
+export type PagesRegisterContext = {
+    rootDir?: string | URL,
+    baseURL: string
+};
+
 /**
  * The MIT License (MIT)
  *
@@ -21,9 +29,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import type { NuxtPage } from '@nuxt/schema';
-import type { SegmentTokenType } from './constants';
 
 export type ScannedFile = {
     relativePath: string

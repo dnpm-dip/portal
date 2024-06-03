@@ -13,31 +13,23 @@ import {
     navigateTo,
 } from '#app';
 
-function checkAbilityOrPermission(route: RouteLocationNormalized, has: (name: string) => boolean) {
-    const layoutKeys : string[] = [
-        PageMetaKey.REQUIRED_PERMISSIONS,
-    ];
-
+function checkPermissions(route: RouteLocationNormalized, has: (name: string) => boolean) {
     let isAllowed : undefined | boolean;
 
-    for (let i = 0; i < layoutKeys.length; i++) {
-        const layoutKey = layoutKeys[i];
+    for (let j = 0; j < route.matched.length; j++) {
+        const matchedRecord = route.matched[j];
 
-        for (let j = 0; j < route.matched.length; j++) {
-            const matchedRecord = route.matched[j];
+        if (!hasOwnProperty(matchedRecord.meta, PageMetaKey.REQUIRED_PERMISSIONS)) {
+            continue;
+        }
 
-            if (!hasOwnProperty(matchedRecord.meta, layoutKey)) {
-                continue;
-            }
+        const value = matchedRecord.meta[PageMetaKey.REQUIRED_PERMISSIONS];
+        if (Array.isArray(value)) {
+            isAllowed = value.some((val) => has(val));
+        }
 
-            const value = matchedRecord.meta[layoutKey];
-            if (Array.isArray(value)) {
-                isAllowed = value.some((val) => has(val));
-            }
-
-            if (isAllowed) {
-                return true;
-            }
+        if (isAllowed) {
+            return true;
         }
     }
 
@@ -59,7 +51,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     let redirectPath = '/';
 
-    if (typeof from !== 'undefined') {
+    if (
+        typeof from !== 'undefined' &&
+        from.fullPath !== to.fullPath
+    ) {
         redirectPath = from.fullPath;
     }
 
@@ -83,7 +78,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const { loggedIn } = storeToRefs(store);
 
     if (
-        to.matched.some((matched) => !!matched.meta[PageMetaKey.REQUIRED_LOGGED_IN])
+        to.matched.some((matched) => !!matched.meta[PageMetaKey.REQUIRED_LOGGED_IN] || !!matched.meta[PageMetaKey.REQUIRED_PERMISSIONS])
     ) {
         if (!loggedIn.value) {
             const query : Record<string, any> = {};
@@ -96,13 +91,13 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             }
 
             return navigateTo({
-                path: '/login',
+                path: '/',
                 query,
             });
         }
 
         try {
-            checkAbilityOrPermission(to, (name) => store.abilities.has(name));
+            checkPermissions(to, (name) => store.abilities.has(name));
         } catch (e) {
             return navigateTo({
                 path: redirectPath,

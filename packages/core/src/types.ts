@@ -5,7 +5,20 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
+import type { NavigationItem } from '@vuecs/navigation';
+import type { PageMetaKey } from './core';
+
 export type ObjectLiteral = Record<string, any>;
 export type InstallOptions = {
     baseURL: string
+};
+
+export type ModuleMeta = {
+    name: string,
+    description?: string,
+    baseURL: string,
+    navigationItems?: NavigationItem[]
+    navigationTopId?: string,
+    [PageMetaKey.REQUIRED_LOGGED_IN]?: boolean,
+    [PageMetaKey.REQUIRED_PERMISSIONS]?: string[]
 };

@@ -1,11 +1,9 @@
-import { PageMetaKey } from '@dnpm-dip/core';
-import { register } from '@dnpm-dip/kit';
+import { registerPages } from '@dnpm-dip/kit';
 import {
     addPlugin,
     createResolver,
     defineNuxtModule,
 } from '@nuxt/kit';
-import type { PermissionName } from './runtime/domains';
 
 export default defineNuxtModule({
     meta: {
@@ -17,25 +15,12 @@ export default defineNuxtModule({
     async setup(options, nuxt) {
         const resolver = createResolver(import.meta.url);
 
-        await register({
-            name: 'RD',
+        await registerPages({
             baseURL: '/rd/',
             rootDir: import.meta.url,
-            requireLoggedIn: true,
-            navigationItems: [
-                {
-                    id: 'rd-search',
-                    name: 'Suche',
-                    icon: 'fa fa-search',
-                    url: '',
-                    [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                        'rd_query_submit',
-                    ] satisfies `${PermissionName}`[],
-                },
-            ],
-            navigationTopId: 'rd',
         });
 
         addPlugin(resolver.resolve('./runtime/plugins/api'));
+        addPlugin(resolver.resolve('./runtime/plugins/register'));
     },
 });
