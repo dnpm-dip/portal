@@ -49,13 +49,13 @@ function checkPermissions(route: RouteLocationNormalized, has: (name: string) =>
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const store = useStore();
 
-    let redirectPath = '/';
+    let previousPath = '/login';
 
     if (
         typeof from !== 'undefined' &&
         from.fullPath !== to.fullPath
     ) {
-        redirectPath = from.fullPath;
+        previousPath = from.fullPath;
     }
 
     try {
@@ -63,11 +63,14 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     } catch (e) {
         store.logout();
 
-        if (!to.fullPath.startsWith('/logout') && !to.fullPath.startsWith('/login')) {
+        if (
+            !to.fullPath.startsWith('/logout') &&
+            !to.fullPath.startsWith('/login')
+        ) {
             return navigateTo({
                 path: '/logout',
                 query: {
-                    redirect: redirectPath,
+                    redirect: previousPath,
                 },
             });
         }
@@ -77,9 +80,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     const { loggedIn } = storeToRefs(store);
 
-    if (
-        to.matched.some((matched) => !!matched.meta[PageMetaKey.REQUIRED_LOGGED_IN] || !!matched.meta[PageMetaKey.REQUIRED_PERMISSIONS])
-    ) {
+    if (to.matched.some((matched) => !!matched.meta[PageMetaKey.REQUIRED_LOGGED_IN] || !!matched.meta[PageMetaKey.REQUIRED_PERMISSIONS])) {
         if (!loggedIn.value) {
             const query : Record<string, any> = {};
 
@@ -91,25 +92,29 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             }
 
             return navigateTo({
-                path: '/',
+                path: '/login',
                 query,
             });
         }
+    }
 
+    if (to.matched.some((matched) => !!matched.meta[PageMetaKey.REQUIRED_PERMISSIONS])) {
         try {
             checkPermissions(to, (name) => store.abilities.has(name));
         } catch (e) {
             return navigateTo({
-                path: redirectPath,
+                path: previousPath,
             });
         }
-    } else if (
+    }
+
+    if (
         !to.fullPath.startsWith('/logout') &&
         to.matched.some((matched) => matched.meta[PageMetaKey.REQUIRED_LOGGED_OUT])
     ) {
         const query : Record<string, any> = {};
-        if (!redirectPath.includes('logout')) {
-            query.redirect = redirectPath;
+        if (!previousPath.includes('logout')) {
+            query.redirect = previousPath;
         }
 
         if (loggedIn.value) {

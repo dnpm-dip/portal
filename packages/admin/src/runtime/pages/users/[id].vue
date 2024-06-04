@@ -60,6 +60,7 @@ export default defineNuxtComponent({
                 .user
                 .getOne(route.params.id as string, { fields: ['+email'] });
         } catch (e) {
+            console.log(e);
             await navigateTo({ path: '/admin/users' });
             throw createError({});
         }
@@ -95,7 +96,7 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <div>
+    <div v-if="entity">
         <h1 class="title no-border mb-3">
             <i class="fa fa-user me-1" />
             {{ entity.name }}

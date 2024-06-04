@@ -7,6 +7,9 @@ export default defineNuxtConfig({
         '../mtb/src/module',
         '../rd/src/module',
     ],
+    experimental: {
+        renderJsonPayloads: false,
+    },
     css: [
         '@fortawesome/fontawesome-free/css/all.css',
         'bootstrap/dist/css/bootstrap.css',
