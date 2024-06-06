@@ -1,5 +1,5 @@
 <script lang="ts">
-import { DQueryPatientFilters, type URLQueryRecord } from '@dnpm-dip/core';
+import { DQueryInfoBox, DQueryPatientFilters, type URLQueryRecord } from '@dnpm-dip/core';
 import { DNav } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { provide, ref } from 'vue';
@@ -10,6 +10,7 @@ import type { QuerySession } from '../../../domains';
 export default defineNuxtComponent({
     components: {
         DQueryPatientFilters,
+        DQueryInfoBox,
         SearchForm,
         DNav,
     },
@@ -28,6 +29,9 @@ export default defineNuxtComponent({
             },
             {
                 name: 'Patienten', icon: 'fas fa-user-injured', urlSuffix: '/patients',
+            },
+            {
+                name: 'Info', icon: 'fa fa-network-wired', urlSuffix: '/info',
             },
             {
                 name: 'Anpassen', icon: 'fa fa-cog', urlSuffix: '/settings',
@@ -80,6 +84,11 @@ export default defineNuxtComponent({
     </div>
 
     <hr>
+
+    <DQueryInfoBox
+        :entity="entity"
+        :link="'/mtb/query/' + entity.id + '/info'"
+    />
 
     <template v-if="entity">
         <div class="row">

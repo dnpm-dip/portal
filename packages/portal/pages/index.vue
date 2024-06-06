@@ -1,6 +1,5 @@
 <template>
     <div class="container text-center">
-        <h1>DNPM:DIP</h1>
         <WorldHealth :style="{'width': '800px'}" />
 
         <div class="d-flex flex-row gap-2">
