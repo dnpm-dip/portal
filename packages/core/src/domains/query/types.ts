@@ -1,5 +1,6 @@
 import type { ObjectLiteral } from '../../types';
 import type { Coding } from '../coding';
+import type { ConnectionPeer } from '../connection-peer';
 import type { PatientFilter } from '../patient';
 import type { Distribution, KeyValueRecords } from '../types';
 import type { MinMaxRange } from '../utility';
@@ -35,7 +36,8 @@ export type QueryBase<
      * Validity period (seconds) for the query.
      */
     expiresAfter: number,
-    lastUpdate: string
+    lastUpdate: string,
+    peers: ConnectionPeer[]
 };
 
 export type QuerySummaryGroupedItem<K = Coding, V = KeyValueRecords<Coding>> = {

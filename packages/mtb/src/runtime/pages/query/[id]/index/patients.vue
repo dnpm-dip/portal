@@ -50,8 +50,6 @@ export default defineNuxtComponent({
 </script>
 <template>
     <div>
-        <h6>Patienten</h6>
-
         <QueryPatientMatchList
             ref="listRef"
             :query-id="entity.id"
