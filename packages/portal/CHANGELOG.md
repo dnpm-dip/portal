@@ -1,5 +1,36 @@
 # @dnpm-dip/portal
 
+## [1.11.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.10.1...v1.11.0) (2024-06-07)
+
+
+### Features
+
+* dedicated admin module/package ([#499](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/499)) ([ff07176](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ff0717649e9cdb18099256be79a37cc8765b866d))
+* initial implementaion of query info page ([#507](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/507)) ([1a5a797](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1a5a7972c2864ee240c4bad9bba50040cb939ec5))
+* initial implementation of admin connection report & loading animation ([#491](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/491)) ([c950c99](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/c950c996c3be0f03590fd6b58e67eb84ef525ac4))
+* initial permission implementation for rd & mtb use case ([9c58cf1](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/9c58cf1c401e68fad4db52480cc25185e7046d4a))
+* initial refactoring of module registration ([70467ff](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/70467ffe45acf1423d1085122e94a0337df3ee58))
+* only display use-case modules on home screen ([2c468f3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2c468f3f159bdd08197a56ef7a90c8600b6858c0))
+* stretech module link over container on home page ([a7fc1c7](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a7fc1c7d4d5aa627b25794ca4278eb90123eb7e8))
+
+
+### Bug Fixes
+
+* **deps:** bump bootstrap-vue-next from 0.20.0 to 0.21.0 ([#504](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/504)) ([8b40b91](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8b40b91907ffbda606570e8008ecc4b5343e939c))
+* overflow behaviour ([cda2484](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/cda2484831a7f4f71473458a3d7faa89e975e858))
+* rendering home page ([76fb0bc](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/76fb0bce0a095f683a30ff7b9f0f6b807def5337))
+* word breaks in patient view ([e866308](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/e8663081b999967124b022c7e3591b2560abb06e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.11.0 to ^1.12.0
+    * @dnpm-dip/kit bumped from ^1.10.0 to ^1.11.0
+    * @dnpm-dip/mtb bumped from ^1.10.1 to ^1.11.0
+    * @dnpm-dip/rd bumped from ^1.10.1 to ^1.11.0
+
 ## [1.10.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.10.0...v1.10.1) (2024-05-21)
 
 

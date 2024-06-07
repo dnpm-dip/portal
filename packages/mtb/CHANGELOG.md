@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.11.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.10.1...v1.11.0) (2024-06-07)
+
+
+### Features
+
+* initial implementaion of query info page ([#507](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/507)) ([1a5a797](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1a5a7972c2864ee240c4bad9bba50040cb939ec5))
+* initial permission implementation for rd & mtb use case ([9c58cf1](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/9c58cf1c401e68fad4db52480cc25185e7046d4a))
+* initial refactoring of module registration ([70467ff](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/70467ffe45acf1423d1085122e94a0337df3ee58))
+* only display use-case modules on home screen ([2c468f3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2c468f3f159bdd08197a56ef7a90c8600b6858c0))
+
+
+### Bug Fixes
+
+* **deps:** bump bootstrap-vue-next from 0.20.0 to 0.21.0 ([#504](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/504)) ([8b40b91](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8b40b91907ffbda606570e8008ecc4b5343e939c))
+* minor enhancement to displaying snv, cnv, rna- & dn-afusion in patient list ([8963c68](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8963c68e703be9b96cf48551ac9661558c5aa578))
+* patient view rendering + better color scheme generation ([3c09a91](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/3c09a91c93706d506c773e33578e6885b17bb6b2))
+* remove ':' after criteria in patient-list view ([496dc86](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/496dc86c12f3439191e3016581fcc82096d3157c))
+* remove suffix from diagnose category label ([80413a5](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/80413a579987287ee18029c69604066cafb22699))
+* use type instead of enum import in module definition ([1ed5ae3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1ed5ae3b330cae5ed800f3c842a528a8142843cb))
+* word breaks in patient view ([e866308](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/e8663081b999967124b022c7e3591b2560abb06e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.11.0 to ^1.12.0
+    * @dnpm-dip/kit bumped from ^1.10.0 to ^1.11.0
+
 ## [1.10.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.10.0...v1.10.1) (2024-05-21)
 
 
