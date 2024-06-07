@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.11.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.10.0...v1.11.0) (2024-06-07)
+
+
+### Features
+
+* initial permission implementation for rd & mtb use case ([9c58cf1](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/9c58cf1c401e68fad4db52480cc25185e7046d4a))
+* initial refactoring of module registration ([70467ff](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/70467ffe45acf1423d1085122e94a0337df3ee58))
+
 ## [1.10.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.9.0...v1.10.0) (2024-05-21)
 
 
