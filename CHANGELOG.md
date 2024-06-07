@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.12.0...v1.12.1) (2024-06-07)
+
+
+### Bug Fixes
+
+* hot fix for admin section ([dfafc8a](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/dfafc8ab4130001e260d718093dbd9272fadfc99))
+
 ## [1.12.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.11.0...v1.12.0) (2024-06-07)
 
 
