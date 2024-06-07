@@ -80,7 +80,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     const { loggedIn } = storeToRefs(store);
 
-    if (to.matched.some((matched) => !!matched.meta[PageMetaKey.REQUIRED_LOGGED_IN] || !!matched.meta[PageMetaKey.REQUIRED_PERMISSIONS])) {
+    if (to.matched.some((matched) => !!matched.meta[PageMetaKey.REQUIRED_LOGGED_IN])) {
         if (!loggedIn.value) {
             const query : Record<string, any> = {};
 

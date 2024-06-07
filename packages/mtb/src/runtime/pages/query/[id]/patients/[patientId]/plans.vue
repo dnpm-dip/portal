@@ -74,7 +74,7 @@ export default defineNuxtComponent({
                                                 v-for="(el, idx) in recommendation.supportingEvidence"
                                                 :key="el"
                                             >
-                                                &bull; {{ idx > 0 ? ', ' : '' }} {{ el.type }}: {{ el.display }}
+                                                <p>&bull; {{ idx > 0 ? ', ' : '' }} {{ el.type }}: {{ el.display }}</p>
                                             </template>
                                         </div>
                                         <div v-if="recommendation.priority">
