@@ -62,7 +62,7 @@ export default defineComponent({
 
                     <DQuerySummaryGrouped
                         :items="entity.therapies.responseDistributionByTherapy"
-                        :label="'Variante'"
+                        :label="'Medikation'"
                     >
                         <template #default="{ item }">
                             <DChartDoughnut
