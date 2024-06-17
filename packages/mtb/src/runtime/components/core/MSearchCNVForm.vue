@@ -28,6 +28,7 @@ export default defineComponent({
         const form = reactive<QueryCNVCriteria<FormSelectOption, string>>({
             affectedGenes: [],
             type: '',
+            supporting: false,
         });
 
         const init = () => {
@@ -35,6 +36,7 @@ export default defineComponent({
 
             form.affectedGenes = props.entity?.affectedGenes ?? [];
             form.type = props.entity?.type || '';
+            form.supporting = props.entity?.supporting ?? false;
         };
 
         init();
@@ -57,6 +59,7 @@ export default defineComponent({
             emit('updated', {
                 affectedGenes: form.affectedGenes,
                 type: form.type,
+                supporting: form.supporting,
             } satisfies QueryCNVCriteria<FormSelectOption, string>);
         };
 
@@ -154,9 +157,16 @@ export default defineComponent({
             </DCodeSystem>
         </template>
     </VCFormGroup>
+    <div class="mb-1">
+        <VCFormInputCheckbox
+            v-model="form.supporting"
+            :group-class="'form-switch'"
+            :label="true"
+            :label-content="'Stützend?'"
+        />
+    </div>
     <div>
         <button
-            :disabled="busy"
             type="button"
             class="btn btn-secondary btn-xs"
             @click.prevent="submit()"

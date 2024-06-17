@@ -37,25 +37,27 @@ export function useToast() {
     ) => {
         if (isClientError(error)) {
             const issues = extractAPIClientErrorIssues(error);
-            for (let i = 0; i < issues.length; i++) {
-                let variant : ColorVariant;
-                switch (issues[i].severity) {
-                    case APIClientErrorIssueSeverity.WARNING: {
-                        variant = 'warning';
-                        break;
+            if (issues.length > 0) {
+                for (let i = 0; i < issues.length; i++) {
+                    let variant: ColorVariant;
+                    switch (issues[i].severity) {
+                        case APIClientErrorIssueSeverity.WARNING: {
+                            variant = 'warning';
+                            break;
+                        }
+                        default: {
+                            variant = 'danger';
+                        }
                     }
-                    default: {
-                        variant = 'danger';
-                    }
+
+                    show(issues[i].details, {
+                        variant,
+                        ...options,
+                    });
                 }
 
-                show(issues[i].details, {
-                    variant,
-                    ...options,
-                });
+                return;
             }
-
-            return;
         }
 
         show(error.message, {

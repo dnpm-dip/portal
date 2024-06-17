@@ -41,7 +41,7 @@ export function transformFormSelectOptionsToCodings(
 }
 
 export function extractCodeFromCodingsRecord(
-    input: Record<string, Coding | Coding[]>,
+    input: Record<string, Coding | Coding[] | boolean | string>,
 ): Record<string, any> {
     const output : Record<string, any> = {};
 
@@ -49,10 +49,18 @@ export function extractCodeFromCodingsRecord(
     for (let i = 0; i < keys.length; i++) {
         const value = input[keys[i]];
         if (Array.isArray(value)) {
-            output[keys[i]] = value.map((v) => v.code);
-        } else {
-            output[keys[i]] = value.code;
+            output[keys[i]] = value
+                .filter((v) => isCoding(v))
+                .map((v) => v.code);
+            continue;
         }
+
+        if (isCoding(value)) {
+            output[keys[i]] = value.code;
+            continue;
+        }
+
+        output[keys[i]] = value;
     }
 
     return output;
@@ -75,10 +83,35 @@ export function buildCodingsRecord(input: Record<string, any>) : Record<string, 
             output[keys[i]] = value.map((v) => ({
                 code: isFormSelectOption(v) ? v.id : v,
             } satisfies Coding));
-        } else if (value.length > 0) {
+            continue;
+        }
+
+        if (isCoding(value)) {
             output[keys[i]] = {
-                code: isFormSelectOption(value) ? value.id : value,
+                code: value.code,
             } satisfies Coding;
+            continue;
+        }
+
+        if (isFormSelectOption(value)) {
+            output[keys[i]] = {
+                code: `${value.id}`,
+            } satisfies Coding;
+            continue;
+        }
+
+        if (
+            typeof value === 'string' &&
+            value.length > 0
+        ) {
+            output[keys[i]] = {
+                code: value,
+            } satisfies Coding;
+            continue;
+        }
+
+        if (typeof value === 'boolean') {
+            output[keys[i]] = value;
         }
     }
     return output;

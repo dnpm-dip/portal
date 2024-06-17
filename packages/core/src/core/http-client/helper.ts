@@ -4,14 +4,14 @@ import type { HTTPClientErrorPayload } from './types';
 export function isAPIClientErrorPayload(input: unknown) : input is HTTPClientErrorPayload {
     if (
         !isObject(input) ||
-        !hasOwnProperty(input, '_issues') ||
-        !Array.isArray(input._issues)
+        !hasOwnProperty(input, 'issues') ||
+        !Array.isArray(input.issues)
     ) {
         return false;
     }
 
-    for (let i = 0; i < input._issues.length; i++) {
-        const issue = input._issues[i];
+    for (let i = 0; i < input.issues.length; i++) {
+        const issue = input.issues[i];
 
         if (
             !isObject(issue) ||

@@ -25,6 +25,7 @@ export default defineComponent({
             gene: '',
             dnaChange: '',
             proteinChange: '',
+            supporting: false,
         });
 
         const vuelidate = useVuelidate({
@@ -37,6 +38,9 @@ export default defineComponent({
             proteinChange: {
                 hgvs: helpers.regex(HGVS_CODE_REGEX),
             },
+            supporting: {
+
+            },
         }, form);
 
         const init = () => {
@@ -45,6 +49,7 @@ export default defineComponent({
             form.gene = props.entity?.gene || '';
             form.dnaChange = props.entity?.dnaChange || '';
             form.proteinChange = props.entity?.proteinChange || '';
+            form.supporting = props.entity?.supporting || false;
         };
 
         init();
@@ -63,6 +68,7 @@ export default defineComponent({
                 gene: form.gene,
                 dnaChange: form.dnaChange,
                 proteinChange: form.proteinChange,
+                supporting: form.supporting,
             } satisfies QuerySNVCriteria<string>);
         };
 
@@ -154,6 +160,14 @@ export default defineComponent({
             </VCFormGroup>
         </template>
     </ivuelidate>
+    <div class="mb-1">
+        <VCFormInputCheckbox
+            v-model="form.supporting"
+            :group-class="'form-switch'"
+            :label="true"
+            :label-content="'Stützend?'"
+        />
+    </div>
     <div>
         <button
             :disabled="vuelidate.$invalid"

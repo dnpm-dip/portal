@@ -42,18 +42,22 @@ export type QuerySummary = QuerySummaryBase & {
     survivalReport: KMSurvivalReport[]
 };
 
-export type QueryFusionCriteria<V = Coding> = {
+export type QueryVariantCriteriaBase = {
+    supporting?: boolean
+};
+
+export type QueryFusionCriteria<V = Coding> = QueryVariantCriteriaBase & {
     fusionPartner5pr?: V,
     fusionPartner3pr?: V
 };
 
-export type QuerySNVCriteria<V = Coding> = {
+export type QuerySNVCriteria<V = Coding> = QueryVariantCriteriaBase & {
     dnaChange?: V,
     gene?: V,
     proteinChange?: V
 };
 
-export type QueryCNVCriteria<G = Coding, T = Coding> = {
+export type QueryCNVCriteria<G = Coding, T = Coding> = QueryVariantCriteriaBase & {
     affectedGenes?: G[],
     type?: T
 };

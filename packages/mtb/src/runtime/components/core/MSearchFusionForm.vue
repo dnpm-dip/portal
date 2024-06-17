@@ -24,6 +24,7 @@ export default defineComponent({
         const form = reactive<QueryFusionCriteria<string>>({
             fusionPartner3pr: '',
             fusionPartner5pr: '',
+            supporting: false,
         });
 
         const init = () => {
@@ -31,6 +32,7 @@ export default defineComponent({
 
             form.fusionPartner3pr = props.entity?.fusionPartner3pr || '';
             form.fusionPartner5pr = props.entity?.fusionPartner5pr || '';
+            form.supporting = props.entity?.supporting ?? false;
         };
 
         init();
@@ -48,6 +50,7 @@ export default defineComponent({
             emit('updated', {
                 fusionPartner3pr: form.fusionPartner3pr,
                 fusionPartner5pr: form.fusionPartner5pr,
+                supporting: form.supporting,
             } satisfies QueryFusionCriteria<string>);
         };
 
@@ -143,9 +146,16 @@ export default defineComponent({
             </DCodeSystem>
         </template>
     </VCFormGroup>
+    <div class="mb-1">
+        <VCFormInputCheckbox
+            v-model="form.supporting"
+            :group-class="'form-switch'"
+            :label="true"
+            :label-content="'Stützend?'"
+        />
+    </div>
     <div>
         <button
-            :disabled="busy"
             type="button"
             class="btn btn-secondary btn-xs"
             @click.prevent="submit()"

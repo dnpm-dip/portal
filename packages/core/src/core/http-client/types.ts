@@ -9,7 +9,7 @@ export type HTTPClientErrorIssue = {
 };
 
 export type HTTPClientErrorPayload = {
-    _issues: HTTPClientErrorIssue[],
+    issues: HTTPClientErrorIssue[],
 };
 
 export type BaseHTTPClientInstallOptions = {

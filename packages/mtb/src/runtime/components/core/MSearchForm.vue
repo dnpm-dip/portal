@@ -270,9 +270,9 @@ export default defineComponent({
 
             busy.value = true;
 
-            const payload = buildCriteria();
-
             try {
+                const payload = buildCriteria();
+
                 let query : any;
 
                 if (props.queryId) {
