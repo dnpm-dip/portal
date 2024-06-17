@@ -1,5 +1,19 @@
 # @dnpm-dip/core
 
+## [1.13.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.12.1...v1.13.0) (2024-06-17)
+
+
+### Features
+
+* allow specifying support-variant option for mtb query ([c8bf125](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/c8bf1253e9aecd3e0e15a72c86ca25fc94d634a4))
+* implemeneted infinite-scroll for form-slect-search fields ([#530](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/530)) ([36dec87](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/36dec87edee8482a14ff395743dbe08b1c5ccb98))
+
+
+### Bug Fixes
+
+* **deps:** bump bootstrap-vue-next from 0.21.0 to 0.21.2 ([#519](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/519)) ([d0fffb2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d0fffb2e4980654751f1d6866312f211860ed381))
+* rendering grouped query-summary on patient-filter change ([52dad18](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/52dad187d538e090412b242ea7930f10609dfde2))
+
 ## [1.12.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.12.0...v1.12.1) (2024-06-07)
 
 
