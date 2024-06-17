@@ -29,6 +29,8 @@ export default defineComponent({
                 const response = await httpClient.kaplanMeier.getOptions();
 
                 data.value = response.entries;
+                type.value = response.defaults.type;
+                grouping.value = response.defaults.grouping;
             } finally {
                 busy.value = false;
             }

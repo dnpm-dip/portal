@@ -5,14 +5,13 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import type { ResourceCollectionResponse } from '@dnpm-dip/core';
 import { BaseAPI } from '@dnpm-dip/core';
 import type {
-    KaplanMeierOptions,
+    KaplanMeierOptionsResponse,
 } from './types';
 
 export class KaplanMeierAPI extends BaseAPI {
-    async getOptions() : Promise<ResourceCollectionResponse<KaplanMeierOptions>> {
+    async getOptions() : Promise<KaplanMeierOptionsResponse> {
         const response = await this.client.get('mtb/kaplan-meier/config');
         return response.data;
     }
