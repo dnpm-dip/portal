@@ -1,4 +1,5 @@
 import type {
+    KMSurvivalReport,
     ResourceCollectionLoadMeta, ResourceCollectionResponse,
     URLQueryRecord,
 } from '@dnpm-dip/core';
@@ -94,6 +95,24 @@ export class QueryAPI extends BaseAPI {
 
     async getPatientRecord(queryId: string, patientId: string) : Promise<PatientRecord> {
         const response = await this.client.get(`mtb/queries/${queryId}/patient-record/${patientId}`);
+        return response.data;
+    }
+
+    async getKaplanMeierStatistics(
+        queryId: string,
+        type?: string,
+        grouping?: string,
+    ) : Promise<KMSurvivalReport> {
+        const qParts : string[] = [];
+        if (type) {
+            qParts.push(`type=${type}`);
+        }
+        if (grouping) {
+            qParts.push(`grouping=${grouping}`);
+        }
+
+        const qs = qParts.length > 0 ? `?${qParts.join('&')}` : '';
+        const response = await this.client.get(`mtb/queries/${queryId}/survival-statistics${qs}`);
         return response.data;
     }
 }
