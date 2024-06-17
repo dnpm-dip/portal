@@ -6,7 +6,9 @@
  */
 
 import { install } from '@authup/client-web-kit';
-import { defineNuxtPlugin, useCookie, useRuntimeConfig } from '#imports';
+import {
+    defineNuxtPlugin, tryUseNuxtApp, useCookie, useRuntimeConfig,
+} from '#imports';
 
 export default defineNuxtPlugin({
     enforce: 'pre',
@@ -17,16 +19,27 @@ export default defineNuxtPlugin({
         ctx.vueApp.use(install, {
             baseURL,
             cookieSet: (key, value) => {
-                const cookie = useCookie(key);
-                cookie.value = value;
+                const app = tryUseNuxtApp();
+                if (app) {
+                    const cookie = useCookie(key);
+                    cookie.value = value;
+                }
             },
             cookieUnset: (key) => {
-                const cookie = useCookie(key);
-                cookie.value = null;
+                const app = tryUseNuxtApp();
+                if (app) {
+                    const cookie = useCookie(key);
+                    cookie.value = null;
+                }
             },
             cookieGet: (key) => {
-                const cookie = useCookie(key);
-                return cookie.value;
+                const app = tryUseNuxtApp();
+                if (app) {
+                    const cookie = useCookie(key);
+                    return cookie.value;
+                }
+
+                return null;
             },
         });
     },
