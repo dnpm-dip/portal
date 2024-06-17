@@ -25,7 +25,7 @@ export default defineNuxtComponent({
         };
 
         const handleSubmitted = async (data : QuerySession) => {
-            await navigateTo({ path: `/mtb/query/${data.id}` });
+            await navigateTo({ path: `/mtb/query/${data.id}/summary` });
         };
 
         return {

@@ -40,7 +40,7 @@ export default defineNuxtComponent({
             const keys = Object.keys(data);
             for (let i = 0; i < keys.length; i++) {
                 const key = keys[i] as keyof QuerySession;
-                (entity.value as QuerySession)[key] = data[key];
+                (entity.value as Record<string, any>)[key] = data[key] as QuerySession[keyof QuerySession];
             }
         };
 
