@@ -111,7 +111,9 @@ export default defineNuxtComponent({
                         <MQuerySummaryMedication :entity="props.data.medication" />
                     </template>
                     <template v-else>
-                        <MQuerySummarySurvivalReport :items="props.data.survivalReport" />
+                        <MQuerySummarySurvivalReport
+                            :query-id="entity.id"
+                        />
                     </template>
                 </template>
             </MQuerySummary>

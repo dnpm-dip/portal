@@ -1,31 +1,49 @@
 <script lang="ts">
-import { DChartLineKM } from '@dnpm-dip/core';
-import { type PropType, defineComponent } from 'vue';
+import { type PropType, defineComponent, ref } from 'vue';
+import MQueryKaplanMeierPicker from './MQueryKaplanMeierPicker.vue';
+import MQueryKaplanMeierStatistic from './MQueryKaplanMeierStatistic.vue';
 
 export default defineComponent({
     components: {
-        DChartLineKM,
+        MQueryKaplanMeierStatistic,
+        MQueryKaplanMeierPicker,
     },
     props: {
-        items: {
-            type: Array as PropType<Record<string, any>[]>,
+        queryId: {
+            type: String,
             required: true,
         },
+    },
+    setup() {
+        const type = ref('');
+        const grouping = ref('');
+
+        const handlePicked = (ctx: {type: string, grouping: string}) => {
+            type.value = ctx.type;
+            grouping.value = ctx.grouping;
+        };
+
+        return {
+            type,
+            grouping,
+            handlePicked,
+        };
     },
 });
 </script>
 <template>
     <div>
         <h5>Überlebensbericht</h5>
-        <template
-            v-for="(item, key) in items"
-            :key="key"
-        >
-            <div class="entity-card text-center mb-3 w-100">
-                <h6>{{ item.survivalType.display }} (Gruppierung: {{ item.grouping.display }})</h6>
 
-                <DChartLineKM :report="item" />
-            </div>
-        </template>
+        <MQueryKaplanMeierPicker
+            class="mb-3"
+            @picked="handlePicked"
+        />
+
+        <MQueryKaplanMeierStatistic
+            :query-id="queryId"
+            :type="type"
+            :grouping="grouping"
+        />
     </div>
 </template>
