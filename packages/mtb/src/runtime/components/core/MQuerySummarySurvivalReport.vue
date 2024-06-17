@@ -13,10 +13,6 @@ export default defineComponent({
             type: String,
             required: true,
         },
-        items: {
-            type: Array as PropType<Record<string, any>[]>,
-            required: true,
-        },
     },
     setup() {
         const type = ref('');

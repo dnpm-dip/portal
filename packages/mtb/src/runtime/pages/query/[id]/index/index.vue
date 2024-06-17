@@ -113,7 +113,6 @@ export default defineNuxtComponent({
                     <template v-else>
                         <MQuerySummarySurvivalReport
                             :query-id="entity.id"
-                            :items="props.data.survivalReport"
                         />
                     </template>
                 </template>
