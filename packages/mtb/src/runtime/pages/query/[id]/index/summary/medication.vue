@@ -6,7 +6,7 @@
   -->
 <script lang="ts">
 import { type PropType, defineComponent } from 'vue';
-import type { QuerySummary, QuerySummaryMedication } from '../../../../../domains';
+import type { QuerySummary } from '../../../../../domains';
 import MQuerySummaryMedication from '../../../../../components/core/MQuerySummaryMedication.vue';
 
 export default defineComponent({

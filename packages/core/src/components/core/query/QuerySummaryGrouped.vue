@@ -6,9 +6,14 @@ import type {
     Ref,
 } from 'vue';
 import {
-    computed, defineComponent, ref, watch,
+    computed,
+    defineComponent,
+    inject,
+    ref,
+    watch,
 } from 'vue';
 import type { KeyValueRecord, KeyValueRecords } from '../../../domains';
+import type { URLQueryRecord } from '../../../utils';
 import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils';
 
 export default defineComponent({
@@ -34,16 +39,37 @@ export default defineComponent({
             value: generateChartLabelsForKeyValueRecord(el),
         })));
 
-        watch(id, (val) => {
-            if (typeof val === 'undefined' || val === '') {
+        const selected = ref<string | null>(null);
+
+        const render = () => {
+            if (selected.value === null) {
                 item.value = null;
                 return;
             }
 
-            const index = props.items.findIndex((_el, id) => id === parseInt(`${val}`, 10));
+            const index = props.items.findIndex(
+                (_el, id) => id === parseInt(`${selected.value}`, 10),
+            );
+
             if (index !== -1) {
                 item.value = props.items[index];
             }
+        };
+
+        watch(id, (val) => {
+            if (typeof val === 'undefined' || val === '') {
+                selected.value = null;
+                return;
+            }
+
+            selected.value = `${val}`;
+
+            render();
+        });
+
+        const queryFilters = inject('queryFilters') as Ref<URLQueryRecord>;
+        watch(queryFilters, () => {
+            render();
         });
 
         return {
