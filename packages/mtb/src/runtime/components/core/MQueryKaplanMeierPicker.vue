@@ -59,7 +59,11 @@ export default defineComponent({
             return data.value[index].value.map((v) => transformCoding(v));
         });
 
-        const handleChanged = () => {
+        const handleTypeChanged = () => {
+            grouping.value = '';
+        };
+
+        const handleGroupingChanged = () => {
             emit('picked', {
                 type: type.value,
                 grouping: grouping.value,
@@ -70,7 +74,8 @@ export default defineComponent({
             data,
             busy,
 
-            handleChanged,
+            handleTypeChanged,
+            handleGroupingChanged,
 
             type,
             typeOptions,
@@ -94,7 +99,7 @@ export default defineComponent({
                         :disabled="busy"
                         :options="typeOptions"
                         placeholder="..."
-                        @change="handleChanged"
+                        @change="handleTypeChanged"
                     />
                 </template>
             </VCFormGroup>
@@ -110,7 +115,7 @@ export default defineComponent({
                         :disabled="busy || !type"
                         :options="groupingOptions"
                         placeholder="..."
-                        @change="handleChanged"
+                        @change="handleGroupingChanged"
                     />
                 </template>
             </VCFormGroup>
