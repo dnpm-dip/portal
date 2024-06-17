@@ -1,5 +1,28 @@
 # @dnpm-dip/portal
 
+## [1.13.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.12.0...v1.13.0) (2024-06-17)
+
+
+### Features
+
+* implemeneted infinite-scroll for form-slect-search fields ([#530](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/530)) ([36dec87](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/36dec87edee8482a14ff395743dbe08b1c5ccb98))
+
+
+### Bug Fixes
+
+* cookie access in authup plugin ([df9146d](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/df9146d1a72f6b56477201f3e45b46c4f8389037))
+* **deps:** bump bootstrap-vue-next from 0.21.0 to 0.21.2 ([#519](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/519)) ([d0fffb2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d0fffb2e4980654751f1d6866312f211860ed381))
+* hot fix for admin section ([dfafc8a](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/dfafc8ab4130001e260d718093dbd9272fadfc99))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.12.1 to ^1.13.0
+    * @dnpm-dip/mtb bumped from ^1.12.0 to ^1.13.0
+    * @dnpm-dip/rd bumped from ^1.12.0 to ^1.13.0
+
 ## [1.12.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.11.0...v1.12.0) (2024-06-07)
 
 

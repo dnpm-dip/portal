@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.13.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.12.1...v1.13.0) (2024-06-17)
+
+
+### Features
+
+* allow specifying support-variant option for mtb query ([c8bf125](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/c8bf1253e9aecd3e0e15a72c86ca25fc94d634a4))
+* implemeneted infinite-scroll for form-slect-search fields ([#530](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/530)) ([36dec87](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/36dec87edee8482a14ff395743dbe08b1c5ccb98))
+* refactored kalpan meier survival report view ([#539](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/539)) ([49f0cde](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/49f0cde5d289ee73c14913109d781c94570d4f4b))
+* refactored query summary rendering ([21acf07](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/21acf07fc163067e38588c840c40cd5b0e84f9af))
+* use kaplan-meier config defaults for rendering picker ([032abaf](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/032abaf7975611270db7b749431263261ff5273b))
+
+
+### Bug Fixes
+
+* cleanup kaplan-meier option picker ([f54eb40](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f54eb406c4328b39608828687e6adfa724751709))
+* cookie access in authup plugin ([df9146d](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/df9146d1a72f6b56477201f3e45b46c4f8389037))
+* **deps:** bump bootstrap-vue-next from 0.21.0 to 0.21.2 ([#519](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/519)) ([d0fffb2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d0fffb2e4980654751f1d6866312f211860ed381))
+* rendering grouped query-summary on patient-filter change ([52dad18](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/52dad187d538e090412b242ea7930f10609dfde2))
+
 ## [1.12.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.12.0...v1.12.1) (2024-06-07)
 
 
