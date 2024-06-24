@@ -1,5 +1,20 @@
 # @dnpm-dip/rare-diseases
 
+## [1.13.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.13.0...v1.13.1) (2024-06-24)
+
+
+### Bug Fixes
+
+* adjusted dtos to breaking backend changes ([29fb1c1](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/29fb1c1fde9d2e5edb8cd4179ba6313d11fc6172))
+* other minor modification for patien-record schema ([de680c6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/de680c62f6d5bcd36fd9e556f9ffe8580e1ed898))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.13.0 to ^1.13.1
+
 ## [1.13.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.12.0...v1.13.0) (2024-06-17)
 
 
