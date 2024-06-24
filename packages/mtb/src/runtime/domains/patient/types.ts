@@ -261,7 +261,7 @@ type MedicationRecommendation = {
     priority: Coding,
     issuedOn: string,
     medication: Coding[],
-    supportingEvidence: { id: string, display: string, type: string }[]
+    supportingVariants: { id: string, display: string, type: string }[]
 };
 
 type GeneticCounselingRecommendation = {
@@ -277,7 +277,7 @@ type StudyEnrollmentRecommendation = {
     reason: Reference,
     issuedOn: string,
     levelOfEvidence?: Coding,
-    supportingEvidence: { id: string, display: string, type: string }[],
+    supportingVariants: { id: string, display: string, type: string }[],
     studyIds: string[]
 };
 
@@ -287,7 +287,7 @@ type CarePlan = {
     indication: Reference,
     issuedOn: string,
     statusReason?: Coding,
-    protocol?: string,
+    notes?: string,
     medicationRecommendations?: MedicationRecommendation[],
     geneticCounselingRecommendation?: GeneticCounselingRecommendation,
     studyEnrollmentRecommendations?: StudyEnrollmentRecommendation[]
@@ -320,7 +320,7 @@ type Response = {
 
 export type PatientRecord = {
     patient: Patient,
-    episodes: Episode[],
+    episodesOfCare: Episode[],
     diagnoses?: Diagnosis[],
     guidelineMedicationTherapies: MedicationTherapy[],
     guidelineProcedures: OncoProcedure[],

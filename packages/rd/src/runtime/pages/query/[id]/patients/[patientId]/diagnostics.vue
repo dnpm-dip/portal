@@ -40,7 +40,7 @@ export default defineNuxtComponent({
                             </div>
                         </div>
                         <div class="col">
-                            <div><strong><i class="fa fa-keyboard" /> Type</strong> {{ item.type.display }}</div>
+                            <!-- <div><strong><i class="fa fa-keyboard" /> Type</strong> {{ item.type.display }}</div> -->
                             <div>
                                 <strong><i class="fa fa-dna" /> Sequenzierungs-Typ</strong>
                                 {{ item.sequencingInfo.platform.display || item.sequencingInfo.platform.code }}

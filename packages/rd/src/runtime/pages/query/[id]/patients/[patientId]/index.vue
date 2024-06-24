@@ -35,7 +35,7 @@ export default defineNuxtComponent({
 
                 <div class="entity-card-group flex-column">
                     <template
-                        v-for="(item) in record.episodes"
+                        v-for="(item) in record.episodesOfCare"
                         :key="item.id"
                     >
                         <div class="entity-card">
@@ -68,7 +68,10 @@ export default defineNuxtComponent({
                             <span class="ms-1 badge bg-dark">{{ item.display }}</span>
                         </template>
                     </div>
-                    <div><strong><i class="fas fa-spinner" /> Status</strong> {{ record.diagnosis.status.display }}</div>
+                    <div>
+                        <strong><i class="fas fa-spinner" /> Status</strong>
+                        {{ record.diagnosis.verificationStatus.display }}
+                    </div>
                 </div>
             </div>
         </div>

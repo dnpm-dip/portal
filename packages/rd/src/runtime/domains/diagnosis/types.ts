@@ -9,6 +9,5 @@ export type Diagnosis = {
     recordedOn?: string,
     categories: Coding[], // todo: check type
     onsetAge?: unknown, // todo: check type
-    prenatal: boolean,
-    status: Coding<'solved' | 'partially-solved' | 'unclear' | 'unsolved'>
+    verificationStatus: Coding<'solved' | 'partially-solved' | 'unclear' | 'unsolved'>
 };

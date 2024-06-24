@@ -6,12 +6,16 @@
   -->
 
 <script lang="ts">
+import { VCLink } from '@vuecs/link';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 import type { QueryBase } from '../../../domains';
 import { ConnectionPeerStatus } from '../../../domains';
 
 export default defineComponent({
+    components: {
+        VCLink,
+    },
     props: {
         entity: {
             type: Object as PropType<QueryBase>,

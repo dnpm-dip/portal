@@ -32,7 +32,7 @@ export default defineNuxtComponent({
                                 <strong><i class="fas fa-calculator" /> Indikation</strong>
                                 {{ item.indication.display || item.indication.type }}
                             </div>
-                            <div><strong><i class="fas fa-shield" /> Protokoll</strong> {{ item.protocol }}</div>
+                            <div><strong><i class="fas fa-shield" /> Notizen</strong> {{ item.notes }}</div>
                         </div>
                         <div class="col">
                             <div><strong><i class="fa fa-clock" /> Erfassungsdatum</strong> {{ item.issuedOn }}</div>
@@ -68,10 +68,10 @@ export default defineNuxtComponent({
                                                 {{ idx > 0 ? ', ' : '' }} {{ el.display || el.code }}
                                             </template>
                                         </div>
-                                        <div v-if="recommendation.supportingEvidence">
+                                        <div v-if="recommendation.supportingVariants">
                                             <strong><i class="fas fa-check-circle" /> Stützende molekulare Alterationen</strong><br>
                                             <template
-                                                v-for="(el, idx) in recommendation.supportingEvidence"
+                                                v-for="(el, idx) in recommendation.supportingVariants"
                                                 :key="el"
                                             >
                                                 <p>&bull; {{ idx > 0 ? ', ' : '' }} {{ el.type }}: {{ el.display }}</p>
@@ -130,10 +130,10 @@ export default defineNuxtComponent({
                                 >
                                     <div class="mb-2">
                                         <div><strong><i class="fa fa-clock" /> Datum</strong> {{ recommendation.issuedOn }}</div>
-                                        <div v-if="recommendation.supportingEvidence">
+                                        <div v-if="recommendation.supportingVariants">
                                             <strong><i class="fas fa-check-circle" /> Stützende Evidenz</strong><br>
                                             <template
-                                                v-for="(el, idx) in recommendation.supportingEvidence"
+                                                v-for="(el, idx) in recommendation.supportingVariants"
                                                 :key="el"
                                             >
                                                 &bull; {{ idx > 0 ? ', ' : '' }} {{ el.type }}: {{ el.display }}

@@ -30,7 +30,7 @@ export default defineNuxtComponent({
         <h5>Fälle</h5>
         <div class="entity-card-group mb-3">
             <template
-                v-for="item in record.episodes"
+                v-for="item in record.episodesOfCare"
                 :key="item.id"
             >
                 <div
