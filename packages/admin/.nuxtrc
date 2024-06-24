@@ -2,3 +2,5 @@ imports.autoImport=false
 typescript.includeWorkspace=true
 alias.@dnpm-dip/core=../../core/src
 alias.@dnpm-dip/kit=../../kit/src
+
+w

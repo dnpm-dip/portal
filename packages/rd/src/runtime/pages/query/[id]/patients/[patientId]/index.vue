@@ -39,16 +39,16 @@ export default defineNuxtComponent({
                         :key="item.id"
                     >
                         <div class="entity-card">
-                            <template v-if="item.gestaltMatcherId">
+                            <template v-if="item.transferTan">
                                 <div>
-                                    <strong><i class="fa fa-id-card" /> GestaltMatcherID</strong>
-                                    {{ item.gestaltMatcherId.value }}
+                                    <strong><i class="fa fa-id-card" /> TransferTan</strong>
+                                    {{ item.transferTan }}
                                 </div>
-                            </template>
-                            <template v-if="item.face2geneId">
                                 <div>
-                                    <strong><i class="fa fa-id-card" /> Face2GeneID</strong>
-                                    {{ item.face2geneId.value }}
+                                    <strong><i class="fa fa-clock" /> Datum</strong>
+                                    {{ item.period.start }} <template v-if="item.period.end">
+                                        - {{ item.period.end }}
+                                    </template>
                                 </div>
                             </template>
                         </div>

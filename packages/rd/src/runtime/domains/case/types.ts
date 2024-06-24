@@ -1,6 +1,11 @@
 import type { Patient } from '@dnpm-dip/core';
 import type { Diagnosis } from '../diagnosis';
 
+type Period = {
+    start: string,
+    end?: string
+};
+
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-rd-model/blob/main/dto_model/src/main/scala/de/dnpm/dip/rd/model/RDCase.scala
  */
@@ -12,13 +17,6 @@ export type Case = {
     },
     patient: Patient,
     transferTan?: string,
-    gestaltMatcherId?: {
-        value: string,
-        system?: string
-    },
-    face2geneId?: {
-        value: string,
-        system?: string
-    },
+    period: Period,
     diagnoses: Diagnosis[]
 };

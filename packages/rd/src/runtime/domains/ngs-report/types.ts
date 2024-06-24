@@ -64,7 +64,7 @@ export type NGSReport = {
         display: string
     },
     recordedOn?: string,
-    type: Coding<'panel' | 'exome' | 'genome' | 'array'>,
+    sequencingType: Coding,
     familyControls: Coding,
     sequencingInfo: {
         platform: Coding,
