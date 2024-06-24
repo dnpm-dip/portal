@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.13.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.13.0...v1.13.1) (2024-06-24)
+
+
+### Bug Fixes
+
+* adjusted dtos to breaking backend changes ([29fb1c1](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/29fb1c1fde9d2e5edb8cd4179ba6313d11fc6172))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.13.0 to ^1.13.1
+
 ## [1.13.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.12.0...v1.13.0) (2024-06-17)
 
 
