@@ -2,15 +2,15 @@
 import {
     DCollectionTransform,
     DFormTabGroups,
+    DLogicalOperatorSwitch,
     DTags,
     DValueSet,
-    QueryCriteriaOperator,
+    LogicalOperator,
     QueryRequestMode,
     type ValueSetCoding,
     buildCodingsRecord,
     extractCodeFromCodingsRecord,
-    transformCodingsToFormSelectOptions,
-    transformFormSelectOptionsToCodings,
+    transformCodingsToFormSelectOptions, transformFormSelectOptionsToCodings,
 } from '@dnpm-dip/core';
 import {
     VCFormSelectSearch,
@@ -31,6 +31,7 @@ import MMutationTabGroup from './MMutationTabGroup.vue';
 
 export default defineComponent({
     components: {
+        DLogicalOperatorSwitch,
         MMutationTabGroup,
         DFormTabGroups,
         DTags,
@@ -77,7 +78,7 @@ export default defineComponent({
 
         const medicationDrugs = ref<FormSelectOption[]>([]);
         const medicationUsage = ref<string[]>([]);
-        const medicationOperator = ref<`${QueryCriteriaOperator}`>(QueryCriteriaOperator.OR);
+        const medicationOperator = ref<`${LogicalOperator}`>(LogicalOperator.OR);
 
         const responses = ref<FormSelectOption[]>([]);
 
@@ -533,30 +534,33 @@ export default defineComponent({
                                         :transform="transformCodings"
                                     >
                                         <template #default="options">
-                                            <VCFormSelectSearch
-                                                v-model="medicationDrugs"
-                                                :multiple="true"
-                                                :options="options"
-                                                placeholder="ATC"
-                                            >
-                                                <template #selected="{ items, toggle }">
-                                                    <DCollectionTransform
-                                                        :items="items"
-                                                        :transform="(item: Record<string,any>) => ({
-                                                            ...item,
-                                                            value: item.value.split(':').pop()
-                                                        })"
-                                                    >
-                                                        <template #default="tags">
-                                                            <DTags
-                                                                :items="tags"
-                                                                tag-variant="dark"
-                                                                @deleted="toggle"
-                                                            />
-                                                        </template>
-                                                    </DCollectionTransform>
-                                                </template>
-                                            </VCFormSelectSearch>
+                                            <div class="input-group">
+                                                <DLogicalOperatorSwitch v-model="medicationOperator" />
+                                                <VCFormSelectSearch
+                                                    v-model="medicationDrugs"
+                                                    :multiple="true"
+                                                    :options="options"
+                                                    placeholder="ATC"
+                                                >
+                                                    <template #selected="{ items, toggle }">
+                                                        <DCollectionTransform
+                                                            :items="items"
+                                                            :transform="(item: Record<string,any>) => ({
+                                                                ...item,
+                                                                value: item.value.split(':').pop()
+                                                            })"
+                                                        >
+                                                            <template #default="tags">
+                                                                <DTags
+                                                                    :items="tags"
+                                                                    tag-variant="dark"
+                                                                    @deleted="toggle"
+                                                                />
+                                                            </template>
+                                                        </DCollectionTransform>
+                                                    </template>
+                                                </VCFormSelectSearch>
+                                            </div>
                                         </template>
                                     </DCollectionTransform>
                                 </template>

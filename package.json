@@ -49,6 +49,7 @@
         "workspaces-publish": "^1.4.4"
     },
     "scripts": {
+        "dev": "npm run dev --workspace=packages/portal",
         "build": "npx nx run-many -t build",
         "test": "npx nx run-many -t test",
         "lint": "npx eslint packages/",
