@@ -186,3 +186,21 @@ a:focus{
         transform: translateX(100%);
     }
 }
+
+.input-group>.form-select-search {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) input {
+    margin-left: calc(var(--bs-border-width)* -1);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group .btn {
+    height: 2rem;
+    line-height: 1rem;
+}
