@@ -1,5 +1,7 @@
 <script lang="ts">
-import { DChartBar, DChartDoughnut, DQuerySummaryGrouped } from '@dnpm-dip/core';
+import {
+    DChartBar, DChartDoughnut, DQuerySummaryGrouped, DQuerySummaryNested,
+} from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryMedication } from '../../domains';
 
@@ -7,6 +9,7 @@ export default defineComponent({
     components: {
         DChartBar,
         DChartDoughnut,
+        DQuerySummaryNested,
         DQuerySummaryGrouped,
     },
     props: {
@@ -25,7 +28,14 @@ export default defineComponent({
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Gesamtverteilung ({{ entity.recommendations.overallDistribution.total }})</h6>
 
-                    <DChartBar :items="entity.recommendations.overallDistribution.elements" />
+                    <DQuerySummaryNested
+                        :label="'Kategorie'"
+                        :entity="entity.recommendations.overallDistribution"
+                    >
+                        <template #default="{ items }">
+                            <DChartBar :items="items" />
+                        </template>
+                    </DQuerySummaryNested>
                 </div>
             </div>
             <div class="col">
@@ -53,7 +63,14 @@ export default defineComponent({
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Gesamtverteilung ({{ entity.therapies.overallDistribution.total }})</h6>
 
-                    <DChartBar :items="entity.therapies.overallDistribution.elements" />
+                    <DQuerySummaryNested
+                        :label="'Kategorie'"
+                        :entity="entity.therapies.overallDistribution"
+                    >
+                        <template #default="{ items }">
+                            <DChartBar :items="items" />
+                        </template>
+                    </DQuerySummaryNested>
                 </div>
             </div>
             <div class="col">
