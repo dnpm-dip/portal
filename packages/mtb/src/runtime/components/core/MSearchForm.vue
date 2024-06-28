@@ -3,6 +3,7 @@ import {
     DCollectionTransform,
     DFormTabGroups,
     DLogicalOperatorSwitch,
+    DSitePicker,
     DTags,
     DValueSet,
     LogicalOperator,
@@ -32,6 +33,7 @@ import MMutationTabGroup from './MMutationTabGroup.vue';
 export default defineComponent({
     components: {
         DLogicalOperatorSwitch,
+        DSitePicker,
         MMutationTabGroup,
         DFormTabGroups,
         DTags,
@@ -587,6 +589,13 @@ export default defineComponent({
                     :options="modeOptions"
                     :option-default="false"
                 />
+
+                <template v-if="mode === 'federated'">
+                    <DSitePicker
+                        class="mt-3"
+                        :use-case="'mtb'"
+                    />
+                </template>
             </div>
 
             <hr>
