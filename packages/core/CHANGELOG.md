@@ -1,5 +1,22 @@
 # @dnpm-dip/core
 
+## [1.14.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.13.1...v1.14.0) (2024-07-01)
+
+
+### Features
+
+* logical operator switch for medication type ([#563](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/563)) ([9425f33](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/9425f33bbe85b1ad10a74e60e2285a7aaa067eed))
+* view for nested query summary (distribution with children) ([#569](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/569)) ([dcb6305](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/dcb630519e1f628f9b15fea30c154fb849e1be08))
+
+
+### Bug Fixes
+
+* **deps:** bump @authup/client-web-kit ([#560](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/560)) ([8417cec](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8417cece735865bb994510d67c33ffb3f8fad950))
+* **deps:** bump @authup/client-web-kit ([#574](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/574)) ([9b574fe](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/9b574fea5b905d4f3fd08312e43f5101934f527c))
+* **deps:** bump bootstrap-vue-next from 0.21.2 to 0.22.1 ([#548](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/548)) ([1839a77](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1839a77d6642481952fb512031d7829260100459))
+* **deps:** bump bootstrap-vue-next from 0.22.1 to 0.22.2 ([#565](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/565)) ([742919b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/742919b0534ffaded3a29c21fe8be2d87d59109f))
+* **deps:** bump vue from 3.4.29 to 3.4.30 ([#556](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/556)) ([ba37564](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ba375640edd7ec28f6d19b8c6eeca4f7b10e11c8))
+
 ## [1.13.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.13.0...v1.13.1) (2024-06-24)
 
 
