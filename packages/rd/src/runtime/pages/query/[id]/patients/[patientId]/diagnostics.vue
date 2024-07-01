@@ -35,7 +35,7 @@ export default defineNuxtComponent({
                     <div class="row">
                         <div class="col">
                             <div>
-                                <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.recordedOn }}</div>
+                                <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.issuedOn }}</div>
                                 <div><strong><i class="fa fa-microscope" /> Labor</strong> {{ item.performingLab.display }}</div>
                             </div>
                         </div>

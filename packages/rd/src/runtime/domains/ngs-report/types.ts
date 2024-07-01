@@ -63,7 +63,7 @@ export type NGSReport = {
     performingLab: {
         display: string
     },
-    recordedOn?: string,
+    issuedOn?: string,
     sequencingType: Coding,
     familyControls: Coding,
     sequencingInfo: {
