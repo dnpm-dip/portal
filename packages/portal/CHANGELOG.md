@@ -1,5 +1,15 @@
 # @dnpm-dip/portal
 
+## [1.14.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.14.0...v1.14.1) (2024-07-01)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/mtb bumped from ^1.14.0 to ^1.14.1
+    * @dnpm-dip/rd bumped from ^1.13.2 to ^1.14.0
+
 ## [1.14.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.13.1...v1.14.0) (2024-07-01)
 
 
