@@ -1,18 +1,19 @@
-import type {
-    CodeRecord,
-    Coding,
-    Distribution,
-    KMSurvivalReport,
-    KeyValueRecords,
-    QueryBase,
-    QueryRequestMode,
-    QuerySummaryBase,
+import {
+    type CodeRecord,
+    type Coding,
+    type Distribution,
+    type DistributionNested,
+    type KMSurvivalReport,
+    type KeyValueRecords,
+    type QueryBase,
+    type QueryRequestMode,
+    type QuerySummaryBase,
 } from '@dnpm-dip/core';
 
 export type QuerySummaryTumorDiagnostics = {
     overallDistributions: {
-        tumorEntities: Distribution<Coding>,
-        tumorMorphologies: Distribution<Coding>
+        tumorEntities: DistributionNested<Coding>,
+        tumorMorphologies: DistributionNested<Coding>
     },
     distributionsByVariant: KeyValueRecords<string, {
         tumorEntities: Distribution<Coding>,
@@ -21,13 +22,13 @@ export type QuerySummaryTumorDiagnostics = {
 };
 
 type MedicationRecommendations = {
-    overallDistribution: Distribution<Coding>,
+    overallDistribution: DistributionNested<Coding>,
     distributionBySupportingVariant: KeyValueRecords<string, Distribution<string[]>>
 };
 
 type MedicationTherapies = {
     meanDurations: Distribution<string[]>,
-    overallDistribution: Distribution<string[]>,
+    overallDistribution: DistributionNested<string[]>,
     responseDistributionByTherapy: KeyValueRecords<string[], Distribution<Coding>>
 };
 
