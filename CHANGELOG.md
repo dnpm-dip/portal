@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.14.0...v1.14.1) (2024-07-01)
+
+
+### Bug Fixes
+
+* adjusted mtb & rd (type-) structure ([e80bd45](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/e80bd45b7543dc3baf2a26d077af5111fbf1a5df))
+
 ## [1.14.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.13.1...v1.14.0) (2024-07-01)
 
 

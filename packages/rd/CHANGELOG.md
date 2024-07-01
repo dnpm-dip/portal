@@ -1,5 +1,69 @@
 # @dnpm-dip/rare-diseases
 
+## [1.14.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.13.2...v1.14.0) (2024-07-01)
+
+
+### Features
+
+* adjusted and optimized rd query filters for global usage ([90aa6dc](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/90aa6dce69b1adc2799258f68249b2ed9ada79f9))
+* adjusted rd dtos and variant view ([d3b0c66](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d3b0c667a3c782c3818454f0582f45df1dd3687f))
+* align rd and mtb view ([4443732](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/44437321700e0fcd25c99e239066209fd7d25c9e))
+* bump authup & vuecs dependencies ([f9fc12b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f9fc12bcb427e2fb1a4eff0f31dd52ba19a5d410))
+* consistent component naming + minor style and component issues ([#323](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/323)) ([2ed563e](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2ed563ed71ce36551852bcd57b7909fb9dd2690e))
+* create component for {small,structural,copyNumber}-variant ([d963f8c](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d963f8c6c2ce73e9721f843b45ba303c7d9153fc))
+* enhanced summary diagnostics view & adjusted type structure ([f72a826](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f72a82646c8af79764d013ce8d6a6324b71c0cd1))
+* implemeneted infinite-scroll for form-slect-search fields ([#530](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/530)) ([36dec87](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/36dec87edee8482a14ff395743dbe08b1c5ccb98))
+* implemented global filter for mtb ([b74ca4f](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b74ca4fe5deb4bc3c48c90390e401ccbc5ff7a5f))
+* implemented internal mtb form logic and state management ([6197be4](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6197be47515f1efe0a870877baa7c2d3eb704669))
+* implemented validation for protein change inputs ([#471](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/471)) ([0c38990](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/0c38990f9a6c40ed5ca89ec3925b75cf0cfc4a2f))
+* initial final summary view for mtb and rd ([f89e085](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f89e08506fd7866d7fc39d1c3b690ecf033c4e63))
+* initial global filters for query views ([d127ef6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d127ef6f87e420e4c9afd997247f62d6067888a7))
+* initial implementaion of query info page ([#507](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/507)) ([1a5a797](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1a5a7972c2864ee240c4bad9bba50040cb939ec5))
+* initial mtb domains, pages etc + initial type refactoring + fix page schema generation ([2befba6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2befba6ed6e169e5c88c8038985ca7d10ed0ded5))
+* initial mtb form elements/components ([8fd3720](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8fd3720fd65ab808307814233e9a184603d23d40))
+* initial mtb patient-record view ([ec58fbc](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ec58fbcfe855546bb8eee80ec86c94a34489c642))
+* initial patient-list & enable modification of query search ([108a3ee](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/108a3eefef45b4b191cb060e391eacdf57976f7a))
+* initial permission implementation for rd & mtb use case ([9c58cf1](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/9c58cf1c401e68fad4db52480cc25185e7046d4a))
+* initial refactoring of module registration ([70467ff](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/70467ffe45acf1423d1085122e94a0337df3ee58))
+* kaplan-meier survival statistics ([56de499](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/56de499a739c62c28db06101507b237af3ac1beb))
+* move and prefix core components with letter D ([becfa81](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/becfa815683c284da58d899d5de0efbb36261619))
+* only display use-case modules on home screen ([2c468f3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2c468f3f159bdd08197a56ef7a90c8600b6858c0))
+* refactoring summary logic ([4d41987](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/4d4198738864b7370fc96e18192ec351fc49fe3d))
+* reimplemented plugin (http-client, ...) installation and procedure ([#465](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/465)) ([dc1af34](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/dc1af345e5509f60a9f0a8deda678e0af5ac2f4f))
+* remove components & upgraded vuecs/form-controls ([ff634f2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ff634f20283f743c79a3938e4878210e64b56b20))
+* remove RD prefix of rd domains ([8ca6949](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8ca69498ea13bc1e9339d6e0be9af8044e8cafd7))
+* set search form to full width ([1302025](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1302025255f466dad9a32ff4a9348e30a1ae9af6))
+* simplified api singleton management ([15955cb](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/15955cb28b7cf311510b260d70cc9ade74d9f709))
+* support multiple catalogs for rd disease category ([60c558e](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/60c558ee8f70eaea9779535ab49cec1a51c8b3b1))
+
+
+### Bug Fixes
+
+* adjusted dtos to breaking backend changes ([29fb1c1](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/29fb1c1fde9d2e5edb8cd4179ba6313d11fc6172))
+* adjusted mtb & rd (type-) structure ([e80bd45](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/e80bd45b7543dc3baf2a26d077af5111fbf1a5df))
+* align headings ([63815a7](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/63815a787356eef720d06dadecbf6c565d6d88a7))
+* change workflow execution steps ([87f397e](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/87f397e9259e512d40970a57ad58caca87148b5e))
+* **deps:** bump @authup/client-web-kit ([#560](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/560)) ([8417cec](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8417cece735865bb994510d67c33ffb3f8fad950))
+* **deps:** bump @authup/client-web-kit ([#574](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/574)) ([9b574fe](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/9b574fea5b905d4f3fd08312e43f5101934f527c))
+* **deps:** bump bootstrap-vue-next from 0.20.0 to 0.21.0 ([#504](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/504)) ([8b40b91](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8b40b91907ffbda606570e8008ecc4b5343e939c))
+* **deps:** bump bootstrap-vue-next from 0.21.0 to 0.21.2 ([#519](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/519)) ([d0fffb2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d0fffb2e4980654751f1d6866312f211860ed381))
+* **deps:** bump bootstrap-vue-next from 0.21.2 to 0.22.1 ([#548](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/548)) ([1839a77](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1839a77d6642481952fb512031d7829260100459))
+* **deps:** bump bootstrap-vue-next from 0.22.1 to 0.22.2 ([#565](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/565)) ([742919b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/742919b0534ffaded3a29c21fe8be2d87d59109f))
+* **deps:** bump nuxt and reset lock file ([8de5687](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/8de5687a1a170877b15f0e1ec3bd20147b0b72d8))
+* **deps:** bump nuxt to v3.11.1 ([56b6c82](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/56b6c82db62519db6edc40ebb33cfceb10e9dedf))
+* **deps:** bump vue from 3.4.29 to 3.4.30 ([#556](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/556)) ([ba37564](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ba375640edd7ec28f6d19b8c6eeca4f7b10e11c8))
+* disease category submission in rd modul ([4b623fb](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/4b623fb85978ca3918af730dea4cea69a627dfaf))
+* hot fix for admin section ([dfafc8a](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/dfafc8ab4130001e260d718093dbd9272fadfc99))
+* layout in mtb and rd module ([b968ac9](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b968ac9e58f25fdb294698ee08ad0dea794c07ca))
+* minor changes to bump version ([a716868](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a7168681078dae8550c04fe06475b1561560d718))
+* other minor modification for patien-record schema ([de680c6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/de680c62f6d5bcd36fd9e556f9ffe8580e1ed898))
+* patient record episodes rendering ([63363d3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/63363d30f68628ba358b89f58ca90a9fc3fdacf5))
+* rd patient record overview view ([fb3d88c](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/fb3d88cc9a2280e53c90d31fab832ef6d98fe50f))
+* redirect in rd query record page ([277f426](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/277f426bed151ce26f82678d4d2ba41f020682e5))
+* set rd ngs-report list item width to 100% ([2884ddc](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2884ddcf2d856cb03c81764bffa028fe407a30be))
+* tags view in rd search form ([a514a77](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a514a773e760c694af7a95d40bc61fbab93b5a76))
+* use type instead of enum import in module definition ([1ed5ae3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1ed5ae3b330cae5ed800f3c842a528a8142843cb))
+
 ## [1.13.2](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.13.1...v1.13.2) (2024-07-01)
 
 
