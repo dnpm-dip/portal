@@ -32,7 +32,7 @@
     },
     "dependencies": {
         "bootstrap-vue-next": "^0.22.2",
-        "@authup/core-kit": "^1.0.0-beta.13",
+        "@authup/core-kit": "^1.0.0-beta.19",
         "@authup/client-web-kit": "^1.0.0-beta.18",
         "@dnpm-dip/core": "^1.11.0",
         "@dnpm-dip/kit": "^1.10.0",
