@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.15.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.14.1...v1.15.0) (2024-07-04)
+
+
+### Features
+
+* change logical operator for medication ([2a78530](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2a785305817a6803b2506afa5db47dc9a2c59fee))
+* modal search ([#587](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/587)) ([7260a60](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/7260a602f52e74c0389237dfa7b2825754cffd9a))
+
 ## [1.14.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.14.0...v1.14.1) (2024-07-01)
 
 
