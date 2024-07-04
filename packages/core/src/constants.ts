@@ -14,3 +14,8 @@ export enum LogicalOperator {
     AND = 'and',
     OR = 'or',
 }
+
+export enum InjectionKey {
+    QUERY_UPDATED_AT = 'queryUpdatedAt',
+    QUERY_FILTERS = 'queryFilters',
+}
