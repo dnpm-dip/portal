@@ -1,6 +1,6 @@
 <script lang="ts">
 import { BFormTag } from 'bootstrap-vue-next';
-import type { PropType } from 'vue';
+import type { PropType, SlotsType } from 'vue';
 import {
     defineComponent, ref, toRef, watch,
 } from 'vue';
@@ -35,6 +35,10 @@ export default defineComponent({
         },
     },
     emits: ['update:modelValue', 'deleted'],
+    slots: Object as SlotsType<{
+        tag: Record<string, any>,
+        between: Record<string, any>,
+    }>,
     setup(props, { emit }) {
         const tags = ref<Tag[]>([]);
 
@@ -83,7 +87,7 @@ export default defineComponent({
     <slot>
         <ul class="list-unstyled mb-0 d-flex flex-wrap align-items-center">
             <template
-                v-for="(item) in tags"
+                v-for="(item, index) in tags"
                 :key="item.id"
             >
                 <slot
@@ -94,8 +98,12 @@ export default defineComponent({
                     :tag-pills="tagPills"
                     :remove-tag="drop"
                 >
+                    <template v-if="index > 0">
+                        <slot name="between" />
+                    </template>
                     <BFormTag
                         :key="item.id"
+                        class="mt-1"
                         :class="tagClass"
                         tag="li"
                         :variant="tagVariant"
