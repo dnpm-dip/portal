@@ -1,3 +1,5 @@
+import type { Slots } from 'vue';
+
 export type NavItem = {
     id?: string,
     name: string,
@@ -9,5 +11,6 @@ export type NavItems = NavItem[];
 
 export type NavOptions = {
     direction?: 'vertical' | 'horizontal',
-    prevLink?: boolean | string
+    prevLink?: boolean | string,
+    slots?: Slots
 };

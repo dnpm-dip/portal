@@ -1,5 +1,5 @@
 <script lang="ts">
-import { PageMetaKey } from '@dnpm-dip/core';
+import { PageMetaKey, useToast } from '@dnpm-dip/core';
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 import {
@@ -13,7 +13,7 @@ import { injectHTTPClient } from '../../core';
 import type { QuerySession } from '../../domains';
 
 export default defineNuxtComponent({
-    async setup() {
+    async setup(_, { emit }) {
         definePageMeta({
             [PageMetaKey.NAVIGATION_TOP_ID]: 'rd',
             [PageMetaKey.NAVIGATION_SIDE_ID]: 'rd-search',
@@ -21,6 +21,7 @@ export default defineNuxtComponent({
 
         const api = injectHTTPClient();
         const route = useRoute();
+        const toast = useToast();
 
         const entity = ref(null) as unknown as Ref<QuerySession>;
 
@@ -44,9 +45,14 @@ export default defineNuxtComponent({
             }
         };
 
+        const handleFailed = (e: Error) => {
+            toast.showError(e);
+        };
+
         return {
             entity,
             handleUpdated,
+            handleFailed,
         };
     },
 });
@@ -56,6 +62,7 @@ export default defineNuxtComponent({
         <NuxtPage
             :entity="entity"
             @updated="handleUpdated"
+            @failed="handleFailed"
         />
     </template>
 </template>

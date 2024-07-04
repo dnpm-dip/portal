@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCPagination } from '@vuecs/pagination';
-import type { URLQueryRecord } from '@dnpm-dip/core';
+import { InjectionKey, type URLQueryRecord } from '@dnpm-dip/core';
 import {
     type PropType, type Ref, nextTick, watch,
 } from 'vue';
@@ -25,7 +25,7 @@ export default defineNuxtComponent({
     },
     setup() {
         const listRef = ref(null) as Ref<typeof QueryPatientMatchList | null>;
-        const queryFilters = inject('queryFilters') as Ref<URLQueryRecord>;
+        const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
 
         watch(queryFilters, () => {
             nextTick(() => {

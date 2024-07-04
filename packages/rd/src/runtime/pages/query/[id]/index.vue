@@ -1,7 +1,8 @@
 <script lang="ts">
-import { DQueryInfoBox, type URLQueryRecord } from '@dnpm-dip/core';
+import { DQueryInfoBox, InjectionKey, type URLQueryRecord } from '@dnpm-dip/core';
 import { DNav, DQueryPatientFilters } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
+import { BModal } from 'bootstrap-vue-next';
 import { provide, ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
 import QueryDiagnosisFilter from '../../../components/core/RQueryDiagnosisFilter.vue';
@@ -11,6 +12,7 @@ import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        BModal,
         DQueryInfoBox,
         QueryHPOFilter,
         QueryDiagnosisFilter,
@@ -37,13 +39,13 @@ export default defineNuxtComponent({
             {
                 name: 'Info', icon: 'fa fa-network-wired', urlSuffix: '/info',
             },
-            {
-                name: 'Anpassen', icon: 'fa fa-cog', urlSuffix: '/settings',
-            },
         ];
 
         const queryFilters = ref<URLQueryRecord>({});
-        provide('queryFilters', queryFilters);
+        provide(InjectionKey.QUERY_FILTERS, queryFilters);
+
+        const queryUpdatedAt = ref(props.entity.lastUpdate);
+        provide(InjectionKey.QUERY_UPDATED_AT, queryUpdatedAt);
 
         const applyFilters = (input: URLQueryRecord) => {
             queryFilters.value = {
@@ -54,11 +56,34 @@ export default defineNuxtComponent({
 
         const handleUpdated = (entity: QuerySession) => {
             emit('updated', entity);
+
+            queryUpdatedAt.value = entity.lastUpdate;
+        };
+
+        const handleFailed = (e: Error) => {
+            emit('failed', e);
+        };
+
+        const modal = ref(false);
+        const toggleModal = () => {
+            modal.value = !modal.value;
+        };
+
+        const handleModalUpdated = (entity: QuerySession) => {
+            handleUpdated(entity);
+            modal.value = false;
         };
 
         return {
             applyFilters,
+
             handleUpdated,
+            handleFailed,
+
+            toggleModal,
+            modal,
+            handleModalUpdated,
+
             navItems,
             preparedQueryId: route.query.preparedQueryId,
         };
@@ -84,7 +109,19 @@ export default defineNuxtComponent({
         <DNav
             :items="navItems"
             :path="'/rd/query/'+ entity.id"
-        />
+        >
+            <template #end>
+                <li class="nav-item">
+                    <button
+                        type="button"
+                        class="nav-link"
+                        @click.prevent="toggleModal"
+                    >
+                        <i class="fa fa-cog" /> Anpassen
+                    </button>
+                </li>
+            </template>
+        </DNav>
     </div>
 
     <hr>
@@ -122,5 +159,39 @@ export default defineNuxtComponent({
                 />
             </div>
         </div>
+
+        <BModal
+            v-model="modal"
+            :hide-footer="true"
+            :size="'lg'"
+        >
+            <template #header="props">
+                <div class="d-flex flex-row w-100">
+                    <div>
+                        <h5 class="mb-0">
+                            <i class="fa fa-search" /> Suche
+                        </h5>
+                    </div>
+                    <div class="ms-auto">
+                        <button
+                            type="button"
+                            class="btn btn-xs btn-secondary"
+                            @click.prevent="props.close()"
+                        >
+                            <i class="fa fa-times" />
+                        </button>
+                    </div>
+                </div>
+            </template>
+
+            <SearchForm
+                :query-mode="entity.mode.code"
+                :query-id="entity.id"
+                :criteria="entity.criteria"
+                :prepared-query-id="preparedQueryId"
+                @query-updated="handleModalUpdated"
+                @failed="handleFailed"
+            />
+        </BModal>
     </template>
 </template>

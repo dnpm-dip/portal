@@ -12,9 +12,9 @@ import {
     DChartLineKM,
     DNav,
     DQuerySummaryDemographics,
+    InjectionKey,
     type NavItem,
-    type URLQueryRecord,
-    createResourceRecordManager,
+    type URLQueryRecord, createResourceRecordManager,
 } from '@dnpm-dip/core';
 import {
     type PropType, type Ref, nextTick, watch,
@@ -64,7 +64,8 @@ export default defineNuxtComponent({
 
         const httpClient = injectHTTPClient();
 
-        const queryFilters = inject('queryFilters') as Ref<URLQueryRecord>;
+        const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
+        const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
 
         const manager = createResourceRecordManager({
             load: (id) => httpClient.query.getSummary(id, queryFilters.value),
@@ -78,6 +79,10 @@ export default defineNuxtComponent({
                 manager.load(true);
             });
         }, { deep: true });
+
+        watch(queryUpdatedAt, () => {
+            manager.load(true);
+        });
 
         const navItemId = ref('default');
 
