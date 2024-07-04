@@ -1,5 +1,24 @@
 # @dnpm-dip/rare-diseases
 
+## [1.15.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.14.0...v1.15.0) (2024-07-04)
+
+
+### Features
+
+* modal search ([#587](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/587)) ([7260a60](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/7260a602f52e74c0389237dfa7b2825754cffd9a))
+
+
+### Bug Fixes
+
+* adjusted mtb & rd (type-) structure ([e80bd45](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/e80bd45b7543dc3baf2a26d077af5111fbf1a5df))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.14.0 to ^1.15.0
+
 ## [1.14.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.13.2...v1.14.0) (2024-07-01)
 
 
