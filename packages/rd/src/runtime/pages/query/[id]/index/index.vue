@@ -45,8 +45,14 @@ export default defineNuxtComponent({
             });
         }, { deep: true });
 
-        const navItemId = ref('default');
+        const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
+        watch(queryUpdatedAt, () => {
+            if (entityRef.value) {
+                entityRef.value.load(true);
+            }
+        });
 
+        const navItemId = ref('default');
         const setNavItem = (item: NavItem) => {
             navItemId.value = item.id || 'default';
         };
