@@ -1,5 +1,5 @@
 <script lang="ts">
-import { DQueryInfoBox, type URLQueryRecord } from '@dnpm-dip/core';
+import { DQueryInfoBox, InjectionKey, type URLQueryRecord } from '@dnpm-dip/core';
 import { DNav, DQueryPatientFilters } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { provide, ref } from 'vue';
@@ -43,7 +43,7 @@ export default defineNuxtComponent({
         ];
 
         const queryFilters = ref<URLQueryRecord>({});
-        provide('queryFilters', queryFilters);
+        provide(InjectionKey.QUERY_FILTERS, queryFilters);
 
         const applyFilters = (input: URLQueryRecord) => {
             queryFilters.value = {
