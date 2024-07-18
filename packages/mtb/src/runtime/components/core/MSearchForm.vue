@@ -443,53 +443,6 @@ export default defineComponent({
 
             <hr>
 
-            <div class="row mb-3">
-                <h6><i class="fas fa-chart-line" /> Response</h6>
-                <div class="col">
-                    <VCFormGroup>
-                        <template #default>
-                            <DValueSet
-                                :code="'RECIST'"
-                                :lazy-load="true"
-                            >
-                                <template #default="{ data }">
-                                    <DCollectionTransform
-                                        :items="data.codings"
-                                        :transform="transformCodings"
-                                    >
-                                        <template #default="options">
-                                            <VCFormSelectSearch
-                                                v-model="responses"
-                                                :multiple="true"
-                                                :options="options"
-                                                placeholder="RECIST"
-                                            >
-                                                <template #selected="{ items, toggle }">
-                                                    <DTags
-                                                        :items="items"
-                                                        tag-variant="dark"
-                                                        @deleted="toggle"
-                                                    />
-                                                </template>
-                                            </VCFormSelectSearch>
-                                        </template>
-                                    </DCollectionTransform>
-                                </template>
-                                <template #loading>
-                                    <VCFormSelectSearch
-                                        :options="[]"
-                                        :disabled="true"
-                                        placeholder="RECIST"
-                                    />
-                                </template>
-                            </DValueSet>
-                        </template>
-                    </VCFormGroup>
-                </div>
-            </div>
-
-            <hr>
-
             <div class="mb-3">
                 <h6><i class="fa fa-pills" /> Medikation</h6>
                 <div class="d-flex flex-row">
@@ -587,6 +540,53 @@ export default defineComponent({
                                         :options="[]"
                                         :disabled="true"
                                         placeholder="ATC"
+                                    />
+                                </template>
+                            </DValueSet>
+                        </template>
+                    </VCFormGroup>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row mb-3">
+                <h6><i class="fas fa-chart-line" /> Response</h6>
+                <div class="col">
+                    <VCFormGroup>
+                        <template #default>
+                            <DValueSet
+                                :code="'RECIST'"
+                                :lazy-load="true"
+                            >
+                                <template #default="{ data }">
+                                    <DCollectionTransform
+                                        :items="data.codings"
+                                        :transform="transformCodings"
+                                    >
+                                        <template #default="options">
+                                            <VCFormSelectSearch
+                                                v-model="responses"
+                                                :multiple="true"
+                                                :options="options"
+                                                placeholder="RECIST"
+                                            >
+                                                <template #selected="{ items, toggle }">
+                                                    <DTags
+                                                        :items="items"
+                                                        tag-variant="dark"
+                                                        @deleted="toggle"
+                                                    />
+                                                </template>
+                                            </VCFormSelectSearch>
+                                        </template>
+                                    </DCollectionTransform>
+                                </template>
+                                <template #loading>
+                                    <VCFormSelectSearch
+                                        :options="[]"
+                                        :disabled="true"
+                                        placeholder="RECIST"
                                     />
                                 </template>
                             </DValueSet>
