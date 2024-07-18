@@ -33,6 +33,10 @@ export default defineComponent({
         tagVariant: {
             type: String as PropType<ColorVariant>,
         },
+        emitOnly: {
+            type: Boolean,
+            default: false,
+        },
     },
     emits: ['update:modelValue', 'deleted'],
     slots: Object as SlotsType<{
@@ -68,9 +72,11 @@ export default defineComponent({
         const drop = (value: string) => {
             const index = tags.value.findIndex((el) => el.value === value);
             if (index !== -1) {
-                emit('deleted', tags.value[index]);
+                if (!props.emitOnly) {
+                    tags.value.splice(index, 1);
+                }
 
-                tags.value.splice(index, 1);
+                emit('deleted', tags.value[index]);
             }
 
             emit('update:modelValue', tags);
