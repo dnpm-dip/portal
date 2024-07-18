@@ -109,7 +109,7 @@ export default defineComponent({
                 }
 
                 if (criteria.value.medication.usage) {
-                    medicationDrugs.value = transformCodingsToFormSelectOptions(criteria.value.medication.usage);
+                    medicationUsage.value = criteria.value.medication.usage.map((e) => e.code);
                 }
 
                 if (criteria.value.medication.operator) {
