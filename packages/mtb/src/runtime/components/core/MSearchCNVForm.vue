@@ -96,6 +96,7 @@ export default defineComponent({
                             >
                                 <template #selected="{ items, toggle }">
                                     <DTags
+                                        :emit-only="true"
                                         :items="items"
                                         tag-variant="dark"
                                         @deleted="toggle"
@@ -138,6 +139,7 @@ export default defineComponent({
                             >
                                 <template #selected="{ items, toggle }">
                                     <DTags
+                                        :emit-only="true"
                                         :items="items"
                                         tag-variant="dark"
                                         @deleted="toggle"
