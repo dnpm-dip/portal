@@ -41,7 +41,7 @@
         "vue": "^3.4.32"
     },
     "devDependencies": {
-        "@nuxt/module-builder": "^0.8.0",
+        "@nuxt/module-builder": "^0.8.1",
         "nuxt": "^3.12.2"
     }
 }
