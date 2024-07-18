@@ -41,7 +41,7 @@
         "access": "public"
     },
     "dependencies": {
-        "@nuxt/schema": "^3.11.2",
+        "@nuxt/schema": "^3.12.3",
         "@nuxt/kit": "^3.11.1",
         "ufo": "^1.5.4"
     },
