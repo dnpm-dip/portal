@@ -119,7 +119,7 @@ export default defineComponent({
                     </div>
                 </div>
             </div>
-            <template v-if="extended">
+            <template v-if="extended && entity.matchingCriteria">
                 <MQueryCriteriaSummary :entity="entity.matchingCriteria" />
             </template>
         </div>

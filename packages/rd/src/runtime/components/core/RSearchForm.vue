@@ -29,7 +29,7 @@ export default defineComponent({
     },
     props: {
         criteria: {
-            type: Object as PropType<QueryCriteria>,
+            type: Object as PropType<QueryCriteria | null>,
         },
         queryId: {
             type: String,
@@ -117,7 +117,7 @@ export default defineComponent({
                     preparedQueryName.value = response.name;
                 } else if (props.queryId) {
                     const response = await apiClient.query.getOne(props.queryId);
-                    criteria.value = response.criteria;
+                    criteria.value = response.criteria || {};
                 }
             } catch (e) {
                 if (e instanceof Error) {

@@ -39,7 +39,7 @@ export default defineComponent({
     },
     props: {
         criteria: {
-            type: Object as PropType<QueryCriteria>,
+            type: Object as PropType<QueryCriteria | null>,
         },
         queryId: {
             type: String,

@@ -133,11 +133,13 @@ export default defineNuxtComponent({
     <template v-if="entity">
         <div class="row">
             <div class="col-6 col-md-9 col-lg-10">
-                <div class="entity-card mb-2">
-                    <div class="d-flex flex-row">
-                        <MQueryCriteriaSummary :entity="entity.criteria" />
+                <template v-if="entity.criteria">
+                    <div class="entity-card mb-2">
+                        <div class="d-flex flex-row">
+                            <MQueryCriteriaSummary :entity="entity.criteria" />
+                        </div>
                     </div>
-                </div>
+                </template>
                 <NuxtPage
                     :entity="entity"
                     @updated="handleUpdated"
