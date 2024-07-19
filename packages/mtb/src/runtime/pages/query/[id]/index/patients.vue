@@ -63,6 +63,11 @@ export default defineNuxtComponent({
             :filters="queryFilters"
         >
             <template #default="props">
+                <div class="d-flex flex-row">
+                    <div class="ms-auto">
+                        Es gibt insgesamt {{ props.total }} Patienten
+                    </div>
+                </div>
                 <template v-if="props.data.length > 0">
                     <div class="list">
                         <ul class="list-body list-unstyled">

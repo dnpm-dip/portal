@@ -7,11 +7,13 @@ import { BModal } from 'bootstrap-vue-next';
 import type { PropType } from 'vue';
 import { provide, ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
+import MQueryCriteriaSummary from '../../../components/core/MQueryCriteriaSummary.vue';
 import MSearchForm from '../../../components/core/MSearchForm.vue';
 import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        MQueryCriteriaSummary,
         BModal,
         MSearchForm,
         DQueryPatientFilters,
@@ -131,6 +133,11 @@ export default defineNuxtComponent({
     <template v-if="entity">
         <div class="row">
             <div class="col-6 col-md-9 col-lg-10">
+                <div class="entity-card mb-2">
+                    <div class="d-flex flex-row">
+                        <MQueryCriteriaSummary :entity="entity.criteria" />
+                    </div>
+                </div>
                 <NuxtPage
                     :entity="entity"
                     @updated="handleUpdated"
