@@ -1,5 +1,23 @@
 # @dnpm-dip/portal
 
+## [1.14.3](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.14.2...v1.14.3) (2024-07-19)
+
+
+### Bug Fixes
+
+* **deps:** bump bootstrap-vue-next from 0.22.2 to 0.23.5 ([#609](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/609)) ([0e1aed3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/0e1aed385a77b9807e3c5aef03025e01e209014a))
+* **deps:** bump vue from 3.4.30 to 3.4.32 ([#617](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/617)) ([c0f0fa8](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/c0f0fa8bf71086188baea51b7330cb640f83b12b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.15.0 to ^1.16.0
+    * @dnpm-dip/kit bumped from ^1.12.0 to ^1.12.1
+    * @dnpm-dip/mtb bumped from ^1.15.0 to ^1.16.0
+    * @dnpm-dip/rd bumped from ^1.15.0 to ^1.16.0
+
 ## [1.14.2](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.14.1...v1.14.2) (2024-07-04)
 
 

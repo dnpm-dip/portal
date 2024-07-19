@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.12.0...v1.12.1) (2024-07-19)
+
+
+### Bug Fixes
+
+* **deps:** bump ufo from 1.5.3 to 1.5.4 ([#614](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/614)) ([57a36be](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/57a36be1edd6add6231b197e8c3ca3bd032e8b1a))
+
 ## [1.12.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.11.0...v1.12.0) (2024-06-07)
 
 
