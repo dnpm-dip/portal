@@ -8,7 +8,7 @@ export default defineNuxtConfig({
         '../rd/src/module',
     ],
     experimental: {
-        renderJsonPayloads: false,
+        scanPageMeta: false,
     },
     css: [
         '@fortawesome/fontawesome-free/css/all.css',
