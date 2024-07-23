@@ -8,7 +8,7 @@ import type { PatientMatch, PatientRecord } from '../patient';
 import type {
     QuerySession,
     QuerySessionCreate,
-    QuerySummary,
+    QuerySummary, QueryTherapyResponse,
 } from './types';
 
 export class QueryAPI extends BaseAPI {
@@ -113,6 +113,11 @@ export class QueryAPI extends BaseAPI {
 
         const qs = qParts.length > 0 ? `?${qParts.join('&')}` : '';
         const response = await this.client.get(`mtb/queries/${queryId}/survival-statistics${qs}`);
+        return response.data;
+    }
+
+    async getTherapyResponses(queryId: string, meta?: ResourceCollectionLoadMeta) : Promise<ResourceCollectionResponse<QueryTherapyResponse>> {
+        const response = await this.client.get(`mtb/queries/${queryId}/therapy-responses`);
         return response.data;
     }
 }

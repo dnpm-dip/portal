@@ -58,6 +58,9 @@ export default defineNuxtComponent({
                 id: 'medication', name: 'Medikation', icon: 'fas fa-pills', urlSuffix: '/medication',
             },
             {
+                id: 'therapyResponses', name: 'Therapie Antworten', icon: 'fas fa-comment-medical', urlSuffix: '/therapy-responses',
+            },
+            {
                 id: 'survivalReport', name: 'Überlebensbericht', icon: 'fas fa-book-open', urlSuffix: '/survival-report',
             },
         ];
