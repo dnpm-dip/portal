@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.16.0...v1.16.1) (2024-07-23)
+
+
+### Bug Fixes
+
+* disable scanPageMeta temporarily ([afd26af](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/afd26af9e84ac2be9c34b01ff10d9094de3f495d))
+
 ## [1.16.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.15.0...v1.16.0) (2024-07-19)
 
 
