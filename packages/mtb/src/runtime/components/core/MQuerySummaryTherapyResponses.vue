@@ -1,12 +1,12 @@
 <script lang="ts">
-import { DChartDoughnut } from '@dnpm-dip/core';
-import { type PropType, defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import { BTable } from 'bootstrap-vue-next';
 import MQueryTherapyResponses from './MQueryTherapyResponses';
+import MTherapyResponseDistributionBar from './MTherapyResponseDistributionBar.vue';
 
 export default defineComponent({
     components: {
-        DChartDoughnut,
+        MTherapyResponseDistributionBar,
         MQueryTherapyResponses,
         BTable,
     },
@@ -28,7 +28,7 @@ export default defineComponent({
                 key: 'supportingVariants', label: 'Stützende Varianten', thClass: 'text-left', tdClass: 'text-left',
             },
             {
-                key: 'responseDistribution', label: 'Response Verteilung', thClass: 'text-center', tdClass: 'text-center',
+                key: 'responseDistribution', label: 'Response Verteilung', thClass: 'text-center', tdClass: 'text-center align-middle',
             },
         ];
 
@@ -79,10 +79,7 @@ export default defineComponent({
                     </ul>
                 </template>
                 <template #cell(responseDistribution)="data">
-                    <DChartDoughnut
-                        style="max-height: 150px"
-                        :items="data.item.responseDistribution.elements"
-                    />
+                    <MTherapyResponseDistributionBar :distribution="data.item.responseDistribution" />
                 </template>
             </BTable>
         </template>
