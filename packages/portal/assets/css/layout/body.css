@@ -12,6 +12,10 @@ body {
     background: #D5D8DA;
 }
 
+ul {
+    padding-inline-start: 1rem;
+}
+
 b, strong {
     font-weight: 700;
 }

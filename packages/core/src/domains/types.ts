@@ -49,10 +49,18 @@ export type ConceptsCount<KEY = any> = ConceptCount<KEY>[];
 export type Quantity<KEY = any> = KeyValueRecord<KEY, number>;
 export type Quantities<KEY = any> = Quantity<KEY>[];
 
-export type Distribution<KEY = any> = {
+export type DistributionConceptsCount<KEY = any> = {
     total: number,
-    elements: Quantities<KEY> | ConceptsCount<KEY>
+    elements: ConceptsCount<KEY>
 };
+
+export type DistributionQuantities<KEY = any> = {
+    total: number,
+    elements: Quantities<KEY>
+};
+
+export type Distribution<KEY = any> = DistributionConceptsCount<KEY> |
+DistributionQuantities<KEY>;
 
 export type DistributionNested<KEY = any> = {
     total: number,

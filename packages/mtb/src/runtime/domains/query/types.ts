@@ -1,7 +1,9 @@
-import {
+import type {
     type CodeRecord,
     type Coding,
+    type ConceptsCount,
     type Distribution,
+    DistributionConceptsCount,
     type DistributionNested,
     type KMSurvivalReport,
     type KeyValueRecords,
@@ -86,3 +88,10 @@ export type QuerySessionCreate = {
 };
 
 export type QuerySession = QueryBase<QueryCriteria>;
+
+export type QueryTherapyResponse = {
+    medicationClasses: unknown[],
+    medications: string[],
+    supportingVariants: string[],
+    responseDistribution: DistributionConceptsCount<Coding>
+};
