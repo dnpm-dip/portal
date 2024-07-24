@@ -1,9 +1,9 @@
 {
-    ".": "1.16.0",
+    ".": "1.16.1",
     "packages/core": "1.16.0",
-    "packages/portal": "1.14.3",
+    "packages/portal": "1.15.0",
     "packages/rare-diseases": "1.0.0",
-    "packages/kit": "1.12.1",
-    "packages/mtb": "1.16.0",
-    "packages/rd": "1.16.0"
+    "packages/kit": "1.12.2",
+    "packages/mtb": "1.16.1",
+    "packages/rd": "1.16.1"
 }

@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.16.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.16.0...v1.16.1) (2024-07-23)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/kit bumped from ^1.12.1 to ^1.12.2
+
 ## [1.16.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.15.0...v1.16.0) (2024-07-19)
 
 
