@@ -5,17 +5,22 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
+import { BTooltip } from 'bootstrap-vue-next';
 import type { Coding, DistributionConceptsCount } from '@dnpm-dip/core';
 import { type PropType, computed, defineComponent } from 'vue';
 import { RecistColor } from '../../domains';
 
 type Item = {
-    name: string,
+    title: string,
+    code: string,
     percent: number,
     color: string
 };
 
 export default defineComponent({
+    directives: {
+        BTooltip,
+    },
     props: {
         distribution: {
             type: Object as PropType<DistributionConceptsCount<Coding<string>>>,
@@ -30,7 +35,8 @@ export default defineComponent({
                 const element = props.distribution.elements[i];
 
                 output.push({
-                    name: element.key.code,
+                    title: `${element.key.display || element.key.code} (${element.value.count}/${props.distribution.total}; ${Math.round(element.value.percent)}%)`,
+                    code: element.key.code,
                     percent: element.value.percent,
                     color: RecistColor[element.key.code as keyof typeof RecistColor],
                 });
@@ -52,8 +58,15 @@ export default defineComponent({
             :key="key"
         >
             <div
-                :style="{width: (100 * item.percent) + '%', 'background-color': item.color}"
-            />
+                v-b-tooltip.hover.top
+                :title="item.title"
+                :style="{
+                    width: (100 * item.percent) + '%',
+                    'background-color': item.color
+                }"
+            >
+                {{ item.code }}
+            </div>
         </template>
     </div>
 </template>
@@ -61,11 +74,13 @@ export default defineComponent({
 .distribution-bar {
     height: 1rem;
     line-height: 1rem;
+    font-size: 0.85rem;
     background-color: #ececec;
     border: 1px solid #dedede;
     box-shadow: 0 4px 25px 0 rgba(0, 0, 0, .1);
     border-radius: 4px;
 }
+
 .distribution-bar div {
     height:100%;
     opacity: 0.8;
