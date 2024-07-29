@@ -1,6 +1,6 @@
 {
     "name": "@dnpm-dip/root",
-    "version": "1.16.1",
+    "version": "1.17.0",
     "private": true,
     "author": {
         "name": "Peter Placzek",
@@ -27,7 +27,7 @@
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-swc": "^0.3.1",
         "@rollup/plugin-terser": "^0.4.4",
-        "@swc/core": "^1.7.3",
+        "@swc/core": "^1.7.0",
         "@swc/jest": "^0.2.36",
         "@tada5hi/commitlint-config": "^1.2.1",
         "@tada5hi/eslint-config-vue-typescript": "^1.3.11",
@@ -42,7 +42,7 @@
         "lint-staged": "^15.2.7",
         "nx": "^19.5.0",
         "rimraf": "^6.0.1",
-        "rollup": "^4.19.1",
+        "rollup": "^4.18.0",
         "rollup-plugin-postcss": "^4.0.2",
         "smob": "^1.5.0",
         "typescript": "5.5.3",
