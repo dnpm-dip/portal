@@ -1,5 +1,6 @@
 <script lang="ts">
 import {
+    type Coding,
     DCollectionTransform,
     DFormTabGroups,
     DTags,
@@ -8,8 +9,7 @@ import {
     QueryRequestMode,
     type ValueSetCoding,
     buildCodingsRecord,
-    extractCodeFromCodingsRecord,
-    transformCodingsToFormSelectOptions, transformFormSelectOptionsToCodings,
+    extractCodeFromCodingsRecord, transformCodingsToFormSelectOptions, transformFormSelectOptionsToCodings,
 } from '@dnpm-dip/core';
 import {
     VCFormSelectSearch,
@@ -27,9 +27,11 @@ import {
     type QuerySNVCriteria,
 } from '../../domains';
 import MMutationTabGroup from './MMutationTabGroup.vue';
+import MSearchMedicationForm from './MSearchMedicationForm.vue';
 
 export default defineComponent({
     components: {
+        MSearchMedicationForm,
         MMutationTabGroup,
         DFormTabGroups,
         DTags,
@@ -74,7 +76,7 @@ export default defineComponent({
         const diagnoses = ref<FormSelectOption[]>([]);
         const tumorMorphologies = ref<FormSelectOption[]>([]);
 
-        const medicationDrugs = ref<FormSelectOption[]>([]);
+        const medicationDrugs = ref<Coding[]>([]);
         const medicationUsage = ref<string[]>([]);
         const medicationInCombination = ref(false);
 
@@ -105,7 +107,7 @@ export default defineComponent({
 
             if (criteria.value.medication) {
                 if (criteria.value.medication.drugs) {
-                    medicationDrugs.value = transformCodingsToFormSelectOptions(criteria.value.medication.drugs);
+                    medicationDrugs.value = criteria.value.medication.drugs;
                 }
 
                 if (criteria.value.medication.usage) {
@@ -185,7 +187,7 @@ export default defineComponent({
                 medicationDrugs.value &&
                 medicationDrugs.value.length > 0
             ) {
-                medication.drugs = transformFormSelectOptionsToCodings(medicationDrugs.value);
+                medication.drugs = medicationDrugs.value;
             }
 
             if (
@@ -309,6 +311,13 @@ export default defineComponent({
             value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
+        const handleMedicationUpdated = ({ drugs, usage, combination }) => {
+            console.log(medicationDrugs.value);
+            medicationDrugs.value = drugs;
+            medicationUsage.value = usage;
+            medicationInCombination.value = combination;
+        };
+
         return {
             mutations,
             diagnoses,
@@ -325,6 +334,8 @@ export default defineComponent({
             busy,
 
             submit,
+
+            handleMedicationUpdated,
 
             transformCodings,
         };
@@ -445,111 +456,12 @@ export default defineComponent({
 
             <hr>
 
-            <div class="mb-3">
-                <h6><i class="fa fa-pills" /> Medikation</h6>
-                <div class="d-flex flex-row">
-                    <div>
-                        <VCFormInputCheckbox
-                            v-model="medicationInCombination"
-                            :group-class="'form-switch'"
-                            :label="true"
-                            :label-content="'Kombination?'"
-                        />
-                    </div>
-                    <div class="ms-3">
-                        <VCFormInputCheckbox
-                            v-model="medicationUsage"
-                            :group-class="'form-switch'"
-                            :value="'recommended'"
-                            :label="true"
-                            :group="true"
-                        >
-                            <template #label="{id}">
-                                <label :for="id">Empfohlen?</label>
-                            </template>
-                        </VCFormInputCheckbox>
-                    </div>
-                    <div class="ms-3">
-                        <VCFormInputCheckbox
-                            v-model="medicationUsage"
-                            :group-class="'form-switch'"
-                            :value="'used'"
-                            :label="true"
-                            :group="true"
-                        >
-                            <template #label="{id}">
-                                <label :for="id">Verabreicht?</label>
-                            </template>
-                        </VCFormInputCheckbox>
-                    </div>
-                </div>
-                <div>
-                    <VCFormGroup>
-                        <template #label>
-                            Name
-                        </template>
-                        <template #default>
-                            <DValueSet
-                                :code="'http://fhir.de/CodeSystem/bfarm/atc'"
-                                :lazy-load="true"
-                            >
-                                <template #default="{ data }">
-                                    <DCollectionTransform
-                                        :items="data.codings"
-                                        :transform="transformCodings"
-                                    >
-                                        <template #default="options">
-                                            <VCFormSelectSearch
-                                                v-model="medicationDrugs"
-                                                :multiple="true"
-                                                :options="options"
-                                                placeholder="ATC"
-                                            >
-                                                <template #selected="{ items, toggle }">
-                                                    <DCollectionTransform
-                                                        :items="items"
-                                                        :transform="(item: Record<string,any>) => ({
-                                                            ...item,
-                                                            value: item.value.split(':').pop()
-                                                        })"
-                                                    >
-                                                        <template #default="tags">
-                                                            <DTags
-                                                                :emit-only="true"
-                                                                :items="tags"
-                                                                tag-variant="dark"
-                                                                @deleted="toggle"
-                                                            >
-                                                                <template #between>
-                                                                    <span class="me-1">
-                                                                        <template v-if="medicationInCombination">
-                                                                            und
-                                                                        </template>
-                                                                        <template v-else>
-                                                                            oder
-                                                                        </template>
-                                                                    </span>
-                                                                </template>
-                                                            </DTags>
-                                                        </template>
-                                                    </DCollectionTransform>
-                                                </template>
-                                            </VCFormSelectSearch>
-                                        </template>
-                                    </DCollectionTransform>
-                                </template>
-                                <template #loading>
-                                    <VCFormSelectSearch
-                                        :options="[]"
-                                        :disabled="true"
-                                        placeholder="ATC"
-                                    />
-                                </template>
-                            </DValueSet>
-                        </template>
-                    </VCFormGroup>
-                </div>
-            </div>
+            <MSearchMedicationForm
+                :usage="medicationUsage"
+                :drugs="medicationDrugs"
+                :combination="medicationInCombination"
+                @updated="handleMedicationUpdated"
+            />
 
             <hr>
 
