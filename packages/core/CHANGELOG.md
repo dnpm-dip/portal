@@ -1,5 +1,12 @@
 # @dnpm-dip/core
 
+## [1.17.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.16.0...v1.17.0) (2024-07-29)
+
+
+### Features
+
+* therapy-response table ([#636](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/636)) ([af39643](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/af3964303d93893fceed724fd41b74ccba0a28b6))
+
 ## [1.16.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.15.0...v1.16.0) (2024-07-19)
 
 

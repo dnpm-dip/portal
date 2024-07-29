@@ -1,5 +1,15 @@
 # @dnpm-dip/rare-diseases
 
+## [1.16.2](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.16.1...v1.16.2) (2024-07-29)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.16.0 to ^1.17.0
+    * @dnpm-dip/kit bumped from ^1.12.2 to ^1.13.0
+
 ## [1.16.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.16.0...v1.16.1) (2024-07-23)
 
 

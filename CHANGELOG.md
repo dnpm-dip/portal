@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.17.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.16.1...v1.17.0) (2024-07-29)
+
+
+### Features
+
+* support registered and unregistered medication selection ([2e6b2e7](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2e6b2e72908c9a06bd187519e0ab2b10596b8e37))
+
+
+### Bug Fixes
+
+* therapy response view percentage calculation ([ac78e5a](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ac78e5ab01aaee0642a245e93769f0c16c424390))
+
 ## [1.16.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.16.0...v1.16.1) (2024-07-23)
 
 
