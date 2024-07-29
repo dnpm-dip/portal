@@ -61,7 +61,7 @@ export default defineComponent({
                 v-b-tooltip.hover.top
                 :title="item.title"
                 :style="{
-                    width: (100 * item.percent) + '%',
+                    width: item.percent + '%',
                     'background-color': item.color
                 }"
             >
