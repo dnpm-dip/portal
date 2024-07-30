@@ -7,42 +7,54 @@
 <script lang="ts">
 import {
     DQuerySummaryDemographics,
-    InjectionKey,
+    InjectionKey, type QuerySummaryDemographics,
     type URLQueryRecord,
 } from '@dnpm-dip/core';
 import {
-    type PropType, type Ref, defineComponent, inject,
+    type PropType, type Ref, defineComponent, inject, ref, watch,
 } from 'vue';
-import MQueryDemographics from '../../../../../components/core/MQueryDemographics';
+import { injectHTTPClient } from '../../../../../core/http-client';
 import type { QuerySession } from '../../../../../domains';
 
 export default defineComponent({
-    components: { MQueryDemographics, DQuerySummaryDemographics },
+    components: { DQuerySummaryDemographics },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
             required: true,
         },
     },
-    setup() {
+    async setup(props) {
         const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
         const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
 
+        const api = injectHTTPClient();
+
+        const data = ref<null | QuerySummaryDemographics>(null);
+        const load = async () => {
+            data.value = await api.query.getDemographics(props.entity.id, queryFilters.value);
+        };
+
+        await load();
+
+        watch(queryFilters, () => {
+            load();
+        }, { deep: true });
+
+        watch(queryUpdatedAt, () => {
+            load();
+        });
+
         return {
-            queryFilters,
-            queryUpdatedAt,
+            data,
         };
     },
 });
 </script>
 <template>
-    <MQueryDemographics
-        :query-id="entity.id"
-        :query-record="queryFilters"
-        :query-updated-at="queryUpdatedAt"
-    >
-        <template #default="{ data }">
-            <DQuerySummaryDemographics :entity="data" />
-        </template>
-    </MQueryDemographics>
+    <template v-if="data">
+        <DQuerySummaryDemographics
+            :entity="data"
+        />
+    </template>
 </template>

@@ -1,6 +1,5 @@
 <script lang="ts">
-
-import { type PropType, defineComponent, toRef } from 'vue';
+import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryDemographics } from '../../../domains';
 import { DChartBar, DChartDoughnut } from '../../utility';
 
@@ -11,21 +10,6 @@ export default defineComponent({
             type: Object as PropType<QuerySummaryDemographics>,
             required: true,
         },
-    },
-    setup(props, expose) {
-        const data = toRef(props, 'entity');
-
-        const set = (input: QuerySummaryDemographics): void => {
-            data.value = input;
-        };
-
-        expose({
-            set,
-        });
-
-        return {
-            data,
-        };
     },
 });
 </script>
@@ -40,7 +24,7 @@ export default defineComponent({
                     </h6>
                     <DChartDoughnut
                         style="max-height: 390px"
-                        :items="data.siteDistribution.elements"
+                        :items="entity.siteDistribution.elements"
                     />
                 </div>
             </div>
@@ -51,7 +35,7 @@ export default defineComponent({
                     </h6>
                     <DChartDoughnut
                         style="max-height: 390px"
-                        :items="data.genderDistribution.elements"
+                        :items="entity.genderDistribution.elements"
                     />
                 </div>
             </div>
@@ -62,7 +46,7 @@ export default defineComponent({
                     </h6>
                     <DChartBar
                         style="max-height: 390px"
-                        :items="data.ageDistribution.elements"
+                        :items="entity.ageDistribution.elements"
                     />
                 </div>
             </div>

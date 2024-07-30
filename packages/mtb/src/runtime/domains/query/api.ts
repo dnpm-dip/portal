@@ -106,17 +106,17 @@ export class QueryAPI extends BaseAPI {
         return response.data;
     }
 
-    async getTumorDiagnostics(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QuerySummaryTumorDiagnostics>> {
+    async getTumorDiagnostics(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryTumorDiagnostics> {
         const response = await this.client.get(`mtb/queries/${queryId}/tumor-diagnostics${this.buildRequestQueryString(query)}`);
         return response.data;
     }
 
-    async getMedication(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QuerySummaryMedication>> {
+    async getMedication(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryMedication> {
         const response = await this.client.get(`mtb/queries/${queryId}/medication${this.buildRequestQueryString(query)}`);
         return response.data;
     }
 
-    async getDemographics(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QuerySummaryDemographics>> {
+    async getDemographics(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryDemographics> {
         const response = await this.client.get(`mtb/queries/${queryId}/demographics${this.buildRequestQueryString(query)}`);
         return response.data;
     }
