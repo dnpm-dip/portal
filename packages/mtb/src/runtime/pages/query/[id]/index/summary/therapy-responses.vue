@@ -5,12 +5,14 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
+import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import { InjectionKey, type URLQueryRecord } from '@dnpm-dip/core';
 import {
-    type PropType, type Ref, defineComponent, inject,
+    type PropType, type Ref, defineComponent, inject, ref, watch,
 } from 'vue';
 import MQuerySummaryTherapyResponses from '../../../../../components/core/MQuerySummaryTherapyResponses.vue';
-import type { QuerySession } from '../../../../../domains';
+import { injectHTTPClient } from '../../../../../core/http-client';
+import type { QuerySession, QueryTherapyResponse } from '../../../../../domains';
 
 export default defineComponent({
     components: { MQuerySummaryTherapyResponses },
@@ -20,21 +22,40 @@ export default defineComponent({
             required: true,
         },
     },
-    setup() {
+
+    async setup(props) {
         const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
         const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
 
+        const api = injectHTTPClient();
+
+        const busy = ref(false);
+        const items = ref<QueryTherapyResponse[]>([]);
+        const load = wrapFnWithBusyState(busy, async () => {
+            const response = await api.query.getTherapyResponses(props.entity.id, queryFilters.value);
+            items.value = response.entries;
+        });
+
+        await load();
+
+        watch(queryFilters, () => {
+            load();
+        }, { deep: true });
+
+        watch(queryUpdatedAt, () => {
+            load();
+        });
+
         return {
-            queryFilters,
-            queryUpdatedAt,
+            busy,
+            items,
         };
     },
 });
 </script>
 <template>
     <MQuerySummaryTherapyResponses
-        :query-id="entity.id"
-        :query-updated-at="queryUpdatedAt"
-        :query-filters="queryFilters"
+        :busy="busy"
+        :items="items"
     />
 </template>

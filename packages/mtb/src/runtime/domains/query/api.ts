@@ -101,8 +101,8 @@ export class QueryAPI extends BaseAPI {
         return response.data;
     }
 
-    async getTherapyResponses(queryId: string) : Promise<ResourceCollectionResponse<QueryTherapyResponse>> {
-        const response = await this.client.get(`mtb/queries/${queryId}/therapy-responses`);
+    async getTherapyResponses(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QueryTherapyResponse>> {
+        const response = await this.client.get(`mtb/queries/${queryId}/therapy-responses${this.buildRequestQueryString(query)}`);
         return response.data;
     }
 

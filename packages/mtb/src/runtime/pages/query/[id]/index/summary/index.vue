@@ -5,6 +5,7 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
+import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
     DQuerySummaryDemographics,
     InjectionKey, type QuerySummaryDemographics,
@@ -24,18 +25,20 @@ export default defineComponent({
             required: true,
         },
     },
-    async setup(props) {
+    setup(props) {
         const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
         const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
 
         const api = injectHTTPClient();
 
+        const busy = ref(false);
         const data = ref<null | QuerySummaryDemographics>(null);
-        const load = async () => {
+        const load = wrapFnWithBusyState(busy, async () => {
             data.value = await api.query.getDemographics(props.entity.id, queryFilters.value);
-        };
+        });
 
-        await load();
+        Promise.resolve()
+            .then(() => load());
 
         watch(queryFilters, () => {
             load();
