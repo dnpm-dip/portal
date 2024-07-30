@@ -23,7 +23,7 @@ export default defineComponent({
         },
     },
 
-    async setup(props) {
+    setup(props) {
         const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
         const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
 
@@ -36,7 +36,8 @@ export default defineComponent({
             items.value = response.entries;
         });
 
-        await load();
+        Promise.resolve()
+            .then(() => load());
 
         watch(queryFilters, () => {
             load();
