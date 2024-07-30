@@ -12,21 +12,17 @@ import {
     DChartLineKM,
     DNav,
     DQuerySummaryDemographics,
-    InjectionKey,
     type NavItem,
-    type URLQueryRecord, createResourceRecordManager,
 } from '@dnpm-dip/core';
 import {
-    type PropType, type Ref, nextTick, watch,
+    type PropType,
 } from 'vue';
 import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
-import MQuerySummary from '../../../../components/core/MQuerySummary';
 import MQuerySummaryMedication from '../../../../components/core/MQuerySummaryMedication.vue';
 import MQuerySummarySurvivalReport from '../../../../components/core/MQuerySummarySurvivalReport.vue';
 import MQuerySummaryTumorDiagnostics from '../../../../components/core/MQuerySummaryTumorDiagnostics.vue';
 import type { QuerySession } from '../../../../domains';
-import { injectHTTPClient } from '../../../../core/http-client';
 
 export default defineNuxtComponent({
     components: {
@@ -38,7 +34,6 @@ export default defineNuxtComponent({
         DChartDoughnut,
         DChartBar,
         DChartLineKM,
-        MQuerySummary,
     },
     props: {
         entity: {
@@ -65,28 +60,6 @@ export default defineNuxtComponent({
             },
         ];
 
-        const httpClient = injectHTTPClient();
-
-        const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
-        const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
-
-        const manager = createResourceRecordManager({
-            load: (id) => httpClient.query.getSummary(id, queryFilters.value),
-            id: props.entity.id,
-        });
-
-        await manager.load();
-
-        watch(queryFilters, () => {
-            nextTick(() => {
-                manager.load(true);
-            });
-        }, { deep: true });
-
-        watch(queryUpdatedAt, () => {
-            manager.load(true);
-        });
-
         const navItemId = ref('default');
 
         const setNavItem = (item: NavItem) => {
@@ -94,9 +67,6 @@ export default defineNuxtComponent({
         };
 
         return {
-            data: manager.data,
-
-            queryFilters,
             navItems,
             navItemId,
             setNavItem,
@@ -115,7 +85,7 @@ export default defineNuxtComponent({
         </div>
         <div class="content-main">
             <NuxtPage
-                :entity="data"
+                :entity="entity"
             />
         </div>
     </div>

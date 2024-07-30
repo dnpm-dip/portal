@@ -1,5 +1,6 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import type { URLQueryRecord } from '@dnpm-dip/core';
+import { type PropType, defineComponent } from 'vue';
 import { BTable } from 'bootstrap-vue-next';
 import MQueryTherapyResponses from './MQueryTherapyResponses';
 import MTherapyResponseDistributionBar from './MTherapyResponseDistributionBar.vue';
@@ -14,6 +15,12 @@ export default defineComponent({
         queryId: {
             type: String,
             required: true,
+        },
+        queryFilters: {
+            type: Object as PropType<URLQueryRecord>,
+        },
+        queryUpdatedAt: {
+            type: String,
         },
     },
     setup() {
@@ -39,7 +46,10 @@ export default defineComponent({
 });
 </script>
 <template>
-    <MQueryTherapyResponses :query-id="queryId">
+    <MQueryTherapyResponses
+        :query-id="queryId"
+        :query-updated-at="queryUpdatedAt"
+    >
         <template #default="props">
             <BTable
                 :variant="'light'"

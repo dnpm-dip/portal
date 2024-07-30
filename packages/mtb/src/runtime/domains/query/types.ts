@@ -1,15 +1,14 @@
 import type {
-    type CodeRecord,
-    type Coding,
-    type ConceptsCount,
-    type Distribution,
+    CodeRecord,
+    Coding,
+    Distribution,
     DistributionConceptsCount,
-    type DistributionNested,
-    type KMSurvivalReport,
-    type KeyValueRecords,
-    type QueryBase,
-    type QueryRequestMode,
-    type QuerySummaryBase,
+    DistributionNested,
+    KMSurvivalReport,
+    KeyValueRecords,
+    QueryBase,
+    QueryRequestMode,
+    QuerySummaryBase,
 } from '@dnpm-dip/core';
 
 export type QuerySummaryTumorDiagnostics = {
