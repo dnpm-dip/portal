@@ -1,10 +1,11 @@
 import type {
+    QuerySummaryDemographics,
     ResourceCollectionLoadMeta, ResourceCollectionResponse, URLQueryRecord,
 } from '@dnpm-dip/core';
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
 import type { PatientMatch, PatientRecord } from '../patient';
 import type {
-    QuerySession, QuerySessionCreate, QuerySummary,
+    QuerySession, QuerySessionCreate, QuerySummary, QuerySummaryDiagnostics,
 } from './types';
 
 export class QueryAPI extends BaseAPI {
@@ -35,25 +36,6 @@ export class QueryAPI extends BaseAPI {
      */
     async update(id: string, query?: QuerySessionCreate) : Promise<QuerySession> {
         const response = await this.client.put(`rd/queries/${id}`, query);
-        return response.data;
-    }
-
-    /**
-     * Get a summary/overview in the context of a specific query.
-     *
-     * @param id
-     * @param query
-     */
-    async getSummary(id: string, query?: URLQueryRecord) : Promise<QuerySummary> {
-        let qs : string = '';
-        if (typeof query !== 'undefined') {
-            qs = serializeURLQueryRecord(query);
-            if (qs.length > 0) {
-                qs = `?${qs}`;
-            }
-        }
-
-        const response = await this.client.get(`rd/queries/${id}/summary${qs}`);
         return response.data;
     }
 
@@ -89,6 +71,16 @@ export class QueryAPI extends BaseAPI {
         return response.data;
     }
 
+    async getDemographics(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryDemographics> {
+        const response = await this.client.get(`rd/queries/${queryId}/demographics${this.buildRequestQueryString(query)}`);
+        return response.data;
+    }
+
+    async getDiagnostics(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryDiagnostics> {
+        const response = await this.client.get(`rd/queries/${queryId}/diagnostics${this.buildRequestQueryString(query)}`);
+        return response.data;
+    }
+
     /**
      * Get an individual patient in the context of a specific query.
      *
@@ -98,5 +90,17 @@ export class QueryAPI extends BaseAPI {
     async getPatientRecord(queryId: string, patientId: string) : Promise<PatientRecord> {
         const response = await this.client.get(`rd/queries/${queryId}/patient-record/${patientId}`);
         return response.data;
+    }
+
+    private buildRequestQueryString(query?: URLQueryRecord) {
+        let qs : string = '';
+        if (typeof query !== 'undefined') {
+            qs = serializeURLQueryRecord(query);
+            if (qs.length > 0) {
+                qs = `?${qs}`;
+            }
+        }
+
+        return qs;
     }
 }
