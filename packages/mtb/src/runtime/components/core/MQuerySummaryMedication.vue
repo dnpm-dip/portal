@@ -1,6 +1,6 @@
 <script lang="ts">
 import {
-    DChartBar, DChartDoughnut, DQuerySummaryGrouped, DQuerySummaryNested,
+    DChartBar, DChartDoughnut, DQuerySummaryGrouped, DQuerySummaryNested, type URLQueryRecord,
 } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryMedication } from '../../domains';

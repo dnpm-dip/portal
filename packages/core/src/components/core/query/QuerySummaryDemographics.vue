@@ -1,5 +1,4 @@
 <script lang="ts">
-
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryDemographics } from '../../../domains';
 import { DChartBar, DChartDoughnut } from '../../utility';

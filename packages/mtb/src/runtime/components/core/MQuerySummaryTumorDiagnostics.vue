@@ -1,5 +1,7 @@
 <script lang="ts">
-import { DChartBar, DQuerySummaryGrouped, DQuerySummaryNested } from '@dnpm-dip/core';
+import {
+    DChartBar, DQuerySummaryGrouped, DQuerySummaryNested, type URLQueryRecord,
+} from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryTumorDiagnostics } from '../../domains';
 

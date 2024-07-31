@@ -1,6 +1,8 @@
 import type {
     KMSurvivalReport,
-    ResourceCollectionLoadMeta, ResourceCollectionResponse,
+    QuerySummaryDemographics,
+    ResourceCollectionLoadMeta,
+    ResourceCollectionResponse,
     URLQueryRecord,
 } from '@dnpm-dip/core';
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
@@ -8,7 +10,9 @@ import type { PatientMatch, PatientRecord } from '../patient';
 import type {
     QuerySession,
     QuerySessionCreate,
-    QuerySummary, QueryTherapyResponse,
+    QuerySummaryMedication,
+    QuerySummaryTumorDiagnostics,
+    QueryTherapyResponse,
 } from './types';
 
 export class QueryAPI extends BaseAPI {
@@ -39,25 +43,6 @@ export class QueryAPI extends BaseAPI {
      */
     async update(id: string, query?: QuerySessionCreate) : Promise<QuerySession> {
         const response = await this.client.put(`mtb/queries/${id}`, query);
-        return response.data;
-    }
-
-    /**
-     * Get a summary/overview in the context of a specific query.
-     *
-     * @param id
-     * @param query
-     */
-    async getSummary(id: string, query?: URLQueryRecord) : Promise<QuerySummary> {
-        let qs : string = '';
-        if (typeof query !== 'undefined') {
-            qs = serializeURLQueryRecord(query);
-            if (qs.length > 0) {
-                qs = `?${qs}`;
-            }
-        }
-
-        const response = await this.client.get(`mtb/queries/${id}/summary${qs}`);
         return response.data;
     }
 
@@ -116,8 +101,35 @@ export class QueryAPI extends BaseAPI {
         return response.data;
     }
 
-    async getTherapyResponses(queryId: string, meta?: ResourceCollectionLoadMeta) : Promise<ResourceCollectionResponse<QueryTherapyResponse>> {
-        const response = await this.client.get(`mtb/queries/${queryId}/therapy-responses`);
+    async getTherapyResponses(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QueryTherapyResponse>> {
+        const response = await this.client.get(`mtb/queries/${queryId}/therapy-responses${this.buildRequestQueryString(query)}`);
         return response.data;
+    }
+
+    async getTumorDiagnostics(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryTumorDiagnostics> {
+        const response = await this.client.get(`mtb/queries/${queryId}/tumor-diagnostics${this.buildRequestQueryString(query)}`);
+        return response.data;
+    }
+
+    async getMedication(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryMedication> {
+        const response = await this.client.get(`mtb/queries/${queryId}/medication${this.buildRequestQueryString(query)}`);
+        return response.data;
+    }
+
+    async getDemographics(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryDemographics> {
+        const response = await this.client.get(`mtb/queries/${queryId}/demographics${this.buildRequestQueryString(query)}`);
+        return response.data;
+    }
+
+    private buildRequestQueryString(query?: URLQueryRecord) {
+        let qs : string = '';
+        if (typeof query !== 'undefined') {
+            qs = serializeURLQueryRecord(query);
+            if (qs.length > 0) {
+                qs = `?${qs}`;
+            }
+        }
+
+        return qs;
     }
 }

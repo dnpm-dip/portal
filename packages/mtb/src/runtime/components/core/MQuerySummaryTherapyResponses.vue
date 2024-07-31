@@ -1,19 +1,23 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import type { URLQueryRecord } from '@dnpm-dip/core';
+import { type PropType, defineComponent } from 'vue';
 import { BTable } from 'bootstrap-vue-next';
-import MQueryTherapyResponses from './MQueryTherapyResponses';
+import type { QueryTherapyResponse } from '../../domains';
 import MTherapyResponseDistributionBar from './MTherapyResponseDistributionBar.vue';
 
 export default defineComponent({
     components: {
         MTherapyResponseDistributionBar,
-        MQueryTherapyResponses,
         BTable,
     },
     props: {
-        queryId: {
-            type: String,
+        items: {
+            type: Object as PropType<QueryTherapyResponse[]>,
             required: true,
+        },
+        busy: {
+            type: Boolean,
+            default: false,
         },
     },
     setup() {
@@ -39,49 +43,45 @@ export default defineComponent({
 });
 </script>
 <template>
-    <MQueryTherapyResponses :query-id="queryId">
-        <template #default="props">
-            <BTable
-                :variant="'light'"
-                :items="props.data"
-                :fields="fields"
-                :busy="props.busy"
-                outlined
-            >
-                <template #cell(medicationClasses)="data">
-                    <ul>
-                        <li
-                            v-for="(item,key) in data.item.medicationClasses"
-                            :key="key"
-                        >
-                            {{ item }}
-                        </li>
-                    </ul>
-                </template>
-                <template #cell(medications)="data">
-                    <ul>
-                        <li
-                            v-for="(item,key) in data.item.medications"
-                            :key="key"
-                        >
-                            {{ item }}
-                        </li>
-                    </ul>
-                </template>
-                <template #cell(supportingVariants)="data">
-                    <ul>
-                        <li
-                            v-for="(item,key) in data.item.supportingVariants"
-                            :key="key"
-                        >
-                            {{ item }}
-                        </li>
-                    </ul>
-                </template>
-                <template #cell(responseDistribution)="data">
-                    <MTherapyResponseDistributionBar :distribution="data.item.responseDistribution" />
-                </template>
-            </BTable>
+    <BTable
+        :variant="'light'"
+        :items="items"
+        :fields="fields"
+        :busy="busy"
+        outlined
+    >
+        <template #cell(medicationClasses)="data">
+            <ul>
+                <li
+                    v-for="(item,key) in data.item.medicationClasses"
+                    :key="key"
+                >
+                    {{ item }}
+                </li>
+            </ul>
         </template>
-    </MQueryTherapyResponses>
+        <template #cell(medications)="data">
+            <ul>
+                <li
+                    v-for="(item,key) in data.item.medications"
+                    :key="key"
+                >
+                    {{ item }}
+                </li>
+            </ul>
+        </template>
+        <template #cell(supportingVariants)="data">
+            <ul>
+                <li
+                    v-for="(item,key) in data.item.supportingVariants"
+                    :key="key"
+                >
+                    {{ item }}
+                </li>
+            </ul>
+        </template>
+        <template #cell(responseDistribution)="data">
+            <MTherapyResponseDistributionBar :distribution="data.item.responseDistribution" />
+        </template>
+    </BTable>
 </template>
