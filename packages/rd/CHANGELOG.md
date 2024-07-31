@@ -1,5 +1,20 @@
 # @dnpm-dip/rare-diseases
 
+## [1.17.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.16.2...v1.17.0) (2024-07-31)
+
+
+### Features
+
+* rd summary endpoint split ([#661](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/661)) ([47dfb43](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/47dfb438bcb1f96ca350eb0f42609b8200243d0b))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.17.0 to ^1.18.0
+    * @dnpm-dip/kit bumped from ^1.13.0 to ^1.14.0
+
 ## [1.16.2](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.16.1...v1.16.2) (2024-07-29)
 
 

@@ -1,5 +1,27 @@
 # @dnpm-dip/portal
 
+## [1.17.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.16.0...v1.17.0) (2024-07-31)
+
+
+### Features
+
+* therapy-response table ([#636](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/636)) ([af39643](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/af3964303d93893fceed724fd41b74ccba0a28b6))
+
+
+### Bug Fixes
+
+* disable scanPageMeta temporarily ([afd26af](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/afd26af9e84ac2be9c34b01ff10d9094de3f495d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.17.0 to ^1.18.0
+    * @dnpm-dip/kit bumped from ^1.13.0 to ^1.14.0
+    * @dnpm-dip/mtb bumped from ^1.17.0 to ^1.18.0
+    * @dnpm-dip/rd bumped from ^1.16.2 to ^1.17.0
+
 ## [1.16.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.15.0...v1.16.0) (2024-07-29)
 
 
