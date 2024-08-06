@@ -1,5 +1,7 @@
 <script lang="ts">
-import type { CodeRecord, Coding, ValueSetCoding } from '@dnpm-dip/core';
+import {
+    type CodeRecord, type Coding, type ConnectionPeer, DSitePicker, type ValueSetCoding,
+} from '@dnpm-dip/core';
 import {
     DCollectionTransform, DFormTabGroups, DTags, DValueSet, QueryRequestMode,
 } from '@dnpm-dip/core';
@@ -20,6 +22,7 @@ import RVariantFormTabGroup from './RVariantFormTabGroup.vue';
 
 export default defineComponent({
     components: {
+        DSitePicker,
         DTags,
         RVariantFormTabGroup,
         DFormTabGroups,
@@ -36,6 +39,9 @@ export default defineComponent({
         },
         queryMode: {
             type: String as PropType<QueryRequestMode>,
+        },
+        queryPeers: {
+            type: Array as PropType<ConnectionPeer[]>,
         },
         preparedQuery: {
             type: Object as PropType<PreparedQuery>,
@@ -57,9 +63,11 @@ export default defineComponent({
         const apiClient = injectHTTPClient();
 
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
+        const modeSites = ref<Coding[]>([]);
         const modeOptions : FormSelectOption[] = [
             { id: QueryRequestMode.LOCAL, value: 'Lokal' },
             { id: QueryRequestMode.FEDERATED, value: 'Föderiert' },
+            { id: QueryRequestMode.CUSTOM, value: 'Benutzerdefiniert' },
         ];
 
         const busy = ref(false);
@@ -94,6 +102,10 @@ export default defineComponent({
 
             if (props.queryMode) {
                 mode.value = props.queryMode;
+            }
+
+            if (props.queryPeers) {
+                modeSites.value = props.queryPeers.map((peer) => peer.site);
             }
 
             try {
@@ -295,6 +307,7 @@ export default defineComponent({
                         mode: {
                             code: mode.value,
                         },
+                        sites: modeSites.value,
                     });
 
                     emit('queryUpdated', query);
@@ -304,6 +317,7 @@ export default defineComponent({
                         mode: {
                             code: mode.value,
                         },
+                        sites: modeSites.value,
                     });
 
                     emit('queryCreated', query);
@@ -324,6 +338,7 @@ export default defineComponent({
 
         return {
             mode,
+            modeSites,
             modeOptions,
 
             busy,
@@ -472,6 +487,14 @@ export default defineComponent({
                     :options="modeOptions"
                     :option-default="false"
                 />
+
+                <template v-if="mode === 'custom'">
+                    <DSitePicker
+                        v-model="modeSites"
+                        class="mt-3"
+                        :use-case="'rd'"
+                    />
+                </template>
             </div>
 
             <hr>

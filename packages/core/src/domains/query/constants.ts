@@ -1,6 +1,7 @@
 export enum QueryRequestMode {
     LOCAL = 'local',
     FEDERATED = 'federated',
+    CUSTOM = 'custom',
 }
 
 export enum QueryCriteriaOperator {

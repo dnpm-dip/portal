@@ -186,6 +186,7 @@ export default defineNuxtComponent({
 
             <SearchForm
                 :query-mode="entity.mode.code"
+                :query-peers="entity.peers"
                 :query-id="entity.id"
                 :criteria="entity.criteria"
                 :prepared-query-id="preparedQueryId"
