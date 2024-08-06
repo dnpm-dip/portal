@@ -1,17 +1,23 @@
 <script lang="ts">
-import { DQueryInfoBox, DQueryPatientFilters, type URLQueryRecord } from '@dnpm-dip/core';
+import {
+    DQueryInfoBox, DQueryPatientFilters, InjectionKey, type URLQueryRecord,
+} from '@dnpm-dip/core';
 import { DNav } from '@dnpm-dip/core';
+import { BModal } from 'bootstrap-vue-next';
 import type { PropType } from 'vue';
 import { provide, ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
-import SearchForm from '../../../components/core/MSearchForm.vue';
+import MQueryCriteriaSummary from '../../../components/core/MQueryCriteriaSummary.vue';
+import MSearchForm from '../../../components/core/MSearchForm.vue';
 import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        MQueryCriteriaSummary,
+        BModal,
+        MSearchForm,
         DQueryPatientFilters,
         DQueryInfoBox,
-        SearchForm,
         DNav,
     },
     props: {
@@ -20,7 +26,7 @@ export default defineNuxtComponent({
             required: true,
         },
     },
-    setup(_, { emit }) {
+    setup(props, { emit }) {
         const route = useRoute();
 
         const navItems = [
@@ -33,13 +39,13 @@ export default defineNuxtComponent({
             {
                 name: 'Info', icon: 'fa fa-network-wired', urlSuffix: '/info',
             },
-            {
-                name: 'Anpassen', icon: 'fa fa-cog', urlSuffix: '/settings',
-            },
         ];
 
         const queryFilters = ref<URLQueryRecord>({});
-        provide('queryFilters', queryFilters);
+        provide(InjectionKey.QUERY_FILTERS, queryFilters);
+
+        const queryUpdatedAt = ref(props.entity.lastUpdate);
+        provide(InjectionKey.QUERY_UPDATED_AT, queryUpdatedAt);
 
         const applyFilters = (input: URLQueryRecord) => {
             queryFilters.value = {
@@ -50,13 +56,35 @@ export default defineNuxtComponent({
 
         const handleUpdated = (entity: QuerySession) => {
             emit('updated', entity);
+
+            queryUpdatedAt.value = entity.lastUpdate;
+        };
+
+        const handleFailed = (e: Error) => {
+            emit('failed', e);
+        };
+
+        const modal = ref(false);
+        const toggleModal = () => {
+            modal.value = !modal.value;
+        };
+
+        const handleModalUpdated = (entity: QuerySession) => {
+            handleUpdated(entity);
+            modal.value = false;
         };
 
         return {
             applyFilters,
-            handleUpdated,
             navItems,
             preparedQueryId: route.query.preparedQueryId,
+
+            toggleModal,
+            modal,
+            handleModalUpdated,
+
+            handleUpdated,
+            handleFailed,
         };
     },
 });
@@ -80,7 +108,19 @@ export default defineNuxtComponent({
         <DNav
             :items="navItems"
             :path="'/mtb/query/'+ entity.id"
-        />
+        >
+            <template #end>
+                <li class="nav-item">
+                    <button
+                        type="button"
+                        class="nav-link"
+                        @click.prevent="toggleModal"
+                    >
+                        <i class="fa fa-cog" /> Anpassen
+                    </button>
+                </li>
+            </template>
+        </DNav>
     </div>
 
     <hr>
@@ -93,6 +133,13 @@ export default defineNuxtComponent({
     <template v-if="entity">
         <div class="row">
             <div class="col-6 col-md-9 col-lg-10">
+                <template v-if="entity.criteria">
+                    <div class="entity-card mb-2">
+                        <div class="d-flex flex-row">
+                            <MQueryCriteriaSummary :entity="entity.criteria" />
+                        </div>
+                    </div>
+                </template>
                 <NuxtPage
                     :entity="entity"
                     @updated="handleUpdated"
@@ -106,5 +153,38 @@ export default defineNuxtComponent({
                 />
             </div>
         </div>
+
+        <BModal
+            v-model="modal"
+            :hide-footer="true"
+            :size="'lg'"
+        >
+            <template #header="props">
+                <div class="d-flex flex-row w-100">
+                    <div>
+                        <h5 class="mb-0">
+                            <i class="fa fa-search" /> Suche
+                        </h5>
+                    </div>
+                    <div class="ms-auto">
+                        <button
+                            type="button"
+                            class="btn btn-xs btn-secondary"
+                            @click.prevent="props.close()"
+                        >
+                            <i class="fa fa-times" />
+                        </button>
+                    </div>
+                </div>
+            </template>
+            <MSearchForm
+                :query-mode="entity.mode.code"
+                :query-id="entity.id"
+                :criteria="entity.criteria"
+                :prepared-query-id="preparedQueryId"
+                @query-updated="handleModalUpdated"
+                @failed="handleFailed"
+            />
+        </BModal>
     </template>
 </template>

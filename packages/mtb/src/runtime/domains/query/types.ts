@@ -2,6 +2,8 @@ import type {
     CodeRecord,
     Coding,
     Distribution,
+    DistributionConceptsCount,
+    DistributionNested,
     KMSurvivalReport,
     KeyValueRecords,
     QueryBase,
@@ -11,8 +13,8 @@ import type {
 
 export type QuerySummaryTumorDiagnostics = {
     overallDistributions: {
-        tumorEntities: Distribution<Coding>,
-        tumorMorphologies: Distribution<Coding>
+        tumorEntities: DistributionNested<Coding>,
+        tumorMorphologies: DistributionNested<Coding>
     },
     distributionsByVariant: KeyValueRecords<string, {
         tumorEntities: Distribution<Coding>,
@@ -21,13 +23,13 @@ export type QuerySummaryTumorDiagnostics = {
 };
 
 type MedicationRecommendations = {
-    overallDistribution: Distribution<Coding>,
+    overallDistribution: DistributionNested<Coding>,
     distributionBySupportingVariant: KeyValueRecords<string, Distribution<string[]>>
 };
 
 type MedicationTherapies = {
     meanDurations: Distribution<string[]>,
-    overallDistribution: Distribution<string[]>,
+    overallDistribution: DistributionNested<string[]>,
     responseDistributionByTherapy: KeyValueRecords<string[], Distribution<Coding>>
 };
 
@@ -85,3 +87,10 @@ export type QuerySessionCreate = {
 };
 
 export type QuerySession = QueryBase<QueryCriteria>;
+
+export type QueryTherapyResponse = {
+    medicationClasses: unknown[],
+    medications: string[],
+    supportingVariants: string[],
+    responseDistribution: DistributionConceptsCount<Coding>
+};

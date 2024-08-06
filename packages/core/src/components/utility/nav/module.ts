@@ -1,6 +1,7 @@
 import { VCLink } from '@vuecs/link';
 import { h } from 'vue';
 import type { VNodeChild } from 'vue';
+import { hasNormalizedSlot, normalizeSlot } from '../../../core';
 import type { NavItem, NavOptions } from './types';
 
 export function buildNav(
@@ -58,26 +59,43 @@ export function buildNav(
         return `${path}/${link}`;
     };
 
+    const children : VNodeChild = [
+        prevLink,
+    ];
+
+    if (
+        options.slots &&
+        hasNormalizedSlot('start', options.slots)
+    ) {
+        children.push(normalizeSlot('start', {}, options.slots));
+    }
+
+    children.push(...items.map((item) => h('li', { class: 'nav-item' }, [
+        h(
+            VCLink,
+            {
+                class: 'nav-link',
+                to: buildLink(item.urlSuffix),
+            },
+            {
+                default: () => [
+                    h('i', { class: `${item.icon} pe-1` }),
+                    item.name,
+                ],
+            },
+        ),
+    ])));
+
+    if (
+        options.slots &&
+        hasNormalizedSlot('end', options.slots)
+    ) {
+        children.push(normalizeSlot('end', {}, options.slots));
+    }
+
     return h(
         'ul',
         { class: clazz },
-        [
-            prevLink,
-            ...items.map((item) => h('li', { class: 'nav-item' }, [
-                h(
-                    VCLink,
-                    {
-                        class: 'nav-link',
-                        to: buildLink(item.urlSuffix),
-                    },
-                    {
-                        default: () => [
-                            h('i', { class: `${item.icon} pe-1` }),
-                            item.name,
-                        ],
-                    },
-                ),
-            ])),
-        ],
+        children,
     );
 }

@@ -6,19 +6,16 @@
   -->
 <script lang="ts">
 import { wrapFnWithBusyState } from '@authup/client-web-kit';
-import {
-    DQuerySummaryDemographics,
-    InjectionKey, type QuerySummaryDemographics,
-    type URLQueryRecord,
-} from '@dnpm-dip/core';
+import { InjectionKey, type URLQueryRecord } from '@dnpm-dip/core';
 import {
     type PropType, type Ref, defineComponent, inject, ref, watch,
 } from 'vue';
 import { injectHTTPClient } from '../../../../../core/http-client';
-import type { QuerySession } from '../../../../../domains';
+import type { QuerySession, QuerySummaryDiagnostics } from '../../../../../domains';
+import RQuerySummaryDiagnostics from '../../../../../components/core/RQuerySummaryDiagnostics.vue';
 
 export default defineComponent({
-    components: { DQuerySummaryDemographics },
+    components: { RQuerySummaryDiagnostics },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -32,9 +29,9 @@ export default defineComponent({
         const api = injectHTTPClient();
 
         const busy = ref(false);
-        const data = ref<null | QuerySummaryDemographics>(null);
+        const data = ref<null | QuerySummaryDiagnostics>(null);
         const load = wrapFnWithBusyState(busy, async () => {
-            data.value = await api.query.getDemographics(props.entity.id, queryFilters.value);
+            data.value = await api.query.getDiagnostics(props.entity.id, queryFilters.value);
         });
 
         Promise.resolve()
@@ -56,8 +53,6 @@ export default defineComponent({
 </script>
 <template>
     <template v-if="data">
-        <DQuerySummaryDemographics
-            :entity="data"
-        />
+        <RQuerySummaryDiagnostics :entity="data" />
     </template>
 </template>

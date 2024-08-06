@@ -6,14 +6,14 @@
   -->
 <script lang="ts">
 import { type PropType, defineComponent } from 'vue';
-import type { QuerySummary } from '../../../../../domains';
+import type { QuerySession, QuerySummary } from '../../../../../domains';
 import MQuerySummarySurvivalReport from '../../../../../components/core/MQuerySummarySurvivalReport.vue';
 
 export default defineComponent({
     components: { MQuerySummarySurvivalReport },
     props: {
         entity: {
-            type: Object as PropType<QuerySummary>,
+            type: Object as PropType<QuerySession>,
             required: true,
         },
     },

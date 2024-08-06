@@ -19,12 +19,12 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <template v-if="record.medicationTherapies">
+    <template v-if="record.therapies">
         <div>
             <h5>Durchgeführte Therapien</h5>
         </div>
         <template
-            v-for="(history, key) in record.medicationTherapies"
+            v-for="(history, key) in record.therapies"
             :key="key"
         >
             <template
@@ -68,7 +68,7 @@ export default defineNuxtComponent({
                                 </div>
                             </div>
                             <div>
-                                <div><strong><i class="far fa-sticky-note" /> Notiz</strong> {{ item.note }}</div>
+                                <div><strong><i class="far fa-sticky-note" /> Notiz</strong> {{ item.notes }}</div>
                             </div>
                         </div>
                     </div>

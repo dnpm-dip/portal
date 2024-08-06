@@ -113,7 +113,7 @@ export default defineComponent({
                 </div>
             </div>
             <div
-                v-if="extended"
+                v-if="extended && entity.matchingCriteria"
                 class="ms-3 d-flex flex-column justify-content-between mb-2 mt-2"
             >
                 <div v-if="entity.matchingCriteria.diagnoses">

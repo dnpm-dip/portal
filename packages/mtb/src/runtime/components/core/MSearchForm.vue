@@ -1,8 +1,8 @@
 <script lang="ts">
 import {
+    type Coding,
     DCollectionTransform,
     DFormTabGroups,
-    DLogicalOperatorSwitch,
     DSitePicker,
     DTags,
     DValueSet,
@@ -10,8 +10,7 @@ import {
     QueryRequestMode,
     type ValueSetCoding,
     buildCodingsRecord,
-    extractCodeFromCodingsRecord,
-    transformCodingsToFormSelectOptions, transformFormSelectOptionsToCodings,
+    extractCodeFromCodingsRecord, transformCodingsToFormSelectOptions, transformFormSelectOptionsToCodings,
 } from '@dnpm-dip/core';
 import {
     VCFormSelectSearch,
@@ -29,11 +28,12 @@ import {
     type QuerySNVCriteria,
 } from '../../domains';
 import MMutationTabGroup from './MMutationTabGroup.vue';
+import MSearchMedicationForm from './MSearchMedicationForm.vue';
 
 export default defineComponent({
     components: {
-        DLogicalOperatorSwitch,
         DSitePicker,
+        MSearchMedicationForm,
         MMutationTabGroup,
         DFormTabGroups,
         DTags,
@@ -43,7 +43,7 @@ export default defineComponent({
     },
     props: {
         criteria: {
-            type: Object as PropType<QueryCriteria>,
+            type: Object as PropType<QueryCriteria | null>,
         },
         queryId: {
             type: String,
@@ -78,9 +78,9 @@ export default defineComponent({
         const diagnoses = ref<FormSelectOption[]>([]);
         const tumorMorphologies = ref<FormSelectOption[]>([]);
 
-        const medicationDrugs = ref<FormSelectOption[]>([]);
+        const medicationDrugs = ref<Coding[]>([]);
         const medicationUsage = ref<string[]>([]);
-        const medicationOperator = ref<`${LogicalOperator}`>(LogicalOperator.OR);
+        const medicationInCombination = ref(false);
 
         const responses = ref<FormSelectOption[]>([]);
 
@@ -109,15 +109,15 @@ export default defineComponent({
 
             if (criteria.value.medication) {
                 if (criteria.value.medication.drugs) {
-                    medicationDrugs.value = transformCodingsToFormSelectOptions(criteria.value.medication.drugs);
+                    medicationDrugs.value = criteria.value.medication.drugs;
                 }
 
                 if (criteria.value.medication.usage) {
-                    medicationDrugs.value = transformCodingsToFormSelectOptions(criteria.value.medication.usage);
+                    medicationUsage.value = criteria.value.medication.usage.map((e) => e.code);
                 }
 
                 if (criteria.value.medication.operator) {
-                    medicationOperator.value = criteria.value.medication.operator;
+                    medicationInCombination.value = criteria.value.medication.operator === LogicalOperator.AND;
                 }
             }
 
@@ -189,7 +189,7 @@ export default defineComponent({
                 medicationDrugs.value &&
                 medicationDrugs.value.length > 0
             ) {
-                medication.drugs = transformFormSelectOptionsToCodings(medicationDrugs.value);
+                medication.drugs = medicationDrugs.value;
             }
 
             if (
@@ -199,8 +199,10 @@ export default defineComponent({
                 medication.usage = medicationUsage.value.map((item) => ({ code: item }));
             }
 
-            if (medicationOperator.value) {
-                medication.operator = medicationOperator.value;
+            if (medicationInCombination.value) {
+                medication.operator = LogicalOperator.AND;
+            } else {
+                medication.operator = LogicalOperator.OR;
             }
 
             if (medication.drugs) {
@@ -311,6 +313,13 @@ export default defineComponent({
             value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
+        const handleMedicationUpdated = ({ drugs, usage, combination }) => {
+            console.log(medicationDrugs.value);
+            medicationDrugs.value = drugs;
+            medicationUsage.value = usage;
+            medicationInCombination.value = combination;
+        };
+
         return {
             mutations,
             diagnoses,
@@ -322,11 +331,13 @@ export default defineComponent({
 
             medicationDrugs,
             medicationUsage,
-            medicationOperator,
+            medicationInCombination,
 
             busy,
 
             submit,
+
+            handleMedicationUpdated,
 
             transformCodings,
         };
@@ -379,6 +390,7 @@ export default defineComponent({
                                             >
                                                 <template #selected="{ items, toggle }">
                                                     <DTags
+                                                        :emit-only="true"
                                                         :items="items"
                                                         tag-variant="dark"
                                                         @deleted="toggle"
@@ -421,6 +433,7 @@ export default defineComponent({
                                             >
                                                 <template #selected="{ items, toggle }">
                                                     <DTags
+                                                        :emit-only="true"
                                                         :items="items"
                                                         tag-variant="dark"
                                                         @deleted="toggle"
@@ -442,6 +455,15 @@ export default defineComponent({
                     </VCFormGroup>
                 </div>
             </div>
+
+            <hr>
+
+            <MSearchMedicationForm
+                :usage="medicationUsage"
+                :drugs="medicationDrugs"
+                :combination="medicationInCombination"
+                @updated="handleMedicationUpdated"
+            />
 
             <hr>
 
@@ -468,6 +490,7 @@ export default defineComponent({
                                             >
                                                 <template #selected="{ items, toggle }">
                                                     <DTags
+                                                        :emit-only="true"
                                                         :items="items"
                                                         tag-variant="dark"
                                                         @deleted="toggle"
@@ -482,95 +505,6 @@ export default defineComponent({
                                         :options="[]"
                                         :disabled="true"
                                         placeholder="RECIST"
-                                    />
-                                </template>
-                            </DValueSet>
-                        </template>
-                    </VCFormGroup>
-                </div>
-            </div>
-
-            <hr>
-
-            <div class="mb-3">
-                <h6><i class="fa fa-pills" /> Medikation</h6>
-                <div class="d-flex flex-row">
-                    <div>
-                        <VCFormInputCheckbox
-                            v-model="medicationUsage"
-                            :value="'recommended'"
-                            :label="true"
-                            :group="true"
-                        >
-                            <template #label="{id}">
-                                <label :for="id">Empfohlen?</label>
-                            </template>
-                        </VCFormInputCheckbox>
-                    </div>
-                    <div class="ms-3">
-                        <VCFormInputCheckbox
-                            v-model="medicationUsage"
-                            :value="'used'"
-                            :label="true"
-                            :group="true"
-                        >
-                            <template #label="{id}">
-                                <label :for="id">Verabreicht?</label>
-                            </template>
-                        </VCFormInputCheckbox>
-                    </div>
-                </div>
-                <div>
-                    <VCFormGroup>
-                        <template #label>
-                            Name
-                        </template>
-                        <template #default>
-                            <DValueSet
-                                :code="'http://fhir.de/CodeSystem/bfarm/atc'"
-                                :lazy-load="true"
-                            >
-                                <template #default="{ data }">
-                                    <DCollectionTransform
-                                        :items="data.codings"
-                                        :transform="transformCodings"
-                                    >
-                                        <template #default="options">
-                                            <div class="input-group">
-                                                <DLogicalOperatorSwitch v-model="medicationOperator" />
-                                                <VCFormSelectSearch
-                                                    v-model="medicationDrugs"
-                                                    :multiple="true"
-                                                    :options="options"
-                                                    placeholder="ATC"
-                                                >
-                                                    <template #selected="{ items, toggle }">
-                                                        <DCollectionTransform
-                                                            :items="items"
-                                                            :transform="(item: Record<string,any>) => ({
-                                                                ...item,
-                                                                value: item.value.split(':').pop()
-                                                            })"
-                                                        >
-                                                            <template #default="tags">
-                                                                <DTags
-                                                                    :items="tags"
-                                                                    tag-variant="dark"
-                                                                    @deleted="toggle"
-                                                                />
-                                                            </template>
-                                                        </DCollectionTransform>
-                                                    </template>
-                                                </VCFormSelectSearch>
-                                            </div>
-                                        </template>
-                                    </DCollectionTransform>
-                                </template>
-                                <template #loading>
-                                    <VCFormSelectSearch
-                                        :options="[]"
-                                        :disabled="true"
-                                        placeholder="ATC"
                                     />
                                 </template>
                             </DValueSet>

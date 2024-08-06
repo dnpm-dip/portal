@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/rd",
     "type": "module",
-    "version": "1.13.1",
+    "version": "1.17.0",
     "private": true,
     "description": "Rare Diseases (RD) module for the DNPM:DIP Portal.",
     "repository": {
@@ -30,9 +30,9 @@
         "lint": "eslint ."
     },
     "dependencies": {
-        "@authup/client-web-kit": "^1.0.0-beta.18",
-        "@dnpm-dip/core": "^1.13.1",
-        "@dnpm-dip/kit": "^1.12.0",
+        "@authup/client-web-kit": "^1.0.0-beta.19",
+        "@dnpm-dip/core": "^1.18.0",
+        "@dnpm-dip/kit": "^1.14.0",
         "@nuxt/kit": "^3.11.1"
     },
     "devDependencies": {
@@ -44,9 +44,9 @@
         "@vuecs/pagination": "^1.1.1",
         "@vuelidate/core": "^2.0.3",
         "@vuelidate/validators": "^2.0.4",
-        "bootstrap-vue-next": "^0.22.2",
-        "nuxt": "^3.12.2",
-        "vue": "^3.4.30",
+        "bootstrap-vue-next": "^0.24.0",
+        "nuxt": "^3.12.4",
+        "vue": "^3.4.32",
         "vue-chartjs": "^5.3.1"
     }
 }

@@ -7,11 +7,7 @@
 
 <script lang="ts">
 import {
-    DChartBar,
-    DChartDoughnut,
-    DChartLineKM,
     DNav,
-    DQuerySummaryDemographics,
     type NavItem,
 } from '@dnpm-dip/core';
 import {
@@ -19,21 +15,11 @@ import {
 } from 'vue';
 import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
-import MQuerySummaryMedication from '../../../../components/core/MQuerySummaryMedication.vue';
-import MQuerySummarySurvivalReport from '../../../../components/core/MQuerySummarySurvivalReport.vue';
-import MQuerySummaryTumorDiagnostics from '../../../../components/core/MQuerySummaryTumorDiagnostics.vue';
 import type { QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
     components: {
         DNav,
-        MQuerySummarySurvivalReport,
-        DQuerySummaryDemographics,
-        MQuerySummaryMedication,
-        MQuerySummaryTumorDiagnostics,
-        DChartDoughnut,
-        DChartBar,
-        DChartLineKM,
     },
     props: {
         entity: {
@@ -47,16 +33,7 @@ export default defineNuxtComponent({
                 id: 'default', name: 'Demographie', icon: 'fas fa-globe', urlSuffix: '',
             },
             {
-                id: 'diagnostics', name: 'Diagnose', icon: 'fas fa-stethoscope', urlSuffix: '/diagnostics',
-            },
-            {
-                id: 'medication', name: 'Medikation', icon: 'fas fa-pills', urlSuffix: '/medication',
-            },
-            {
-                id: 'therapyResponses', name: 'Therapie Responses', icon: 'fas fa-comment-medical', urlSuffix: '/therapy-responses',
-            },
-            {
-                id: 'survivalReport', name: 'Überlebensbericht', icon: 'fas fa-book-open', urlSuffix: '/survival-report',
+                id: 'diagnostics', name: 'Diagnostik', icon: 'fas fa-stethoscope', urlSuffix: '/diagnostics',
             },
         ];
 
@@ -80,7 +57,7 @@ export default defineNuxtComponent({
             <DNav
                 :direction="'vertical'"
                 :items="navItems"
-                :path="'/mtb/query/'+ entity.id + '/summary'"
+                :path="'/rd/query/'+ entity.id + '/summary'"
             />
         </div>
         <div class="content-main">

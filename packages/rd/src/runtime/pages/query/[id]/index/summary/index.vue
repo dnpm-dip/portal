@@ -14,7 +14,7 @@ import {
 import {
     type PropType, type Ref, defineComponent, inject, ref, watch,
 } from 'vue';
-import { injectHTTPClient } from '../../../../../core/http-client';
+import { injectHTTPClient } from '../../../../../core';
 import type { QuerySession } from '../../../../../domains';
 
 export default defineComponent({

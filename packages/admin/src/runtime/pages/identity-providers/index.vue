@@ -24,9 +24,9 @@ export default defineNuxtComponent({
             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.ADMIN,
             [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                PermissionName.PROVIDER_EDIT,
-                PermissionName.PROVIDER_DROP,
-                PermissionName.PROVIDER_ADD,
+                PermissionName.IDENTITY_PROVIDER_UPDATE,
+                PermissionName.IDENTITY_PROVIDER_DELETE,
+                PermissionName.IDENTITY_PROVIDER_CREATE,
             ],
         });
 

@@ -179,7 +179,7 @@ type MedicationTherapy = {
     statusReason?: Coding,
     period?: Period,
     medication?: Coding[],
-    note?: string
+    notes?: string
 };
 
 type OncoProcedure = {
@@ -322,7 +322,7 @@ export type PatientRecord = {
     patient: Patient,
     episodesOfCare: Episode[],
     diagnoses?: Diagnosis[],
-    guidelineMedicationTherapies: MedicationTherapy[],
+    guidelineTherapies: MedicationTherapy[],
     guidelineProcedures: OncoProcedure[],
     performanceStatus: PerformanceStatus[],
     specimens?: TumorSpecimen,
@@ -332,6 +332,6 @@ export type PatientRecord = {
     carePlans?: CarePlan[],
     claims?: Claim[],
     claimResponses?: ClaimResponse[],
-    medicationTherapies?: History<MedicationTherapy>[],
+    therapies?: History<MedicationTherapy>[],
     responses?: Response[]
 };

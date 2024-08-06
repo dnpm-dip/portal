@@ -30,7 +30,7 @@ export type QueryBase<
     submittedAt: string,
     querier: string,
     mode: Coding,
-    criteria: CRITERIA,
+    criteria?: CRITERIA | null,
     filters: FILTERS
     /**
      * Validity period (seconds) for the query.

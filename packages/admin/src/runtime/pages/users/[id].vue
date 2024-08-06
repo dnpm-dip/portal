@@ -29,10 +29,12 @@ export default defineNuxtComponent({
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.ADMIN,
             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
             [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                PermissionName.USER_EDIT,
-                PermissionName.USER_ROLE_ADD,
-                PermissionName.USER_ROLE_EDIT,
-                PermissionName.USER_ROLE_DROP,
+                PermissionName.USER_UPDATE,
+                PermissionName.USER_DELETE,
+                PermissionName.USER_READ,
+                PermissionName.USER_ROLE_CREATE,
+                PermissionName.USER_ROLE_UPDATE,
+                PermissionName.USER_ROLE_DELETE,
             ],
         });
 
@@ -60,7 +62,6 @@ export default defineNuxtComponent({
                 .user
                 .getOne(route.params.id as string, { fields: ['+email'] });
         } catch (e) {
-            console.log(e);
             await navigateTo({ path: '/admin/users' });
             throw createError({});
         }

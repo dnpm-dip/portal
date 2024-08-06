@@ -6,9 +6,9 @@
   -->
 
 <script lang="ts">
-import { DChartLineKM, type KMSurvivalReport } from '@dnpm-dip/core';
+import { DChartLineKM, InjectionKey, type KMSurvivalReport } from '@dnpm-dip/core';
 import {
-    defineComponent, ref, toRef, watch,
+    type Ref, defineComponent, inject, ref, toRef, watch,
 } from 'vue';
 import { injectHTTPClient } from '../../core/http-client';
 
@@ -37,16 +37,27 @@ export default defineComponent({
         const busy = ref(false);
         const data = ref<KMSurvivalReport | null>(null);
 
+        let resolvePromise : Promise<any> | undefined;
         const resolve = async () => {
-            if (busy.value) return;
+            if (busy.value) {
+                return Promise.resolve();
+            }
+
+            if (resolvePromise) {
+                return resolvePromise;
+            }
 
             busy.value = true;
 
             try {
-                data.value = await httpClient.query.getKaplanMeierStatistics(props.queryId, type.value, grouping.value);
+                resolvePromise = httpClient.query.getKaplanMeierStatistics(props.queryId, type.value, grouping.value);
+                data.value = await resolvePromise;
+                resolvePromise = undefined;
             } finally {
                 busy.value = false;
             }
+
+            return Promise.resolve();
         };
 
         Promise.resolve()
@@ -62,6 +73,11 @@ export default defineComponent({
             if (val !== oldValue) {
                 resolve();
             }
+        });
+
+        const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
+        watch(queryUpdatedAt, () => {
+            resolve();
         });
 
         return {

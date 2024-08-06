@@ -1,4 +1,4 @@
-import type { ConceptCount, KeyValueRecord } from '../../../domains';
+import type { ConceptCount, KeyValueChildrenRecord, KeyValueRecord } from '../../../domains';
 import { isCoding, isMinMaxRange } from '../../../domains';
 
 type ChartLabelsGenerateOptions = {
@@ -7,7 +7,7 @@ type ChartLabelsGenerateOptions = {
 };
 
 export function generateChartLabelsForKeyValueRecord(
-    item: KeyValueRecord | ConceptCount,
+    item: KeyValueRecord | KeyValueChildrenRecord | ConceptCount,
     options: ChartLabelsGenerateOptions = {},
 ) : string | undefined {
     if (isCoding(item.key)) {

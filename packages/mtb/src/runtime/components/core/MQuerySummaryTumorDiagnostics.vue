@@ -1,10 +1,13 @@
 <script lang="ts">
-import { DChartBar, DQuerySummaryGrouped } from '@dnpm-dip/core';
+import {
+    DChartBar, DQuerySummaryGrouped, DQuerySummaryNested, type URLQueryRecord,
+} from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryTumorDiagnostics } from '../../domains';
 
 export default defineComponent({
     components: {
+        DQuerySummaryNested,
         DChartBar,
         DQuerySummaryGrouped,
     },
@@ -24,19 +27,35 @@ export default defineComponent({
                 <div class="col-12 col-xl-6">
                     <div class="entity-card text-center mb-3">
                         <h6>Tumor-Entitäten (ICD-10-GM)</h6>
-                        <DChartBar
-                            :coding-verbose-label="true"
-                            :items="entity.overallDistributions.tumorEntities.elements"
-                        />
+                        <DQuerySummaryNested
+                            :label="'Kategorie'"
+                            :entity="entity.overallDistributions.tumorEntities"
+                            :key-verbose="true"
+                        >
+                            <template #default="{items}">
+                                <DChartBar
+                                    :coding-verbose-label="true"
+                                    :items="items"
+                                />
+                            </template>
+                        </DQuerySummaryNested>
                     </div>
                 </div>
                 <div class="col-12 col-xl-6">
                     <div class="entity-card text-center mb-3">
                         <h6>Tumor-Morphologie (ICD-O-3-M)</h6>
-                        <DChartBar
-                            :coding-verbose-label="true"
-                            :items="entity.overallDistributions.tumorMorphologies.elements"
-                        />
+                        <DQuerySummaryNested
+                            :label="'Kategorie'"
+                            :entity="entity.overallDistributions.tumorMorphologies"
+                            :key-verbose="true"
+                        >
+                            <template #default="{items}">
+                                <DChartBar
+                                    :coding-verbose-label="true"
+                                    :items="items"
+                                />
+                            </template>
+                        </DQuerySummaryNested>
                     </div>
                 </div>
             </div>

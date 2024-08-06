@@ -1,6 +1,6 @@
-import type { PropType } from 'vue';
+import type { PropType, SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
-import { buildNav } from './utils';
+import { buildNav } from './module';
 import type { NavItems } from './types';
 
 export default defineComponent({
@@ -20,12 +20,17 @@ export default defineComponent({
             type: [String, Boolean],
         },
     },
-    setup(props) {
+    slots: Object as SlotsType<{
+        start: Record<string, any>,
+        end: Record<string, any>
+    }>,
+    setup(props, { slots }) {
         const items = toRef(props, 'items');
         const direction = toRef(props, 'direction');
         return () => buildNav(props.path, items.value, {
             direction: direction.value,
             prevLink: props.prevLink,
+            slots,
         });
     },
 });

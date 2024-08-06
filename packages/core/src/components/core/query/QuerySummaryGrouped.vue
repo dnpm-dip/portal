@@ -12,6 +12,7 @@ import {
     ref,
     watch,
 } from 'vue';
+import { InjectionKey } from '../../../constants';
 import type { KeyValueRecord, KeyValueRecords } from '../../../domains';
 import type { URLQueryRecord } from '../../../utils';
 import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils';
@@ -67,8 +68,13 @@ export default defineComponent({
             render();
         });
 
-        const queryFilters = inject('queryFilters') as Ref<URLQueryRecord>;
+        const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
         watch(queryFilters, () => {
+            render();
+        });
+
+        const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
+        watch(queryUpdatedAt, () => {
             render();
         });
 

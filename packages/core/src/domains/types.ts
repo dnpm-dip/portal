@@ -19,23 +19,54 @@ export type CodeRecord<V extends string = string> = {
     display?: string
 };
 
-export type KeyValueRecord<KEY = any, VALUE = number> = {
+export type KeyValueRecord<
+    KEY = any,
+    VALUE = number,
+> = {
     key: KEY,
     value: VALUE
 };
+
+export type KeyValueChildrenRecord<
+    KEY = any,
+    VALUE = number,
+    CHILDREN extends KeyValueRecord<any, any>[] = KeyValueRecord<any, any>[],
+> = {
+    key: KEY,
+    value: VALUE,
+    children?: CHILDREN
+};
+
 export type KeyValueRecords<KEY = any, VALUE = number> = KeyValueRecord<KEY, VALUE>[];
 
-export type ConceptCount<KEY = any> = KeyValueRecord<KEY, {
+export type ConceptCountValue = {
     count: number,
     percent: number
-}>;
-
+};
+export type ConceptCount<KEY = any> = KeyValueRecord<KEY, ConceptCountValue>;
 export type ConceptsCount<KEY = any> = ConceptCount<KEY>[];
 
 export type Quantity<KEY = any> = KeyValueRecord<KEY, number>;
 export type Quantities<KEY = any> = Quantity<KEY>[];
 
-export type Distribution<KEY = any> = {
+export type DistributionConceptsCount<KEY = any> = {
     total: number,
-    elements: ConceptsCount<KEY> | Quantities<KEY>
+    elements: ConceptsCount<KEY>
+};
+
+export type DistributionQuantities<KEY = any> = {
+    total: number,
+    elements: Quantities<KEY>
+};
+
+export type Distribution<KEY = any> = DistributionConceptsCount<KEY> |
+DistributionQuantities<KEY>;
+
+export type DistributionNested<KEY = any> = {
+    total: number,
+    elements: KeyValueChildrenRecord<
+    KEY,
+    ConceptCountValue | number,
+    Quantities | ConceptsCount
+    >[]
 };

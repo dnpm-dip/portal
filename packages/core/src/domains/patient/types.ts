@@ -33,7 +33,7 @@ export type PatientMatchBase<Criteria = any> = {
         unit: string
     },
     vitalStatus: Coding<'alive' | 'deceased'>,
-    matchingCriteria: Criteria
+    matchingCriteria?: Criteria | null
 };
 
 export type PatientFilterGender = Coding<'male' | 'female' | 'other' | 'unknown'>[];

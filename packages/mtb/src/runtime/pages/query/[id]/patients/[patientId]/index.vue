@@ -60,7 +60,7 @@ export default defineNuxtComponent({
         <h5>Leitlinien-Therapien</h5>
         <div class="entity-card-group mb-3">
             <template
-                v-for="item in record.guidelineMedicationTherapies"
+                v-for="item in record.guidelineTherapies"
                 :key="item.id"
             >
                 <div
@@ -100,7 +100,7 @@ export default defineNuxtComponent({
                             </div>
                             <div>
                                 <strong><i class="far fa-sticky-note" /> Notiz</strong>
-                                {{ item.note }}
+                                {{ item.notes }}
                             </div>
                         </div>
                     </div>
