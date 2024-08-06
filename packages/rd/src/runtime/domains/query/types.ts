@@ -32,6 +32,7 @@ export type QueryCriteria = {
 
 export type QuerySessionCreate = {
     mode?: CodeRecord<`${QueryRequestMode}` | QueryRequestMode>,
+    sites?: Coding[],
     criteria: QueryCriteria
 };
 

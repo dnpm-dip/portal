@@ -1,6 +1,7 @@
 <script lang="ts">
 import {
     type Coding,
+    type ConnectionPeer,
     DCollectionTransform,
     DFormTabGroups,
     DSitePicker,
@@ -10,7 +11,9 @@ import {
     QueryRequestMode,
     type ValueSetCoding,
     buildCodingsRecord,
-    extractCodeFromCodingsRecord, transformCodingsToFormSelectOptions, transformFormSelectOptionsToCodings,
+    extractCodeFromCodingsRecord,
+    transformCodingsToFormSelectOptions,
+    transformFormSelectOptionsToCodings,
 } from '@dnpm-dip/core';
 import {
     VCFormSelectSearch,
@@ -51,6 +54,9 @@ export default defineComponent({
         queryMode: {
             type: String as PropType<QueryRequestMode>,
         },
+        queryPeers: {
+            type: Array as PropType<ConnectionPeer[]>,
+        },
     },
     emits: [
         'failed',
@@ -65,9 +71,11 @@ export default defineComponent({
         const apiClient = injectHTTPClient();
 
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
+        const modeSites = ref<Coding[]>([]);
         const modeOptions : FormSelectOption[] = [
             { id: QueryRequestMode.LOCAL, value: 'Lokal' },
             { id: QueryRequestMode.FEDERATED, value: 'Föderiert' },
+            { id: QueryRequestMode.CUSTOM, value: 'Benutzerdefiniert' },
         ];
 
         const busy = ref(false);
@@ -89,14 +97,18 @@ export default defineComponent({
 
             busy.value = true;
 
+            if (props.queryMode) {
+                mode.value = props.queryMode;
+            }
+
+            if (props.queryPeers) {
+                modeSites.value = props.queryPeers.map((peer) => peer.site);
+            }
+
             criteria.value = {};
 
             if (props.criteria) {
                 criteria.value = props.criteria;
-            }
-
-            if (props.queryMode) {
-                mode.value = props.queryMode;
             }
 
             if (criteria.value.diagnoses) {
@@ -286,6 +298,7 @@ export default defineComponent({
                         mode: {
                             code: mode.value,
                         },
+                        sites: modeSites.value,
                     });
 
                     emit('queryUpdated', query);
@@ -295,6 +308,7 @@ export default defineComponent({
                         mode: {
                             code: mode.value,
                         },
+                        sites: modeSites.value,
                     });
 
                     emit('queryCreated', query);
@@ -314,7 +328,6 @@ export default defineComponent({
         });
 
         const handleMedicationUpdated = ({ drugs, usage, combination }) => {
-            console.log(medicationDrugs.value);
             medicationDrugs.value = drugs;
             medicationUsage.value = usage;
             medicationInCombination.value = combination;
@@ -328,6 +341,7 @@ export default defineComponent({
 
             mode,
             modeOptions,
+            modeSites,
 
             medicationDrugs,
             medicationUsage,
@@ -524,8 +538,9 @@ export default defineComponent({
                     :option-default="false"
                 />
 
-                <template v-if="mode === 'federated'">
+                <template v-if="mode === 'custom'">
                     <DSitePicker
+                        v-model="modeSites"
                         class="mt-3"
                         :use-case="'mtb'"
                     />

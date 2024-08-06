@@ -1,5 +1,6 @@
 <script lang="ts">
 import {
+    type Coding,
     DQueryInfoBox, DQueryPatientFilters, InjectionKey, type URLQueryRecord,
 } from '@dnpm-dip/core';
 import { DNav } from '@dnpm-dip/core';
@@ -179,6 +180,7 @@ export default defineNuxtComponent({
             </template>
             <MSearchForm
                 :query-mode="entity.mode.code"
+                :query-peers="entity.peers"
                 :query-id="entity.id"
                 :criteria="entity.criteria"
                 :prepared-query-id="preparedQueryId"
