@@ -47,7 +47,7 @@
         "bootstrap-vue-next": "^0.24.0",
         "chart.js": "^4.4.3",
         "nuxt": "^3.12.4",
-        "vue": "^3.4.32",
+        "vue": "^3.4.37",
         "vue-chartjs": "^5.3.1"
     }
 }
