@@ -31,7 +31,7 @@
         "test:watch": "vitest watch"
     },
     "dependencies": {
-        "bootstrap-vue-next": "^0.24.0",
+        "bootstrap-vue-next": "^0.24.6",
         "@authup/core-kit": "^1.0.0-beta.19",
         "@authup/client-web-kit": "^1.0.0-beta.19",
         "@dnpm-dip/core": "^1.11.0",
