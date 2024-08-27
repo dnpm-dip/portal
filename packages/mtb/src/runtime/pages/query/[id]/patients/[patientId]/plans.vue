@@ -71,10 +71,10 @@ export default defineNuxtComponent({
                                         <div v-if="recommendation.supportingVariants">
                                             <strong><i class="fas fa-check-circle" /> Stützende molekulare Alterationen</strong><br>
                                             <template
-                                                v-for="(el, idx) in recommendation.supportingVariants"
+                                                v-for="el in recommendation.supportingVariants"
                                                 :key="el"
                                             >
-                                                <p>&bull; {{ idx > 0 ? ', ' : '' }} {{ el.type }}: {{ el.display }}</p>
+                                                <p>&bull; {{ el.display }}</p>
                                             </template>
                                         </div>
                                         <div v-if="recommendation.priority">
@@ -133,10 +133,10 @@ export default defineNuxtComponent({
                                         <div v-if="recommendation.supportingVariants">
                                             <strong><i class="fas fa-check-circle" /> Stützende Evidenz</strong><br>
                                             <template
-                                                v-for="(el, idx) in recommendation.supportingVariants"
+                                                v-for="el in recommendation.supportingVariants"
                                                 :key="el"
                                             >
-                                                &bull; {{ idx > 0 ? ', ' : '' }} {{ el.type }}: {{ el.display }}
+                                                <p>&bull; {{ el.display }}</p>
                                             </template>
                                         </div>
                                         <div v-if="recommendation.levelOfEvidence">

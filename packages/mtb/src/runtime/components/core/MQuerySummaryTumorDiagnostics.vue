@@ -24,7 +24,7 @@ export default defineComponent({
         <div>
             <h5>Gesamtverteilung</h5>
             <div class="row">
-                <div class="col-12 col-xl-6">
+                <div class="col-12 col-sm-6">
                     <div class="entity-card text-center mb-3">
                         <h6>Tumor-Entitäten (ICD-10-GM)</h6>
                         <DQuerySummaryNested
