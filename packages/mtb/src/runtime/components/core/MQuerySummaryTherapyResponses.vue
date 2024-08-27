@@ -51,7 +51,7 @@ export default defineComponent({
         outlined
     >
         <template #cell(medicationClasses)="data">
-            <ul>
+            <ul class="column">
                 <li
                     v-for="(item,key) in data.item.medicationClasses"
                     :key="key"
@@ -61,7 +61,7 @@ export default defineComponent({
             </ul>
         </template>
         <template #cell(medications)="data">
-            <ul>
+            <ul class="column">
                 <li
                     v-for="(item,key) in data.item.medications"
                     :key="key"
@@ -71,7 +71,7 @@ export default defineComponent({
             </ul>
         </template>
         <template #cell(supportingVariants)="data">
-            <ul>
+            <ul class="column">
                 <li
                     v-for="(item,key) in data.item.supportingVariants"
                     :key="key"
@@ -85,3 +85,8 @@ export default defineComponent({
         </template>
     </BTable>
 </template>
+<style scoped>
+.column {
+    word-break: break-all;
+}
+</style>

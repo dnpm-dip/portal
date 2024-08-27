@@ -72,6 +72,7 @@ export default defineComponent({
 </template>
 <style scoped>
 .distribution-bar {
+    min-width: 200px;
     height: 1rem;
     line-height: 1rem;
     font-size: 0.85rem;
