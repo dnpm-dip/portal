@@ -1,5 +1,17 @@
 # @dnpm-dip/core
 
+## [1.19.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.18.0...v1.19.0) (2024-08-29)
+
+
+### Features
+
+* initial site-picker implmementation ([#568](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/568)) ([bd32314](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/bd3231423dfb38a65575d543b0d231fedaf40898))
+
+
+### Bug Fixes
+
+* **deps:** bump bootstrap-vue-next from 0.24.0 to 0.24.10 ([#701](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/701)) ([28db808](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/28db808c775d28407a48575c468969472ecb12b4))
+
 ## [1.18.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.17.0...v1.18.0) (2024-07-31)
 
 
