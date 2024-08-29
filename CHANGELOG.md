@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.19.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.18.0...v1.19.0) (2024-08-29)
+
+
+### Features
+
+* initial site-picker implmementation ([#568](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/568)) ([bd32314](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/bd3231423dfb38a65575d543b0d231fedaf40898))
+* or operation for variants + refactored query criteria summary ([5ca287a](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/5ca287a217dc6be5332149c474089b03daa6cdef))
+
+
+### Bug Fixes
+
+* **deps:** bump bootstrap-vue-next from 0.24.0 to 0.24.10 ([#701](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/701)) ([28db808](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/28db808c775d28407a48575c468969472ecb12b4))
+* overlay/overstretch of therapy response table ([594ad9d](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/594ad9d6ee2168220a6ccfda790faa7d9989143f))
+* supporting variant listing in patient view ([e03e4a9](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/e03e4a98e940299e7cd72edc341bb9707a05b7f4))
+
 ## [1.18.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.17.0...v1.18.0) (2024-07-31)
 
 
