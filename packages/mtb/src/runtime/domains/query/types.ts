@@ -70,15 +70,20 @@ export type QueryMedicationCriteria<V = Coding> = {
     usage?: V[]
 };
 
-export type QueryCriteria = {
-    diagnoses?: Coding<string>[],
-    tumorMorphologies?: Coding<string>[],
+export type QueryVariantCriteria = {
+    operator?: 'and' | 'or',
     simpleVariants?: QuerySNVCriteria[],
     copyNumberVariants?: QueryCNVCriteria[],
     dnaFusions?: QueryFusionCriteria[],
     rnaFusions?: QueryFusionCriteria[],
+};
+
+export type QueryCriteria = {
+    diagnoses?: Coding<string>[],
+    tumorMorphologies?: Coding<string>[],
     medication?:QueryMedicationCriteria,
-    responses?: Coding<string>[]
+    responses?: Coding<string>[],
+    variants?: QueryVariantCriteria
 };
 
 export type QuerySessionCreate = {

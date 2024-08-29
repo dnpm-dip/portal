@@ -167,7 +167,7 @@ export default defineComponent({
                     v-model="form.combination"
                     :group-class="'form-switch'"
                     :label="true"
-                    :label-content="'Kombination?'"
+                    :label-content="'In Kombination?'"
                     @change="handleChanged"
                 />
             </div>
