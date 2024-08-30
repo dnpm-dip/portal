@@ -120,7 +120,10 @@ export default defineComponent({
                 </div>
             </div>
             <template v-if="extended && entity.matchingCriteria">
-                <MQueryCriteriaSummary :entity="entity.matchingCriteria" />
+                <MQueryCriteriaSummary
+                    :entity="entity.matchingCriteria"
+                    :direction="'horizontal'"
+                />
             </template>
         </div>
     </div>

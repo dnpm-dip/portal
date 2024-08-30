@@ -16,128 +16,49 @@ export default defineComponent({
             type: Object as PropType<QueryCriteria>,
             required: true,
         },
+        direction: {
+            type: String as PropType<'vertical' | 'horizontal'>,
+            default: 'vertical',
+        },
     },
 });
 </script>
 <template>
-    <div class="d-flex flex-row gap-3">
+    <div
+        class="d-flex gap-3"
+        :class="{'flex-column': direction === 'vertical', 'flex-row': direction === 'horizontal'}"
+    >
         <div
-            v-if="entity.diagnoses || entity.tumorMorphologies"
+            v-if="entity.variants && (
+                entity.variants.simpleVariants ||
+                entity.variants.copyNumberVariants ||
+                entity.variants.dnaFusions ||
+                entity.variants.rnaFusions
+            )"
             class="d-flex flex-column gap-1"
         >
-            <span class="text-muted">Diagnose</span>
+            <strong>Varianten (<span>{{ entity.variants.operator }}</span>)</strong>
 
-            <div v-if="entity.diagnoses">
-                <strong>Kategorien</strong>
-
-                <ul class="list-unstyled mb-0">
-                    <template
-                        v-for="item in entity.diagnoses"
-                        :key="item.code"
-                    >
-                        <li class="badge bg-dark">
-                            <DCodingText
-                                :composite="true"
-                                :entity="item"
-                            />
-                        </li>
-                    </template>
-                </ul>
-            </div>
-
-            <div v-if="entity.tumorMorphologies">
-                <strong>Tumormorphologie</strong>
-
-                <ul class="list-unstyled">
-                    <template
-                        v-for="item in entity.tumorMorphologies"
-                        :key="item.code"
-                    >
-                        <li class="badge bg-dark">
-                            <DCodingText
-                                :composite="true"
-                                :entity="item"
-                            />
-                        </li>
-                    </template>
-                </ul>
-            </div>
-        </div>
-        <div
-            v-if="entity.medication"
-            class="d-flex flex-column gap-1"
-        >
-            <span class="text-muted">Medikation</span>
-            <div v-if="entity.medication.drugs">
-                <strong>Drugs</strong>
-                <ul class="list-unstyled mb-0">
-                    <template
-                        v-for="item in entity.medication.drugs"
-                        :key="item.code"
-                    >
-                        <li>
-                            <span class="badge bg-dark">{{ item.display || item.code }}</span>
-                        </li>
-                    </template>
-                </ul>
-            </div>
-
-            <div v-if="entity.medication.usage">
-                <strong>Verwendung</strong>
-                <ul class="list-unstyled mb-0">
-                    <template
-                        v-for="item in entity.medication.usage"
-                        :key="item.code"
-                    >
-                        <li>
-                            <span class="badge bg-dark">{{ item.display || item.code }}</span>
-                        </li>
-                    </template>
-                </ul>
-            </div>
-
-            <div v-if="entity.medication.operator">
-                <strong class="me-1">Operator</strong>
-                <span>{{ entity.medication.operator }}</span>
-            </div>
-        </div>
-        <div
-            v-if="entity.responses"
-        >
-            <span class="text-muted">Response</span>
-
-            <ul class="list-unstyled mb-0">
-                <template
-                    v-for="item in entity.responses"
-                    :key="item.code"
-                >
-                    <li>
-                        <span class="badge bg-dark">{{ item.display || item.code }}</span>
-                    </li>
-                </template>
-            </ul>
-        </div>
-        <div
-            v-if="entity.variants"
-            class="d-flex flex-column gap-1"
-        >
-            <span class="text-muted">Varianten</span>
-
-            <div v-if="entity.variants.operator">
-                <strong class="me-1">Operator</strong>
-                <span>{{ entity.variants.operator }}</span>
-            </div>
-
-            <div class="d-flex flex-row gap-2">
+            <div class="d-flex flex-row gap-3">
                 <template v-if="entity.variants?.simpleVariants">
                     <template
                         v-for="item in entity.variants?.simpleVariants"
                         :key="item.code"
                     >
-                        <div>
-                            <strong>SNV</strong>
+                        <div class="entity-card variant-box">
+                            <span class="text-muted">SNV</span>
 
                             <ul class="list-unstyled">
+                                <li>
+                                    <strong>&bull; Stützend?</strong>
+                                    <i
+                                        class="fa ms-1"
+                                        :class="{
+                                            'fa-check text-success': item.supporting,
+                                            'fa-times text-danger': !item.supporting
+                                        }"
+                                    />
+                                </li>
                                 <li v-if="item.gene">
                                     <strong>&bull; Gen</strong> <DCodingText
                                         :entity="item.gene"
@@ -162,10 +83,20 @@ export default defineComponent({
                         v-for="(item, key) in entity.variants?.copyNumberVariants"
                         :key="key"
                     >
-                        <div>
-                            <strong>CNV</strong>
+                        <div class="entity-card variant-box">
+                            <span class="text-muted">CNV</span>
 
                             <ul class="list-unstyled">
+                                <li>
+                                    <strong>&bull; Stützend?</strong>
+                                    <i
+                                        class="fa ms-1"
+                                        :class="{
+                                            'fa-check text-success': item.supporting,
+                                            'fa-times text-danger': !item.supporting
+                                        }"
+                                    />
+                                </li>
                                 <li v-if="item.type">
                                     <strong>&bull; Type</strong>
                                     {{ item.type.display || item.type.code }}
@@ -193,10 +124,20 @@ export default defineComponent({
                         v-for="(item, key) in entity.variants?.dnaFusions"
                         :key="key"
                     >
-                        <div>
-                            <strong>DNA-Fusion</strong>
+                        <div class="entity-card variant-box">
+                            <span class="text-muted">DNA-Fusion</span>
 
                             <ul class="list-unstyled">
+                                <li>
+                                    <strong>&bull; Stützend?</strong>
+                                    <i
+                                        class="fa ms-1"
+                                        :class="{
+                                            'fa-check text-success': item.supporting,
+                                            'fa-times text-danger': !item.supporting
+                                        }"
+                                    />
+                                </li>
                                 <li v-if="item.fusionPartner3pr">
                                     <strong>&bull; 3'-Gen</strong> {{ item.fusionPartner3pr.display || item.fusionPartner3pr.code }}
                                 </li>
@@ -212,10 +153,20 @@ export default defineComponent({
                         v-for="(item, key) in entity.variants?.rnaFusions"
                         :key="key"
                     >
-                        <div>
-                            <strong>RNA-Fusion</strong>
+                        <div class="entity-card variant-box">
+                            <span class="text-muted">RNA-Fusion</span>
 
                             <ul class="list-unstyled">
+                                <li>
+                                    <strong>&bull; Stützend?</strong>
+                                    <i
+                                        class="fa ms-1"
+                                        :class="{
+                                            'fa-check text-success': item.supporting,
+                                            'fa-times text-danger': !item.supporting
+                                        }"
+                                    />
+                                </li>
                                 <li v-if="item.fusionPartner3pr">
                                     <strong>&bull; 3'-Gen</strong> {{ item.fusionPartner3pr.display || item.fusionPartner3pr.code }}
                                 </li>
@@ -228,5 +179,109 @@ export default defineComponent({
                 </template>
             </div>
         </div>
+        <div
+            v-if="entity.diagnoses || entity.tumorMorphologies"
+            class="d-flex flex-column gap-1"
+        >
+            <strong>Diagnose</strong>
+
+            <div v-if="entity.diagnoses">
+                <span class="text-muted">Kategorien</span>
+
+                <div class="d-flex flex-row gap-1">
+                    <template
+                        v-for="item in entity.diagnoses"
+                        :key="item.code"
+                    >
+                        <div>
+                            <span class="badge bg-dark">
+                                <DCodingText
+                                    :composite="true"
+                                    :entity="item"
+                                />
+                            </span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <div v-if="entity.tumorMorphologies">
+                <span class="text-muted">Tumormorphologie</span>
+
+                <div class="d-flex flex-row gap-1">
+                    <template
+                        v-for="item in entity.tumorMorphologies"
+                        :key="item.code"
+                    >
+                        <div>
+                            <span class="badge bg-dark">
+                                <DCodingText
+                                    :composite="true"
+                                    :entity="item"
+                                />
+                            </span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <div
+            v-if="entity.medication"
+            class="d-flex flex-column gap-1"
+        >
+            <strong>Medikation</strong>
+            <div v-if="entity.medication.drugs">
+                <span class="text-muted">Name(n)</span>
+                <div class="d-flex flex-row gap-1">
+                    <template
+                        v-for="(item, index) in entity.medication.drugs"
+                        :key="item.code"
+                    >
+                        <div v-if="index > 0">
+                            <span>{{ entity.medication.operator }}</span>
+                        </div>
+                        <div>
+                            <span class="badge bg-dark">{{ item.display || item.code }}</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <div v-if="entity.medication.usage">
+                <span class="text-muted">Verwendung</span>
+                <div class="d-flex flex-row gap-1">
+                    <template
+                        v-for="item in entity.medication.usage"
+                        :key="item.code"
+                    >
+                        <div>
+                            <span class="badge bg-dark">{{ item.display || item.code }}</span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <div
+            v-if="entity.responses"
+        >
+            <strong>Response</strong>
+
+            <div class="d-flex flex-row gap-1">
+                <template
+                    v-for="item in entity.responses"
+                    :key="item.code"
+                >
+                    <div>
+                        <span class="badge bg-dark">{{ item.display || item.code }}</span>
+                    </div>
+                </template>
+            </div>
+        </div>
     </div>
 </template>
+<style scoped>
+.variant-box {
+    background-color: #e0e0e0 !important;
+    border: 1px solid #c4c4c4;
+}
+</style>
