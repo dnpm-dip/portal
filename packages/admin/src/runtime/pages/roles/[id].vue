@@ -13,16 +13,16 @@ import { PermissionName, isRealmResourceWritable } from '@authup/core-kit';
 import {
     DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
 } from '@dnpm-dip/core';
-import { ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import type { Ref } from 'vue';
 import {
     definePageMeta,
 } from '#imports';
 import {
-    createError, defineNuxtComponent, navigateTo, useRoute,
+    createError, navigateTo, useRoute,
 } from '#app';
 
-export default defineNuxtComponent({
+export default defineComponent({
     components: {
         DNav,
     },

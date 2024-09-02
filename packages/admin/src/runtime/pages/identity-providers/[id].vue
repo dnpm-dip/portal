@@ -13,17 +13,16 @@ import {
     DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
 } from '@dnpm-dip/core';
 import { injectHTTPClient, storeToRefs, useStore } from '@authup/client-web-kit';
-import { ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import type { Ref } from 'vue';
 import {
     createError,
-    defineNuxtComponent,
     definePageMeta,
     navigateTo,
     useRoute,
 } from '#imports';
 
-export default defineNuxtComponent({
+export default defineComponent({
     components: {
         DNav,
     },

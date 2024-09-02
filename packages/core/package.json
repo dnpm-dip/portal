@@ -19,7 +19,7 @@
     "scripts": {
         "build:types": "vue-tsc --declaration --emitDeclarationOnly -p tsconfig.build.json",
         "build:js": "rollup -c",
-        "build": "rimraf ./dist && cross-env NODE_ENV=production npm run build:js && npm run build:types"
+        "build": "rimraf ./dist && cross-env NODE_ENV=production npm run build:js"
     },
     "keywords": [],
     "author": {
@@ -50,22 +50,21 @@
         "@authup/client-web-kit": "^1.0.0-beta.19",
         "bootstrap-vue-next": "^0.24.10",
         "chart.js": "^4.4.3",
-        "@nuxt/schema": "^3.11.2",
-        "@nuxt/kit": "^3.11.1",
+        "@nuxt/schema": "^3.13.0",
+        "@nuxt/kit": "^3.13.0",
         "@vuecs/form-controls": "^2.3.0",
         "@vuecs/link": "^1.0.0",
         "vue": "^3.4.38",
-        "vue-chartjs": "^5.3.1",
-        "vue-tsc": "^2.1.4"
+        "vue-chartjs": "^5.3.1"
     },
     "peerDependencies": {
         "@authup/core-http-kit": "^1.0.0-beta.19",
         "@authup/client-web-kit": "^1.0.0-beta.15",
         "chart.js": "^4.4.3",
-        "@nuxt/kit": "^3.11.1",
+        "@nuxt/kit": "^3.13.0",
         "@vuecs/link": "^1.0.0",
         "@vuecs/form-controls": "^2.3.0",
-        "vue": "^3.4.x",
+        "vue": "^3.x",
         "vue-chartjs": "^5.3.1"
     }
 }

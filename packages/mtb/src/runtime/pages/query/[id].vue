@@ -1,10 +1,9 @@
 <script lang="ts">
 import { PageMetaKey, useToast } from '@dnpm-dip/core';
-import type { Ref } from 'vue';
+import { type Ref, defineComponent } from 'vue';
 import { ref } from 'vue';
 import {
     createError,
-    defineNuxtComponent,
     definePageMeta,
     navigateTo,
     useRoute,
@@ -12,7 +11,7 @@ import {
 import { injectHTTPClient } from '../../core/http-client';
 import type { QuerySession } from '../../domains';
 
-export default defineNuxtComponent({
+export default defineComponent({
     async setup() {
         definePageMeta({
             [PageMetaKey.NAVIGATION_TOP_ID]: 'mtb',

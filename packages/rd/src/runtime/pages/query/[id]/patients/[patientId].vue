@@ -1,14 +1,14 @@
 <script lang="ts">
 import { DNav } from '@dnpm-dip/core';
-import type { PropType } from 'vue';
+import { type PropType, defineComponent } from 'vue';
 import { ref } from 'vue';
 import {
-    createError, defineNuxtComponent, navigateTo, useRoute,
+    createError, navigateTo, useRoute,
 } from '#app';
 import { injectHTTPClient } from '../../../../core';
 import type { PatientRecord, QuerySession } from '../../../../domains';
 
-export default defineNuxtComponent({
+export default defineComponent({
     components: {
         DNav,
     },
