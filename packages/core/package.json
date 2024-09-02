@@ -49,7 +49,7 @@
         "@authup/core-http-kit": "^1.0.0-beta.19",
         "@authup/client-web-kit": "^1.0.0-beta.19",
         "bootstrap-vue-next": "^0.24.10",
-        "chart.js": "^4.4.3",
+        "chart.js": "^4.4.4",
         "@nuxt/schema": "^3.11.2",
         "@nuxt/kit": "^3.11.1",
         "@vuecs/form-controls": "^2.3.0",
@@ -61,7 +61,7 @@
     "peerDependencies": {
         "@authup/core-http-kit": "^1.0.0-beta.19",
         "@authup/client-web-kit": "^1.0.0-beta.15",
-        "chart.js": "^4.4.3",
+        "chart.js": "^4.4.4",
         "@nuxt/kit": "^3.11.1",
         "@vuecs/link": "^1.0.0",
         "@vuecs/form-controls": "^2.3.0",
