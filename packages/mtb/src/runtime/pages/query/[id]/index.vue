@@ -9,11 +9,13 @@ import type { PropType } from 'vue';
 import { provide, ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
 import MQueryCriteriaSummary from '../../../components/core/MQueryCriteriaSummary.vue';
+import MQueryCriteriaSummaryBox from '../../../components/core/MQueryCriteriaSummaryBox.vue';
 import MSearchForm from '../../../components/core/MSearchForm.vue';
 import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        MQueryCriteriaSummaryBox,
         MQueryCriteriaSummary,
         BModal,
         MSearchForm,
@@ -65,24 +67,10 @@ export default defineNuxtComponent({
             emit('failed', e);
         };
 
-        const modal = ref(false);
-        const toggleModal = () => {
-            modal.value = !modal.value;
-        };
-
-        const handleModalUpdated = (entity: QuerySession) => {
-            handleUpdated(entity);
-            modal.value = false;
-        };
-
         return {
             applyFilters,
             navItems,
             preparedQueryId: route.query.preparedQueryId,
-
-            toggleModal,
-            modal,
-            handleModalUpdated,
 
             handleUpdated,
             handleFailed,
@@ -109,19 +97,7 @@ export default defineNuxtComponent({
         <DNav
             :items="navItems"
             :path="'/mtb/query/'+ entity.id"
-        >
-            <template #end>
-                <li class="nav-item">
-                    <button
-                        type="button"
-                        class="nav-link"
-                        @click.prevent="toggleModal"
-                    >
-                        <i class="fa fa-cog" /> Anpassen
-                    </button>
-                </li>
-            </template>
-        </DNav>
+        />
     </div>
 
     <hr>
@@ -134,17 +110,21 @@ export default defineNuxtComponent({
     <template v-if="entity">
         <div class="row">
             <div class="col-6 col-md-9 col-lg-10">
-                <template v-if="entity.criteria">
-                    <div class="entity-card mb-2">
-                        <div class="d-flex flex-row">
-                            <MQueryCriteriaSummary :entity="entity.criteria" />
-                        </div>
+                <div class="d-flex flex-column gap-3">
+                    <div>
+                        <MQueryCriteriaSummaryBox
+                            :entity="entity"
+                            @updated="handleUpdated"
+                            @failed="handleFailed"
+                        />
                     </div>
-                </template>
-                <NuxtPage
-                    :entity="entity"
-                    @updated="handleUpdated"
-                />
+                    <div>
+                        <NuxtPage
+                            :entity="entity"
+                            @updated="handleUpdated"
+                        />
+                    </div>
+                </div>
             </div>
             <div class="col-6 col-md-3 col-lg-2">
                 <DQueryPatientFilters
@@ -154,39 +134,5 @@ export default defineNuxtComponent({
                 />
             </div>
         </div>
-
-        <BModal
-            v-model="modal"
-            :hide-footer="true"
-            :size="'lg'"
-        >
-            <template #header="props">
-                <div class="d-flex flex-row w-100">
-                    <div>
-                        <h5 class="mb-0">
-                            <i class="fa fa-search" /> Suche
-                        </h5>
-                    </div>
-                    <div class="ms-auto">
-                        <button
-                            type="button"
-                            class="btn btn-xs btn-secondary"
-                            @click.prevent="props.close()"
-                        >
-                            <i class="fa fa-times" />
-                        </button>
-                    </div>
-                </div>
-            </template>
-            <MSearchForm
-                :query-mode="entity.mode.code"
-                :query-peers="entity.peers"
-                :query-id="entity.id"
-                :criteria="entity.criteria"
-                :prepared-query-id="preparedQueryId"
-                @query-updated="handleModalUpdated"
-                @failed="handleFailed"
-            />
-        </BModal>
     </template>
 </template>
