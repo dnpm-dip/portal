@@ -1,6 +1,5 @@
 <script lang="ts">
 import {
-    type Coding,
     DQueryInfoBox, DQueryPatientFilters, InjectionKey, type URLQueryRecord,
 } from '@dnpm-dip/core';
 import { DNav } from '@dnpm-dip/core';

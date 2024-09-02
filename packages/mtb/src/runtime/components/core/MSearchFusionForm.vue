@@ -64,90 +64,97 @@ export default defineComponent({
 });
 </script>
 <template>
-    <VCFormGroup>
-        <template #label>
-            3'-Gen
-        </template>
-        <template #default>
-            <DCodeSystem
-                :code="'https://www.genenames.org/'"
-                :lazy-load="true"
-            >
-                <template #default="{ data }">
-                    <DCollectionTransform
-                        :items="data.concepts"
-                        :transform="transformConcepts"
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <VCFormGroup>
+                <template #label>
+                    3'-Gen
+                </template>
+                <template #default>
+                    <DCodeSystem
+                        :code="'https://www.genenames.org/'"
+                        :lazy-load="true"
                     >
-                        <template #default="options">
-                            <VCFormSelectSearch
-                                v-model="form.fusionPartner3pr"
-                                :options="options"
-                                placeholder="HGNC"
+                        <template #default="{ data }">
+                            <DCollectionTransform
+                                :items="data.concepts"
+                                :transform="transformConcepts"
                             >
-                                <template #selected="{ items, toggle }">
-                                    <DTags
-                                        :emit-only="true"
-                                        :items="items"
-                                        tag-variant="dark"
-                                        @deleted="toggle"
-                                    />
+                                <template #default="options">
+                                    <VCFormSelectSearch
+                                        v-model="form.fusionPartner3pr"
+                                        :options="options"
+                                        placeholder="HGNC"
+                                    >
+                                        <template #selected="{ items, toggle }">
+                                            <DTags
+                                                :emit-only="true"
+                                                :items="items"
+                                                tag-variant="dark"
+                                                @deleted="toggle"
+                                            />
+                                        </template>
+                                    </VCFormSelectSearch>
                                 </template>
-                            </VCFormSelectSearch>
+                            </DCollectionTransform>
                         </template>
-                    </DCollectionTransform>
+                        <template #loading>
+                            <VCFormSelectSearch
+                                :options="[]"
+                                :disabled="true"
+                                placeholder="HGNC"
+                            />
+                        </template>
+                    </DCodeSystem>
                 </template>
-                <template #loading>
-                    <VCFormSelectSearch
-                        :options="[]"
-                        :disabled="true"
-                        placeholder="HGNC"
-                    />
+            </VCFormGroup>
+        </div>
+        <div class="col-12 col-md-6">
+            <VCFormGroup>
+                <template #label>
+                    5'-Gen
                 </template>
-            </DCodeSystem>
-        </template>
-    </VCFormGroup>
-    <VCFormGroup>
-        <template #label>
-            5'-Gen
-        </template>
-        <template #default>
-            <DCodeSystem
-                :code="'https://www.genenames.org/'"
-                :lazy-load="true"
-            >
-                <template #default="{ data }">
-                    <DCollectionTransform
-                        :items="data.concepts"
-                        :transform="transformConcepts"
+                <template #default>
+                    <DCodeSystem
+                        :code="'https://www.genenames.org/'"
+                        :lazy-load="true"
                     >
-                        <template #default="options">
-                            <VCFormSelectSearch
-                                v-model="form.fusionPartner5pr"
-                                :options="options"
-                                placeholder="HGNC"
+                        <template #default="{ data }">
+                            <DCollectionTransform
+                                :items="data.concepts"
+                                :transform="transformConcepts"
                             >
-                                <template #selected="{ items, toggle }">
-                                    <DTags
-                                        :emit-only="true"
-                                        :items="items"
-                                        tag-variant="dark"
-                                        @deleted="toggle"
-                                    />
+                                <template #default="options">
+                                    <VCFormSelectSearch
+                                        v-model="form.fusionPartner5pr"
+                                        :options="options"
+                                        placeholder="HGNC"
+                                    >
+                                        <template #selected="{ items, toggle }">
+                                            <DTags
+                                                :emit-only="true"
+                                                :items="items"
+                                                tag-variant="dark"
+                                                @deleted="toggle"
+                                            />
+                                        </template>
+                                    </VCFormSelectSearch>
                                 </template>
-                            </VCFormSelectSearch>
+                            </DCollectionTransform>
                         </template>
-                    </DCollectionTransform>
+                        <template #loading>
+                            <VCFormSelectSearch
+                                :options="[]"
+                                :disabled="true"
+                                placeholder="HGNC"
+                            />
+                        </template>
+                    </DCodeSystem>
                 </template>
-                <template #loading>
-                    <VCFormSelectSearch
-                        :options="[]"
-                        :disabled="true"
-                        placeholder="HGNC"
-                    />
-                </template>
-            </DCodeSystem>
-        </template>
-    </VCFormGroup>
+            </VCFormGroup>
+        </div>
+    </div>
+
     <div class="mb-1">
         <VCFormInputCheckbox
             v-model="form.supporting"
