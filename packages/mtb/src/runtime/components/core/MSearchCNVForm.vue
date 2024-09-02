@@ -74,91 +74,98 @@ export default defineComponent({
 });
 </script>
 <template>
-    <VCFormGroup>
-        <template #label>
-            Type
-        </template>
-        <template #default>
-            <DValueSet
-                :code="'dnpm-dip/mtb/ngs-report/cnv/type'"
-                :lazy-load="true"
-            >
-                <template #default="{ data }">
-                    <DCollectionTransform
-                        :items="data.codings"
-                        :transform="transformCodings"
+    <div class="row">
+        <div class="col-12 col-sm-4">
+            <VCFormGroup>
+                <template #label>
+                    Type
+                </template>
+                <template #default>
+                    <DValueSet
+                        :code="'dnpm-dip/mtb/ngs-report/cnv/type'"
+                        :lazy-load="true"
                     >
-                        <template #default="options">
+                        <template #default="{ data }">
+                            <DCollectionTransform
+                                :items="data.codings"
+                                :transform="transformCodings"
+                            >
+                                <template #default="options">
+                                    <VCFormSelectSearch
+                                        v-model="form.type"
+                                        :options="options"
+                                        placeholder="CNV Type"
+                                    >
+                                        <template #selected="{ items, toggle }">
+                                            <DTags
+                                                :emit-only="true"
+                                                :items="items"
+                                                tag-variant="dark"
+                                                @deleted="toggle"
+                                            />
+                                        </template>
+                                    </VCFormSelectSearch>
+                                </template>
+                            </DCollectionTransform>
+                        </template>
+                        <template #loading>
                             <VCFormSelectSearch
-                                v-model="form.type"
-                                :options="options"
+                                :options="[]"
+                                :disabled="true"
                                 placeholder="CNV Type"
-                            >
-                                <template #selected="{ items, toggle }">
-                                    <DTags
-                                        :emit-only="true"
-                                        :items="items"
-                                        tag-variant="dark"
-                                        @deleted="toggle"
-                                    />
-                                </template>
-                            </VCFormSelectSearch>
+                            />
                         </template>
-                    </DCollectionTransform>
+                    </DValueSet>
                 </template>
-                <template #loading>
-                    <VCFormSelectSearch
-                        :options="[]"
-                        :disabled="true"
-                        placeholder="CNV Type"
-                    />
+            </VCFormGroup>
+        </div>
+        <div class="col-12 col-sm-8">
+            <VCFormGroup>
+                <template #label>
+                    Betroffene Gene
                 </template>
-            </DValueSet>
-        </template>
-    </VCFormGroup>
-    <VCFormGroup>
-        <template #label>
-            Betroffene Gene
-        </template>
-        <template #default>
-            <DCodeSystem
-                :code="'https://www.genenames.org/'"
-                :lazy-load="true"
-            >
-                <template #default="{ data }">
-                    <DCollectionTransform
-                        :items="data.concepts"
-                        :transform="transformConcepts"
+                <template #default>
+                    <DCodeSystem
+                        :code="'https://www.genenames.org/'"
+                        :lazy-load="true"
                     >
-                        <template #default="options">
-                            <VCFormSelectSearch
-                                v-model="form.affectedGenes"
-                                :multiple="true"
-                                :options="options"
-                                placeholder="HGNC"
+                        <template #default="{ data }">
+                            <DCollectionTransform
+                                :items="data.concepts"
+                                :transform="transformConcepts"
                             >
-                                <template #selected="{ items, toggle }">
-                                    <DTags
-                                        :emit-only="true"
-                                        :items="items"
-                                        tag-variant="dark"
-                                        @deleted="toggle"
-                                    />
+                                <template #default="options">
+                                    <VCFormSelectSearch
+                                        v-model="form.affectedGenes"
+                                        :multiple="true"
+                                        :options="options"
+                                        placeholder="HGNC"
+                                    >
+                                        <template #selected="{ items, toggle }">
+                                            <DTags
+                                                :emit-only="true"
+                                                :items="items"
+                                                tag-variant="dark"
+                                                @deleted="toggle"
+                                            />
+                                        </template>
+                                    </VCFormSelectSearch>
                                 </template>
-                            </VCFormSelectSearch>
+                            </DCollectionTransform>
                         </template>
-                    </DCollectionTransform>
+                        <template #loading>
+                            <VCFormSelectSearch
+                                :options="[]"
+                                :disabled="true"
+                                placeholder="HGNC"
+                            />
+                        </template>
+                    </DCodeSystem>
                 </template>
-                <template #loading>
-                    <VCFormSelectSearch
-                        :options="[]"
-                        :disabled="true"
-                        placeholder="HGNC"
-                    />
-                </template>
-            </DCodeSystem>
-        </template>
-    </VCFormGroup>
+            </VCFormGroup>
+        </div>
+    </div>
+
     <div class="mb-1">
         <VCFormInputCheckbox
             v-model="form.supporting"
