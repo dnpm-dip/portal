@@ -23,7 +23,37 @@
 }
 
 .nav-pills .nav-link {
-    color: inherit;
+    color: #5b646c;
+    background-color: #ececec;
+    border-color: #171a1d;
+}
+
+.nav-pills .nav-item .nav-link {
+    border-radius: 0;
+}
+
+.nav-pills .nav-item:first-child:not(:last-child) .nav-link {
+    border-radius: var(--bs-border-radius) 0 0 var(--bs-border-radius) !important;
+}
+
+.nav-pills .nav-item:last-child:not(:first-child) .nav-link {
+    border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0 !important;
+}
+
+.nav-pills .nav-item:first-child:last-child .nav-link {
+    border-radius: var(--bs-border-radius) !important;
+}
+
+.nav-pills.flex-column .nav-item:first-child:not(:last-child) .nav-link {
+    border-radius: var(--bs-border-radius) var(--bs-border-radius) 0 0 !important;
+}
+
+.nav-pills.flex-column .nav-item:last-child:not(:first-child) .nav-link {
+    border-radius: 0 0 var(--bs-border-radius) var(--bs-border-radius) !important;
+}
+
+.nav-pills.flex-column .nav-item:first-child:last-child .nav-link {
+    border-radius: var(--bs-border-radius) !important;
 }
 
 .nav-pills .nav-link.active,

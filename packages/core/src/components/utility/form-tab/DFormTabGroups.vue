@@ -126,37 +126,58 @@ export default defineComponent({
                 :updated="handleUpdated"
             />
         </div>
-        <ul
-            class="nav nav-pills"
+        <div
+            class="d-flex"
             :class="{'flex-column ms-2': direction === 'row', 'flex-row mt-2': direction === 'col'}"
         >
-            <li
-                v-if="createButton"
-                class="nav-item"
-                :class="{'ms-auto': direction === 'col'}"
+            <div>
+                <ul
+                    class="nav nav-pills"
+                    :class="{'flex-column': direction === 'row'}"
+                >
+                    <template
+                        v-for="(item,index) in items"
+                        :key="index"
+                    >
+                        <slot
+                            name="label"
+                            :item="item"
+                            :index="index"
+                            :current-index="currentIndex"
+                            :label="label"
+                            :toggle="toggle"
+                        >
+                            <DFormTabGroup
+                                :item="item"
+                                :index="index"
+                                :current-index="currentIndex"
+                                :label="label"
+                                @toggle="toggle"
+                            />
+                        </slot>
+                    </template>
+                </ul>
+            </div>
+            <div
+                :class="{'ms-auto': direction === 'col', 'mt-auto': direction !== 'col'}"
                 :style="{'order': direction === 'col' ? '1' : 0}"
             >
-                <a
-                    href="javascript:void(0)"
-                    class="nav-link nav-link-dark text-center mb-1"
-                    :class="{'disabled': maxItems && maxItems === items.length}"
-                    @click.prevent="add"
-                >
-                    <i class="fa fa-plus" />
-                </a>
-            </li>
-            <template
-                v-for="(item,index) in items"
-                :key="index"
-            >
-                <DFormTabGroup
-                    :item="item"
-                    :index="index"
-                    :current-index="currentIndex"
-                    :label="label"
-                    @toggle="toggle"
-                />
-            </template>
-        </ul>
+                <ul class="nav nav-pills">
+                    <li
+                        v-if="createButton"
+                        class="nav-item"
+                    >
+                        <a
+                            href="javascript:void(0)"
+                            class="nav-link nav-link-dark text-center mb-1"
+                            :class="{'disabled': maxItems && maxItems === items.length}"
+                            @click.prevent="add"
+                        >
+                            <i class="fa fa-plus" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>

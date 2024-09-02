@@ -24,7 +24,7 @@ export default defineComponent({
     },
     emits: ['updated', 'failed'],
     setup(props, { emit }) {
-        const extended = ref(true);
+        const extended = ref(false);
 
         const toggleExtended = () => {
             extended.value = !extended.value;

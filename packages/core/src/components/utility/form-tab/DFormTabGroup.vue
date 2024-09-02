@@ -55,7 +55,14 @@ export default defineComponent({
             :class="{'router-link-exact-active': currentIndex === index}"
             @click="toggle"
         >
-            {{ text }}
+            <slot
+                :item="item"
+                :index="index"
+                :current-index="currentIndex"
+                :toggle="toggle"
+            >
+                {{ text }}
+            </slot>
         </a>
     </li>
 </template>

@@ -15,6 +15,7 @@ import {
     transformCodingsToFormSelectOptions,
     transformFormSelectOptionsToCodings,
 } from '@dnpm-dip/core';
+import DFormTabGroup from '@dnpm-dip/core/components/utility/form-tab/DFormTabGroup.vue';
 import {
     VCFormSelectSearch,
 } from '@vuecs/form-controls';
@@ -35,6 +36,7 @@ import MSearchMedicationForm from './MSearchMedicationForm.vue';
 
 export default defineComponent({
     components: {
+        DFormTabGroup,
         DSitePicker,
         MSearchMedicationForm,
         MMutationTabGroup,
@@ -393,6 +395,30 @@ export default defineComponent({
                     :max-items="6"
                     :direction="'col'"
                 >
+                    <template #label="props">
+                        <DFormTabGroup
+                            :label="props.label"
+                            :item="props.item"
+                            :index="props.index"
+                            :current-index="props.currentIndex"
+                            @toggle="props.toggle"
+                        >
+                            <template v-if="props.item && props.item.type">
+                                <template v-if="props.item.type === 'rnaFusion'">
+                                    {{ props.index + 1 }}. RNA Fusion
+                                </template>
+                                <template v-else-if="props.item.type === 'dnaFusion'">
+                                    {{ props.index + 1 }}. DNA Fusion
+                                </template>
+                                <template v-else>
+                                    {{ props.index + 1 }}. {{ props.item.type.toUpperCase() }}
+                                </template>
+                            </template>
+                            <template v-else>
+                                {{ props.index + 1 }}
+                            </template>
+                        </DFormTabGroup>
+                    </template>
                     <template #default="props">
                         <MMutationTabGroup
                             :entity="props.item"
