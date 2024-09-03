@@ -1,5 +1,12 @@
 # @dnpm-dip/core
 
+## [1.21.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.20.0...v1.21.0) (2024-09-03)
+
+
+### Features
+
+* join arbitairy key label structures ([b6a8676](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b6a8676891542b920997fc81bf1d77afd7a7f8de))
+
 ## [1.20.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.19.0...v1.20.0) (2024-09-02)
 
 

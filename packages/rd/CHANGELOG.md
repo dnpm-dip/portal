@@ -1,5 +1,25 @@
 # @dnpm-dip/rare-diseases
 
+## [1.20.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.19.0...v1.20.0) (2024-09-03)
+
+
+### Features
+
+* bump nuxt to v3.13.0 and fixed pages ([ad4c47b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ad4c47bc438f68b8c848c8547ae1313db98f6fd7))
+
+
+### Bug Fixes
+
+* **deps:** bump vue from 3.4.32 to 3.4.38 ([#690](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/690)) ([6758c86](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6758c864daf5ba461221e82966671e02238257b0))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.20.0 to ^1.21.0
+    * @dnpm-dip/kit bumped from ^1.16.0 to ^1.17.0
+
 ## [1.19.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.18.0...v1.19.0) (2024-09-02)
 
 
