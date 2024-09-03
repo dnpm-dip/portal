@@ -1,4 +1,3 @@
-import type { ConceptCount, KeyValueChildrenRecord, KeyValueRecord } from '../../../domains';
 import { isCoding, isMinMaxRange } from '../../../domains';
 
 type ChartLabelsGenerateOptions = {
@@ -6,10 +5,19 @@ type ChartLabelsGenerateOptions = {
     codingCodeOnly?: boolean
 };
 
+type RecordWithKeyAttribute = {
+    [key: string]: any,
+    key: unknown
+};
+
 export function generateChartLabelsForKeyValueRecord(
-    item: KeyValueRecord | KeyValueChildrenRecord | ConceptCount,
+    item: RecordWithKeyAttribute,
     options: ChartLabelsGenerateOptions = {},
 ) : string | undefined {
+    if (typeof item.key === 'string') {
+        return item.key;
+    }
+
     if (isCoding(item.key)) {
         if (options.codingCodeOnly) {
             return item.key.code;
@@ -31,11 +39,9 @@ export function generateChartLabelsForKeyValueRecord(
     }
 
     if (Array.isArray(item.key)) {
-        return `${item.key.join(', ')}`;
-    }
-
-    if (typeof item.key === 'string') {
-        return item.key;
+        return item.key
+            .map((el) => generateChartLabelsForKeyValueRecord({ key: el }, options))
+            .join(', ');
     }
 
     return undefined;
