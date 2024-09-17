@@ -2,26 +2,33 @@
 import type {
     ChartData, ChartOptions,
 } from 'chart.js';
-import { Bar } from 'vue-chartjs';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
-import type {
-    Coding, ConceptsCount, MinMaxRange, Quantities,
-} from '../../../domains';
+import type { Coding, KeyValueRecord, MinMaxRange } from '../../../domains';
+import { isConceptCount } from '../../../domains';
 import {
     generateRandomColorTuple, getColorInRange, rgbToHex,
 } from '../../../utils';
-import { generateChartLabelsForKeyValueRecord } from './utils';
+import { DChart } from '../chart';
+import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
 
 type Key = MinMaxRange | Coding | string[] | string;
+
 export default defineComponent({
     components: {
-        Bar,
+        DChart,
     },
     props: {
+        type: {
+            type: String as PropType<'bar' | 'doughnut'>,
+            default: 'bar',
+        },
         items: {
             required: true,
-            type: Array as PropType<ConceptsCount<Key> | Quantities<Key>>,
+            type: Array as PropType<KeyValueRecord<Key, unknown>[]>,
+        },
+        options: {
+            type: Object as PropType<ChartOptions>,
         },
         codingVerboseLabel: {
             type: Boolean,
@@ -36,15 +43,19 @@ export default defineComponent({
 
         const [start, end] = generateRandomColorTuple();
 
-        const data = computed<ChartData<'bar'>>(() => ({
+        const data = computed<ChartData>(() => ({
             datasets: [{
                 data: items.value.map((item) => {
                     if (typeof item.value === 'number') {
                         return item.value;
                     }
 
-                    return item.value.count;
-                }),
+                    if (isConceptCount(item)) {
+                        return item.value.count;
+                    }
+
+                    return Number(item.value);
+                }) as number[],
                 backgroundColor: items.value.map((_, key) => rgbToHex(getColorInRange({
                     start,
                     end,
@@ -53,36 +64,35 @@ export default defineComponent({
                 }))),
             }],
             labels: items.value.map((item) => {
+                let text : string;
                 if (typeof item.value === 'number') {
-                    return `${generateChartLabelsForKeyValueRecord(item)}`;
+                    text = `${generateChartLabelsForKeyValueRecord(item)}`;
+                } else if (isConceptCount(item)) {
+                    text = `${generateChartLabelsForKeyValueRecord(item, {
+                        codingVerbose: props.codingVerboseLabel,
+                    })} (${item.value.percent.toFixed(1)}%)`;
+                } else {
+                    text = 'unknown';
                 }
 
-                return `${generateChartLabelsForKeyValueRecord(item, {
-                    codingVerbose: props.codingVerboseLabel,
-                })} (${item.value.percent.toFixed(1)}%)`;
+                if (text.length > 30) {
+                    return `${text.substring(0, 70)}...`;
+                }
+
+                return text;
             }),
         }));
 
-        const options : ChartOptions<'bar'> = {
-            responsive: true,
-            indexAxis: 'y',
-            plugins: {
-                legend: {
-                    display: false,
-                },
-            },
-        };
-
         return {
             data,
-            options,
         };
     },
 });
 </script>
 <template>
-    <Bar
-        :options="options"
+    <DChart
+        :type="type"
         :data="data"
+        :options="options"
     />
 </template>

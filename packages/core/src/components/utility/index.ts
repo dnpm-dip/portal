@@ -6,5 +6,9 @@ export * from './form-tab';
 export * from './logical-operator-switch';
 export * from './nav';
 
+export * from './kv-chart';
+export * from './kv-chart-table-switch';
+export * from './kv-table';
+
 export { default as DCollectionTransform } from './DCollectionTransform.vue';
 export { default as DTags } from './DTags.vue';

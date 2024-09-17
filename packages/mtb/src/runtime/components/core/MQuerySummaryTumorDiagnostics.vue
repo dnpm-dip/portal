@@ -1,6 +1,6 @@
 <script lang="ts">
 import {
-    DChartBar, DQuerySummaryGrouped, DQuerySummaryNested, type URLQueryRecord,
+    DKVChartTableSwitch, DQuerySummaryGrouped, DQuerySummaryNested,
 } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryTumorDiagnostics } from '../../domains';
@@ -8,7 +8,7 @@ import type { QuerySummaryTumorDiagnostics } from '../../domains';
 export default defineComponent({
     components: {
         DQuerySummaryNested,
-        DChartBar,
+        DKVChartTableSwitch,
         DQuerySummaryGrouped,
     },
     props: {
@@ -33,9 +33,9 @@ export default defineComponent({
                             :key-verbose="true"
                         >
                             <template #default="{items}">
-                                <DChartBar
+                                <DKVChartTableSwitch
                                     :coding-verbose-label="true"
-                                    :items="items"
+                                    :data="items"
                                 />
                             </template>
                         </DQuerySummaryNested>
@@ -50,9 +50,9 @@ export default defineComponent({
                             :key-verbose="true"
                         >
                             <template #default="{items}">
-                                <DChartBar
+                                <DKVChartTableSwitch
                                     :coding-verbose-label="true"
-                                    :items="items"
+                                    :data="items"
                                 />
                             </template>
                         </DQuerySummaryNested>
@@ -73,9 +73,9 @@ export default defineComponent({
                                 <h6 class="text-center">
                                     Tumor-Entitäten (ICD-10-GM)
                                 </h6>
-                                <DChartBar
+                                <DKVChartTableSwitch
                                     :coding-verbose-label="true"
-                                    :items="item.value.tumorEntities.elements"
+                                    :data="item.value.tumorEntities.elements"
                                 />
                             </div>
                         </div>
@@ -84,9 +84,9 @@ export default defineComponent({
                                 <h6 class="text-center">
                                     Tumor-Morphologie (IDC-O-3-M)
                                 </h6>
-                                <DChartBar
+                                <DKVChartTableSwitch
                                     :coding-verbose-label="true"
-                                    :items="item.value.tumorMorphologies.elements"
+                                    :data="item.value.tumorMorphologies.elements"
                                 />
                             </div>
                         </div>

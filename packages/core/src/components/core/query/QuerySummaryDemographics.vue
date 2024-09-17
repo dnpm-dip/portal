@@ -1,10 +1,10 @@
 <script lang="ts">
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryDemographics } from '../../../domains';
-import { DChartBar, DChartDoughnut } from '../../utility';
+import { DKVChartTableSwitch } from '../../utility';
 
 export default defineComponent({
-    components: { DChartDoughnut, DChartBar },
+    components: { DKVChartTableSwitch },
     props: {
         entity: {
             type: Object as PropType<QuerySummaryDemographics>,
@@ -22,9 +22,9 @@ export default defineComponent({
                     <h6>
                         Patienten pro Standort
                     </h6>
-                    <DChartDoughnut
-                        style="max-height: 390px"
-                        :items="entity.siteDistribution.elements"
+                    <DKVChartTableSwitch
+                        :type="'doughnut'"
+                        :data="entity.siteDistribution.elements"
                     />
                 </div>
             </div>
@@ -33,9 +33,9 @@ export default defineComponent({
                     <h6>
                         Geschlechterverteilung
                     </h6>
-                    <DChartDoughnut
-                        style="max-height: 390px"
-                        :items="entity.genderDistribution.elements"
+                    <DKVChartTableSwitch
+                        :type="'doughnut'"
+                        :data="entity.genderDistribution.elements"
                     />
                 </div>
             </div>
@@ -44,10 +44,7 @@ export default defineComponent({
                     <h6>
                         Altersverteilung
                     </h6>
-                    <DChartBar
-                        style="max-height: 390px"
-                        :items="entity.ageDistribution.elements"
-                    />
+                    <DKVChartTableSwitch :data="entity.ageDistribution.elements" />
                 </div>
             </div>
         </div>

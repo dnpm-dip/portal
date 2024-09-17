@@ -242,6 +242,15 @@ a:focus{
     line-height: 1rem;
 }
 
+.text-left {
+    text-align: left;
+}
+
+
 .table.table-light {
+    --bs-table-bg: none;
+}
+
+.table > :not(caption) > * > * {
     --bs-table-bg: none;
 }

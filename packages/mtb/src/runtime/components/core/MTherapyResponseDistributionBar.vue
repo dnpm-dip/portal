@@ -72,10 +72,10 @@ export default defineComponent({
 </template>
 <style scoped>
 .distribution-bar {
-    min-width: 200px;
+    min-width: 250px;
     height: 1rem;
     line-height: 1rem;
-    font-size: 0.85rem;
+    font-size: 0.65rem;
     background-color: #ececec;
     border: 1px solid #dedede;
     box-shadow: 0 4px 25px 0 rgba(0, 0, 0, .1);

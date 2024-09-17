@@ -7,8 +7,6 @@
 
 <script lang="ts">
 import {
-    DChartBar,
-    DChartDoughnut,
     DChartLineKM,
     DNav,
     DQuerySummaryDemographics,
@@ -31,8 +29,6 @@ export default defineNuxtComponent({
         DQuerySummaryDemographics,
         MQuerySummaryMedication,
         MQuerySummaryTumorDiagnostics,
-        DChartDoughnut,
-        DChartBar,
         DChartLineKM,
     },
     props: {
