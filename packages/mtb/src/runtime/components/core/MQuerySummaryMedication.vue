@@ -22,82 +22,74 @@ export default defineComponent({
 <template>
     <div>
         <h5>Therapie Empfehlungen</h5>
-        <div class="row">
-            <div class="col">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Gesamtverteilung ({{ entity.recommendations.overallDistribution.total }})</h6>
+        <div class="d-flex flex-column gap-2">
+            <div class="entity-card text-center mb-3 w-100">
+                <h6>Gesamtverteilung ({{ entity.recommendations.overallDistribution.total }})</h6>
 
-                    <DQuerySummaryNested
-                        :label="'Kategorie'"
-                        :entity="entity.recommendations.overallDistribution"
-                    >
-                        <template #default="{ items }">
-                            <DKVChartTableSwitch :data="items" />
-                        </template>
-                    </DQuerySummaryNested>
-                </div>
+                <DQuerySummaryNested
+                    :label="'Kategorie'"
+                    :entity="entity.recommendations.overallDistribution"
+                >
+                    <template #default="{ items }">
+                        <DKVChartTableSwitch :data="items" />
+                    </template>
+                </DQuerySummaryNested>
             </div>
-            <div class="col">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Empfehlungen nach stützender molekularer Alteration</h6>
+            <div class="entity-card text-center mb-3 w-100">
+                <h6>Empfehlungen nach stützender molekularer Alteration</h6>
 
-                    <DQuerySummaryGrouped
-                        :items="entity.recommendations.distributionBySupportingVariant"
-                        :label="'Variante'"
-                    >
-                        <template #default="{ item }">
-                            <DKVChartTableSwitch
-                                :type="'doughnut'"
-                                :data="item.value.elements"
-                            />
-                        </template>
-                    </DQuerySummaryGrouped>
-                </div>
+                <DQuerySummaryGrouped
+                    :items="entity.recommendations.distributionBySupportingVariant"
+                    :label="'Variante'"
+                >
+                    <template #default="{ item }">
+                        <DKVChartTableSwitch
+                            :type="'doughnut'"
+                            :data="item.value.elements"
+                        />
+                    </template>
+                </DQuerySummaryGrouped>
             </div>
         </div>
+
+        <hr>
 
         <h5>Umgesetzte Therapien</h5>
-        <div class="row">
-            <div class="col">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Gesamtverteilung ({{ entity.therapies.overallDistribution.total }})</h6>
+        <div class="d-flex flex-column gap-2">
+            <div class="entity-card text-center mb-3 w-100">
+                <h6>Gesamtverteilung ({{ entity.therapies.overallDistribution.total }})</h6>
 
-                    <DQuerySummaryNested
-                        :label="'Kategorie'"
-                        :entity="entity.therapies.overallDistribution"
-                    >
-                        <template #default="{ items }">
-                            <DKVChartTableSwitch :data="items" />
-                        </template>
-                    </DQuerySummaryNested>
-                </div>
+                <DQuerySummaryNested
+                    :label="'Kategorie'"
+                    :entity="entity.therapies.overallDistribution"
+                >
+                    <template #default="{ items }">
+                        <DKVChartTableSwitch :data="items" />
+                    </template>
+                </DQuerySummaryNested>
             </div>
-            <div class="col">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Response-Verteilung nach Medikation</h6>
 
-                    <DQuerySummaryGrouped
-                        :items="entity.therapies.responseDistributionByTherapy"
-                        :label="'Medikation'"
-                    >
-                        <template #default="{ item }">
-                            <DKVChartTableSwitch
-                                :type="'doughnut'"
-                                :data="item.value.elements"
-                            />
-                        </template>
-                    </DQuerySummaryGrouped>
-                </div>
+            <div class="entity-card text-center mb-3 w-100">
+                <h6>Response-Verteilung nach Medikation</h6>
+
+                <DQuerySummaryGrouped
+                    :items="entity.therapies.responseDistributionByTherapy"
+                    :label="'Medikation'"
+                >
+                    <template #default="{ item }">
+                        <DKVChartTableSwitch
+                            :type="'doughnut'"
+                            :data="item.value.elements"
+                        />
+                    </template>
+                </DQuerySummaryGrouped>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Durchschnittliche Dauer <small>(in Wochen)</small></h6>
-                    <DKVChartTableSwitch :data="entity.therapies.meanDurations" />
-                </div>
+        <div class="d-flex flex-column gap-2">
+            <div class="entity-card text-center mb-3 w-100">
+                <h6>Durchschnittliche Dauer <small>(in Wochen)</small></h6>
+                <DKVChartTableSwitch :data="entity.therapies.meanDurations" />
             </div>
-            <div class="col" />
         </div>
     </div>
 </template>

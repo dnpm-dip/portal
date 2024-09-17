@@ -16,37 +16,34 @@ export default defineComponent({
 <template>
     <div>
         <h5>Allgemein</h5>
-        <div class="row">
-            <div class="col-12 col-xl-4">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>
-                        Patienten pro Standort
-                    </h6>
-                    <DKVChartTableSwitch
-                        :type="'doughnut'"
-                        :data="entity.siteDistribution.elements"
-                    />
-                </div>
+
+        <div class="d-flex flex-row gap-2">
+            <div class="entity-card text-center mb-3 w-100">
+                <h6>
+                    Patienten pro Standort
+                </h6>
+                <DKVChartTableSwitch
+                    :type="'doughnut'"
+                    :data="entity.siteDistribution.elements"
+                />
             </div>
-            <div class="col-12 col-xl-4">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>
-                        Geschlechterverteilung
-                    </h6>
-                    <DKVChartTableSwitch
-                        :type="'doughnut'"
-                        :data="entity.genderDistribution.elements"
-                    />
-                </div>
+
+            <div class="entity-card text-center mb-3 w-100">
+                <h6>
+                    Geschlechterverteilung
+                </h6>
+                <DKVChartTableSwitch
+                    :type="'doughnut'"
+                    :data="entity.genderDistribution.elements"
+                />
             </div>
-            <div class="col-12 col-xl-4">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>
-                        Altersverteilung
-                    </h6>
-                    <DKVChartTableSwitch :data="entity.ageDistribution.elements" />
-                </div>
-            </div>
+        </div>
+
+        <div class="entity-card text-center mb-3 w-100">
+            <h6>
+                Altersverteilung
+            </h6>
+            <DKVChartTableSwitch :data="entity.ageDistribution.elements" />
         </div>
     </div>
 </template>
