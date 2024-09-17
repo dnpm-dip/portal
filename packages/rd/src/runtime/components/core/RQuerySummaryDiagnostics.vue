@@ -1,11 +1,11 @@
 <script lang="ts">
-import { DChartBar, DQuerySummaryGrouped } from '@dnpm-dip/core';
+import { DKVChart, DQuerySummaryGrouped } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryDiagnostics } from '../../domains';
 
 export default defineComponent({
     components: {
-        DChartBar,
+        DKVChart,
         DQuerySummaryGrouped,
     },
     props: {
@@ -26,7 +26,7 @@ export default defineComponent({
                     <h6 class="text-center">
                         Diagnose Kategorien
                     </h6>
-                    <DChartBar :items="entity.overallDistributions.diseaseCategories.elements" />
+                    <DKVChart :items="entity.overallDistributions.diseaseCategories.elements" />
                 </div>
             </div>
             <div class="col-12 col-xl-6">
@@ -34,7 +34,7 @@ export default defineComponent({
                     <h6 class="text-center">
                         HPOTermen
                     </h6>
-                    <DChartBar
+                    <DKVChart
                         :items="entity.overallDistributions.hpoTerms.elements"
                     />
                 </div>
@@ -56,7 +56,7 @@ export default defineComponent({
                             <h6 class="text-center">
                                 Diagnose Kategorien
                             </h6>
-                            <DChartBar :items="item.value.diseaseCategories.elements" />
+                            <DKVChart :items="item.value.diseaseCategories.elements" />
                         </div>
                     </div>
                     <div class="col-12 col-xl-6">
@@ -64,7 +64,7 @@ export default defineComponent({
                             <h6 class="text-center">
                                 HPO Termen
                             </h6>
-                            <DChartBar :items="item.value.hpoTerms.elements" />
+                            <DKVChart :items="item.value.hpoTerms.elements" />
                         </div>
                     </div>
                 </div>

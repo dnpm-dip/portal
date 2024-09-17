@@ -1,14 +1,13 @@
 <script lang="ts">
 import {
-    DChartBar, DChartDoughnut, DQuerySummaryGrouped, DQuerySummaryNested, type URLQueryRecord,
+    DKVChartTableSwitch, DQuerySummaryGrouped, DQuerySummaryNested, type URLQueryRecord,
 } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryMedication } from '../../domains';
 
 export default defineComponent({
     components: {
-        DChartBar,
-        DChartDoughnut,
+        DKVChartTableSwitch,
         DQuerySummaryNested,
         DQuerySummaryGrouped,
     },
@@ -33,7 +32,7 @@ export default defineComponent({
                         :entity="entity.recommendations.overallDistribution"
                     >
                         <template #default="{ items }">
-                            <DChartBar :items="items" />
+                            <DKVChartTableSwitch :data="items" />
                         </template>
                     </DQuerySummaryNested>
                 </div>
@@ -47,9 +46,9 @@ export default defineComponent({
                         :label="'Variante'"
                     >
                         <template #default="{ item }">
-                            <DChartDoughnut
-                                style="max-height: 450px"
-                                :items="item.value.elements"
+                            <DKVChartTableSwitch
+                                :type="'doughnut'"
+                                :data="item.value.elements"
                             />
                         </template>
                     </DQuerySummaryGrouped>
@@ -68,7 +67,7 @@ export default defineComponent({
                         :entity="entity.therapies.overallDistribution"
                     >
                         <template #default="{ items }">
-                            <DChartBar :items="items" />
+                            <DKVChartTableSwitch :data="items" />
                         </template>
                     </DQuerySummaryNested>
                 </div>
@@ -82,9 +81,9 @@ export default defineComponent({
                         :label="'Medikation'"
                     >
                         <template #default="{ item }">
-                            <DChartDoughnut
-                                style="max-height: 450px"
-                                :items="item.value.elements"
+                            <DKVChartTableSwitch
+                                :type="'doughnut'"
+                                :data="item.value.elements"
                             />
                         </template>
                     </DQuerySummaryGrouped>
@@ -95,7 +94,7 @@ export default defineComponent({
             <div class="col">
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Durchschnittliche Dauer <small>(in Wochen)</small></h6>
-                    <DChartBar :items="entity.therapies.meanDurations" />
+                    <DKVChartTableSwitch :data="entity.therapies.meanDurations" />
                 </div>
             </div>
             <div class="col" />
