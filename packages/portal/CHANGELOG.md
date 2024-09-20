@@ -1,5 +1,29 @@
 # @dnpm-dip/portal
 
+## [1.21.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.20.0...v1.21.0) (2024-09-20)
+
+
+### Features
+
+* chart-table-switch component and chart refactoring ([#768](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/768)) ([2e6a0f2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2e6a0f218eb1d7dfd9d6145a3684d08c676fc6f9))
+
+
+### Bug Fixes
+
+* **deps:** bump bootstrap-vue-next from 0.24.11 to 0.24.17 ([#767](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/767)) ([3476d7d](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/3476d7d9d9b9d443ab9e38064dd22625e97a843c))
+* **deps:** bump bootstrap-vue-next from 0.24.17 to 0.24.18 ([#770](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/770)) ([bc61ba6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/bc61ba64ade102b7e73915c6ff572208fc17449f))
+* **deps:** bump vue from 3.5.5 to 3.5.6 ([#765](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/765)) ([93bee3f](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/93bee3f35e6ccc4452542351c1acf5f0210d1836))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.21.0 to ^1.22.0
+    * @dnpm-dip/kit bumped from ^1.17.0 to ^1.18.0
+    * @dnpm-dip/mtb bumped from ^1.20.1 to ^1.21.0
+    * @dnpm-dip/rd bumped from ^1.20.0 to ^1.21.0
+
 ## [1.20.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.19.0...v1.20.0) (2024-09-03)
 
 
