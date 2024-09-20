@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.22.0...v1.22.1) (2024-09-20)
+
+
+### Bug Fixes
+
+* register chart controllers ([5d874da](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/5d874dae28db40d56ce26aefb7fad61661ae8490))
+
 ## [1.22.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.21.0...v1.22.0) (2024-09-20)
 
 
