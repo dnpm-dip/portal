@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.18.0...v1.19.0) (2024-09-23)
+
+
+### Features
+
+* bump nuxt to v3.13.0 and fixed pages ([ad4c47b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ad4c47bc438f68b8c848c8547ae1313db98f6fd7))
+
 ## [1.18.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.17.0...v1.18.0) (2024-09-20)
 
 

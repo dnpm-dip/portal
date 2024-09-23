@@ -1,5 +1,12 @@
 # @dnpm-dip/core
 
+## [1.23.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.22.0...v1.23.0) (2024-09-23)
+
+
+### Features
+
+* split key value table in 3 columns (key, value, percent) ([f1880f5](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f1880f525899d76b425a4368b7f11af9ab8ff55b))
+
 ## [1.22.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.21.0...v1.22.0) (2024-09-20)
 
 
