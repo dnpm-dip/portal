@@ -29,44 +29,52 @@ export default defineComponent({
     setup(props) {
         const items = computed<{
             key: string,
-            value: number | string
+            value: number | string,
+            percent: number | string
         }[]>(() => props.data.map((item) => {
             let key : string;
+            let value : number | string;
+            let percent : number | string;
+
             if (typeof item.value === 'number') {
                 key = `${generateChartLabelsForKeyValueRecord(item)}`;
+                value = item.value.toFixed(2);
+                percent = '?%';
             } else if (isConceptCount(item)) {
-                key = `${generateChartLabelsForKeyValueRecord(item, {
+                key = generateChartLabelsForKeyValueRecord(item, {
                     codingVerbose: props.codingVerboseLabel,
-                })} (${item.value.percent.toFixed(1)}%)`;
+                });
+                value = item.value.count.toFixed(2);
+                percent = `${item.value.percent.toFixed(1)}%`;
             } else {
                 key = 'unknown';
-            }
-
-            let value : number | string;
-            if (typeof item.value === 'number') {
-                value = item.value.toFixed(2);
-            } else if (isConceptCount(item)) {
-                value = item.value.count.toFixed(2);
-            } else {
                 value = Number(item.value);
+                percent = '?%';
             }
 
             return {
                 key,
                 value,
+                percent,
             };
         }));
 
         const fields : TableFieldRaw[] = [
             {
                 key: 'key',
-                label: 'Key',
+                label: 'Element',
                 thClass: 'text-left',
                 tdClass: 'text-left',
             },
             {
                 key: 'value',
-                label: 'Value',
+                label: 'Häufigkeit',
+                thClass: 'text-center',
+                tdClass: 'text-center',
+            },
+            {
+                key: 'percent',
+                label: 'Prozent (%)',
                 thClass: 'text-center',
                 tdClass: 'text-center',
             },
