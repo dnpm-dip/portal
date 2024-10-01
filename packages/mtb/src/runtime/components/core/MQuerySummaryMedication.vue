@@ -1,6 +1,6 @@
 <script lang="ts">
 import {
-    DKVChartTableSwitch, DQuerySummaryGrouped, DQuerySummaryNested, type URLQueryRecord,
+    DKVChartTableSwitch, DQuerySummaryGrouped, DQuerySummaryNested,
 } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySummaryMedication } from '../../domains';
@@ -67,22 +67,6 @@ export default defineComponent({
                         <DKVChartTableSwitch :data="items" />
                     </template>
                 </DQuerySummaryNested>
-            </div>
-
-            <div class="entity-card text-center mb-3 w-100">
-                <h6>Response-Verteilung nach Medikation</h6>
-
-                <DQuerySummaryGrouped
-                    :items="entity.therapies.responseDistributionByTherapy"
-                    :label="'Medikation'"
-                >
-                    <template #default="{ item }">
-                        <DKVChartTableSwitch
-                            :type="'doughnut'"
-                            :data="item.value.elements"
-                        />
-                    </template>
-                </DQuerySummaryGrouped>
             </div>
         </div>
         <div class="d-flex flex-column gap-2">

@@ -29,8 +29,7 @@ type MedicationRecommendations = {
 
 type MedicationTherapies = {
     meanDurations: Distribution<string[]>,
-    overallDistribution: DistributionNested<string[]>,
-    responseDistributionByTherapy: KeyValueRecords<string[], Distribution<Coding>>
+    overallDistribution: DistributionNested<string[]>
 };
 
 export type QuerySummaryMedication = {

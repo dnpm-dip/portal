@@ -28,22 +28,27 @@ export default defineComponent({
         },
         items: {
             type: Array as PropType<KeyValueRecords>,
-            required: true,
         },
     },
     setup(props) {
         const id = ref(undefined) as Ref<string | undefined>;
         const item = ref(null) as Ref<KeyValueRecord | null>;
 
-        const options = computed<FormSelectOption[]>(() => props.items.map((el, id) => ({
-            id,
-            value: generateChartLabelsForKeyValueRecord(el),
-        })));
+        const options = computed<FormSelectOption[]>(() => {
+            if (!props.items) {
+                return [];
+            }
+
+            return props.items.map((el, id) => ({
+                id,
+                value: generateChartLabelsForKeyValueRecord(el),
+            }));
+        });
 
         const selected = ref<string | null>(null);
 
         const render = () => {
-            if (selected.value === null) {
+            if (!props.items || selected.value === null) {
                 item.value = null;
                 return;
             }
