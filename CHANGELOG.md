@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.24.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.23.0...v1.24.0) (2024-10-01)
+
+
+### Features
+
+* reorganize medication charts + select first item as default ([3d77c3d](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/3d77c3d8692e20f8e886eb88f225e97b139070b4))
+
+
+### Bug Fixes
+
+* accessing and submitting query filters ([50aa8a3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/50aa8a3a06ac2336a4f7b885f447aa1e901b759f))
+* add chart note when items exceed smooth rendering ([779a0b2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/779a0b234bd5ccb8c294984d76965aa94c591a4e))
+* adjust middleware & navigation permission check ([d6826f6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d6826f65b7a1f9adc2a58e6225f99105ba7ea5a1))
+* **deps:** bump authup to v1.0.0-beta.20 ([6ed2f45](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6ed2f4506762c3260da7b9bf09af8a3ab614d11b))
+* **deps:** bump bootstrap-vue-next from 0.24.18 to 0.24.23 ([#793](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/793)) ([a3ff95f](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a3ff95fab70f169e260b94f5bec88c0cce49b5e1))
+* **deps:** bump vue from 3.5.6 to 3.5.10 ([#796](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/796)) ([161303b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/161303b7cd3412760e8233c765b966a76c37031d))
+* medication view ([c4fd5df](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/c4fd5df2183899aa7db8416f07c995e84a5d47c8))
+* rendering therapy response table (medication-, medicationClass-label) ([6db4793](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6db4793fffb726fe27ad9d9a11b32e012fddf3df))
+
 ## [1.23.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.22.0...v1.23.0) (2024-09-23)
 
 

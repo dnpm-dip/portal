@@ -1,5 +1,26 @@
 # @dnpm-dip/portal
 
+## [1.22.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.22.0...v1.22.1) (2024-10-01)
+
+
+### Bug Fixes
+
+* adjust middleware & navigation permission check ([d6826f6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d6826f65b7a1f9adc2a58e6225f99105ba7ea5a1))
+* **deps:** bump authup to v1.0.0-beta.20 ([6ed2f45](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6ed2f4506762c3260da7b9bf09af8a3ab614d11b))
+* **deps:** bump bootstrap-vue-next from 0.24.18 to 0.24.23 ([#793](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/793)) ([a3ff95f](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a3ff95fab70f169e260b94f5bec88c0cce49b5e1))
+* **deps:** bump vue from 3.5.6 to 3.5.10 ([#796](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/796)) ([161303b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/161303b7cd3412760e8233c765b966a76c37031d))
+* register chart controllers ([5d874da](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/5d874dae28db40d56ce26aefb7fad61661ae8490))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.23.0 to ^1.24.0
+    * @dnpm-dip/kit bumped from ^1.19.0 to ^1.20.0
+    * @dnpm-dip/mtb bumped from ^1.22.0 to ^1.23.0
+    * @dnpm-dip/rd bumped from ^1.22.0 to ^1.22.1
+
 ## [1.22.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.21.0...v1.22.0) (2024-09-23)
 
 
