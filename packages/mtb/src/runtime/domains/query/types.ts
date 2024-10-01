@@ -94,8 +94,8 @@ export type QuerySessionCreate = {
 export type QuerySession = QueryBase<QueryCriteria>;
 
 export type QueryTherapyResponse = {
-    medicationClasses: unknown[],
-    medications: string[],
+    medicationClasses: Coding[],
+    medications: Coding[],
     supportingVariants: string[],
     responseDistribution: DistributionConceptsCount<Coding>
 };

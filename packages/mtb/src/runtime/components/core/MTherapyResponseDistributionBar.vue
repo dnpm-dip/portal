@@ -52,7 +52,7 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="d-flex flex-row distribution-bar">
+    <div class="d-flex flex-column distribution-bar">
         <template
             v-for="(item, key) in items"
             :key="key"
@@ -61,7 +61,7 @@ export default defineComponent({
                 v-b-tooltip.hover.top
                 :title="item.title"
                 :style="{
-                    width: item.percent + '%',
+                    height: (item.percent * 1.25) + 'px',
                     'background-color': item.color
                 }"
             >
@@ -72,18 +72,22 @@ export default defineComponent({
 </template>
 <style scoped>
 .distribution-bar {
-    min-width: 250px;
-    height: 1rem;
+    width: 100%;
+    height: 120px;
     line-height: 1rem;
     font-size: 0.65rem;
     background-color: #ececec;
     border: 1px solid #dedede;
     box-shadow: 0 4px 25px 0 rgba(0, 0, 0, .1);
     border-radius: 4px;
+    vertical-align: center;
 }
 
 .distribution-bar div {
-    height:100%;
+    width:100%;
     opacity: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>

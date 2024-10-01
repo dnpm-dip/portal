@@ -56,7 +56,7 @@ export default defineComponent({
                     v-for="(item,key) in data.item.medicationClasses"
                     :key="key"
                 >
-                    {{ item }}
+                    {{ item.display }}
                 </li>
             </ul>
         </template>
@@ -66,7 +66,7 @@ export default defineComponent({
                     v-for="(item,key) in data.item.medications"
                     :key="key"
                 >
-                    {{ item }}
+                    {{ item.display }}
                 </li>
             </ul>
         </template>
