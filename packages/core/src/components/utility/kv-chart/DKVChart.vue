@@ -35,11 +35,14 @@ export default defineComponent({
         },
         limit: {
             type: Number,
-            default: 15,
+            default: 25,
         },
     },
     setup(props) {
         const items = computed(() => props.items.slice(0, props.limit));
+        const itemsDisplayed = computed(() => items.value.length);
+        const itemsTotal = computed(() => props.items.length);
+        const itemsMissing = computed(() => items.value.length < props.items.length);
 
         const [start, end] = generateRandomColorTuple();
 
@@ -75,8 +78,8 @@ export default defineComponent({
                     text = 'unknown';
                 }
 
-                if (text.length > 30) {
-                    return `${text.substring(0, 70)}...`;
+                if (text.length > 100) {
+                    return `${text.substring(0, 100)}...`;
                 }
 
                 return text;
@@ -84,15 +87,29 @@ export default defineComponent({
         }));
 
         return {
+            itemsMissing,
+            itemsDisplayed,
+            itemsTotal,
             data,
         };
     },
 });
 </script>
 <template>
-    <DChart
-        :type="type"
-        :data="data"
-        :options="options"
-    />
+    <div class="d-flex flex-column gap-1">
+        <template v-if="itemsMissing">
+            <div class="alert alert-sm alert-warning">
+                Es werden nur <strong>{{ itemsDisplayed }}/{{ itemsTotal }}</strong> Elemente angezeigt, da
+                es bei mehr Elementen zu Anzeigefehlern kommt.
+                Bitte wechseln Sie zur Tabellenansicht um alle Elemente zu sehen.
+            </div>
+        </template>
+        <div>
+            <DChart
+                :type="type"
+                :data="data"
+                :options="options"
+            />
+        </div>
+    </div>
 </template>

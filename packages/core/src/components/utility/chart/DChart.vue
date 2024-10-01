@@ -66,6 +66,6 @@ export default defineComponent({
         :type="type"
         :options="optionsNormalized"
         :data="data"
-        style="max-height: 400px"
+        style="max-height: 550px"
     />
 </template>
