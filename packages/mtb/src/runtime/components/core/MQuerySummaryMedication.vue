@@ -24,6 +24,22 @@ export default defineComponent({
         <h5>Therapie Empfehlungen</h5>
         <div class="d-flex flex-column gap-2">
             <div class="entity-card text-center mb-3 w-100">
+                <h6>Empfehlungen nach stützender molekularer Alteration</h6>
+
+                <DQuerySummaryGrouped
+                    :items="entity.recommendations.distributionBySupportingVariant"
+                    :label="'Variante'"
+                    :select-first="true"
+                >
+                    <template #default="{ item }">
+                        <DKVChartTableSwitch
+                            :type="'doughnut'"
+                            :data="item.value.elements"
+                        />
+                    </template>
+                </DQuerySummaryGrouped>
+            </div>
+            <div class="entity-card text-center mb-3 w-100">
                 <h6>Gesamtverteilung ({{ entity.recommendations.overallDistribution.total }})</h6>
 
                 <DQuerySummaryNested
@@ -34,21 +50,6 @@ export default defineComponent({
                         <DKVChartTableSwitch :data="items" />
                     </template>
                 </DQuerySummaryNested>
-            </div>
-            <div class="entity-card text-center mb-3 w-100">
-                <h6>Empfehlungen nach stützender molekularer Alteration</h6>
-
-                <DQuerySummaryGrouped
-                    :items="entity.recommendations.distributionBySupportingVariant"
-                    :label="'Variante'"
-                >
-                    <template #default="{ item }">
-                        <DKVChartTableSwitch
-                            :type="'doughnut'"
-                            :data="item.value.elements"
-                        />
-                    </template>
-                </DQuerySummaryGrouped>
             </div>
         </div>
 

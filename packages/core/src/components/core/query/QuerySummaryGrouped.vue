@@ -29,9 +29,13 @@ export default defineComponent({
         items: {
             type: Array as PropType<KeyValueRecords>,
         },
+        selectFirst: {
+            type: Boolean,
+            default: false,
+        },
     },
     setup(props) {
-        const id = ref(undefined) as Ref<string | undefined>;
+        const id = ref(undefined) as Ref<string | number | undefined>;
         const item = ref(null) as Ref<KeyValueRecord | null>;
 
         const options = computed<FormSelectOption[]>(() => {
@@ -72,6 +76,18 @@ export default defineComponent({
 
             render();
         });
+
+        const init = () => {
+            if (!props.selectFirst || !props.items || props.items.length === 0) {
+                return;
+            }
+
+            id.value = 1;
+            selected.value = '1';
+            render();
+        };
+
+        init();
 
         const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
         watch(queryFilters, () => {
