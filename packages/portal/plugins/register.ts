@@ -1,3 +1,4 @@
+import type { PolicyIdentity } from '@authup/kit';
 import { type ModuleMeta, PageMetaKey } from '@dnpm-dip/core';
 import type { HookResult } from '@nuxt/schema';
 import type { NavigationItem } from '@vuecs/navigation';
@@ -57,11 +58,28 @@ export default defineNuxtPlugin<Record<string, any>>({
         const authStore = useStore(nuxt.$pinia as Pinia);
         const moduleStore = useModuleStore(nuxt.$pinia as Pinia);
 
-        const { loggedIn } = storeToRefs(authStore);
+        const { loggedIn, userId } = storeToRefs(authStore);
 
         const provider = new Navigation({
             isLoggedIn: () => loggedIn.value,
-            hasPermission: (name) => authStore.abilities.has(name),
+            hasPermission: async (name) => {
+                let identity: PolicyIdentity | undefined;
+                if (userId.value) {
+                    identity = {
+                        type: 'user',
+                        id: userId.value,
+                    };
+                }
+                return authStore.permissionChecker
+                    .preCheck({
+                        name,
+                        data: {
+                            identity,
+                        },
+                    })
+                    .then(() => true)
+                    .catch(() => false);
+            },
         });
 
         nuxt.hook('register', (context: ModuleMeta) => {

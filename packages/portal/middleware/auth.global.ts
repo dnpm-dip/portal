@@ -5,6 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
+import type { PolicyIdentity } from '@authup/kit';
 import { PageMetaKey, hasOwnProperty } from '@dnpm-dip/core';
 import { storeToRefs } from 'pinia';
 import type { RouteLocationNormalized } from 'vue-router';
@@ -13,7 +14,7 @@ import {
     navigateTo,
 } from '#app';
 
-function checkPermissions(route: RouteLocationNormalized, has: (name: string) => boolean) {
+async function checkPermissions(route: RouteLocationNormalized, has: (name: string) => Promise<boolean>) {
     let isAllowed : undefined | boolean;
 
     for (let j = 0; j < route.matched.length; j++) {
@@ -25,7 +26,15 @@ function checkPermissions(route: RouteLocationNormalized, has: (name: string) =>
 
         const value = matchedRecord.meta[PageMetaKey.REQUIRED_PERMISSIONS];
         if (Array.isArray(value)) {
-            isAllowed = value.some((val) => has(val));
+            let passed = false;
+            for (let k = 0; k < value.length; k++) {
+                const outcome = await has(value[k]);
+                if (outcome) {
+                    passed = true;
+                    break;
+                }
+            }
+            isAllowed = passed;
         }
 
         if (isAllowed) {
@@ -78,7 +87,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         return undefined;
     }
 
-    const { loggedIn } = storeToRefs(store);
+    const { loggedIn, userId } = storeToRefs(store);
 
     if (to.matched.some((matched) => !!matched.meta[PageMetaKey.REQUIRED_LOGGED_IN])) {
         if (!loggedIn.value) {
@@ -98,14 +107,30 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         }
     }
 
-    if (to.matched.some((matched) => !!matched.meta[PageMetaKey.REQUIRED_PERMISSIONS])) {
-        try {
-            checkPermissions(to, (name) => store.abilities.has(name));
-        } catch (e) {
-            return navigateTo({
-                path: previousPath,
-            });
-        }
+    let identity : PolicyIdentity | undefined;
+    if (userId.value) {
+        identity = {
+            type: 'user',
+            id: userId.value,
+        };
+    }
+
+    try {
+        await checkPermissions(
+            to,
+            (name) => store.permissionChecker
+                .preCheck({
+                    name,
+                    data: {
+                        identity,
+                    },
+                }).then(() => true)
+                .catch(() => false),
+        );
+    } catch (e) {
+        return navigateTo({
+            path: previousPath,
+        });
     }
 
     if (

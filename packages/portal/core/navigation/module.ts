@@ -5,7 +5,7 @@ import type { RouteLocationNormalized } from 'vue-router';
 import { reduceNavigationElementsByRestriction } from './utils';
 
 type NavigationContext = {
-    hasPermission: (name: string) => boolean,
+    hasPermission: (name: string) => Promise<boolean>,
     isLoggedIn: () => boolean
 };
 
