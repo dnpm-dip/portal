@@ -128,7 +128,7 @@ export default defineNuxtComponent({
             <div class="col-6 col-md-3 col-lg-2">
                 <DQueryPatientFilters
                     class="mb-3"
-                    :available-filters="entity.filters.patientFilter"
+                    :available-filters="entity.filters.patient"
                     @submit="applyFilters"
                 />
             </div>

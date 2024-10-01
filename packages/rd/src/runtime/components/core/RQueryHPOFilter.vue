@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { PropType, Ref } from 'vue';
+import type { PropType } from 'vue';
 import {
     computed, defineComponent, ref, watch,
 } from 'vue';
@@ -24,7 +24,7 @@ export default defineComponent({
     },
     emits: ['submit'],
     async setup(props, { emit }) {
-        const term = ref<string[]>([]);
+        const form = ref<string[]>([]);
         const termChanged = ref(false);
 
         const hasChanged = computed(
@@ -35,8 +35,8 @@ export default defineComponent({
 
         const reset = () => {
             if (props.availableFilters.value) {
-                term.value = props.availableFilters.value.map((el) => el.code);
-                previousSelection.value = clone(term.value);
+                form.value = props.availableFilters.value.map((el) => el.code);
+                previousSelection.value = clone(form.value);
             }
 
             termChanged.value = false;
@@ -44,7 +44,7 @@ export default defineComponent({
 
         reset();
 
-        watch(term, (value) => {
+        watch(form, (value) => {
             if (!previousSelection.value) {
                 termChanged.value = true;
                 return;
@@ -71,18 +71,11 @@ export default defineComponent({
         const submit = () => {
             const data : QueryRecord = {
                 hpo: {
-                    term: clone(term.value),
+                    term: [...form.value],
                 },
             };
 
-            previousSelection.value = data.hpo?.term ?? [];
-
-            if (
-                props.availableFilters.value &&
-                data.hpo.term.length === props.availableFilters.value.length
-            ) {
-                data.hpo.term = [];
-            }
+            previousSelection.value = [...form.value];
 
             emit('submit', data);
 
@@ -90,7 +83,7 @@ export default defineComponent({
         };
 
         return {
-            term,
+            form,
 
             hasChanged,
             termChanged,
@@ -121,7 +114,7 @@ export default defineComponent({
                 >
                     <div class="form-check">
                         <VCFormInputCheckbox
-                            v-model="term"
+                            v-model="form"
                             :label="true"
                             :label-content="(item.display || item.code)"
                             :value="item.code"

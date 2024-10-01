@@ -14,9 +14,9 @@ export type HPOFilter = {
 };
 
 export type QueryFilters = {
-    diagnosisFilter: DiagnosisFilter,
-    hpoFilter: HPOFilter,
-    patientFilter: PatientFilter,
+    diagnoses: DiagnosisFilter,
+    hpoTerms: HPOFilter,
+    patient: PatientFilter,
 };
 
 /**

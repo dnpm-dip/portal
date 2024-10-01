@@ -1,9 +1,9 @@
 <script lang="ts">
-import type { PropType, Ref } from 'vue';
+import type { PropType } from 'vue';
 import {
     computed, defineComponent, ref, watch,
 } from 'vue';
-import { type DiagnosisFilter, clone } from '@dnpm-dip/core';
+import { type DiagnosisFilter, serializeCoding } from '@dnpm-dip/core';
 
 type QueryRecord = {
     diagnosis: {
@@ -36,7 +36,7 @@ export default defineComponent({
         const reset = () => {
             if (props.availableFilters.category) {
                 category.value = props.availableFilters.category.map((el) => el.code);
-                previousSelection.value = clone(category.value);
+                previousSelection.value = [...category.value];
             }
 
             categoryChanged.value = false;
@@ -71,18 +71,20 @@ export default defineComponent({
         const submit = () => {
             const data : QueryRecord = {
                 diagnosis: {
-                    category: clone(category.value),
+                    category: [],
                 },
             };
 
-            previousSelection.value = data.diagnosis?.category ?? [];
-
-            if (
-                props.availableFilters.category &&
-                data.diagnosis.category.length === props.availableFilters.category.length
-            ) {
-                data.diagnosis.category = [];
+            if (props.availableFilters.category) {
+                for (let i = 0; i < category.value.length; i++) {
+                    const index = props.availableFilters.category.findIndex((el) => el.code === category.value[i]);
+                    if (index !== -1) {
+                        data.diagnosis.category.push(serializeCoding(props.availableFilters.category[index]));
+                    }
+                }
             }
+
+            previousSelection.value = [...category.value];
 
             emit('submit', data);
 
