@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.24.1](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.24.0...v1.24.1) (2024-10-02)
+
+
+### Bug Fixes
+
+* temporarily disable ability check in module meta card ([76a63f2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/76a63f2ee19965a25936086ffb38fa660effb292))
+
 ## [1.24.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.23.0...v1.24.0) (2024-10-01)
 
 

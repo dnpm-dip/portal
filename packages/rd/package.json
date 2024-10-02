@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/rd",
     "type": "module",
-    "version": "1.22.1",
+    "version": "1.23.0",
     "private": true,
     "description": "Rare Diseases (RD) module for the DNPM:DIP Portal.",
     "repository": {
