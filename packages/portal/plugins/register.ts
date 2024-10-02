@@ -58,7 +58,10 @@ export default defineNuxtPlugin<Record<string, any>>({
         const authStore = useStore(nuxt.$pinia as Pinia);
         const moduleStore = useModuleStore(nuxt.$pinia as Pinia);
 
-        const { loggedIn, userId } = storeToRefs(authStore);
+        const {
+            loggedIn,
+            userId,
+        } = storeToRefs(authStore);
 
         const provider = new Navigation({
             isLoggedIn: () => loggedIn.value,
@@ -70,6 +73,7 @@ export default defineNuxtPlugin<Record<string, any>>({
                         id: userId.value,
                     };
                 }
+
                 return authStore.permissionChecker
                     .preCheck({
                         name,

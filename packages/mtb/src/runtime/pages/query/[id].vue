@@ -5,8 +5,8 @@ import { ref } from 'vue';
 import {
     createError,
     definePageMeta,
-    navigateTo,
     useRoute,
+    useRouter,
 } from '#imports';
 import { injectHTTPClient } from '../../core/http-client';
 import type { QuerySession } from '../../domains';
@@ -19,20 +19,21 @@ export default defineComponent({
         });
 
         const api = injectHTTPClient();
+        const router = useRouter();
         const route = useRoute();
         const toast = useToast();
 
         const entity = ref(null) as unknown as Ref<QuerySession>;
 
         if (typeof route.params.id !== 'string') {
-            await navigateTo({ path: '/mtb/' });
+            await router.push({ path: '/mtb/' });
             throw createError({});
         }
 
         try {
             entity.value = await api.query.getOne(route.params.id);
         } catch (e) {
-            await navigateTo({ path: '/mtb/' });
+            await router.push({ path: '/mtb/' });
             throw createError({});
         }
 

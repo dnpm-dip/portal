@@ -16,7 +16,7 @@ export default defineNuxtPlugin<Record<string, any>>({
         nuxt.vueApp.use(pinia);
         setActivePinia(pinia);
 
-        if (process.server) {
+        if (import.meta.server) {
             nuxt.payload.pinia = pinia.state.value;
         } else if (nuxt.payload && nuxt.payload.pinia) {
             pinia.state.value = nuxt.payload.pinia as Record<string, StateTree>;

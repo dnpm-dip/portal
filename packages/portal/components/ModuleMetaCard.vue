@@ -27,6 +27,7 @@ export default defineComponent({
                 return true;
             }
 
+            /*
             const permissions = props.entity[PageMetaKey.REQUIRED_PERMISSIONS] as string[];
             for (let i = 0; i < permissions.length; i++) {
                 const isPermitted = useAbilityCheck(permissions[i]);
@@ -36,6 +37,9 @@ export default defineComponent({
             }
 
             return false;
+             */
+
+            return true;
         });
 
         return {
