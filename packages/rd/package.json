@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/rd",
     "type": "module",
-    "version": "1.22.1",
+    "version": "1.23.0",
     "private": true,
     "description": "Rare Diseases (RD) module for the DNPM:DIP Portal.",
     "repository": {
@@ -31,7 +31,7 @@
     },
     "dependencies": {
         "@authup/client-web-kit": "^1.0.0-beta.20",
-        "@dnpm-dip/core": "^1.24.0",
+        "@dnpm-dip/core": "^1.25.0",
         "@dnpm-dip/kit": "^1.20.0",
         "@nuxt/kit": "^3.13.0"
     },
