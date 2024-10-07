@@ -1,5 +1,17 @@
 # @dnpm-dip/core
 
+## [1.25.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.24.0...v1.25.0) (2024-10-07)
+
+
+### Features
+
+* change supporting variant to bar chart ([693d28c](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/693d28c109f740b9166bec1e5c0b1ba1a6a6dad2))
+
+
+### Bug Fixes
+
+* **deps:** bump vue from 3.5.10 to 3.5.11 ([#807](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/807)) ([2653c4a](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2653c4ad0bb96f618118e45f6b6a29c38689a59c))
+
 ## [1.24.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.23.0...v1.24.0) (2024-10-01)
 
 
