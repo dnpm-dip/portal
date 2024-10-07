@@ -33,7 +33,7 @@ export default defineComponent({
                 >
                     <template #default="{ item }">
                         <DKVChartTableSwitch
-                            :type="'doughnut'"
+                            :type="'bar'"
                             :data="item.value.elements"
                         />
                     </template>

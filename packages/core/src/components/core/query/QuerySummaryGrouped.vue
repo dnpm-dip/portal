@@ -82,8 +82,8 @@ export default defineComponent({
                 return;
             }
 
-            id.value = 1;
-            selected.value = '1';
+            id.value = 0;
+            selected.value = '0';
             render();
         };
 
