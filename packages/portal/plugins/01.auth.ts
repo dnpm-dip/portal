@@ -16,26 +16,31 @@ export default defineNuxtPlugin({
         const runtimeConfig = useRuntimeConfig();
         const { authupUrl: baseURL } = runtimeConfig.public;
 
+        const { hostname } = new URL(baseURL || 'http://localhost:3000');
+        const cookieOptions : { domain?: string } = {
+            domain: hostname,
+        };
+
         ctx.vueApp.use(install, {
             baseURL,
             cookieSet: (key, value) => {
                 const app = tryUseNuxtApp();
                 if (app) {
-                    const cookie = useCookie(key);
+                    const cookie = useCookie(key, cookieOptions);
                     cookie.value = value;
                 }
             },
             cookieUnset: (key) => {
                 const app = tryUseNuxtApp();
                 if (app) {
-                    const cookie = useCookie(key);
+                    const cookie = useCookie(key, cookieOptions);
                     cookie.value = null;
                 }
             },
             cookieGet: (key) => {
                 const app = tryUseNuxtApp();
                 if (app) {
-                    const cookie = useCookie(key);
+                    const cookie = useCookie(key, cookieOptions);
                     return cookie.value;
                 }
 

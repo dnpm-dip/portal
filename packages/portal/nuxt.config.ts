@@ -10,6 +10,9 @@ export default defineNuxtConfig({
     experimental: {
         scanPageMeta: false,
     },
+    devtools: {
+        componentInspector: false,
+    },
     css: [
         '@fortawesome/fontawesome-free/css/all.css',
         'bootstrap/dist/css/bootstrap.css',
