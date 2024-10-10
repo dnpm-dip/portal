@@ -46,8 +46,8 @@ export default defineNuxtComponent({
                     <small>
                         <VCCountdown :time="tokenExpiresIn">
                             <template #default="props">
-                                <i class="fa fa-clock pr-1" /> Die Sitzung läuft in
-                                <span class="text-success">{{ props.minutes }} Minute(n), {{ props.seconds }} Sekunde(n)</span> aus.
+                                <i class="fa fa-clock pr-1" /> Die Sitzung erneuert sich in
+                                <span class="text-success">{{ props.minutes }} Minute(n), {{ props.seconds }} Sekunde(n)</span>.
                             </template>
                         </VCCountdown>
                     </small>

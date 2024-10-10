@@ -1,7 +1,8 @@
 <script lang="ts">
-import { PageMetaKey, useToast } from '@dnpm-dip/core';
-import { type Ref, defineComponent } from 'vue';
-import { ref } from 'vue';
+import { PageMetaKey, useQuerySessionStore, useToast } from '@dnpm-dip/core';
+import {
+    defineComponent, onMounted, onUnmounted, ref,
+} from 'vue';
 import {
     createError,
     definePageMeta,
@@ -21,8 +22,23 @@ export default defineComponent({
         const api = injectHTTPClient();
         const route = useRoute();
         const toast = useToast();
+        const store = useQuerySessionStore();
 
-        const entity = ref(null) as unknown as Ref<QuerySession>;
+        const entity = ref<null | QuerySession>(null);
+
+        onMounted(() => {
+            if (!entity.value) {
+                return;
+            }
+
+            store.setUseCase('rd');
+            store.track(entity.value);
+        });
+
+        onUnmounted(() => {
+            store.setUseCase(null);
+            store.unTrack();
+        });
 
         if (typeof route.params.id !== 'string') {
             await navigateTo({ path: '/rd/' });
@@ -37,10 +53,13 @@ export default defineComponent({
         }
 
         const handleUpdated = (data: QuerySession) => {
+            if (!entity.value) {
+                return;
+            }
+
             const keys = Object.keys(data);
             for (let i = 0; i < keys.length; i++) {
-                const key = keys[i] as keyof QuerySession;
-                (entity.value as QuerySession)[key] = data[key];
+                entity.value[keys[i]] = data[keys[i]];
             }
         };
 

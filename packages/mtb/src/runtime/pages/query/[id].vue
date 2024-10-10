@@ -1,7 +1,8 @@
 <script lang="ts">
-import { PageMetaKey, useToast } from '@dnpm-dip/core';
-import { type Ref, defineComponent } from 'vue';
-import { ref } from 'vue';
+import { PageMetaKey, useQuerySessionStore, useToast } from '@dnpm-dip/core';
+import {
+    defineComponent, onMounted, onUnmounted, ref,
+} from 'vue';
 import {
     createError,
     definePageMeta,
@@ -22,8 +23,23 @@ export default defineComponent({
         const router = useRouter();
         const route = useRoute();
         const toast = useToast();
+        const store = useQuerySessionStore();
 
-        const entity = ref(null) as unknown as Ref<QuerySession>;
+        const entity = ref<null | QuerySession>(null);
+
+        onMounted(() => {
+            if (!entity.value) {
+                return;
+            }
+
+            store.setUseCase('mtb');
+            store.track(entity.value);
+        });
+
+        onUnmounted(() => {
+            store.setUseCase(null);
+            store.unTrack();
+        });
 
         if (typeof route.params.id !== 'string') {
             await router.push({ path: '/mtb/' });
@@ -38,10 +54,13 @@ export default defineComponent({
         }
 
         const handleUpdated = (data: QuerySession) => {
+            if (!entity.value) {
+                return;
+            }
+
             const keys = Object.keys(data);
             for (let i = 0; i < keys.length; i++) {
-                const key = keys[i] as keyof QuerySession;
-                (entity.value as Record<string, any>)[key] = data[key] as QuerySession[keyof QuerySession];
+                entity.value[keys[i]] = data[keys[i]];
             }
         };
 
