@@ -23,10 +23,7 @@ export default defineNuxtComponent({
         const toast = useToast();
 
         const handleFailed = (e: ClientError) => {
-            toast.show({
-                body: e.message,
-                variant: 'warning',
-            });
+            toast.showError(e);
         };
 
         const handleSubmitted = async (data : {
