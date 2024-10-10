@@ -16,7 +16,7 @@ import { IVuelidate } from '@ilingo/vuelidate';
 import useVuelidate from '@vuelidate/core';
 import { maxLength, minLength, required } from '@vuelidate/validators';
 import {
-    toRef, watch,
+    computed, toRef, watch,
 } from 'vue';
 import {
     definePageMeta,
@@ -43,6 +43,7 @@ export default defineNuxtComponent({
         });
 
         const store = useStore();
+
         const apiClient = injectHTTPClient();
         const toast = useToast();
 
@@ -74,20 +75,19 @@ export default defineNuxtComponent({
 
         const realmId = toRef(form, 'realm_id');
 
-        const identityProviderQuery : BuildInput<IdentityProvider> = {
+        const identityProviderQuery = computed<BuildInput<IdentityProvider>>(() => ({
             filters: {
                 realm_id: realmId.value || '',
                 protocol: `!${IdentityProviderProtocol.LDAP}`,
                 enabled: true,
             },
-        };
-        const identityProviderRef = ref<null | { load:() => any, [key: string]: any}>(null);
+        }));
+        const identityProviderList = ref<null | { load:() => any, [key: string]: any}>(null);
 
         watch(realmId, async (val, oldVal) => {
             if (val !== oldVal) {
-                if (identityProviderRef.value) {
-                    identityProviderQuery.filters.realm_id = realmId.value;
-                    identityProviderRef.value.load();
+                if (identityProviderList.value) {
+                    identityProviderList.value.load();
                 }
             }
         });
@@ -129,7 +129,7 @@ export default defineNuxtComponent({
             busy,
 
             identityProviderQuery,
-            identityProviderRef,
+            identityProviderList,
             buildIdentityProviderURL,
         };
     },
@@ -193,7 +193,7 @@ export default defineNuxtComponent({
                     <hr>
 
                     <AIdentityProviders
-                        ref="identityProviderRef"
+                        ref="identityProviderList"
                         :query="identityProviderQuery"
                         :footer="false"
                     >
