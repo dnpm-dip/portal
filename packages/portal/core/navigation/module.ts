@@ -1,23 +1,29 @@
+/*
+ * Copyright (c) 2024.
+ * Author Peter Placzek (tada5hi)
+ * For the full copyright and license information,
+ * view the LICENSE file that was distributed with this source code.
+ */
+
+import type { Store } from '@authup/client-web-kit';
+import type { PolicyIdentity } from '@authup/kit';
 import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
 import type { NavigationItem, NavigationProvider } from '@vuecs/navigation';
 import { flattenNestedNavigationItems } from '@vuecs/navigation';
 import type { RouteLocationNormalized } from 'vue-router';
-import { reduceNavigationElementsByRestriction } from './utils';
-
-type NavigationContext = {
-    hasPermission: (name: string) => Promise<boolean>,
-    isLoggedIn: () => boolean
-};
 
 export class Navigation implements NavigationProvider {
     protected topElements: NavigationItem[];
 
     protected sideElements : Record<string, NavigationItem[]>;
 
-    protected context : NavigationContext;
+    protected store : Store;
 
-    constructor(context: NavigationContext) {
-        this.context = context;
+    protected initialized: boolean;
+
+    constructor(store: Store) {
+        this.store = store;
+        this.initialized = false;
 
         this.topElements = [
             {
@@ -56,6 +62,20 @@ export class Navigation implements NavigationProvider {
         };
     }
 
+    async initialize(): Promise<void> {
+        if (this.initialized) {
+            return;
+        }
+
+        this.initialized = true;
+
+        try {
+            await this.store.resolve();
+        } catch (e) {
+            // do nothing :)
+        }
+    }
+
     addTopElement(element: NavigationItem) {
         this.topElements.push(element);
     }
@@ -70,10 +90,7 @@ export class Navigation implements NavigationProvider {
         }
 
         if (tier === 0) {
-            return reduceNavigationElementsByRestriction(this.topElements, {
-                hasPermission: (name: string) => this.context.hasPermission(name),
-                isLoggedIn: () => this.context.isLoggedIn(),
-            });
+            return this.reduce(this.topElements);
         }
 
         let component : NavigationItem;
@@ -83,10 +100,7 @@ export class Navigation implements NavigationProvider {
             component = { id: 'default' };
         }
 
-        return reduceNavigationElementsByRestriction(this.sideElements[component.id || 'default'] || [], {
-            hasPermission: (name: string) => this.context.hasPermission(name),
-            isLoggedIn: () => this.context.isLoggedIn(),
-        });
+        return this.reduce(this.sideElements[component.id || 'default'] || []);
     }
 
     async getItemsActiveByRoute(route: RouteLocationNormalized) {
@@ -155,5 +169,78 @@ export class Navigation implements NavigationProvider {
         }
 
         return [];
+    }
+
+    protected async reduce(items: NavigationItem[]) : Promise<NavigationItem[]> {
+        await this.initialize();
+
+        const promises = items.map(
+            (item) => this.reduceItem(item),
+        );
+
+        const output = await Promise.all(promises);
+
+        return output.filter((item) => !!item);
+    }
+
+    protected async reduceItem(item: NavigationItem) : Promise<NavigationItem | undefined> {
+        const { loggedIn } = this.store;
+        let identity: PolicyIdentity | undefined;
+        if (this.store.userId) {
+            identity = {
+                type: 'user',
+                id: this.store.userId,
+            };
+        }
+
+        if (
+            typeof item.requireLoggedIn !== 'undefined' &&
+            item.requireLoggedIn &&
+            !loggedIn
+        ) {
+            return undefined;
+        }
+
+        if (
+            typeof item.requireLoggedOut !== 'undefined' &&
+            item.requireLoggedOut &&
+            loggedIn
+        ) {
+            return undefined;
+        }
+
+        let canPass = true;
+
+        if (item.requirePermissions) {
+            let permissions : string[] = [];
+            if (Array.isArray(item.requirePermissions)) {
+                permissions = item.requirePermissions.filter((item) => item);
+            } else if (typeof item.requirePermissions === 'string') {
+                permissions = [item.requirePermissions];
+            }
+
+            if (permissions.length > 0) {
+                try {
+                    await this.store.permissionChecker.preCheckOneOf({
+                        name: permissions,
+                        data: {
+                            identity,
+                        },
+                    });
+                } catch (e) {
+                    canPass = false;
+                }
+            }
+        }
+
+        if (canPass) {
+            if (item.children) {
+                item.children = await this.reduce(item.children);
+            }
+
+            return item;
+        }
+
+        return undefined;
     }
 }

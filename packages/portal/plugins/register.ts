@@ -1,10 +1,16 @@
-import type { PolicyIdentity } from '@authup/kit';
+/*
+ * Copyright (c) 2024.
+ * Author Peter Placzek (tada5hi)
+ * For the full copyright and license information,
+ * view the LICENSE file that was distributed with this source code.
+ */
+
 import { type ModuleMeta, PageMetaKey } from '@dnpm-dip/core';
 import type { HookResult } from '@nuxt/schema';
 import type { NavigationItem } from '@vuecs/navigation';
 import installNavigation from '@vuecs/navigation';
 import type { Pinia } from 'pinia';
-import { storeToRefs, useStore } from '@authup/client-web-kit';
+import { useStore } from '@authup/client-web-kit';
 import { defineNuxtPlugin } from '#app';
 import { Navigation } from '../core';
 import { useModuleStore } from '../stores/modules';
@@ -58,33 +64,7 @@ export default defineNuxtPlugin<Record<string, any>>({
         const authStore = useStore(nuxt.$pinia as Pinia);
         const moduleStore = useModuleStore(nuxt.$pinia as Pinia);
 
-        const {
-            loggedIn,
-            userId,
-        } = storeToRefs(authStore);
-
-        const provider = new Navigation({
-            isLoggedIn: () => loggedIn.value,
-            hasPermission: async (name) => {
-                let identity: PolicyIdentity | undefined;
-                if (userId.value) {
-                    identity = {
-                        type: 'user',
-                        id: userId.value,
-                    };
-                }
-
-                return authStore.permissionChecker
-                    .preCheck({
-                        name,
-                        data: {
-                            identity,
-                        },
-                    })
-                    .then(() => true)
-                    .catch(() => false);
-            },
-        });
+        const provider = new Navigation(authStore);
 
         nuxt.hook('register', (context: ModuleMeta) => {
             if (context.navigationItems) {
