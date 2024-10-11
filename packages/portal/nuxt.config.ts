@@ -1,8 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import type { ModuleOptions } from '@authup/client-web-nuxt';
 import path from 'node:path';
 
 export default defineNuxtConfig({
     modules: [
+        [
+            '@authup/client-web-nuxt', {
+                apiURLRuntimeKey: 'authupUrl',
+                apiURLServerRuntimeKey: 'authupUrlServer',
+            } satisfies ModuleOptions,
+        ],
         '../admin/src/module',
         '../mtb/src/module',
         '../rd/src/module',
@@ -39,6 +46,7 @@ export default defineNuxtConfig({
         public: {
             apiUrl: process.env.API_URL || 'https://dnpm.bwhealthcloud.de/api/',
             authupUrl: process.env.AUTHUP_URL || 'https://dnpm.bwhealthcloud.de/auth/',
+            authupUrlServer: process.env.AUTHUP_URL_SERVER,
         },
     },
 });
