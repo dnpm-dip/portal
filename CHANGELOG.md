@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.26.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.25.0...v1.26.0) (2024-10-14)
+
+
+### Features
+
+* align rd submission error to mtb use case ([0c52802](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/0c52802a7e30c27f7a31e7ec19c9eb7a91ac2c42))
+* initial query-session-store implementation ([f8f1292](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f8f1292ff9846b0be86e2050daba5d0976cef852))
+* show auth providers on login page ([#814](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/814)) ([cd30aa9](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/cd30aa9d0be17292b2c46541ae8dc92c914ca269))
+* simplified plugin dependency definiton & fixed meta-box + navigation rendering ([6047d05](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6047d05b2bd68c501b04276c70d9461f7cf5d37a))
+* use authup nuxt module instead of manual plugin configuration ([084abe6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/084abe6f2f1576f6aa1355e7615d12eac8824879))
+
+
+### Bug Fixes
+
+* **deps:** bump vue from 3.5.11 to 3.5.12 ([#818](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/818)) ([a2f98ac](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a2f98acfb2aea45eecb87b0945008ded0e2ec3a4))
+* minor adjustment to login page ([4f0b9c2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/4f0b9c2227d79370b3c9279ccac55fff4580e36e))
+* optimize and fix permission/identity check in navigation provider ([ca28334](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ca283348e99a66b1bea7bcec0dabf1e4f8ff1754))
+* set cookie domain on set/get/unset operations ([e3f96a3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/e3f96a3f199274266b8c7f2bf8af2e95a9e9ec0f))
+
 ## [1.25.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.24.0...v1.25.0) (2024-10-07)
 
 

@@ -1,5 +1,39 @@
 # @dnpm-dip/portal
 
+## [1.24.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.23.0...v1.24.0) (2024-10-14)
+
+
+### Features
+
+* change supporting variant to bar chart ([693d28c](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/693d28c109f740b9166bec1e5c0b1ba1a6a6dad2))
+* initial query-session-store implementation ([f8f1292](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f8f1292ff9846b0be86e2050daba5d0976cef852))
+* show auth providers on login page ([#814](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/814)) ([cd30aa9](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/cd30aa9d0be17292b2c46541ae8dc92c914ca269))
+* simplified plugin dependency definiton & fixed meta-box + navigation rendering ([6047d05](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6047d05b2bd68c501b04276c70d9461f7cf5d37a))
+* use authup nuxt module instead of manual plugin configuration ([084abe6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/084abe6f2f1576f6aa1355e7615d12eac8824879))
+
+
+### Bug Fixes
+
+* adjust middleware & navigation permission check ([d6826f6](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/d6826f65b7a1f9adc2a58e6225f99105ba7ea5a1))
+* **deps:** bump authup to v1.0.0-beta.20 ([6ed2f45](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6ed2f4506762c3260da7b9bf09af8a3ab614d11b))
+* **deps:** bump bootstrap-vue-next from 0.24.18 to 0.24.23 ([#793](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/793)) ([a3ff95f](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a3ff95fab70f169e260b94f5bec88c0cce49b5e1))
+* **deps:** bump vue from 3.5.10 to 3.5.11 ([#807](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/807)) ([2653c4a](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2653c4ad0bb96f618118e45f6b6a29c38689a59c))
+* **deps:** bump vue from 3.5.11 to 3.5.12 ([#818](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/818)) ([a2f98ac](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a2f98acfb2aea45eecb87b0945008ded0e2ec3a4))
+* **deps:** bump vue from 3.5.6 to 3.5.10 ([#796](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/796)) ([161303b](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/161303b7cd3412760e8233c765b966a76c37031d))
+* minor adjustment to login page ([4f0b9c2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/4f0b9c2227d79370b3c9279ccac55fff4580e36e))
+* optimize and fix permission/identity check in navigation provider ([ca28334](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ca283348e99a66b1bea7bcec0dabf1e4f8ff1754))
+* set cookie domain on set/get/unset operations ([e3f96a3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/e3f96a3f199274266b8c7f2bf8af2e95a9e9ec0f))
+* temporarily disable ability check in module meta card ([76a63f2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/76a63f2ee19965a25936086ffb38fa660effb292))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.25.0 to ^1.26.0
+    * @dnpm-dip/mtb bumped from ^1.24.0 to ^1.25.0
+    * @dnpm-dip/rd bumped from ^1.23.0 to ^1.24.0
+
 ## [1.23.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.22.1...v1.23.0) (2024-10-07)
 
 

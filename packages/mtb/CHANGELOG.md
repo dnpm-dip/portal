@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.25.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.24.0...v1.25.0) (2024-10-14)
+
+
+### Features
+
+* change supporting variant to bar chart ([693d28c](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/693d28c109f740b9166bec1e5c0b1ba1a6a6dad2))
+* initial query-session-store implementation ([f8f1292](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f8f1292ff9846b0be86e2050daba5d0976cef852))
+* simplified plugin dependency definiton & fixed meta-box + navigation rendering ([6047d05](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6047d05b2bd68c501b04276c70d9461f7cf5d37a))
+
+
+### Bug Fixes
+
+* **deps:** bump vue from 3.5.10 to 3.5.11 ([#807](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/807)) ([2653c4a](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/2653c4ad0bb96f618118e45f6b6a29c38689a59c))
+* **deps:** bump vue from 3.5.11 to 3.5.12 ([#818](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/818)) ([a2f98ac](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a2f98acfb2aea45eecb87b0945008ded0e2ec3a4))
+* temporarily disable ability check in module meta card ([76a63f2](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/76a63f2ee19965a25936086ffb38fa660effb292))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.25.0 to ^1.26.0
+
 ## [1.24.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.23.0...v1.24.0) (2024-10-07)
 
 
