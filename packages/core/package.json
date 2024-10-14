@@ -47,7 +47,7 @@
         "ufo": "^1.5.4"
     },
     "devDependencies": {
-        "@authup/core-http-kit": "^1.0.0-beta.20",
+        "@authup/core-http-kit": "^1.0.0-beta.21",
         "@authup/client-web-kit": "^1.0.0-beta.20",
         "bootstrap-vue-next": "^0.24.23",
         "chart.js": "^4.4.4",
@@ -60,7 +60,7 @@
         "vue-chartjs": "^5.3.1"
     },
     "peerDependencies": {
-        "@authup/core-http-kit": "^1.0.0-beta.20",
+        "@authup/core-http-kit": "^1.0.0-beta.21",
         "@authup/client-web-kit": "^1.0.0-beta.20",
         "chart.js": "^4.4.3",
         "@nuxt/kit": "^3.13.0",
