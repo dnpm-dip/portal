@@ -6,6 +6,7 @@
   -->
 
 <script lang="ts">
+import { usePermissionCheck } from '@authup/client-web-kit';
 import { type ModuleMeta, PageMetaKey } from '@dnpm-dip/core';
 import { VCLink } from '@vuecs/link';
 import { type PropType, computed, defineComponent } from 'vue';
@@ -22,10 +23,10 @@ export default defineComponent({
     },
     setup(props) {
         const permissions = computed<string[]>(() => props.entity[PageMetaKey.REQUIRED_PERMISSIONS] || []);
-        // const display = computed(() => useAbilityCheck(permissions.value));
+        const display = computed(() => usePermissionCheck({ name: permissions.value }));
 
         return {
-            display: true,
+            display,
         };
     },
 });

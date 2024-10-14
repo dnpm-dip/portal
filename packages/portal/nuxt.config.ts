@@ -7,7 +7,7 @@ export default defineNuxtConfig({
         [
             '@authup/client-web-nuxt', {
                 apiURLRuntimeKey: 'authupUrl',
-                apiURLServerRuntimeKey: 'authupUrlServer',
+                cookieDomainRuntimeKey: 'cookieDomain',
             } satisfies ModuleOptions,
         ],
         '../admin/src/module',
@@ -43,10 +43,12 @@ export default defineNuxtConfig({
         '@dnpm-dip/kit': path.join(__dirname, '..', 'kit', 'src'),
     },
     runtimeConfig: {
+        apiUrl: process.env.API_URL,
+        authupUrl: process.env.AUTHUP_URL,
         public: {
             apiUrl: process.env.API_URL || 'https://dnpm.bwhealthcloud.de/api/',
             authupUrl: process.env.AUTHUP_URL || 'https://dnpm.bwhealthcloud.de/auth/',
-            authupUrlServer: process.env.AUTHUP_URL_SERVER,
+            cookieDomain: process.env.COOKIE_DOMAIN,
         },
     },
 });

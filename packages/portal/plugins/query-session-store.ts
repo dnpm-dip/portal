@@ -10,6 +10,7 @@ import type { Pinia } from 'pinia';
 import { defineNuxtPlugin } from '#app';
 
 export default defineNuxtPlugin({
+    dependsOn: ['dnpm:kit'],
     async setup(nuxt) {
         installQuerySessionStore(nuxt.vueApp);
 

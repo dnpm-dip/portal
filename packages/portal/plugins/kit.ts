@@ -2,10 +2,19 @@ import { install } from '@dnpm-dip/core';
 import { defineNuxtPlugin, useRuntimeConfig } from '#app';
 
 export default defineNuxtPlugin({
-    enforce: 'pre',
+    name: 'dnpm:kit',
+    dependsOn: ['authup'],
     async setup(ctx) {
         const runtimeConfig = useRuntimeConfig();
-        const { apiUrl: baseURL } = runtimeConfig.public;
+
+        let baseURL : string | undefined;
+        if (import.meta.server) {
+            baseURL = runtimeConfig.apiUrl;
+        }
+
+        if (!baseURL) {
+            baseURL = runtimeConfig.public.apiUrl;
+        }
 
         install(ctx.vueApp, {
             baseURL,

@@ -5,7 +5,6 @@ import install from '@vuecs/pagination';
 import { defineNuxtPlugin } from '#app';
 
 export default defineNuxtPlugin({
-    enforce: 'pre',
     async setup(nuxt) {
         nuxt.vueApp.use(install, {
             storeManager: {

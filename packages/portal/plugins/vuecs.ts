@@ -1,6 +1,6 @@
 import { injectTranslatorLocale } from '@authup/client-web-kit';
 import installTimeago, { injectLocale as injectTimeagoLocale } from '@vuecs/timeago';
-import de from 'date-fns/locale/de';
+import { de } from 'date-fns/locale/de';
 import { applyStoreManagerOptions, installStoreManager } from '@vuecs/form-controls/core';
 
 import bootstrap from '@vuecs/preset-bootstrap-v5';
@@ -10,7 +10,6 @@ import installFormControls from '@vuecs/form-controls';
 import { defineNuxtPlugin } from '#app';
 
 export default defineNuxtPlugin({
-    enforce: 'pre',
     async setup(nuxt) {
         const storeManager = installStoreManager(nuxt.vueApp);
         applyStoreManagerOptions(storeManager, {

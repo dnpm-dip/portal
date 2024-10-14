@@ -5,7 +5,7 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import { useAbilityCheck } from '@authup/client-web-kit';
+import { usePermissionCheck } from '@authup/client-web-kit';
 import { DConnectionPeerCard } from '@dnpm-dip/core';
 import { defineNuxtComponent } from '#imports';
 import AConnectionReport from '../components/AConnectionReport';
@@ -14,7 +14,7 @@ import { PermissionName } from '../domains';
 export default defineNuxtComponent({
     components: { AConnectionReport, DConnectionPeerCard },
     setup() {
-        const connectionReportRead = useAbilityCheck(PermissionName.CONNECTION_REPORT_READ);
+        const connectionReportRead = usePermissionCheck({ name: PermissionName.CONNECTION_REPORT_READ });
 
         return {
             connectionReportRead,

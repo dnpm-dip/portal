@@ -7,14 +7,14 @@
 
 import type { Client as BaseClient } from 'hapic';
 import {
-    STORE_ID, injectHTTPClient, injectStore, storeToRefs,
+    STORE_ID, injectHTTPClient, injectStoreFactory, storeToRefs,
 } from '@authup/client-web-kit';
 import { ClientResponseErrorTokenHook } from '@authup/core-http-kit';
 import type { App } from 'vue';
 
 export function setupBaseHTTPClient(app: App, client: BaseClient) {
-    const storeCreator = injectStore(app);
-    const store = storeCreator();
+    const storeFactory = injectStoreFactory(app);
+    const store = storeFactory();
     const { refreshToken } = storeToRefs(store);
 
     const authupClient = injectHTTPClient(app);

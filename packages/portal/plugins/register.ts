@@ -59,7 +59,8 @@ function extractNavigationItemsPermissions(items: NavigationItem[]) : string[] {
 }
 
 export default defineNuxtPlugin<Record<string, any>>({
-    enforce: 'pre',
+    name: 'dnpm:register',
+    dependsOn: ['dnpm:kit'],
     async setup(nuxt) {
         const authStore = useStore(nuxt.$pinia as Pinia);
         const moduleStore = useModuleStore(nuxt.$pinia as Pinia);

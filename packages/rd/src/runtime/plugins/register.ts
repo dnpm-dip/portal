@@ -18,7 +18,7 @@ declare module '#app' {
 }
 
 export default defineNuxtPlugin({
-    enforce: 'post',
+    dependsOn: ['dnpm:register'],
     async setup(nuxt) {
         await nuxt.callHook(
             'register',
