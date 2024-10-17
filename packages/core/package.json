@@ -53,7 +53,7 @@
         "chart.js": "^4.4.4",
         "@nuxt/schema": "^3.13.0",
         "@nuxt/kit": "^3.13.0",
-        "@vuecs/form-controls": "^2.3.0",
+        "@vuecs/form-controls": "^2.3.1",
         "@vuecs/link": "^1.0.0",
         "pinia": "^2.2.4",
         "vue": "^3.5.12",
@@ -65,7 +65,7 @@
         "chart.js": "^4.4.3",
         "@nuxt/kit": "^3.13.0",
         "@vuecs/link": "^1.0.0",
-        "@vuecs/form-controls": "^2.3.0",
+        "@vuecs/form-controls": "^2.3.1",
         "pinia": "^2.2.4",
         "vue": "^3.x",
         "vue-chartjs": "^5.3.1"
