@@ -5,13 +5,19 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { injectHTTPClient, installQuerySessionStore, useQuerySessionStore } from '@dnpm-dip/core';
+import {
+    injectHTTPClient,
+    installQueryFilterStore,
+    installQuerySessionStore,
+    useQuerySessionStore,
+} from '@dnpm-dip/core';
 import type { Pinia } from 'pinia';
 import { defineNuxtPlugin } from '#app';
 
 export default defineNuxtPlugin({
     dependsOn: ['dnpm:kit'],
     async setup(nuxt) {
+        installQueryFilterStore(nuxt.vueApp);
         installQuerySessionStore(nuxt.vueApp);
 
         const coreAPI = injectHTTPClient();

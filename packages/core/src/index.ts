@@ -4,5 +4,6 @@ export * from './components';
 export * from './composables';
 export * from './domains';
 export * from './install';
+export * from './stores';
 export * from './types';
 export * from './utils';

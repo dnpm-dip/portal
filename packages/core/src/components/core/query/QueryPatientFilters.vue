@@ -6,6 +6,7 @@ import {
 } from 'vue';
 import { VCFormRangeMultiSlider } from '@vuecs/form-controls';
 import type { PatientFilter } from '../../../domains';
+import { useQueryFilterStore } from '../../../stores';
 import { clone } from '../../../utils';
 
 type QueryRecord = {
@@ -34,6 +35,8 @@ export default defineComponent({
     },
     emits: ['submit'],
     async setup(props, { emit }) {
+        const store = useQueryFilterStore();
+
         const gender = ref<string[]>([]);
         const genderChanged = ref(false);
 
@@ -203,6 +206,12 @@ export default defineComponent({
         }, { deep: true });
 
         const submit = () => {
+            store.setFilterValue('age[min]', [`${age.value.min}`]);
+            store.setFilterValue('age[max]', [`${age.value.max}`]);
+            store.setFilterValue('vitalStatus', clone(vitalStatus.value));
+            store.setFilterValue('site', clone(site.value));
+            store.setFilterValue('gender', clone(gender.value));
+
             previousQuery.value = buildQueryRecord();
 
             emit('submit', previousQuery.value);

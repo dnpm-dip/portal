@@ -7,11 +7,10 @@
 
 import type { Pinia } from 'pinia';
 import type { App } from 'vue';
-import { inject } from '../inject';
-import { provide } from '../provide';
+import { inject, provide } from '../../core';
 import type { QuerySessionStore, QuerySessionStoreDefinition } from './types';
 
-export const StoreSymbol = Symbol.for('QuerySessionStore');
+const StoreSymbol = Symbol.for('QuerySessionStore');
 
 export function useQuerySessionStore(pinia?: Pinia, app?: App) : QuerySessionStore {
     const instance = injectQuerySessionStore(app);
