@@ -1,11 +1,10 @@
 <script lang="ts">
 import {
-    DQueryInfoBox, DQueryPatientFilters, InjectionKey, type URLQueryRecord,
+    DNav, DQueryInfoBox, DQueryPatientFilters, injectQueryEventBus,
 } from '@dnpm-dip/core';
-import { DNav } from '@dnpm-dip/core';
+import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
 import { BModal } from 'bootstrap-vue-next';
 import type { PropType } from 'vue';
-import { provide, ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
 import MQueryCriteriaSummary from '../../../components/core/MQueryCriteriaSummary.vue';
 import MQueryCriteriaSummaryBox from '../../../components/core/MQueryCriteriaSummaryBox.vue';
@@ -30,6 +29,7 @@ export default defineNuxtComponent({
     },
     setup(props, { emit }) {
         const route = useRoute();
+        const queryEventBus = injectQueryEventBus();
 
         const navItems = [
             {
@@ -43,23 +43,14 @@ export default defineNuxtComponent({
             },
         ];
 
-        const queryFilters = ref<URLQueryRecord>({});
-        provide(InjectionKey.QUERY_FILTERS, queryFilters);
-
-        const queryUpdatedAt = ref(props.entity.lastUpdate);
-        provide(InjectionKey.QUERY_UPDATED_AT, queryUpdatedAt);
-
-        const applyFilters = (input: URLQueryRecord) => {
-            queryFilters.value = {
-                ...queryFilters.value,
-                ...input,
-            };
+        const handleSubmit = () => {
+            // do nothing
         };
 
         const handleUpdated = (entity: QuerySession) => {
             emit('updated', entity);
 
-            queryUpdatedAt.value = entity.lastUpdate;
+            queryEventBus.emit(QueryEventBusEventName.SESSION_UPDATED, entity, 'mtb');
         };
 
         const handleFailed = (e: Error) => {
@@ -67,7 +58,7 @@ export default defineNuxtComponent({
         };
 
         return {
-            applyFilters,
+            handleSubmit,
             navItems,
             preparedQueryId: route.query.preparedQueryId,
 
@@ -129,7 +120,7 @@ export default defineNuxtComponent({
                 <DQueryPatientFilters
                     class="mb-3"
                     :available-filters="entity.filters.patient"
-                    @submit="applyFilters"
+                    @submit="handleSubmit"
                 />
             </div>
         </div>

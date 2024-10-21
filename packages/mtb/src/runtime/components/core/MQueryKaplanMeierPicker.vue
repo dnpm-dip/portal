@@ -6,7 +6,7 @@
   -->
 
 <script lang="ts">
-import { DCollectionTransform, DTags, type ValueSetCoding } from '@dnpm-dip/core';
+import { type ValueSetCoding } from '@dnpm-dip/core';
 import { VCFormSelect } from '@vuecs/form-controls';
 import { computed, defineComponent, ref } from 'vue';
 import { injectHTTPClient } from '../../core/http-client';

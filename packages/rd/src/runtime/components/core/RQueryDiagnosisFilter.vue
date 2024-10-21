@@ -3,7 +3,9 @@ import type { PropType } from 'vue';
 import {
     computed, defineComponent, ref, watch,
 } from 'vue';
-import { type DiagnosisFilter, serializeCoding } from '@dnpm-dip/core';
+import {
+    type Coding, type DiagnosisFilter, useQueryFilterStore,
+} from '@dnpm-dip/core';
 
 type QueryRecord = {
     diagnosis: {
@@ -24,6 +26,7 @@ export default defineComponent({
     },
     emits: ['submit'],
     async setup(props, { emit }) {
+        const store = useQueryFilterStore();
         const category = ref<string[]>([]);
         const categoryChanged = ref(false);
 
@@ -69,24 +72,22 @@ export default defineComponent({
         }, { deep: true });
 
         const submit = () => {
-            const data : QueryRecord = {
-                diagnosis: {
-                    category: [],
-                },
-            };
-
+            const data : Coding[] = [];
             if (props.availableFilters.category) {
                 for (let i = 0; i < category.value.length; i++) {
                     const index = props.availableFilters.category.findIndex((el) => el.code === category.value[i]);
                     if (index !== -1) {
-                        data.diagnosis.category.push(serializeCoding(props.availableFilters.category[index]));
+                        data.push(props.availableFilters.category[index]);
                     }
                 }
             }
 
+            store.set('diagnosis[category]', data);
+            store.commit();
+
             previousSelection.value = [...category.value];
 
-            emit('submit', data);
+            emit('submit');
 
             categoryChanged.value = false;
         };

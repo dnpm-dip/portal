@@ -7,17 +7,18 @@
 
 import { defineStore } from 'pinia';
 import type { App } from 'vue';
+import type { StoreInstallOptions } from '../types';
 import { createQuerySessionStore } from './module';
 import { hasQuerySessionStore, provideQuerySessionStore } from './singleton';
 
-export function installQuerySessionStore(app: App) {
+export function installQuerySessionStore(app: App, options: StoreInstallOptions) {
     if (hasQuerySessionStore(app)) {
         return;
     }
 
     const storeCreator = defineStore(
         'querySession',
-        () => createQuerySessionStore(),
+        () => createQuerySessionStore(options),
     );
 
     provideQuerySessionStore(storeCreator, app);

@@ -8,11 +8,12 @@
 import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
     DQuerySummaryDemographics,
-    InjectionKey, type QuerySummaryDemographics,
-    type URLQueryRecord,
+    QueryEventBusEventName,
+    type QuerySummaryDemographics,
+    injectQueryEventBus, useQueryFilterStore,
 } from '@dnpm-dip/core';
 import {
-    type PropType, type Ref, defineComponent, inject, ref, watch,
+    type PropType, defineComponent, ref,
 } from 'vue';
 import { injectHTTPClient } from '../../../../../core';
 import type { QuerySession } from '../../../../../domains';
@@ -26,27 +27,21 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
-        const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
-
         const api = injectHTTPClient();
+        const queryEventBus = injectQueryEventBus();
+        const queryFilterStore = useQueryFilterStore();
 
         const busy = ref(false);
         const data = ref<null | QuerySummaryDemographics>(null);
         const load = wrapFnWithBusyState(busy, async () => {
-            data.value = await api.query.getDemographics(props.entity.id, queryFilters.value);
+            data.value = await api.query.getDemographics(props.entity.id, queryFilterStore.buildURLRecord());
         });
 
         Promise.resolve()
             .then(() => load());
 
-        watch(queryFilters, () => {
-            load();
-        }, { deep: true });
-
-        watch(queryUpdatedAt, () => {
-            load();
-        });
+        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
+        queryEventBus.on(QueryEventBusEventName.FILTERS_UPDATED, () => load());
 
         return {
             data,

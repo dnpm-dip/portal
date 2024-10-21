@@ -6,9 +6,14 @@
   -->
 
 <script lang="ts">
-import { DChartLineKM, InjectionKey, type KMSurvivalReport } from '@dnpm-dip/core';
 import {
-    type Ref, defineComponent, inject, ref, toRef, watch,
+    DChartLineKM,
+    type KMSurvivalReport,
+    QueryEventBusEventName,
+    injectQueryEventBus,
+} from '@dnpm-dip/core';
+import {
+    defineComponent, ref, toRef, watch,
 } from 'vue';
 import { injectHTTPClient } from '../../core/http-client';
 
@@ -30,6 +35,7 @@ export default defineComponent({
     },
     setup(props) {
         const httpClient = injectHTTPClient();
+        const queryEventBus = injectQueryEventBus();
 
         const type = toRef(props, 'type');
         const grouping = toRef(props, 'grouping');
@@ -75,10 +81,7 @@ export default defineComponent({
             }
         });
 
-        const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
-        watch(queryUpdatedAt, () => {
-            resolve();
-        });
+        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => resolve());
 
         return {
             data,

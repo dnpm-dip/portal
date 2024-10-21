@@ -5,24 +5,12 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { EventEmitter } from '@posva/event-emitter';
 import { ref } from 'vue';
 import type { QueryBase } from '../../domains';
+import { QueryEventBusEventName } from '../../services/query-event-bus/constants';
+import type { StoreCreateOptions } from '../types';
 
-type EventContext = {
-    session: QueryBase,
-    useCase: string | null
-};
-
-export function createQuerySessionStore() {
-    const eventEmitter = new EventEmitter<{
-        tracked: EventContext,
-        refreshFailed: [],
-        untracked: EventContext,
-        expiring: EventContext,
-        expired: EventContext,
-    }>();
-
+export function createQuerySessionStore(ctx: StoreCreateOptions) {
     const session = ref<QueryBase | null>(null);
     const useCase = ref<null | string>(null);
     const expireDate = ref<Date | null>(null);
@@ -42,14 +30,14 @@ export function createQuerySessionStore() {
         expireDate.value = new Date(Date.now() + expiresMS);
 
         expiringTimeout = setTimeout(() => {
-            eventEmitter.emit('expiring', {
+            ctx.queryEventBus.emit(QueryEventBusEventName.SESSION_EXPIRING, {
                 session: input,
                 useCase: useCase.value,
             });
         }, expiresMS - 30_000);
 
         expiredTimeout = setTimeout(() => {
-            eventEmitter.emit('expired', {
+            ctx.queryEventBus.emit(QueryEventBusEventName.SESSION_EXPIRED, {
                 session: input,
                 useCase: useCase.value,
             });
@@ -59,13 +47,6 @@ export function createQuerySessionStore() {
     };
 
     const unTrack = () => {
-        if (session.value) {
-            eventEmitter.emit('untracked', {
-                session: session.value,
-                useCase: useCase.value,
-            });
-        }
-
         session.value = null;
 
         clearTimeout(expiringTimeout);
@@ -77,7 +58,6 @@ export function createQuerySessionStore() {
         unTrack,
         setUseCase,
         expireDate,
-        eventEmitter,
         session,
     };
 }
