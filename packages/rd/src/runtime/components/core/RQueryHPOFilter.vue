@@ -3,7 +3,7 @@ import type { PropType } from 'vue';
 import {
     computed, defineComponent, ref, watch,
 } from 'vue';
-import { type HPOFilter, clone } from '@dnpm-dip/core';
+import { type HPOFilter, clone, useQueryFilterStore } from '@dnpm-dip/core';
 
 type QueryRecord = {
     hpo: {
@@ -24,6 +24,8 @@ export default defineComponent({
     },
     emits: ['submit'],
     async setup(props, { emit }) {
+        const store = useQueryFilterStore();
+
         const form = ref<string[]>([]);
         const termChanged = ref(false);
 
@@ -69,15 +71,12 @@ export default defineComponent({
         }, { deep: true });
 
         const submit = () => {
-            const data : QueryRecord = {
-                hpo: {
-                    term: [...form.value],
-                },
-            };
+            store.set('hpo[value]', [...form.value]);
+            store.commit();
 
             previousSelection.value = [...form.value];
 
-            emit('submit', data);
+            emit('submit');
 
             termChanged.value = false;
         };

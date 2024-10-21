@@ -6,7 +6,7 @@
  */
 
 import type { EventEmitter } from '@posva/event-emitter';
-import type { Coding, QueryBase } from '../../domains';
+import type { QueryBase } from '../../domains';
 import type { QueryEventBusEventName } from './constants';
 
 export type QueryEventBusEvents = {
@@ -15,7 +15,7 @@ export type QueryEventBusEvents = {
     [QueryEventBusEventName.SESSION_EXPIRED]: [QueryBase<any>, string | null],
     [QueryEventBusEventName.SESSION_REFRESH_FAILED]: [QueryBase<any>, string | null],
 
-    [QueryEventBusEventName.FILTERS_UPDATED]: Record<string, Coding[]>,
+    [QueryEventBusEventName.FILTERS_UPDATED]: [],
 };
 
 export type QueryEventBus = EventEmitter<QueryEventBusEvents>;

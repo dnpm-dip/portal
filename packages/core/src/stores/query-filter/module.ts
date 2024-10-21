@@ -11,8 +11,6 @@ import { serializeCoding } from '../../domains';
 import { QueryEventBusEventName } from '../../services';
 import type { StoreCreateOptions } from '../types';
 
-type Filters = Record<string, Coding[]>;
-
 const toCoding = (input: string | Coding) : Coding => {
     if (typeof input === 'string') {
         return {
@@ -23,51 +21,47 @@ const toCoding = (input: string | Coding) : Coding => {
     return input;
 };
 
+type FilterGroupInput = string | Coding | string[] | Coding[];
+
+type FilterGroup = Coding[];
+type Filters = Record<string, FilterGroup[]>;
+
 export function createQueryFilterStore(options: StoreCreateOptions) {
     const items = ref<Filters>({});
 
-    const addValue = (key: string, value: string | Coding) => {
-        const coding = toCoding(value);
+    const addGroup = (key: string, input: FilterGroupInput) => {
+        let data : Coding[];
+        if (Array.isArray(input)) {
+            data = input.map((el) => toCoding(el));
+        } else {
+            data = [toCoding(input)];
+        }
+
         if (!items.value[key]) {
             items.value[key] = [];
         }
 
-        const index = items.value[key].findIndex((el) => el.code === coding.code);
-        if (index !== -1) {
-            return;
-        }
-
-        items.value[key].push(coding);
+        items.value[key].push(data);
     };
 
-    const dropValue = (key: string, value: string | Coding) => {
-        const coding = toCoding(value);
-        if (!items.value[key]) {
-            return;
-        }
+    const reset = (key: string) => {
+        items.value[key] = [];
+    };
 
-        const index = items.value[key].findIndex((el) => el.code === coding.code);
-        if (index !== -1) {
-            items.value[key].splice(index, 1);
+    const set = (key: string, input: FilterGroupInput[]) => {
+        reset(key);
+
+        for (let i = 0; i < input.length; i++) {
+            addGroup(key, input[i]);
         }
     };
 
-    const setValue = (key: string, value: (string | Coding)[]) => {
-        items.value[key] = value.map((el) => toCoding(el));
-    };
-
-    const reset = (key?: string) => {
-        if (typeof key === 'string') {
-            items.value[key] = [];
-            return;
-        }
-
+    const resetAll = () => {
         items.value = {};
     };
 
     const commit = () => {
-        // todo: this is a placeholder
-        options.queryEventBus.emit(QueryEventBusEventName.FILTERS_UPDATED, items.value);
+        options.queryEventBus.emit(QueryEventBusEventName.FILTERS_UPDATED);
     };
 
     const buildURLRecord = () => {
@@ -75,11 +69,14 @@ export function createQueryFilterStore(options: StoreCreateOptions) {
 
         const keys = Object.keys(items.value);
         for (let i = 0; i < keys.length; i++) {
-            const value = items.value[keys[i]];
+            const groups = items.value[keys[i]];
+            const parts : string[] = [];
+            for (let j = 0; j < groups.length; j++) {
+                const part = groups[j].map((el) => serializeCoding(el)).join('+');
+                parts.push(part);
+            }
 
-            output[keys[i]] = value
-                .map((el) => serializeCoding(el))
-                .join(',');
+            output[keys[i]] = parts.join(',');
         }
 
         return output;
@@ -89,11 +86,9 @@ export function createQueryFilterStore(options: StoreCreateOptions) {
         items,
         buildURLRecord,
 
-        addValue,
-        dropValue,
-        setValue,
+        set,
 
         commit,
-        reset,
+        resetAll,
     };
 }
