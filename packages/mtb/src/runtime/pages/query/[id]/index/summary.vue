@@ -7,9 +7,7 @@
 
 <script lang="ts">
 import {
-    DChartLineKM,
     DNav,
-    DQuerySummaryDemographics,
     type NavItem,
 } from '@dnpm-dip/core';
 import {
@@ -17,19 +15,11 @@ import {
 } from 'vue';
 import { ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
-import MQuerySummaryMedication from '../../../../components/core/MQuerySummaryMedication.vue';
-import MQuerySummarySurvivalReport from '../../../../components/core/MQuerySummarySurvivalReport.vue';
-import MQuerySummaryTumorDiagnostics from '../../../../components/core/MQuerySummaryTumorDiagnostics.vue';
 import type { QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
     components: {
         DNav,
-        MQuerySummarySurvivalReport,
-        DQuerySummaryDemographics,
-        MQuerySummaryMedication,
-        MQuerySummaryTumorDiagnostics,
-        DChartLineKM,
     },
     props: {
         entity: {

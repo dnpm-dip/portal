@@ -16,6 +16,10 @@ export default defineComponent({
             type: Object as PropType<QuerySummaryTumorDiagnostics>,
             required: true,
         },
+        queryId: {
+            type: String,
+            required: true,
+        },
     },
 });
 </script>

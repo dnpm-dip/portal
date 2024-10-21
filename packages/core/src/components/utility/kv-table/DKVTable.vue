@@ -9,8 +9,8 @@ import type { TableFieldRaw } from 'bootstrap-vue-next';
 import { BTable } from 'bootstrap-vue-next';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
-import type { KeyValueRecord } from '../../../domains';
-import { isConceptCount } from '../../../domains';
+import type { Coding, KeyValueRecord } from '../../../domains';
+import { isCoding, isConceptCount } from '../../../domains';
 import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
 
 export default defineComponent({
@@ -25,8 +25,13 @@ export default defineComponent({
         codingVerboseLabel: {
             type: Boolean,
         },
+        clickable: {
+            type: Boolean,
+            default: false,
+        },
     },
-    setup(props) {
+    emits: ['clicked'],
+    setup(props, { emit }) {
         const items = computed<{
             key: string,
             value: number | string,
@@ -41,9 +46,9 @@ export default defineComponent({
                 value = item.value.toFixed(2);
                 percent = '?%';
             } else if (isConceptCount(item)) {
-                key = generateChartLabelsForKeyValueRecord(item, {
+                key = `${generateChartLabelsForKeyValueRecord(item, {
                     codingVerbose: props.codingVerboseLabel,
-                });
+                })}`;
                 value = item.value.count.toFixed(2);
                 percent = `${item.value.percent.toFixed(1)}%`;
             } else {
@@ -80,7 +85,47 @@ export default defineComponent({
             },
         ];
 
+        const handleClick = (key: string) => {
+            const index = items.value.findIndex((el) => el.key === key);
+            if (index === -1) {
+                return;
+            }
+
+            const { key: itemKey } = props.data[index];
+
+            if (isCoding(itemKey)) {
+                emit('clicked', [{ ...itemKey }]);
+
+                return;
+            }
+
+            if (typeof itemKey === 'string') {
+                emit('clicked', [{ code: itemKey } satisfies Coding]);
+                return;
+            }
+
+            const value : Coding[] = [];
+            if (Array.isArray(itemKey)) {
+                for (let i = 0; i < itemKey.length; i++) {
+                    if (isCoding(itemKey[i])) {
+                        value.push(itemKey[i]);
+                        continue;
+                    }
+
+                    if (typeof itemKey[i] === 'string') {
+                        value.push({ code: itemKey[i] });
+                    }
+                }
+            }
+
+            if (value.length > 0) {
+                emit('clicked', value);
+            }
+        };
+
         return {
+            handleClick,
+
             fields,
             items,
         };
@@ -92,5 +137,19 @@ export default defineComponent({
         :items="items"
         :fields="fields"
         outlined
-    />
+    >
+        <template #cell(key)="data">
+            <template v-if="clickable">
+                <a
+                    href="javascript:void(0)"
+                    @click.prevent="handleClick(data.item.key)"
+                >
+                    {{ data.item.key }}
+                </a>
+            </template>
+            <template v-else>
+                {{ data.item.key }}
+            </template>
+        </template>
+    </BTable>
 </template>

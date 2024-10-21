@@ -51,6 +51,9 @@ export default defineComponent({
 </script>
 <template>
     <template v-if="data">
-        <MQuerySummaryTumorDiagnostics :entity="data" />
+        <MQuerySummaryTumorDiagnostics
+            :entity="data"
+            :query-id="entity.id"
+        />
     </template>
 </template>

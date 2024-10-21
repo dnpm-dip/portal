@@ -56,6 +56,8 @@ export function createQueryFilterStore(options: StoreCreateOptions) {
         }
     };
 
+    const get = (key: string) : FilterGroup => items.value[key] || [];
+
     const resetAll = () => {
         items.value = {};
     };
@@ -76,7 +78,9 @@ export function createQueryFilterStore(options: StoreCreateOptions) {
                 parts.push(part);
             }
 
-            output[keys[i]] = parts.join(',');
+            if (parts.length > 0) {
+                output[keys[i]] = parts.join(',');
+            }
         }
 
         return output;
@@ -87,6 +91,7 @@ export function createQueryFilterStore(options: StoreCreateOptions) {
         buildURLRecord,
 
         set,
+        get,
 
         commit,
         resetAll,

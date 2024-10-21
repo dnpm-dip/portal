@@ -27,15 +27,26 @@ export default defineComponent({
         codingVerboseLabel: {
             type: Boolean,
         },
+        clickable: {
+            type: Boolean,
+            default: false,
+        },
     },
-    setup() {
+    emits: ['clicked'],
+    setup(_, { emit }) {
         const variant = ref('chart');
 
         const setVariant = (input: string) => {
             variant.value = input;
         };
 
+        const handleClick = (key: any) => {
+            emit('clicked', key);
+        };
+
         return {
+            handleClick,
+
             variant,
             setVariant,
         };
@@ -93,7 +104,9 @@ export default defineComponent({
                     <DKVTable
                         :data="data"
                         :type="type"
+                        :clickable="clickable"
                         :coding-verbose-label="codingVerboseLabel"
+                        @clicked="handleClick"
                     />
                 </slot>
             </template>
