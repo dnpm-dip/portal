@@ -8,13 +8,11 @@ import type {
 import {
     computed,
     defineComponent,
-    inject,
     ref,
     watch,
 } from 'vue';
-import { InjectionKey } from '../../../constants';
 import type { KeyValueRecord, KeyValueRecords } from '../../../domains';
-import type { URLQueryRecord } from '../../../utils';
+import { QueryEventBusEventName, injectQueryEventBus } from '../../../services';
 import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils';
 
 export default defineComponent({
@@ -35,6 +33,7 @@ export default defineComponent({
         },
     },
     setup(props) {
+        const queryEventBus = injectQueryEventBus();
         const id = ref(undefined) as Ref<string | number | undefined>;
         const item = ref(null) as Ref<KeyValueRecord | null>;
 
@@ -89,15 +88,8 @@ export default defineComponent({
 
         init();
 
-        const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
-        watch(queryFilters, () => {
-            render();
-        });
-
-        const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
-        watch(queryUpdatedAt, () => {
-            render();
-        });
+        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => render());
+        queryEventBus.on(QueryEventBusEventName.FILTERS_UPDATED, () => render());
 
         return {
             options,

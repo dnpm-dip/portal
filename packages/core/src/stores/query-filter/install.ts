@@ -7,17 +7,21 @@
 
 import { defineStore } from 'pinia';
 import type { App } from 'vue';
+import type { StoreInstallOptions } from '../types';
 import { createQueryFilterStore } from './module';
 import { hasQueryFilterStore, provideQueryFilterStore } from './singleton';
 
-export function installQueryFilterStore(app: App) {
+export function installQueryFilterStore(
+    app: App,
+    options: StoreInstallOptions,
+) {
     if (hasQueryFilterStore(app)) {
         return;
     }
 
     const storeCreator = defineStore(
         'queryFilter',
-        () => createQueryFilterStore(),
+        () => createQueryFilterStore(options),
     );
 
     provideQueryFilterStore(storeCreator, app);

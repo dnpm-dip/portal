@@ -1,9 +1,9 @@
 <script lang="ts">
+import { QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore } from '@dnpm-dip/core';
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCPagination } from '@vuecs/pagination';
-import { InjectionKey, type URLQueryRecord } from '@dnpm-dip/core';
 import {
-    type PropType, type Ref, nextTick, watch,
+    type PropType, type Ref,
 } from 'vue';
 import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
@@ -24,20 +24,20 @@ export default defineNuxtComponent({
         },
     },
     setup() {
-        const listRef = ref(null) as Ref<typeof QueryPatientMatchList | null>;
-        const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
-        watch(queryFilters, () => {
-            nextTick(() => {
-                if (listRef.value) {
-                    listRef.value.load({ filters: queryFilters.value });
-                }
-            });
-        }, { deep: true });
+        const queryEventBus = injectQueryEventBus();
+        const queryFilterStore = useQueryFilterStore();
 
-        const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
-        watch(queryUpdatedAt, () => {
+        const listRef = ref(null) as Ref<typeof QueryPatientMatchList | null>;
+
+        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => {
             if (listRef.value) {
-                listRef.value.load({ filters: queryFilters.value });
+                listRef.value.load({ filters: queryFilterStore.buildURLRecord() });
+            }
+        });
+
+        queryEventBus.on(QueryEventBusEventName.FILTERS_UPDATED, () => {
+            if (listRef.value) {
+                listRef.value.load({ filters: queryFilterStore.buildURLRecord() });
             }
         });
 
@@ -46,6 +46,8 @@ export default defineNuxtComponent({
                 listRef.value.load({ limit, offset });
             }
         };
+
+        const queryFilters = queryFilterStore.buildURLRecord();
 
         return {
             queryFilters,

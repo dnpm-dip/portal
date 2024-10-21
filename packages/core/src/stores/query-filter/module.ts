@@ -7,6 +7,9 @@
 
 import { ref } from 'vue';
 import type { Coding } from '../../domains';
+import { serializeCoding } from '../../domains';
+import { QueryEventBusEventName } from '../../services';
+import type { StoreCreateOptions } from '../types';
 
 type Filters = Record<string, Coding[]>;
 
@@ -20,43 +23,77 @@ const toCoding = (input: string | Coding) : Coding => {
     return input;
 };
 
-export function createQueryFilterStore() {
-    const filters = ref<Filters>({});
+export function createQueryFilterStore(options: StoreCreateOptions) {
+    const items = ref<Filters>({});
 
-    const addFilterValue = (key: string, value: string | Coding) => {
+    const addValue = (key: string, value: string | Coding) => {
         const coding = toCoding(value);
-        if (!filters.value[key]) {
-            filters.value[key] = [];
+        if (!items.value[key]) {
+            items.value[key] = [];
         }
 
-        const index = filters.value[key].findIndex((el) => el.code === coding.code);
+        const index = items.value[key].findIndex((el) => el.code === coding.code);
         if (index !== -1) {
             return;
         }
 
-        filters.value[key].push(coding);
+        items.value[key].push(coding);
     };
 
-    const dropFilterValue = (key: string, value: string | Coding) => {
+    const dropValue = (key: string, value: string | Coding) => {
         const coding = toCoding(value);
-        if (!filters.value[key]) {
+        if (!items.value[key]) {
             return;
         }
 
-        const index = filters.value[key].findIndex((el) => el.code === coding.code);
+        const index = items.value[key].findIndex((el) => el.code === coding.code);
         if (index !== -1) {
-            filters.value[key].splice(index, 1);
+            items.value[key].splice(index, 1);
         }
     };
 
-    const setFilterValue = (key: string, value: (string | Coding)[]) => {
-        filters.value[key] = value.map((el) => toCoding(el));
+    const setValue = (key: string, value: (string | Coding)[]) => {
+        items.value[key] = value.map((el) => toCoding(el));
+    };
+
+    const reset = (key?: string) => {
+        if (typeof key === 'string') {
+            items.value[key] = [];
+            return;
+        }
+
+        items.value = {};
+    };
+
+    const commit = () => {
+        // todo: this is a placeholder
+        options.queryEventBus.emit(QueryEventBusEventName.FILTERS_UPDATED, items.value);
+    };
+
+    const buildURLRecord = () => {
+        const output : Record<string, string> = {};
+
+        const keys = Object.keys(items.value);
+        for (let i = 0; i < keys.length; i++) {
+            const value = items.value[keys[i]];
+
+            output[keys[i]] = value
+                .map((el) => serializeCoding(el))
+                .join(',');
+        }
+
+        return output;
     };
 
     return {
-        filters,
-        addFilterValue,
-        dropFilterValue,
-        setFilterValue,
+        items,
+        buildURLRecord,
+
+        addValue,
+        dropValue,
+        setValue,
+
+        commit,
+        reset,
     };
 }

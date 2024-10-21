@@ -5,36 +5,31 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import {
-    injectHTTPClient,
-    installQueryFilterStore,
-    installQuerySessionStore,
-    useQuerySessionStore,
-} from '@dnpm-dip/core';
+import { injectHTTPClient, injectQueryEventBus, useQuerySessionStore } from '@dnpm-dip/core';
+import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
 import type { Pinia } from 'pinia';
 import { defineNuxtPlugin } from '#app';
 
 export default defineNuxtPlugin({
     dependsOn: ['dnpm:kit'],
     async setup(nuxt) {
-        installQueryFilterStore(nuxt.vueApp);
-        installQuerySessionStore(nuxt.vueApp);
+        const coreAPI = injectHTTPClient(nuxt.vueApp);
 
-        const coreAPI = injectHTTPClient();
+        const eventBus = injectQueryEventBus(nuxt.vueApp);
         const store = useQuerySessionStore(nuxt.$pinia as Pinia, nuxt.vueApp);
 
-        store.eventEmitter.on('expiring', async (ctx) => {
-            if (!ctx.useCase) {
-                store.eventEmitter.emit('refreshFailed');
+        eventBus.on(QueryEventBusEventName.SESSION_EXPIRING, async (session, useCase) => {
+            if (!useCase) {
+                eventBus.emit(QueryEventBusEventName.SESSION_REFRESH_FAILED, session, useCase);
                 return;
             }
 
             try {
-                const newQuery = await coreAPI.query.getOne(ctx.useCase, ctx.session.id);
+                const newQuery = await coreAPI.query.getOne(useCase, session.id);
 
                 store.track(newQuery);
             } catch (e) {
-                store.eventEmitter.emit('refreshFailed');
+                eventBus.emit(QueryEventBusEventName.SESSION_REFRESH_FAILED, session, useCase);
             }
         });
     },

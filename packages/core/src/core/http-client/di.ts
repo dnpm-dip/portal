@@ -13,8 +13,8 @@ export function provideHTTPClient(client: HTTPClient, app?: App) {
     provide(APIClientSymbol, client, app);
 }
 
-export function injectHTTPClient() {
-    const instance = inject<HTTPClient>(APIClientSymbol);
+export function injectHTTPClient(app?: App) {
+    const instance = inject<HTTPClient>(APIClientSymbol, app);
     if (!instance) {
         throw new Error('The APIClient is not set.');
     }

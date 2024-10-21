@@ -15,7 +15,7 @@ import {
 import {
     type PropType,
 } from 'vue';
-import { inject, ref } from 'vue';
+import { ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import MQuerySummaryMedication from '../../../../components/core/MQuerySummaryMedication.vue';
 import MQuerySummarySurvivalReport from '../../../../components/core/MQuerySummarySurvivalReport.vue';

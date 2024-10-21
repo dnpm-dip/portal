@@ -1,9 +1,13 @@
 <script lang="ts">
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCPagination } from '@vuecs/pagination';
-import { InjectionKey, type URLQueryRecord } from '@dnpm-dip/core';
 import {
-    type PropType, type Ref, nextTick, watch,
+    QueryEventBusEventName,
+    injectQueryEventBus,
+    useQueryFilterStore,
+} from '@dnpm-dip/core';
+import {
+    type PropType, type Ref,
 } from 'vue';
 import { inject, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
@@ -24,16 +28,22 @@ export default defineNuxtComponent({
         },
     },
     setup() {
-        const listRef = ref(null) as Ref<typeof QueryPatientMatchList | null>;
-        const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
+        const queryEventBus = injectQueryEventBus();
+        const queryFilterStore = useQueryFilterStore();
 
-        watch(queryFilters, () => {
-            nextTick(() => {
-                if (listRef.value) {
-                    listRef.value.load({ filters: queryFilters.value });
-                }
-            });
-        }, { deep: true });
+        const listRef = ref(null) as Ref<typeof QueryPatientMatchList | null>;
+
+        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => {
+            if (listRef.value) {
+                listRef.value.load({ filters: queryFilterStore.buildURLRecord() });
+            }
+        });
+
+        queryEventBus.on(QueryEventBusEventName.FILTERS_UPDATED, () => {
+            if (listRef.value) {
+                listRef.value.load({ filters: queryFilterStore.buildURLRecord() });
+            }
+        });
 
         const applyPagination = ({ limit, offset } : PaginationMeta) => {
             if (listRef.value) {
@@ -41,7 +51,10 @@ export default defineNuxtComponent({
             }
         };
 
+        const queryFilters = queryFilterStore.buildURLRecord();
+
         return {
+            queryFilters,
             listRef,
             applyPagination,
         };

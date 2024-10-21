@@ -6,9 +6,9 @@
   -->
 <script lang="ts">
 import { wrapFnWithBusyState } from '@authup/client-web-kit';
-import { InjectionKey, type URLQueryRecord } from '@dnpm-dip/core';
+import { QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore } from '@dnpm-dip/core';
 import {
-    type PropType, type Ref, defineComponent, inject, ref, watch,
+    type PropType, defineComponent, ref,
 } from 'vue';
 import MQuerySummaryTherapyResponses from '../../../../../components/core/MQuerySummaryTherapyResponses.vue';
 import { injectHTTPClient } from '../../../../../core/http-client';
@@ -24,28 +24,22 @@ export default defineComponent({
     },
 
     setup(props) {
-        const queryFilters = inject(InjectionKey.QUERY_FILTERS) as Ref<URLQueryRecord>;
-        const queryUpdatedAt = inject(InjectionKey.QUERY_UPDATED_AT) as Ref<string>;
-
         const api = injectHTTPClient();
+        const queryEventBus = injectQueryEventBus();
+        const queryFilterStore = useQueryFilterStore();
 
         const busy = ref(false);
         const items = ref<QueryTherapyResponse[]>([]);
         const load = wrapFnWithBusyState(busy, async () => {
-            const response = await api.query.getTherapyResponses(props.entity.id, queryFilters.value);
+            const response = await api.query.getTherapyResponses(props.entity.id, queryFilterStore.buildURLRecord());
             items.value = response.entries;
         });
 
         Promise.resolve()
             .then(() => load());
 
-        watch(queryFilters, () => {
-            load();
-        }, { deep: true });
-
-        watch(queryUpdatedAt, () => {
-            load();
-        });
+        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
+        queryEventBus.on(QueryEventBusEventName.FILTERS_UPDATED, () => load());
 
         return {
             busy,

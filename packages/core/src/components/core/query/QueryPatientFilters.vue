@@ -206,11 +206,12 @@ export default defineComponent({
         }, { deep: true });
 
         const submit = () => {
-            store.setFilterValue('age[min]', [`${age.value.min}`]);
-            store.setFilterValue('age[max]', [`${age.value.max}`]);
-            store.setFilterValue('vitalStatus', clone(vitalStatus.value));
-            store.setFilterValue('site', clone(site.value));
-            store.setFilterValue('gender', clone(gender.value));
+            store.setValue('age[min]', [`${age.value.min}`]);
+            store.setValue('age[max]', [`${age.value.max}`]);
+            store.setValue('vitalStatus', clone(vitalStatus.value));
+            store.setValue('site', clone(site.value));
+            store.setValue('gender', clone(gender.value));
+            store.commit();
 
             previousQuery.value = buildQueryRecord();
 

@@ -1,6 +1,10 @@
 <script lang="ts">
-import { DQueryInfoBox, InjectionKey, type URLQueryRecord } from '@dnpm-dip/core';
-import { DNav, DQueryPatientFilters } from '@dnpm-dip/core';
+import {
+    DNav,
+    DQueryInfoBox,
+    DQueryPatientFilters,
+    QueryEventBusEventName, injectQueryEventBus,
+} from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { BModal } from 'bootstrap-vue-next';
 import { provide, ref } from 'vue';
@@ -28,6 +32,7 @@ export default defineNuxtComponent({
     },
     setup(props, { emit }) {
         const route = useRoute();
+        const queryEventBus = injectQueryEventBus();
 
         const navItems = [
             {
@@ -41,23 +46,14 @@ export default defineNuxtComponent({
             },
         ];
 
-        const queryFilters = ref<URLQueryRecord>({});
-        provide(InjectionKey.QUERY_FILTERS, queryFilters);
-
-        const queryUpdatedAt = ref(props.entity.lastUpdate);
-        provide(InjectionKey.QUERY_UPDATED_AT, queryUpdatedAt);
-
-        const applyFilters = (input: URLQueryRecord) => {
-            queryFilters.value = {
-                ...queryFilters.value,
-                ...input,
-            };
+        const handleSubmit = () => {
+            // do nothing
         };
 
         const handleUpdated = (entity: QuerySession) => {
             emit('updated', entity);
 
-            queryUpdatedAt.value = entity.lastUpdate;
+            queryEventBus.emit(QueryEventBusEventName.SESSION_UPDATED, entity, 'mtb');
         };
 
         const handleFailed = (e: Error) => {
@@ -71,11 +67,12 @@ export default defineNuxtComponent({
 
         const handleModalUpdated = (entity: QuerySession) => {
             handleUpdated(entity);
+
             modal.value = false;
         };
 
         return {
-            applyFilters,
+            handleSubmit,
 
             handleUpdated,
             handleFailed,
@@ -143,19 +140,19 @@ export default defineNuxtComponent({
                 <DQueryPatientFilters
                     class="mb-3"
                     :available-filters="entity.filters.patient"
-                    @submit="applyFilters"
+                    @submit="handleSubmit"
                 />
 
                 <QueryDiagnosisFilter
                     class="mb-3"
                     :available-filters="entity.filters.diagnoses"
-                    @submit="applyFilters"
+                    @submit="handleSubmit"
                 />
 
                 <QueryHPOFilter
                     class="mb-3"
                     :available-filters="entity.filters.hpoTerms"
-                    @submit="applyFilters"
+                    @submit="handleSubmit"
                 />
             </div>
         </div>
