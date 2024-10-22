@@ -39,7 +39,7 @@ export default defineComponent({
             .then(() => load());
 
         queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
-        queryEventBus.on(QueryEventBusEventName.FILTERS_UPDATED, () => load());
+        queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => load());
 
         return {
             busy,

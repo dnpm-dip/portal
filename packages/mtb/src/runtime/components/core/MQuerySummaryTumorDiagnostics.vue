@@ -1,8 +1,10 @@
 <script lang="ts">
 import {
-    DKVChartTableSwitch, DQuerySummaryGrouped, DQuerySummaryNested,
+    type Coding,
+    DKVChartTableSwitch, DQuerySummaryGrouped, DQuerySummaryNested, useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
+import { navigateTo } from '#imports';
 import type { QuerySummaryTumorDiagnostics } from '../../domains';
 
 export default defineComponent({
@@ -20,6 +22,34 @@ export default defineComponent({
             type: String,
             required: true,
         },
+    },
+    setup(props) {
+        const queryFilterStore = useQueryFilterStore();
+
+        const handleClick = (keys: Coding[]) => {
+            const old = queryFilterStore.get('diagnosis[code]');
+
+            let hasChanged : boolean;
+
+            // todo: check if one group of old is equal to keys
+            if (old.length === 1) {
+                hasChanged = false;
+                queryFilterStore.set('diagnosis[code]', []);
+            } else {
+                hasChanged = true;
+                queryFilterStore.set('diagnosis[code]', [keys]);
+            }
+
+            queryFilterStore.commit();
+
+            if (hasChanged) {
+                navigateTo(`/mtb/query/${props.queryId}/patients`);
+            }
+        };
+
+        return {
+            handleClick,
+        };
     },
 });
 </script>
@@ -40,6 +70,8 @@ export default defineComponent({
                             <DKVChartTableSwitch
                                 :coding-verbose-label="true"
                                 :data="items"
+                                :clickable="true"
+                                @clicked="handleClick"
                             />
                         </template>
                     </DQuerySummaryNested>

@@ -145,13 +145,13 @@ export default defineNuxtComponent({
 
                 <QueryDiagnosisFilter
                     class="mb-3"
-                    :available-filters="entity.filters.diagnoses"
+                    :available-filters="entity.filters.diagnosis"
                     @submit="handleSubmit"
                 />
 
                 <QueryHPOFilter
                     class="mb-3"
-                    :available-filters="entity.filters.hpoTerms"
+                    :available-filters="entity.filters.hpo"
                     @submit="handleSubmit"
                 />
             </div>

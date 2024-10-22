@@ -38,7 +38,7 @@ export default defineComponent({
         });
 
         queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
-        queryEventBus.on(QueryEventBusEventName.FILTERS_UPDATED, () => load());
+        queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => load());
 
         Promise.resolve()
             .then(() => load());
@@ -52,6 +52,7 @@ export default defineComponent({
 <template>
     <template v-if="data">
         <MQuerySummaryTumorDiagnostics
+            :key="entity.lastUpdate"
             :entity="data"
             :query-id="entity.id"
         />

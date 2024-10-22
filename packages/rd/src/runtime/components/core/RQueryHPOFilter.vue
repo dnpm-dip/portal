@@ -3,7 +3,8 @@ import type { PropType } from 'vue';
 import {
     computed, defineComponent, ref, watch,
 } from 'vue';
-import { type HPOFilter, clone, useQueryFilterStore } from '@dnpm-dip/core';
+import { clone, useQueryFilterStore } from '@dnpm-dip/core';
+import type { QueryHpoFilter } from '../../domains';
 
 type QueryRecord = {
     hpo: {
@@ -14,7 +15,7 @@ type QueryRecord = {
 export default defineComponent({
     props: {
         availableFilters: {
-            type: Object as PropType<HPOFilter>,
+            type: Object as PropType<QueryHpoFilter>,
             required: true,
         },
         busy: {

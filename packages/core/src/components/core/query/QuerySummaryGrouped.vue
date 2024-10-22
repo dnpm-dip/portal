@@ -89,7 +89,7 @@ export default defineComponent({
         init();
 
         queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => render());
-        queryEventBus.on(QueryEventBusEventName.FILTERS_UPDATED, () => render());
+        queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => render());
 
         return {
             options,

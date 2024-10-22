@@ -1,6 +1,6 @@
 <script lang="ts">
 import {
-    DNav, DQueryInfoBox, DQueryPatientFilters, injectQueryEventBus,
+    DNav, DQueryInfoBox, DQueryPatientFilters, type QueryBase, injectQueryEventBus,
 } from '@dnpm-dip/core';
 import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
 import { BModal } from 'bootstrap-vue-next';
@@ -8,11 +8,13 @@ import type { PropType } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
 import MQueryCriteriaSummary from '../../../components/core/MQueryCriteriaSummary.vue';
 import MQueryCriteriaSummaryBox from '../../../components/core/MQueryCriteriaSummaryBox.vue';
+import MQueryDiagnosisFilter from '../../../components/core/MQueryDiagnosisFilter.vue';
 import MSearchForm from '../../../components/core/MSearchForm.vue';
 import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        MQueryDiagnosisFilter,
         MQueryCriteriaSummaryBox,
         MQueryCriteriaSummary,
         BModal,
@@ -47,7 +49,7 @@ export default defineNuxtComponent({
             // do nothing
         };
 
-        const handleUpdated = (entity: QuerySession) => {
+        const handleUpdated = (entity: QueryBase) => {
             emit('updated', entity);
 
             queryEventBus.emit(QueryEventBusEventName.SESSION_UPDATED, entity, 'mtb');
@@ -117,11 +119,15 @@ export default defineNuxtComponent({
                 </div>
             </div>
             <div class="col-6 col-md-3 col-lg-2">
-                <DQueryPatientFilters
-                    class="mb-3"
-                    :available-filters="entity.filters.patient"
-                    @submit="handleSubmit"
-                />
+                <div class="d-flex flex-column gap-3">
+                    <DQueryPatientFilters
+                        :available-filters="entity.filters.patient"
+                    />
+
+                    <MQueryDiagnosisFilter
+                        :available="entity.filters.diagnosis?.code"
+                    />
+                </div>
             </div>
         </div>
     </template>

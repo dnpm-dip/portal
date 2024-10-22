@@ -4,19 +4,14 @@ import {
     computed, defineComponent, ref, watch,
 } from 'vue';
 import {
-    type Coding, type DiagnosisFilter, useQueryFilterStore,
+    type Coding, useQueryFilterStore,
 } from '@dnpm-dip/core';
-
-type QueryRecord = {
-    diagnosis: {
-        category: string[]
-    }
-};
+import type { QueryDiagnosisFilter } from '../../domains';
 
 export default defineComponent({
     props: {
         availableFilters: {
-            type: Object as PropType<DiagnosisFilter>,
+            type: Object as PropType<QueryDiagnosisFilter>,
             required: true,
         },
         busy: {

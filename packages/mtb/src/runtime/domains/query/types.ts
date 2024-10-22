@@ -6,9 +6,9 @@ import type {
     DistributionNested,
     KMSurvivalReport,
     KeyValueRecords,
+    PatientFilter,
     QueryBase,
-    QueryRequestMode,
-    QuerySummaryBase,
+    QueryRequestMode, QuerySummaryBase,
 } from '@dnpm-dip/core';
 
 export type QuerySummaryTumorDiagnostics = {
@@ -85,13 +85,26 @@ export type QueryCriteria = {
     variants?: QueryVariantCriteria
 };
 
+export type QueryFilters = {
+    patient: PatientFilter,
+    diagnosis?: {
+        code?: Coding<string>[]
+    },
+    recommendation?: {
+        medication?: Coding<string>[]
+    },
+    therapy?: {
+        medication?: Coding<string[]>
+    }
+};
+
 export type QuerySessionCreate = {
     mode?: CodeRecord<`${QueryRequestMode}` | QueryRequestMode>,
     sites?: Coding[],
     criteria: QueryCriteria
 };
 
-export type QuerySession = QueryBase<QueryCriteria>;
+export type QuerySession = QueryBase<QueryCriteria, QueryFilters>;
 
 export type QueryTherapyResponse = {
     medicationClasses: Coding[],

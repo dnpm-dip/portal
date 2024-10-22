@@ -39,7 +39,7 @@ export default defineNuxtComponent({
             }
         });
 
-        queryEventBus.on(QueryEventBusEventName.FILTERS_UPDATED, () => {
+        queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => {
             if (listRef.value) {
                 listRef.value.load({ filters: queryFilterStore.buildURLRecord() });
             }

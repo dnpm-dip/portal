@@ -1,7 +1,9 @@
 import type {
     CodeRecord,
-    Coding, Distribution,
+    Coding,
+    Distribution,
     KeyValueRecords,
+    PatientFilter,
     QueryBase,
     QueryRequestMode,
     QuerySummaryBase,
@@ -26,7 +28,7 @@ export type QueryCriteriaVariant<
 
 export type QueryCriteria = {
     diagnoses?: CodeRecord[],
-    hpoTerms?: CodeRecord[],
+    hpo?: CodeRecord[],
     variants?: QueryCriteriaVariant[]
 };
 
@@ -36,7 +38,24 @@ export type QuerySessionCreate = {
     criteria: QueryCriteria
 };
 
-export type QuerySession = QueryBase<QueryCriteria>;
+export type QueryDiagnosisFilter = {
+    category?: Coding[],
+};
+
+export type QueryHpoFilter = {
+    value?: Coding[]
+};
+
+export type QueryFilters = {
+    diagnosis: QueryDiagnosisFilter,
+    hpo: QueryHpoFilter,
+    patient: PatientFilter,
+};
+
+export type QuerySession = QueryBase<
+QueryCriteria,
+QueryFilters
+>;
 
 export type QuerySummaryDiagnostics = {
     overallDistributions: {

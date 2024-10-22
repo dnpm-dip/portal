@@ -26,7 +26,7 @@ type FilterGroupInput = string | Coding | string[] | Coding[];
 type FilterGroup = Coding[];
 type Filters = Record<string, FilterGroup[]>;
 
-export function createQueryFilterStore(options: StoreCreateOptions) {
+export function createQueryFilterStore(ctx: StoreCreateOptions) {
     const items = ref<Filters>({});
 
     const addGroup = (key: string, input: FilterGroupInput) => {
@@ -54,16 +54,18 @@ export function createQueryFilterStore(options: StoreCreateOptions) {
         for (let i = 0; i < input.length; i++) {
             addGroup(key, input[i]);
         }
+
+        ctx.queryEventBus.emit(QueryEventBusEventName.FILTER_UPDATED, key);
     };
 
-    const get = (key: string) : FilterGroup => items.value[key] || [];
+    const get = (key: string) : FilterGroup[] => items.value[key] || [];
 
     const resetAll = () => {
         items.value = {};
     };
 
     const commit = () => {
-        options.queryEventBus.emit(QueryEventBusEventName.FILTERS_UPDATED);
+        ctx.queryEventBus.emit(QueryEventBusEventName.FILTERS_COMMITED);
     };
 
     const buildURLRecord = () => {
@@ -71,15 +73,13 @@ export function createQueryFilterStore(options: StoreCreateOptions) {
 
         const keys = Object.keys(items.value);
         for (let i = 0; i < keys.length; i++) {
-            const groups = items.value[keys[i]];
-            const parts : string[] = [];
-            for (let j = 0; j < groups.length; j++) {
-                const part = groups[j].map((el) => serializeCoding(el)).join('+');
-                parts.push(part);
-            }
+            const groups : string[] = items.value[keys[i]]
+                .map((group) => group
+                    .map((el) => serializeCoding(el))
+                    .join('+'));
 
-            if (parts.length > 0) {
-                output[keys[i]] = parts.join(',');
+            if (groups.length > 0) {
+                output[keys[i]] = groups.join(',');
             }
         }
 

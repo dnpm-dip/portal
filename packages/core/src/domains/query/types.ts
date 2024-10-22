@@ -1,30 +1,15 @@
 import type { ObjectLiteral } from '../../types';
 import type { Coding } from '../coding';
 import type { ConnectionPeer } from '../connection-peer';
-import type { PatientFilter } from '../patient';
-import type { Distribution, KeyValueRecords } from '../types';
+import type { Distribution } from '../types';
 import type { MinMaxRange } from '../utility';
-
-export type DiagnosisFilter = {
-    category?: Coding[],
-};
-
-export type HPOFilter = {
-    value?: Coding[]
-};
-
-export type QueryFilters = {
-    diagnoses: DiagnosisFilter,
-    hpoTerms: HPOFilter,
-    patient: PatientFilter,
-};
 
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-service-base/blob/main/src/main/scala/de/dnpm/dip/service/query/Query.scala
  */
 export type QueryBase<
     CRITERIA extends ObjectLiteral = ObjectLiteral,
-    FILTERS extends QueryFilters = QueryFilters,
+    FILTERS extends ObjectLiteral = ObjectLiteral,
 > = {
     id: string,
     submittedAt: string,
@@ -39,12 +24,6 @@ export type QueryBase<
     lastUpdate: string,
     peers: ConnectionPeer[]
 };
-
-export type QuerySummaryGroupedItem<K = Coding, V = KeyValueRecords<Coding>> = {
-    key: K,
-    value: V
-};
-export type QuerySummaryGrouped<K = Coding, V = KeyValueRecords> = QuerySummaryGroupedItem<K, V>[];
 
 export type QuerySummaryDemographics = {
     siteDistribution: Distribution<Coding>,

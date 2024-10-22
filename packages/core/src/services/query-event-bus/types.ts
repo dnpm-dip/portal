@@ -15,7 +15,8 @@ export type QueryEventBusEvents = {
     [QueryEventBusEventName.SESSION_EXPIRED]: [QueryBase<any>, string | null],
     [QueryEventBusEventName.SESSION_REFRESH_FAILED]: [QueryBase<any>, string | null],
 
-    [QueryEventBusEventName.FILTERS_UPDATED]: [],
+    [QueryEventBusEventName.FILTER_UPDATED]: [string],
+    [QueryEventBusEventName.FILTERS_COMMITED]: [],
 };
 
 export type QueryEventBus = EventEmitter<QueryEventBusEvents>;

@@ -12,5 +12,6 @@ export enum QueryEventBusEventName {
 
     SESSION_REFRESH_FAILED = 'sessionRefreshFailed',
 
-    FILTERS_UPDATED = 'filtersUpdated',
+    FILTER_UPDATED = 'filterUpdated',
+    FILTERS_COMMITED = 'filtersCommited',
 }
