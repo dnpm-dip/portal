@@ -1,30 +1,20 @@
 <script lang="ts">
-import type { PropType, Ref } from 'vue';
+import type { PropType } from 'vue';
 import {
-    computed,
-    defineComponent, ref, watch,
+    defineComponent, ref,
 } from 'vue';
 import { VCFormRangeMultiSlider } from '@vuecs/form-controls';
 import type { PatientFilter } from '../../../domains';
 import { useQueryFilterStore } from '../../../stores';
-import { clone } from '../../../utils';
-
-type QueryRecord = {
-    age?: {
-        min?: number,
-        max?: number
-    },
-    vitalStatus?: string[],
-    gender?: string[],
-    site?: string[],
-};
+import QueryFilterBox from './QueryFilterBox.vue';
 
 export default defineComponent({
     components: {
+        QueryFilterBox,
         VCFormRangeMultiSlider,
     },
     props: {
-        availableFilters: {
+        available: {
             type: Object as PropType<PatientFilter>,
             required: true,
         },
@@ -38,189 +28,104 @@ export default defineComponent({
         const store = useQueryFilterStore();
 
         const gender = ref<string[]>([]);
-        const genderChanged = ref(false);
-
         const vitalStatus = ref<string[]>([]);
-        const vitalStatusChanged = ref(false);
-
         const site = ref<string[]>([]);
-        const siteChanged = ref(false);
-
         const age = ref({
             min: 0,
             max: 100,
         });
-        const ageChanged = ref(false);
-
-        const hasChanged = computed(
-            () => genderChanged.value ||
-                vitalStatusChanged.value ||
-                ageChanged.value ||
-                siteChanged.value,
-        );
 
         const reset = () => {
-            if (props.availableFilters.gender) {
-                gender.value = props.availableFilters.gender.map((el) => el.code);
-            }
-            if (props.availableFilters.vitalStatus) {
-                vitalStatus.value = props.availableFilters.vitalStatus.map((el) => el.code);
+            if (props.available.gender) {
+                gender.value = props.available.gender.map((el) => el.code);
             }
 
-            if (props.availableFilters.ageRange) {
+            if (props.available.vitalStatus) {
+                vitalStatus.value = props.available.vitalStatus.map((el) => el.code);
+            }
+
+            if (props.available.ageRange) {
                 age.value = {
-                    min: props.availableFilters.ageRange.min,
-                    max: props.availableFilters.ageRange.max,
+                    min: props.available.ageRange.min,
+                    max: props.available.ageRange.max,
                 };
             }
 
-            if (props.availableFilters.site) {
-                site.value = props.availableFilters.site.map((el) => el.code);
+            if (props.available.site) {
+                site.value = props.available.site.map((el) => el.code);
             }
-
-            genderChanged.value = false;
-            vitalStatusChanged.value = false;
-            siteChanged.value = false;
-            ageChanged.value = false;
         };
 
         reset();
 
-        const buildQueryRecord = (skipCheck?: boolean) : QueryRecord => {
-            const data : QueryRecord = {};
-
-            if (skipCheck || ageChanged.value) {
-                data.age = {
-                    min: age.value.min,
-                    max: age.value.max,
-                };
-            }
-
-            if (skipCheck || vitalStatusChanged.value) {
-                data.vitalStatus = clone(vitalStatus.value);
-            } else {
-                data.vitalStatus = [];
-            }
-
-            if (skipCheck || genderChanged.value) {
-                data.gender = clone(gender.value);
-            } else {
-                data.gender = [];
-            }
-
-            if (skipCheck || siteChanged.value) {
-                data.site = clone(site.value);
-            } else {
-                data.site = [];
-            }
-
-            return data;
-        };
-
-        const previousQuery : Ref<QueryRecord> = ref(buildQueryRecord(true));
-
         const handleAgeRangeChanged = (ctx: { min: number, max: number}) => {
-            if (!previousQuery.value || !previousQuery.value.age) {
-                return;
-            }
-
             age.value.min = Math.round(ctx.min);
             age.value.max = Math.round(ctx.max);
 
-            if (
-                age.value.min !== previousQuery.value.age.min ||
-                age.value.max !== previousQuery.value.age.max
-            ) {
-                ageChanged.value = true;
+            if (props.available.ageRange) {
+                if (
+                    props.available.ageRange.min &&
+                    props.available.ageRange.min === age.value.min
+                ) {
+                    store.set('age[min]', []);
+                } else {
+                    store.set('age[min]', [`${age.value.min}`]);
+                }
+
+                if (
+                    props.available.ageRange.max &&
+                    props.available.ageRange.max === age.value.max
+                ) {
+                    store.set('age[max]', []);
+                } else {
+                    store.set('age[max]', [`${age.value.max}`]);
+                }
             }
         };
 
-        watch(gender, (value) => {
-            if (!previousQuery.value.gender) {
-                genderChanged.value = true;
-                return;
+        const handleGenderChanged = () => {
+            const data : string[] = [];
+            if (
+                props.available &&
+                props.available.gender &&
+                props.available.gender.length !== gender.value.length
+            ) {
+                data.push(...gender.value);
             }
 
-            if (value.length !== previousQuery.value.gender.length) {
-                genderChanged.value = true;
-                return;
+            store.set('gender', data);
+        };
+
+        const handleVitalStatusChanged = () => {
+            const data : string[] = [];
+            if (
+                props.available &&
+                props.available.vitalStatus &&
+                props.available.vitalStatus.length !== vitalStatus.value.length
+            ) {
+                data.push(...vitalStatus.value);
             }
 
-            let changed : boolean = false;
-            let index : number;
-            for (let i = 0; i < value.length; i++) {
-                index = previousQuery.value.gender.findIndex((el) => el === value[i]);
-                if (index === -1) {
-                    changed = true;
-                    break;
-                }
+            store.set('vitalStatus', data);
+        };
+
+        const handleSiteChanged = () => {
+            const data : string[] = [];
+            if (
+                props.available &&
+                props.available.site &&
+                props.available.site.length !== site.value.length
+            ) {
+                data.push(...vitalStatus.value);
             }
 
-            genderChanged.value = changed;
-        }, { deep: true });
-
-        watch(vitalStatus, (value) => {
-            if (!previousQuery.value.vitalStatus) {
-                vitalStatusChanged.value = true;
-                return;
-            }
-            if (value.length !== previousQuery.value.vitalStatus.length) {
-                vitalStatusChanged.value = true;
-                return;
-            }
-
-            let changed : boolean = false;
-            let index : number;
-            for (let i = 0; i < value.length; i++) {
-                index = previousQuery.value.vitalStatus.findIndex((el) => el === value[i]);
-                if (index === -1) {
-                    changed = true;
-                    break;
-                }
-            }
-
-            vitalStatusChanged.value = changed;
-        }, { deep: true });
-
-        watch(site, (value) => {
-            if (!previousQuery.value.site) {
-                return;
-            }
-
-            if (value.length !== previousQuery.value.site.length) {
-                siteChanged.value = true;
-                return;
-            }
-
-            let changed : boolean = false;
-            let index : number;
-            for (let i = 0; i < value.length; i++) {
-                index = previousQuery.value.site.findIndex((el) => el === value[i]);
-                if (index === -1) {
-                    changed = true;
-                    break;
-                }
-            }
-
-            siteChanged.value = changed;
-        }, { deep: true });
+            store.set('site', data);
+        };
 
         const submit = () => {
-            store.set('age[min]', [`${age.value.min}`]);
-            store.set('age[max]', [`${age.value.max}`]);
-            store.set('vitalStatus', clone(vitalStatus.value));
-            store.set('site', clone(site.value));
-            store.set('gender', clone(gender.value));
             store.commit();
 
-            previousQuery.value = buildQueryRecord();
-
-            emit('submit', previousQuery.value);
-
-            genderChanged.value = false;
-            vitalStatusChanged.value = false;
-            siteChanged.value = false;
-            ageChanged.value = false;
+            emit('submit');
         };
 
         return {
@@ -229,125 +134,128 @@ export default defineComponent({
             vitalStatus,
             site,
 
-            hasChanged,
-
             handleAgeRangeChanged,
+            handleGenderChanged,
+            handleVitalStatusChanged,
+            handleSiteChanged,
 
             reset,
             submit,
-
-            previousQuery,
         };
     },
 });
 </script>
 <template>
-    <div class="entity-card">
-        <div class="text-center">
-            <h5 class="text-muted">
+    <QueryFilterBox>
+        <template #title>
+            <h5 class="text-muted mb-0">
                 Patient
             </h5>
-        </div>
-        <div
-            v-if="availableFilters.gender"
-            class="mb-3"
-        >
-            <h6><i class="fas fa-transgender-alt" /> Geschlecht</h6>
+        </template>
+        <template #default>
+            <div
+                v-if="available.gender"
+                class="mb-3"
+            >
+                <h6><i class="fas fa-transgender-alt" /> Geschlecht</h6>
 
-            <div>
-                <template
-                    v-for="item in availableFilters.gender"
-                    :key="item.code"
-                >
-                    <div class="form-check">
-                        <VCFormInputCheckbox
-                            v-model="gender"
-                            :label="true"
-                            :label-content="(item.display || item.code)"
-                            :value="item.code"
-                        />
-                    </div>
-                </template>
+                <div>
+                    <template
+                        v-for="item in available.gender"
+                        :key="item.code"
+                    >
+                        <div class="form-check">
+                            <VCFormInputCheckbox
+                                v-model="gender"
+                                :label="true"
+                                :label-content="(item.display || item.code)"
+                                :value="item.code"
+                                @change="handleGenderChanged"
+                            />
+                        </div>
+                    </template>
+                </div>
             </div>
-        </div>
-        <div
-            v-if="availableFilters.vitalStatus"
-            class="mb-3"
-        >
-            <h6><i class="fas fa-heartbeat" /> Vital Status</h6>
+            <div
+                v-if="available.vitalStatus"
+                class="mb-3"
+            >
+                <h6><i class="fas fa-heartbeat" /> Vital Status</h6>
 
-            <div>
-                <template
-                    v-for="item in availableFilters.vitalStatus"
-                    :key="item.code"
-                >
-                    <div class="form-check">
-                        <VCFormInputCheckbox
-                            v-model="vitalStatus"
-                            :label="true"
-                            :label-content="(item.display || item.code)"
-                            :value="item.code"
-                        />
-                    </div>
-                </template>
+                <div>
+                    <template
+                        v-for="item in available.vitalStatus"
+                        :key="item.code"
+                    >
+                        <div class="form-check">
+                            <VCFormInputCheckbox
+                                v-model="vitalStatus"
+                                :label="true"
+                                :label-content="(item.display || item.code)"
+                                :value="item.code"
+                                @change="handleVitalStatusChanged"
+                            />
+                        </div>
+                    </template>
+                </div>
             </div>
-        </div>
-        <div
-            v-if="availableFilters.site"
-            class="mb-3"
-        >
-            <h6><i class="fas fa-hospital" /> Standort</h6>
+            <div
+                v-if="available.site"
+                class="mb-3"
+            >
+                <h6><i class="fas fa-hospital" /> Standort</h6>
 
-            <div>
-                <template
-                    v-for="item in availableFilters.site"
-                    :key="item.code"
-                >
-                    <div class="form-check">
-                        <VCFormInputCheckbox
-                            v-model="site"
-                            :label="true"
-                            :label-content="(item.display || item.code)"
-                            :value="item.code"
-                        />
-                    </div>
-                </template>
+                <div>
+                    <template
+                        v-for="item in available.site"
+                        :key="item.code"
+                    >
+                        <div class="form-check">
+                            <VCFormInputCheckbox
+                                v-model="site"
+                                :label="true"
+                                :label-content="(item.display || item.code)"
+                                :value="item.code"
+                                @change="handleSiteChanged"
+                            />
+                        </div>
+                    </template>
+                </div>
             </div>
-        </div>
-        <div
-            v-if="availableFilters.ageRange"
-            class="mb-3"
-        >
-            <h6><i class="fas fa-users" /> Alter <small class="text-muted">({{ age.min }} - {{ age.max }})</small></h6>
+            <div
+                v-if="available.ageRange"
+                class="mb-3"
+            >
+                <h6><i class="fas fa-users" /> Alter <small class="text-muted">({{ age.min }} - {{ age.max }})</small></h6>
 
-            <div class="mt-3">
-                <VCFormRangeMultiSlider
-                    :min="age.min"
-                    :max="age.max"
-                    @change="handleAgeRangeChanged"
-                />
+                <div class="mt-3">
+                    <VCFormRangeMultiSlider
+                        :min="age.min"
+                        :max="age.max"
+                        @change="handleAgeRangeChanged"
+                    />
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <button
-                    type="button"
-                    class="btn btn-xs btn-primary btn-block"
-                    :disabled="!hasChanged"
-                    @click.prevent="submit"
-                >
-                    Anwenden
-                </button>
+            <div class="row">
+                <div class="form-group">
+                    <button
+                        type="button"
+                        class="btn btn-xs btn-primary btn-block"
+                        @click.prevent="submit"
+                    >
+                        Anwenden
+                    </button>
+                </div>
+                <div>
+                    <button
+                        type="button"
+                        class="btn btn-xs btn-secondary btn-block"
+                        @click.prevent="reset"
+                    >
+                        Zurücksetzen
+                    </button>
+                </div>
             </div>
-            <div>
-                <button
-                    type="button"
-                    class="btn btn-xs btn-secondary btn-block"
-                    @click.prevent="reset"
-                >
-                    Zurücksetzen
-                </button>
-            </div>
-        </div>
-    </div>
+        </template>
+    </QueryFilterBox>
 </template>

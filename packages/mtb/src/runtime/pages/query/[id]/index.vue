@@ -45,10 +45,6 @@ export default defineNuxtComponent({
             },
         ];
 
-        const handleSubmit = () => {
-            // do nothing
-        };
-
         const handleUpdated = (entity: QueryBase) => {
             emit('updated', entity);
 
@@ -60,7 +56,6 @@ export default defineNuxtComponent({
         };
 
         return {
-            handleSubmit,
             navItems,
             preparedQueryId: route.query.preparedQueryId,
 
@@ -121,7 +116,7 @@ export default defineNuxtComponent({
             <div class="col-6 col-md-3 col-lg-2">
                 <div class="d-flex flex-column gap-3">
                     <DQueryPatientFilters
-                        :available-filters="entity.filters.patient"
+                        :available="entity.filters.patient"
                     />
 
                     <MQueryDiagnosisFilter

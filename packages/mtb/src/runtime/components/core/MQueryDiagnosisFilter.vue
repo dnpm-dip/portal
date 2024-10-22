@@ -4,10 +4,13 @@ import {
     computed, defineComponent, onUnmounted, ref,
 } from 'vue';
 import {
-    type Coding, QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore,
+    type Coding, DQueryFilterBox, QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore,
 } from '@dnpm-dip/core';
 
 export default defineComponent({
+    components: {
+        DQueryFilterBox,
+    },
     props: {
         available: {
             type: Object as PropType<Coding[]>,
@@ -142,65 +145,67 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="entity-card">
-        <div class=" flex-column gap-1 d-flex">
-            <div class="text-center">
-                <h5 class="text-muted">
-                    Diagnose
-                </h5>
-            </div>
-            <div class="d-flex flex-column gap-2">
-                <h6 class="mb-0">
-                    <i class="fas fa-tags" /> Code
-                </h6>
+    <DQueryFilterBox>
+        <template #title>
+            <h5 class="text-muted mb-0">
+                Diagnose
+            </h5>
+        </template>
+        <template #default>
+            <div class=" flex-column gap-1 d-flex">
+                <div class="d-flex flex-column gap-2">
+                    <h6 class="mb-0">
+                        <i class="fas fa-tags" /> Code
+                    </h6>
 
-                <div>
-                    <template
-                        v-for="item in availableSubset"
-                        :key="item.code"
-                    >
-                        <div class="form-check">
-                            <VCFormInputCheckbox
-                                v-model="items"
-                                :label="true"
-                                :label-content="item.code +':' + item.display"
-                                :value="item.code"
-                                @change.prevent="handleChanged"
-                            />
-                        </div>
-                    </template>
+                    <div>
+                        <template
+                            v-for="item in availableSubset"
+                            :key="item.code"
+                        >
+                            <div class="form-check">
+                                <VCFormInputCheckbox
+                                    v-model="items"
+                                    :label="true"
+                                    :label-content="item.code +':' + item.display"
+                                    :value="item.code"
+                                    @change.prevent="handleChanged"
+                                />
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="ms-auto me-auto">
+                        <VCPagination
+                            :total="total"
+                            :offset="offset"
+                            :limit="limit"
+                            @load="load"
+                        />
+                    </div>
                 </div>
 
-                <div class="ms-auto me-auto">
-                    <VCPagination
-                        :total="total"
-                        :offset="offset"
-                        :limit="limit"
-                        @load="load"
-                    />
+                <div class="row">
+                    <div class="form-group">
+                        <button
+                            type="button"
+                            class="btn btn-xs btn-primary btn-block"
+                            @click.prevent="submit"
+                        >
+                            Anwenden
+                        </button>
+                    </div>
+                    <div>
+                        <button
+                            type="button"
+                            class="btn btn-xs btn-secondary btn-block"
+                            @click.prevent="reset"
+                        >
+                            Zurücksetzen
+                        </button>
+                    </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <button
-                        type="button"
-                        class="btn btn-xs btn-primary btn-block"
-                        @click.prevent="submit"
-                    >
-                        Anwenden
-                    </button>
-                </div>
-                <div>
-                    <button
-                        type="button"
-                        class="btn btn-xs btn-secondary btn-block"
-                        @click.prevent="reset"
-                    >
-                        Zurücksetzen
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+        </template>
+    </DQueryFilterBox>
 </template>

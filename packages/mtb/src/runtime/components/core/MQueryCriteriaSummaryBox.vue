@@ -59,33 +59,33 @@ export default defineComponent({
 </script>
 <template>
     <div class="entity-card w-100">
-        <div class="d-flex flex-row">
-            <div>
-                <strong><i class="fa fa-search" /> Suchkriterien</strong>
-            </div>
-            <div class="ms-auto">
-                <button
-                    v-if="entity.criteria"
-                    class="btn btn-dark btn-xs"
-                    @click.prevent="toggleExtended"
-                >
-                    <i :class="{'fa fa-chevron-down': !extended, 'fa fa-chevron-up': extended}" />
-                </button>
+        <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-row">
+                <div>
+                    <strong><i class="fa fa-search" /> Suchkriterien</strong>
+                </div>
+                <div class="ms-auto">
+                    <button
+                        v-if="entity.criteria"
+                        class="btn btn-dark btn-xs"
+                        @click.prevent="toggleExtended"
+                    >
+                        <i :class="{'fa fa-chevron-down': !extended, 'fa fa-chevron-up': extended}" />
+                    </button>
 
-                <NuxtLink
-                    class="btn btn-xs btn-primary ms-1"
-                    @click.prevent="toggleModal"
-                >
-                    <i class="fa-solid fa-cog" />
-                </NuxtLink>
+                    <NuxtLink
+                        class="btn btn-xs btn-primary ms-1"
+                        @click.prevent="toggleModal"
+                    >
+                        <i class="fa-solid fa-cog" />
+                    </NuxtLink>
+                </div>
+            </div>
+            <div v-show="!!entity.criteria && extended">
+                <MQueryCriteriaSummary :entity="entity.criteria" />
             </div>
         </div>
-        <div>
-            <template v-if="entity.criteria && extended">
-                <hr class="mt-1 mb-1">
-                <MQueryCriteriaSummary :entity="entity.criteria" />
-            </template>
-        </div>
+
         <BModal
             v-model="modal"
             :hide-footer="true"
