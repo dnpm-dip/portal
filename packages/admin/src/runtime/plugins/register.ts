@@ -31,54 +31,59 @@ export default defineNuxtPlugin({
                         type: 'link',
                         url: '',
                         icon: 'fa fa-home',
-                        [PageMetaKey.REQUIRED_PERMISSIONS]: [
-
-                        ],
+                        meta: {
+                            [PageMetaKey.REQUIRED_PERMISSIONS]: [],
+                        },
                     },
                     {
                         name: 'Identitätsanbieter',
                         type: 'link',
                         url: 'identity-providers',
                         icon: 'fa-solid fa-atom',
-                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
-                        [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                            AuthupPermissionName.IDENTITY_PROVIDER_CREATE,
-                            AuthupPermissionName.IDENTITY_PROVIDER_UPDATE,
-                            AuthupPermissionName.IDENTITY_PROVIDER_DELETE,
-                            AuthupPermissionName.IDENTITY_PROVIDER_READ,
-                        ],
+                        meta: {
+                            [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                            [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                                AuthupPermissionName.IDENTITY_PROVIDER_CREATE,
+                                AuthupPermissionName.IDENTITY_PROVIDER_UPDATE,
+                                AuthupPermissionName.IDENTITY_PROVIDER_DELETE,
+                                AuthupPermissionName.IDENTITY_PROVIDER_READ,
+                            ],
+                        },
                     },
                     {
                         name: 'Benutzer',
                         type: 'link',
                         url: 'users',
                         icon: 'fas fa-user',
-                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
-                        [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                            AuthupPermissionName.USER_CREATE,
-                            AuthupPermissionName.USER_UPDATE,
-                            AuthupPermissionName.USER_DELETE,
-                            AuthupPermissionName.USER_READ,
-                        ],
+                        meta: {
+                            [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                            [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                                AuthupPermissionName.USER_CREATE,
+                                AuthupPermissionName.USER_UPDATE,
+                                AuthupPermissionName.USER_DELETE,
+                                AuthupPermissionName.USER_READ,
+                            ],
+                        },
                     },
                     {
                         name: 'Rollen',
                         type: 'link',
                         url: 'roles',
                         icon: 'fa-solid fa-theater-masks',
-                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
-                        [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                            AuthupPermissionName.ROLE_CREATE,
-                            AuthupPermissionName.ROLE_UPDATE,
-                            AuthupPermissionName.ROLE_DELETE,
-                            AuthupPermissionName.ROLE_READ,
-                            AuthupPermissionName.ROLE_PERMISSION_CREATE,
-                            AuthupPermissionName.ROLE_PERMISSION_DELETE,
-                            AuthupPermissionName.ROLE_PERMISSION_READ,
-                        ],
+                        meta: {
+                            [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                            [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                                AuthupPermissionName.ROLE_CREATE,
+                                AuthupPermissionName.ROLE_UPDATE,
+                                AuthupPermissionName.ROLE_DELETE,
+                                AuthupPermissionName.ROLE_READ,
+                                AuthupPermissionName.ROLE_PERMISSION_CREATE,
+                                AuthupPermissionName.ROLE_PERMISSION_DELETE,
+                                AuthupPermissionName.ROLE_PERMISSION_READ,
+                            ],
+                        },
                     },
                 ],
-                navigationTopId: 'admin',
             },
         );
     },

@@ -56,25 +56,25 @@ export default defineNuxtComponent({
                 >
                     <VCNavItems
                         class="navbar-nav"
-                        :tier="0"
+                        :level="0"
                     />
 
                     <ul
                         v-if="loggedIn && user"
-                        class="navbar-nav nav-items navbar-gadgets"
+                        class="navbar-nav vc-nav-items navbar-gadgets"
                     >
-                        <li class="nav-item">
+                        <li class="vc-nav-item">
                             <a
                                 href="javascript:void(0)"
-                                class="nav-link"
+                                class="vc-nav-link"
                             >
                                 <span>{{ user.display_name ? user.display_name : user.name }}</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="vc-nav-item">
                             <NuxtLink
                                 :to="'/logout'"
-                                class="nav-link"
+                                class="vc-nav-link"
                             >
                                 <i class="fa fa-power-off" />
                             </NuxtLink>

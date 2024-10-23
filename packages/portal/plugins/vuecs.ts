@@ -5,7 +5,7 @@ import { applyStoreManagerOptions, installStoreManager } from '@vuecs/form-contr
 
 import bootstrap from '@vuecs/preset-bootstrap-v5';
 import fontAwesome from '@vuecs/preset-font-awesome';
-
+import { install as installPagination } from '@vuecs/pagination';
 import installFormControls from '@vuecs/form-controls';
 import { defineNuxtPlugin } from '#app';
 
@@ -33,6 +33,8 @@ export default defineNuxtPlugin({
                 },
             },
         });
+
+        installPagination(nuxt.vueApp);
 
         nuxt.vueApp.use(installFormControls);
         nuxt.vueApp.use(installTimeago, {

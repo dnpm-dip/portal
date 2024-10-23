@@ -5,12 +5,13 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { type ModuleMeta, PageMetaKey } from '@dnpm-dip/core';
+import type { ModuleMeta, NavigationItemMeta } from '@dnpm-dip/core';
+import { PageMetaKey } from '@dnpm-dip/core';
 import type { HookResult } from '@nuxt/schema';
 import type { NavigationItem } from '@vuecs/navigation';
-import installNavigation from '@vuecs/navigation';
+import { injectNavigationManager, install as installNavigation } from '@vuecs/navigation';
 import type { Pinia } from 'pinia';
-import { useStore } from '@authup/client-web-kit';
+import { StoreDispatcherEventName, injectStoreDispatcher, useStore } from '@authup/client-web-kit';
 import { defineNuxtPlugin } from '#app';
 import { Navigation } from '../core';
 import { useModuleStore } from '../stores/modules';
@@ -41,13 +42,22 @@ function extendNavigationItemsURL(items: NavigationItem[], baseURL: string) {
     return items;
 }
 
-function extractNavigationItemsPermissions(items: NavigationItem[]) : string[] {
+function extractNavigationItemsPermissions(items: NavigationItem<NavigationItemMeta>[]) : string[] {
     const permissions : string[] = [];
 
     for (let i = 0; i < items.length; i++) {
         const item = items[i];
-        if (Array.isArray(item[PageMetaKey.REQUIRED_PERMISSIONS])) {
-            permissions.push(...item[PageMetaKey.REQUIRED_PERMISSIONS]);
+
+        if (!item.meta) {
+            continue;
+        }
+
+        if (Array.isArray(item.meta[PageMetaKey.REQUIRED_PERMISSIONS])) {
+            permissions.push(...item.meta[PageMetaKey.REQUIRED_PERMISSIONS]);
+        }
+
+        if (typeof item.meta[PageMetaKey.REQUIRED_PERMISSIONS] === 'string') {
+            permissions.push(item.meta[PageMetaKey.REQUIRED_PERMISSIONS]);
         }
 
         if (item.children) {
@@ -65,36 +75,55 @@ export default defineNuxtPlugin<Record<string, any>>({
         const authStore = useStore(nuxt.$pinia as Pinia);
         const moduleStore = useModuleStore(nuxt.$pinia as Pinia);
 
-        const provider = new Navigation(authStore);
+        const navigation = new Navigation(authStore);
 
         nuxt.hook('register', (context: ModuleMeta) => {
             if (context.navigationItems) {
-                const topNavigationId = context.navigationTopId ||
-                    context.name.toLowerCase();
-
                 context.requirePermissions = extractNavigationItemsPermissions(context.navigationItems);
 
-                const topNavigationItem: NavigationItem = {
-                    id: topNavigationId,
+                const topNavigationItem: NavigationItem<NavigationItemMeta> = {
                     name: context.name,
                     url: context.baseURL,
-                    requireLoggedIn: context.requireLoggedIn,
-                    requirePermissions: context.requirePermissions,
+                    activeMatch: context.baseURL,
+                    meta: {
+                        requireLoggedIn: context.requireLoggedIn,
+                        requirePermissions: context.requirePermissions,
+                    },
                 };
 
                 if (context.baseURL) {
                     extendNavigationItemsURL(context.navigationItems, context.baseURL);
                 }
 
-                provider.addTopElement(topNavigationItem);
-                provider.addSideElements(topNavigationId, context.navigationItems);
+                navigation.addTopElement(topNavigationItem);
+                navigation.addSideElements(context.name, context.navigationItems);
             }
 
             moduleStore.register(context);
         });
 
-        nuxt.vueApp.use(installNavigation, {
-            provider,
+        installNavigation(nuxt.vueApp, {
+            items: ({
+                level,
+                parent,
+            }) => navigation.getItems(level, parent),
         });
+
+        const navigationManager = injectNavigationManager(nuxt.vueApp);
+        const storeDispatcher = injectStoreDispatcher(nuxt.vueApp);
+        storeDispatcher.on(
+            StoreDispatcherEventName.LOGGED_IN,
+            () => navigationManager.build({
+                reset: true,
+                path: nuxt._route.fullPath,
+            }),
+        );
+        storeDispatcher.on(
+            StoreDispatcherEventName.LOGGED_OUT,
+            () => navigationManager.build({
+                reset: true,
+                path: nuxt._route.fullPath,
+            }),
+        );
     },
 });

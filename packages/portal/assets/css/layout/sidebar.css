@@ -24,21 +24,6 @@
         overflow: hidden;
     }
 
-    .page-sidebar .sidebar-header,
-    .page-sidebar .nav-separator,
-    .page-sidebar .nav-link-text {
-        display: none !important;
-    }
-
-    .nav-items .nav-link,
-    .nav-items .nav-item .nav-sub-title {
-        text-align: center;
-    }
-
-    .page-sidebar .nav-item {
-        text-align: center !important;
-    }
-
     .m-l-sidebar {
         margin-left: 56px;
     }

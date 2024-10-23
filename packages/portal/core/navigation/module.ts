@@ -7,12 +7,13 @@
 
 import type { Store } from '@authup/client-web-kit';
 import type { PolicyIdentity } from '@authup/kit';
-import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
-import type { NavigationItem, NavigationProvider } from '@vuecs/navigation';
-import { flattenNestedNavigationItems } from '@vuecs/navigation';
-import type { RouteLocationNormalized } from 'vue-router';
+import type { NavigationItemMeta } from '@dnpm-dip/core';
+import { PageMetaKey } from '@dnpm-dip/core';
+import type { NavigationItem, NavigationItemNormalized } from '@vuecs/navigation';
 
-export class Navigation implements NavigationProvider {
+const TopDefaultName = 'Home';
+
+export class Navigation {
     protected topElements: NavigationItem[];
 
     protected sideElements : Record<string, NavigationItem[]>;
@@ -27,36 +28,38 @@ export class Navigation implements NavigationProvider {
 
         this.topElements = [
             {
-                id: PageNavigationTopID.DEFAULT,
-                name: 'Home',
-                url: '/',
-                rootLink: true,
+                name: TopDefaultName,
+                icon: 'fa fa-home',
             },
         ];
 
         this.sideElements = {
-            default: [
+            [TopDefaultName]: [
                 {
-                    id: 'default',
                     name: 'Home',
                     icon: 'fa fa-home',
                     url: '/',
-                    rootLink: true,
-                    [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                    meta: {
+                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                    },
                 },
                 {
                     name: 'Login',
                     type: 'link',
                     url: '/login',
                     icon: 'fas fa-sign',
-                    [PageMetaKey.REQUIRED_LOGGED_OUT]: true,
+                    meta: {
+                        [PageMetaKey.REQUIRED_LOGGED_OUT]: true,
+                    },
                 },
                 {
                     name: 'Logout',
                     type: 'link',
                     url: '/logout',
                     icon: 'fa fa-power-off',
-                    [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                    meta: {
+                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                    },
                 },
             ],
         };
@@ -84,88 +87,19 @@ export class Navigation implements NavigationProvider {
         this.sideElements[id] = elements;
     }
 
-    async getItems(tier: number, items: NavigationItem[]) {
-        if (tier > 1) {
-            return undefined;
-        }
-
-        if (tier === 0) {
+    async getItems(level: number, parent?: NavigationItemNormalized): Promise<NavigationItem[]> {
+        if (level === 0) {
             return this.reduce(this.topElements);
         }
 
-        let component : NavigationItem;
-        if (items.length > 0) {
-            [component] = items;
-        } else {
-            component = { id: 'default' };
-        }
+        if (parent) {
+            if (level === 1) {
+                if (this.sideElements[parent.name]) {
+                    return this.reduce(this.sideElements[parent.name]);
+                }
 
-        return this.reduce(this.sideElements[component.id || 'default'] || []);
-    }
-
-    async getItemsActiveByRoute(route: RouteLocationNormalized) {
-        const {
-            [PageMetaKey.NAVIGATION_TOP_ID]: topId,
-            [PageMetaKey.NAVIGATION_SIDE_ID]: sideId,
-        } = route.meta;
-
-        const url = route.fullPath;
-
-        const keys = Object.keys(this.sideElements);
-        for (let i = 0; i < keys.length; i++) {
-            const items = flattenNestedNavigationItems(this.sideElements[keys[i]])
-                .sort((a: NavigationItem, b: NavigationItem) => {
-                    if (a.root && !b.root) {
-                        return 1;
-                    }
-
-                    if (!a.root && b.root) {
-                        return -1;
-                    }
-
-                    return (b.url?.length ?? 0) - (a.url?.length ?? 0);
-                })
-                .filter((item) => {
-                    if (sideId) {
-                        if (item.id === sideId) {
-                            return true;
-                        }
-                    }
-
-                    if (!item.url) return false;
-
-                    if (item.rootLink) {
-                        return url === item.url;
-                    }
-
-                    return url === item.url || url.startsWith(item.url);
-                });
-
-            if (items.length === 0) {
-                continue;
+                return this.reduce(this.sideElements[TopDefaultName]);
             }
-
-            const topIndex = this.topElements.findIndex(
-                (el) => (topId && topId === el.id) || el.id === keys[i],
-            );
-
-            if (topIndex === -1) {
-                continue;
-            }
-
-            return [
-                this.topElements[topIndex],
-                items[0],
-            ];
-        }
-
-        const topIndex = this.topElements.findIndex(
-            (el) => topId && topId === el.id,
-        );
-        if (topIndex !== -1) {
-            return [
-                this.topElements[topIndex],
-            ];
         }
 
         return [];
@@ -183,7 +117,11 @@ export class Navigation implements NavigationProvider {
         return output.filter((item) => !!item);
     }
 
-    protected async reduceItem(item: NavigationItem) : Promise<NavigationItem | undefined> {
+    protected async reduceItem(item: NavigationItem<NavigationItemMeta>) : Promise<NavigationItem | undefined> {
+        if (!item.meta) {
+            return item;
+        }
+
         const { loggedIn } = this.store;
         let identity: PolicyIdentity | undefined;
         if (this.store.userId) {
@@ -194,16 +132,16 @@ export class Navigation implements NavigationProvider {
         }
 
         if (
-            typeof item.requireLoggedIn !== 'undefined' &&
-            item.requireLoggedIn &&
+            typeof item.meta.requireLoggedIn !== 'undefined' &&
+            item.meta.requireLoggedIn &&
             !loggedIn
         ) {
             return undefined;
         }
 
         if (
-            typeof item.requireLoggedOut !== 'undefined' &&
-            item.requireLoggedOut &&
+            typeof item.meta.requireLoggedOut !== 'undefined' &&
+            item.meta.requireLoggedOut &&
             loggedIn
         ) {
             return undefined;
@@ -211,12 +149,12 @@ export class Navigation implements NavigationProvider {
 
         let canPass = true;
 
-        if (item.requirePermissions) {
+        if (item.meta.requirePermissions) {
             let permissions : string[] = [];
-            if (Array.isArray(item.requirePermissions)) {
-                permissions = item.requirePermissions.filter((item) => item);
-            } else if (typeof item.requirePermissions === 'string') {
-                permissions = [item.requirePermissions];
+            if (Array.isArray(item.meta.requirePermissions)) {
+                permissions = item.meta.requirePermissions;
+            } else {
+                permissions = [item.meta.requirePermissions];
             }
 
             if (permissions.length > 0) {

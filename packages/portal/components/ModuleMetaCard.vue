@@ -23,7 +23,7 @@ export default defineComponent({
     },
     setup(props) {
         const permissions = computed<string[]>(() => props.entity[PageMetaKey.REQUIRED_PERMISSIONS] || []);
-        const display = computed(() => usePermissionCheck({ name: permissions.value }));
+        const display = usePermissionCheck({ name: permissions.value });
 
         return {
             display,

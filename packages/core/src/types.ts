@@ -14,13 +14,18 @@ export type InstallOptions = {
     baseURL: string
 };
 
+export type NavigationItemMeta = {
+    [PageMetaKey.REQUIRED_LOGGED_IN]?: boolean,
+    [PageMetaKey.REQUIRED_LOGGED_OUT]?: boolean,
+    [PageMetaKey.REQUIRED_PERMISSIONS]?: string | string[],
+};
+
 export type ModuleMeta = {
     type?: `${ModuleType}`,
     name: string,
     description?: string,
     baseURL: string,
-    navigationItems?: NavigationItem[]
-    navigationTopId?: string,
+    navigationItems?: NavigationItem<NavigationItemMeta>[]
     [PageMetaKey.REQUIRED_LOGGED_IN]?: boolean,
     [PageMetaKey.REQUIRED_PERMISSIONS]?: string[]
 };

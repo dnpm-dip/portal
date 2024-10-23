@@ -44,11 +44,5 @@
         "@nuxt/schema": "^3.13.0",
         "@nuxt/kit": "^3.13.0",
         "ufo": "^1.5.4"
-    },
-    "devDependencies": {
-        "@vuecs/navigation": "^1.1.1"
-    },
-    "peerDependencies": {
-        "@vuecs/navigation": "^1.1.1"
     }
 }

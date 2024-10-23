@@ -29,16 +29,16 @@ export default defineNuxtPlugin({
                 requireLoggedIn: true,
                 navigationItems: [
                     {
-                        id: 'rd-search',
                         name: 'Suche',
                         icon: 'fa fa-search',
                         url: '',
-                        [PageMetaKey.REQUIRED_PERMISSIONS]: [
-                            PermissionName.QUERY_SUBMIT,
-                        ],
+                        meta: {
+                            [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                                PermissionName.QUERY_SUBMIT,
+                            ],
+                        },
                     },
                 ],
-                navigationTopId: 'rd',
             },
         );
     },
