@@ -112,14 +112,7 @@ export default defineNuxtPlugin<Record<string, any>>({
         const navigationManager = injectNavigationManager(nuxt.vueApp);
         const storeDispatcher = injectStoreDispatcher(nuxt.vueApp);
         storeDispatcher.on(
-            StoreDispatcherEventName.LOGGED_IN,
-            () => navigationManager.build({
-                reset: true,
-                path: nuxt._route.fullPath,
-            }),
-        );
-        storeDispatcher.on(
-            StoreDispatcherEventName.LOGGED_OUT,
+            StoreDispatcherEventName.ACCESS_TOKEN_UPDATED,
             () => navigationManager.build({
                 reset: true,
                 path: nuxt._route.fullPath,
