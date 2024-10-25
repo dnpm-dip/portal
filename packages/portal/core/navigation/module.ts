@@ -29,7 +29,7 @@ export class Navigation {
         this.topElements = [
             {
                 name: TopDefaultName,
-                icon: 'fa fa-home',
+                url: '/',
             },
         ];
 

@@ -13,8 +13,8 @@
 .vc-nav-items .vc-nav-item.vc-nav-item-nested:hover > .vc-nav-link,
 .vc-nav-items .vc-nav-item.vc-nav-item-nested:active > .vc-nav-link,
 .vc-nav-items .vc-nav-item.vc-nav-item-nested.active > .vc-nav-link {
-    background: #c8b98d;
-    color: #fff;
+    background: none;
+    color: inherit;
 }
 
 .vc-nav-items .vc-nav-item .vc-nav-link.dropdown-toggle {
@@ -26,16 +26,16 @@
 .vc-nav-items .vc-nav-item .vc-nav-link,
 .vc-nav-items .vc-nav-item:hover .vc-nav-link,
 .vc-nav-items .vc-nav-item.active .vc-nav-link {
-    border-left-color: #c8b98d !important;
+    border-left-color: #6d7fcc !important;
 }
 
-.vc-nav-items .vc-nav-link.active:not(.vc-nav-link-root),
+.vc-nav-items .vc-nav-link.active,
 
 .vc-nav-items .vc-nav-link:active,
 .vc-nav-items .vc-nav-link:hover,
 
-.vc-nav-items .vc-nav-link.router-link-active:not(.vc-nav-link-root),
-.vc-nav-items .vc-nav-link.nuxt-link-active:not(.vc-nav-link-root),
+.vc-nav-items .vc-nav-link.router-link-active,
+.vc-nav-items .vc-nav-link.nuxt-link-active,
 
 .vc-nav-items .vc-nav-link.router-link-exact-active,
 .vc-nav-items .vc-nav-link.nuxt-link-exact-active {
