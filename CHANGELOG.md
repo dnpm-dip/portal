@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.27.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.26.0...v1.27.0) (2024-10-29)
+
+
+### Features
+
+* bump authup & vuecs packages ([6e433a3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6e433a3633f81cf2ef384a30f462e1cadd6ab0c2))
+* mtb diagnosis filter implementation + query filter schema updated ([3de72da](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/3de72da7969dbb6324dffbe215a09130f46d8a98))
+* refactored build query filters (new event bus & query filter store) ([#841](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/841)) ([685d539](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/685d539b3de5652d377c9082846519064b3048f4))
+* refactored query patient filter ([6d62807](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6d62807f8aab0434f05ed80ecc32da83e4adb4e0))
+* reorganized query filter store ([dc6755d](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/dc6755d6f968ed53f02a9afc23a6f4dd43ee1a2d))
+* table click event support ([52aef47](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/52aef471de01e105cb0919d6f2c05ef344e8ba14))
+
+
+### Bug Fixes
+
+* minor filter submission fix for patient filter ([15fc86e](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/15fc86ea189c254cd9cdf9bbb9df144c0932bcb3))
+* rerender navigation on access token changes ([ac1ccb8](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ac1ccb8542f3125409566ee11df0ca2b3e9a93de))
+
 ## [1.26.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.25.0...v1.26.0) (2024-10-14)
 
 
