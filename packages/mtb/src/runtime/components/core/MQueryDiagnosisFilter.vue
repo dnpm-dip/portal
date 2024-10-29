@@ -6,6 +6,7 @@ import {
 import {
     type Coding, DQueryFilterBox, QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { QueryFilterURLKey } from '../../constants';
 
 export default defineComponent({
     components: {
@@ -27,12 +28,21 @@ export default defineComponent({
 
         const items = ref<string[]>([]);
 
+        const itemsAvailable = computed(() => {
+            if (!props.available) {
+                return [];
+            }
+
+            return [...props.available]
+                .sort((a, b) => a.code.localeCompare(b.code));
+        });
+
         const offset = ref(0);
         const limit = ref(10);
-        const total = computed<number>(() => (props.available ? props.available.length : 0));
+        const total = computed<number>(() => itemsAvailable.value.length);
 
         const availableSubset = computed(() => {
-            if (!props.available) {
+            if (itemsAvailable.value.length === 0) {
                 return [];
             }
 
@@ -45,7 +55,7 @@ export default defineComponent({
 
             const endIndex : number = startIndex + limit.value;
 
-            return props.available
+            return itemsAvailable.value
                 .slice(startIndex, endIndex);
         });
 
@@ -58,7 +68,10 @@ export default defineComponent({
         const removeFilterUpdatedHandler = eventBus.on(
             QueryEventBusEventName.FILTER_UPDATED,
             (key) => {
-                if (key !== 'diagnosis[code]' || !listenForFilterUpdates.value) {
+                if (
+                    key !== QueryFilterURLKey.DIAGNOSIS_CODE ||
+                    !listenForFilterUpdates.value
+                ) {
                     return;
                 }
 
@@ -66,19 +79,17 @@ export default defineComponent({
                     .flat()
                     .map((el) => el.code);
 
-                if (
-                    storeItems.length === 0 &&
-                    !!props.available
-                ) {
-                    items.value = props.available.map((el) => el.code);
+                if (storeItems.length === 0) {
+                    items.value = itemsAvailable.value.map((el) => el.code);
 
                     return;
                 }
+
                 items.value = storeItems;
 
                 const [item] = storeItems;
-                if (item && props.available) {
-                    const index = props.available.findIndex((el) => el.code === item);
+                if (item) {
+                    const index = itemsAvailable.value.findIndex((el) => el.code === item);
                     if (index === -1) {
                         return;
                     }
@@ -95,27 +106,26 @@ export default defineComponent({
         const setFilter = () => {
             const data : string[] = [];
 
-            if (
-                props.available &&
-                props.available.length !== items.value.length
-            ) {
+            if (itemsAvailable.value.length !== items.value.length) {
                 data.push(...items.value);
             }
 
             listenForFilterUpdates.value = false;
-            store.set('diagnosis[code]', data);
+            store.set(QueryFilterURLKey.DIAGNOSIS_CODE, data);
             listenForFilterUpdates.value = true;
         };
 
-        const reset = () => {
-            if (props.available) {
-                items.value = props.available.map((el) => el.code);
-            }
+        const selectAll = () => {
+            items.value = itemsAvailable.value.map((el) => el.code);
 
             setFilter();
         };
 
-        reset();
+        const unselectAll = () => {
+            items.value = [];
+        };
+
+        selectAll();
 
         const submit = () => {
             store.commit();
@@ -131,7 +141,8 @@ export default defineComponent({
             items,
 
             handleChanged,
-            reset,
+            selectAll,
+            unselectAll,
             submit,
 
             availableSubset,
@@ -157,6 +168,27 @@ export default defineComponent({
                     <h6 class="mb-0">
                         <i class="fas fa-tags" /> Code
                     </h6>
+
+                    <div class="d-flex flex-row">
+                        <div>
+                            <button
+                                type="button"
+                                class="btn btn-xs btn-dark"
+                                @click.prevent="selectAll"
+                            >
+                                Alle auswählen
+                            </button>
+                        </div>
+                        <div class="ms-auto">
+                            <button
+                                type="button"
+                                class="btn btn-xs btn-dark"
+                                @click.prevent="unselectAll"
+                            >
+                                Alle abwählen
+                            </button>
+                        </div>
+                    </div>
 
                     <div>
                         <template
@@ -193,15 +225,6 @@ export default defineComponent({
                             @click.prevent="submit"
                         >
                             Anwenden
-                        </button>
-                    </div>
-                    <div>
-                        <button
-                            type="button"
-                            class="btn btn-xs btn-secondary btn-block"
-                            @click.prevent="reset"
-                        >
-                            Zurücksetzen
                         </button>
                     </div>
                 </div>

@@ -8,6 +8,7 @@ import {
 } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import { navigateTo } from '#imports';
+import { QueryFilterURLKey } from '../../constants';
 import type { QuerySummaryTumorDiagnostics } from '../../domains';
 
 export default defineComponent({
@@ -32,12 +33,12 @@ export default defineComponent({
         const handleClick = (keys: Coding[]) => {
             let hasChanged : boolean;
 
-            if (queryFilterStore.hasGroup('diagnosis[code]', keys)) {
+            if (queryFilterStore.hasGroup(QueryFilterURLKey.DIAGNOSIS_CODE, keys)) {
                 hasChanged = false;
-                queryFilterStore.set('diagnosis[code]', []);
+                queryFilterStore.set(QueryFilterURLKey.DIAGNOSIS_CODE, []);
             } else {
                 hasChanged = true;
-                queryFilterStore.set('diagnosis[code]', [keys]);
+                queryFilterStore.set(QueryFilterURLKey.DIAGNOSIS_CODE, [keys]);
             }
 
             queryFilterStore.commit();
@@ -70,7 +71,7 @@ export default defineComponent({
                             <DKVChartTableSwitch
                                 :coding-verbose-label="true"
                                 :data="items"
-                                :clickable="false"
+                                :clickable="true"
                                 @clicked="handleClick"
                             />
                         </template>

@@ -119,11 +119,9 @@ export default defineNuxtComponent({
                         :available="entity.filters.patient"
                     />
 
-                    <!--
                     <MQueryDiagnosisFilter
                         :available="entity.filters.diagnosis?.code"
                     />
-                    -->
                 </div>
             </div>
         </div>
