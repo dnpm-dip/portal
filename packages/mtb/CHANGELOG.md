@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.26.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.25.0...v1.26.0) (2024-10-29)
+
+
+### Features
+
+* bump authup & vuecs packages ([6e433a3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6e433a3633f81cf2ef384a30f462e1cadd6ab0c2))
+* initial query-session-store implementation ([f8f1292](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f8f1292ff9846b0be86e2050daba5d0976cef852))
+* mtb diagnosis filter implementation + query filter schema updated ([3de72da](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/3de72da7969dbb6324dffbe215a09130f46d8a98))
+* refactored build query filters (new event bus & query filter store) ([#841](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/841)) ([685d539](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/685d539b3de5652d377c9082846519064b3048f4))
+* refactored query patient filter ([6d62807](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6d62807f8aab0434f05ed80ecc32da83e4adb4e0))
+* reorganized query filter store ([dc6755d](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/dc6755d6f968ed53f02a9afc23a6f4dd43ee1a2d))
+* simplified plugin dependency definiton & fixed meta-box + navigation rendering ([6047d05](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6047d05b2bd68c501b04276c70d9461f7cf5d37a))
+* table click event support ([52aef47](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/52aef471de01e105cb0919d6f2c05ef344e8ba14))
+
+
+### Bug Fixes
+
+* **deps:** bump vue from 3.5.11 to 3.5.12 ([#818](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/818)) ([a2f98ac](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a2f98acfb2aea45eecb87b0945008ded0e2ec3a4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.26.0 to ^1.27.0
+    * @dnpm-dip/kit bumped from ^1.20.0 to ^1.21.0
+
 ## [1.25.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.24.0...v1.25.0) (2024-10-14)
 
 

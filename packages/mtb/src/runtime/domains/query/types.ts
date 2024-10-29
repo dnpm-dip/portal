@@ -112,3 +112,10 @@ export type QueryTherapyResponse = {
     supportingVariants: string[],
     responseDistribution: DistributionConceptsCount<Coding>
 };
+
+export type QueryTherapyResponseByVariant = {
+    medicationClasses: Coding[],
+    medications: Coding[],
+    supportingVariant: string,
+    responseDistribution: DistributionConceptsCount<Coding>
+};

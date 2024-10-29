@@ -116,7 +116,7 @@ export default defineComponent({
                 props.available.site &&
                 props.available.site.length !== site.value.length
             ) {
-                data.push(...vitalStatus.value);
+                data.push(...site.value);
             }
 
             store.set('site', data);
