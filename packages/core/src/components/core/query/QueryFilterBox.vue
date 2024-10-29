@@ -9,7 +9,7 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
     setup() {
-        const extended = ref(false);
+        const extended = ref(true);
 
         const toggleExtended = () => {
             extended.value = !extended.value;

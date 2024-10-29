@@ -1,3 +1,10 @@
+<!--
+  - Copyright (c) 2024.
+  - Author Peter Placzek (tada5hi)
+  - For the full copyright and license information,
+  - view the LICENSE file that was distributed with this source code.
+  -->
+
 <script lang="ts">
 import {
     type Coding,
@@ -22,7 +29,7 @@ import {
 import type { FormSelectOption } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
 import { defineComponent, ref } from 'vue';
-import { injectHTTPClient } from '../../core/http-client';
+import { injectHTTPClient } from '../../../core/http-client';
 import {
     FormMutationType,
     type MutationDefinition,
@@ -30,8 +37,8 @@ import {
     type QueryCriteria,
     type QueryFusionCriteria, type QueryMedicationCriteria,
     type QuerySNVCriteria, type QueryVariantCriteria,
-} from '../../domains';
-import MMutationTabGroup from './MMutationTabGroup.vue';
+} from '../../../domains';
+import MMutationTabGroup from '../MMutationTabGroup.vue';
 import MSearchMedicationForm from './MSearchMedicationForm.vue';
 
 export default defineComponent({

@@ -1,5 +1,5 @@
 <!--
-  - Copyright (c) 2024.
+  - Copyright (c) 2024-2024.
   - Author Peter Placzek (tada5hi)
   - For the full copyright and license information,
   - view the LICENSE file that was distributed with this source code.
@@ -7,9 +7,9 @@
 <script lang="ts">
 import { BModal } from 'bootstrap-vue-next';
 import { type PropType, defineComponent, ref } from 'vue';
-import type { QuerySession } from '../../domains';
+import type { QuerySession } from '../../../domains';
 import MQueryCriteriaSummary from './MQueryCriteriaSummary.vue';
-import MSearchForm from './MSearchForm.vue';
+import MSearchForm from '../search/MSearchForm.vue';
 
 export default defineComponent({
     components: { BModal, MQueryCriteriaSummary, MSearchForm },

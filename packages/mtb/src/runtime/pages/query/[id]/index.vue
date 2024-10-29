@@ -6,10 +6,10 @@ import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/
 import { BModal } from 'bootstrap-vue-next';
 import type { PropType } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
-import MQueryCriteriaSummary from '../../../components/core/MQueryCriteriaSummary.vue';
-import MQueryCriteriaSummaryBox from '../../../components/core/MQueryCriteriaSummaryBox.vue';
+import MQueryCriteriaSummary from '../../../components/core/query-criteria/MQueryCriteriaSummary.vue';
+import MQueryCriteriaSummaryBox from '../../../components/core/query-criteria/MQueryCriteriaSummaryBox.vue';
 import MQueryDiagnosisFilter from '../../../components/core/MQueryDiagnosisFilter.vue';
-import MSearchForm from '../../../components/core/MSearchForm.vue';
+import MSearchForm from '../../../components/core/search/MSearchForm.vue';
 import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
@@ -119,9 +119,11 @@ export default defineNuxtComponent({
                         :available="entity.filters.patient"
                     />
 
+                    <!--
                     <MQueryDiagnosisFilter
                         :available="entity.filters.diagnosis?.code"
                     />
+                    -->
                 </div>
             </div>
         </div>

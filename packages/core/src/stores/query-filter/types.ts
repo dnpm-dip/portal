@@ -10,8 +10,10 @@ import type {
     StoreDefinition as BaseStoreDefinition,
     Pinia,
     _ExtractActionsFromSetupStore,
-    _ExtractGettersFromSetupStore, _ExtractStateFromSetupStore,
+    _ExtractGettersFromSetupStore,
+    _ExtractStateFromSetupStore,
 } from 'pinia';
+import type { Coding } from '../../domains';
 
 import type { createQueryFilterStore } from './module';
 
@@ -33,3 +35,7 @@ _ExtractActionsFromSetupStore<StoreData>
 export type QueryFilterStoreInstallOptions = {
     pinia?: Pinia
 };
+
+export type QueryFilterGroupInput = string | Coding | string[] | Coding[];
+export type QueryFilterGroup = Coding[];
+export type QueryFilters = Record<string, QueryFilterGroup[]>;

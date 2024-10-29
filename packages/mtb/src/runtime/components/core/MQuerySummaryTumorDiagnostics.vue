@@ -1,7 +1,10 @@
 <script lang="ts">
 import {
     type Coding,
-    DKVChartTableSwitch, DQuerySummaryGrouped, DQuerySummaryNested, useQueryFilterStore,
+    DKVChartTableSwitch,
+    DQuerySummaryGrouped,
+    DQuerySummaryNested,
+    useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import { navigateTo } from '#imports';
@@ -27,12 +30,9 @@ export default defineComponent({
         const queryFilterStore = useQueryFilterStore();
 
         const handleClick = (keys: Coding[]) => {
-            const old = queryFilterStore.get('diagnosis[code]');
-
             let hasChanged : boolean;
 
-            // todo: check if one group of old is equal to keys
-            if (old.length === 1) {
+            if (queryFilterStore.hasGroup('diagnosis[code]', keys)) {
                 hasChanged = false;
                 queryFilterStore.set('diagnosis[code]', []);
             } else {
@@ -70,7 +70,7 @@ export default defineComponent({
                             <DKVChartTableSwitch
                                 :coding-verbose-label="true"
                                 :data="items"
-                                :clickable="true"
+                                :clickable="false"
                                 @clicked="handleClick"
                             />
                         </template>

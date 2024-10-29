@@ -1,8 +1,15 @@
+<!--
+  - Copyright (c) 2024.
+  - Author Peter Placzek (tada5hi)
+  - For the full copyright and license information,
+  - view the LICENSE file that was distributed with this source code.
+  -->
+
 <script lang="ts">
 import type { PropType } from 'vue';
-import { defineComponent, ref } from 'vue';
-import type { PatientMatch } from '../../domains';
-import MQueryCriteriaSummary from './MQueryCriteriaSummary.vue';
+import { computed, defineComponent, ref } from 'vue';
+import type { PatientMatch } from '../../../domains';
+import MQueryCriteriaSummary from '../query-criteria/MQueryCriteriaSummary.vue';
 
 export default defineComponent({
     components: {
@@ -21,14 +28,23 @@ export default defineComponent({
             type: Number,
         },
     },
-    setup() {
-        const extended = ref(true);
+    setup(props) {
+        const extended = ref<boolean>(true);
 
         const toggleExtended = () => {
             extended.value = !extended.value;
         };
 
+        const id = computed(() => {
+            if (Number.isInteger(props.index)) {
+                return props.index + 1;
+            }
+
+            return props.entity.id;
+        });
+
         return {
+            id,
             toggleExtended,
             extended,
         };
@@ -39,7 +55,7 @@ export default defineComponent({
     <div class="entity-card w-100">
         <div class="d-flex flex-row">
             <div>
-                <strong># {{ Number.isInteger(index) ? index + 1 : entity.id }}</strong>
+                <strong># {{ id }}</strong>
             </div>
             <div class="ms-auto">
                 <button

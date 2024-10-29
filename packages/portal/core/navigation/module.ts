@@ -150,7 +150,7 @@ export class Navigation {
         let canPass = true;
 
         if (item.meta.requirePermissions) {
-            let permissions : string[] = [];
+            let permissions : string[];
             if (Array.isArray(item.meta.requirePermissions)) {
                 permissions = item.meta.requirePermissions;
             } else {

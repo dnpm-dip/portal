@@ -1,8 +1,15 @@
+/*
+ * Copyright (c) 2024.
+ * Author Peter Placzek (tada5hi)
+ * For the full copyright and license information,
+ * view the LICENSE file that was distributed with this source code.
+ */
+
 import type { ObjectLiteral, PatientMatchBase, ResourceCollectionSlots } from '@dnpm-dip/core';
 import { createResourceCollectionManager } from '@dnpm-dip/core';
 import type { PropType, SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
-import { injectHTTPClient } from '../../core/http-client';
+import { injectHTTPClient } from '../../../core/http-client';
 
 export default defineComponent({
     props: {

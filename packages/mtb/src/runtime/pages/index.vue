@@ -2,7 +2,7 @@
 import { PageMetaKey, useToast } from '@dnpm-dip/core';
 import type { ClientError } from 'hapic';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
-import SearchForm from '../components/core/MSearchForm.vue';
+import SearchForm from '../components/core/search/MSearchForm.vue';
 import { PermissionName, type QuerySession } from '../domains';
 
 export default defineNuxtComponent({

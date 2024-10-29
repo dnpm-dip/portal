@@ -8,9 +8,9 @@ import {
     defineComponent, markRaw, ref, toRef,
 } from 'vue';
 import { FormMutationType, type MutationDefinition } from '../../domains';
-import MSearchCNVForm from './MSearchCNVForm.vue';
-import MSearchFusionForm from './MSearchFusionForm.vue';
-import MSearchSNVForm from './MSearchSNVForm.vue';
+import MSearchCNVForm from './search/MSearchCNVForm.vue';
+import MSearchFusionForm from './search/MSearchFusionForm.vue';
+import MSearchSNVForm from './search/MSearchSNVForm.vue';
 
 export default defineComponent({
     components: { VCFormSelect },
