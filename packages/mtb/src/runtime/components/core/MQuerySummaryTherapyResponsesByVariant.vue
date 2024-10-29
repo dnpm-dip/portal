@@ -1,8 +1,7 @@
 <script lang="ts">
-import type { URLQueryRecord } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import { BTable } from 'bootstrap-vue-next';
-import type { QueryTherapyResponse } from '../../domains';
+import type { QueryTherapyResponseByVariant } from '../../domains';
 import MTherapyResponseDistributionBar from './MTherapyResponseDistributionBar.vue';
 
 export default defineComponent({
@@ -12,7 +11,7 @@ export default defineComponent({
     },
     props: {
         items: {
-            type: Object as PropType<QueryTherapyResponse[]>,
+            type: Object as PropType<QueryTherapyResponseByVariant[]>,
             required: true,
         },
         busy: {
