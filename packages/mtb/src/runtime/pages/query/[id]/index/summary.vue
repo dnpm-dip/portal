@@ -42,6 +42,9 @@ export default defineNuxtComponent({
                 id: 'therapyResponses', name: 'Therapie Responses', icon: 'fas fa-comment-medical', urlSuffix: '/therapy-responses',
             },
             {
+                id: 'therapyResponsesByVariant', name: 'Therapie Responses By Variant', icon: 'fas fa-comment-medical', urlSuffix: '/therapy-responses-by-variant',
+            },
+            {
                 id: 'survivalReport', name: 'Überlebensbericht', icon: 'fas fa-book-open', urlSuffix: '/survival-report',
             },
         ];

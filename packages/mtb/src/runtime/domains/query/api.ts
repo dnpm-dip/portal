@@ -12,7 +12,7 @@ import type {
     QuerySessionCreate,
     QuerySummaryMedication,
     QuerySummaryTumorDiagnostics,
-    QueryTherapyResponse,
+    QueryTherapyResponse, QueryTherapyResponseByVariant,
 } from './types';
 
 export class QueryAPI extends BaseAPI {
@@ -103,6 +103,11 @@ export class QueryAPI extends BaseAPI {
 
     async getTherapyResponses(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QueryTherapyResponse>> {
         const response = await this.client.get(`mtb/queries/${queryId}/therapy-responses${this.buildRequestQueryString(query)}`);
+        return response.data;
+    }
+
+    async getTherapyResponsesByVariant(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QueryTherapyResponseByVariant>> {
+        const response = await this.client.get(`mtb/queries/${queryId}/therapy-responses-by-variant${this.buildRequestQueryString(query)}`);
         return response.data;
     }
 
