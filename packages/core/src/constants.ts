@@ -14,3 +14,11 @@ export enum LogicalOperator {
     AND = 'and',
     OR = 'or',
 }
+
+export enum QueryFilterURLKey {
+    AGE_MIN = 'age[min]',
+    AGE_MAX = 'age[max]',
+    GENDER = 'gender',
+    VITAL_STATUS = 'vitalStatus',
+    SITE = 'site',
+}

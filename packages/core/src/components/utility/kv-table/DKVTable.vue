@@ -91,7 +91,9 @@ export default defineComponent({
                 return;
             }
 
-            const { key: itemKey } = props.data[index];
+            const {
+                key: itemKey,
+            } = props.data[index];
 
             if (isCoding(itemKey)) {
                 emit('clicked', [{ ...itemKey }]);

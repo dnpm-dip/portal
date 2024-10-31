@@ -22,9 +22,11 @@ export type CodeRecord<V extends string = string> = {
 export type KeyValueRecord<
     KEY = any,
     VALUE = number,
+    CHILDREN extends KeyValueRecord<any, any>[] = KeyValueRecord<any, any, any>[],
 > = {
     key: KEY,
-    value: VALUE
+    value: VALUE,
+    children?: CHILDREN
 };
 
 export type KeyValueChildrenRecord<

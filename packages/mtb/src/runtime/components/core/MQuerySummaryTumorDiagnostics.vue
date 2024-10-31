@@ -6,8 +6,9 @@ import {
     DQuerySummaryNested,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { type PropType, defineComponent } from 'vue';
+import { type PropType, defineComponent, ref } from 'vue';
 import { navigateTo } from '#imports';
+import { QueryFilterURLKey } from '../../constants';
 import type { QuerySummaryTumorDiagnostics } from '../../domains';
 
 export default defineComponent({
@@ -27,23 +28,26 @@ export default defineComponent({
         },
     },
     setup(props) {
+        const tumorEntitiesVNode = ref<null | typeof DQuerySummaryNested>(null);
         const queryFilterStore = useQueryFilterStore();
 
         const handleClick = (keys: Coding[]) => {
             let hasChanged : boolean;
 
-            if (queryFilterStore.hasGroup('diagnosis[code]', keys)) {
+            if (queryFilterStore.hasGroup(QueryFilterURLKey.DIAGNOSIS_CODE, keys)) {
                 hasChanged = false;
-                queryFilterStore.set('diagnosis[code]', []);
+                queryFilterStore.set(QueryFilterURLKey.DIAGNOSIS_CODE, []);
             } else {
                 hasChanged = true;
-                queryFilterStore.set('diagnosis[code]', [keys]);
+                queryFilterStore.set(QueryFilterURLKey.DIAGNOSIS_CODE, [keys]);
             }
 
             queryFilterStore.commit();
 
             if (hasChanged) {
                 navigateTo(`/mtb/query/${props.queryId}/patients`);
+            } else if (tumorEntitiesVNode.value) {
+                tumorEntitiesVNode.value.reset();
             }
         };
 
@@ -62,6 +66,7 @@ export default defineComponent({
                 <div class="entity-card text-center mb-3">
                     <h6>Tumor-Entitäten (ICD-10-GM)</h6>
                     <DQuerySummaryNested
+                        ref="tumorEntitiesVNode"
                         :label="'Kategorie'"
                         :entity="entity.overallDistributions.tumorEntities"
                         :key-verbose="true"
@@ -70,7 +75,7 @@ export default defineComponent({
                             <DKVChartTableSwitch
                                 :coding-verbose-label="true"
                                 :data="items"
-                                :clickable="false"
+                                :clickable="true"
                                 @clicked="handleClick"
                             />
                         </template>

@@ -7,7 +7,7 @@
 
 import { ref } from 'vue';
 import type { QueryBase } from '../../domains';
-import { QueryEventBusEventName } from '../../services/query-event-bus/constants';
+import { QueryEventBusEventName } from '../../services';
 import type { StoreCreateOptions } from '../types';
 
 export function createQuerySessionStore(ctx: StoreCreateOptions) {
@@ -30,17 +30,19 @@ export function createQuerySessionStore(ctx: StoreCreateOptions) {
         expireDate.value = new Date(Date.now() + expiresMS);
 
         expiringTimeout = setTimeout(() => {
-            ctx.queryEventBus.emit(QueryEventBusEventName.SESSION_EXPIRING, {
-                session: input,
-                useCase: useCase.value,
-            });
-        }, expiresMS - 30_000);
+            ctx.queryEventBus.emit(
+                QueryEventBusEventName.SESSION_EXPIRING,
+                input,
+                useCase.value,
+            );
+        }, expiresMS - (5 * 60_000));
 
         expiredTimeout = setTimeout(() => {
-            ctx.queryEventBus.emit(QueryEventBusEventName.SESSION_EXPIRED, {
-                session: input,
-                useCase: useCase.value,
-            });
+            ctx.queryEventBus.emit(
+                QueryEventBusEventName.SESSION_EXPIRED,
+                input,
+                useCase.value,
+            );
         }, expiresMS);
 
         session.value = input;
