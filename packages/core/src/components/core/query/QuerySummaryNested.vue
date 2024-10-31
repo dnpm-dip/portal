@@ -31,7 +31,7 @@ export default defineComponent({
             default: false,
         },
     },
-    setup(props) {
+    setup(props, { expose }) {
         const id = ref(null) as Ref<string | number | null>;
         const transformToIndex = (input: string | number | null) => {
             let index = -1;
@@ -58,6 +58,10 @@ export default defineComponent({
         const reset = () => {
             id.value = null;
         };
+
+        expose({
+            reset,
+        });
 
         const items = computed(() => {
             const index = transformToIndex(id.value);

@@ -23,7 +23,7 @@ export default defineComponent({
         const api = injectHTTPClient();
         const route = useRoute();
 
-        const entity = ref<PatientRecord>(null) as any;
+        const entity = ref<null | PatientRecord>(null);
 
         if (typeof route.params.patientId !== 'string') {
             await navigateTo({ path: `/mtb/query/${props.entity.id}` });
@@ -33,7 +33,7 @@ export default defineComponent({
         try {
             entity.value = await api.query.getPatientRecord(props.entity.id, route.params.patientId);
         } catch (e) {
-            await navigateTo({ path: `/mtb/query/${props.entity.id}` });
+            await navigateTo({ path: `/mtb/query/${props.entity.id}/patients` });
             throw createError({});
         }
 
@@ -65,7 +65,7 @@ export default defineComponent({
             <h4>
                 <NuxtLink
                     class="btn btn-xs btn-dark me-1"
-                    :to="'/mtb/query/'+ entity.id"
+                    :to="'/mtb/query/'+ entity.id +'/patients'"
                 >
                     <i class="fa fa-arrow-left" />
                 </NuxtLink>

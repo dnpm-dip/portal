@@ -26,7 +26,10 @@ const toCoding = (input: string | Coding) : Coding => {
 export function createQueryFilterStore(ctx: StoreCreateOptions) {
     const items = ref<QueryFilters>({});
 
-    const hasGroup = (key: string, input: QueryFilterGroupInput) => {
+    const hasGroup = (
+        key: string,
+        input: QueryFilterGroupInput,
+    ) => {
         if (typeof items.value[key] === 'undefined' || items.value[key].length === 0) {
             return false;
         }
@@ -47,7 +50,10 @@ export function createQueryFilterStore(ctx: StoreCreateOptions) {
         return false;
     };
 
-    const addGroup = (key: string, input: QueryFilterGroupInput) => {
+    const addGroup = (
+        key: string,
+        input: QueryFilterGroupInput,
+    ) => {
         let data : Coding[];
         if (Array.isArray(input)) {
             data = input.map((el) => toCoding(el));

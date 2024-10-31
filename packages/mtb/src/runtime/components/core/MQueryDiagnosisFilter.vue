@@ -64,6 +64,32 @@ export default defineComponent({
             offset.value = pagination.offset;
         };
 
+        const init = () => {
+            const storeItems = store.get(QueryFilterURLKey.DIAGNOSIS_CODE)
+                .flat()
+                .map((el) => el.code);
+
+            if (storeItems.length === 0) {
+                items.value = itemsAvailable.value.map((el) => el.code);
+
+                return;
+            }
+
+            items.value = storeItems;
+
+            const [item] = storeItems;
+            if (item) {
+                const index = itemsAvailable.value.findIndex((el) => el.code === item);
+                if (index === -1) {
+                    return;
+                }
+
+                offset.value = index === 0 ?
+                    0 :
+                    Math.floor((index + 1) / limit.value) * limit.value;
+            }
+        };
+
         const listenForFilterUpdates = ref(true);
         const removeFilterUpdatedHandler = eventBus.on(
             QueryEventBusEventName.FILTER_UPDATED,
@@ -75,29 +101,7 @@ export default defineComponent({
                     return;
                 }
 
-                const storeItems = store.get(key)
-                    .flat()
-                    .map((el) => el.code);
-
-                if (storeItems.length === 0) {
-                    items.value = itemsAvailable.value.map((el) => el.code);
-
-                    return;
-                }
-
-                items.value = storeItems;
-
-                const [item] = storeItems;
-                if (item) {
-                    const index = itemsAvailable.value.findIndex((el) => el.code === item);
-                    if (index === -1) {
-                        return;
-                    }
-
-                    offset.value = index === 0 ?
-                        0 :
-                        Math.floor((index + 1) / limit.value) * limit.value;
-                }
+                init();
             },
         );
 
@@ -123,9 +127,11 @@ export default defineComponent({
 
         const unselectAll = () => {
             items.value = [];
+
+            setFilter();
         };
 
-        selectAll();
+        init();
 
         const submit = () => {
             store.commit();

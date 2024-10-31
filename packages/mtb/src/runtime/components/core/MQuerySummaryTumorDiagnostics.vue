@@ -6,7 +6,7 @@ import {
     DQuerySummaryNested,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { type PropType, defineComponent } from 'vue';
+import { type PropType, defineComponent, ref } from 'vue';
 import { navigateTo } from '#imports';
 import { QueryFilterURLKey } from '../../constants';
 import type { QuerySummaryTumorDiagnostics } from '../../domains';
@@ -28,6 +28,7 @@ export default defineComponent({
         },
     },
     setup(props) {
+        const tumorEntitiesVNode = ref<null | typeof DQuerySummaryNested>(null);
         const queryFilterStore = useQueryFilterStore();
 
         const handleClick = (keys: Coding[]) => {
@@ -45,6 +46,8 @@ export default defineComponent({
 
             if (hasChanged) {
                 navigateTo(`/mtb/query/${props.queryId}/patients`);
+            } else if (tumorEntitiesVNode.value) {
+                tumorEntitiesVNode.value.reset();
             }
         };
 
@@ -63,6 +66,7 @@ export default defineComponent({
                 <div class="entity-card text-center mb-3">
                     <h6>Tumor-Entitäten (ICD-10-GM)</h6>
                     <DQuerySummaryNested
+                        ref="tumorEntitiesVNode"
                         :label="'Kategorie'"
                         :entity="entity.overallDistributions.tumorEntities"
                         :key-verbose="true"
