@@ -38,7 +38,7 @@ export default defineComponent({
             try {
                 available.value = await httpClient.query.getPatientFilter(props.useCase, props.queryId);
             } catch (e) {
-                available.value = [];
+                available.value = {};
             } finally {
                 availableInitialized.value = true;
             }
@@ -156,27 +156,40 @@ export default defineComponent({
             .then(() => init());
 
         const handleAgeRangeChanged = (ctx: { min: number, max: number}) => {
-            age.value.min = Math.round(ctx.min);
-            age.value.max = Math.round(ctx.max);
+            if (!available.value.ageRange) {
+                return;
+            }
 
-            if (available.value.ageRange) {
-                if (
-                    available.value.ageRange.min &&
-                    available.value.ageRange.min === age.value.min
-                ) {
-                    store.set(QueryFilterURLKey.AGE_MIN, []);
-                } else {
-                    store.set(QueryFilterURLKey.AGE_MIN, [`${age.value.min}`]);
-                }
+            const minRounded = Math.round(ctx.min);
+            const maxRounded = Math.round(ctx.max);
 
-                if (
-                    available.value.ageRange.max &&
-                    available.value.ageRange.max === age.value.max
-                ) {
-                    store.set(QueryFilterURLKey.AGE_MAX, []);
-                } else {
-                    store.set(QueryFilterURLKey.AGE_MAX, [`${age.value.max}`]);
-                }
+            if (minRounded < available.value.ageRange.min) {
+                return;
+            }
+
+            if (maxRounded > available.value.ageRange.max) {
+                return;
+            }
+
+            age.value.min = minRounded;
+            age.value.max = maxRounded;
+
+            if (
+                available.value.ageRange.min &&
+                available.value.ageRange.min === age.value.min
+            ) {
+                store.set(QueryFilterURLKey.AGE_MIN, []);
+            } else {
+                store.set(QueryFilterURLKey.AGE_MIN, [`${age.value.min}`]);
+            }
+
+            if (
+                available.value.ageRange.max &&
+                available.value.ageRange.max === age.value.max
+            ) {
+                store.set(QueryFilterURLKey.AGE_MAX, []);
+            } else {
+                store.set(QueryFilterURLKey.AGE_MAX, [`${age.value.max}`]);
             }
         };
 
