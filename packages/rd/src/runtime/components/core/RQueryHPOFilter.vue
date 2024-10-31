@@ -1,21 +1,16 @@
 <script lang="ts">
-import type { PropType } from 'vue';
 import {
-    computed, defineComponent, ref, watch,
+    defineComponent, ref,
 } from 'vue';
-import { clone, useQueryFilterStore } from '@dnpm-dip/core';
+import { type Coding, useQueryFilterStore } from '@dnpm-dip/core';
+import { QueryURLFilterKey } from '../../constants';
+import { injectHTTPClient } from '../../core';
 import type { QueryHpoFilter } from '../../domains';
-
-type QueryRecord = {
-    hpo: {
-        term: string[]
-    }
-};
 
 export default defineComponent({
     props: {
-        availableFilters: {
-            type: Object as PropType<QueryHpoFilter>,
+        queryId: {
+            type: String,
             required: true,
         },
         busy: {
@@ -26,67 +21,67 @@ export default defineComponent({
     emits: ['submit'],
     async setup(props, { emit }) {
         const store = useQueryFilterStore();
+        const httpClient = injectHTTPClient();
 
-        const form = ref<string[]>([]);
-        const termChanged = ref(false);
+        const available = ref<QueryHpoFilter>({});
+        const availableInitialized = ref<boolean>(false);
 
-        const hasChanged = computed(
-            () => termChanged.value,
-        );
-
-        const previousSelection = ref<string[] | null>(null);
-
-        const reset = () => {
-            if (props.availableFilters.value) {
-                form.value = props.availableFilters.value.map((el) => el.code);
-                previousSelection.value = clone(form.value);
+        const load = async () => {
+            try {
+                available.value = await httpClient.query.getHpoFilter(props.queryId);
+            } catch (e) {
+                available.value = {};
+            } finally {
+                availableInitialized.value = true;
             }
-
-            termChanged.value = false;
         };
 
-        reset();
+        const items = ref<string[]>([]);
+        const reset = () => {
+            if (available.value.value) {
+                items.value = available.value.value.map((el) => el.code);
+                store.set(QueryURLFilterKey.HPO_VALUE, []);
+            }
+        };
 
-        watch(form, (value) => {
-            if (!previousSelection.value) {
-                termChanged.value = true;
+        Promise.resolve()
+            .then(() => load())
+            .then(() => reset());
+
+        const handleChanged = () => {
+            if (!available.value.value) {
                 return;
             }
 
-            if (value.length !== previousSelection.value.length) {
-                termChanged.value = true;
+            if (available.value.value.length === items.value.length) {
+                store.set(QueryURLFilterKey.HPO_VALUE, []);
                 return;
             }
 
-            let changed : boolean = false;
-            let index : number;
-            for (let i = 0; i < value.length; i++) {
-                index = previousSelection.value.findIndex((el) => el === value[i]);
-                if (index === -1) {
-                    changed = true;
-                    break;
+            const data : Coding[] = [];
+            for (let i = 0; i < items.value.length; i++) {
+                const index = available.value.value.findIndex((el) => el.code === items.value[i]);
+                if (index !== -1) {
+                    data.push(available.value.value[index]);
                 }
             }
 
-            termChanged.value = changed;
-        }, { deep: true });
+            store.set(QueryURLFilterKey.HPO_VALUE, data);
+        };
 
         const submit = () => {
-            store.set('hpo[value]', [...form.value]);
             store.commit();
 
-            previousSelection.value = [...form.value];
-
             emit('submit');
-
-            termChanged.value = false;
         };
 
         return {
-            form,
+            available,
+            availableInitialized,
 
-            hasChanged,
-            termChanged,
+            items,
+
+            handleChanged,
 
             reset,
             submit,
@@ -102,22 +97,23 @@ export default defineComponent({
             </h5>
         </div>
         <div
-            v-if="availableFilters.value"
+            v-if="available.value"
             class="mb-3"
         >
             <h6><i class="fas fa-tags" /> Term</h6>
 
             <div>
                 <template
-                    v-for="item in availableFilters.value"
+                    v-for="item in available.value"
                     :key="item.code"
                 >
                     <div class="form-check">
                         <VCFormInputCheckbox
-                            v-model="form"
+                            v-model="items"
                             :label="true"
                             :label-content="(item.display || item.code)"
                             :value="item.code"
+                            @change="handleChanged"
                         />
                     </div>
                 </template>
@@ -129,7 +125,7 @@ export default defineComponent({
                 <button
                     type="button"
                     class="btn btn-xs btn-primary btn-block"
-                    :disabled="!hasChanged"
+                    :disabled="!availableInitialized"
                     @click.prevent="submit"
                 >
                     Anwenden
@@ -137,6 +133,7 @@ export default defineComponent({
             </div>
             <div>
                 <button
+                    :disabled="!availableInitialized"
                     type="button"
                     class="btn btn-xs btn-secondary btn-block"
                     @click.prevent="reset"

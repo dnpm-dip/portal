@@ -1,5 +1,5 @@
 import type {
-    KMSurvivalReport,
+    KMSurvivalReport, PatientFilter,
     QuerySummaryDemographics,
     ResourceCollectionLoadMeta,
     ResourceCollectionResponse,
@@ -8,10 +8,11 @@ import type {
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
 import type { PatientMatch, PatientRecord } from '../patient';
 import type {
-    QuerySession,
+    QueryDiagnosisFilter, QuerySession,
     QuerySessionCreate,
     QuerySummaryMedication,
-    QuerySummaryTumorDiagnostics,
+    QuerySummaryTumorDiagnostics, QueryTherapyImplementedFilter,
+    QueryTherapyRecommendedFilter,
     QueryTherapyResponse, QueryTherapyResponseByVariant,
 } from './types';
 
@@ -43,6 +44,21 @@ export class QueryAPI extends BaseAPI {
      */
     async update(id: string, query?: QuerySessionCreate) : Promise<QuerySession> {
         const response = await this.client.put(`mtb/queries/${id}`, query);
+        return response.data;
+    }
+
+    async getDiagnosisFilter(id: string) : Promise<QueryDiagnosisFilter> {
+        const response = await this.client.get(`mtb/queries/${id}/filters/diagnosis`);
+        return response.data;
+    }
+
+    async getTherapyImplementedFilter(id: string) : Promise<QueryTherapyImplementedFilter> {
+        const response = await this.client.get(`mtb/queries/${id}/filters/therapy`);
+        return response.data;
+    }
+
+    async getTherapyRecommendedFilter(id: string) : Promise<QueryTherapyRecommendedFilter> {
+        const response = await this.client.get(`mtb/queries/${id}/filters/therapy-recommendation`);
         return response.data;
     }
 

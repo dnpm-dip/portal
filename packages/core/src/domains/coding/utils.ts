@@ -122,6 +122,10 @@ export function serializeCoding(coding: Coding) {
     parts.push(coding.code);
     if (coding.system) {
         parts.push(coding.system);
+
+        if (coding.version) {
+            parts.push(coding.version);
+        }
     }
 
     return parts.join('|');

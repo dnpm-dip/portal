@@ -1,17 +1,18 @@
 <script lang="ts">
-import type { PropType } from 'vue';
 import {
-    computed, defineComponent, ref, watch,
+    defineComponent, ref,
 } from 'vue';
 import {
     type Coding, useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { QueryURLFilterKey } from '../../constants';
+import { injectHTTPClient } from '../../core';
 import type { QueryDiagnosisFilter } from '../../domains';
 
 export default defineComponent({
     props: {
-        availableFilters: {
-            type: Object as PropType<QueryDiagnosisFilter>,
+        queryId: {
+            type: String,
             required: true,
         },
         busy: {
@@ -22,75 +23,68 @@ export default defineComponent({
     emits: ['submit'],
     async setup(props, { emit }) {
         const store = useQueryFilterStore();
-        const category = ref<string[]>([]);
-        const categoryChanged = ref(false);
+        const httpClient = injectHTTPClient();
 
-        const hasChanged = computed(
-            () => categoryChanged.value,
-        );
+        const available = ref<QueryDiagnosisFilter>({});
+        const availableInitialized = ref<boolean>(false);
 
-        const previousSelection = ref<string[] | null>(null);
-
-        const reset = () => {
-            if (props.availableFilters.category) {
-                category.value = props.availableFilters.category.map((el) => el.code);
-                previousSelection.value = [...category.value];
+        const load = async () => {
+            try {
+                available.value = await httpClient.query.getDiagnosisFilter(props.queryId);
+            } catch (e) {
+                available.value = {};
+            } finally {
+                availableInitialized.value = true;
             }
-
-            categoryChanged.value = false;
         };
 
-        reset();
+        const category = ref<string[]>([]);
 
-        watch(category, (value) => {
-            if (!previousSelection.value) {
-                categoryChanged.value = true;
+        const reset = () => {
+            if (available.value.category) {
+                category.value = available.value.category.map((el) => el.code);
+                store.set(QueryURLFilterKey.DIAGNOSIS_CATEGORY, []);
+            }
+        };
+
+        Promise.resolve()
+            .then(() => load())
+            .then(() => reset());
+
+        const handleChanged = () => {
+            if (!available.value.category) {
                 return;
             }
 
-            if (value.length !== previousSelection.value.length) {
-                categoryChanged.value = true;
+            if (available.value.category.length === category.value.length) {
+                store.set(QueryURLFilterKey.DIAGNOSIS_CATEGORY, []);
                 return;
             }
 
-            let changed : boolean = false;
-            let index : number;
-            for (let i = 0; i < value.length; i++) {
-                index = previousSelection.value.findIndex((el) => el === value[i]);
-                if (index === -1) {
-                    changed = true;
-                    break;
+            const data : Coding[] = [];
+            for (let i = 0; i < category.value.length; i++) {
+                const index = available.value.category.findIndex((el) => el.code === category.value[i]);
+                if (index !== -1) {
+                    data.push(available.value.category[index]);
                 }
             }
 
-            categoryChanged.value = changed;
-        }, { deep: true });
+            store.set(QueryURLFilterKey.DIAGNOSIS_CATEGORY, data);
+        };
 
         const submit = () => {
-            const data : Coding[] = [];
-            if (props.availableFilters.category) {
-                for (let i = 0; i < category.value.length; i++) {
-                    const index = props.availableFilters.category.findIndex((el) => el.code === category.value[i]);
-                    if (index !== -1) {
-                        data.push(props.availableFilters.category[index]);
-                    }
-                }
-            }
-
-            store.set('diagnosis[category]', data);
             store.commit();
 
-            previousSelection.value = [...category.value];
-
             emit('submit');
-
-            categoryChanged.value = false;
         };
 
         return {
+            available,
+            availableInitialized,
+
             category,
 
-            hasChanged,
+            handleChanged,
 
             reset,
             submit,
@@ -106,14 +100,14 @@ export default defineComponent({
             </h5>
         </div>
         <div
-            v-if="availableFilters.category"
+            v-if="available.category"
             class="mb-3"
         >
             <h6><i class="fas fa-tags" /> Kategorie</h6>
 
             <div>
                 <template
-                    v-for="item in availableFilters.category"
+                    v-for="item in available.category"
                     :key="item.code"
                 >
                     <div class="form-check">
@@ -122,6 +116,7 @@ export default defineComponent({
                             :label="true"
                             :label-content="(item.display || item.code)"
                             :value="item.code"
+                            @change="handleChanged"
                         />
                     </div>
                 </template>
@@ -133,7 +128,7 @@ export default defineComponent({
                 <button
                     type="button"
                     class="btn btn-xs btn-primary btn-block"
-                    :disabled="!hasChanged"
+                    :disabled="!availableInitialized"
                     @click.prevent="submit"
                 >
                     Anwenden
@@ -141,6 +136,7 @@ export default defineComponent({
             </div>
             <div>
                 <button
+                    :disabled="!availableInitialized"
                     type="button"
                     class="btn btn-xs btn-secondary btn-block"
                     @click.prevent="reset"

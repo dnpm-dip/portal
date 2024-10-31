@@ -139,19 +139,20 @@ export default defineNuxtComponent({
             <div class="col-6 col-md-3 col-lg-2">
                 <DQueryPatientFilters
                     class="mb-3"
-                    :available="entity.filters.patient"
+                    :query-id="entity.id"
+                    :use-case="'rd'"
                     @submit="handleSubmit"
                 />
 
                 <QueryDiagnosisFilter
                     class="mb-3"
-                    :available-filters="entity.filters.diagnosis"
+                    :query-id="entity.id"
                     @submit="handleSubmit"
                 />
 
                 <QueryHPOFilter
                     class="mb-3"
-                    :available-filters="entity.filters.hpo"
+                    :query-id="entity.id"
                     @submit="handleSubmit"
                 />
             </div>

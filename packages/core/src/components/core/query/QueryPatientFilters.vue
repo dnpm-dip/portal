@@ -1,10 +1,8 @@
 <script lang="ts">
-import type { PropType } from 'vue';
-import {
-    defineComponent, ref,
-} from 'vue';
 import { VCFormRangeMultiSlider } from '@vuecs/form-controls';
+import { defineComponent, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
+import { injectHTTPClient } from '../../../core';
 import type { PatientFilter } from '../../../domains';
 import { useQueryFilterStore } from '../../../stores';
 import QueryFilterBox from './QueryFilterBox.vue';
@@ -15,8 +13,12 @@ export default defineComponent({
         VCFormRangeMultiSlider,
     },
     props: {
-        available: {
-            type: Object as PropType<PatientFilter>,
+        queryId: {
+            type: String,
+            required: true,
+        },
+        useCase: {
+            type: String,
             required: true,
         },
         busy: {
@@ -27,6 +29,20 @@ export default defineComponent({
     emits: ['submit'],
     async setup(props, { emit }) {
         const store = useQueryFilterStore();
+        const httpClient = injectHTTPClient();
+
+        const available = ref<PatientFilter>({});
+        const availableInitialized = ref<boolean>(false);
+
+        const load = async () => {
+            try {
+                available.value = await httpClient.query.getPatientFilter(props.useCase, props.queryId);
+            } catch (e) {
+                available.value = [];
+            } finally {
+                availableInitialized.value = true;
+            }
+        };
 
         const gender = ref<string[]>([]);
         const vitalStatus = ref<string[]>([]);
@@ -37,40 +53,40 @@ export default defineComponent({
         });
 
         const resetGender = () => {
-            gender.value = props.available.gender ?
-                props.available.gender.map((el) => el.code) :
+            gender.value = available.value.gender ?
+                available.value.gender.map((el) => el.code) :
                 [];
 
             store.set(QueryFilterURLKey.GENDER, []);
         };
 
         const resetVitalStatus = () => {
-            vitalStatus.value = props.available.vitalStatus ?
-                props.available.vitalStatus.map((el) => el.code) :
+            vitalStatus.value = available.value.vitalStatus ?
+                available.value.vitalStatus.map((el) => el.code) :
                 [];
 
             store.set(QueryFilterURLKey.VITAL_STATUS, []);
         };
 
         const resetSite = () => {
-            site.value = props.available.site ?
-                props.available.site.map((el) => el.code) :
+            site.value = available.value.site ?
+                available.value.site.map((el) => el.code) :
                 [];
 
             store.set(QueryFilterURLKey.SITE, []);
         };
 
         const resetAgeMin = () => {
-            age.value.min = props.available.ageRange ?
-                props.available.ageRange.min :
+            age.value.min = available.value.ageRange ?
+                available.value.ageRange.min :
                 0;
 
             store.set(QueryFilterURLKey.AGE_MIN, []);
         };
 
         const resetAgeMax = () => {
-            age.value.max = props.available.ageRange ?
-                props.available.ageRange.max :
+            age.value.max = available.value.ageRange ?
+                available.value.ageRange.max :
                 100;
 
             store.set(QueryFilterURLKey.AGE_MAX, []);
@@ -135,16 +151,18 @@ export default defineComponent({
             }
         };
 
-        init();
+        Promise.resolve()
+            .then(() => load())
+            .then(() => init());
 
         const handleAgeRangeChanged = (ctx: { min: number, max: number}) => {
             age.value.min = Math.round(ctx.min);
             age.value.max = Math.round(ctx.max);
 
-            if (props.available.ageRange) {
+            if (available.value.ageRange) {
                 if (
-                    props.available.ageRange.min &&
-                    props.available.ageRange.min === age.value.min
+                    available.value.ageRange.min &&
+                    available.value.ageRange.min === age.value.min
                 ) {
                     store.set(QueryFilterURLKey.AGE_MIN, []);
                 } else {
@@ -152,8 +170,8 @@ export default defineComponent({
                 }
 
                 if (
-                    props.available.ageRange.max &&
-                    props.available.ageRange.max === age.value.max
+                    available.value.ageRange.max &&
+                    available.value.ageRange.max === age.value.max
                 ) {
                     store.set(QueryFilterURLKey.AGE_MAX, []);
                 } else {
@@ -165,9 +183,9 @@ export default defineComponent({
         const handleGenderChanged = () => {
             const data : string[] = [];
             if (
-                props.available &&
-                props.available.gender &&
-                props.available.gender.length !== gender.value.length
+                available.value &&
+                available.value.gender &&
+                available.value.gender.length !== gender.value.length
             ) {
                 data.push(...gender.value);
             }
@@ -178,9 +196,9 @@ export default defineComponent({
         const handleVitalStatusChanged = () => {
             const data : string[] = [];
             if (
-                props.available &&
-                props.available.vitalStatus &&
-                props.available.vitalStatus.length !== vitalStatus.value.length
+                available.value &&
+                available.value.vitalStatus &&
+                available.value.vitalStatus.length !== vitalStatus.value.length
             ) {
                 data.push(...vitalStatus.value);
             }
@@ -191,9 +209,9 @@ export default defineComponent({
         const handleSiteChanged = () => {
             const data : string[] = [];
             if (
-                props.available &&
-                props.available.site &&
-                props.available.site.length !== site.value.length
+                available.value &&
+                available.value.site &&
+                available.value.site.length !== site.value.length
             ) {
                 data.push(...site.value);
             }
@@ -208,6 +226,9 @@ export default defineComponent({
         };
 
         return {
+            available,
+            availableInitialized,
+
             age,
             gender,
             vitalStatus,

@@ -9,14 +9,12 @@ import type { MinMaxRange } from '../utility';
  */
 export type QueryBase<
     CRITERIA extends ObjectLiteral = ObjectLiteral,
-    FILTERS extends ObjectLiteral = ObjectLiteral,
 > = {
     id: string,
     submittedAt: string,
     querier: string,
     mode: Coding,
     criteria?: CRITERIA | null,
-    filters: FILTERS
     /**
      * Validity period (seconds) for the query.
      */

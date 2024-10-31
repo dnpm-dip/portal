@@ -46,16 +46,7 @@ export type QueryHpoFilter = {
     value?: Coding[]
 };
 
-export type QueryFilters = {
-    diagnosis: QueryDiagnosisFilter,
-    hpo: QueryHpoFilter,
-    patient: PatientFilter,
-};
-
-export type QuerySession = QueryBase<
-QueryCriteria,
-QueryFilters
->;
+export type QuerySession = QueryBase<QueryCriteria>;
 
 export type QuerySummaryDiagnostics = {
     overallDistributions: {

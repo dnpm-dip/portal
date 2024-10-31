@@ -8,7 +8,7 @@ import type { PropType } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
 import MQueryCriteriaSummary from '../../../components/core/query-criteria/MQueryCriteriaSummary.vue';
 import MQueryCriteriaSummaryBox from '../../../components/core/query-criteria/MQueryCriteriaSummaryBox.vue';
-import MQueryDiagnosisFilter from '../../../components/core/MQueryDiagnosisFilter.vue';
+import MQueryDiagnosisFilter from '../../../components/core/query-filter/MQueryDiagnosisFilter.vue';
 import MSearchForm from '../../../components/core/search/MSearchForm.vue';
 import type { QuerySession } from '../../../domains';
 
@@ -116,11 +116,12 @@ export default defineNuxtComponent({
             <div class="col-6 col-md-3 col-lg-2">
                 <div class="d-flex flex-column gap-3">
                     <DQueryPatientFilters
-                        :available="entity.filters.patient"
+                        :use-case="'mtb'"
+                        :query-id="entity.id"
                     />
 
                     <MQueryDiagnosisFilter
-                        :available="entity.filters.diagnosis?.code"
+                        :query-id="entity.id"
                     />
                 </div>
             </div>

@@ -1,41 +1,60 @@
+<!--
+  - Copyright (c) 2024.
+  - Author Peter Placzek (tada5hi)
+  - For the full copyright and license information,
+  - view the LICENSE file that was distributed with this source code.
+  -->
+
 <script lang="ts">
-import type { PropType } from 'vue';
 import {
     computed, defineComponent, onUnmounted, ref,
 } from 'vue';
 import {
     type Coding, DQueryFilterBox, QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { QueryFilterURLKey } from '../../constants';
+import { QueryFilterURLKey } from '../../../constants';
+import { injectHTTPClient } from '../../../core/http-client';
 
 export default defineComponent({
     components: {
         DQueryFilterBox,
     },
     props: {
-        available: {
-            type: Object as PropType<Coding[]>,
-        },
         busy: {
             type: Boolean,
             default: false,
+        },
+        queryId: {
+            type: String,
+            required: true,
         },
     },
     emits: ['commited'],
     async setup(props, { emit }) {
         const store = useQueryFilterStore();
         const eventBus = injectQueryEventBus();
+        const httpClient = injectHTTPClient();
 
         const items = ref<string[]>([]);
+        const itemsAvailable = ref<Coding[]>([]);
+        const itemsAvailableInitialized = ref<boolean>(false);
 
-        const itemsAvailable = computed(() => {
-            if (!props.available) {
-                return [];
+        const load = async () => {
+            try {
+                const response = await httpClient.query.getDiagnosisFilter(props.queryId);
+                if (
+                    response &&
+                    response.code
+                ) {
+                    itemsAvailable.value = response.code
+                        .sort((a, b) => a.code.localeCompare(b.code));
+                }
+            } catch (e) {
+                itemsAvailable.value = [];
+            } finally {
+                itemsAvailableInitialized.value = true;
             }
-
-            return [...props.available]
-                .sort((a, b) => a.code.localeCompare(b.code));
-        });
+        };
 
         const offset = ref(0);
         const limit = ref(10);
@@ -59,7 +78,7 @@ export default defineComponent({
                 .slice(startIndex, endIndex);
         });
 
-        const load = (pagination: any) => {
+        const loadPage = (pagination: any) => {
             limit.value = pagination.limit;
             offset.value = pagination.offset;
         };
@@ -131,7 +150,9 @@ export default defineComponent({
             setFilter();
         };
 
-        init();
+        Promise.resolve()
+            .then(() => load())
+            .then(() => init());
 
         const submit = () => {
             store.commit();
@@ -145,6 +166,7 @@ export default defineComponent({
 
         return {
             items,
+            itemsAvailableInitialized,
 
             handleChanged,
             selectAll,
@@ -155,8 +177,7 @@ export default defineComponent({
             total,
             limit,
             offset,
-            load,
-
+            loadPage,
         };
     },
 });
@@ -178,6 +199,7 @@ export default defineComponent({
                     <div class="d-flex flex-row">
                         <div>
                             <button
+                                :disabled="!itemsAvailableInitialized"
                                 type="button"
                                 class="btn btn-xs btn-dark"
                                 @click.prevent="selectAll"
@@ -187,6 +209,7 @@ export default defineComponent({
                         </div>
                         <div class="ms-auto">
                             <button
+                                :disabled="!itemsAvailableInitialized"
                                 type="button"
                                 class="btn btn-xs btn-dark"
                                 @click.prevent="unselectAll"
@@ -218,7 +241,7 @@ export default defineComponent({
                             :total="total"
                             :offset="offset"
                             :limit="limit"
-                            @load="load"
+                            @load="loadPage"
                         />
                     </div>
                 </div>
@@ -226,6 +249,7 @@ export default defineComponent({
                 <div class="row">
                     <div class="form-group">
                         <button
+                            :disabled="!itemsAvailableInitialized"
                             type="button"
                             class="btn btn-xs btn-primary btn-block"
                             @click.prevent="submit"

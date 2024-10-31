@@ -5,6 +5,7 @@ import type {
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
 import type { PatientMatch, PatientRecord } from '../patient';
 import type {
+    QueryDiagnosisFilter, QueryHpoFilter,
     QuerySession, QuerySessionCreate, QuerySummary, QuerySummaryDiagnostics,
 } from './types';
 
@@ -35,7 +36,17 @@ export class QueryAPI extends BaseAPI {
      * @param query
      */
     async update(id: string, query?: QuerySessionCreate) : Promise<QuerySession> {
-        const response = await this.client.put(`rd/queries/${id}`, query);
+        const response = await this.client.get(`rd/queries/${id}`, query);
+        return response.data;
+    }
+
+    async getDiagnosisFilter(id: string) : Promise<QueryDiagnosisFilter> {
+        const response = await this.client.get(`rd/queries/${id}/filters/diagnosis`);
+        return response.data;
+    }
+
+    async getHpoFilter(id: string) : Promise<QueryHpoFilter> {
+        const response = await this.client.get(`rd/queries/${id}/filters/hpo`);
         return response.data;
     }
 
