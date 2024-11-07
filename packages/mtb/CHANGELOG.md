@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.27.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.26.0...v1.27.0) (2024-11-07)
+
+
+### Features
+
+* bump authup & vuecs packages ([6e433a3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6e433a3633f81cf2ef384a30f462e1cadd6ab0c2))
+* cleanup diagnsosis filter + add selectAll/unselectAll toggle ([#857](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/857)) ([69809d3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/69809d35490d5864ad37b7a36ba5023dc23179e9))
+* initial therapy response by variant table ([#858](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/858)) ([3127ca8](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/3127ca80b741b166f002ba3dcc4e9f46d228e2d4))
+* mtb diagnosis filter implementation + query filter schema updated ([3de72da](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/3de72da7969dbb6324dffbe215a09130f46d8a98))
+* refactored build query filters (new event bus & query filter store) ([#841](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/841)) ([685d539](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/685d539b3de5652d377c9082846519064b3048f4))
+* refactored query filter components, api, ... ([b8a95bb](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b8a95bb02fd1d552a03c1d7583fb0e333e5949d5))
+* refactored query patient filter ([6d62807](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6d62807f8aab0434f05ed80ecc32da83e4adb4e0))
+* reorganized query filter store ([dc6755d](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/dc6755d6f968ed53f02a9afc23a6f4dd43ee1a2d))
+* table click event support ([52aef47](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/52aef471de01e105cb0919d6f2c05ef344e8ba14))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.27.0 to ^1.28.0
+    * @dnpm-dip/kit bumped from ^1.21.0 to ^1.22.0
+
 ## [1.26.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.25.0...v1.26.0) (2024-10-29)
 
 
