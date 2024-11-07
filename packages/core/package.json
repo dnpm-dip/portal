@@ -51,7 +51,7 @@
         "@authup/client-web-kit": "^1.0.0-beta.22",
         "bootstrap-vue-next": "^0.24.23",
         "chart.js": "^4.4.4",
-        "@nuxt/schema": "^3.13.0",
+        "@nuxt/schema": "^3.14.159",
         "@nuxt/kit": "^3.13.0",
         "@vuecs/form-controls": "^2.3.0",
         "@vuecs/navigation": "^2.3.1",
