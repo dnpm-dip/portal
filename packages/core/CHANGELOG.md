@@ -1,5 +1,18 @@
 # @dnpm-dip/core
 
+## [1.28.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.27.0...v1.28.0) (2024-11-07)
+
+
+### Features
+
+* cleanup diagnsosis filter + add selectAll/unselectAll toggle ([#857](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/857)) ([69809d3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/69809d35490d5864ad37b7a36ba5023dc23179e9))
+* refactored query filter components, api, ... ([b8a95bb](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b8a95bb02fd1d552a03c1d7583fb0e333e5949d5))
+
+
+### Bug Fixes
+
+* age range form in patient filter ([f261f01](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/f261f01ecb4e214f9cced7e1821b414da7b9640d))
+
 ## [1.27.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.26.0...v1.27.0) (2024-10-29)
 
 
