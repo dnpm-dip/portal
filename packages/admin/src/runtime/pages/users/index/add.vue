@@ -1,5 +1,5 @@
 <script lang="ts">
-import { AUserForm, storeToRefs, useStore } from '@authup/client-web-kit';
+import { AUserForm, injectStore, storeToRefs } from '@authup/client-web-kit';
 import type { User } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
@@ -20,7 +20,7 @@ export default defineNuxtComponent({
             ],
         });
 
-        const store = useStore();
+        const store = injectStore();
 
         const handleCreated = (e: User) => {
             navigateTo({ path: `/admin/users/${e.id}` });

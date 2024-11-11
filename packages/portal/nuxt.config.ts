@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     },
     css: [
         '@fortawesome/fontawesome-free/css/all.css',
-        '@authup/client-web-kit/index.css',
+        '@authup/client-web-kit/dist/index.css',
         '@vuecs/navigation/dist/index.css',
         '@vuecs/pagination/dist/index.css',
         'bootstrap/dist/css/bootstrap.css',

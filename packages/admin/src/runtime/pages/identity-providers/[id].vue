@@ -12,7 +12,7 @@ import { PermissionName, isRealmResourceWritable } from '@authup/core-kit';
 import {
     DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
 } from '@dnpm-dip/core';
-import { injectHTTPClient, storeToRefs, useStore } from '@authup/client-web-kit';
+import { injectHTTPClient, injectStore, storeToRefs } from '@authup/client-web-kit';
 import { defineComponent, ref } from 'vue';
 import type { Ref } from 'vue';
 import {
@@ -45,7 +45,7 @@ export default defineComponent({
         ];
 
         const toast = useToast();
-        const store = useStore();
+        const store = injectStore();
         const route = useRoute();
         const authup = injectHTTPClient();
 

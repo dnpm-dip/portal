@@ -6,7 +6,7 @@
   -->
 
 <script lang="ts">
-import { injectHTTPClient, storeToRefs, useStore } from '@authup/client-web-kit';
+import { injectHTTPClient, injectStore, storeToRefs } from '@authup/client-web-kit';
 import {
     DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
 } from '@dnpm-dip/core';
@@ -50,7 +50,7 @@ export default defineComponent({
         ];
 
         const toast = useToast();
-        const store = useStore();
+        const store = injectStore();
         const route = useRoute();
         const authup = injectHTTPClient();
 

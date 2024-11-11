@@ -9,7 +9,7 @@ import {
     ASearch,
     ATitle,
     injectHTTPClient,
-    useStore,
+    injectStore,
 } from '@authup/client-web-kit';
 import { type IdentityProvider, IdentityProviderProtocol } from '@authup/core-kit';
 import { IVuelidate } from '@ilingo/vuelidate';
@@ -42,7 +42,7 @@ export default defineNuxtComponent({
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.DEFAULT,
         });
 
-        const store = useStore();
+        const store = injectStore();
 
         const apiClient = injectHTTPClient();
         const toast = useToast();

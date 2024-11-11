@@ -2,15 +2,15 @@
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { VCNavItems } from '@vuecs/navigation';
-import { useStore } from '@authup/client-web-kit';
-import { defineNuxtComponent, useNuxtApp } from '#app';
+import { injectStore } from '@authup/client-web-kit';
+import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
     components: {
         VCNavItems,
     },
     setup() {
-        const store = useStore();
+        const store = injectStore();
         const { loggedIn, user } = storeToRefs(store);
 
         const displayNav = ref(false);

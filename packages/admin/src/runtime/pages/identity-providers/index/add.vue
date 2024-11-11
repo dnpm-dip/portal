@@ -1,5 +1,5 @@
 <script lang="ts">
-import { AIdentityProviderForm, storeToRefs, useStore } from '@authup/client-web-kit';
+import { AIdentityProviderForm, injectStore, storeToRefs } from '@authup/client-web-kit';
 import type { IdentityProvider } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
@@ -20,7 +20,7 @@ export default defineNuxtComponent({
             ],
         });
 
-        const store = useStore();
+        const store = injectStore();
         const { realmManagementId } = storeToRefs(store);
 
         const handleCreated = (e: IdentityProvider) => {

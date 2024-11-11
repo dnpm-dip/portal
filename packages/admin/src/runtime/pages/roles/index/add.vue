@@ -1,5 +1,5 @@
 <script lang="ts">
-import { ARoleForm, storeToRefs, useStore } from '@authup/client-web-kit';
+import { ARoleForm, injectStore, storeToRefs } from '@authup/client-web-kit';
 import type { Role } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
@@ -20,7 +20,7 @@ export default defineNuxtComponent({
             ],
         });
 
-        const store = useStore();
+        const store = injectStore();
 
         const handleCreated = (e: Role) => {
             navigateTo({ path: `/admin/roles/${e.id}` });

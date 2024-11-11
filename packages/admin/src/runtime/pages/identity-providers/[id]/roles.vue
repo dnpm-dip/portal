@@ -1,5 +1,4 @@
 <script lang="ts">
-
 import { AIdentityProviderRoleAssignments, APagination } from '@authup/client-web-kit';
 import type { IdentityProvider } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';

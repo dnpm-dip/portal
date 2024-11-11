@@ -9,9 +9,9 @@ import type { ModuleMeta, NavigationItemMeta } from '@dnpm-dip/core';
 import { PageMetaKey } from '@dnpm-dip/core';
 import type { HookResult } from '@nuxt/schema';
 import type { NavigationItem } from '@vuecs/navigation';
-import { injectNavigationManager, install as installNavigation } from '@vuecs/navigation';
+import { install as installNavigation } from '@vuecs/navigation';
 import type { Pinia } from 'pinia';
-import { StoreDispatcherEventName, injectStoreDispatcher, useStore } from '@authup/client-web-kit';
+import { injectStore } from '@authup/client-web-kit';
 import { defineNuxtPlugin } from '#app';
 import { Navigation } from '../core';
 import { useModuleStore } from '../stores/modules';
@@ -72,7 +72,7 @@ export default defineNuxtPlugin<Record<string, any>>({
     name: 'dnpm:register',
     dependsOn: ['dnpm:kit'],
     async setup(nuxt) {
-        const authStore = useStore(nuxt.$pinia as Pinia);
+        const authStore = injectStore(nuxt.$pinia as Pinia);
         const moduleStore = useModuleStore(nuxt.$pinia as Pinia);
 
         const navigation = new Navigation(authStore);
@@ -108,15 +108,5 @@ export default defineNuxtPlugin<Record<string, any>>({
                 parent,
             }) => navigation.getItems(level, parent),
         });
-
-        const navigationManager = injectNavigationManager(nuxt.vueApp);
-        const storeDispatcher = injectStoreDispatcher(nuxt.vueApp);
-        storeDispatcher.on(
-            StoreDispatcherEventName.ACCESS_TOKEN_UPDATED,
-            () => navigationManager.build({
-                reset: true,
-                path: nuxt._route.fullPath,
-            }),
-        );
     },
 });

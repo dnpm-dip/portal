@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { VCNavItems } from '@vuecs/navigation';
 import { VCCountdown } from '@vuecs/countdown';
-import { useStore } from '@authup/client-web-kit';
+import { injectStore } from '@authup/client-web-kit';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
@@ -12,7 +12,7 @@ export default defineNuxtComponent({
         VCNavItems,
     },
     setup() {
-        const store = useStore();
+        const store = injectStore();
         const { loggedIn, accessTokenExpireDate: tokenExpireDate } = storeToRefs(store);
 
         const tokenExpiresIn = computed(() => {

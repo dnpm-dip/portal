@@ -4,8 +4,8 @@ import { BTable } from 'bootstrap-vue-next';
 import type { Role } from '@authup/core-kit';
 import { PermissionName, isRealmResourceWritable } from '@authup/core-kit';
 import {
-    AEntityDelete, APagination, ARoles, ASearch, ATitle, storeToRefs, usePermissionCheck,
-    useStore,
+    AEntityDelete, APagination, ARoles, ASearch, ATitle, injectStore, storeToRefs,
+    usePermissionCheck,
 } from '@authup/client-web-kit';
 import type { BuildInput } from 'rapiq';
 import { defineNuxtComponent } from '#imports';
@@ -25,7 +25,7 @@ export default defineNuxtComponent({
             emit('deleted', e);
         };
 
-        const store = useStore();
+        const store = injectStore();
         const { realm, realmManagementId } = storeToRefs(store);
 
         const query : BuildInput<Role> = {

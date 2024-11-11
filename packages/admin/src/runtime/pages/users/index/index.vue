@@ -5,8 +5,8 @@ import {
     PermissionName, isRealmResourceWritable,
 } from '@authup/core-kit';
 import {
-    AEntityDelete, APagination, ASearch, ATitle, AUsers, storeToRefs, usePermissionCheck,
-    useStore,
+    AEntityDelete, APagination, ASearch, ATitle, AUsers, injectStore, storeToRefs,
+    usePermissionCheck,
 } from '@authup/client-web-kit';
 import type { BuildInput } from 'rapiq';
 import { defineNuxtComponent } from '#imports';
@@ -26,7 +26,7 @@ export default defineNuxtComponent({
             emit('deleted', e);
         };
 
-        const store = useStore();
+        const store = injectStore();
         const { realm, realmManagementId } = storeToRefs(store);
 
         const query : BuildInput<User> = {

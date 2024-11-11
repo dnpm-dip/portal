@@ -7,7 +7,7 @@
 
 <script lang="ts">
 
-import { injectHTTPClient, storeToRefs, useStore } from '@authup/client-web-kit';
+import { injectHTTPClient, injectStore, storeToRefs } from '@authup/client-web-kit';
 import type { Role } from '@authup/core-kit';
 import { PermissionName, isRealmResourceWritable } from '@authup/core-kit';
 import {
@@ -51,7 +51,7 @@ export default defineComponent({
         ];
 
         const toast = useToast();
-        const store = useStore();
+        const store = injectStore();
         const route = useRoute();
         const authup = injectHTTPClient();
 
