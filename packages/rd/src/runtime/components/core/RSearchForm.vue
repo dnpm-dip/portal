@@ -1,6 +1,6 @@
 <script lang="ts">
 import {
-    type CodeRecord, type Coding, type ConnectionPeer, DSitePicker, type ValueSetCoding,
+    type CodeRecord, type Coding, type ConnectionPeer, DSitePicker, type ValueSetCoding, useQueryFilterStore,
 } from '@dnpm-dip/core';
 import {
     DCollectionTransform, DFormTabGroups, DTags, DValueSet, QueryRequestMode,
@@ -60,6 +60,7 @@ export default defineComponent({
         'queryUpdated',
     ],
     async setup(props, { emit, expose }) {
+        const filterStore = useQueryFilterStore();
         const apiClient = injectHTTPClient();
 
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
@@ -299,6 +300,9 @@ export default defineComponent({
             const payload = buildCriteria();
 
             try {
+                filterStore.reset();
+                filterStore.resetActive();
+
                 let query : QuerySession;
 
                 if (props.queryId) {

@@ -3,7 +3,8 @@ import { VCFormRangeMultiSlider } from '@vuecs/form-controls';
 import { defineComponent, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core';
-import type { PatientFilter } from '../../../domains';
+import type { Coding, PatientFilter } from '../../../domains';
+import { isCoding, toCoding } from '../../../domains';
 import { useQueryFilterStore } from '../../../stores';
 import QueryFilterBox from './QueryFilterBox.vue';
 
@@ -57,7 +58,7 @@ export default defineComponent({
                 available.value.gender.map((el) => el.code) :
                 [];
 
-            store.set(QueryFilterURLKey.GENDER, []);
+            store.setItems(QueryFilterURLKey.GENDER, []);
         };
 
         const resetVitalStatus = () => {
@@ -65,7 +66,7 @@ export default defineComponent({
                 available.value.vitalStatus.map((el) => el.code) :
                 [];
 
-            store.set(QueryFilterURLKey.VITAL_STATUS, []);
+            store.setItems(QueryFilterURLKey.VITAL_STATUS, []);
         };
 
         const resetSite = () => {
@@ -73,7 +74,7 @@ export default defineComponent({
                 available.value.site.map((el) => el.code) :
                 [];
 
-            store.set(QueryFilterURLKey.SITE, []);
+            store.setItems(QueryFilterURLKey.SITE, []);
         };
 
         const resetAgeMin = () => {
@@ -81,7 +82,7 @@ export default defineComponent({
                 available.value.ageRange.min :
                 0;
 
-            store.set(QueryFilterURLKey.AGE_MIN, []);
+            store.setItems(QueryFilterURLKey.AGE_MIN, []);
         };
 
         const resetAgeMax = () => {
@@ -89,7 +90,7 @@ export default defineComponent({
                 available.value.ageRange.max :
                 100;
 
-            store.set(QueryFilterURLKey.AGE_MAX, []);
+            store.setItems(QueryFilterURLKey.AGE_MAX, []);
         };
 
         const reset = () => {
@@ -105,8 +106,8 @@ export default defineComponent({
         };
 
         const init = () => {
-            let items = store.get(QueryFilterURLKey.GENDER)
-                .flat()
+            let items = store.getItems(QueryFilterURLKey.GENDER)
+                .filter((el) => isCoding(el))
                 .map((el) => el.code);
             if (items.length > 0) {
                 gender.value = items;
@@ -114,8 +115,8 @@ export default defineComponent({
                 resetGender();
             }
 
-            items = store.get(QueryFilterURLKey.VITAL_STATUS)
-                .flat()
+            items = store.getItems(QueryFilterURLKey.VITAL_STATUS)
+                .filter((el) => isCoding(el))
                 .map((el) => el.code);
             if (items.length > 0) {
                 vitalStatus.value = items;
@@ -123,8 +124,8 @@ export default defineComponent({
                 resetVitalStatus();
             }
 
-            items = store.get(QueryFilterURLKey.SITE)
-                .flat()
+            items = store.getItems(QueryFilterURLKey.SITE)
+                .filter((el) => isCoding(el))
                 .map((el) => el.code);
             if (items.length > 0) {
                 site.value = items;
@@ -132,8 +133,8 @@ export default defineComponent({
                 resetSite();
             }
 
-            items = store.get(QueryFilterURLKey.AGE_MIN)
-                .flat()
+            items = store.getItems(QueryFilterURLKey.AGE_MIN)
+                .filter((el) => isCoding(el))
                 .map((el) => el.code);
             if (items.length > 0) {
                 age.value.min = parseInt(items[0], 10);
@@ -141,8 +142,8 @@ export default defineComponent({
                 resetAgeMin();
             }
 
-            items = store.get(QueryFilterURLKey.AGE_MAX)
-                .flat()
+            items = store.getItems(QueryFilterURLKey.AGE_MAX)
+                .filter((el) => isCoding(el))
                 .map((el) => el.code);
             if (items.length > 0) {
                 age.value.max = parseInt(items[0], 10);
@@ -178,58 +179,58 @@ export default defineComponent({
                 available.value.ageRange.min &&
                 available.value.ageRange.min === age.value.min
             ) {
-                store.set(QueryFilterURLKey.AGE_MIN, []);
+                store.setItems(QueryFilterURLKey.AGE_MIN, []);
             } else {
-                store.set(QueryFilterURLKey.AGE_MIN, [`${age.value.min}`]);
+                store.setItems(QueryFilterURLKey.AGE_MIN, [toCoding(age.value.min)]);
             }
 
             if (
                 available.value.ageRange.max &&
                 available.value.ageRange.max === age.value.max
             ) {
-                store.set(QueryFilterURLKey.AGE_MAX, []);
+                store.setItems(QueryFilterURLKey.AGE_MAX, []);
             } else {
-                store.set(QueryFilterURLKey.AGE_MAX, [`${age.value.max}`]);
+                store.setItems(QueryFilterURLKey.AGE_MAX, [toCoding(age.value.max)]);
             }
         };
 
         const handleGenderChanged = () => {
-            const data : string[] = [];
+            const data : Coding[] = [];
             if (
                 available.value &&
                 available.value.gender &&
                 available.value.gender.length !== gender.value.length
             ) {
-                data.push(...gender.value);
+                data.push(...gender.value.map((el) => toCoding(el)));
             }
 
-            store.set(QueryFilterURLKey.GENDER, data);
+            store.setItems(QueryFilterURLKey.GENDER, data);
         };
 
         const handleVitalStatusChanged = () => {
-            const data : string[] = [];
+            const data : Coding[] = [];
             if (
                 available.value &&
                 available.value.vitalStatus &&
                 available.value.vitalStatus.length !== vitalStatus.value.length
             ) {
-                data.push(...vitalStatus.value);
+                data.push(...vitalStatus.value.map((el) => toCoding(el)));
             }
 
-            store.set(QueryFilterURLKey.VITAL_STATUS, data);
+            store.setItems(QueryFilterURLKey.VITAL_STATUS, data);
         };
 
         const handleSiteChanged = () => {
-            const data : string[] = [];
+            const data : Coding[] = [];
             if (
                 available.value &&
                 available.value.site &&
                 available.value.site.length !== site.value.length
             ) {
-                data.push(...site.value);
+                data.push(...site.value.map((el) => toCoding(el)));
             }
 
-            store.set(QueryFilterURLKey.SITE, data);
+            store.setItems(QueryFilterURLKey.SITE, data);
         };
 
         const submit = () => {
@@ -259,11 +260,9 @@ export default defineComponent({
 });
 </script>
 <template>
-    <QueryFilterBox>
+    <QueryFilterBox :name="'patient'">
         <template #title>
-            <h5 class="text-muted mb-0">
-                Patient
-            </h5>
+            <i class="fa fa-user-injured" /> Patient
         </template>
         <template #default>
             <div
@@ -350,15 +349,6 @@ export default defineComponent({
                 </div>
             </div>
             <div class="row">
-                <div class="form-group">
-                    <button
-                        type="button"
-                        class="btn btn-xs btn-primary btn-block"
-                        @click.prevent="submit"
-                    >
-                        Anwenden
-                    </button>
-                </div>
                 <div>
                     <button
                         type="button"

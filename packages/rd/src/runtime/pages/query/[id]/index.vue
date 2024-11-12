@@ -1,9 +1,9 @@
 <script lang="ts">
 import {
     DNav,
+    DQueryFilterContainer,
     DQueryInfoBox,
-    DQueryPatientFilters,
-    QueryEventBusEventName, injectQueryEventBus,
+    DQueryPatientFilters, QueryEventBusEventName, injectQueryEventBus,
 } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { BModal } from 'bootstrap-vue-next';
@@ -16,6 +16,7 @@ import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        DQueryFilterContainer,
         BModal,
         DQueryInfoBox,
         QueryHPOFilter,
@@ -137,24 +138,28 @@ export default defineNuxtComponent({
                 />
             </div>
             <div class="col-6 col-md-3 col-lg-2">
-                <DQueryPatientFilters
-                    class="mb-3"
-                    :query-id="entity.id"
-                    :use-case="'rd'"
-                    @submit="handleSubmit"
-                />
+                <DQueryFilterContainer>
+                    <template #default>
+                        <DQueryPatientFilters
+                            class="mb-3"
+                            :query-id="entity.id"
+                            :use-case="'rd'"
+                            @submit="handleSubmit"
+                        />
 
-                <QueryDiagnosisFilter
-                    class="mb-3"
-                    :query-id="entity.id"
-                    @submit="handleSubmit"
-                />
+                        <QueryDiagnosisFilter
+                            class="mb-3"
+                            :query-id="entity.id"
+                            @submit="handleSubmit"
+                        />
 
-                <QueryHPOFilter
-                    class="mb-3"
-                    :query-id="entity.id"
-                    @submit="handleSubmit"
-                />
+                        <QueryHPOFilter
+                            class="mb-3"
+                            :query-id="entity.id"
+                            @submit="handleSubmit"
+                        />
+                    </template>
+                </DQueryFilterContainer>
             </div>
         </div>
 

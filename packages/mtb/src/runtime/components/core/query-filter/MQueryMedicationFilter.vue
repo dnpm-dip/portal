@@ -6,14 +6,22 @@
   -->
 
 <script lang="ts">
+import type { PropType } from 'vue';
 import {
     computed, defineComponent, onUnmounted, ref,
 } from 'vue';
 import {
-    type Coding, DQueryFilterBox, QueryEventBusEventName, injectQueryEventBus, isCoding, toCoding, useQueryFilterStore,
+    type CodingGroup,
+    DQueryFilterBox,
+    QueryEventBusEventName,
+    injectQueryEventBus,
+    isCodingGroup,
+    toCodingGroup,
+    useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
+import type { QueryTherapyRecommendedFilter } from '../../../domains';
 
 export default defineComponent({
     components: {
@@ -28,6 +36,10 @@ export default defineComponent({
             type: String,
             required: true,
         },
+        type: {
+            type: String as PropType<'recommended' | 'used'>,
+            required: true,
+        },
     },
     emits: ['commited'],
     async setup(props, { emit }) {
@@ -36,18 +48,24 @@ export default defineComponent({
         const httpClient = injectHTTPClient();
 
         const items = ref<string[]>([]);
-        const itemsAvailable = ref<Coding[]>([]);
+        const itemsAvailable = ref<CodingGroup[]>([]);
         const itemsAvailableInitialized = ref<boolean>(false);
 
         const load = async () => {
             try {
-                const response = await httpClient.query.getDiagnosisFilter(props.queryId);
+                let response : QueryTherapyRecommendedFilter;
+                if (props.type === 'recommended') {
+                    response = await httpClient.query.getTherapyRecommendedFilter(props.queryId);
+                } else {
+                    response = await httpClient.query.getTherapyImplementedFilter(props.queryId);
+                }
+
                 if (
                     response &&
-                    response.code
+                    response.medication
                 ) {
-                    itemsAvailable.value = response.code
-                        .sort((a, b) => a.code.localeCompare(b.code));
+                    itemsAvailable.value = response.medication
+                        .map((group) => toCodingGroup(group));
                 }
             } catch (e) {
                 itemsAvailable.value = [];
@@ -83,13 +101,22 @@ export default defineComponent({
             offset.value = pagination.offset;
         };
 
+        const storeKey = computed(() => {
+            if (props.type === 'recommended') {
+                return QueryFilterURLKey.THERAPY_RECOMMENDED;
+            }
+
+            return QueryFilterURLKey.THERAPY_IMPLEMENTED;
+        });
+
+        // todo: refactor
         const init = () => {
-            const storeItems = store.getItems(QueryFilterURLKey.DIAGNOSIS_CODE)
-                .filter((el) => isCoding(el))
-                .map((el) => el.code);
+            const storeItems = store.getItems(storeKey.value)
+                .filter((el) => isCodingGroup(el))
+                .map((el) => el.id);
 
             if (storeItems.length === 0) {
-                items.value = itemsAvailable.value.map((el) => el.code);
+                items.value = itemsAvailable.value.map((el) => el.id);
 
                 return;
             }
@@ -98,7 +125,7 @@ export default defineComponent({
 
             const [item] = storeItems;
             if (item) {
-                const index = itemsAvailable.value.findIndex((el) => el.code === item);
+                const index = itemsAvailable.value.findIndex((el) => el.id === item);
                 if (index === -1) {
                     return;
                 }
@@ -114,7 +141,7 @@ export default defineComponent({
             QueryEventBusEventName.FILTER_UPDATED,
             (key) => {
                 if (
-                    key !== QueryFilterURLKey.DIAGNOSIS_CODE ||
+                    key !== storeKey.value ||
                     !listenForFilterUpdates.value
                 ) {
                     return;
@@ -127,19 +154,26 @@ export default defineComponent({
         onUnmounted(() => removeFilterUpdatedHandler());
 
         const setFilter = () => {
-            const data : Coding[] = [];
+            const data : CodingGroup[] = [];
 
             if (itemsAvailable.value.length !== items.value.length) {
-                data.push(...items.value.map((el) => toCoding(el)));
+                for (let i = 0; i < items.value.length; i++) {
+                    const index = itemsAvailable.value.findIndex((el) => el.id === items.value[i]);
+                    if (index === -1) {
+                        continue;
+                    }
+
+                    data.push(itemsAvailable.value[index]);
+                }
             }
 
             listenForFilterUpdates.value = false;
-            store.setItems(QueryFilterURLKey.DIAGNOSIS_CODE, data);
+            store.setItems(storeKey.value, data);
             listenForFilterUpdates.value = true;
         };
 
         const selectAll = () => {
-            items.value = itemsAvailable.value.map((el) => el.code);
+            items.value = itemsAvailable.value.map((el) => el.id);
 
             setFilter();
         };
@@ -176,9 +210,14 @@ export default defineComponent({
 });
 </script>
 <template>
-    <DQueryFilterBox :name="'diagnosis'">
+    <DQueryFilterBox :name="type">
         <template #title>
-            <i class="fa fa-stethoscope" /> Diagnose
+            <template v-if="type === 'recommended'">
+                <i class="fa fa-pills" /> Therapien: Empfohlen
+            </template>
+            <template v-else>
+                <i class="fa fa-pills" /> Therapien: Umgesetzt
+            </template>
         </template>
         <template #default>
             <div class=" flex-column gap-1 d-flex">
@@ -209,16 +248,30 @@ export default defineComponent({
                     <div>
                         <template
                             v-for="item in availableSubset"
-                            :key="item.code"
+                            :key="item.id"
                         >
                             <div class="form-check">
                                 <VCFormInputCheckbox
                                     v-model="items"
                                     :label="true"
-                                    :label-content="item.code +':' + item.display"
-                                    :value="item.code"
+                                    :value="item.id"
                                     @change.prevent="handleChanged"
-                                />
+                                >
+                                    <template #label="labelProps">
+                                        <label :for="labelProps.id">
+                                            <div class="d-flex flex-column">
+                                                <template
+                                                    v-for="sub in item.children"
+                                                    :key="sub.code"
+                                                >
+                                                    <div>
+                                                        {{ sub.display }}
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </label>
+                                    </template>
+                                </VCFormInputCheckbox>
                             </div>
                         </template>
                     </div>

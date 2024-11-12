@@ -20,7 +20,7 @@ import {
     buildCodingsRecord,
     extractCodeFromCodingsRecord,
     transformCodingsToFormSelectOptions,
-    transformFormSelectOptionsToCodings,
+    transformFormSelectOptionsToCodings, useQueryFilterStore,
 } from '@dnpm-dip/core';
 import DFormTabGroup from '@dnpm-dip/core/components/utility/form-tab/DFormTabGroup.vue';
 import {
@@ -77,6 +77,7 @@ export default defineComponent({
         'queryUpdated',
     ],
     async setup(props, { emit, expose }) {
+        const filterStore = useQueryFilterStore();
         const apiClient = injectHTTPClient();
 
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
@@ -313,6 +314,9 @@ export default defineComponent({
 
             try {
                 const payload = buildCriteria();
+
+                filterStore.reset();
+                filterStore.resetActive();
 
                 let query : any;
 

@@ -2,12 +2,13 @@
 import {
     defineComponent, ref,
 } from 'vue';
-import { type Coding, useQueryFilterStore } from '@dnpm-dip/core';
+import { type Coding, DQueryFilterBox, useQueryFilterStore } from '@dnpm-dip/core';
 import { QueryURLFilterKey } from '../../constants';
 import { injectHTTPClient } from '../../core';
 import type { QueryHpoFilter } from '../../domains';
 
 export default defineComponent({
+    components: { DQueryFilterBox },
     props: {
         queryId: {
             type: String,
@@ -40,7 +41,7 @@ export default defineComponent({
         const reset = () => {
             if (available.value.value) {
                 items.value = available.value.value.map((el) => el.code);
-                store.set(QueryURLFilterKey.HPO_VALUE, []);
+                store.setItems(QueryURLFilterKey.HPO_VALUE, []);
             }
         };
 
@@ -54,7 +55,7 @@ export default defineComponent({
             }
 
             if (available.value.value.length === items.value.length) {
-                store.set(QueryURLFilterKey.HPO_VALUE, []);
+                store.setItems(QueryURLFilterKey.HPO_VALUE, []);
                 return;
             }
 
@@ -66,13 +67,7 @@ export default defineComponent({
                 }
             }
 
-            store.set(QueryURLFilterKey.HPO_VALUE, data);
-        };
-
-        const submit = () => {
-            store.commit();
-
-            emit('submit');
+            store.setItems(QueryURLFilterKey.HPO_VALUE, data);
         };
 
         return {
@@ -84,63 +79,52 @@ export default defineComponent({
             handleChanged,
 
             reset,
-            submit,
         };
     },
 });
 </script>
 <template>
-    <div class="entity-card">
-        <div class="text-center">
-            <h5 class="text-muted">
-                HPO
-            </h5>
-        </div>
-        <div
-            v-if="available.value"
-            class="mb-3"
-        >
-            <h6><i class="fas fa-tags" /> Term</h6>
+    <DQueryFilterBox :name="'hpo'">
+        <template #title>
+            <i class="fa fa-dna" /> HPO
+        </template>
+        <template #default>
+            <div
+                v-if="available.value"
+                class="mb-3"
+            >
+                <h6><i class="fas fa-tags" /> Term</h6>
 
-            <div>
-                <template
-                    v-for="item in available.value"
-                    :key="item.code"
-                >
-                    <div class="form-check">
-                        <VCFormInputCheckbox
-                            v-model="items"
-                            :label="true"
-                            :label-content="(item.display || item.code)"
-                            :value="item.code"
-                            @change="handleChanged"
-                        />
-                    </div>
-                </template>
+                <div>
+                    <template
+                        v-for="item in available.value"
+                        :key="item.code"
+                    >
+                        <div class="form-check">
+                            <VCFormInputCheckbox
+                                v-model="items"
+                                :label="true"
+                                :label-content="(item.display || item.code)"
+                                :value="item.code"
+                                @change="handleChanged"
+                            />
+                        </div>
+                    </template>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="form-group">
-                <button
-                    type="button"
-                    class="btn btn-xs btn-primary btn-block"
-                    :disabled="!availableInitialized"
-                    @click.prevent="submit"
-                >
-                    Anwenden
-                </button>
+            <div class="row">
+                <div>
+                    <button
+                        :disabled="!availableInitialized"
+                        type="button"
+                        class="btn btn-xs btn-secondary btn-block"
+                        @click.prevent="reset"
+                    >
+                        Zurücksetzen
+                    </button>
+                </div>
             </div>
-            <div>
-                <button
-                    :disabled="!availableInitialized"
-                    type="button"
-                    class="btn btn-xs btn-secondary btn-block"
-                    @click.prevent="reset"
-                >
-                    Zurücksetzen
-                </button>
-            </div>
-        </div>
-    </div>
+        </template>
+    </DQueryFilterBox>
 </template>

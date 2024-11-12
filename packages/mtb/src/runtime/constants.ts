@@ -7,4 +7,6 @@
 
 export enum QueryFilterURLKey {
     DIAGNOSIS_CODE = 'diagnosis[code]',
+    THERAPY_IMPLEMENTED = 'therapy[medication]',
+    THERAPY_RECOMMENDED = 'therapyRecommendation[medication]',
 }

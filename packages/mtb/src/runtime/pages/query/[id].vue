@@ -23,7 +23,7 @@ export default defineComponent({
         const router = useRouter();
         const route = useRoute();
         const toast = useToast();
-        const store = useQuerySessionStore();
+        const sessionStore = useQuerySessionStore();
 
         const entity = ref<null | QuerySession>(null);
 
@@ -32,13 +32,13 @@ export default defineComponent({
                 return;
             }
 
-            store.setUseCase('mtb');
-            store.track(entity.value);
+            sessionStore.setUseCase('mtb');
+            sessionStore.track(entity.value);
         });
 
         onUnmounted(() => {
-            store.setUseCase(null);
-            store.unTrack();
+            sessionStore.setUseCase(null);
+            sessionStore.unTrack();
         });
 
         if (typeof route.params.id !== 'string') {

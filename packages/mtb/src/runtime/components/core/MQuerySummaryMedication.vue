@@ -1,8 +1,11 @@
 <script lang="ts">
 import {
-    DKVChartTableSwitch, DQuerySummaryGrouped, DQuerySummaryNested,
+    type Coding,
+    DKVChartTableSwitch, DQuerySummaryGrouped, DQuerySummaryNested, toCodingGroup, useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { type PropType, defineComponent } from 'vue';
+import { type PropType, defineComponent, ref } from 'vue';
+import { navigateTo } from '#imports';
+import { QueryFilterURLKey } from '../../constants';
 import type { QuerySummaryMedication } from '../../domains';
 
 export default defineComponent({
@@ -16,6 +19,69 @@ export default defineComponent({
             type: Object as PropType<QuerySummaryMedication>,
             required: true,
         },
+        queryId: {
+            type: String,
+            required: true,
+        },
+    },
+    setup(props) {
+        const queryFilterStore = useQueryFilterStore();
+        const recommendedVNode = ref<null | typeof DQuerySummaryNested>(null);
+        const usedVNode = ref<null | typeof DQuerySummaryNested>(null);
+
+        const handleRecommendationClick = (keys: Coding[]) => {
+            const group = toCodingGroup(keys);
+
+            let hasChanged : boolean;
+
+            if (queryFilterStore.hasItem(QueryFilterURLKey.THERAPY_RECOMMENDED, group)) {
+                hasChanged = false;
+                queryFilterStore.setItems(QueryFilterURLKey.THERAPY_RECOMMENDED, []);
+            } else {
+                hasChanged = true;
+                queryFilterStore.setItems(QueryFilterURLKey.THERAPY_RECOMMENDED, [group]);
+            }
+
+            queryFilterStore.setActive('recommended');
+            queryFilterStore.commit();
+
+            if (hasChanged) {
+                navigateTo(`/mtb/query/${props.queryId}/patients`);
+            } else if (recommendedVNode.value) {
+                recommendedVNode.value.reset();
+            }
+        };
+
+        const handleUsedClick = (keys: Coding[]) => {
+            const group = toCodingGroup(keys);
+
+            let hasChanged : boolean;
+
+            if (queryFilterStore.hasItem(QueryFilterURLKey.THERAPY_IMPLEMENTED, group)) {
+                hasChanged = false;
+                queryFilterStore.setItems(QueryFilterURLKey.THERAPY_IMPLEMENTED, []);
+            } else {
+                hasChanged = true;
+                queryFilterStore.setItems(QueryFilterURLKey.THERAPY_IMPLEMENTED, [group]);
+            }
+
+            queryFilterStore.setActive('used');
+            queryFilterStore.commit();
+
+            if (hasChanged) {
+                navigateTo(`/mtb/query/${props.queryId}/patients`);
+            } else if (usedVNode.value) {
+                usedVNode.value.reset();
+            }
+        };
+
+        return {
+            recommendedVNode,
+            handleRecommendationClick,
+
+            usedVNode,
+            handleUsedClick,
+        };
     },
 });
 </script>
@@ -43,11 +109,16 @@ export default defineComponent({
                 <h6>Gesamtverteilung ({{ entity.recommendations.overallDistribution.total }})</h6>
 
                 <DQuerySummaryNested
+                    ref="recommendedVNode"
                     :label="'Kategorie'"
                     :entity="entity.recommendations.overallDistribution"
                 >
                     <template #default="{ items }">
-                        <DKVChartTableSwitch :data="items" />
+                        <DKVChartTableSwitch
+                            :data="items"
+                            :clickable="true"
+                            @clicked="handleRecommendationClick"
+                        />
                     </template>
                 </DQuerySummaryNested>
             </div>
@@ -61,11 +132,16 @@ export default defineComponent({
                 <h6>Gesamtverteilung ({{ entity.therapies.overallDistribution.total }})</h6>
 
                 <DQuerySummaryNested
+                    ref="usedVNode"
                     :label="'Kategorie'"
                     :entity="entity.therapies.overallDistribution"
                 >
                     <template #default="{ items }">
-                        <DKVChartTableSwitch :data="items" />
+                        <DKVChartTableSwitch
+                            :data="items"
+                            :clickable="true"
+                            @clicked="handleUsedClick"
+                        />
                     </template>
                 </DQuerySummaryNested>
             </div>

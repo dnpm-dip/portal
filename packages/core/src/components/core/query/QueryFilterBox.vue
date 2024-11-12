@@ -5,14 +5,25 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { storeToRefs } from '@authup/client-web-kit';
+import { computed, defineComponent } from 'vue';
+import { useQueryFilterStore } from '../../../stores';
 
 export default defineComponent({
-    setup() {
-        const extended = ref(true);
+    props: {
+        name: {
+            type: String,
+            required: true,
+        },
+    },
+    setup(props) {
+        const store = useQueryFilterStore();
+        const storeRefs = storeToRefs(store);
+
+        const extended = computed(() => storeRefs.active.value === props.name);
 
         const toggleExtended = () => {
-            extended.value = !extended.value;
+            store.setActive(props.name);
         };
 
         return {
@@ -27,13 +38,16 @@ export default defineComponent({
         <div class="d-flex flex-column gap-2">
             <div class="d-flex flex-row">
                 <div>
-                    <slot name="title">
-                        Filter
-                    </slot>
+                    <h6 class="text-muted mb-0">
+                        <slot name="title">
+                            Filter
+                        </slot>
+                    </h6>
                 </div>
                 <div class="ms-auto">
                     <button
                         class="btn btn-dark btn-xs"
+                        :disabled="extended"
                         @click.prevent="toggleExtended"
                     >
                         <i :class="{'fa fa-chevron-down': !extended, 'fa fa-chevron-up': extended}" />

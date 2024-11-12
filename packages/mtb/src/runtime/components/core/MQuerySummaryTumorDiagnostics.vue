@@ -4,6 +4,7 @@ import {
     DKVChartTableSwitch,
     DQuerySummaryGrouped,
     DQuerySummaryNested,
+    toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { type PropType, defineComponent, ref } from 'vue';
@@ -32,16 +33,22 @@ export default defineComponent({
         const queryFilterStore = useQueryFilterStore();
 
         const handleClick = (keys: Coding[]) => {
-            let hasChanged : boolean;
-
-            if (queryFilterStore.hasGroup(QueryFilterURLKey.DIAGNOSIS_CODE, keys)) {
-                hasChanged = false;
-                queryFilterStore.set(QueryFilterURLKey.DIAGNOSIS_CODE, []);
-            } else {
-                hasChanged = true;
-                queryFilterStore.set(QueryFilterURLKey.DIAGNOSIS_CODE, [keys]);
+            const [coding] = keys;
+            if (typeof coding === 'undefined') {
+                return;
             }
 
+            let hasChanged : boolean;
+
+            if (queryFilterStore.hasItem(QueryFilterURLKey.DIAGNOSIS_CODE, coding)) {
+                hasChanged = false;
+                queryFilterStore.setItems(QueryFilterURLKey.DIAGNOSIS_CODE, []);
+            } else {
+                hasChanged = true;
+                queryFilterStore.setItems(QueryFilterURLKey.DIAGNOSIS_CODE, [coding]);
+            }
+
+            queryFilterStore.setActive('diagnosis');
             queryFilterStore.commit();
 
             if (hasChanged) {

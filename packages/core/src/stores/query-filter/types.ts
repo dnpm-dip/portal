@@ -13,7 +13,7 @@ import type {
     _ExtractGettersFromSetupStore,
     _ExtractStateFromSetupStore,
 } from 'pinia';
-import type { Coding } from '../../domains';
+import type { Coding, CodingGroup } from '../../domains';
 
 import type { createQueryFilterStore } from './module';
 
@@ -36,6 +36,5 @@ export type QueryFilterStoreInstallOptions = {
     pinia?: Pinia
 };
 
-export type QueryFilterGroupInput = string | Coding | string[] | Coding[];
-export type QueryFilterGroup = Coding[];
-export type QueryFilters = Record<string, QueryFilterGroup[]>;
+export type QueryFilterItem = Coding | CodingGroup;
+export type QueryFilters = Record<string, QueryFilterItem[]>;

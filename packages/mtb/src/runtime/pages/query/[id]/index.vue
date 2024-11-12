@@ -1,6 +1,6 @@
 <script lang="ts">
 import {
-    DNav, DQueryInfoBox, DQueryPatientFilters, type QueryBase, injectQueryEventBus,
+    DNav, DQueryFilterContainer, DQueryInfoBox, DQueryPatientFilters, type QueryBase, injectQueryEventBus,
 } from '@dnpm-dip/core';
 import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
 import { BModal } from 'bootstrap-vue-next';
@@ -9,11 +9,14 @@ import { defineNuxtComponent, useRoute } from '#imports';
 import MQueryCriteriaSummary from '../../../components/core/query-criteria/MQueryCriteriaSummary.vue';
 import MQueryCriteriaSummaryBox from '../../../components/core/query-criteria/MQueryCriteriaSummaryBox.vue';
 import MQueryDiagnosisFilter from '../../../components/core/query-filter/MQueryDiagnosisFilter.vue';
+import MQueryMedicationFilter from '../../../components/core/query-filter/MQueryMedicationFilter.vue';
 import MSearchForm from '../../../components/core/search/MSearchForm.vue';
 import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        DQueryFilterContainer,
+        MQueryMedicationFilter,
         MQueryDiagnosisFilter,
         MQueryCriteriaSummaryBox,
         MQueryCriteriaSummary,
@@ -115,14 +118,28 @@ export default defineNuxtComponent({
             </div>
             <div class="col-6 col-md-3 col-lg-2">
                 <div class="d-flex flex-column gap-3">
-                    <DQueryPatientFilters
-                        :use-case="'mtb'"
-                        :query-id="entity.id"
-                    />
+                    <DQueryFilterContainer>
+                        <template #default>
+                            <DQueryPatientFilters
+                                :use-case="'mtb'"
+                                :query-id="entity.id"
+                            />
 
-                    <MQueryDiagnosisFilter
-                        :query-id="entity.id"
-                    />
+                            <MQueryDiagnosisFilter
+                                :query-id="entity.id"
+                            />
+
+                            <MQueryMedicationFilter
+                                :query-id="entity.id"
+                                :type="'recommended'"
+                            />
+
+                            <MQueryMedicationFilter
+                                :query-id="entity.id"
+                                :type="'used'"
+                            />
+                        </template>
+                    </DQueryFilterContainer>
                 </div>
             </div>
         </div>
