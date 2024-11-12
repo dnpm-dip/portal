@@ -6,6 +6,16 @@ export function isCoding(input: unknown) : input is Coding {
         typeof input.code === 'string';
 }
 
+export function toCoding(input: number | string | Coding) : Coding {
+    if (!isCoding(input)) {
+        return {
+            code: input,
+        };
+    }
+
+    return input;
+}
+
 type FormSelectOption = {
     id: string | number,
     value: any

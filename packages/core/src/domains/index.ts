@@ -1,6 +1,7 @@
 export * from './connection-peer';
 export * from './codesystem';
 export * from './coding';
+export * from './coding-group';
 export * from './patient';
 export * from './query';
 export * from './site';

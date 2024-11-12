@@ -5,14 +5,20 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { serializeCoding } from '../../domains';
-import type { QueryFilterGroup, QueryFilters } from './types';
+import { isCoding, serializeCoding } from '../../domains';
+import type { QueryFilterItem, QueryFilters } from './types';
 
-export function buildQueryFilterURLValue(items: QueryFilterGroup[]) {
-    const output = items
-        .map((group) => group
-            .map((el) => serializeCoding(el))
-            .join('+'));
+export function buildQueryFilterURLValue(items: QueryFilterItem[]) {
+    const output : string[] = [];
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (isCoding(item)) {
+            output.push(serializeCoding(item));
+        } else {
+            output.push(item.children
+                .map((child) => serializeCoding(child)).join('+'));
+        }
+    }
 
     if (output.length > 0) {
         return output.join(',');

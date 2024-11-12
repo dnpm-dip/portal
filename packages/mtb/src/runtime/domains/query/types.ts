@@ -88,10 +88,10 @@ export type QueryDiagnosisFilter = {
     code?: Coding<string>[]
 };
 export type QueryTherapyRecommendedFilter = {
-    medication?: Coding<string>[]
+    medication?: Coding<string>[][]
 };
 export type QueryTherapyImplementedFilter = {
-    medication?: Coding<string>[]
+    medication?: Coding<string>[][]
 };
 
 export type QuerySessionCreate = {

@@ -7,42 +7,38 @@
 
 import { isEqual } from 'smob';
 import { ref } from 'vue';
-import type { Coding } from '../../domains';
 import { QueryEventBusEventName } from '../../services';
 import type { StoreCreateOptions } from '../types';
 import { buildQueryFiltersURLRecord } from './helper';
-import type { QueryFilterGroup, QueryFilterGroupInput, QueryFilters } from './types';
-
-const toCoding = (input: string | Coding) : Coding => {
-    if (typeof input === 'string') {
-        return {
-            code: input,
-        };
-    }
-
-    return input;
-};
+import type { QueryFilterItem, QueryFilters } from './types';
 
 export function createQueryFilterStore(ctx: StoreCreateOptions) {
+    const active = ref<string>('patient');
+    const setActive = (name: string) => {
+        active.value = name;
+    };
+    const resetActive = () => {
+        active.value = 'patient';
+    };
+
+    // ----------------------------------------------------------------
+
     const items = ref<QueryFilters>({});
 
-    const hasGroup = (
+    const reset = () => {
+        items.value = {};
+    };
+
+    const hasItem = (
         key: string,
-        input: QueryFilterGroupInput,
+        input: QueryFilterItem,
     ) => {
         if (typeof items.value[key] === 'undefined' || items.value[key].length === 0) {
             return false;
         }
 
-        let data : Coding[];
-        if (Array.isArray(input)) {
-            data = input.map((el) => toCoding(el));
-        } else {
-            data = [toCoding(input)];
-        }
-
         for (let i = 0; i < items.value[key].length; i++) {
-            if (isEqual(items.value[key][i], data)) {
+            if (isEqual(items.value[key][i], input)) {
                 return true;
             }
         }
@@ -50,43 +46,30 @@ export function createQueryFilterStore(ctx: StoreCreateOptions) {
         return false;
     };
 
-    const addGroup = (
+    const addItem = (
         key: string,
-        input: QueryFilterGroupInput,
+        input: QueryFilterItem,
     ) => {
-        let data : Coding[];
-        if (Array.isArray(input)) {
-            data = input.map((el) => toCoding(el));
-        } else {
-            data = [toCoding(input)];
-        }
-
         if (!items.value[key]) {
             items.value[key] = [];
         }
 
-        items.value[key].push(data);
+        items.value[key].push(input);
     };
 
-    const reset = (key: string) => {
+    const setItems = (key: string, input: QueryFilterItem[]) => {
         items.value[key] = [];
-    };
-
-    const set = (key: string, input: QueryFilterGroupInput[]) => {
-        reset(key);
 
         for (let i = 0; i < input.length; i++) {
-            addGroup(key, input[i]);
+            addItem(key, input[i]);
         }
 
         ctx.queryEventBus.emit(QueryEventBusEventName.FILTER_UPDATED, key);
     };
 
-    const get = (key: string) : QueryFilterGroup[] => items.value[key] || [];
+    const getItems = (key: string) : QueryFilterItem[] => items.value[key] || [];
 
-    const resetAll = () => {
-        items.value = {};
-    };
+    // ----------------------------------------------------------------
 
     const commit = () => {
         ctx.queryEventBus.emit(QueryEventBusEventName.FILTERS_COMMITED);
@@ -95,16 +78,21 @@ export function createQueryFilterStore(ctx: StoreCreateOptions) {
     const buildURLRecord = () => buildQueryFiltersURLRecord(items.value);
 
     return {
-        hasGroup,
-        addGroup,
+        active,
+        setActive,
+        resetActive,
+
+        reset,
+
+        hasItem,
+        addItem,
 
         items,
         buildURLRecord,
 
-        set,
-        get,
+        setItems,
+        getItems,
 
         commit,
-        resetAll,
     };
 }
