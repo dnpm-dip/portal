@@ -4,10 +4,9 @@ import {
     defineComponent, onMounted, onUnmounted, ref,
 } from 'vue';
 import {
-    createError,
     definePageMeta,
+    navigateTo,
     useRoute,
-    useRouter,
 } from '#imports';
 import { injectHTTPClient } from '../../core/http-client';
 import type { QuerySession } from '../../domains';
@@ -20,7 +19,6 @@ export default defineComponent({
         });
 
         const api = injectHTTPClient();
-        const router = useRouter();
         const route = useRoute();
         const toast = useToast();
         const sessionStore = useQuerySessionStore();
@@ -42,15 +40,13 @@ export default defineComponent({
         });
 
         if (typeof route.params.id !== 'string') {
-            await router.push({ path: '/mtb/' });
-            throw createError({});
-        }
-
-        try {
-            entity.value = await api.query.getOne(route.params.id);
-        } catch (e) {
-            await router.push({ path: '/mtb/' });
-            throw createError({});
+            await navigateTo({ path: '/mtb/' });
+        } else {
+            try {
+                entity.value = await api.query.getOne(route.params.id);
+            } catch (e) {
+                await navigateTo({ path: '/mtb/' });
+            }
         }
 
         const handleUpdated = (data: QuerySession) => {

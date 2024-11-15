@@ -4,7 +4,6 @@ import {
     defineComponent, onMounted, onUnmounted, ref,
 } from 'vue';
 import {
-    createError,
     definePageMeta,
     navigateTo,
     useRoute,
@@ -42,14 +41,12 @@ export default defineComponent({
 
         if (typeof route.params.id !== 'string') {
             await navigateTo({ path: '/rd/' });
-            throw createError({});
-        }
-
-        try {
-            entity.value = await api.query.getOne(route.params.id);
-        } catch (e) {
-            await navigateTo({ path: '/rd/' });
-            throw createError({});
+        } else {
+            try {
+                entity.value = await api.query.getOne(route.params.id);
+            } catch (e) {
+                await navigateTo({ path: '/rd/' });
+            }
         }
 
         const handleUpdated = (data: QuerySession) => {
