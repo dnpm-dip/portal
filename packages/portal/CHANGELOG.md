@@ -1,5 +1,33 @@
 # @dnpm-dip/portal
 
+## [1.27.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.26.0...v1.27.0) (2024-11-19)
+
+
+### Features
+
+* adjusted code base to new version of authup dependencies ([1da44b8](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1da44b8f2ab7d7ec29350d59e8319dfcb1db96d2))
+* bump authup & vuecs packages ([6e433a3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6e433a3633f81cf2ef384a30f462e1cadd6ab0c2))
+* refactored build query filters (new event bus & query filter store) ([#841](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/841)) ([685d539](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/685d539b3de5652d377c9082846519064b3048f4))
+* reorganized query filter store ([dc6755d](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/dc6755d6f968ed53f02a9afc23a6f4dd43ee1a2d))
+
+
+### Bug Fixes
+
+* **deps:** bump @authup/client-web-kit ([#891](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/891)) ([182a546](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/182a546d5a577543771ca2cc6ee0470e865c9561))
+* **deps:** bump @authup/core-kit from 1.0.0-beta.22 to 1.0.0-beta.23 ([#896](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/896)) ([7999069](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/799906912c6ad1728aca2516893b76ecea15cfb3))
+* **deps:** bump vue from 3.5.12 to 3.5.13 ([#907](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/907)) ([c191dcf](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/c191dcf4ee7002d8a670c4523f5db01e20865de3))
+* rerender navigation on access token changes ([ac1ccb8](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/ac1ccb8542f3125409566ee11df0ca2b3e9a93de))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.28.0 to ^1.29.0
+    * @dnpm-dip/kit bumped from ^1.22.0 to ^1.23.0
+    * @dnpm-dip/mtb bumped from ^1.27.0 to ^1.28.0
+    * @dnpm-dip/rd bumped from ^1.26.0 to ^1.27.0
+
 ## [1.26.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.25.0...v1.26.0) (2024-11-07)
 
 

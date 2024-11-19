@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.23.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.22.0...v1.23.0) (2024-11-19)
+
+
+### Features
+
+* bump authup & vuecs packages ([6e433a3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6e433a3633f81cf2ef384a30f462e1cadd6ab0c2))
+
 ## [1.22.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.21.0...v1.22.0) (2024-11-07)
 
 

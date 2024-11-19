@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.28.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.27.0...v1.28.0) (2024-11-19)
+
+
+### Features
+
+* cleanup diagnsosis filter + add selectAll/unselectAll toggle ([#857](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/857)) ([69809d3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/69809d35490d5864ad37b7a36ba5023dc23179e9))
+* initial therapy response by variant table ([#858](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/858)) ([3127ca8](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/3127ca80b741b166f002ba3dcc4e9f46d228e2d4))
+* mtb medication filters implementation + filter expansion refactoring ([#898](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/898)) ([a0d984f](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a0d984f2a6fa4ca02b3806a0920efd60157d7394))
+* refactored query filter components, api, ... ([b8a95bb](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b8a95bb02fd1d552a03c1d7583fb0e333e5949d5))
+
+
+### Bug Fixes
+
+* **deps:** bump @authup/client-web-kit ([#891](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/891)) ([182a546](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/182a546d5a577543771ca2cc6ee0470e865c9561))
+* **deps:** bump vue from 3.5.12 to 3.5.13 ([#907](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/907)) ([c191dcf](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/c191dcf4ee7002d8a670c4523f5db01e20865de3))
+* do not throw error in query handler ([55a8af7](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/55a8af7274c96f3a8d3c87f06fb9ff4b403a1700))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.28.0 to ^1.29.0
+    * @dnpm-dip/kit bumped from ^1.22.0 to ^1.23.0
+
 ## [1.27.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.26.0...v1.27.0) (2024-11-07)
 
 

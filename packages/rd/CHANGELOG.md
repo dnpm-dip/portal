@@ -1,5 +1,32 @@
 # @dnpm-dip/rare-diseases
 
+## [1.27.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.26.0...v1.27.0) (2024-11-19)
+
+
+### Features
+
+* bump authup & vuecs packages ([6e433a3](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6e433a3633f81cf2ef384a30f462e1cadd6ab0c2))
+* mtb diagnosis filter implementation + query filter schema updated ([3de72da](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/3de72da7969dbb6324dffbe215a09130f46d8a98))
+* mtb medication filters implementation + filter expansion refactoring ([#898](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/898)) ([a0d984f](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a0d984f2a6fa4ca02b3806a0920efd60157d7394))
+* refactored build query filters (new event bus & query filter store) ([#841](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/841)) ([685d539](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/685d539b3de5652d377c9082846519064b3048f4))
+* refactored query filter components, api, ... ([b8a95bb](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/b8a95bb02fd1d552a03c1d7583fb0e333e5949d5))
+* refactored query patient filter ([6d62807](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/6d62807f8aab0434f05ed80ecc32da83e4adb4e0))
+
+
+### Bug Fixes
+
+* **deps:** bump @authup/client-web-kit ([#891](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/891)) ([182a546](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/182a546d5a577543771ca2cc6ee0470e865c9561))
+* **deps:** bump vue from 3.5.12 to 3.5.13 ([#907](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/907)) ([c191dcf](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/c191dcf4ee7002d8a670c4523f5db01e20865de3))
+* do not throw error in query handler ([55a8af7](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/55a8af7274c96f3a8d3c87f06fb9ff4b403a1700))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.28.0 to ^1.29.0
+    * @dnpm-dip/kit bumped from ^1.22.0 to ^1.23.0
+
 ## [1.26.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.25.0...v1.26.0) (2024-11-07)
 
 
