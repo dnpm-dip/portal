@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.29.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.28.0...v1.29.0) (2024-11-19)
+
+
+### Features
+
+* adjusted code base to new version of authup dependencies ([1da44b8](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/1da44b8f2ab7d7ec29350d59e8319dfcb1db96d2))
+* mtb medication filters implementation + filter expansion refactoring ([#898](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/898)) ([a0d984f](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/a0d984f2a6fa4ca02b3806a0920efd60157d7394))
+
+
+### Bug Fixes
+
+* **deps:** bump @authup/client-web-kit ([#891](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/891)) ([182a546](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/182a546d5a577543771ca2cc6ee0470e865c9561))
+* **deps:** bump @authup/core-kit from 1.0.0-beta.22 to 1.0.0-beta.23 ([#896](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/896)) ([7999069](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/799906912c6ad1728aca2516893b76ecea15cfb3))
+* **deps:** bump vue from 3.5.12 to 3.5.13 ([#907](https://github.com/KohlbacherLab/dnpm-dip-portal/issues/907)) ([c191dcf](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/c191dcf4ee7002d8a670c4523f5db01e20865de3))
+* do not throw error in query handler ([55a8af7](https://github.com/KohlbacherLab/dnpm-dip-portal/commit/55a8af7274c96f3a8d3c87f06fb9ff4b403a1700))
+
 ## [1.28.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.27.0...v1.28.0) (2024-11-07)
 
 
