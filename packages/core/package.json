@@ -58,7 +58,7 @@
         "@vuecs/link": "^1.0.0",
         "pinia": "^2.2.4",
         "vue": "^3.5.13",
-        "vue-chartjs": "^5.3.1"
+        "vue-chartjs": "^5.3.2"
     },
     "peerDependencies": {
         "@authup/core-http-kit": "^1.0.0-beta.21",
@@ -70,6 +70,6 @@
         "@vuecs/navigation": "^2.3.1",
         "pinia": "^2.2.4",
         "vue": "^3.x",
-        "vue-chartjs": "^5.3.1"
+        "vue-chartjs": "^5.3.2"
     }
 }
