@@ -78,7 +78,6 @@
 }
 
 a {
-    color: #949da5;
     transition: color .1s ease-in-out,background-color .1s ease-in-out,border-color .1s ease-in-out;
     text-decoration: none;
 }
