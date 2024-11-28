@@ -12,6 +12,7 @@ export function buildQueryFilterURLValue(items: QueryFilterItem[]) {
     const output : string[] = [];
     for (let i = 0; i < items.length; i++) {
         const item = items[i];
+
         if (isCoding(item)) {
             output.push(serializeCoding(item));
         } else {

@@ -3,7 +3,7 @@ import type { Coding } from './types';
 
 export function isCoding(input: unknown) : input is Coding {
     return isObject(input) &&
-        typeof input.code === 'string';
+        (typeof input.code === 'string' || typeof input.code === 'number');
 }
 
 export function toCoding(input: number | string | Coding) : Coding {
@@ -129,7 +129,7 @@ export function buildCodingsRecord(input: Record<string, any>) : Record<string, 
 
 export function serializeCoding(coding: Coding) {
     const parts: string[] = [];
-    parts.push(coding.code);
+    parts.push(`${coding.code}`);
     if (coding.system) {
         parts.push(coding.system);
 
