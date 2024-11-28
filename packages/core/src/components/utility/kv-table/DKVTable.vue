@@ -10,7 +10,7 @@ import { BTable } from 'bootstrap-vue-next';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 import type { Coding, KeyValueRecord } from '../../../domains';
-import { isCoding, isConceptCount } from '../../../domains';
+import { isCoding, isConceptCount, isMinMaxRange } from '../../../domains';
 import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
 
 export default defineComponent({
@@ -98,6 +98,11 @@ export default defineComponent({
             if (isCoding(itemKey)) {
                 emit('clicked', [{ ...itemKey }]);
 
+                return;
+            }
+
+            if (isMinMaxRange(itemKey)) {
+                emit('clicked', [{ code: itemKey.min }, { code: itemKey.max }]);
                 return;
             }
 

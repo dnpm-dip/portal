@@ -1,10 +1,11 @@
 <script lang="ts">
 import { VCFormRangeMultiSlider } from '@vuecs/form-controls';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onUnmounted, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core';
 import type { Coding, PatientFilter } from '../../../domains';
 import { isCoding, toCoding } from '../../../domains';
+import { QueryEventBusEventName, injectQueryEventBus } from '../../../services';
 import { useQueryFilterStore } from '../../../stores';
 import QueryFilterBox from './QueryFilterBox.vue';
 
@@ -30,6 +31,7 @@ export default defineComponent({
     emits: ['submit'],
     async setup(props, { emit }) {
         const store = useQueryFilterStore();
+        const eventBus = injectQueryEventBus();
         const httpClient = injectHTTPClient();
 
         const available = ref<PatientFilter>({});
@@ -156,6 +158,31 @@ export default defineComponent({
             .then(() => load())
             .then(() => init());
 
+        const listenForFilterUpdates = ref(true);
+        const removeFilterUpdatedHandler = eventBus.on(
+            QueryEventBusEventName.FILTER_UPDATED,
+            (key) => {
+                if (!listenForFilterUpdates.value) {
+                    return;
+                }
+
+                if (
+                    key !== QueryFilterURLKey.SITE &&
+                    key !== QueryFilterURLKey.GENDER &&
+                    key !== QueryFilterURLKey.AGE_MIN &&
+                    key !== QueryFilterURLKey.AGE_MAX
+                ) {
+                    return;
+                }
+
+                listenForFilterUpdates.value = false;
+                init();
+                listenForFilterUpdates.value = true;
+            },
+        );
+
+        onUnmounted(() => removeFilterUpdatedHandler());
+
         const handleAgeRangeChanged = (ctx: { min: number, max: number}) => {
             if (!available.value.ageRange) {
                 return;
@@ -175,6 +202,8 @@ export default defineComponent({
             age.value.min = minRounded;
             age.value.max = maxRounded;
 
+            listenForFilterUpdates.value = false;
+
             if (
                 available.value.ageRange.min &&
                 available.value.ageRange.min === age.value.min
@@ -192,6 +221,8 @@ export default defineComponent({
             } else {
                 store.setItems(QueryFilterURLKey.AGE_MAX, [toCoding(age.value.max)]);
             }
+
+            listenForFilterUpdates.value = true;
         };
 
         const handleGenderChanged = () => {
@@ -204,7 +235,9 @@ export default defineComponent({
                 data.push(...gender.value.map((el) => toCoding(el)));
             }
 
+            listenForFilterUpdates.value = false;
             store.setItems(QueryFilterURLKey.GENDER, data);
+            listenForFilterUpdates.value = true;
         };
 
         const handleVitalStatusChanged = () => {
@@ -217,7 +250,9 @@ export default defineComponent({
                 data.push(...vitalStatus.value.map((el) => toCoding(el)));
             }
 
+            listenForFilterUpdates.value = false;
             store.setItems(QueryFilterURLKey.VITAL_STATUS, data);
+            listenForFilterUpdates.value = true;
         };
 
         const handleSiteChanged = () => {
@@ -230,7 +265,9 @@ export default defineComponent({
                 data.push(...site.value.map((el) => toCoding(el)));
             }
 
+            listenForFilterUpdates.value = false;
             store.setItems(QueryFilterURLKey.SITE, data);
+            listenForFilterUpdates.value = true;
         };
 
         const submit = () => {
