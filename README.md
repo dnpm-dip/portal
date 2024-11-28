@@ -1,5 +1,10 @@
 # Portal 🩺
 
+[![main](https://github.com/KohlbacherLab/dnpm-dip-portal/actions/workflows/main.yml/badge.svg)](https://github.com/KohlbacherLab/dnpm-dip-portal/actions/workflows/main.yml)
+[![CodeQL](https://github.com/KohlbacherLab/dnpm-dip-portal/actions/workflows/codeql.yml/badge.svg)](https://github.com/KohlbacherLab/dnpm-dip-portal/actions/workflows/codeql.yml)
+[![Known Vulnerabilities](https://snyk.io/test/github/KohlbacherLab/dnpm-dip-portal/badge.svg)](https://snyk.io/test/github/KohlbacherLab/dnpm-dip-portal)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
+
 This repository contains the Portal of DNPM:DIP.
 
 **Table of Contents**
