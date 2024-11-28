@@ -43,9 +43,6 @@ export default defineNuxtComponent({
 
         const fields = [
             {
-                key: 'id', label: 'ID', thClass: 'text-left', tdClass: 'text-left',
-            },
-            {
                 key: 'name', label: 'Name', thClass: 'text-left', tdClass: 'text-left',
             },
             {
@@ -95,6 +92,14 @@ export default defineNuxtComponent({
                 head-variant="'dark'"
                 outlined
             >
+                <template #cell(name)="data">
+                    <template v-if="data.item.display_name">
+                        {{ data.item.display_name }} <span class="text-muted">({{ data.item.name }})</span>
+                    </template>
+                    <template v-else>
+                        {{ data.item.name }}
+                    </template>
+                </template>
                 <template #cell(created_at)="data">
                     <VCTimeago :datetime="data.item.created_at" />
                 </template>
