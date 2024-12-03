@@ -8,7 +8,7 @@
 <script lang="ts">
 import {
     type CodeSystemConcept,
-    DCodeSystem, DCollectionTransform, DTags, HGVS_CODE_REGEX, transformConceptToFormSelectOption,
+    HGVS_CODE_REGEX, toCoding, transformConceptToFormSelectOption,
 } from '@dnpm-dip/core';
 import { IVuelidate } from '@ilingo/vuelidate';
 import useVuelidate from '@vuelidate/core';
@@ -16,23 +16,21 @@ import { helpers } from '@vuelidate/validators';
 import {
     type PropType, computed, defineComponent, reactive, toRef, watch,
 } from 'vue';
-import { VCFormSelectSearch } from '@vuecs/form-controls';
-import type { QuerySNVCriteria } from '../../../domains';
+import { FormMutationType, type QueryGeneAlterationSNVCriteria } from '../../../domains';
 
 export default defineComponent({
     components: {
-        DTags, DCodeSystem, DCollectionTransform, IVuelidate, VCFormSelectSearch,
+        IVuelidate,
     },
     props: {
-        entity: Object as PropType<QuerySNVCriteria<string>>,
+        entity: Object as PropType<QueryGeneAlterationSNVCriteria>,
     },
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
-        const form = reactive<QuerySNVCriteria<string>>({
-            gene: '',
+        const form = reactive<Partial<QueryGeneAlterationSNVCriteria<string>>>({
+            type: FormMutationType.SNV,
             dnaChange: '',
             proteinChange: '',
-            supporting: false,
         });
 
         const vuelidate = useVuelidate({
@@ -53,10 +51,8 @@ export default defineComponent({
         const init = () => {
             if (!props.entity) return;
 
-            form.gene = props.entity?.gene || '';
-            form.dnaChange = props.entity?.dnaChange || '';
-            form.proteinChange = props.entity?.proteinChange || '';
-            form.supporting = props.entity?.supporting || false;
+            form.dnaChange = props.entity?.dnaChange?.code || '';
+            form.proteinChange = props.entity?.proteinChange?.code || '';
         };
 
         init();
@@ -70,64 +66,33 @@ export default defineComponent({
         ) => transformConceptToFormSelectOption(concept);
 
         const isEditing = computed(() => !!entityRef.value);
-        const submit = () => {
-            emit('updated', {
-                gene: form.gene,
-                dnaChange: form.dnaChange,
-                proteinChange: form.proteinChange,
-                supporting: form.supporting,
-            } satisfies QuerySNVCriteria<string>);
+        const handleChanged = () => {
+            const output : QueryGeneAlterationSNVCriteria = {
+                type: FormMutationType.SNV,
+            };
+
+            if (form.dnaChange) {
+                output.dnaChange = toCoding(form.dnaChange);
+            }
+
+            if (form.proteinChange) {
+                output.proteinChange = toCoding(form.proteinChange);
+            }
+
+            emit('updated', output);
         };
 
         return {
             form,
             transformConcepts,
             isEditing,
-            submit,
+            handleChanged,
             vuelidate,
         };
     },
 });
 </script>
 <template>
-    <div class="form-group">
-        <label>Gen</label>
-        <DCodeSystem
-            :code="'https://www.genenames.org/'"
-            :lazy-load="true"
-        >
-            <template #default="{ data }">
-                <DCollectionTransform
-                    :items="data.concepts"
-                    :transform="transformConcepts"
-                >
-                    <template #default="options">
-                        <VCFormSelectSearch
-                            v-model="form.gene"
-                            :options="options"
-                            placeholder="HGNC"
-                        >
-                            <template #selected="{ items, toggle }">
-                                <DTags
-                                    :emit-only="true"
-                                    :items="items"
-                                    tag-variant="dark"
-                                    @deleted="toggle"
-                                />
-                            </template>
-                        </VCFormSelectSearch>
-                    </template>
-                </DCollectionTransform>
-            </template>
-            <template #loading>
-                <VCFormSelectSearch
-                    :options="[]"
-                    :disabled="true"
-                    placeholder="HGNC"
-                />
-            </template>
-        </DCodeSystem>
-    </div>
     <VCFormGroup>
         <template #label>
             DNA-Änderung
@@ -136,6 +101,7 @@ export default defineComponent({
             <VCFormInput
                 v-model="form.dnaChange"
                 placeholder="HGVS"
+                @change="handleChanged"
             />
         </template>
     </VCFormGroup>
@@ -152,6 +118,7 @@ export default defineComponent({
                     <VCFormInput
                         v-model="vuelidate.proteinChange.$model"
                         placeholder="HGVS 3-Buchstaben-Code"
+                        @change="handleChanged"
                     />
                     <!--
                         <div class="alert alert-sm alert-info mt-1">
@@ -168,22 +135,4 @@ export default defineComponent({
             </VCFormGroup>
         </template>
     </ivuelidate>
-    <div class="mb-1">
-        <VCFormInputCheckbox
-            v-model="form.supporting"
-            :group-class="'form-switch'"
-            :label="true"
-            :label-content="'Stützend?'"
-        />
-    </div>
-    <div>
-        <button
-            :disabled="vuelidate.$invalid"
-            type="button"
-            class="btn btn-dark btn-xs"
-            @click.prevent="submit()"
-        >
-            {{ isEditing ? 'Aktualisieren' : 'Hinzufügen' }}
-        </button>
-    </div>
 </template>

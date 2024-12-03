@@ -49,8 +49,8 @@ export default defineNuxtConfig({
         apiUrl: process.env.API_URL,
         authupUrl: process.env.AUTHUP_URL,
         public: {
-            apiUrl: process.env.API_URL || 'https://dnpm.bwhealthcloud.de/api/',
-            authupUrl: process.env.AUTHUP_URL || 'https://dnpm.bwhealthcloud.de/auth/',
+            apiUrl: process.env.API_URL || 'https://dnpm-dip.net/api/',
+            authupUrl: process.env.AUTHUP_URL || 'https://dnpm-dip.net/auth/',
             cookieDomain: process.env.COOKIE_DOMAIN,
         },
     },

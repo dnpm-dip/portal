@@ -1,111 +1,149 @@
 <script lang="ts">
-import { VCFormSelect } from '@vuecs/form-controls';
+import {
+    type CodeSystemConcept,
+    DCodeSystem,
+    DCollectionTransform,
+    DTags, toCoding,
+    transformConceptToFormSelectOption,
+} from '@dnpm-dip/core';
+import { VCFormSelect, VCFormSelectSearch } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import {
-    type PropType, type Ref, computed, watch,
+    type PropType, type Ref, computed, reactive,
 } from 'vue';
 import {
-    defineComponent, markRaw, ref, toRef,
+    defineComponent, markRaw, ref,
 } from 'vue';
-import { FormMutationType, type MutationDefinition } from '../../domains';
+import {
+    FormMutationType,
+    type QueryGeneAlterationCriteria,
+    type QueryGeneAlterationVariantCriteria,
+} from '../../domains';
 import MSearchCNVForm from './search/MSearchCNVForm.vue';
 import MSearchFusionForm from './search/MSearchFusionForm.vue';
 import MSearchSNVForm from './search/MSearchSNVForm.vue';
 
 export default defineComponent({
-    components: { VCFormSelect },
+    components: {
+        DCollectionTransform, DTags, VCFormSelectSearch, DCodeSystem, VCFormSelect,
+    },
     emit: ['updated'],
     props: {
         entity: {
-            type: Object as PropType<MutationDefinition>,
+            type: Object as PropType<QueryGeneAlterationCriteria>,
         },
     },
     setup(props, { emit }) {
-        const entityRef = toRef(props, 'entity');
+        const form = reactive<Partial<QueryGeneAlterationCriteria<string>>>({
+            gene: '',
+            supporting: false,
+            negated: false,
+        });
 
-        const options : FormSelectOption[] = [
+        const mutationType = ref<null | `${FormMutationType}`>(null);
+        const mutationData = ref<null | QueryGeneAlterationVariantCriteria>(null);
+
+        const mutationOptions : FormSelectOption[] = [
             { id: FormMutationType.CNV, value: 'CNV' },
             { id: FormMutationType.SNV, value: 'SNV' },
-            { id: FormMutationType.DNA_FUSION, value: 'DNA Fusion' },
-            { id: FormMutationType.RNA_FUSION, value: 'RNA Fusion' },
+            { id: FormMutationType.FUSION, value: 'Fusion' },
         ];
 
         const comp = ref(null) as Ref<null | Record<string, any>>;
-        const changeComp = (type: FormMutationType) => {
+        const changeMutationType = (type: `${FormMutationType}` | null) => {
             switch (type) {
                 case FormMutationType.CNV: {
                     comp.value = markRaw(MSearchCNVForm);
+
+                    mutationData.value = {
+                        type: FormMutationType.CNV,
+                    };
+                    mutationType.value = FormMutationType.CNV;
                     break;
                 }
                 case FormMutationType.SNV: {
                     comp.value = markRaw(MSearchSNVForm);
+
+                    mutationData.value = {
+                        type: FormMutationType.SNV,
+                    };
+                    mutationType.value = FormMutationType.SNV;
                     break;
                 }
-                case FormMutationType.RNA_FUSION:
-                case FormMutationType.DNA_FUSION: {
+                case FormMutationType.FUSION: {
                     comp.value = markRaw(MSearchFusionForm);
+
+                    mutationData.value = {
+                        type: FormMutationType.FUSION,
+                    };
+                    mutationType.value = FormMutationType.FUSION;
                     break;
                 }
 
                 default: {
                     comp.value = null;
+                    mutationData.value = null;
+                    mutationType.value = null;
                     break;
                 }
             }
         };
 
-        const changeCompByEvent = (event: Event) => {
-            if (!event.target) return;
-
-            changeComp((event.target as Record<string, any>).value);
-        };
-
-        const compData = ref(null);
-        const compType = ref(null);
-
-        const init = () => {
-            if (props.entity) {
-                changeComp(props.entity.type);
-
-                compType.value = props.entity.type;
-                compData.value = props.entity.data;
+        const changeMutationTypeByEvent = (event: Event) => {
+            if (!event.target) {
                 return;
             }
 
-            compType.value = null;
-            compData.value = null;
+            changeMutationType((event.target as Record<string, any>).value || null);
+        };
+
+        const isEditing = computed(() => !!props.entity && Object.keys(props.entity).length > 0);
+        const init = () => {
+            if (
+                props.entity &&
+                props.entity.variant
+            ) {
+                changeMutationType(props.entity.variant.type);
+                return;
+            }
+
+            changeMutationType(null);
         };
 
         init();
 
-        watch(entityRef, () => {
-            init();
-        }, { deep: true });
-
-        const isEditing = computed(() => !!props.entity &&
-                !!props.entity.type &&
-                !!props.entity.data);
-
-        const handleUpdated = (data: Record<string, any>) => {
-            compData.value = data;
-
-            emit('updated', {
-                type: compType.value,
-                data: compData.value,
-            });
+        const handleUpdated = (data: QueryGeneAlterationVariantCriteria | null) => {
+            mutationData.value = data;
         };
 
-        return {
-            changeCompByEvent,
-            comp,
-            compData,
-            compType,
+        const submit = () => {
+            emit('updated', {
+                gene: form.gene ? toCoding(form.gene) : undefined,
+                supporting: form.supporting,
+                negated: form.negated,
+                ...(mutationData.value ? { variant: mutationData.value } : {}),
+            } satisfies QueryGeneAlterationCriteria);
+        };
 
-            options,
+        const transformConcepts = (
+            concept: CodeSystemConcept,
+        ) => transformConceptToFormSelectOption(concept);
+
+        return {
+            form,
+
+            changeMutationTypeByEvent,
+            comp,
+
+            mutationType,
+            mutationOptions,
 
             handleUpdated,
 
             isEditing,
+            transformConcepts,
+
+            submit,
         };
     },
 });
@@ -113,22 +151,80 @@ export default defineComponent({
 <template>
     <VCFormGroup>
         <template #label>
+            Gen
+        </template>
+        <template #default>
+            <DCodeSystem
+                :code="'https://www.genenames.org/'"
+                :lazy-load="true"
+            >
+                <template #default="{ data }">
+                    <DCollectionTransform
+                        :items="data.concepts"
+                        :transform="transformConcepts"
+                    >
+                        <template #default="options">
+                            <VCFormSelectSearch
+                                v-model="form.gene"
+                                :options="options"
+                                placeholder="HGNC"
+                            >
+                                <template #selected="{ items, toggle }">
+                                    <DTags
+                                        :emit-only="true"
+                                        :items="items"
+                                        tag-variant="dark"
+                                        @deleted="toggle"
+                                    />
+                                </template>
+                            </VCFormSelectSearch>
+                        </template>
+                    </DCollectionTransform>
+                </template>
+                <template #loading>
+                    <VCFormSelectSearch
+                        :options="[]"
+                        :disabled="true"
+                        placeholder="HGNC"
+                    />
+                </template>
+            </DCodeSystem>
+        </template>
+    </VCFormGroup>
+    <VCFormGroup>
+        <template #label>
             Mutationsart
         </template>
         <template #default>
             <VCFormSelect
-                v-model="compType"
-                :disabled="isEditing"
-                :options="options"
-                @change="changeCompByEvent"
+                v-model="mutationType"
+                :options="mutationOptions"
+                @change="changeMutationTypeByEvent"
             />
         </template>
     </VCFormGroup>
-    <template v-if="comp && compType">
+    <template v-if="comp && mutationType">
         <component
             :is="comp"
-            :entity="compData"
+            :entity="entity"
             @updated="handleUpdated"
         />
     </template>
+    <div class="mb-1">
+        <VCFormInputCheckbox
+            v-model="form.supporting"
+            :group-class="'form-switch'"
+            :label="true"
+            :label-content="'Stützend?'"
+        />
+    </div>
+    <div>
+        <button
+            type="button"
+            class="btn btn-secondary btn-xs"
+            @click.prevent="submit()"
+        >
+            {{ isEditing ? 'Aktualisieren' : 'Hinzufügen' }}
+        </button>
+    </div>
 </template>

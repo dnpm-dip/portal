@@ -9,6 +9,7 @@ import type {
     QueryBase,
     QueryRequestMode, QuerySummaryBase,
 } from '@dnpm-dip/core';
+import type { FormMutationType } from '../form';
 
 export type QuerySummaryTumorDiagnostics = {
     overallDistributions: {
@@ -76,11 +77,44 @@ export type QueryVariantCriteria = {
     rnaFusions?: QueryFusionCriteria[],
 };
 
+export type QueryGeneAlterationSNVCriteria<T = Coding> = {
+    type: `${FormMutationType.SNV}`,
+    dnaChange?: T,
+    proteinChange?: T,
+};
+
+export type QueryGeneAlterationCNVCriteria<T = Coding> = {
+    type: `${FormMutationType.CNV}`,
+    copyNumberType?: T[]
+};
+
+export type QueryGeneAlterationFusionCriteria<T = Coding> = {
+    type: `${FormMutationType.FUSION}`,
+    partner?: T
+};
+
+export type QueryGeneAlterationVariantCriteria<T = Coding> = QueryGeneAlterationCNVCriteria |
+QueryGeneAlterationSNVCriteria |
+QueryGeneAlterationFusionCriteria<T>;
+
+export type QueryGeneAlterationCriteria<T = Coding> = {
+    gene: T,
+    supporting?: boolean,
+    negated?: boolean,
+    variant?: QueryGeneAlterationVariantCriteria<T>
+};
+
+export type QueryGeneAlterationsCriteria = {
+    operator?: 'and' | 'or',
+    items?: QueryGeneAlterationCriteria[]
+};
+
 export type QueryCriteria = {
     diagnoses?: Coding<string>[],
     tumorMorphologies?: Coding<string>[],
     medication?:QueryMedicationCriteria,
     responses?: Coding<string>[],
+    geneAlterations?: QueryGeneAlterationsCriteria,
     variants?: QueryVariantCriteria
 };
 
