@@ -149,82 +149,94 @@ export default defineComponent({
 });
 </script>
 <template>
-    <VCFormGroup>
-        <template #label>
-            Gen
-        </template>
-        <template #default>
-            <DCodeSystem
-                :code="'https://www.genenames.org/'"
-                :lazy-load="true"
-            >
-                <template #default="{ data }">
-                    <DCollectionTransform
-                        :items="data.concepts"
-                        :transform="transformConcepts"
-                    >
-                        <template #default="options">
-                            <VCFormSelectSearch
-                                v-model="form.gene"
-                                :options="options"
-                                placeholder="HGNC"
-                            >
-                                <template #selected="{ items, toggle }">
-                                    <DTags
-                                        :emit-only="true"
-                                        :items="items"
-                                        tag-variant="dark"
-                                        @deleted="toggle"
-                                    />
-                                </template>
-                            </VCFormSelectSearch>
-                        </template>
-                    </DCollectionTransform>
-                </template>
-                <template #loading>
-                    <VCFormSelectSearch
-                        :options="[]"
-                        :disabled="true"
-                        placeholder="HGNC"
-                    />
-                </template>
-            </DCodeSystem>
-        </template>
-    </VCFormGroup>
-    <VCFormGroup>
-        <template #label>
-            Mutationsart
-        </template>
-        <template #default>
-            <VCFormSelect
-                v-model="mutationType"
-                :options="mutationOptions"
-                @change="changeMutationTypeByEvent"
+    <div class="d-flex flex-column gap-2">
+        <VCFormGroup>
+            <template #label>
+                Gen
+            </template>
+            <template #default>
+                <DCodeSystem
+                    :code="'https://www.genenames.org/'"
+                    :lazy-load="true"
+                >
+                    <template #default="{ data }">
+                        <DCollectionTransform
+                            :items="data.concepts"
+                            :transform="transformConcepts"
+                        >
+                            <template #default="options">
+                                <VCFormSelectSearch
+                                    v-model="form.gene"
+                                    :options="options"
+                                    placeholder="HGNC"
+                                >
+                                    <template #selected="{ items, toggle }">
+                                        <DTags
+                                            :emit-only="true"
+                                            :items="items"
+                                            tag-variant="dark"
+                                            @deleted="toggle"
+                                        />
+                                    </template>
+                                </VCFormSelectSearch>
+                            </template>
+                        </DCollectionTransform>
+                    </template>
+                    <template #loading>
+                        <VCFormSelectSearch
+                            :options="[]"
+                            :disabled="true"
+                            placeholder="HGNC"
+                        />
+                    </template>
+                </DCodeSystem>
+            </template>
+        </VCFormGroup>
+        <VCFormGroup>
+            <template #label>
+                Mutationsart
+            </template>
+            <template #default>
+                <VCFormSelect
+                    v-model="mutationType"
+                    :options="mutationOptions"
+                    @change="changeMutationTypeByEvent"
+                />
+            </template>
+        </VCFormGroup>
+        <template v-if="comp && mutationType">
+            <component
+                :is="comp"
+                :entity="entity"
+                @updated="handleUpdated"
             />
         </template>
-    </VCFormGroup>
-    <template v-if="comp && mutationType">
-        <component
-            :is="comp"
-            :entity="entity"
-            @updated="handleUpdated"
-        />
-    </template>
-    <div class="mb-1">
-        <VCFormInputCheckbox
-            v-model="form.supporting"
-            :group-class="'form-switch'"
-            :label="true"
-            :label-content="'Stützend?'"
-        />
-    </div>
-    <div>
-        <button
-            type="button"
-            class="btn btn-secondary btn-xs"
-            @click.prevent="submit()"
-        >
-            {{ isEditing ? 'Aktualisieren' : 'Hinzufügen' }}
-        </button>
+        <div class="d-flex flex-row gap-2">
+            <div>
+                <VCFormInputCheckbox
+                    v-model="form.supporting"
+                    :group-class="'form-switch'"
+                    :label="true"
+                    :label-content="'Stützend?'"
+                />
+            </div>
+            <div>
+                <VCFormInputCheckbox
+                    v-model="form.negated"
+                    :group-class="'form-switch'"
+                    :label="true"
+                    :label-content="'Negiert?'"
+                />
+            </div>
+        </div>
+        <div>
+            <button
+                type="button"
+                class="btn btn-secondary btn-xs"
+                @click.prevent="submit()"
+            >
+                {{ isEditing ? 'Aktualisieren' : 'Hinzufügen' }}
+            </button>
+        </div>
     </div>
 </template>

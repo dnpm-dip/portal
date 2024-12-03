@@ -17,8 +17,6 @@ import {
     LogicalOperator,
     QueryRequestMode,
     type ValueSetCoding,
-    buildCodingsRecord,
-    extractCodeFromCodingsRecord,
     transformCodingsToFormSelectOptions,
     transformFormSelectOptionsToCodings, useQueryFilterStore,
 } from '@dnpm-dip/core';
@@ -31,12 +29,9 @@ import type { PropType } from 'vue';
 import { defineComponent, ref } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';
 import {
-    FormMutationType,
-    type MutationDefinition,
-    type QueryCNVCriteria,
     type QueryCriteria,
-    type QueryFusionCriteria, type QueryGeneAlterationCriteria, type QueryMedicationCriteria,
-    type QuerySNVCriteria, type QueryVariantCriteria,
+    type QueryGeneAlterationCriteria,
+    type QueryMedicationCriteria,
 } from '../../../domains';
 import MMutationTabGroup from '../MMutationTabGroup.vue';
 import MSearchMedicationForm from './MSearchMedicationForm.vue';
@@ -152,12 +147,13 @@ export default defineComponent({
 
             if (
                 criteria.value.geneAlterations &&
+                criteria.value.geneAlterations.items &&
                 criteria.value.geneAlterations.items.length > 0
             ) {
                 mutations.value = criteria.value.geneAlterations.items;
 
                 if (criteria.value.geneAlterations.operator) {
-                    mutationsInCombination.value = criteria.value.variants.operator === LogicalOperator.AND;
+                    mutationsInCombination.value = criteria.value.geneAlterations.operator === LogicalOperator.AND;
                 }
             }
 
