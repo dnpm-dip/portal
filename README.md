@@ -1,8 +1,8 @@
 # Portal 🩺
 
-[![main](https://github.com/KohlbacherLab/dnpm-dip-portal/actions/workflows/main.yml/badge.svg)](https://github.com/KohlbacherLab/dnpm-dip-portal/actions/workflows/main.yml)
-[![CodeQL](https://github.com/KohlbacherLab/dnpm-dip-portal/actions/workflows/codeql.yml/badge.svg)](https://github.com/KohlbacherLab/dnpm-dip-portal/actions/workflows/codeql.yml)
-[![Known Vulnerabilities](https://snyk.io/test/github/KohlbacherLab/dnpm-dip-portal/badge.svg)](https://snyk.io/test/github/KohlbacherLab/dnpm-dip-portal)
+[![main](https://github.com/dnpm-dip/portal/actions/workflows/main.yml/badge.svg)](https://github.com/dnpm-dip/portal/actions/workflows/main.yml)
+[![CodeQL](https://github.com/dnpm-dip/portal/actions/workflows/codeql.yml/badge.svg)](https://github.com/dnpm-dip/portal/actions/workflows/codeql.yml)
+[![Known Vulnerabilities](https://snyk.io/test/github/dnpm-dip/portal/badge.svg)](https://snyk.io/test/github/dnpm-dip/portal)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
 This repository contains the Portal of DNPM:DIP.
@@ -39,7 +39,7 @@ The repository contains the following packages:
 ```shell
 $ docker run -d -p 3000:3000 \
     --restart=always \
-    ghcr.io/kohlbacherlab/dnpm-dip-portal:latest
+    ghcr.io/dnpm-dip/portal:latest
 ```
 
 ### Development 
@@ -52,7 +52,7 @@ To start the portal with the associated modules such as rd, mtb, etc, the follow
 **`Download`**
 
 ```shell
-$ git clone https://github.com/KohlbacherLab/dnpm-dip-portal
+$ git clone https://github.com/dnpm-dip/portal
 $ cd dnpm-dip-portal
 ```
 
