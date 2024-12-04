@@ -18,7 +18,7 @@ import { VCFormSelectSearch } from '@vuecs/form-controls';
 import {
     type PropType, computed, defineComponent, reactive, toRef, watch,
 } from 'vue';
-import { FormMutationType, type QueryGeneAlterationCNVCriteria } from '../../../domains';
+import { type QueryGeneAlterationCNVCriteria, QueryMutationType } from '../../../domains';
 
 export default defineComponent({
     components: {
@@ -31,7 +31,7 @@ export default defineComponent({
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
         const form = reactive<QueryGeneAlterationCNVCriteria<{ id: string, value: string }>>({
-            type: FormMutationType.CNV,
+            type: QueryMutationType.CNV,
             copyNumberType: [],
         });
 
@@ -64,7 +64,7 @@ export default defineComponent({
         const isEditing = computed(() => !!entityRef.value);
         const handleChanged = () => {
             const output : QueryGeneAlterationCNVCriteria = {
-                type: FormMutationType.CNV,
+                type: QueryMutationType.CNV,
             };
 
             if (form.copyNumberType) {

@@ -150,7 +150,7 @@ export default defineComponent({
                 criteria.value.geneAlterations.items &&
                 criteria.value.geneAlterations.items.length > 0
             ) {
-                mutations.value = criteria.value.geneAlterations.items;
+                mutations.value = [...criteria.value.geneAlterations.items];
 
                 if (criteria.value.geneAlterations.operator) {
                     mutationsInCombination.value = criteria.value.geneAlterations.operator === LogicalOperator.AND;
@@ -359,6 +359,7 @@ export default defineComponent({
                         <MMutationTabGroup
                             :entity="props.item"
                             @updated="props.updated"
+                            @toggle="props.toggle"
                         />
                     </template>
                 </DFormTabGroups>

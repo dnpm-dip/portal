@@ -8,7 +8,8 @@ import type {
     QueryBase,
     QueryRequestMode,
 } from '@dnpm-dip/core';
-import type { FormMutationType } from '../form';
+
+import type { QueryMutationType } from './constants';
 
 export type QuerySummaryTumorDiagnostics = {
     overallDistributions: {
@@ -43,18 +44,18 @@ export type QueryMedicationCriteria<V = Coding> = {
 };
 
 export type QueryGeneAlterationSNVCriteria<T = Coding> = {
-    type: `${FormMutationType.SNV}`,
+    type: `${QueryMutationType.SNV}`,
     dnaChange?: T,
     proteinChange?: T,
 };
 
 export type QueryGeneAlterationCNVCriteria<T = Coding> = {
-    type: `${FormMutationType.CNV}`,
+    type: `${QueryMutationType.CNV}`,
     copyNumberType?: T[]
 };
 
 export type QueryGeneAlterationFusionCriteria<T = Coding> = {
-    type: `${FormMutationType.FUSION}`,
+    type: `${QueryMutationType.FUSION}`,
     partner?: T
 };
 

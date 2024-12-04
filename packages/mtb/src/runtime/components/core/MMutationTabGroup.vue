@@ -9,15 +9,15 @@ import {
 import { VCFormSelect, VCFormSelectSearch } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import {
-    type PropType, type Ref, computed, reactive,
+    type PropType, type Ref, computed, reactive, toRef, watch,
 } from 'vue';
 import {
     defineComponent, markRaw, ref,
 } from 'vue';
 import {
-    FormMutationType,
     type QueryGeneAlterationCriteria,
     type QueryGeneAlterationVariantCriteria,
+    QueryMutationType,
 } from '../../domains';
 import MSearchCNVForm from './search/MSearchCNVForm.vue';
 import MSearchFusionForm from './search/MSearchFusionForm.vue';
@@ -27,56 +27,57 @@ export default defineComponent({
     components: {
         DCollectionTransform, DTags, VCFormSelectSearch, DCodeSystem, VCFormSelect,
     },
-    emit: ['updated'],
+    emit: ['updated', 'toggle'],
     props: {
         entity: {
             type: Object as PropType<QueryGeneAlterationCriteria>,
         },
     },
     setup(props, { emit }) {
+        const entity = toRef(props, 'entity');
         const form = reactive<Partial<QueryGeneAlterationCriteria<string>>>({
             gene: '',
             supporting: false,
             negated: false,
         });
 
-        const mutationType = ref<null | `${FormMutationType}`>(null);
+        const mutationType = ref<null | `${QueryMutationType}`>(null);
         const mutationData = ref<null | QueryGeneAlterationVariantCriteria>(null);
 
         const mutationOptions : FormSelectOption[] = [
-            { id: FormMutationType.CNV, value: 'CNV' },
-            { id: FormMutationType.SNV, value: 'SNV' },
-            { id: FormMutationType.FUSION, value: 'Fusion' },
+            { id: QueryMutationType.CNV, value: 'CNV' },
+            { id: QueryMutationType.SNV, value: 'SNV' },
+            { id: QueryMutationType.FUSION, value: 'Fusion' },
         ];
 
         const comp = ref(null) as Ref<null | Record<string, any>>;
-        const changeMutationType = (type: `${FormMutationType}` | null) => {
+        const changeMutationType = (type: `${QueryMutationType}` | null) => {
             switch (type) {
-                case FormMutationType.CNV: {
+                case QueryMutationType.CNV: {
                     comp.value = markRaw(MSearchCNVForm);
 
                     mutationData.value = {
-                        type: FormMutationType.CNV,
+                        type: QueryMutationType.CNV,
                     };
-                    mutationType.value = FormMutationType.CNV;
+                    mutationType.value = QueryMutationType.CNV;
                     break;
                 }
-                case FormMutationType.SNV: {
+                case QueryMutationType.SNV: {
                     comp.value = markRaw(MSearchSNVForm);
 
                     mutationData.value = {
-                        type: FormMutationType.SNV,
+                        type: QueryMutationType.SNV,
                     };
-                    mutationType.value = FormMutationType.SNV;
+                    mutationType.value = QueryMutationType.SNV;
                     break;
                 }
-                case FormMutationType.FUSION: {
+                case QueryMutationType.FUSION: {
                     comp.value = markRaw(MSearchFusionForm);
 
                     mutationData.value = {
-                        type: FormMutationType.FUSION,
+                        type: QueryMutationType.FUSION,
                     };
-                    mutationType.value = FormMutationType.FUSION;
+                    mutationType.value = QueryMutationType.FUSION;
                     break;
                 }
 
@@ -99,30 +100,59 @@ export default defineComponent({
 
         const isEditing = computed(() => !!props.entity && Object.keys(props.entity).length > 0);
         const init = () => {
-            if (
-                props.entity &&
-                props.entity.variant
-            ) {
-                changeMutationType(props.entity.variant.type);
+            if (!props.entity) {
                 return;
             }
 
-            changeMutationType(null);
+            if (
+                props.entity.variant &&
+                props.entity.variant.type
+            ) {
+                changeMutationType(props.entity.variant.type);
+            } else {
+                changeMutationType(null);
+            }
+
+            if (props.entity.gene) {
+                form.gene = props.entity.gene.code;
+            } else {
+                form.gene = '';
+            }
+
+            if (typeof props.entity.supporting !== 'undefined') {
+                form.supporting = props.entity.supporting;
+            } else {
+                form.supporting = false;
+            }
+
+            if (typeof props.entity.negated !== 'undefined') {
+                form.negated = props.entity.negated;
+            } else {
+                form.negated = false;
+            }
         };
 
         init();
 
-        const handleUpdated = (data: QueryGeneAlterationVariantCriteria | null) => {
-            mutationData.value = data;
-        };
+        watch(entity, () => {
+            init();
+        }, { deep: true });
 
         const submit = () => {
-            emit('updated', {
-                gene: form.gene ? toCoding(form.gene) : undefined,
-                supporting: form.supporting,
-                negated: form.negated,
-                ...(mutationData.value ? { variant: mutationData.value } : {}),
-            } satisfies QueryGeneAlterationCriteria);
+            if (form.gene) {
+                emit('updated', {
+                    gene: form.gene ? toCoding(form.gene) : undefined,
+                    supporting: form.supporting,
+                    negated: form.negated,
+                    ...(mutationData.value ? { variant: mutationData.value } : {}),
+                } satisfies QueryGeneAlterationCriteria);
+            } else {
+                emit('toggle');
+            }
+        };
+
+        const handleVariantChanged = (data: QueryGeneAlterationVariantCriteria | null) => {
+            mutationData.value = data;
         };
 
         const transformConcepts = (
@@ -138,7 +168,7 @@ export default defineComponent({
             mutationType,
             mutationOptions,
 
-            handleUpdated,
+            handleVariantChanged,
 
             isEditing,
             transformConcepts,
@@ -208,7 +238,7 @@ export default defineComponent({
             <component
                 :is="comp"
                 :entity="entity"
-                @updated="handleUpdated"
+                @updated="handleVariantChanged"
             />
         </template>
         <div class="d-flex flex-row gap-2">

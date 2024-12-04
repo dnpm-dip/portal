@@ -35,13 +35,23 @@ export default defineComponent({
                     entity.geneAlterations.items.length > 0"
             class="d-flex flex-column gap-1"
         >
-            <strong>Varianten (<span>{{ entity.geneAlterations.operator }}</span>)</strong>
+            <strong>Gene</strong>
 
-            <div class="d-flex flex-row gap-3">
+            <div class="d-flex flex-row flex-wrap gap-3">
                 <template
-                    v-for="item in entity.geneAlterations.items"
+                    v-for="(item, index) in entity.geneAlterations.items"
                     :key="item.gene"
                 >
+                    <template v-if="index > 0">
+                        <div
+                            class="entity-card variant-box d-flex"
+                            style="align-items: center; justify-content: center;"
+                        >
+                            <strong>
+                                {{ entity.geneAlterations.operator.toUpperCase() }}
+                            </strong>
+                        </div>
+                    </template>
                     <div class="entity-card variant-box">
                         <template v-if="item.variant">
                             <span class="text-muted">{{ item.variant.type }}</span>

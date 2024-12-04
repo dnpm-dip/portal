@@ -87,10 +87,16 @@ export default defineComponent({
 
                 currentIndex.value = nextIndex < 0 ? 0 : nextIndex;
 
-                items.value.splice(index, 1);
+                if (items.value.length > 0) {
+                    items.value.splice(index, 1);
+                }
             } else {
                 currentIndex.value = index;
             }
+        };
+
+        const toggleCurrent = () => {
+            toggle(currentIndex.value);
         };
 
         const handleUpdated = (data: Record<string, any>) => {
@@ -110,6 +116,7 @@ export default defineComponent({
             items,
             add,
             toggle,
+            toggleCurrent,
         };
     },
 });
@@ -124,6 +131,7 @@ export default defineComponent({
             <slot
                 :item="items[currentIndex]"
                 :updated="handleUpdated"
+                :toggle="toggleCurrent"
             />
         </div>
         <div

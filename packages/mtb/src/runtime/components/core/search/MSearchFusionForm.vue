@@ -17,7 +17,7 @@ import { VCFormSelectSearch } from '@vuecs/form-controls';
 import {
     type PropType, computed, defineComponent, reactive, toRef, watch,
 } from 'vue';
-import { FormMutationType, type QueryGeneAlterationFusionCriteria } from '../../../domains';
+import { type QueryGeneAlterationFusionCriteria, QueryMutationType } from '../../../domains';
 
 export default defineComponent({
     components: {
@@ -30,7 +30,7 @@ export default defineComponent({
         const entityRef = toRef(props, 'entity');
         const form = reactive<QueryGeneAlterationFusionCriteria<string>>({
             partner: '',
-            type: FormMutationType.FUSION,
+            type: QueryMutationType.FUSION,
         });
 
         const init = () => {
@@ -53,7 +53,7 @@ export default defineComponent({
         const handleChanged = () => {
             if (form.partner) {
                 emit('updated', {
-                    type: FormMutationType.FUSION,
+                    type: QueryMutationType.FUSION,
                     partner: {
                         code: form.partner,
                     },
