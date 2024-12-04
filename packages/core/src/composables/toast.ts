@@ -1,5 +1,5 @@
 import type { ColorVariant, OrchestratedToast } from 'bootstrap-vue-next';
-import { useToast as _useToast } from 'bootstrap-vue-next';
+import { useToastController as _useToast } from 'bootstrap-vue-next';
 import { isClientError } from 'hapic';
 import { isObject } from 'smob';
 import { APIClientErrorIssueSeverity, extractAPIClientErrorIssues } from '../core';

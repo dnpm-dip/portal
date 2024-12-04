@@ -54,7 +54,7 @@
         "test": "npx nx run-many -t test",
         "lint": "npx eslint packages/",
         "lint:fix": "npm run lint -- --fix",
-        "prepare": "husky install"
+        "prepare": "husky"
     },
     "lint-staged": {
         "*.vue": "npm run lint:fix",
