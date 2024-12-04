@@ -4,11 +4,12 @@ import type {
     Distribution,
     DistributionConceptsCount,
     DistributionNested,
-    KMSurvivalReport,
     KeyValueRecords,
     QueryBase,
-    QueryRequestMode, QuerySummaryBase,
+    QueryRequestMode,
 } from '@dnpm-dip/core';
+
+import type { QueryMutationType } from './constants';
 
 export type QuerySummaryTumorDiagnostics = {
     overallDistributions: {
@@ -36,44 +37,42 @@ export type QuerySummaryMedication = {
     therapies: MedicationTherapies
 };
 
-export type QuerySummary = QuerySummaryBase & {
-    diagnostics: QuerySummaryTumorDiagnostics,
-    medication: QuerySummaryMedication,
-    survivalReport: KMSurvivalReport[]
-};
-
-export type QueryVariantCriteriaBase = {
-    supporting?: boolean
-};
-
-export type QueryFusionCriteria<V = Coding> = QueryVariantCriteriaBase & {
-    fusionPartner5pr?: V,
-    fusionPartner3pr?: V
-};
-
-export type QuerySNVCriteria<V = Coding> = QueryVariantCriteriaBase & {
-    dnaChange?: V,
-    gene?: V,
-    proteinChange?: V
-};
-
-export type QueryCNVCriteria<G = Coding, T = Coding> = QueryVariantCriteriaBase & {
-    affectedGenes?: G[],
-    type?: T
-};
-
 export type QueryMedicationCriteria<V = Coding> = {
     operator?: 'and' | 'or',
     drugs?: V[],
     usage?: V[]
 };
 
-export type QueryVariantCriteria = {
+export type QueryGeneAlterationSNVCriteria<T = Coding> = {
+    type: `${QueryMutationType.SNV}`,
+    dnaChange?: T,
+    proteinChange?: T,
+};
+
+export type QueryGeneAlterationCNVCriteria<T = Coding> = {
+    type: `${QueryMutationType.CNV}`,
+    copyNumberType?: T[]
+};
+
+export type QueryGeneAlterationFusionCriteria<T = Coding> = {
+    type: `${QueryMutationType.FUSION}`,
+    partner?: T
+};
+
+export type QueryGeneAlterationVariantCriteria<T = Coding> = QueryGeneAlterationCNVCriteria |
+QueryGeneAlterationSNVCriteria |
+QueryGeneAlterationFusionCriteria<T>;
+
+export type QueryGeneAlterationCriteria<T = Coding> = {
+    gene: T,
+    supporting?: boolean,
+    negated?: boolean,
+    variant?: QueryGeneAlterationVariantCriteria<T>
+};
+
+export type QueryGeneAlterationsCriteria = {
     operator?: 'and' | 'or',
-    simpleVariants?: QuerySNVCriteria[],
-    copyNumberVariants?: QueryCNVCriteria[],
-    dnaFusions?: QueryFusionCriteria[],
-    rnaFusions?: QueryFusionCriteria[],
+    items?: QueryGeneAlterationCriteria[]
 };
 
 export type QueryCriteria = {
@@ -81,7 +80,7 @@ export type QueryCriteria = {
     tumorMorphologies?: Coding<string>[],
     medication?:QueryMedicationCriteria,
     responses?: Coding<string>[],
-    variants?: QueryVariantCriteria
+    geneAlterations?: QueryGeneAlterationsCriteria
 };
 
 export type QueryDiagnosisFilter = {

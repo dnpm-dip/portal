@@ -17,8 +17,6 @@ import {
     LogicalOperator,
     QueryRequestMode,
     type ValueSetCoding,
-    buildCodingsRecord,
-    extractCodeFromCodingsRecord,
     transformCodingsToFormSelectOptions,
     transformFormSelectOptionsToCodings, useQueryFilterStore,
 } from '@dnpm-dip/core';
@@ -31,12 +29,9 @@ import type { PropType } from 'vue';
 import { defineComponent, ref } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';
 import {
-    FormMutationType,
-    type MutationDefinition,
-    type QueryCNVCriteria,
     type QueryCriteria,
-    type QueryFusionCriteria, type QueryMedicationCriteria,
-    type QuerySNVCriteria, type QueryVariantCriteria,
+    type QueryGeneAlterationCriteria,
+    type QueryMedicationCriteria,
 } from '../../../domains';
 import MMutationTabGroup from '../MMutationTabGroup.vue';
 import MSearchMedicationForm from './MSearchMedicationForm.vue';
@@ -91,7 +86,7 @@ export default defineComponent({
         const busy = ref(false);
         const criteria = ref<QueryCriteria>({});
 
-        const mutations = ref<MutationDefinition[]>([]);
+        const mutations = ref<QueryGeneAlterationCriteria[]>([]);
         const mutationsInCombination = ref(false);
 
         const diagnoses = ref<FormSelectOption[]>([]);
@@ -150,45 +145,15 @@ export default defineComponent({
 
             mutations.value = [];
 
-            if (criteria.value.variants) {
-                if (criteria.value.variants.operator) {
-                    mutationsInCombination.value = criteria.value.variants.operator === LogicalOperator.AND;
-                }
+            if (
+                criteria.value.geneAlterations &&
+                criteria.value.geneAlterations.items &&
+                criteria.value.geneAlterations.items.length > 0
+            ) {
+                mutations.value = [...criteria.value.geneAlterations.items];
 
-                if (criteria.value.variants.simpleVariants) {
-                    for (let i = 0; i < criteria.value.variants.simpleVariants.length; i++) {
-                        mutations.value.push({
-                            type: FormMutationType.SNV,
-                            data: extractCodeFromCodingsRecord(criteria.value.variants.simpleVariants[i]),
-                        });
-                    }
-                }
-
-                if (criteria.value.variants.copyNumberVariants) {
-                    for (let i = 0; i < criteria.value.variants.copyNumberVariants.length; i++) {
-                        mutations.value.push({
-                            type: FormMutationType.CNV,
-                            data: extractCodeFromCodingsRecord(criteria.value.variants.copyNumberVariants[i]),
-                        });
-                    }
-                }
-
-                if (criteria.value.variants.dnaFusions) {
-                    for (let i = 0; i < criteria.value.variants.dnaFusions.length; i++) {
-                        mutations.value.push({
-                            type: FormMutationType.DNA_FUSION,
-                            data: extractCodeFromCodingsRecord(criteria.value.variants.dnaFusions[i]),
-                        });
-                    }
-                }
-
-                if (criteria.value.variants.rnaFusions) {
-                    for (let i = 0; i < criteria.value.variants.rnaFusions.length; i++) {
-                        mutations.value.push({
-                            type: FormMutationType.RNA_FUSION,
-                            data: extractCodeFromCodingsRecord(criteria.value.variants.rnaFusions[i]),
-                        });
-                    }
+                if (criteria.value.geneAlterations.operator) {
+                    mutationsInCombination.value = criteria.value.geneAlterations.operator === LogicalOperator.AND;
                 }
             }
 
@@ -245,57 +210,17 @@ export default defineComponent({
                 payload.responses = transformFormSelectOptionsToCodings(responses.value);
             }
 
-            const snv : QuerySNVCriteria[] = [];
-            const cnv : QueryCNVCriteria[] = [];
-            const dnaFusions : QueryFusionCriteria[] = [];
-            const rnaFusions : QueryFusionCriteria[] = [];
-
-            for (let i = 0; i < mutations.value.length; i++) {
-                const mutation = mutations.value[i];
-
-                switch (mutation.type) {
-                    case FormMutationType.CNV: {
-                        cnv.push(buildCodingsRecord(mutation.data));
-                        break;
-                    }
-                    case FormMutationType.SNV: {
-                        snv.push(buildCodingsRecord(mutation.data));
-                        break;
-                    }
-                    case FormMutationType.DNA_FUSION: {
-                        dnaFusions.push(buildCodingsRecord(mutation.data));
-                        break;
-                    }
-                    case FormMutationType.RNA_FUSION: {
-                        rnaFusions.push(buildCodingsRecord(mutation.data));
-                        break;
-                    }
-                }
+            if (
+                mutations.value &&
+                mutations.value.length > 0
+            ) {
+                payload.geneAlterations = {
+                    items: mutations.value,
+                    operator: mutationsInCombination.value ?
+                        LogicalOperator.AND :
+                        LogicalOperator.OR,
+                };
             }
-
-            const payloadVariants : QueryVariantCriteria = {};
-            if (mutationsInCombination.value) {
-                payloadVariants.operator = LogicalOperator.AND;
-            } else {
-                payloadVariants.operator = LogicalOperator.OR;
-            }
-            if (cnv.length > 0) {
-                payloadVariants.copyNumberVariants = cnv;
-            }
-
-            if (snv.length > 0) {
-                payloadVariants.simpleVariants = snv;
-            }
-
-            if (dnaFusions.length > 0) {
-                payloadVariants.dnaFusions = dnaFusions;
-            }
-
-            if (rnaFusions.length > 0) {
-                payloadVariants.rnaFusions = rnaFusions;
-            }
-
-            payload.variants = payloadVariants;
 
             return payload;
         };
@@ -434,6 +359,7 @@ export default defineComponent({
                         <MMutationTabGroup
                             :entity="props.item"
                             @updated="props.updated"
+                            @toggle="props.toggle"
                         />
                     </template>
                 </DFormTabGroups>

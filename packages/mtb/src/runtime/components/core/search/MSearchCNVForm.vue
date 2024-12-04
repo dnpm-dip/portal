@@ -8,42 +8,42 @@
 <script lang="ts">
 import {
     type CodeSystemConcept,
-    DCodeSystem,
     DCollectionTransform,
     DTags,
     DValueSet,
     type ValueSetCoding,
-    transformConceptToFormSelectOption,
+    toCoding, transformConceptToFormSelectOption,
 } from '@dnpm-dip/core';
 import { VCFormSelectSearch } from '@vuecs/form-controls';
-import type { FormSelectOption } from '@vuecs/form-controls';
 import {
     type PropType, computed, defineComponent, reactive, toRef, watch,
 } from 'vue';
-import type { QueryCNVCriteria } from '../../../domains';
+import { type QueryGeneAlterationCNVCriteria, QueryMutationType } from '../../../domains';
 
 export default defineComponent({
     components: {
-        DTags, DCodeSystem, DValueSet, DCollectionTransform, VCFormSelectSearch,
+        DTags, DValueSet, DCollectionTransform, VCFormSelectSearch,
     },
     props: {
-        entity: Object as PropType<QueryCNVCriteria<FormSelectOption, string>>,
+        entity: Object as PropType<QueryGeneAlterationCNVCriteria>,
     },
     emits: ['updated'],
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
-        const form = reactive<QueryCNVCriteria<FormSelectOption, string>>({
-            affectedGenes: [],
-            type: '',
-            supporting: false,
+        const form = reactive<QueryGeneAlterationCNVCriteria<{ id: string, value: string }>>({
+            type: QueryMutationType.CNV,
+            copyNumberType: [],
         });
 
         const init = () => {
             if (!props.entity) return;
 
-            form.affectedGenes = props.entity?.affectedGenes ?? [];
-            form.type = props.entity?.type || '';
-            form.supporting = props.entity?.supporting ?? false;
+            if (props.entity.copyNumberType) {
+                form.copyNumberType = props.entity.copyNumberType.map((coding) => ({
+                    id: coding.code,
+                    value: coding.display,
+                }));
+            }
         };
 
         init();
@@ -62,12 +62,16 @@ export default defineComponent({
         ) => transformConceptToFormSelectOption(concept);
 
         const isEditing = computed(() => !!entityRef.value);
-        const submit = () => {
-            emit('updated', {
-                affectedGenes: form.affectedGenes,
-                type: form.type,
-                supporting: form.supporting,
-            } satisfies QueryCNVCriteria<FormSelectOption, string>);
+        const handleChanged = () => {
+            const output : QueryGeneAlterationCNVCriteria = {
+                type: QueryMutationType.CNV,
+            };
+
+            if (form.copyNumberType) {
+                output.copyNumberType = form.copyNumberType.map((code) => toCoding(code.id));
+            }
+
+            emit('updated', output);
         };
 
         return {
@@ -75,119 +79,53 @@ export default defineComponent({
             transformCodings,
             transformConcepts,
             isEditing,
-            submit,
+            handleChanged,
         };
     },
 });
 </script>
 <template>
-    <div class="row">
-        <div class="col-12 col-sm-4">
-            <VCFormGroup>
-                <template #label>
-                    Type
-                </template>
-                <template #default>
-                    <DValueSet
-                        :code="'dnpm-dip/mtb/ngs-report/cnv/type'"
-                        :lazy-load="true"
+    <VCFormGroup>
+        <template #label>
+            Type
+        </template>
+        <template #default>
+            <DValueSet
+                :code="'dnpm-dip/mtb/ngs-report/cnv/type'"
+                :lazy-load="true"
+            >
+                <template #default="{ data }">
+                    <DCollectionTransform
+                        :items="data.codings"
+                        :transform="transformCodings"
                     >
-                        <template #default="{ data }">
-                            <DCollectionTransform
-                                :items="data.codings"
-                                :transform="transformCodings"
-                            >
-                                <template #default="options">
-                                    <VCFormSelectSearch
-                                        v-model="form.type"
-                                        :options="options"
-                                        placeholder="CNV Type"
-                                    >
-                                        <template #selected="{ items, toggle }">
-                                            <DTags
-                                                :emit-only="true"
-                                                :items="items"
-                                                tag-variant="dark"
-                                                @deleted="toggle"
-                                            />
-                                        </template>
-                                    </VCFormSelectSearch>
-                                </template>
-                            </DCollectionTransform>
-                        </template>
-                        <template #loading>
+                        <template #default="options">
                             <VCFormSelectSearch
-                                :options="[]"
-                                :disabled="true"
+                                v-model="form.copyNumberType"
+                                :options="options"
                                 placeholder="CNV Type"
-                            />
-                        </template>
-                    </DValueSet>
-                </template>
-            </VCFormGroup>
-        </div>
-        <div class="col-12 col-sm-8">
-            <VCFormGroup>
-                <template #label>
-                    Betroffene Gene
-                </template>
-                <template #default>
-                    <DCodeSystem
-                        :code="'https://www.genenames.org/'"
-                        :lazy-load="true"
-                    >
-                        <template #default="{ data }">
-                            <DCollectionTransform
-                                :items="data.concepts"
-                                :transform="transformConcepts"
+                                @change="handleChanged"
                             >
-                                <template #default="options">
-                                    <VCFormSelectSearch
-                                        v-model="form.affectedGenes"
-                                        :multiple="true"
-                                        :options="options"
-                                        placeholder="HGNC"
-                                    >
-                                        <template #selected="{ items, toggle }">
-                                            <DTags
-                                                :emit-only="true"
-                                                :items="items"
-                                                tag-variant="dark"
-                                                @deleted="toggle"
-                                            />
-                                        </template>
-                                    </VCFormSelectSearch>
+                                <template #selected="{ items, toggle }">
+                                    <DTags
+                                        :emit-only="true"
+                                        :items="items"
+                                        tag-variant="dark"
+                                        @deleted="toggle"
+                                    />
                                 </template>
-                            </DCollectionTransform>
+                            </VCFormSelectSearch>
                         </template>
-                        <template #loading>
-                            <VCFormSelectSearch
-                                :options="[]"
-                                :disabled="true"
-                                placeholder="HGNC"
-                            />
-                        </template>
-                    </DCodeSystem>
+                    </DCollectionTransform>
                 </template>
-            </VCFormGroup>
-        </div>
-    </div>
-
-    <div class="mb-1">
-        <VCFormInputCheckbox
-            v-model="form.supporting"
-            :group-class="'form-switch'"
-            :label="true"
-            :label-content="'Stützend?'"
-        />
-    </div>
-    <div>
-        <button
-            type="button"
-            class="btn btn-secondary btn-xs"
-            @click.prevent="submit()"
-        >
-            {{ isEditing ? 'Aktualisieren' : 'Hinzufügen' }}
-        </button>
-    </div>
+                <template #loading>
+                    <VCFormSelectSearch
+                        :options="[]"
+                        :disabled="true"
+                        placeholder="CNV Type"
+                    />
+                </template>
+            </DValueSet>
+        </template>
+    </VCFormGroup>
 </template>

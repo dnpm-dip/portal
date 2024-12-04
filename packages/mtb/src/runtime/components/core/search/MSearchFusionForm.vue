@@ -17,29 +17,26 @@ import { VCFormSelectSearch } from '@vuecs/form-controls';
 import {
     type PropType, computed, defineComponent, reactive, toRef, watch,
 } from 'vue';
-import type { QueryFusionCriteria } from '../../../domains';
+import { type QueryGeneAlterationFusionCriteria, QueryMutationType } from '../../../domains';
 
 export default defineComponent({
     components: {
         DTags, DCodeSystem, DCollectionTransform, VCFormSelectSearch,
     },
     props: {
-        entity: Object as PropType<QueryFusionCriteria<string>>,
+        entity: Object as PropType<QueryGeneAlterationFusionCriteria>,
     },
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
-        const form = reactive<QueryFusionCriteria<string>>({
-            fusionPartner3pr: '',
-            fusionPartner5pr: '',
-            supporting: false,
+        const form = reactive<QueryGeneAlterationFusionCriteria<string>>({
+            partner: '',
+            type: QueryMutationType.FUSION,
         });
 
         const init = () => {
             if (!props.entity) return;
 
-            form.fusionPartner3pr = props.entity?.fusionPartner3pr || '';
-            form.fusionPartner5pr = props.entity?.fusionPartner5pr || '';
-            form.supporting = props.entity?.supporting ?? false;
+            form.partner = props.entity?.partner?.code || '';
         };
 
         init();
@@ -53,130 +50,70 @@ export default defineComponent({
         ) => transformConceptToFormSelectOption(concept);
 
         const isEditing = computed(() => !!entityRef.value);
-        const submit = () => {
-            emit('updated', {
-                fusionPartner3pr: form.fusionPartner3pr,
-                fusionPartner5pr: form.fusionPartner5pr,
-                supporting: form.supporting,
-            } satisfies QueryFusionCriteria<string>);
+        const handleChanged = () => {
+            if (form.partner) {
+                emit('updated', {
+                    type: QueryMutationType.FUSION,
+                    partner: {
+                        code: form.partner,
+                    },
+                } satisfies QueryGeneAlterationFusionCriteria);
+            }
+
+            emit('updated', null);
         };
 
         return {
             form,
             transformConcepts,
             isEditing,
-            submit,
+            handleChanged,
         };
     },
 });
 </script>
 <template>
-    <div class="row">
-        <div class="col-12 col-md-6">
-            <VCFormGroup>
-                <template #label>
-                    3'-Gen
-                </template>
-                <template #default>
-                    <DCodeSystem
-                        :code="'https://www.genenames.org/'"
-                        :lazy-load="true"
+    <VCFormGroup>
+        <template #label>
+            Partner
+        </template>
+        <template #default>
+            <DCodeSystem
+                :code="'https://www.genenames.org/'"
+                :lazy-load="true"
+            >
+                <template #default="{ data }">
+                    <DCollectionTransform
+                        :items="data.concepts"
+                        :transform="transformConcepts"
                     >
-                        <template #default="{ data }">
-                            <DCollectionTransform
-                                :items="data.concepts"
-                                :transform="transformConcepts"
-                            >
-                                <template #default="options">
-                                    <VCFormSelectSearch
-                                        v-model="form.fusionPartner3pr"
-                                        :options="options"
-                                        placeholder="HGNC"
-                                    >
-                                        <template #selected="{ items, toggle }">
-                                            <DTags
-                                                :emit-only="true"
-                                                :items="items"
-                                                tag-variant="dark"
-                                                @deleted="toggle"
-                                            />
-                                        </template>
-                                    </VCFormSelectSearch>
-                                </template>
-                            </DCollectionTransform>
-                        </template>
-                        <template #loading>
+                        <template #default="options">
                             <VCFormSelectSearch
-                                :options="[]"
-                                :disabled="true"
+                                v-model="form.partner"
+                                :options="options"
                                 placeholder="HGNC"
-                            />
-                        </template>
-                    </DCodeSystem>
-                </template>
-            </VCFormGroup>
-        </div>
-        <div class="col-12 col-md-6">
-            <VCFormGroup>
-                <template #label>
-                    5'-Gen
-                </template>
-                <template #default>
-                    <DCodeSystem
-                        :code="'https://www.genenames.org/'"
-                        :lazy-load="true"
-                    >
-                        <template #default="{ data }">
-                            <DCollectionTransform
-                                :items="data.concepts"
-                                :transform="transformConcepts"
+                                @change="handleChanged"
                             >
-                                <template #default="options">
-                                    <VCFormSelectSearch
-                                        v-model="form.fusionPartner5pr"
-                                        :options="options"
-                                        placeholder="HGNC"
-                                    >
-                                        <template #selected="{ items, toggle }">
-                                            <DTags
-                                                :emit-only="true"
-                                                :items="items"
-                                                tag-variant="dark"
-                                                @deleted="toggle"
-                                            />
-                                        </template>
-                                    </VCFormSelectSearch>
+                                <template #selected="{ items, toggle }">
+                                    <DTags
+                                        :emit-only="true"
+                                        :items="items"
+                                        tag-variant="dark"
+                                        @deleted="toggle"
+                                    />
                                 </template>
-                            </DCollectionTransform>
+                            </VCFormSelectSearch>
                         </template>
-                        <template #loading>
-                            <VCFormSelectSearch
-                                :options="[]"
-                                :disabled="true"
-                                placeholder="HGNC"
-                            />
-                        </template>
-                    </DCodeSystem>
+                    </DCollectionTransform>
                 </template>
-            </VCFormGroup>
-        </div>
-    </div>
-
-    <div class="mb-1">
-        <VCFormInputCheckbox
-            v-model="form.supporting"
-            :group-class="'form-switch'"
-            :label="true"
-            :label-content="'Stützend?'"
-        />
-    </div>
-    <div>
-        <button
-            type="button"
-            class="btn btn-secondary btn-xs"
-            @click.prevent="submit()"
-        >
-            {{ isEditing ? 'Aktualisieren' : 'Hinzufügen' }}
-        </button>
-    </div>
+                <template #loading>
+                    <VCFormSelectSearch
+                        :options="[]"
+                        :disabled="true"
+                        placeholder="HGNC"
+                    />
+                </template>
+            </DCodeSystem>
+        </template>
+    </VCFormGroup>
 </template>

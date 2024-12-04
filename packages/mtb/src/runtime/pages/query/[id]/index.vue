@@ -50,12 +50,6 @@ export default defineNuxtComponent({
             }
 
             const keys = Object.keys(props.entity.criteria);
-            if (keys.length === 1) {
-                if (props.entity.criteria && props.entity.criteria.variants.operator) {
-                    return false;
-                }
-            }
-
             return keys.length > 0;
         });
 
