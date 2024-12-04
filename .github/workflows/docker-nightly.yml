@@ -1,0 +1,21 @@
+name: docker-nightly
+
+on:
+    schedule:
+        - cron: "0 0 * * *"
+
+jobs:
+    push:
+        runs-on: ubuntu-latest
+        permissions:
+            packages: write
+            contents: read
+
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   uses: tada5hi/action-docker-image-publish@v3
+                with:
+                    registryTag: next
+
+
