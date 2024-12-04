@@ -42,7 +42,7 @@
     },
     "dependencies": {
         "@posva/event-emitter": "^1.0.2",
-        "hapic": "^2.5.1",
+        "hapic": "^2.5.2",
         "smob": "^1.5.0",
         "ufo": "^1.5.4"
     },
@@ -50,26 +50,26 @@
         "@authup/core-http-kit": "^1.0.0-beta.23",
         "@authup/client-web-kit": "^1.0.0-beta.23",
         "bootstrap-vue-next": "^0.26.8",
-        "chart.js": "^4.4.4",
+        "chart.js": "^4.4.7",
         "@nuxt/schema": "^3.13.0",
-        "@nuxt/kit": "^3.13.0",
+        "@nuxt/kit": "^3.14.1592",
         "@vuecs/form-controls": "^2.3.0",
         "@vuecs/navigation": "^2.3.1",
         "@vuecs/link": "^1.0.0",
-        "pinia": "^2.2.4",
+        "pinia": "^2.2.8",
         "vue": "^3.5.13",
-        "vue-chartjs": "^5.3.1"
+        "vue-chartjs": "^5.3.2"
     },
     "peerDependencies": {
         "@authup/core-http-kit": "^1.0.0-beta.21",
         "@authup/client-web-kit": "^1.0.0-beta.21",
         "chart.js": "^4.4.3",
-        "@nuxt/kit": "^3.13.0",
+        "@nuxt/kit": "^3.14.1592",
         "@vuecs/link": "^1.0.0",
         "@vuecs/form-controls": "^2.3.0",
         "@vuecs/navigation": "^2.3.1",
-        "pinia": "^2.2.4",
+        "pinia": "^2.2.8",
         "vue": "^3.x",
-        "vue-chartjs": "^5.3.1"
+        "vue-chartjs": "^5.3.2"
     }
 }
