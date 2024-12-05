@@ -26,23 +26,48 @@ export default defineNuxtComponent({
     <template v-if="connectionReportRead">
         <div>
             <h1 class="title no-border mb-3">
-                <i class="fa fa-map-marker-alt" /> Standorte
+                <i class="fa fa-plug" /> Verbindungen
+                <span class="sub-title">
+                    Übersicht
+                </span>
             </h1>
         </div>
-        <div class="d-flex flex-row flex-wrap gap-2">
-            <AConnectionReport>
-                <template #default="{ data }">
-                    <template
-                        v-for="(item, key) in data.peers"
-                        :key="key"
-                    >
-                        <DConnectionPeerCard :entity="item" />
-                    </template>
-                </template>
-                <template #loading>
-                    <DConnectionPeerCard />
-                </template>
-            </AConnectionReport>
-        </div>
+        <AConnectionReport>
+            <template #default="{ data }">
+                <div class="d-flex flex-column gap-3">
+                    <div>
+                        <h5 class="title no-border">
+                            <i class="fa fa-map-marker-alt" /> Mein Standort
+                        </h5>
+                        <div class="d-flex flex-row flex-wrap gap-2">
+                            <DConnectionPeerCard :entity="data.self" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <h5 class="title no-border">
+                            <i class="fa fa-map-marker-alt" /> Externe Standorte
+                        </h5>
+                        <div class="d-flex flex-row flex-wrap gap-2">
+                            <template
+                                v-for="(item, key) in data.peers"
+                                :key="key"
+                            >
+                                <DConnectionPeerCard :entity="item" />
+                            </template>
+                        </div>
+
+                        <template v-if="data.peers.length === 0">
+                            <div class="alert alert-sm alert-info">
+                                Es sind keine externen Standorte erreichbar.
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+            <template #loading>
+                <DConnectionPeerCard />
+            </template>
+        </AConnectionReport>
     </template>
 </template>

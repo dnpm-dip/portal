@@ -9,5 +9,6 @@ import type { ConnectionPeer } from '@dnpm-dip/core';
 
 export type ConnectionReport = {
     peers: ConnectionPeer[],
+    self: ConnectionPeer,
     createdAt: string
 };
