@@ -20,7 +20,7 @@ export default defineComponent({
 </script>
 <template>
     <div
-        class="entity-card"
+        class="entity-card connection-peer-card"
         style="min-width: 300px;"
     >
         <div class="text-center">
