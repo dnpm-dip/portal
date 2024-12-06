@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.29.0](https://github.com/dnpm-dip/portal/compare/v1.28.0...v1.29.0) (2024-12-06)
+
+
+### Features
+
+* mtb gene centric search ([#951](https://github.com/dnpm-dip/portal/issues/951)) ([9047772](https://github.com/dnpm-dip/portal/commit/904777203eee1e67e86d190d6186506a8b6138d9))
+* mtb medication filters implementation + filter expansion refactoring ([#898](https://github.com/dnpm-dip/portal/issues/898)) ([a0d984f](https://github.com/dnpm-dip/portal/commit/a0d984f2a6fa4ca02b3806a0920efd60157d7394))
+* reorganized mtb query session view ([#938](https://github.com/dnpm-dip/portal/issues/938)) ([1621e45](https://github.com/dnpm-dip/portal/commit/1621e451de44ba0f7b28dfb00c571913fd60829d))
+* short label for mb gene alteratioon tab ([f90bb70](https://github.com/dnpm-dip/portal/commit/f90bb7046ab57f7e0535ccb710596c829b68915a))
+
+
+### Bug Fixes
+
+* bump bootstrap-vue-next to v0.26.x ([ef95fab](https://github.com/dnpm-dip/portal/commit/ef95fab5e8c398100a9b1cfc23458271a3359a85))
+* **deps:** bump @authup/client-web-kit ([#891](https://github.com/dnpm-dip/portal/issues/891)) ([182a546](https://github.com/dnpm-dip/portal/commit/182a546d5a577543771ca2cc6ee0470e865c9561))
+* **deps:** bump the minorandpatch group across 1 directory with 21 updates ([#952](https://github.com/dnpm-dip/portal/issues/952)) ([9dd812f](https://github.com/dnpm-dip/portal/commit/9dd812f43074ed8af7bc92f8026178f1e6065d45))
+* **deps:** bump vue from 3.5.12 to 3.5.13 ([#907](https://github.com/dnpm-dip/portal/issues/907)) ([c191dcf](https://github.com/dnpm-dip/portal/commit/c191dcf4ee7002d8a670c4523f5db01e20865de3))
+* do not throw error in query handler ([55a8af7](https://github.com/dnpm-dip/portal/commit/55a8af7274c96f3a8d3c87f06fb9ff4b403a1700))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.29.0 to ^1.30.0
+    * @dnpm-dip/kit bumped from ^1.23.0 to ^1.24.0
+
 ## [1.28.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.27.0...v1.28.0) (2024-11-19)
 
 
