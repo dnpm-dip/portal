@@ -3,7 +3,7 @@ import {
     type CodeSystemConcept,
     DCodeSystem,
     DCollectionTransform,
-    DTags, toCoding,
+    toCoding,
     transformConceptToFormSelectOption,
 } from '@dnpm-dip/core';
 import { VCFormSelect, VCFormSelectSearch } from '@vuecs/form-controls';
@@ -25,7 +25,7 @@ import MSearchSNVForm from './search/MSearchSNVForm.vue';
 
 export default defineComponent({
     components: {
-        DCollectionTransform, DTags, VCFormSelectSearch, DCodeSystem, VCFormSelect,
+        DCollectionTransform, VCFormSelectSearch, DCodeSystem, VCFormSelect,
     },
     emit: ['updated', 'toggle'],
     props: {
@@ -114,7 +114,7 @@ export default defineComponent({
             }
 
             if (props.entity.gene) {
-                form.gene = props.entity.gene.code;
+                form.gene = `${props.entity.gene.code}+++${props.entity.gene.display}`;
             } else {
                 form.gene = '';
             }
@@ -140,8 +140,9 @@ export default defineComponent({
 
         const submit = () => {
             if (form.gene) {
+                const [code, display] = form.gene.split('+++');
                 emit('updated', {
-                    gene: form.gene ? toCoding(form.gene) : undefined,
+                    gene: { code, display },
                     supporting: form.supporting,
                     negated: form.negated,
                     ...(mutationData.value ? { variant: mutationData.value } : {}),
@@ -157,7 +158,14 @@ export default defineComponent({
 
         const transformConcepts = (
             concept: CodeSystemConcept,
-        ) => transformConceptToFormSelectOption(concept);
+        ) => {
+            const option : FormSelectOption = {
+                id: `${concept.code}+++${concept.display}`,
+                value: concept.display,
+            };
+
+            return option;
+        };
 
         return {
             form,
@@ -199,16 +207,7 @@ export default defineComponent({
                                     v-model="form.gene"
                                     :options="options"
                                     placeholder="HGNC"
-                                >
-                                    <template #selected="{ items, toggle }">
-                                        <DTags
-                                            :emit-only="true"
-                                            :items="items"
-                                            tag-variant="dark"
-                                            @deleted="toggle"
-                                        />
-                                    </template>
-                                </VCFormSelectSearch>
+                                />
                             </template>
                         </DCollectionTransform>
                     </template>

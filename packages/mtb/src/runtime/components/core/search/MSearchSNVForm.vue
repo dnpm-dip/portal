@@ -7,8 +7,7 @@
 
 <script lang="ts">
 import {
-    type CodeSystemConcept,
-    HGVS_CODE_REGEX, toCoding, transformConceptToFormSelectOption,
+    HGVS_CODE_REGEX, toCoding,
 } from '@dnpm-dip/core';
 import { IVuelidate } from '@ilingo/vuelidate';
 import useVuelidate from '@vuelidate/core';
@@ -61,10 +60,6 @@ export default defineComponent({
             init();
         });
 
-        const transformConcepts = (
-            concept: CodeSystemConcept,
-        ) => transformConceptToFormSelectOption(concept);
-
         const isEditing = computed(() => !!entityRef.value);
         const handleChanged = () => {
             const output : QueryGeneAlterationSNVCriteria = {
@@ -84,7 +79,6 @@ export default defineComponent({
 
         return {
             form,
-            transformConcepts,
             isEditing,
             handleChanged,
             vuelidate,

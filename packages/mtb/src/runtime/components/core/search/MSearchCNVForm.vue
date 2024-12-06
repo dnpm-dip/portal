@@ -7,12 +7,11 @@
 
 <script lang="ts">
 import {
-    type CodeSystemConcept,
     DCollectionTransform,
     DTags,
     DValueSet,
     type ValueSetCoding,
-    toCoding, transformConceptToFormSelectOption,
+    toCoding,
 } from '@dnpm-dip/core';
 import { VCFormSelectSearch } from '@vuecs/form-controls';
 import {
@@ -57,10 +56,6 @@ export default defineComponent({
             value: coding.display ? `${coding.display}` : coding.code,
         });
 
-        const transformConcepts = (
-            concept: CodeSystemConcept,
-        ) => transformConceptToFormSelectOption(concept);
-
         const isEditing = computed(() => !!entityRef.value);
         const handleChanged = () => {
             const output : QueryGeneAlterationCNVCriteria = {
@@ -77,7 +72,6 @@ export default defineComponent({
         return {
             form,
             transformCodings,
-            transformConcepts,
             isEditing,
             handleChanged,
         };

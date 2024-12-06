@@ -339,16 +339,8 @@ export default defineComponent({
                             :current-index="props.currentIndex"
                             @toggle="props.toggle"
                         >
-                            <template v-if="props.item && props.item.type">
-                                <template v-if="props.item.type === 'rnaFusion'">
-                                    {{ props.index + 1 }}. RNA Fusion
-                                </template>
-                                <template v-else-if="props.item.type === 'dnaFusion'">
-                                    {{ props.index + 1 }}. DNA Fusion
-                                </template>
-                                <template v-else>
-                                    {{ props.index + 1 }}. {{ props.item.type.toUpperCase() }}
-                                </template>
+                            <template v-if="props.item && props.item.gene">
+                                {{ props.item.gene.display || props.item.gene.code }} {{ props.item.variant ? props.item.variant.type : '' }}
                             </template>
                             <template v-else>
                                 {{ props.index + 1 }}
