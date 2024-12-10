@@ -1,5 +1,11 @@
 <script lang="ts">
-import { PageMetaKey, useQuerySessionStore, useToast } from '@dnpm-dip/core';
+import {
+    PageMetaKey,
+    QueryEventBusEventName,
+    injectQueryEventBus,
+    useQuerySessionStore,
+    useToast,
+} from '@dnpm-dip/core';
 import {
     defineComponent, onMounted, onUnmounted, ref,
 } from 'vue';
@@ -22,8 +28,18 @@ export default defineComponent({
         const route = useRoute();
         const toast = useToast();
         const sessionStore = useQuerySessionStore();
+        const evenBus = injectQueryEventBus();
 
         const entity = ref<null | QuerySession>(null);
+
+        const filtersCommitedUnsubscribeFn = evenBus.on(
+            QueryEventBusEventName.FILTERS_COMMITED,
+            () => {
+                toast.show('Die Filterkriterien wurden aktualisiert.', {
+                    variant: 'dark',
+                });
+            },
+        );
 
         onMounted(() => {
             if (!entity.value) {
@@ -37,6 +53,8 @@ export default defineComponent({
         onUnmounted(() => {
             sessionStore.setUseCase(null);
             sessionStore.unTrack();
+
+            filtersCommitedUnsubscribeFn();
         });
 
         if (typeof route.params.id !== 'string') {
