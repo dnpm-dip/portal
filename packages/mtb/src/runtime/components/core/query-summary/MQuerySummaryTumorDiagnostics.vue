@@ -1,3 +1,10 @@
+<!--
+  - Copyright (c) 2024.
+  - Author Peter Placzek (tada5hi)
+  - For the full copyright and license information,
+  - view the LICENSE file that was distributed with this source code.
+  -->
+
 <script lang="ts">
 import {
     type Coding,
@@ -9,8 +16,8 @@ import {
 } from '@dnpm-dip/core';
 import { type PropType, defineComponent, ref } from 'vue';
 import { navigateTo } from '#imports';
-import { QueryFilterURLKey } from '../../constants';
-import type { QuerySummaryTumorDiagnostics } from '../../domains';
+import { QueryFilterURLKey } from '../../../constants';
+import type { QuerySummaryTumorDiagnostics } from '../../../domains';
 
 export default defineComponent({
     components: {
@@ -51,10 +58,10 @@ export default defineComponent({
             queryFilterStore.setActive('diagnosis');
             queryFilterStore.commit();
 
-            if (hasChanged) {
-                navigateTo(`/mtb/query/${props.queryId}/patients`);
-            } else if (tumorEntitiesVNode.value) {
-                tumorEntitiesVNode.value.reset();
+            if (!hasChanged) {
+                if (tumorEntitiesVNode.value) {
+                    tumorEntitiesVNode.value.reset();
+                }
             }
         };
 

@@ -1,3 +1,10 @@
+<!--
+  - Copyright (c) 2024.
+  - Author Peter Placzek (tada5hi)
+  - For the full copyright and license information,
+  - view the LICENSE file that was distributed with this source code.
+  -->
+
 <script lang="ts">
 import {
     type Coding,
@@ -5,8 +12,8 @@ import {
 } from '@dnpm-dip/core';
 import { type PropType, defineComponent, ref } from 'vue';
 import { navigateTo } from '#imports';
-import { QueryFilterURLKey } from '../../constants';
-import type { QuerySummaryMedication } from '../../domains';
+import { QueryFilterURLKey } from '../../../constants';
+import type { QuerySummaryMedication } from '../../../domains';
 
 export default defineComponent({
     components: {
@@ -45,9 +52,7 @@ export default defineComponent({
             queryFilterStore.setActive('recommended');
             queryFilterStore.commit();
 
-            if (hasChanged) {
-                navigateTo(`/mtb/query/${props.queryId}/patients`);
-            } else if (recommendedVNode.value) {
+            if (!hasChanged) {
                 recommendedVNode.value.reset();
             }
         };
@@ -68,9 +73,7 @@ export default defineComponent({
             queryFilterStore.setActive('used');
             queryFilterStore.commit();
 
-            if (hasChanged) {
-                navigateTo(`/mtb/query/${props.queryId}/patients`);
-            } else if (usedVNode.value) {
+            if (!hasChanged) {
                 usedVNode.value.reset();
             }
         };

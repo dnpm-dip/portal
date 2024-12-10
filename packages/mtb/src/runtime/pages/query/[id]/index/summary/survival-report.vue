@@ -7,7 +7,7 @@
 <script lang="ts">
 import { type PropType, defineComponent } from 'vue';
 import type { QuerySession } from '../../../../../domains';
-import MQuerySummarySurvivalReport from '../../../../../components/core/MQuerySummarySurvivalReport.vue';
+import MQuerySummarySurvivalReport from '../../../../../components/core/query-summary/MQuerySummarySurvivalReport.vue';
 
 export default defineComponent({
     components: { MQuerySummarySurvivalReport },

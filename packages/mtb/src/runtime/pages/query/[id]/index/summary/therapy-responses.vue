@@ -10,7 +10,7 @@ import { QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore } from
 import {
     type PropType, defineComponent, ref,
 } from 'vue';
-import MQuerySummaryTherapyResponses from '../../../../../components/core/MQuerySummaryTherapyResponses.vue';
+import MQuerySummaryTherapyResponses from '../../../../../components/core/query-summary/MQuerySummaryTherapyResponses.vue';
 import { injectHTTPClient } from '../../../../../core/http-client';
 import type { QuerySession, QueryTherapyResponse } from '../../../../../domains';
 

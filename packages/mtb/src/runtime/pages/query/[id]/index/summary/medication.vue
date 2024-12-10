@@ -15,7 +15,7 @@ import {
 } from 'vue';
 import { injectHTTPClient } from '../../../../../core/http-client';
 import type { QuerySession, QuerySummaryMedication } from '../../../../../domains';
-import MQuerySummaryMedication from '../../../../../components/core/MQuerySummaryMedication.vue';
+import MQuerySummaryMedication from '../../../../../components/core/query-summary/MQuerySummaryMedication.vue';
 
 export default defineComponent({
     components: { MQuerySummaryMedication },

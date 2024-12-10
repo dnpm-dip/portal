@@ -11,7 +11,7 @@ import {
     type PropType, defineComponent, ref,
 } from 'vue';
 import MQuerySummaryTherapyResponsesByVariant
-    from '../../../../../components/core/MQuerySummaryTherapyResponsesByVariant.vue';
+    from '../../../../../components/core/query-summary/MQuerySummaryTherapyResponsesByVariant.vue';
 import { injectHTTPClient } from '../../../../../core/http-client';
 import type { QuerySession, QueryTherapyResponse } from '../../../../../domains';
 

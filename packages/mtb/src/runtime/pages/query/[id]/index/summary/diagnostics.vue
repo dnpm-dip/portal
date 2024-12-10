@@ -16,7 +16,7 @@ import {
 } from 'vue';
 import { injectHTTPClient } from '../../../../../core/http-client';
 import type { QuerySession, QuerySummaryTumorDiagnostics } from '../../../../../domains';
-import MQuerySummaryTumorDiagnostics from '../../../../../components/core/MQuerySummaryTumorDiagnostics.vue';
+import MQuerySummaryTumorDiagnostics from '../../../../../components/core/query-summary/MQuerySummaryTumorDiagnostics.vue';
 
 export default defineComponent({
     components: { MQuerySummaryTumorDiagnostics },

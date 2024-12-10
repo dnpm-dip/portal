@@ -1,7 +1,14 @@
+<!--
+  - Copyright (c) 2024.
+  - Author Peter Placzek (tada5hi)
+  - For the full copyright and license information,
+  - view the LICENSE file that was distributed with this source code.
+  -->
+
 <script lang="ts">
 import { type PropType, defineComponent, ref } from 'vue';
-import MQueryKaplanMeierPicker from './MQueryKaplanMeierPicker.vue';
-import MQueryKaplanMeierStatistic from './MQueryKaplanMeierStatistic.vue';
+import MQueryKaplanMeierPicker from '../MQueryKaplanMeierPicker.vue';
+import MQueryKaplanMeierStatistic from '../MQueryKaplanMeierStatistic.vue';
 
 export default defineComponent({
     components: {
