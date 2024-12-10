@@ -31,7 +31,7 @@ export default defineComponent({
             required: true,
         },
     },
-    setup(props) {
+    setup() {
         const queryFilterStore = useQueryFilterStore();
         const recommendedVNode = ref<null | typeof DQuerySummaryNested>(null);
         const usedVNode = ref<null | typeof DQuerySummaryNested>(null);
@@ -74,7 +74,9 @@ export default defineComponent({
             queryFilterStore.commit();
 
             if (!hasChanged) {
-                usedVNode.value.reset();
+                if (usedVNode.value) {
+                    usedVNode.value.reset();
+                }
             }
         };
 
@@ -104,6 +106,8 @@ export default defineComponent({
                         <DKVChartTableSwitch
                             :type="'bar'"
                             :data="item.value.elements"
+                            :clickable="true"
+                            @clicked="handleRecommendationClick"
                         />
                     </template>
                 </DQuerySummaryGrouped>
@@ -152,7 +156,11 @@ export default defineComponent({
         <div class="d-flex flex-column gap-2">
             <div class="entity-card text-center mb-3 w-100">
                 <h6>Durchschnittliche Dauer <small>(in Wochen)</small></h6>
-                <DKVChartTableSwitch :data="entity.therapies.meanDurations" />
+                <DKVChartTableSwitch
+                    :data="entity.therapies.meanDurations"
+                    :clickable="true"
+                    @clicked="handleUsedClick"
+                />
             </div>
         </div>
     </div>
