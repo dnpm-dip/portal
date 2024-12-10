@@ -64,11 +64,13 @@ export type DistributionQuantities<KEY = any> = {
 export type Distribution<KEY = any> = DistributionConceptsCount<KEY> |
 DistributionQuantities<KEY>;
 
+export type DistributionNestedElements<KEY> = KeyValueChildrenRecord<
+KEY,
+ConceptCountValue | number,
+Quantities | ConceptsCount
+>[];
+
 export type DistributionNested<KEY = any> = {
     total: number,
-    elements: KeyValueChildrenRecord<
-    KEY,
-    ConceptCountValue | number,
-    Quantities | ConceptsCount
-    >[]
+    elements: DistributionNestedElements<KEY>
 };

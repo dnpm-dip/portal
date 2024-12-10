@@ -10,7 +10,7 @@ import {
     defineComponent,
     ref,
 } from 'vue';
-import type { DistributionNested, KeyValueChildrenRecord } from '../../../domains';
+import type { Coding, DistributionNestedElements, KeyValueChildrenRecord } from '../../../domains';
 import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils';
 
 export default defineComponent({
@@ -22,9 +22,13 @@ export default defineComponent({
             type: String,
             default: 'Gruppe',
         },
-        entity: {
-            type: Object as PropType<DistributionNested>,
+        data: {
+            type: Array as PropType<DistributionNestedElements<Coding>>,
             required: true,
+        },
+        total: {
+            type: Number,
+            default: 0,
         },
         keyVerbose: {
             type: Boolean,
@@ -44,7 +48,7 @@ export default defineComponent({
             return index;
         };
 
-        const options = computed<FormSelectOption[]>(() => props.entity.elements.map((el, index) => {
+        const options = computed<FormSelectOption[]>(() => props.data.map((el, index) => {
             const value = generateChartLabelsForKeyValueRecord(el as KeyValueChildrenRecord, {
                 codingVerbose: props.keyVerbose,
             });
@@ -65,11 +69,11 @@ export default defineComponent({
 
         const items = computed(() => {
             const index = transformToIndex(id.value);
-            if (index > -1 && props.entity.elements[index]) {
-                return props.entity.elements[index].children || [];
+            if (index > -1 && props.data[index]) {
+                return props.data[index].children || [];
             }
 
-            return props.entity.elements;
+            return props.data;
         });
 
         return {

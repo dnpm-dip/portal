@@ -11,7 +11,6 @@ import {
     DKVChartTableSwitch, DQuerySummaryGrouped, DQuerySummaryNested, toCodingGroup, useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { type PropType, defineComponent, ref } from 'vue';
-import { navigateTo } from '#imports';
 import { QueryFilterURLKey } from '../../../constants';
 import type { QuerySummaryMedication } from '../../../domains';
 
@@ -34,9 +33,13 @@ export default defineComponent({
     setup() {
         const queryFilterStore = useQueryFilterStore();
         const recommendedVNode = ref<null | typeof DQuerySummaryNested>(null);
+        const recommendedByVariantVNode = ref<null | typeof DQuerySummaryGrouped>(null);
         const usedVNode = ref<null | typeof DQuerySummaryNested>(null);
 
-        const handleRecommendationClick = (keys: Coding[]) => {
+        const handleRecommendationClick = (
+            keys: Coding[],
+            type: 'recommended' | 'recommendedByVariant',
+        ) => {
             const group = toCodingGroup(keys);
 
             let hasChanged : boolean;
@@ -53,7 +56,19 @@ export default defineComponent({
             queryFilterStore.commit();
 
             if (!hasChanged) {
-                recommendedVNode.value.reset();
+                if (
+                    type === 'recommended' &&
+                    recommendedVNode.value
+                ) {
+                    recommendedVNode.value.reset();
+                }
+
+                if (
+                    type === 'recommendedByVariant' &&
+                    recommendedByVariantVNode.value
+                ) {
+                    recommendedByVariantVNode.value.reset();
+                }
             }
         };
 
@@ -82,6 +97,7 @@ export default defineComponent({
 
         return {
             recommendedVNode,
+            recommendedByVariantVNode,
             handleRecommendationClick,
 
             usedVNode,
@@ -98,16 +114,17 @@ export default defineComponent({
                 <h6>Empfehlungen nach stützender molekularer Alteration</h6>
 
                 <DQuerySummaryGrouped
+                    ref="recommendedByVariantVNode"
+                    :select-first="true"
                     :items="entity.recommendations.distributionBySupportingVariant"
                     :label="'Variante'"
-                    :select-first="true"
                 >
                     <template #default="{ item }">
                         <DKVChartTableSwitch
                             :type="'bar'"
                             :data="item.value.elements"
                             :clickable="true"
-                            @clicked="handleRecommendationClick"
+                            @clicked="(keys) => handleRecommendationClick(keys, 'recommendedByVariant')"
                         />
                     </template>
                 </DQuerySummaryGrouped>
@@ -118,13 +135,14 @@ export default defineComponent({
                 <DQuerySummaryNested
                     ref="recommendedVNode"
                     :label="'Kategorie'"
-                    :entity="entity.recommendations.overallDistribution"
+                    :total="entity.recommendations.overallDistribution.total"
+                    :data="entity.recommendations.overallDistribution.elements"
                 >
                     <template #default="{ items }">
                         <DKVChartTableSwitch
                             :data="items"
                             :clickable="true"
-                            @clicked="handleRecommendationClick"
+                            @clicked="(keys) => handleRecommendationClick(keys, 'recommended')"
                         />
                     </template>
                 </DQuerySummaryNested>
@@ -141,7 +159,8 @@ export default defineComponent({
                 <DQuerySummaryNested
                     ref="usedVNode"
                     :label="'Kategorie'"
-                    :entity="entity.therapies.overallDistribution"
+                    :data="entity.therapies.overallDistribution.elements"
+                    :total="entity.therapies.overallDistribution.total"
                 >
                     <template #default="{ items }">
                         <DKVChartTableSwitch

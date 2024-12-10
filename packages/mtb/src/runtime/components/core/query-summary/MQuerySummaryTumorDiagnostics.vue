@@ -82,7 +82,8 @@ export default defineComponent({
                     <DQuerySummaryNested
                         ref="tumorEntitiesVNode"
                         :label="'Kategorie'"
-                        :entity="entity.overallDistributions.tumorEntities"
+                        :data="entity.overallDistributions.tumorEntities.elements"
+                        :total="entity.overallDistributions.tumorEntities.total"
                         :key-verbose="true"
                     >
                         <template #default="{items}">
@@ -100,7 +101,8 @@ export default defineComponent({
                     <h6>Tumor-Morphologie (ICD-O-3-M)</h6>
                     <DQuerySummaryNested
                         :label="'Kategorie'"
-                        :entity="entity.overallDistributions.tumorMorphologies"
+                        :data="entity.overallDistributions.tumorMorphologies.elements"
+                        :total="entity.overallDistributions.tumorMorphologies.total"
                         :key-verbose="true"
                     >
                         <template #default="{items}">

@@ -10,4 +10,5 @@ export * from './valueset';
 export * from './utility';
 
 export * from './api';
+export * from './check';
 export * from './types';
