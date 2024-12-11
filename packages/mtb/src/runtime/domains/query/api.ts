@@ -47,6 +47,8 @@ export class QueryAPI extends BaseAPI {
         return response.data;
     }
 
+    // --------------------------------------------------------------------
+
     async getDiagnosisFilter(id: string) : Promise<QueryDiagnosisFilter> {
         const response = await this.client.get(`mtb/queries/${id}/filters/diagnosis`);
         return response.data;
@@ -61,6 +63,8 @@ export class QueryAPI extends BaseAPI {
         const response = await this.client.get(`mtb/queries/${id}/filters/therapy-recommendation`);
         return response.data;
     }
+
+    // --------------------------------------------------------------------
 
     /**
      * Get all patients in the context of a specific query.
@@ -98,6 +102,8 @@ export class QueryAPI extends BaseAPI {
         const response = await this.client.get(`mtb/queries/${queryId}/patient-record/${patientId}`);
         return response.data;
     }
+
+    // --------------------------------------------------------------------
 
     async getKaplanMeierStatistics(
         queryId: string,
@@ -141,6 +147,8 @@ export class QueryAPI extends BaseAPI {
         const response = await this.client.get(`mtb/queries/${queryId}/demographics${this.buildRequestQueryString(query)}`);
         return response.data;
     }
+
+    // --------------------------------------------------------------------
 
     private buildRequestQueryString(query?: URLQueryRecord) {
         let qs : string = '';

@@ -38,6 +38,18 @@ export default defineNuxtPlugin({
                             ],
                         },
                     },
+                    {
+                        name: 'Validierung',
+                        icon: 'fas fa-shield',
+                        url: 'validation',
+                        meta: {
+                            [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                                PermissionName.VALIDATION_INFO_READ,
+                                PermissionName.VALIDATION_REPORT_READ,
+                                PermissionName.VALIDATION_PATIENT_RECORD_READ,
+                            ],
+                        },
+                    },
                 ],
             },
         );
