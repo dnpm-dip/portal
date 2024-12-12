@@ -1,41 +1,44 @@
 <script lang="ts">
+import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
+import type { FormTab } from './types';
 
 export default defineComponent({
     props: {
-        index: {
-            type: Number,
-            required: true,
-        },
         item: {
-            type: Object,
+            type: Object as PropType<FormTab>,
             required: true,
         },
         currentIndex: {
             type: Number,
         },
-        label: {
-            type: String,
+        minItems: {
+            type: Number,
+            required: true,
+        },
+        totalItems: {
+            type: Number,
+            required: true,
         },
     },
     emits: ['picked', 'closed'],
     setup(props, { emit }) {
         const text = computed(() => {
-            if (props.label) {
-                return props.label;
+            if (props.item.label) {
+                return props.item.label;
             }
 
-            return `${props.index + 1}`;
+            return `${(props.item.index ?? 0) + 1}`;
         });
 
-        const isEmpty = computed(() => Object.keys(props.item).length === 0);
+        const isEmpty = computed(() => props.item.data === null);
 
         const pick = () => {
-            emit('picked', props.index);
+            emit('picked', props.item.index);
         };
 
         const close = () => {
-            emit('closed', props.index);
+            emit('closed', props.item.index);
         };
 
         return {
@@ -51,7 +54,7 @@ export default defineComponent({
 <template>
     <li
         class="form-tab gap-2"
-        :class="{'active': currentIndex === index }"
+        :class="{'active': currentIndex === item.index }"
     >
         <div
             class="form-tab-text"
@@ -60,8 +63,7 @@ export default defineComponent({
             <template v-if="isEmpty">
                 <slot
                     name="empty"
-                    :item="item"
-                    :index="index"
+                    :data="item"
                     :current-index="currentIndex"
                     :pick="pick"
                 >
@@ -70,8 +72,7 @@ export default defineComponent({
             </template>
             <template v-else>
                 <slot
-                    :item="item"
-                    :index="index"
+                    :data="item"
                     :current-index="currentIndex"
                     :pick="pick"
                 >
@@ -81,6 +82,7 @@ export default defineComponent({
         </div>
         <div class="ms-auto">
             <a
+                v-if="minItems < totalItems || !isEmpty"
                 href="javascript:void(0)"
                 class="nav-link text-center"
                 @click="close"

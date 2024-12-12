@@ -2,9 +2,7 @@
 import {
     type CodeSystemConcept,
     DCodeSystem,
-    DCollectionTransform,
-    toCoding,
-    transformConceptToFormSelectOption,
+    DCollectionTransform, type FormTabInput,
 } from '@dnpm-dip/core';
 import { VCFormSelect, VCFormSelectSearch } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
@@ -18,6 +16,7 @@ import {
     type QueryGeneAlterationCriteria,
     type QueryGeneAlterationVariantCriteria,
     QueryMutationType,
+    buildQueryGeneAlterationCriteriaLabel,
 } from '../../domains';
 import MSearchCNVForm from './search/MSearchCNVForm.vue';
 import MSearchFusionForm from './search/MSearchFusionForm.vue';
@@ -27,10 +26,11 @@ export default defineComponent({
     components: {
         DCollectionTransform, VCFormSelectSearch, DCodeSystem, VCFormSelect,
     },
-    emit: ['updated', 'toggle'],
+    emit: ['saved'],
     props: {
         entity: {
-            type: Object as PropType<QueryGeneAlterationCriteria>,
+            type: Object as PropType<FormTabInput<QueryGeneAlterationCriteria>>,
+            required: true,
         },
     },
     setup(props, { emit }) {
@@ -98,35 +98,41 @@ export default defineComponent({
             changeMutationType((event.target as Record<string, any>).value || null);
         };
 
-        const isEditing = computed(() => !!props.entity && Object.keys(props.entity).length > 0);
+        const isEditing = computed(() => props.entity.data !== null);
         const init = () => {
-            if (!props.entity) {
-                return;
-            }
-
             if (
-                props.entity.variant &&
-                props.entity.variant.type
+                props.entity.data &&
+                props.entity.data.variant &&
+                props.entity.data.variant.type
             ) {
-                changeMutationType(props.entity.variant.type);
+                changeMutationType(props.entity.data.variant.type);
             } else {
                 changeMutationType(null);
             }
 
-            if (props.entity.gene) {
-                form.gene = `${props.entity.gene.code}+++${props.entity.gene.display}`;
+            if (
+                props.entity.data &&
+                props.entity.data.gene
+            ) {
+                form.gene = `${props.entity.data.gene.code}+++${props.entity.data.gene.display}`;
             } else {
                 form.gene = '';
             }
 
-            if (typeof props.entity.supporting !== 'undefined') {
-                form.supporting = props.entity.supporting;
+            if (
+                props.entity.data &&
+                typeof props.entity.data.supporting !== 'undefined'
+            ) {
+                form.supporting = props.entity.data.supporting;
             } else {
                 form.supporting = false;
             }
 
-            if (typeof props.entity.negated !== 'undefined') {
-                form.negated = props.entity.negated;
+            if (
+                props.entity.data &&
+                typeof props.entity.data.negated !== 'undefined'
+            ) {
+                form.negated = props.entity.data.negated;
             } else {
                 form.negated = false;
             }
@@ -141,14 +147,21 @@ export default defineComponent({
         const submit = () => {
             if (form.gene) {
                 const [code, display] = form.gene.split('+++');
-                emit('updated', {
+
+                const data : QueryGeneAlterationCriteria = {
                     gene: { code, display },
                     supporting: form.supporting,
                     negated: form.negated,
                     ...(mutationData.value ? { variant: mutationData.value } : {}),
-                } satisfies QueryGeneAlterationCriteria);
+                };
+
+                emit('saved', {
+                    ...props.entity,
+                    data,
+                    label: buildQueryGeneAlterationCriteriaLabel(data),
+                });
             } else {
-                emit('toggle');
+                emit('saved', props.entity);
             }
         };
 
@@ -236,7 +249,7 @@ export default defineComponent({
         <template v-if="comp && mutationType">
             <component
                 :is="comp"
-                :entity="entity"
+                :entity="entity.data"
                 @updated="handleVariantChanged"
             />
         </template>

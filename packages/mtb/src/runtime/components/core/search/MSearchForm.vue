@@ -6,9 +6,13 @@
   -->
 
 <script lang="ts">
+import type {
+    Coding,
+    ConnectionPeer,
+    FormTabInput,
+    ValueSetCoding,
+} from '@dnpm-dip/core';
 import {
-    type Coding,
-    type ConnectionPeer,
     DCollectionTransform,
     DFormTabGroups,
     DSitePicker,
@@ -16,11 +20,10 @@ import {
     DValueSet,
     LogicalOperator,
     QueryRequestMode,
-    type ValueSetCoding,
     transformCodingsToFormSelectOptions,
-    transformFormSelectOptionsToCodings, useQueryFilterStore,
+    transformFormSelectOptionsToCodings,
+    useQueryFilterStore,
 } from '@dnpm-dip/core';
-import DFormTabGroup from '@dnpm-dip/core/components/utility/form-tab/DFormTabGroup.vue';
 import {
     VCFormSelectSearch,
 } from '@vuecs/form-controls';
@@ -32,13 +35,13 @@ import {
     type QueryCriteria,
     type QueryGeneAlterationCriteria,
     type QueryMedicationCriteria,
+    buildQueryGeneAlterationCriteriaLabel,
 } from '../../../domains';
 import MMutationTabGroup from '../MMutationTabGroup.vue';
 import MSearchMedicationForm from './MSearchMedicationForm.vue';
 
 export default defineComponent({
     components: {
-        DFormTabGroup,
         DSitePicker,
         MSearchMedicationForm,
         MMutationTabGroup,
@@ -86,7 +89,7 @@ export default defineComponent({
         const busy = ref(false);
         const criteria = ref<QueryCriteria>({});
 
-        const mutations = ref<QueryGeneAlterationCriteria[]>([]);
+        const mutations = ref<FormTabInput<QueryGeneAlterationCriteria>[]>([]);
         const mutationsInCombination = ref(false);
 
         const diagnoses = ref<FormSelectOption[]>([]);
@@ -150,7 +153,10 @@ export default defineComponent({
                 criteria.value.geneAlterations.items &&
                 criteria.value.geneAlterations.items.length > 0
             ) {
-                mutations.value = [...criteria.value.geneAlterations.items];
+                mutations.value = criteria.value.geneAlterations.items.map((item) => ({
+                    data: item,
+                    label: buildQueryGeneAlterationCriteriaLabel(item),
+                }));
 
                 if (criteria.value.geneAlterations.operator) {
                     mutationsInCombination.value = criteria.value.geneAlterations.operator === LogicalOperator.AND;
@@ -215,7 +221,7 @@ export default defineComponent({
                 mutations.value.length > 0
             ) {
                 payload.geneAlterations = {
-                    items: mutations.value,
+                    items: mutations.value.map((item) => item.data).filter(Boolean),
                     operator: mutationsInCombination.value ?
                         LogicalOperator.AND :
                         LogicalOperator.OR,
@@ -331,28 +337,10 @@ export default defineComponent({
                     :max-items="6"
                     :direction="'col'"
                 >
-                    <template #label="props">
-                        <DFormTabGroup
-                            :label="props.label"
-                            :item="props.item"
-                            :index="props.index"
-                            :current-index="props.currentIndex"
-                            @picked="props.pick"
-                            @closed="props.close"
-                        >
-                            <template v-if="props.item && props.item.gene">
-                                {{ props.item.gene.display || props.item.gene.code }} {{ props.item.variant ? props.item.variant.type : '' }}
-                            </template>
-                            <template v-else>
-                                {{ props.index + 1 }}
-                            </template>
-                        </DFormTabGroup>
-                    </template>
                     <template #default="props">
                         <MMutationTabGroup
-                            :entity="props.item"
-                            @updated="props.updated"
-                            @toggle="props.toggle"
+                            :entity="props.data"
+                            @saved="props.saved"
                         />
                     </template>
                 </DFormTabGroups>

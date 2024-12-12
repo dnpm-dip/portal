@@ -3,12 +3,13 @@ import {
     type PropType, defineComponent, ref, toRef, watch,
 } from 'vue';
 import DFormTabGroup from './DFormTabGroup.vue';
+import type { FormTab, FormTabInput } from './types';
 
 export default defineComponent({
     components: { DFormTabGroup },
     props: {
         modelValue: {
-            type: Array as PropType<Record<string, any>[]>,
+            type: Array as PropType<FormTabInput[]>,
         },
         label: {
             type: String,
@@ -32,19 +33,32 @@ export default defineComponent({
     },
     emits: ['update:modelValue'],
     setup(props, { emit }) {
-        const items = ref<Record<string, any>[]>([]);
+        const items = ref<FormTab[]>([]);
         const modelValue = toRef(props, 'modelValue');
         const currentIndex = ref(-1);
 
         const add = () => {
-            items.value.push({});
+            items.value.push({
+                data: null,
+                label: props.label,
+                index: items.value.length,
+            });
+
             currentIndex.value = items.value.length - 1;
         };
 
         const init = () => {
             if (!props.modelValue) return;
 
-            items.value = props.modelValue;
+            items.value = props.modelValue.map((el, index) => {
+                const item: FormTab = {
+                    data: el.data ?? null,
+                    index,
+                    label: el.label ? el.label : props.label,
+                };
+
+                return item;
+            });
 
             if (
                 items.value.length > 0 &&
@@ -78,33 +92,41 @@ export default defineComponent({
         };
 
         const close = (index: number) => {
-            if (items.value.length === props.minItems || index < -1) {
+            if (items.value.length === props.minItems) {
+                if (index === 0 && items.value.length === 1) {
+                    items.value[index].data = null;
+                    items.value[index].label = props.label;
+                }
+
                 return;
             }
-
-            const nextIndex = index - 1;
-
-            currentIndex.value = nextIndex < 0 ? 0 : nextIndex;
 
             if (items.value.length > 0) {
                 items.value.splice(index, 1);
             }
+
+            for (let i = 0; i < items.value.length; i++) {
+                items.value[i].index = i;
+            }
+
+            const nextIndex = index - 1;
+            currentIndex.value = nextIndex < 0 ? 0 : nextIndex;
         };
 
-        const handleUpdated = (data: Record<string, any>) => {
-            if (currentIndex.value === -1) {
-                items.value.push({ ...data });
-                currentIndex.value = 0;
-            } else {
-                items.value[currentIndex.value] = { ...data };
-            }
+        const handleSaved = (data: FormTab) => {
+            currentIndex.value = data.index;
+
+            items.value[data.index] = {
+                ...items.value[data.index],
+                ...data,
+            };
 
             emit('update:modelValue', items.value);
         };
 
         return {
             currentIndex,
-            handleUpdated,
+            handleSaved,
             items,
 
             add,
@@ -122,8 +144,8 @@ export default defineComponent({
     >
         <div class="w-100">
             <slot
-                :item="items[currentIndex]"
-                :updated="handleUpdated"
+                :data="items[currentIndex]"
+                :saved="handleSaved"
             />
         </div>
         <div
@@ -136,27 +158,18 @@ export default defineComponent({
                     :class="{'flex-column': direction === 'row'}"
                 >
                     <template
-                        v-for="(item,index) in items"
-                        :key="index"
+                        v-for="item in items"
+                        :key="item.index"
                     >
-                        <slot
-                            name="label"
+                        <DFormTabGroup
                             :item="item"
-                            :index="index"
                             :current-index="currentIndex"
-                            :label="label"
-                            :pick="pick"
-                            :close="close"
-                        >
-                            <DFormTabGroup
-                                :item="item"
-                                :index="index"
-                                :current-index="currentIndex"
-                                :label="label"
-                                @picked="pick"
-                                @closed="close"
-                            />
-                        </slot>
+                            :min-items="minItems"
+                            :max-items="maxItems"
+                            :total-items="items.length"
+                            @picked="pick"
+                            @closed="close"
+                        />
                     </template>
                     <li
                         v-if="createButton"
