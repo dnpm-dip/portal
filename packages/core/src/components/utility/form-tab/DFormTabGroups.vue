@@ -10,13 +10,13 @@ export default defineComponent({
         modelValue: {
             type: Array as PropType<Record<string, any>[]>,
         },
-        defaultLabel: {
+        label: {
             type: String,
-            default: 'Group',
+            default: 'Neuer Tab',
         },
         minItems: {
             type: Number,
-            default: 0,
+            default: 1,
         },
         maxItems: {
             type: Number,
@@ -28,10 +28,6 @@ export default defineComponent({
         direction: {
             type: String as PropType<'row' | 'col'>,
             default: 'row',
-        },
-        label: {
-            type: String,
-            default: undefined,
         },
     },
     emits: ['update:modelValue'],
@@ -77,26 +73,22 @@ export default defineComponent({
             init();
         }, { deep: true });
 
-        const toggle = (index: number) => {
-            if (currentIndex.value === index) {
-                if (items.value.length <= props.minItems) {
-                    return;
-                }
-
-                const nextIndex = index - 1;
-
-                currentIndex.value = nextIndex < 0 ? 0 : nextIndex;
-
-                if (items.value.length > 0) {
-                    items.value.splice(index, 1);
-                }
-            } else {
-                currentIndex.value = index;
-            }
+        const pick = (index: number) => {
+            currentIndex.value = index;
         };
 
-        const toggleCurrent = () => {
-            toggle(currentIndex.value);
+        const close = (index: number) => {
+            if (items.value.length === props.minItems || index < -1) {
+                return;
+            }
+
+            const nextIndex = index - 1;
+
+            currentIndex.value = nextIndex < 0 ? 0 : nextIndex;
+
+            if (items.value.length > 0) {
+                items.value.splice(index, 1);
+            }
         };
 
         const handleUpdated = (data: Record<string, any>) => {
@@ -114,9 +106,10 @@ export default defineComponent({
             currentIndex,
             handleUpdated,
             items,
+
             add,
-            toggle,
-            toggleCurrent,
+            close,
+            pick,
         };
     },
 });
@@ -131,7 +124,6 @@ export default defineComponent({
             <slot
                 :item="items[currentIndex]"
                 :updated="handleUpdated"
-                :toggle="toggleCurrent"
             />
         </div>
         <div
@@ -140,7 +132,7 @@ export default defineComponent({
         >
             <div>
                 <ul
-                    class="nav nav-pills"
+                    class="form-tabs"
                     :class="{'flex-column': direction === 'row'}"
                 >
                     <template
@@ -153,27 +145,22 @@ export default defineComponent({
                             :index="index"
                             :current-index="currentIndex"
                             :label="label"
-                            :toggle="toggle"
+                            :pick="pick"
+                            :close="close"
                         >
                             <DFormTabGroup
                                 :item="item"
                                 :index="index"
                                 :current-index="currentIndex"
                                 :label="label"
-                                @toggle="toggle"
+                                @picked="pick"
+                                @closed="close"
                             />
                         </slot>
                     </template>
-                </ul>
-            </div>
-            <div
-                :class="{'ms-auto': direction === 'col', 'mt-auto': direction !== 'col'}"
-                :style="{'order': direction === 'col' ? '1' : 0}"
-            >
-                <ul class="nav nav-pills">
                     <li
                         v-if="createButton"
-                        class="nav-item"
+                        class="form-tab"
                     >
                         <a
                             href="javascript:void(0)"
@@ -186,6 +173,50 @@ export default defineComponent({
                     </li>
                 </ul>
             </div>
+            <div
+                :class="{'ms-auto': direction === 'col', 'mt-auto': direction !== 'col'}"
+                :style="{'order': direction === 'col' ? '1' : 0}"
+            >
+                <ul class="nav nav-pills" />
+            </div>
         </div>
     </div>
 </template>
+<style>
+.form-tabs {
+    display: flex;
+    flex-direction: row;
+
+    list-style: none;
+    padding: 0;
+    margin-block-start: 0;
+}
+
+.form-tab {
+    display: flex;
+    flex-direction: row;
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+
+    text-decoration: none;
+    border: 0;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    max-width: 150px;
+    overflow-y: hidden;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #5b646c;
+    background-color: #ececec;
+}
+.form-tab.active {
+    color: #fff;
+    background-color: #6d7fcc;
+}
+
+.form-tab-text {
+    user-select: none;
+    cursor: pointer;
+}
+</style>

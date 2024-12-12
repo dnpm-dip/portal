@@ -1,6 +1,5 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import { template } from '../../../utils';
 
 export default defineComponent({
     props: {
@@ -19,50 +18,75 @@ export default defineComponent({
             type: String,
         },
     },
-    emits: ['toggle'],
+    emits: ['picked', 'closed'],
     setup(props, { emit }) {
         const text = computed(() => {
             if (props.label) {
-                return template(props.label, {
-                    ...props.item,
-                    index: props.index,
-                    position: props.index + 1,
-                });
+                return props.label;
             }
 
             return `${props.index + 1}`;
         });
 
-        const toggle = () => {
-            emit('toggle', props.index);
+        const isEmpty = computed(() => Object.keys(props.item).length === 0);
+
+        const pick = () => {
+            emit('picked', props.index);
+        };
+
+        const close = () => {
+            emit('closed', props.index);
         };
 
         return {
+            isEmpty,
             text,
-            toggle,
+
+            close,
+            pick,
         };
     },
 });
 </script>
 <template>
     <li
-        class="nav-item"
-        style="max-width: 150px;"
+        class="form-tab gap-2"
+        :class="{'active': currentIndex === index }"
     >
-        <a
-            href="javascript:void(0)"
-            class="nav-link text-center"
-            :class="{'router-link-exact-active': currentIndex === index}"
-            @click="toggle"
+        <div
+            class="form-tab-text"
+            @click.prevent="pick"
         >
-            <slot
-                :item="item"
-                :index="index"
-                :current-index="currentIndex"
-                :toggle="toggle"
+            <template v-if="isEmpty">
+                <slot
+                    name="empty"
+                    :item="item"
+                    :index="index"
+                    :current-index="currentIndex"
+                    :pick="pick"
+                >
+                    {{ text }}
+                </slot>
+            </template>
+            <template v-else>
+                <slot
+                    :item="item"
+                    :index="index"
+                    :current-index="currentIndex"
+                    :pick="pick"
+                >
+                    {{ text }}
+                </slot>
+            </template>
+        </div>
+        <div class="ms-auto">
+            <a
+                href="javascript:void(0)"
+                class="nav-link text-center"
+                @click="close"
             >
-                {{ text }}
-            </slot>
-        </a>
+                <i class="fa fa-times" />
+            </a>
+        </div>
     </li>
 </template>

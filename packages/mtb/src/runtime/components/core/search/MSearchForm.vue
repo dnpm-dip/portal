@@ -327,7 +327,7 @@ export default defineComponent({
 
                 <DFormTabGroups
                     v-model="mutations"
-                    :min-items="0"
+                    :min-items="1"
                     :max-items="6"
                     :direction="'col'"
                 >
@@ -337,7 +337,8 @@ export default defineComponent({
                             :item="props.item"
                             :index="props.index"
                             :current-index="props.currentIndex"
-                            @toggle="props.toggle"
+                            @picked="props.pick"
+                            @closed="props.close"
                         >
                             <template v-if="props.item && props.item.gene">
                                 {{ props.item.gene.display || props.item.gene.code }} {{ props.item.variant ? props.item.variant.type : '' }}

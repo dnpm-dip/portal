@@ -262,9 +262,9 @@ export default defineComponent({
             <button
                 type="button"
                 class="btn btn-secondary btn-xs"
-                @click.prevent="submit()"
+                @click.prevent="submit"
             >
-                {{ isEditing ? 'Aktualisieren' : 'Hinzufügen' }}
+                Speichern
             </button>
         </div>
     </div>
