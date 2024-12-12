@@ -1,5 +1,24 @@
 # @dnpm-dip/core
 
+## [1.30.0](https://github.com/dnpm-dip/portal/compare/v1.29.0...v1.30.0) (2024-12-12)
+
+
+### Features
+
+* add table references for demographics to filter ([#943](https://github.com/dnpm-dip/portal/issues/943)) ([6b32464](https://github.com/dnpm-dip/portal/commit/6b32464b43619c23c49ac8e8d34fa90a7b9a27a7))
+* adjust props of query summary nested component ([91f4633](https://github.com/dnpm-dip/portal/commit/91f4633644ba86774761ce16afc8c89d10d990ac))
+* mtb gene centric search ([#951](https://github.com/dnpm-dip/portal/issues/951)) ([9047772](https://github.com/dnpm-dip/portal/commit/904777203eee1e67e86d190d6186506a8b6138d9))
+* redesigned form-tabs ([#962](https://github.com/dnpm-dip/portal/issues/962)) ([9f8dc8f](https://github.com/dnpm-dip/portal/commit/9f8dc8f39262e9898a404eba4b3f47a4cd4dc248))
+* refactored admin connection-report view ([#955](https://github.com/dnpm-dip/portal/issues/955)) ([c232455](https://github.com/dnpm-dip/portal/commit/c232455c0219348c64dc163a015ae275be3b68e6))
+* short label for mb gene alteratioon tab ([f90bb70](https://github.com/dnpm-dip/portal/commit/f90bb7046ab57f7e0535ccb710596c829b68915a))
+
+
+### Bug Fixes
+
+* bump bootstrap-vue-next to v0.26.x ([ef95fab](https://github.com/dnpm-dip/portal/commit/ef95fab5e8c398100a9b1cfc23458271a3359a85))
+* **deps:** bump the minorandpatch group across 1 directory with 21 updates ([#952](https://github.com/dnpm-dip/portal/issues/952)) ([9dd812f](https://github.com/dnpm-dip/portal/commit/9dd812f43074ed8af7bc92f8026178f1e6065d45))
+* **deps:** bump the minorandpatch group across 1 directory with 5 updates ([#959](https://github.com/dnpm-dip/portal/issues/959)) ([3559031](https://github.com/dnpm-dip/portal/commit/355903122a882d66798781f5d908860c262a2a97))
+
 ## [1.29.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.28.0...v1.29.0) (2024-11-19)
 
 
