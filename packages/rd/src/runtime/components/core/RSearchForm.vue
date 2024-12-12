@@ -1,9 +1,16 @@
 <script lang="ts">
-import {
-    type CodeRecord, type Coding, type ConnectionPeer, DSitePicker, type ValueSetCoding, useQueryFilterStore,
+import type {
+    CodeRecord,
+    Coding,
+    ConnectionPeer,
+    FormTabInput,
+    ValueSetCoding,
 } from '@dnpm-dip/core';
 import {
-    DCollectionTransform, DFormTabGroups, DTags, DValueSet, QueryRequestMode,
+    DCollectionTransform,
+    DFormTabGroups,
+
+    DSitePicker, DTags, DValueSet, QueryRequestMode, useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { VCFormSelectSearch } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
@@ -77,7 +84,7 @@ export default defineComponent({
         const categories = ref<FormSelectOption[]>([]);
         const hpoTerms = ref<FormSelectOption[]>([]);
 
-        const variants = ref<QueryCriteriaVariant<string>[]>([]);
+        const variants = ref<FormTabInput<QueryCriteriaVariant<string>>[]>([]);
 
         const preparedQueryId = ref<string | undefined>(undefined);
         const preparedQueryName = ref('');
@@ -150,7 +157,9 @@ export default defineComponent({
                         data[keys[j] as keyof typeof data] = variant[keys[j] as keyof QueryCriteriaVariant]?.code;
                     }
 
-                    variants.value.push(data);
+                    variants.value.push(data.map((item) => ({
+                        data: item,
+                    })));
                 }
             }
 
@@ -201,7 +210,11 @@ export default defineComponent({
             const payload : QueryCriteria = {};
             if (variants.value.length > 0) {
                 for (let i = 0; i < variants.value.length; i++) {
-                    const variant = variants.value[i];
+                    const variant = variants.value[i].data;
+                    if (!variant) {
+                        continue;
+                    }
+
                     const keys = Object.keys(variant);
                     let isValid = false;
                     const group : Record<string, CodeRecord> = {};
@@ -467,15 +480,15 @@ export default defineComponent({
 
                 <DFormTabGroups
                     v-model="variants"
-                    :min-items="0"
+                    :min-items="1"
                     :max-items="6"
                 >
                     <!-- todo: label; max 15 zeichen; {{Gene}} ({{dnaÄnderung}} || -->
                     <!-- todo: {{proteinänderung}}) || proteinänderung precedence vorrang dnaÄnderung -->
                     <template #default="props">
                         <RVariantFormTabGroup
-                            :entity="props.item"
-                            @updated="props.updated"
+                            :entity="props.data"
+                            @saved="props.saved"
                         />
                     </template>
                 </DFormTabGroups>
