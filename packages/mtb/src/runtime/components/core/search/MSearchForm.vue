@@ -220,12 +220,15 @@ export default defineComponent({
                 mutations.value &&
                 mutations.value.length > 0
             ) {
-                payload.geneAlterations = {
-                    items: mutations.value.map((item) => item.data).filter(Boolean),
-                    operator: mutationsInCombination.value ?
-                        LogicalOperator.AND :
-                        LogicalOperator.OR,
-                };
+                const mutationItems = mutations.value.map((item) => item.data).filter(Boolean);
+                if (mutationItems.length > 0) {
+                    payload.geneAlterations = {
+                        items: mutationItems,
+                        operator: mutationsInCombination.value ?
+                            LogicalOperator.AND :
+                            LogicalOperator.OR,
+                    };
+                }
             }
 
             return payload;

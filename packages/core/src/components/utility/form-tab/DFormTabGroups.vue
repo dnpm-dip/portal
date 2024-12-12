@@ -98,6 +98,8 @@ export default defineComponent({
                     items.value[index].label = props.label;
                 }
 
+                emit('update:modelValue', items.value);
+
                 return;
             }
 
@@ -111,6 +113,8 @@ export default defineComponent({
 
             const nextIndex = index - 1;
             currentIndex.value = nextIndex < 0 ? 0 : nextIndex;
+
+            emit('update:modelValue', items.value);
         };
 
         const handleSaved = (data: FormTab) => {
