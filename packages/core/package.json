@@ -50,7 +50,7 @@
     "devDependencies": {
         "@authup/core-http-kit": "^1.0.0-beta.23",
         "@authup/client-web-kit": "^1.0.0-beta.23",
-        "bootstrap-vue-next": "^0.26.14",
+        "bootstrap-vue-next": "^0.26.17",
         "chart.js": "^4.4.7",
         "@nuxt/schema": "^3.13.0",
         "@nuxt/kit": "^3.14.1592",
