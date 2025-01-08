@@ -3,11 +3,14 @@ import { DExpandableContent } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import MNGSReportCNV from '../../../../../components/core/MNGSReportCNV.vue';
+import MNGSReportFusion from '../../../../../components/core/MNGSReportFusion.vue';
 import MNgsReportSNV from '../../../../../components/core/MNGSReportSNV.vue';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
-    components: { DExpandableContent, MNGSReportCNV, MNgsReportSNV },
+    components: {
+        MNGSReportFusion, DExpandableContent, MNGSReportCNV, MNgsReportSNV,
+    },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -175,7 +178,7 @@ export default defineNuxtComponent({
             v-for="(item) in record.ngsReports"
             :key="item.id"
         >
-            <div class="entity-card">
+            <div class="entity-card gap-1 d-flex flex-column">
                 <div class="mb-3">
                     <div class="row">
                         <div class="col">
@@ -241,23 +244,44 @@ export default defineNuxtComponent({
                     </template>
                 </DExpandableContent>
 
-                <DExpandableContent>
-                    <template #header>
-                        <h6>DNA Fusions</h6>
-                    </template>
-                    <template #default>
-                        {{ item.results.dnaFusions }}
-                    </template>
-                </DExpandableContent>
-
-                <DExpandableContent>
-                    <template #header>
-                        <h6>RNA Fusions</h6>
-                    </template>
-                    <template #default>
-                        {{ item.results.rnaFusions }}
-                    </template>
-                </DExpandableContent>
+                <div class="row">
+                    <div class="col-6">
+                        <DExpandableContent>
+                            <template #header>
+                                <h6>DNA Fusions</h6>
+                            </template>
+                            <template #default>
+                                <template
+                                    v-for="el in item.results.dnaFusions"
+                                    :key="el.id"
+                                >
+                                    <MNGSReportFusion
+                                        :entity="el"
+                                        class="mb-1"
+                                    />
+                                </template>
+                            </template>
+                        </DExpandableContent>
+                    </div>
+                    <div class="col-6">
+                        <DExpandableContent>
+                            <template #header>
+                                <h6>RNA Fusions</h6>
+                            </template>
+                            <template #default>
+                                <template
+                                    v-for="el in item.results.rnaFusions"
+                                    :key="el.id"
+                                >
+                                    <MNGSReportFusion
+                                        :entity="el"
+                                        class="mb-1"
+                                    />
+                                </template>
+                            </template>
+                        </DExpandableContent>
+                    </div>
+                </div>
             </div>
         </template>
     </template>
