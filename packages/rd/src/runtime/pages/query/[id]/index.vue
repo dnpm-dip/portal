@@ -165,7 +165,7 @@ export default defineNuxtComponent({
 
         <BModal
             v-model="modal"
-            :hide-footer="true"
+            :no-footer="true"
             :size="'lg'"
         >
             <template #header="props">

@@ -1,6 +1,6 @@
+import { PreparedQueryAPI } from '@dnpm-dip/core';
 import type { HTTPClient } from '@dnpm-dip/core';
 import {
-    PreparedQueryAPI,
     QueryAPI,
 } from '../../domains';
 
@@ -11,6 +11,6 @@ export class RDHTTPClient {
 
     constructor(client: HTTPClient) {
         this.query = new QueryAPI({ client });
-        this.preparedQuery = new PreparedQueryAPI({ client });
+        this.preparedQuery = new PreparedQueryAPI({ client, useCase: 'rd' });
     }
 }

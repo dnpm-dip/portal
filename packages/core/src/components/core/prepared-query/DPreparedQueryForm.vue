@@ -1,21 +1,31 @@
 <script lang="ts">
 import type { Ref } from 'vue';
 import {
-    computed, defineComponent, nextTick, ref,
+    computed, defineComponent, ref,
 } from 'vue';
-import SearchForm from './RSearchForm.vue';
-import RPreparedQueries from './RPreparedQueries';
-import RPreparedQuery from './RPreparedQuery';
-import type { PreparedQuery, QueryCriteria, QuerySession } from '../../domains';
+import { injectHTTPClient } from '../../../core';
+import type { PreparedQuery } from '../../../domains';
+import { PreparedQueryAPI } from '../../../domains';
+import DPreparedQueries from './DPreparedQueries';
+import DPreparedQuery from './DPreparedQuery';
 
 export default defineComponent({
-    components: { RPreparedQuery, RPreparedQueries, SearchForm },
+    components: {
+        DPreparedQuery,
+        DPreparedQueries,
+    },
+    props: {
+        useCase: {
+            type: String,
+            required: true,
+        },
+    },
     emits: ['submitted', 'failed'],
-    setup(props, setup) {
-        const searchEl = ref(null) as Ref<null | typeof SearchForm>;
-        const criteria = ref<QueryCriteria | undefined>(undefined);
+    setup(props, { emit }) {
+        const httpClient = injectHTTPClient();
+        const preparedQueryAPI = new PreparedQueryAPI({ client: httpClient, useCase: props.useCase });
 
-        const preparedQueryNode = ref(null) as Ref<null | typeof RPreparedQueries>;
+        const preparedQueryNode = ref(null) as Ref<null | typeof DPreparedQueries>;
         const preparedQuery = ref<PreparedQuery | undefined>(undefined);
         const preparedQueryId = computed(() => {
             if (preparedQuery.value) {
@@ -25,12 +35,52 @@ export default defineComponent({
             return undefined;
         });
 
+        const criteria = computed(() => {
+            if (preparedQuery.value) {
+                return preparedQuery.value.criteria;
+            }
+
+            return null;
+        });
+
+        const busy = ref<boolean>(false);
+
         const reset = () => {
-            nextTick(() => {
-                if (searchEl.value) {
-                    searchEl.value.reset();
+
+        };
+
+        const save = async (data: Record<string, any>) => {
+            if (busy.value) return;
+
+            busy.value = true;
+
+            try {
+                if (preparedQueryId.value) {
+                    preparedQuery.value = await preparedQueryAPI.update(
+                        preparedQueryId.value,
+                        {
+                            criteria: data,
+                        },
+                    );
+                    if (preparedQueryNode.value) {
+                        preparedQueryNode.value?.updated(preparedQuery.value);
+                    }
+                } else {
+                    preparedQuery.value = await preparedQueryAPI.create({
+                        criteria: data,
+                    });
+
+                    if (preparedQueryNode.value) {
+                        preparedQueryNode.value?.created(preparedQuery.value);
+                    }
                 }
-            });
+            } catch (e) {
+                if (e instanceof Error) {
+                    emit('failed', e);
+                }
+            } finally {
+                busy.value = false;
+            }
         };
 
         const togglePreparedQuery = (data: PreparedQuery) => {
@@ -39,49 +89,31 @@ export default defineComponent({
                 preparedQuery.value.id === data.id
             ) {
                 preparedQuery.value = undefined;
-                criteria.value = undefined;
 
                 reset();
                 return;
             }
 
             preparedQuery.value = data;
-            criteria.value = data.criteria;
             reset();
         };
 
         const handleFailed = (e: Error) => {
-            setup.emit('failed', e);
+            emit('failed', e);
         };
 
-        const handleQueryCreated = (data: QuerySession) => {
-            setup.emit('submitted', {
-                queryId: data.id,
-                criteria: data.criteria,
+        const handleQueryCreated = (data: Record<string, any>) => {
+            emit('submitted', {
+                ...data,
                 ...(preparedQuery.value ? { preparedQueryId: preparedQueryId.value } : {}),
             });
         };
 
-        const handleQueryUpdated = (data: QuerySession) => {
-            setup.emit('submitted', {
-                queryId: data.id,
-                criteria: data.criteria,
+        const handleQueryUpdated = (data: Record<string, any>) => {
+            emit('submitted', {
+                ...data,
                 ...(preparedQuery.value ? { preparedQueryId: preparedQueryId.value } : {}),
             });
-        };
-
-        const handlePreparedQueryCreated = (data: PreparedQuery) => {
-            preparedQuery.value = data;
-            if (preparedQueryNode.value) {
-                preparedQueryNode.value.created(data);
-            }
-        };
-
-        const handlePreparedQueryUpdated = (data: PreparedQuery) => {
-            preparedQuery.value = data;
-            if (preparedQueryNode.value) {
-                preparedQueryNode.value.updated(data);
-            }
         };
 
         const handlePreparedQueryDeleted = (data: PreparedQuery) => {
@@ -90,7 +122,6 @@ export default defineComponent({
                 preparedQuery.value.id === data.id
             ) {
                 preparedQuery.value = undefined;
-                criteria.value = undefined;
 
                 reset();
             }
@@ -101,14 +132,13 @@ export default defineComponent({
             handleFailed,
             handleQueryCreated,
             handleQueryUpdated,
-            handlePreparedQueryCreated,
-            handlePreparedQueryUpdated,
             handlePreparedQueryDeleted,
-            searchEl,
             togglePreparedQuery,
             preparedQuery,
             preparedQueryId,
             preparedQueryNode,
+
+            save,
         };
     },
 });
@@ -116,21 +146,20 @@ export default defineComponent({
 <template>
     <div class="row">
         <div class="col-8">
-            <SearchForm
-                ref="searchEl"
+            <!-- ref="searchEl" -->
+            <slot
+                :save="save"
                 :criteria="criteria"
-                :prepared-query="preparedQuery"
-                @failed="handleFailed"
-                @prepared-query-created="handlePreparedQueryCreated"
-                @prepared-query-updated="handlePreparedQueryUpdated"
-                @query-created="handleQueryCreated"
-                @query-updated="handleQueryUpdated"
+                :failed="handleFailed"
+                :query-created="handleQueryCreated"
+                :query-updated="handleQueryUpdated"
             />
         </div>
         <div class="col-4">
-            <h6><i class="fa fa-history" /> Vordefinierte Anfragen</h6>
-            <RPreparedQueries
+            <h6><i class="fa fa-history" /> Gespeicherte Anfragen</h6>
+            <DPreparedQueries
                 ref="preparedQueryNode"
+                :use-case="useCase"
                 @deleted="handlePreparedQueryDeleted"
             >
                 <template #default="props">
@@ -138,7 +167,7 @@ export default defineComponent({
                         v-if="!props.busy && props.data.length === 0"
                     >
                         <div class="alert alert-sm alert-secondary">
-                            Es existieren keine vordefinierten Anfragen.
+                            Es existieren keine gespeicherten Anfragen.
                         </div>
                     </template>
                     <template v-if="!props.busy && props.data.length > 0">
@@ -149,7 +178,8 @@ export default defineComponent({
                                     :key="item.id"
                                 >
                                     <li class="list-item flex-row">
-                                        <RPreparedQuery
+                                        <DPreparedQuery
+                                            :use-case="useCase"
                                             :entity="item"
                                             @deleted="props.deleted"
                                         >
@@ -186,14 +216,14 @@ export default defineComponent({
                                                     </div>
                                                 </div>
                                             </template>
-                                        </RPreparedQuery>
+                                        </DPreparedQuery>
                                     </li>
                                 </template>
                             </ul>
                         </div>
                     </template>
                 </template>
-            </RPreparedQueries>
+            </DPreparedQueries>
         </div>
     </div>
 </template>
