@@ -74,7 +74,6 @@ export default defineComponent({
 
         const categories = ref<FormSelectOption[]>([]);
         const hpoTerms = ref<FormSelectOption[]>([]);
-
         const variants = ref<FormTabInput<QueryCriteriaVariant<string>>[]>([]);
 
         const parseCategory = (coding: Coding) => ({
@@ -87,10 +86,8 @@ export default defineComponent({
 
             busy.value = true;
 
-            criteria.value = {};
             categories.value = [];
             hpoTerms.value = [];
-
             variants.value = [];
 
             if (props.queryMode) {
@@ -99,10 +96,6 @@ export default defineComponent({
 
             if (props.queryPeers) {
                 modeSites.value = props.queryPeers.map((peer) => peer.site);
-            }
-
-            if (props.criteria) {
-                criteria.value = props.criteria;
             }
 
             if (criteria.value) {
@@ -116,9 +109,9 @@ export default defineComponent({
                             data[keys[j] as keyof typeof data] = variant[keys[j] as keyof QueryCriteriaVariant]?.code;
                         }
 
-                        variants.value.push(data.map((item) => ({
-                            data: item,
-                        })));
+                        variants.value.push({
+                            data,
+                        });
                     }
                 }
 

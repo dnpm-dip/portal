@@ -3,7 +3,7 @@ import { DPreparedQueryForm, PageMetaKey, useToast } from '@dnpm-dip/core';
 import type { ClientError } from 'hapic';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/RSearchForm.vue';
-import { PermissionName, type QueryCriteria, type QuerySession } from '../domains';
+import { PermissionName, type QuerySession } from '../domains';
 
 export default defineNuxtComponent({
     components: {
