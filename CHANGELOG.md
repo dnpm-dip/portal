@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.31.0](https://github.com/dnpm-dip/portal/compare/v1.30.0...v1.31.0) (2025-01-09)
+
+
+### Features
+
+* implemented prepared queries for mtb & rd ([#980](https://github.com/dnpm-dip/portal/issues/980)) ([d89a335](https://github.com/dnpm-dip/portal/commit/d89a33515b8b3cf291ae56174e01aaa94700dc55))
+* render dna- & rna-fusion information of ngs-reports ([85dc19d](https://github.com/dnpm-dip/portal/commit/85dc19d73210489d889a7533bdfecf610482bf2c))
+
+
+### Bug Fixes
+
+* **deps:** bump the minorandpatch group across 1 directory with 10 updates ([#977](https://github.com/dnpm-dip/portal/issues/977)) ([8aefa8b](https://github.com/dnpm-dip/portal/commit/8aefa8ba0aff238e21fbf599e19f612456be8860))
+* initialising rd search form ([bbb5f2e](https://github.com/dnpm-dip/portal/commit/bbb5f2e2f9a075be98f7c0ddcc5ad57957707479))
+
 ## [1.30.0](https://github.com/dnpm-dip/portal/compare/v1.29.0...v1.30.0) (2024-12-12)
 
 

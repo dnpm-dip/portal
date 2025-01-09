@@ -1,5 +1,36 @@
 # @dnpm-dip/rare-diseases
 
+## [1.29.0](https://github.com/dnpm-dip/portal/compare/v1.28.0...v1.29.0) (2025-01-09)
+
+
+### Features
+
+* implemented prepared queries for mtb & rd ([#980](https://github.com/dnpm-dip/portal/issues/980)) ([d89a335](https://github.com/dnpm-dip/portal/commit/d89a33515b8b3cf291ae56174e01aaa94700dc55))
+* mtb medication filters implementation + filter expansion refactoring ([#898](https://github.com/dnpm-dip/portal/issues/898)) ([a0d984f](https://github.com/dnpm-dip/portal/commit/a0d984f2a6fa4ca02b3806a0920efd60157d7394))
+* notification for changed query filter ([3ca5cb6](https://github.com/dnpm-dip/portal/commit/3ca5cb638dfa48fb762a9e0b8e9c152ad81cd275))
+* redesigned form-tabs ([#962](https://github.com/dnpm-dip/portal/issues/962)) ([9f8dc8f](https://github.com/dnpm-dip/portal/commit/9f8dc8f39262e9898a404eba4b3f47a4cd4dc248))
+
+
+### Bug Fixes
+
+* bump bootstrap-vue-next to v0.26.x ([ef95fab](https://github.com/dnpm-dip/portal/commit/ef95fab5e8c398100a9b1cfc23458271a3359a85))
+* **deps:** bump @authup/client-web-kit ([#891](https://github.com/dnpm-dip/portal/issues/891)) ([182a546](https://github.com/dnpm-dip/portal/commit/182a546d5a577543771ca2cc6ee0470e865c9561))
+* **deps:** bump the minorandpatch group across 1 directory with 10 updates ([#977](https://github.com/dnpm-dip/portal/issues/977)) ([8aefa8b](https://github.com/dnpm-dip/portal/commit/8aefa8ba0aff238e21fbf599e19f612456be8860))
+* **deps:** bump the minorandpatch group across 1 directory with 21 updates ([#952](https://github.com/dnpm-dip/portal/issues/952)) ([9dd812f](https://github.com/dnpm-dip/portal/commit/9dd812f43074ed8af7bc92f8026178f1e6065d45))
+* **deps:** bump the minorandpatch group across 1 directory with 5 updates ([#959](https://github.com/dnpm-dip/portal/issues/959)) ([3559031](https://github.com/dnpm-dip/portal/commit/355903122a882d66798781f5d908860c262a2a97))
+* **deps:** bump the minorandpatch group with 2 updates ([#961](https://github.com/dnpm-dip/portal/issues/961)) ([99615ff](https://github.com/dnpm-dip/portal/commit/99615ff66ad298e5a6bb1c18148aa0be9d798263))
+* **deps:** bump vue from 3.5.12 to 3.5.13 ([#907](https://github.com/dnpm-dip/portal/issues/907)) ([c191dcf](https://github.com/dnpm-dip/portal/commit/c191dcf4ee7002d8a670c4523f5db01e20865de3))
+* do not throw error in query handler ([55a8af7](https://github.com/dnpm-dip/portal/commit/55a8af7274c96f3a8d3c87f06fb9ff4b403a1700))
+* initialising rd search form ([bbb5f2e](https://github.com/dnpm-dip/portal/commit/bbb5f2e2f9a075be98f7c0ddcc5ad57957707479))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.30.0 to ^1.31.0
+    * @dnpm-dip/kit bumped from ^1.24.0 to ^1.25.0
+
 ## [1.28.0](https://github.com/dnpm-dip/portal/compare/v1.27.0...v1.28.0) (2024-12-12)
 
 
