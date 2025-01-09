@@ -1,5 +1,38 @@
 # Changelog
 
+## [1.30.0](https://github.com/dnpm-dip/portal/compare/v1.29.0...v1.30.0) (2025-01-09)
+
+
+### Features
+
+* adjust props of query summary nested component ([91f4633](https://github.com/dnpm-dip/portal/commit/91f4633644ba86774761ce16afc8c89d10d990ac))
+* do not redirect after summary filter changes ([b8604de](https://github.com/dnpm-dip/portal/commit/b8604de5c729d43c7fb2a4b22ca231e0ac618904))
+* implemented prepared queries for mtb & rd ([#980](https://github.com/dnpm-dip/portal/issues/980)) ([d89a335](https://github.com/dnpm-dip/portal/commit/d89a33515b8b3cf291ae56174e01aaa94700dc55))
+* make missing medication chart tables clickable ([f8fd31a](https://github.com/dnpm-dip/portal/commit/f8fd31a08bd32264b94a650fc7d639de4254bbe6))
+* mtb gene centric search ([#951](https://github.com/dnpm-dip/portal/issues/951)) ([9047772](https://github.com/dnpm-dip/portal/commit/904777203eee1e67e86d190d6186506a8b6138d9))
+* notification for changed query filter ([3ca5cb6](https://github.com/dnpm-dip/portal/commit/3ca5cb638dfa48fb762a9e0b8e9c152ad81cd275))
+* redesigned form-tabs ([#962](https://github.com/dnpm-dip/portal/issues/962)) ([9f8dc8f](https://github.com/dnpm-dip/portal/commit/9f8dc8f39262e9898a404eba4b3f47a4cd4dc248))
+* render dna- & rna-fusion information of ngs-reports ([85dc19d](https://github.com/dnpm-dip/portal/commit/85dc19d73210489d889a7533bdfecf610482bf2c))
+* reorganized mtb query session view ([#938](https://github.com/dnpm-dip/portal/issues/938)) ([1621e45](https://github.com/dnpm-dip/portal/commit/1621e451de44ba0f7b28dfb00c571913fd60829d))
+* short label for mb gene alteratioon tab ([f90bb70](https://github.com/dnpm-dip/portal/commit/f90bb7046ab57f7e0535ccb710596c829b68915a))
+
+
+### Bug Fixes
+
+* bump bootstrap-vue-next to v0.26.x ([ef95fab](https://github.com/dnpm-dip/portal/commit/ef95fab5e8c398100a9b1cfc23458271a3359a85))
+* **deps:** bump the minorandpatch group across 1 directory with 10 updates ([#977](https://github.com/dnpm-dip/portal/issues/977)) ([8aefa8b](https://github.com/dnpm-dip/portal/commit/8aefa8ba0aff238e21fbf599e19f612456be8860))
+* **deps:** bump the minorandpatch group across 1 directory with 21 updates ([#952](https://github.com/dnpm-dip/portal/issues/952)) ([9dd812f](https://github.com/dnpm-dip/portal/commit/9dd812f43074ed8af7bc92f8026178f1e6065d45))
+* **deps:** bump the minorandpatch group across 1 directory with 5 updates ([#959](https://github.com/dnpm-dip/portal/issues/959)) ([3559031](https://github.com/dnpm-dip/portal/commit/355903122a882d66798781f5d908860c262a2a97))
+* **deps:** bump the minorandpatch group with 2 updates ([#961](https://github.com/dnpm-dip/portal/issues/961)) ([99615ff](https://github.com/dnpm-dip/portal/commit/99615ff66ad298e5a6bb1c18148aa0be9d798263))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.30.0 to ^1.31.0
+    * @dnpm-dip/kit bumped from ^1.24.0 to ^1.25.0
+
 ## [1.29.0](https://github.com/dnpm-dip/portal/compare/v1.28.0...v1.29.0) (2024-12-12)
 
 
