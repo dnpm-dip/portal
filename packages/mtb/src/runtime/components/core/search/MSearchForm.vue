@@ -6,11 +6,11 @@
   -->
 
 <script lang="ts">
-import type {
-    Coding,
-    ConnectionPeer,
-    FormTabInput,
-    ValueSetCoding,
+import {
+    type Coding,
+    type ConnectionPeer,
+    type FormTabInput,
+    type ValueSetCoding,
 } from '@dnpm-dip/core';
 import {
     DCollectionTransform,
@@ -28,7 +28,7 @@ import {
     VCFormSelectSearch,
 } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
-import type { PropType } from 'vue';
+import { type PropType, toRef, watch } from 'vue';
 import { defineComponent, ref } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';
 import {
@@ -68,11 +68,10 @@ export default defineComponent({
     emits: [
         'failed',
 
-        'preparedQueryCreated',
-        'preparedQueryUpdated',
+        'created',
+        'updated',
 
-        'queryCreated',
-        'queryUpdated',
+        'save',
     ],
     async setup(props, { emit, expose }) {
         const filterStore = useQueryFilterStore();
@@ -87,7 +86,7 @@ export default defineComponent({
         ];
 
         const busy = ref(false);
-        const criteria = ref<QueryCriteria>({});
+        const criteria = toRef(props, 'criteria');
 
         const mutations = ref<FormTabInput<QueryGeneAlterationCriteria>[]>([]);
         const mutationsInCombination = ref(false);
@@ -114,57 +113,68 @@ export default defineComponent({
                 modeSites.value = props.queryPeers.map((peer) => peer.site);
             }
 
-            criteria.value = {};
-
-            if (props.criteria) {
-                criteria.value = props.criteria;
-            }
-
-            if (criteria.value.diagnoses) {
-                diagnoses.value = transformCodingsToFormSelectOptions(criteria.value.diagnoses);
-            }
-
-            if (criteria.value.tumorMorphologies) {
-                tumorMorphologies.value = transformCodingsToFormSelectOptions(criteria.value.tumorMorphologies);
-            }
-
-            if (criteria.value.medication) {
-                if (criteria.value.medication.drugs) {
-                    medicationDrugs.value = criteria.value.medication.drugs;
-                }
-
-                if (criteria.value.medication.usage) {
-                    medicationUsage.value = criteria.value.medication.usage.map((e) => e.code);
-                }
-
-                if (criteria.value.medication.operator) {
-                    medicationInCombination.value = criteria.value.medication.operator === LogicalOperator.AND;
-                }
-            }
-
-            if (criteria.value.responses) {
-                responses.value = transformCodingsToFormSelectOptions(criteria.value.responses);
-            }
-
+            diagnoses.value = [];
+            tumorMorphologies.value = [];
+            medicationDrugs.value = [];
+            medicationUsage.value = [];
+            medicationInCombination.value = false;
+            responses.value = [];
             mutations.value = [];
 
-            if (
-                criteria.value.geneAlterations &&
-                criteria.value.geneAlterations.items &&
-                criteria.value.geneAlterations.items.length > 0
-            ) {
-                mutations.value = criteria.value.geneAlterations.items.map((item) => ({
-                    data: item,
-                    label: buildQueryGeneAlterationCriteriaLabel(item),
-                }));
+            if (criteria.value) {
+                if (criteria.value.diagnoses) {
+                    diagnoses.value = transformCodingsToFormSelectOptions(criteria.value.diagnoses);
+                }
 
-                if (criteria.value.geneAlterations.operator) {
-                    mutationsInCombination.value = criteria.value.geneAlterations.operator === LogicalOperator.AND;
+                if (criteria.value.tumorMorphologies) {
+                    tumorMorphologies.value = transformCodingsToFormSelectOptions(criteria.value.tumorMorphologies);
+                }
+
+                if (criteria.value.medication) {
+                    if (criteria.value.medication.drugs) {
+                        medicationDrugs.value = criteria.value.medication.drugs;
+                    }
+
+                    if (criteria.value.medication.usage) {
+                        medicationUsage.value = criteria.value.medication.usage.map((e) => e.code);
+                    }
+
+                    if (criteria.value.medication.operator) {
+                        medicationInCombination.value = criteria.value.medication.operator === LogicalOperator.AND;
+                    }
+                }
+
+                if (criteria.value.responses) {
+                    responses.value = transformCodingsToFormSelectOptions(criteria.value.responses);
+                }
+
+                if (
+                    criteria.value &&
+                    criteria.value.geneAlterations &&
+                    criteria.value.geneAlterations.items &&
+                    criteria.value.geneAlterations.items.length > 0
+                ) {
+                    mutations.value = criteria.value.geneAlterations.items.map((item) => ({
+                        data: item,
+                        label: buildQueryGeneAlterationCriteriaLabel(item),
+                    }));
+
+                    if (criteria.value.geneAlterations.operator) {
+                        mutationsInCombination.value = criteria.value.geneAlterations.operator === LogicalOperator.AND;
+                    }
                 }
             }
 
             busy.value = false;
         };
+
+        watch(criteria, (newVal, oldVal) => {
+            if (newVal === oldVal) {
+                return;
+            }
+
+            reset();
+        });
 
         const buildCriteria = () : QueryCriteria => {
             const payload : QueryCriteria = {};
@@ -241,6 +251,10 @@ export default defineComponent({
         Promise.resolve()
             .then(() => reset());
 
+        const save = () => {
+            emit('save', buildCriteria());
+        };
+
         const submit = async () => {
             if (busy.value) return;
 
@@ -263,7 +277,7 @@ export default defineComponent({
                         sites: modeSites.value,
                     });
 
-                    emit('queryUpdated', query);
+                    emit('updated', query);
                 } else {
                     query = await apiClient.query.submit({
                         criteria: payload,
@@ -273,7 +287,7 @@ export default defineComponent({
                         sites: modeSites.value,
                     });
 
-                    emit('queryCreated', query);
+                    emit('created', query);
                 }
             } catch (e) {
                 if (e instanceof Error) {
@@ -313,6 +327,7 @@ export default defineComponent({
 
             busy,
 
+            save,
             submit,
 
             handleMedicationUpdated,
@@ -530,6 +545,17 @@ export default defineComponent({
                             @click.prevent="submit()"
                         >
                             <i class="fa fa-search me-1" /> Suchen
+                        </button>
+                    </div>
+
+                    <div class="col">
+                        <button
+                            :disabled="busy"
+                            type="button"
+                            class="btn btn-block btn-primary"
+                            @click.prevent="save()"
+                        >
+                            <i class="fa fa-save me-1" /> Speichern
                         </button>
                     </div>
                 </div>

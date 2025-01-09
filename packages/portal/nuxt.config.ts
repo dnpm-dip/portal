@@ -14,12 +14,15 @@ export default defineNuxtConfig({
         '../mtb/src/module',
         '../rd/src/module',
     ],
+
     experimental: {
         scanPageMeta: false,
     },
+
     devtools: {
         componentInspector: false,
     },
+
     css: [
         '@fortawesome/fontawesome-free/css/all.css',
         '@authup/client-web-kit/dist/index.css',
@@ -42,10 +45,12 @@ export default defineNuxtConfig({
         '@dnpm-dip/core/../dist/index.css',
         '@vuecs/form-controls/dist/index.css',
     ],
+
     alias: {
         '@dnpm-dip/core': path.join(__dirname, '..', 'core', 'src'),
         '@dnpm-dip/kit': path.join(__dirname, '..', 'kit', 'src'),
     },
+
     runtimeConfig: {
         apiUrl: process.env.API_URL,
         authupUrl: process.env.AUTHUP_URL,
@@ -55,4 +60,6 @@ export default defineNuxtConfig({
             cookieDomain: process.env.COOKIE_DOMAIN,
         },
     },
+
+    compatibilityDate: '2025-01-08',
 });

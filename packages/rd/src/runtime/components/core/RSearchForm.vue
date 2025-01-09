@@ -9,18 +9,16 @@ import type {
 import {
     DCollectionTransform,
     DFormTabGroups,
-
     DSitePicker, DTags, DValueSet, QueryRequestMode, useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { VCFormSelectSearch } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
-import type { PropType } from 'vue';
+import { type PropType, toRef, watch } from 'vue';
 import {
     defineComponent, ref,
 } from 'vue';
 import { injectHTTPClient } from '../../core';
 import type {
-    PreparedQuery,
     QueryCriteria,
     QueryCriteriaVariant,
     QuerySession,
@@ -50,21 +48,14 @@ export default defineComponent({
         queryPeers: {
             type: Array as PropType<ConnectionPeer[]>,
         },
-        preparedQuery: {
-            type: Object as PropType<PreparedQuery>,
-        },
-        preparedQueryId: {
-            type: String,
-        },
     },
     emits: [
         'failed',
 
-        'preparedQueryCreated',
-        'preparedQueryUpdated',
+        'created',
+        'updated',
 
-        'queryCreated',
-        'queryUpdated',
+        'save',
     ],
     async setup(props, { emit, expose }) {
         const filterStore = useQueryFilterStore();
@@ -79,15 +70,12 @@ export default defineComponent({
         ];
 
         const busy = ref(false);
-        const criteria = ref<QueryCriteria>({});
+        const criteria = toRef(props, 'criteria');
 
         const categories = ref<FormSelectOption[]>([]);
         const hpoTerms = ref<FormSelectOption[]>([]);
 
         const variants = ref<FormTabInput<QueryCriteriaVariant<string>>[]>([]);
-
-        const preparedQueryId = ref<string | undefined>(undefined);
-        const preparedQueryName = ref('');
 
         const parseCategory = (coding: Coding) => ({
             id: `${coding.system}:::${coding.code}`,
@@ -105,9 +93,6 @@ export default defineComponent({
 
             variants.value = [];
 
-            preparedQueryId.value = undefined;
-            preparedQueryName.value = '';
-
             if (props.queryMode) {
                 mode.value = props.queryMode;
             }
@@ -116,70 +101,53 @@ export default defineComponent({
                 modeSites.value = props.queryPeers.map((peer) => peer.site);
             }
 
-            try {
-                if (props.criteria) {
-                    criteria.value = props.criteria;
-                }
-
-                if (props.preparedQuery) {
-                    preparedQueryId.value = props.preparedQuery.id;
-                    preparedQueryName.value = props.preparedQuery.name;
-                    if (!props.criteria) {
-                        criteria.value = props.preparedQuery.criteria;
-                    }
-                } else if (props.preparedQueryId) {
-                    const response = await apiClient.preparedQuery.getOne(props.preparedQueryId);
-                    if (!props.criteria) {
-                        criteria.value = response.criteria;
-                    }
-
-                    preparedQueryId.value = props.preparedQueryId;
-                    preparedQueryName.value = response.name;
-                } else if (props.queryId) {
-                    const response = await apiClient.query.getOne(props.queryId);
-                    criteria.value = response.criteria || {};
-                }
-            } catch (e) {
-                if (e instanceof Error) {
-                    emit('failed');
-                }
-
-                return;
+            if (props.criteria) {
+                criteria.value = props.criteria;
             }
 
-            if (criteria.value.variants) {
-                for (let i = 0; i < criteria.value.variants.length; i++) {
-                    const variant = criteria.value.variants[i] as QueryCriteriaVariant;
-                    const data : QueryCriteriaVariant<string> = {};
+            if (criteria.value) {
+                if (criteria.value.variants) {
+                    for (let i = 0; i < criteria.value.variants.length; i++) {
+                        const variant = criteria.value.variants[i] as QueryCriteriaVariant;
+                        const data: QueryCriteriaVariant<string> = {};
 
-                    const keys = Object.keys(variant);
-                    for (let j = 0; j < keys.length; j++) {
-                        data[keys[j] as keyof typeof data] = variant[keys[j] as keyof QueryCriteriaVariant]?.code;
+                        const keys = Object.keys(variant);
+                        for (let j = 0; j < keys.length; j++) {
+                            data[keys[j] as keyof typeof data] = variant[keys[j] as keyof QueryCriteriaVariant]?.code;
+                        }
+
+                        variants.value.push(data.map((item) => ({
+                            data: item,
+                        })));
                     }
-
-                    variants.value.push(data.map((item) => ({
-                        data: item,
-                    })));
                 }
-            }
 
-            if (criteria.value.hpoTerms) {
-                for (let i = 0; i < criteria.value.hpoTerms.length; i++) {
-                    hpoTerms.value.push({
-                        id: criteria.value.hpoTerms[i].code,
-                        value: criteria.value.hpoTerms[i].display || criteria.value.hpoTerms[i].code,
-                    });
+                if (criteria.value.hpoTerms) {
+                    for (let i = 0; i < criteria.value.hpoTerms.length; i++) {
+                        hpoTerms.value.push({
+                            id: criteria.value.hpoTerms[i].code,
+                            value: criteria.value.hpoTerms[i].display || criteria.value.hpoTerms[i].code,
+                        });
+                    }
                 }
-            }
 
-            if (criteria.value.diagnoses) {
-                for (let i = 0; i < criteria.value.diagnoses.length; i++) {
-                    categories.value.push(parseCategory(criteria.value.diagnoses[i]));
+                if (criteria.value.diagnoses) {
+                    for (let i = 0; i < criteria.value.diagnoses.length; i++) {
+                        categories.value.push(parseCategory(criteria.value.diagnoses[i]));
+                    }
                 }
             }
 
             busy.value = false;
         };
+
+        watch(criteria, (oldVal, newVal) => {
+            if (oldVal === newVal) {
+                return;
+            }
+
+            reset();
+        });
 
         expose({
             reset,
@@ -266,43 +234,8 @@ export default defineComponent({
             return payload;
         };
 
-        const save = async () => {
-            if (busy.value) return;
-
-            busy.value = true;
-
-            const payload = buildCriteria();
-
-            try {
-                let preparedQuery : PreparedQuery | undefined;
-
-                if (preparedQueryId.value) {
-                    preparedQuery = await apiClient.preparedQuery.update(
-                        preparedQueryId.value,
-                        {
-                            name: preparedQueryName.value,
-                            criteria: payload,
-                        },
-                    );
-
-                    emit('preparedQueryUpdated', preparedQuery);
-                } else {
-                    preparedQuery = await apiClient.preparedQuery.create({
-                        name: preparedQueryName.value,
-                        criteria: payload,
-                    });
-
-                    preparedQueryId.value = preparedQuery.id;
-
-                    emit('preparedQueryCreated', preparedQuery);
-                }
-            } catch (e) {
-                if (e instanceof Error) {
-                    emit('failed', e);
-                }
-            } finally {
-                busy.value = false;
-            }
+        const save = () => {
+            emit('save', buildCriteria());
         };
 
         const submit = async () => {
@@ -327,7 +260,7 @@ export default defineComponent({
                         sites: modeSites.value,
                     });
 
-                    emit('queryUpdated', query);
+                    emit('updated', query);
                 } else {
                     query = await apiClient.query.submit({
                         criteria: payload,
@@ -337,7 +270,7 @@ export default defineComponent({
                         sites: modeSites.value,
                     });
 
-                    emit('queryCreated', query);
+                    emit('created', query);
                 }
             } catch (e) {
                 if (e instanceof Error) {
@@ -371,10 +304,6 @@ export default defineComponent({
 
             parseCategory,
             transformCodings,
-
-            // eslint-disable-next-line vue/no-dupe-keys
-            preparedQueryId,
-            preparedQueryName,
         };
     },
 });
@@ -536,7 +465,7 @@ export default defineComponent({
                             class="btn btn-block btn-primary"
                             @click.prevent="save()"
                         >
-                            <i class="fa fa-save me-1" /> {{ preparedQueryId ? 'Aktualisieren' : 'Speichern' }}
+                            <i class="fa fa-save me-1" /> Speichern
                         </button>
                     </div>
                 </div>
