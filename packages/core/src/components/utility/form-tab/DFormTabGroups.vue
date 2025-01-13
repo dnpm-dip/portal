@@ -3,20 +3,21 @@ import {
     type PropType, defineComponent, ref, toRef, watch,
 } from 'vue';
 import DFormTabGroup from './DFormTabGroup.vue';
+import type { FormTab, FormTabInput } from './types';
 
 export default defineComponent({
     components: { DFormTabGroup },
     props: {
         modelValue: {
-            type: Array as PropType<Record<string, any>[]>,
+            type: Array as PropType<FormTabInput[]>,
         },
-        defaultLabel: {
+        label: {
             type: String,
-            default: 'Group',
+            default: 'Neuer Tab',
         },
         minItems: {
             type: Number,
-            default: 0,
+            default: 1,
         },
         maxItems: {
             type: Number,
@@ -29,26 +30,35 @@ export default defineComponent({
             type: String as PropType<'row' | 'col'>,
             default: 'row',
         },
-        label: {
-            type: String,
-            default: undefined,
-        },
     },
     emits: ['update:modelValue'],
     setup(props, { emit }) {
-        const items = ref<Record<string, any>[]>([]);
+        const items = ref<FormTab[]>([]);
         const modelValue = toRef(props, 'modelValue');
         const currentIndex = ref(-1);
 
         const add = () => {
-            items.value.push({});
+            items.value.push({
+                data: null,
+                label: props.label,
+                index: items.value.length,
+            });
+
             currentIndex.value = items.value.length - 1;
         };
 
         const init = () => {
             if (!props.modelValue) return;
 
-            items.value = props.modelValue;
+            items.value = props.modelValue.map((el, index) => {
+                const item: FormTab = {
+                    data: el.data ?? null,
+                    index,
+                    label: el.label ? el.label : props.label,
+                };
+
+                return item;
+            });
 
             if (
                 items.value.length > 0 &&
@@ -77,46 +87,55 @@ export default defineComponent({
             init();
         }, { deep: true });
 
-        const toggle = (index: number) => {
-            if (currentIndex.value === index) {
-                if (items.value.length <= props.minItems) {
-                    return;
-                }
-
-                const nextIndex = index - 1;
-
-                currentIndex.value = nextIndex < 0 ? 0 : nextIndex;
-
-                if (items.value.length > 0) {
-                    items.value.splice(index, 1);
-                }
-            } else {
-                currentIndex.value = index;
-            }
+        const pick = (index: number) => {
+            currentIndex.value = index;
         };
 
-        const toggleCurrent = () => {
-            toggle(currentIndex.value);
+        const close = (index: number) => {
+            if (items.value.length === props.minItems) {
+                if (index === 0 && items.value.length === 1) {
+                    items.value[index].data = null;
+                    items.value[index].label = props.label;
+                }
+
+                emit('update:modelValue', items.value);
+
+                return;
+            }
+
+            if (items.value.length > 0) {
+                items.value.splice(index, 1);
+            }
+
+            for (let i = 0; i < items.value.length; i++) {
+                items.value[i].index = i;
+            }
+
+            const nextIndex = index - 1;
+            currentIndex.value = nextIndex < 0 ? 0 : nextIndex;
+
+            emit('update:modelValue', items.value);
         };
 
-        const handleUpdated = (data: Record<string, any>) => {
-            if (currentIndex.value === -1) {
-                items.value.push({ ...data });
-                currentIndex.value = 0;
-            } else {
-                items.value[currentIndex.value] = { ...data };
-            }
+        const handleSaved = (data: FormTab) => {
+            currentIndex.value = data.index;
+
+            items.value[data.index] = {
+                ...items.value[data.index],
+                ...data,
+            };
 
             emit('update:modelValue', items.value);
         };
 
         return {
             currentIndex,
-            handleUpdated,
+            handleSaved,
             items,
+
             add,
-            toggle,
-            toggleCurrent,
+            close,
+            pick,
         };
     },
 });
@@ -129,9 +148,8 @@ export default defineComponent({
     >
         <div class="w-100">
             <slot
-                :item="items[currentIndex]"
-                :updated="handleUpdated"
-                :toggle="toggleCurrent"
+                :data="items[currentIndex]"
+                :saved="handleSaved"
             />
         </div>
         <div
@@ -140,40 +158,26 @@ export default defineComponent({
         >
             <div>
                 <ul
-                    class="nav nav-pills"
+                    class="form-tabs"
                     :class="{'flex-column': direction === 'row'}"
                 >
                     <template
-                        v-for="(item,index) in items"
-                        :key="index"
+                        v-for="item in items"
+                        :key="item.index"
                     >
-                        <slot
-                            name="label"
+                        <DFormTabGroup
                             :item="item"
-                            :index="index"
                             :current-index="currentIndex"
-                            :label="label"
-                            :toggle="toggle"
-                        >
-                            <DFormTabGroup
-                                :item="item"
-                                :index="index"
-                                :current-index="currentIndex"
-                                :label="label"
-                                @toggle="toggle"
-                            />
-                        </slot>
+                            :min-items="minItems"
+                            :max-items="maxItems"
+                            :total-items="items.length"
+                            @picked="pick"
+                            @closed="close"
+                        />
                     </template>
-                </ul>
-            </div>
-            <div
-                :class="{'ms-auto': direction === 'col', 'mt-auto': direction !== 'col'}"
-                :style="{'order': direction === 'col' ? '1' : 0}"
-            >
-                <ul class="nav nav-pills">
                     <li
                         v-if="createButton"
-                        class="nav-item"
+                        class="form-tab"
                     >
                         <a
                             href="javascript:void(0)"
@@ -186,6 +190,50 @@ export default defineComponent({
                     </li>
                 </ul>
             </div>
+            <div
+                :class="{'ms-auto': direction === 'col', 'mt-auto': direction !== 'col'}"
+                :style="{'order': direction === 'col' ? '1' : 0}"
+            >
+                <ul class="nav nav-pills" />
+            </div>
         </div>
     </div>
 </template>
+<style>
+.form-tabs {
+    display: flex;
+    flex-direction: row;
+
+    list-style: none;
+    padding: 0;
+    margin-block-start: 0;
+}
+
+.form-tab {
+    display: flex;
+    flex-direction: row;
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+
+    text-decoration: none;
+    border: 0;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    max-width: 150px;
+    overflow-y: hidden;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #5b646c;
+    background-color: #ececec;
+}
+.form-tab.active {
+    color: #fff;
+    background-color: #6d7fcc;
+}
+
+.form-tab-text {
+    user-select: none;
+    cursor: pointer;
+}
+</style>

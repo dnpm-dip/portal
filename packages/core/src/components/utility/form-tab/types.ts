@@ -5,5 +5,10 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-export * from './api';
-export * from './types';
+export type FormTab<T = Record<string, any>> = {
+    data: T | null,
+    label: string,
+    index: number
+};
+
+export type FormTabInput<T = Record<string, any>> = Partial<FormTab<T>>;

@@ -6,19 +6,20 @@
  */
 
 import { BaseAPI, type ResourceCollectionResponse } from '@dnpm-dip/core';
+import type { ValidationReport, ValidationReportInfo } from './types';
 
 export class ValidationAPI extends BaseAPI {
-    async getValidationReport() : Promise<ResourceCollectionResponse<Record<string, any>>> {
+    async getReportInfo() : Promise<ResourceCollectionResponse<ValidationReportInfo>> {
         const response = await this.client.get('mtb/validation/infos');
         return response.data;
     }
 
-    async getValidationPatientReport(id: string) {
+    async getReport(id: string) : Promise<ValidationReport> {
         const response = await this.client.get(`mtb/validation/report/${id}`);
         return response.data;
     }
 
-    async getValidationPatientRecord(id: string) {
+    async getPatientRecord(id: string) {
         const response = await this.client.get(`mtb/validation/patient-record/${id}`);
         return response.data;
     }

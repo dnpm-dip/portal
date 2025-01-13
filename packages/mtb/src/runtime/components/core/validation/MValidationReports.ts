@@ -5,11 +5,12 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import type { ObjectLiteral, PatientMatchBase, ResourceCollectionSlots } from '@dnpm-dip/core';
+import type { ObjectLiteral, ResourceCollectionSlots } from '@dnpm-dip/core';
 import { createResourceCollectionManager } from '@dnpm-dip/core';
 import type { PropType, SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';
+import type { ValidationReportInfo } from '../../../domains/validation/types';
 
 export default defineComponent({
     props: {
@@ -17,14 +18,14 @@ export default defineComponent({
             type: Object as PropType<ObjectLiteral>,
         },
     },
-    slots: Object as SlotsType<ResourceCollectionSlots<PatientMatchBase>>,
+    slots: Object as SlotsType<ResourceCollectionSlots<ValidationReportInfo>>,
     setup(props, setup) {
         const api = injectHTTPClient();
 
         const filters = toRef(props, 'filters');
 
         const manager = createResourceCollectionManager({
-            load: async () => {
+            load: async (meta) => {
                 const response = await api.validation.getReportInfo();
 
                 return {

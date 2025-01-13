@@ -1,5 +1,10 @@
 <script lang="ts">
-import { type CodeSystemConcept, HGVS_CODE_REGEX, transformConceptToFormSelectOption } from '@dnpm-dip/core';
+import {
+    type CodeSystemConcept,
+    type FormTab,
+    HGVS_CODE_REGEX,
+    transformConceptToFormSelectOption,
+} from '@dnpm-dip/core';
 import { IVuelidate } from '@ilingo/vuelidate';
 import useVuelidate from '@vuelidate/core';
 import { helpers } from '@vuelidate/validators';
@@ -14,14 +19,15 @@ export default defineComponent({
     components: {
         IVuelidate, DCollectionTransform, DCodeSystem, VCFormSelectSearch,
     },
-    emit: ['updated'],
+    emit: ['saved'],
     props: {
         entity: {
-            type: Object as PropType<QueryCriteriaVariant<string>>,
+            type: Object as PropType<FormTab<QueryCriteriaVariant<string>>>,
+            required: true,
         },
     },
     setup(props, { emit }) {
-        const entityRef = toRef(props, 'entity');
+        const entity = toRef(props, 'entity');
 
         const form = reactive({
             gene: '',
@@ -31,10 +37,10 @@ export default defineComponent({
         });
 
         const init = () => {
-            form.gene = props.entity?.gene || '';
-            form.cDNAChange = props.entity?.cDNAChange || '';
-            form.gDNAChange = props.entity?.gDNAChange || '';
-            form.proteinChange = props.entity?.proteinChange || '';
+            form.gene = props.entity?.data?.gene || '';
+            form.cDNAChange = props.entity?.data?.cDNAChange || '';
+            form.gDNAChange = props.entity?.data?.gDNAChange || '';
+            form.proteinChange = props.entity?.data?.proteinChange || '';
         };
 
         init();
@@ -54,7 +60,7 @@ export default defineComponent({
             },
         }, form);
 
-        watch(entityRef, () => {
+        watch(entity, () => {
             init();
         }, { deep: true });
 
@@ -62,11 +68,19 @@ export default defineComponent({
             concept: CodeSystemConcept,
         ) => transformConceptToFormSelectOption(concept);
 
-        const isEditing = computed(() => !!entityRef.value);
+        const isEditing = computed(() => !!entity.value?.data);
         const submit = () => {
-            if (vuelidate.value.$invalid) return;
-
-            emit('updated', form);
+            if (vuelidate.value.$invalid) {
+                emit('saved', {
+                    ...props.entity,
+                    data: null,
+                });
+            } else {
+                emit('saved', {
+                    ...props.entity,
+                    data: { ...form },
+                });
+            }
         };
 
         return {

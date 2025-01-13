@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.25.0](https://github.com/dnpm-dip/portal/compare/v1.24.0...v1.25.0) (2025-01-09)
+
+
+### Features
+
+* bump authup & vuecs packages ([6e433a3](https://github.com/dnpm-dip/portal/commit/6e433a3633f81cf2ef384a30f462e1cadd6ab0c2))
+
+
+### Bug Fixes
+
+* **deps:** bump the minorandpatch group across 1 directory with 10 updates ([#977](https://github.com/dnpm-dip/portal/issues/977)) ([8aefa8b](https://github.com/dnpm-dip/portal/commit/8aefa8ba0aff238e21fbf599e19f612456be8860))
+* **deps:** bump the minorandpatch group across 1 directory with 21 updates ([#952](https://github.com/dnpm-dip/portal/issues/952)) ([9dd812f](https://github.com/dnpm-dip/portal/commit/9dd812f43074ed8af7bc92f8026178f1e6065d45))
+
+## [1.24.0](https://github.com/dnpm-dip/portal/compare/v1.23.0...v1.24.0) (2024-12-12)
+
+
+### Features
+
+* bump authup & vuecs packages ([6e433a3](https://github.com/dnpm-dip/portal/commit/6e433a3633f81cf2ef384a30f462e1cadd6ab0c2))
+
+
+### Bug Fixes
+
+* **deps:** bump the minorandpatch group across 1 directory with 21 updates ([#952](https://github.com/dnpm-dip/portal/issues/952)) ([9dd812f](https://github.com/dnpm-dip/portal/commit/9dd812f43074ed8af7bc92f8026178f1e6065d45))
+
 ## [1.23.0](https://github.com/KohlbacherLab/dnpm-dip-portal/compare/v1.22.0...v1.23.0) (2024-11-19)
 
 

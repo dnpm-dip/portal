@@ -9,6 +9,10 @@
 import {
     type Coding,
     type ConnectionPeer,
+    type FormTabInput,
+    type ValueSetCoding,
+} from '@dnpm-dip/core';
+import {
     DCollectionTransform,
     DFormTabGroups,
     DSitePicker,
@@ -16,29 +20,28 @@ import {
     DValueSet,
     LogicalOperator,
     QueryRequestMode,
-    type ValueSetCoding,
     transformCodingsToFormSelectOptions,
-    transformFormSelectOptionsToCodings, useQueryFilterStore,
+    transformFormSelectOptionsToCodings,
+    useQueryFilterStore,
 } from '@dnpm-dip/core';
-import DFormTabGroup from '@dnpm-dip/core/components/utility/form-tab/DFormTabGroup.vue';
 import {
     VCFormSelectSearch,
 } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
-import type { PropType } from 'vue';
+import { type PropType, toRef, watch } from 'vue';
 import { defineComponent, ref } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';
 import {
     type QueryCriteria,
     type QueryGeneAlterationCriteria,
     type QueryMedicationCriteria,
+    buildQueryGeneAlterationCriteriaLabel,
 } from '../../../domains';
 import MMutationTabGroup from '../MMutationTabGroup.vue';
 import MSearchMedicationForm from './MSearchMedicationForm.vue';
 
 export default defineComponent({
     components: {
-        DFormTabGroup,
         DSitePicker,
         MSearchMedicationForm,
         MMutationTabGroup,
@@ -65,11 +68,10 @@ export default defineComponent({
     emits: [
         'failed',
 
-        'preparedQueryCreated',
-        'preparedQueryUpdated',
+        'created',
+        'updated',
 
-        'queryCreated',
-        'queryUpdated',
+        'save',
     ],
     async setup(props, { emit, expose }) {
         const filterStore = useQueryFilterStore();
@@ -84,9 +86,9 @@ export default defineComponent({
         ];
 
         const busy = ref(false);
-        const criteria = ref<QueryCriteria>({});
+        const criteria = toRef(props, 'criteria');
 
-        const mutations = ref<QueryGeneAlterationCriteria[]>([]);
+        const mutations = ref<FormTabInput<QueryGeneAlterationCriteria>[]>([]);
         const mutationsInCombination = ref(false);
 
         const diagnoses = ref<FormSelectOption[]>([]);
@@ -111,54 +113,68 @@ export default defineComponent({
                 modeSites.value = props.queryPeers.map((peer) => peer.site);
             }
 
-            criteria.value = {};
-
-            if (props.criteria) {
-                criteria.value = props.criteria;
-            }
-
-            if (criteria.value.diagnoses) {
-                diagnoses.value = transformCodingsToFormSelectOptions(criteria.value.diagnoses);
-            }
-
-            if (criteria.value.tumorMorphologies) {
-                tumorMorphologies.value = transformCodingsToFormSelectOptions(criteria.value.tumorMorphologies);
-            }
-
-            if (criteria.value.medication) {
-                if (criteria.value.medication.drugs) {
-                    medicationDrugs.value = criteria.value.medication.drugs;
-                }
-
-                if (criteria.value.medication.usage) {
-                    medicationUsage.value = criteria.value.medication.usage.map((e) => e.code);
-                }
-
-                if (criteria.value.medication.operator) {
-                    medicationInCombination.value = criteria.value.medication.operator === LogicalOperator.AND;
-                }
-            }
-
-            if (criteria.value.responses) {
-                responses.value = transformCodingsToFormSelectOptions(criteria.value.responses);
-            }
-
+            diagnoses.value = [];
+            tumorMorphologies.value = [];
+            medicationDrugs.value = [];
+            medicationUsage.value = [];
+            medicationInCombination.value = false;
+            responses.value = [];
             mutations.value = [];
 
-            if (
-                criteria.value.geneAlterations &&
-                criteria.value.geneAlterations.items &&
-                criteria.value.geneAlterations.items.length > 0
-            ) {
-                mutations.value = [...criteria.value.geneAlterations.items];
+            if (criteria.value) {
+                if (criteria.value.diagnoses) {
+                    diagnoses.value = transformCodingsToFormSelectOptions(criteria.value.diagnoses);
+                }
 
-                if (criteria.value.geneAlterations.operator) {
-                    mutationsInCombination.value = criteria.value.geneAlterations.operator === LogicalOperator.AND;
+                if (criteria.value.tumorMorphologies) {
+                    tumorMorphologies.value = transformCodingsToFormSelectOptions(criteria.value.tumorMorphologies);
+                }
+
+                if (criteria.value.medication) {
+                    if (criteria.value.medication.drugs) {
+                        medicationDrugs.value = criteria.value.medication.drugs;
+                    }
+
+                    if (criteria.value.medication.usage) {
+                        medicationUsage.value = criteria.value.medication.usage.map((e) => e.code);
+                    }
+
+                    if (criteria.value.medication.operator) {
+                        medicationInCombination.value = criteria.value.medication.operator === LogicalOperator.AND;
+                    }
+                }
+
+                if (criteria.value.responses) {
+                    responses.value = transformCodingsToFormSelectOptions(criteria.value.responses);
+                }
+
+                if (
+                    criteria.value &&
+                    criteria.value.geneAlterations &&
+                    criteria.value.geneAlterations.items &&
+                    criteria.value.geneAlterations.items.length > 0
+                ) {
+                    mutations.value = criteria.value.geneAlterations.items.map((item) => ({
+                        data: item,
+                        label: buildQueryGeneAlterationCriteriaLabel(item),
+                    }));
+
+                    if (criteria.value.geneAlterations.operator) {
+                        mutationsInCombination.value = criteria.value.geneAlterations.operator === LogicalOperator.AND;
+                    }
                 }
             }
 
             busy.value = false;
         };
+
+        watch(criteria, (newVal, oldVal) => {
+            if (newVal === oldVal) {
+                return;
+            }
+
+            reset();
+        });
 
         const buildCriteria = () : QueryCriteria => {
             const payload : QueryCriteria = {};
@@ -214,12 +230,15 @@ export default defineComponent({
                 mutations.value &&
                 mutations.value.length > 0
             ) {
-                payload.geneAlterations = {
-                    items: mutations.value,
-                    operator: mutationsInCombination.value ?
-                        LogicalOperator.AND :
-                        LogicalOperator.OR,
-                };
+                const mutationItems = mutations.value.map((item) => item.data).filter(Boolean);
+                if (mutationItems.length > 0) {
+                    payload.geneAlterations = {
+                        items: mutationItems,
+                        operator: mutationsInCombination.value ?
+                            LogicalOperator.AND :
+                            LogicalOperator.OR,
+                    };
+                }
             }
 
             return payload;
@@ -231,6 +250,10 @@ export default defineComponent({
 
         Promise.resolve()
             .then(() => reset());
+
+        const save = () => {
+            emit('save', buildCriteria());
+        };
 
         const submit = async () => {
             if (busy.value) return;
@@ -254,7 +277,7 @@ export default defineComponent({
                         sites: modeSites.value,
                     });
 
-                    emit('queryUpdated', query);
+                    emit('updated', query);
                 } else {
                     query = await apiClient.query.submit({
                         criteria: payload,
@@ -264,7 +287,7 @@ export default defineComponent({
                         sites: modeSites.value,
                     });
 
-                    emit('queryCreated', query);
+                    emit('created', query);
                 }
             } catch (e) {
                 if (e instanceof Error) {
@@ -304,6 +327,7 @@ export default defineComponent({
 
             busy,
 
+            save,
             submit,
 
             handleMedicationUpdated,
@@ -327,31 +351,14 @@ export default defineComponent({
 
                 <DFormTabGroups
                     v-model="mutations"
-                    :min-items="0"
+                    :min-items="1"
                     :max-items="6"
                     :direction="'col'"
                 >
-                    <template #label="props">
-                        <DFormTabGroup
-                            :label="props.label"
-                            :item="props.item"
-                            :index="props.index"
-                            :current-index="props.currentIndex"
-                            @toggle="props.toggle"
-                        >
-                            <template v-if="props.item && props.item.gene">
-                                {{ props.item.gene.display || props.item.gene.code }} {{ props.item.variant ? props.item.variant.type : '' }}
-                            </template>
-                            <template v-else>
-                                {{ props.index + 1 }}
-                            </template>
-                        </DFormTabGroup>
-                    </template>
                     <template #default="props">
                         <MMutationTabGroup
-                            :entity="props.item"
-                            @updated="props.updated"
-                            @toggle="props.toggle"
+                            :entity="props.data"
+                            @saved="props.saved"
                         />
                     </template>
                 </DFormTabGroups>
@@ -538,6 +545,17 @@ export default defineComponent({
                             @click.prevent="submit()"
                         >
                             <i class="fa fa-search me-1" /> Suchen
+                        </button>
+                    </div>
+
+                    <div class="col">
+                        <button
+                            :disabled="busy"
+                            type="button"
+                            class="btn btn-block btn-primary"
+                            @click.prevent="save()"
+                        >
+                            <i class="fa fa-save me-1" /> Speichern
                         </button>
                     </div>
                 </div>

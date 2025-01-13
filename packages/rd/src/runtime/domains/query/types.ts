@@ -28,7 +28,7 @@ export type QueryCriteriaVariant<
 
 export type QueryCriteria = {
     diagnoses?: CodeRecord[],
-    hpo?: CodeRecord[],
+    hpoTerms?: CodeRecord[],
     variants?: QueryCriteriaVariant[]
 };
 

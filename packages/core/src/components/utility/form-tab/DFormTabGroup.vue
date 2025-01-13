@@ -1,68 +1,94 @@
 <script lang="ts">
+import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
-import { template } from '../../../utils';
+import type { FormTab } from './types';
 
 export default defineComponent({
     props: {
-        index: {
-            type: Number,
-            required: true,
-        },
         item: {
-            type: Object,
+            type: Object as PropType<FormTab>,
             required: true,
         },
         currentIndex: {
             type: Number,
         },
-        label: {
-            type: String,
+        minItems: {
+            type: Number,
+            required: true,
+        },
+        totalItems: {
+            type: Number,
+            required: true,
         },
     },
-    emits: ['toggle'],
+    emits: ['picked', 'closed'],
     setup(props, { emit }) {
         const text = computed(() => {
-            if (props.label) {
-                return template(props.label, {
-                    ...props.item,
-                    index: props.index,
-                    position: props.index + 1,
-                });
+            if (props.item.label) {
+                return props.item.label;
             }
 
-            return `${props.index + 1}`;
+            return `${(props.item.index ?? 0) + 1}`;
         });
 
-        const toggle = () => {
-            emit('toggle', props.index);
+        const isEmpty = computed(() => props.item.data === null);
+
+        const pick = () => {
+            emit('picked', props.item.index);
+        };
+
+        const close = () => {
+            emit('closed', props.item.index);
         };
 
         return {
+            isEmpty,
             text,
-            toggle,
+
+            close,
+            pick,
         };
     },
 });
 </script>
 <template>
     <li
-        class="nav-item"
-        style="max-width: 150px;"
+        class="form-tab gap-2"
+        :class="{'active': currentIndex === item.index }"
     >
-        <a
-            href="javascript:void(0)"
-            class="nav-link text-center"
-            :class="{'router-link-exact-active': currentIndex === index}"
-            @click="toggle"
+        <div
+            class="form-tab-text"
+            @click.prevent="pick"
         >
-            <slot
-                :item="item"
-                :index="index"
-                :current-index="currentIndex"
-                :toggle="toggle"
+            <template v-if="isEmpty">
+                <slot
+                    name="empty"
+                    :data="item"
+                    :current-index="currentIndex"
+                    :pick="pick"
+                >
+                    {{ text }}
+                </slot>
+            </template>
+            <template v-else>
+                <slot
+                    :data="item"
+                    :current-index="currentIndex"
+                    :pick="pick"
+                >
+                    {{ text }}
+                </slot>
+            </template>
+        </div>
+        <div class="ms-auto">
+            <a
+                v-if="minItems < totalItems || !isEmpty"
+                href="javascript:void(0)"
+                class="nav-link text-center"
+                @click="close"
             >
-                {{ text }}
-            </slot>
-        </a>
+                <i class="fa fa-times" />
+            </a>
+        </div>
     </li>
 </template>

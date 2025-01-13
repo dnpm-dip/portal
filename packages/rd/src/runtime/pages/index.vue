@@ -1,14 +1,13 @@
 <script lang="ts">
-import { PageMetaKey, useToast } from '@dnpm-dip/core';
+import { DPreparedQueryForm, PageMetaKey, useToast } from '@dnpm-dip/core';
 import type { ClientError } from 'hapic';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/RSearchForm.vue';
-import { PermissionName, type QueryCriteria } from '../domains';
-import PreparedQueryForm from '../components/core/RPreparedQueryForm.vue';
+import { PermissionName, type QuerySession } from '../domains';
 
 export default defineNuxtComponent({
     components: {
-        PreparedQueryForm,
+        DPreparedQueryForm,
         SearchForm,
     },
     setup() {
@@ -26,19 +25,8 @@ export default defineNuxtComponent({
             toast.showError(e);
         };
 
-        const handleSubmitted = async (data : {
-            criteria: QueryCriteria,
-            queryId: string,
-            preparedQueryId?: string
-        }) => {
-            let query : Record<string, any> | undefined;
-            if (data.preparedQueryId) {
-                query = {
-                    preparedQueryId: data.preparedQueryId,
-                };
-            }
-
-            await navigateTo({ path: `/rd/query/${data.queryId}`, query });
+        const handleSubmitted = async (data: QuerySession) => {
+            await navigateTo({ path: `/rd/query/${data.id}` });
         };
 
         return {
@@ -55,9 +43,20 @@ export default defineNuxtComponent({
             <i class="fa fa-search" /> Suche
         </h1>
 
-        <PreparedQueryForm
+        <DPreparedQueryForm
+            use-case="rd"
             @submitted="handleSubmitted"
             @failed="handleFailed"
-        />
+        >
+            <template #default="props">
+                <SearchForm
+                    :criteria="props.criteria"
+                    @save="props.save"
+                    @failed="props.failed"
+                    @created="props.queryCreated"
+                    @updated="props.queryUpdated"
+                />
+            </template>
+        </DPreparedQueryForm>
     </div>
 </template>

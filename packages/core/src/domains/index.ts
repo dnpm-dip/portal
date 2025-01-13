@@ -3,6 +3,7 @@ export * from './codesystem';
 export * from './coding';
 export * from './coding-group';
 export * from './patient';
+export * from './prepared-query';
 export * from './query';
 export * from './site';
 export * from './valueset';
