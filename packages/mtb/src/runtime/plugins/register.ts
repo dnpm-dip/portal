@@ -39,7 +39,7 @@ export default defineNuxtPlugin({
                         },
                     },
                     {
-                        name: 'Validierung',
+                        name: 'Validierungsmeldungen',
                         icon: 'fas fa-shield',
                         url: 'validation',
                         meta: {

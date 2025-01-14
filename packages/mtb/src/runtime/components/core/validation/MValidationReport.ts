@@ -4,7 +4,7 @@ import {
 } from '@dnpm-dip/core';
 import type { SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
-import type { PatientRecord } from '../../domains';
+import type { PatientRecord } from '../../../domains';
 import { injectHTTPClient } from '../../../core/http-client';
 
 export default defineComponent({
