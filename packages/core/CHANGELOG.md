@@ -1,5 +1,12 @@
 # @dnpm-dip/core
 
+## [1.32.0](https://github.com/dnpm-dip/portal/compare/v1.31.0...v1.32.0) (2025-01-15)
+
+
+### Features
+
+* validation portal ([#960](https://github.com/dnpm-dip/portal/issues/960)) ([1dce4a7](https://github.com/dnpm-dip/portal/commit/1dce4a7a447be6accc32c3ba3203614877082fee))
+
 ## [1.31.0](https://github.com/dnpm-dip/portal/compare/v1.30.0...v1.31.0) (2025-01-09)
 
 
