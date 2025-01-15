@@ -6,3 +6,4 @@ export * from './prepared-query';
 export * from './query';
 export * from './site';
 export * from './value-set';
+export * from './validation';
