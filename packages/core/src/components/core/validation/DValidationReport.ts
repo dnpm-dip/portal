@@ -1,11 +1,12 @@
-import type { ResourceRecordSlots } from '@dnpm-dip/core';
-import {
-    createResourceRecordManager,
-} from '@dnpm-dip/core';
 import type { SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
-import type { PatientRecord } from '../../../domains';
-import { injectHTTPClient } from '../../../core/http-client';
+import type { ResourceRecordSlots } from '../../../core';
+import {
+    createResourceRecordManager,
+    injectHTTPClient,
+} from '../../../core';
+import { ValidationAPI } from '../../../domains';
+import type { ValidationReport } from '../../../domains';
 
 export default defineComponent({
     props: {
@@ -17,14 +18,19 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
+        useCase: {
+            type: String,
+            required: true,
+        },
     },
-    slots: Object as SlotsType<ResourceRecordSlots<PatientRecord>>,
+    slots: Object as SlotsType<ResourceRecordSlots<ValidationReport>>,
     async setup(props, setup) {
-        const apiClient = injectHTTPClient();
+        const api = injectHTTPClient();
+        const validationAPI = new ValidationAPI({ client: api, useCase: props.useCase });
         const id = toRef(props, 'id');
 
         const manager = createResourceRecordManager({
-            load: () => apiClient.validation.getReport(props.id),
+            load: () => validationAPI.getReport(props.id),
             slots: setup.slots,
             id,
         });

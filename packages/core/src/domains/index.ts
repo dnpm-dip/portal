@@ -7,6 +7,7 @@ export * from './prepared-query';
 export * from './query';
 export * from './site';
 export * from './valueset';
+export * from './validation';
 
 export * from './utility';
 

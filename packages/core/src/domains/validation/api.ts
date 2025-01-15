@@ -5,22 +5,31 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { BaseAPI, type ResourceCollectionResponse } from '@dnpm-dip/core';
+import { BaseAPI } from '../api';
+import type { BaseAPIContext, ResourceCollectionResponse } from '../types';
 import type { ValidationReport, ValidationReportInfo } from './types';
 
 export class ValidationAPI extends BaseAPI {
+    protected useCase : string;
+
+    constructor(ctx: BaseAPIContext & { useCase: string }) {
+        super(ctx);
+
+        this.useCase = ctx.useCase;
+    }
+
     async getReportInfo() : Promise<ResourceCollectionResponse<ValidationReportInfo>> {
-        const response = await this.client.get('mtb/validation/infos');
+        const response = await this.client.get(`${this.useCase}/validation/infos`);
         return response.data;
     }
 
     async getReport(id: string) : Promise<ValidationReport> {
-        const response = await this.client.get(`mtb/validation/report/${id}`);
+        const response = await this.client.get(`${this.useCase}/validation/report/${id}`);
         return response.data;
     }
 
     async getPatientRecord(id: string) {
-        const response = await this.client.get(`mtb/validation/patient-record/${id}`);
+        const response = await this.client.get(`${this.useCase}/validation/patient-record/${id}`);
         return response.data;
     }
 }

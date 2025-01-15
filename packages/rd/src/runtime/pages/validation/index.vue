@@ -20,7 +20,7 @@ export default defineComponent({
         <h1 class="title no-border mb-3">
             <i class="fa fa-shield" /> Validierungsmeldungen
         </h1>
-        <DValidations :use-case="'mtb'">
+        <DValidations :use-case="'rd'">
             <template #default="props">
                 <div class="d-flex flex-row mb-2">
                     <div class="ms-auto">
@@ -36,7 +36,7 @@ export default defineComponent({
                             >
                                 <li class="list-item flex-row">
                                     <DValidationReportCard
-                                        :use-case="'mtb'"
+                                        :use-case="'rd'"
                                         :info="item"
                                     />
                                 </li>

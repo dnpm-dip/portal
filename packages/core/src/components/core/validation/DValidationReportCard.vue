@@ -1,19 +1,23 @@
 <script lang="ts">
 import { VCTimeago } from '@vuecs/timeago';
 import {
-    type PropType, computed, defineComponent, ref,
+    type PropType, defineComponent, ref,
 } from 'vue';
-import MValidationReport from './MValidationReport';
-import type { ValidationReportInfo } from '../../../domains/validation';
+import DValidationReport from './DValidationReport';
+import type { ValidationReportInfo } from '../../../domains';
 
 export default defineComponent({
     components: {
-        MValidationReport,
+        DValidationReport,
         VCTimeago,
     },
     props: {
         info: {
             type: Object as PropType<ValidationReportInfo>,
+            required: true,
+        },
+        useCase: {
+            type: String,
             required: true,
         },
     },
@@ -32,10 +36,11 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="entity-card w-100">
+    <div class="validation-report-card entity-card w-100 d-flex flex-column gap-1">
         <div class="d-flex flex-row">
             <div>
-                <strong># {{ info.id }}</strong>
+                <strong>Meldung </strong>
+                <small>#{{ info.id }}</small>
             </div>
             <div class="ms-auto">
                 <button
@@ -48,9 +53,10 @@ export default defineComponent({
         </div>
         <hr>
         <template v-if="extended">
-            <div class=" mb-2 mt-2">
-                <MValidationReport
+            <div>
+                <DValidationReport
                     :id="info.id"
+                    :use-case="useCase"
                     :lazy-load="true"
                 >
                     <template #default="props">
@@ -67,9 +73,9 @@ export default defineComponent({
                                         <div class="ms-1">
                                             <span
                                                 :class="{
-                                                    'text-danger': item.severity === 'error',
-                                                    'text-info': item.severity === 'info',
-                                                    'text-warning': item.severity === 'warning'
+                                                    'severity-danger': item.severity === 'error',
+                                                    'severity-info': item.severity === 'info',
+                                                    'severity-warning': item.severity === 'warning'
                                                 }"
                                             >
                                                 {{ item.severity }}
@@ -96,33 +102,33 @@ export default defineComponent({
                             </template>
                         </div>
                     </template>
-                </MValidationReport>
+                </DValidationReport>
             </div>
         </template>
         <template v-else>
             <div class="d-flex flex-row">
                 <div class="d-flex flex-grow-1 flex-column align-items-center">
-                    <div>
-                        <strong>Info</strong>
+                    <div class="severity-header severity-info">
+                        <strong>{{ info.issues.info }}</strong>
                     </div>
-                    <div class="ms-1 text-info">
-                        {{ info.issues.info }}
-                    </div>
-                </div>
-                <div class="d-flex flex-grow-1 flex-column align-items-center">
-                    <div>
-                        <strong>Warnung</strong>
-                    </div>
-                    <div class="ms-1 text-warning">
-                        {{ info.issues.warning }}
+                    <div class="severity-body">
+                        Infomeldung(en)
                     </div>
                 </div>
                 <div class="d-flex flex-grow-1 flex-column align-items-center">
-                    <div>
-                        <strong>Fehler</strong>
+                    <div class="severity-header severity-warning">
+                        <strong>{{ info.issues.warning }}</strong>
                     </div>
-                    <div class="ms-1 text-danger">
-                        {{ info.issues.error }}
+                    <div class="severity-body">
+                        Warnungsmeldung(en)
+                    </div>
+                </div>
+                <div class="d-flex flex-grow-1 flex-column align-items-center">
+                    <div class="severity-header severity-danger">
+                        <strong>{{ info.issues.error }}</strong>
+                    </div>
+                    <div class="severity-body">
+                        Fehlermeldung(en)
                     </div>
                 </div>
             </div>
@@ -130,10 +136,36 @@ export default defineComponent({
         <hr>
         <div class="d-flex flex-row">
             <div class="ms-auto">
-                <span class="text-muted">
+                <small class="text-muted">
                     <VCTimeago :datetime="info.createdAt" />
-                </span>
+                </small>
             </div>
         </div>
     </div>
 </template>
+<style scoped>
+.validation-report-card hr {
+    margin: 0.5rem 0;
+}
+
+.validation-report-card .severity-header {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.validation-report-card .severity-body {
+    font-size: 0.85rem;
+}
+
+.validation-report-card .severity-info {
+    color: rgb(106 171 184) !important;
+}
+
+.validation-report-card .severity-warning {
+    color: rgb(255 137 0) !important;
+}
+
+.validation-report-card .severity-danger {
+    color: rgb(209 47 62) !important;
+}
+</style>

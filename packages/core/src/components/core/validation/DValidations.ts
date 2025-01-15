@@ -5,27 +5,27 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import type { ObjectLiteral, PatientMatchBase, ResourceCollectionSlots } from '@dnpm-dip/core';
-import { createResourceCollectionManager } from '@dnpm-dip/core';
-import type { PropType, SlotsType } from 'vue';
-import { defineComponent, toRef } from 'vue';
-import { injectHTTPClient } from '../../../core/http-client';
+import type { SlotsType } from 'vue';
+import { defineComponent } from 'vue';
+import type { ObjectLiteral, PatientMatchBase, ResourceCollectionSlots } from '../../../core';
+import { createResourceCollectionManager, injectHTTPClient } from '../../../core';
+import { ValidationAPI } from '../../../domains';
 
 export default defineComponent({
     props: {
-        filters: {
-            type: Object as PropType<ObjectLiteral>,
+        useCase: {
+            type: String,
+            required: true,
         },
     },
     slots: Object as SlotsType<ResourceCollectionSlots<PatientMatchBase>>,
     setup(props, setup) {
         const api = injectHTTPClient();
-
-        const filters = toRef(props, 'filters');
+        const validationAPI = new ValidationAPI({ client: api, useCase: props.useCase });
 
         const manager = createResourceCollectionManager({
             load: async () => {
-                const response = await api.validation.getReportInfo();
+                const response = await validationAPI.getReportInfo();
 
                 return {
                     data: response.entries,
@@ -34,7 +34,6 @@ export default defineComponent({
             },
             slots: setup.slots,
             expose: setup.expose,
-            filters,
         });
 
         return () => manager.render();
