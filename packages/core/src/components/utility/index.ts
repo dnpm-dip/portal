@@ -11,4 +11,5 @@ export * from './kv-chart-table-switch';
 export * from './kv-table';
 
 export { default as DCollectionTransform } from './DCollectionTransform.vue';
+export { default as DLoadingModal } from './DLoadingModal.vue';
 export { default as DTags } from './DTags.vue';

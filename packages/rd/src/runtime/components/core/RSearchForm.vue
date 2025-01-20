@@ -1,10 +1,11 @@
 <script lang="ts">
-import type {
-    CodeRecord,
-    Coding,
-    ConnectionPeer,
-    FormTabInput,
-    ValueSetCoding,
+import {
+    type CodeRecord,
+    type Coding,
+    type ConnectionPeer,
+    DLoadingModal,
+    type FormTabInput,
+    type ValueSetCoding,
 } from '@dnpm-dip/core';
 import {
     DCollectionTransform,
@@ -27,6 +28,7 @@ import RVariantFormTabGroup from './RVariantFormTabGroup.vue';
 
 export default defineComponent({
     components: {
+        DLoadingModal,
         DSitePicker,
         DTags,
         RVariantFormTabGroup,
@@ -464,5 +466,7 @@ export default defineComponent({
                 </div>
             </div>
         </form>
+
+        <DLoadingModal :display="busy" />
     </div>
 </template>

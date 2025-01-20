@@ -15,6 +15,7 @@ import {
 import {
     DCollectionTransform,
     DFormTabGroups,
+    DLoadingModal,
     DSitePicker,
     DTags,
     DValueSet,
@@ -49,6 +50,7 @@ export default defineComponent({
         DTags,
         DValueSet,
         VCFormSelectSearch,
+        DLoadingModal,
         DCollectionTransform,
     },
     props: {
@@ -259,6 +261,8 @@ export default defineComponent({
             if (busy.value) return;
 
             busy.value = true;
+
+            // await new Promise((resolve) => setTimeout(resolve, 4000));
 
             try {
                 const payload = buildCriteria();
@@ -561,5 +565,6 @@ export default defineComponent({
                 </div>
             </div>
         </form>
+        <DLoadingModal :display="busy" />
     </div>
 </template>
