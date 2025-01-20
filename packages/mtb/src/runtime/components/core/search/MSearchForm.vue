@@ -8,7 +8,7 @@
 <script lang="ts">
 import {
     type Coding,
-    type ConnectionPeer,
+    type ConnectionPeer, DLoadingButton,
     type FormTabInput,
     type ValueSetCoding,
 } from '@dnpm-dip/core';
@@ -43,6 +43,7 @@ import MSearchMedicationForm from './MSearchMedicationForm.vue';
 
 export default defineComponent({
     components: {
+        DLoadingButton,
         DSitePicker,
         MSearchMedicationForm,
         MMutationTabGroup,
@@ -261,8 +262,7 @@ export default defineComponent({
             if (busy.value) return;
 
             busy.value = true;
-
-            // await new Promise((resolve) => setTimeout(resolve, 4000));
+            // await new Promise((resolve) => setTimeout(resolve, 10_000));
 
             try {
                 const payload = buildCriteria();
@@ -542,14 +542,13 @@ export default defineComponent({
             <div>
                 <div class="row">
                     <div class="col">
-                        <button
-                            :disabled="busy"
-                            type="button"
+                        <DLoadingButton
                             class="btn btn-block btn-dark"
+                            :loading="busy"
                             @click.prevent="submit()"
                         >
                             <i class="fa fa-search me-1" /> Suchen
-                        </button>
+                        </DLoadingButton>
                     </div>
 
                     <div class="col">
