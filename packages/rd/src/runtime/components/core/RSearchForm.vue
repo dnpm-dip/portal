@@ -1,10 +1,11 @@
 <script lang="ts">
-import type {
-    CodeRecord,
-    Coding,
-    ConnectionPeer,
-    FormTabInput,
-    ValueSetCoding,
+import {
+    type CodeRecord,
+    type Coding,
+    type ConnectionPeer, DLoadingButton,
+    DLoadingModal,
+    type FormTabInput,
+    type ValueSetCoding,
 } from '@dnpm-dip/core';
 import {
     DCollectionTransform,
@@ -27,6 +28,8 @@ import RVariantFormTabGroup from './RVariantFormTabGroup.vue';
 
 export default defineComponent({
     components: {
+        DLoadingButton,
+        DLoadingModal,
         DSitePicker,
         DTags,
         RVariantFormTabGroup,
@@ -441,14 +444,13 @@ export default defineComponent({
             <div>
                 <div class="row">
                     <div class="col">
-                        <button
-                            :disabled="busy"
-                            type="button"
+                        <DLoadingButton
                             class="btn btn-block btn-dark"
+                            :loading="busy"
                             @click.prevent="submit()"
                         >
                             <i class="fa fa-search me-1" /> Suchen
-                        </button>
+                        </DLoadingButton>
                     </div>
 
                     <div class="col">
@@ -464,5 +466,7 @@ export default defineComponent({
                 </div>
             </div>
         </form>
+
+        <DLoadingModal :display="busy" />
     </div>
 </template>
