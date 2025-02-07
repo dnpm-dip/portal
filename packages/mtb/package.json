@@ -44,7 +44,7 @@
         "@vuecs/timeago": "^1.1.0",
         "@vuelidate/core": "^2.0.3",
         "@vuelidate/validators": "^2.0.4",
-        "bootstrap-vue-next": "^0.26.22",
+        "bootstrap-vue-next": "^0.26.25",
         "chart.js": "^4.4.7",
         "nuxt": "^3.15.4",
         "vue": "^3.5.13",
