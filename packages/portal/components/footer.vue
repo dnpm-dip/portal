@@ -2,7 +2,7 @@
     <div>
         <div class="page-footer">
             <div class="copyright">
-                &copy; DNPM DIP
+                &copy; DIP
             </div>
         </div>
     </div>

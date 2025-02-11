@@ -44,7 +44,7 @@ export default defineNuxtComponent({
                     </button>
                 </div>
                 <div class="logo">
-                    DNPM:DIP
+                    DIP
                 </div>
             </div>
 
