@@ -48,7 +48,7 @@
         "ufo": "^1.5.4"
     },
     "devDependencies": {
-        "@authup/core-http-kit": "^1.0.0-beta.23",
+        "@authup/core-http-kit": "^1.0.0-beta.24",
         "@authup/client-web-kit": "^1.0.0-beta.23",
         "bootstrap-vue-next": "^0.26.26",
         "chart.js": "^4.4.7",
