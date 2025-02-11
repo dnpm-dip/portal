@@ -1,5 +1,41 @@
 # @dnpm-dip/portal
 
+## [1.30.0](https://github.com/dnpm-dip/portal/compare/v1.29.0...v1.30.0) (2025-02-11)
+
+
+### Features
+
+* implemented prepared queries for mtb & rd ([#980](https://github.com/dnpm-dip/portal/issues/980)) ([d89a335](https://github.com/dnpm-dip/portal/commit/d89a33515b8b3cf291ae56174e01aaa94700dc55))
+* initial loading animation for mtb & rd search form ([9b1066b](https://github.com/dnpm-dip/portal/commit/9b1066bae4fea1e72fdf7c9948c656f3ab95453d))
+* mtb gene centric search ([#951](https://github.com/dnpm-dip/portal/issues/951)) ([9047772](https://github.com/dnpm-dip/portal/commit/904777203eee1e67e86d190d6186506a8b6138d9))
+* redesigned form-tabs ([#962](https://github.com/dnpm-dip/portal/issues/962)) ([9f8dc8f](https://github.com/dnpm-dip/portal/commit/9f8dc8f39262e9898a404eba4b3f47a4cd4dc248))
+* reorganized mtb query session view ([#938](https://github.com/dnpm-dip/portal/issues/938)) ([1621e45](https://github.com/dnpm-dip/portal/commit/1621e451de44ba0f7b28dfb00c571913fd60829d))
+* validation portal ([#960](https://github.com/dnpm-dip/portal/issues/960)) ([1dce4a7](https://github.com/dnpm-dip/portal/commit/1dce4a7a447be6accc32c3ba3203614877082fee))
+
+
+### Bug Fixes
+
+* bump bootstrap-vue-next to v0.26.x ([ef95fab](https://github.com/dnpm-dip/portal/commit/ef95fab5e8c398100a9b1cfc23458271a3359a85))
+* **deps:** bump authup to v1.0.0-beta.24 ([4b32e76](https://github.com/dnpm-dip/portal/commit/4b32e76f8ecb59f821c7a841e61c281837806926))
+* **deps:** bump bootstrap-vue-next ([#1005](https://github.com/dnpm-dip/portal/issues/1005)) ([7987ba4](https://github.com/dnpm-dip/portal/commit/7987ba460b404af711981f06db323893879688bb))
+* **deps:** bump the minorandpatch group across 1 directory with 10 updates ([#977](https://github.com/dnpm-dip/portal/issues/977)) ([8aefa8b](https://github.com/dnpm-dip/portal/commit/8aefa8ba0aff238e21fbf599e19f612456be8860))
+* **deps:** bump the minorandpatch group across 1 directory with 12 updates ([#994](https://github.com/dnpm-dip/portal/issues/994)) ([dd35f9c](https://github.com/dnpm-dip/portal/commit/dd35f9c77f1e91105ea80d363c5d68bb864d9611))
+* **deps:** bump the minorandpatch group across 1 directory with 21 updates ([#952](https://github.com/dnpm-dip/portal/issues/952)) ([9dd812f](https://github.com/dnpm-dip/portal/commit/9dd812f43074ed8af7bc92f8026178f1e6065d45))
+* **deps:** bump the minorandpatch group across 1 directory with 5 updates ([#959](https://github.com/dnpm-dip/portal/issues/959)) ([3559031](https://github.com/dnpm-dip/portal/commit/355903122a882d66798781f5d908860c262a2a97))
+* **deps:** bump the minorandpatch group with 2 updates ([#961](https://github.com/dnpm-dip/portal/issues/961)) ([99615ff](https://github.com/dnpm-dip/portal/commit/99615ff66ad298e5a6bb1c18148aa0be9d798263))
+* initialising rd search form ([bbb5f2e](https://github.com/dnpm-dip/portal/commit/bbb5f2e2f9a075be98f7c0ddcc5ad57957707479))
+* rename DNPM:DIP to DIP in header/footer components ([aea67a3](https://github.com/dnpm-dip/portal/commit/aea67a3d7032b0c7c94a3465f81ed981b8ca7208))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.31.0 to ^1.32.0
+    * @dnpm-dip/kit bumped from ^1.25.0 to ^1.26.0
+    * @dnpm-dip/mtb bumped from ^1.30.0 to ^1.31.0
+    * @dnpm-dip/rd bumped from ^1.29.0 to ^1.30.0
+
 ## [1.29.0](https://github.com/dnpm-dip/portal/compare/v1.28.0...v1.29.0) (2025-01-09)
 
 
