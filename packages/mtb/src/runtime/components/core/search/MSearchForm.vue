@@ -134,8 +134,8 @@ export default defineComponent({
                 }
 
                 if (criteria.value.medication) {
-                    if (criteria.value.medication.drugs) {
-                        medicationDrugs.value = criteria.value.medication.drugs;
+                    if (criteria.value.medication.items) {
+                        medicationDrugs.value = criteria.value.medication.items;
                     }
 
                     if (criteria.value.medication.usage) {
@@ -202,7 +202,7 @@ export default defineComponent({
                 medicationDrugs.value &&
                 medicationDrugs.value.length > 0
             ) {
-                payloadMedication.drugs = medicationDrugs.value;
+                payloadMedication.items = medicationDrugs.value;
             }
 
             if (
@@ -218,7 +218,7 @@ export default defineComponent({
                 payloadMedication.operator = LogicalOperator.OR;
             }
 
-            if (payloadMedication.drugs) {
+            if (payloadMedication.items) {
                 payload.medication = payloadMedication;
             }
 
@@ -233,7 +233,9 @@ export default defineComponent({
                 mutations.value &&
                 mutations.value.length > 0
             ) {
-                const mutationItems = mutations.value.map((item) => item.data).filter(Boolean);
+                const mutationItems = mutations.value.map(
+                    (item) => item.data,
+                ).filter(Boolean);
                 if (mutationItems.length > 0) {
                     payload.geneAlterations = {
                         items: mutationItems,

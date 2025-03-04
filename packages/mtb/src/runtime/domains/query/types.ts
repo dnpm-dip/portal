@@ -39,7 +39,7 @@ export type QuerySummaryMedication = {
 
 export type QueryMedicationCriteria<V = Coding> = {
     operator?: 'and' | 'or',
-    drugs?: V[],
+    items?: V[],
     usage?: V[]
 };
 
