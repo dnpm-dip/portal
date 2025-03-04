@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.27.0](https://github.com/dnpm-dip/portal/compare/v1.26.0...v1.27.0) (2025-03-04)
+
+
+### Features
+
+* bump authup & vuecs packages ([6e433a3](https://github.com/dnpm-dip/portal/commit/6e433a3633f81cf2ef384a30f462e1cadd6ab0c2))
+
+
+### Bug Fixes
+
+* **deps:** bump the minorandpatch group across 1 directory with 10 updates ([#977](https://github.com/dnpm-dip/portal/issues/977)) ([8aefa8b](https://github.com/dnpm-dip/portal/commit/8aefa8ba0aff238e21fbf599e19f612456be8860))
+* **deps:** bump the minorandpatch group across 1 directory with 12 updates ([#994](https://github.com/dnpm-dip/portal/issues/994)) ([dd35f9c](https://github.com/dnpm-dip/portal/commit/dd35f9c77f1e91105ea80d363c5d68bb864d9611))
+* **deps:** bump the minorandpatch group across 1 directory with 21 updates ([#952](https://github.com/dnpm-dip/portal/issues/952)) ([9dd812f](https://github.com/dnpm-dip/portal/commit/9dd812f43074ed8af7bc92f8026178f1e6065d45))
+
 ## [1.26.0](https://github.com/dnpm-dip/portal/compare/v1.25.0...v1.26.0) (2025-02-11)
 
 

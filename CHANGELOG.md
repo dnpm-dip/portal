@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.32.1](https://github.com/dnpm-dip/portal/compare/v1.32.0...v1.32.1) (2025-03-04)
+
+
+### Bug Fixes
+
+* **deps:** bump bootstrap-vue-next ([#1014](https://github.com/dnpm-dip/portal/issues/1014)) ([9865190](https://github.com/dnpm-dip/portal/commit/98651905e4c5042c8efab71b00f5662cac6f935f))
+* medication submission in mtb search form ([c94ce67](https://github.com/dnpm-dip/portal/commit/c94ce673c7f97612fe4b4c09ecb922b5105f52d3))
+* mtb search form submission + event trigger ([d1c56f9](https://github.com/dnpm-dip/portal/commit/d1c56f9687cbdd9a0aba4a77dcb3d45455d65c9c))
+
 ## [1.32.0](https://github.com/dnpm-dip/portal/compare/v1.31.0...v1.32.0) (2025-02-11)
 
 
