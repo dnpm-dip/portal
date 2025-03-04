@@ -32,7 +32,7 @@ export default defineComponent({
             emit('failed', e);
         };
 
-        const handleModalUpdated = (entity: QuerySession) => {
+        const handleUpdated = (entity: QuerySession) => {
             emit('updated', entity);
             modal.value = false;
         };
@@ -42,7 +42,7 @@ export default defineComponent({
             toggleModal,
 
             handleFailed,
-            handleModalUpdated,
+            handleUpdated,
         };
     },
 });
@@ -89,7 +89,7 @@ export default defineComponent({
             :query-id="entity.id"
             :criteria="entity.criteria"
             :prepared-query-id="preparedQueryId"
-            @query-updated="handleModalUpdated"
+            @updated="handleUpdated"
             @failed="handleFailed"
         />
     </BModal>
