@@ -1,6 +1,6 @@
 {
     "name": "@dnpm-dip/root",
-    "version": "1.32.1",
+    "version": "1.33.0",
     "private": true,
     "author": {
         "name": "Peter Placzek",

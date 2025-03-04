@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.33.0](https://github.com/dnpm-dip/portal/compare/v1.32.1...v1.33.0) (2025-03-04)
+
+
+### Features
+
+* enbale setting name for prepared queries ([#1018](https://github.com/dnpm-dip/portal/issues/1018)) ([6fe2abb](https://github.com/dnpm-dip/portal/commit/6fe2abbb28a30b709997cbe8bd59daa7059a6f24))
+
 ## [1.32.1](https://github.com/dnpm-dip/portal/compare/v1.32.0...v1.32.1) (2025-03-04)
 
 
