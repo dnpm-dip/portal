@@ -8,5 +8,5 @@
 export { default as DPreparedQueries } from './DPreparedQueries';
 export { default as DPreparedQuery } from './DPreparedQuery';
 export {
-    default as DPreparedQueryForm,
-} from './DPreparedQueryForm.vue';
+    default as DPreparedQueryContainer,
+} from './DPreparedQueryContainer.vue';

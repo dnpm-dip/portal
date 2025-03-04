@@ -1,5 +1,5 @@
 <script lang="ts">
-import { DPreparedQueryForm, PageMetaKey, useToast } from '@dnpm-dip/core';
+import { DPreparedQueryContainer, PageMetaKey, useToast } from '@dnpm-dip/core';
 import type { ClientError } from 'hapic';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/RSearchForm.vue';
@@ -7,7 +7,7 @@ import { PermissionName, type QuerySession } from '../domains';
 
 export default defineNuxtComponent({
     components: {
-        DPreparedQueryForm,
+        DPreparedQueryContainer,
         SearchForm,
     },
     setup() {
@@ -43,20 +43,20 @@ export default defineNuxtComponent({
             <i class="fa fa-search" /> Suche
         </h1>
 
-        <DPreparedQueryForm
+        <DPreparedQueryContainer
             use-case="rd"
             @submitted="handleSubmitted"
             @failed="handleFailed"
         >
             <template #default="props">
                 <SearchForm
-                    :criteria="props.criteria"
+                    :criteria="props.setCriteria"
                     @save="props.save"
                     @failed="props.failed"
                     @created="props.queryCreated"
                     @updated="props.queryUpdated"
                 />
             </template>
-        </DPreparedQueryForm>
+        </DPreparedQueryContainer>
     </div>
 </template>
