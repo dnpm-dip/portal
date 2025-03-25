@@ -1,5 +1,18 @@
 # @dnpm-dip/core
 
+## [1.33.0](https://github.com/dnpm-dip/portal/compare/v1.32.1...v1.33.0) (2025-03-25)
+
+
+### Features
+
+* enbale setting name for prepared queries ([#1018](https://github.com/dnpm-dip/portal/issues/1018)) ([6fe2abb](https://github.com/dnpm-dip/portal/commit/6fe2abbb28a30b709997cbe8bd59daa7059a6f24))
+
+
+### Bug Fixes
+
+* **deps:** bump bootstrap-vue-next in the minorandpatch group ([#1020](https://github.com/dnpm-dip/portal/issues/1020)) ([f84a8d8](https://github.com/dnpm-dip/portal/commit/f84a8d836873f60b9fa4a1977e4629f0801be38b))
+* **deps:** bump the minorandpatch group across 1 directory with 3 updates ([#1023](https://github.com/dnpm-dip/portal/issues/1023)) ([fbfdebf](https://github.com/dnpm-dip/portal/commit/fbfdebf2a17c9b4a1eefe6cc220991494360efff))
+
 ## [1.32.1](https://github.com/dnpm-dip/portal/compare/v1.32.0...v1.32.1) (2025-03-04)
 
 
