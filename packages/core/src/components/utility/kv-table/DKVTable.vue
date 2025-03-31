@@ -12,9 +12,11 @@ import { computed, defineComponent } from 'vue';
 import type { Coding, KeyValueRecord } from '../../../domains';
 import { isCoding, isConceptCount, isMinMaxRange } from '../../../domains';
 import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
+import DKVTableEntry from './DKVTableEntry.vue';
 
 export default defineComponent({
     components: {
+        DKVTableEntry,
         BTable,
     },
     props: {
@@ -61,6 +63,7 @@ export default defineComponent({
                 key,
                 value,
                 percent,
+                ...(item.children ? { children: item.children } : {}),
             };
         }));
 
@@ -85,7 +88,11 @@ export default defineComponent({
             },
         ];
 
-        const handleClick = (key: string) => {
+        const handleClicked = (items: Coding[]) => {
+            emit('clicked', items);
+        };
+
+        const handleItemClick = (key: string) => {
             const index = items.value.findIndex((el) => el.key === key);
             if (index === -1) {
                 return;
@@ -131,7 +138,8 @@ export default defineComponent({
         };
 
         return {
-            handleClick,
+            handleItemClick,
+            handleClicked,
 
             fields,
             items,
@@ -146,17 +154,13 @@ export default defineComponent({
         outlined
     >
         <template #cell(key)="data">
-            <template v-if="clickable">
-                <a
-                    href="javascript:void(0)"
-                    @click.prevent="handleClick(data.item.key)"
-                >
-                    {{ data.item.key }}
-                </a>
-            </template>
-            <template v-else>
-                {{ data.item.key }}
-            </template>
+            <DKVTableEntry
+                :data="data.item"
+                :clickable="clickable"
+                :coding-verbose-label="codingVerboseLabel"
+                @item-clicked="handleItemClick"
+                @clicked="handleClicked"
+            />
         </template>
     </BTable>
 </template>
