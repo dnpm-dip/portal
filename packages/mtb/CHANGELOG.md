@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.33.0](https://github.com/dnpm-dip/portal/compare/v1.32.0...v1.33.0) (2025-03-31)
+
+
+### Features
+
+* enbale setting name for prepared queries ([#1018](https://github.com/dnpm-dip/portal/issues/1018)) ([6fe2abb](https://github.com/dnpm-dip/portal/commit/6fe2abbb28a30b709997cbe8bd59daa7059a6f24))
+
+
+### Bug Fixes
+
+* **deps:** bump bootstrap-vue-next ([#1014](https://github.com/dnpm-dip/portal/issues/1014)) ([9865190](https://github.com/dnpm-dip/portal/commit/98651905e4c5042c8efab71b00f5662cac6f935f))
+* **deps:** bump bootstrap-vue-next in the minorandpatch group ([#1020](https://github.com/dnpm-dip/portal/issues/1020)) ([f84a8d8](https://github.com/dnpm-dip/portal/commit/f84a8d836873f60b9fa4a1977e4629f0801be38b))
+* **deps:** bump the minorandpatch group across 1 directory with 3 updates ([#1023](https://github.com/dnpm-dip/portal/issues/1023)) ([fbfdebf](https://github.com/dnpm-dip/portal/commit/fbfdebf2a17c9b4a1eefe6cc220991494360efff))
+* **deps:** bump the minorandpatch group with 3 updates ([#1024](https://github.com/dnpm-dip/portal/issues/1024)) ([488ad17](https://github.com/dnpm-dip/portal/commit/488ad179b8dce6a9f96b6ce860ffc80224c28157))
+* medication submission in mtb search form ([c94ce67](https://github.com/dnpm-dip/portal/commit/c94ce673c7f97612fe4b4c09ecb922b5105f52d3))
+* mtb search form submission + event trigger ([d1c56f9](https://github.com/dnpm-dip/portal/commit/d1c56f9687cbdd9a0aba4a77dcb3d45455d65c9c))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.32.1 to ^1.33.0
+    * @dnpm-dip/kit bumped from ^1.27.0 to ^1.27.1
+
 ## [1.32.0](https://github.com/dnpm-dip/portal/compare/v1.31.0...v1.32.0) (2025-03-04)
 
 

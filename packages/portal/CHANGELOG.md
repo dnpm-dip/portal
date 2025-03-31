@@ -1,5 +1,35 @@
 # @dnpm-dip/portal
 
+## [1.32.0](https://github.com/dnpm-dip/portal/compare/v1.31.0...v1.32.0) (2025-03-31)
+
+
+### Features
+
+* initial loading animation for mtb & rd search form ([9b1066b](https://github.com/dnpm-dip/portal/commit/9b1066bae4fea1e72fdf7c9948c656f3ab95453d))
+* validation portal ([#960](https://github.com/dnpm-dip/portal/issues/960)) ([1dce4a7](https://github.com/dnpm-dip/portal/commit/1dce4a7a447be6accc32c3ba3203614877082fee))
+
+
+### Bug Fixes
+
+* **deps:** bump authup to v1.0.0-beta.24 ([4b32e76](https://github.com/dnpm-dip/portal/commit/4b32e76f8ecb59f821c7a841e61c281837806926))
+* **deps:** bump bootstrap-vue-next ([#1005](https://github.com/dnpm-dip/portal/issues/1005)) ([7987ba4](https://github.com/dnpm-dip/portal/commit/7987ba460b404af711981f06db323893879688bb))
+* **deps:** bump bootstrap-vue-next ([#1014](https://github.com/dnpm-dip/portal/issues/1014)) ([9865190](https://github.com/dnpm-dip/portal/commit/98651905e4c5042c8efab71b00f5662cac6f935f))
+* **deps:** bump bootstrap-vue-next in the minorandpatch group ([#1020](https://github.com/dnpm-dip/portal/issues/1020)) ([f84a8d8](https://github.com/dnpm-dip/portal/commit/f84a8d836873f60b9fa4a1977e4629f0801be38b))
+* **deps:** bump the minorandpatch group across 1 directory with 12 updates ([#994](https://github.com/dnpm-dip/portal/issues/994)) ([dd35f9c](https://github.com/dnpm-dip/portal/commit/dd35f9c77f1e91105ea80d363c5d68bb864d9611))
+* **deps:** bump the minorandpatch group across 1 directory with 3 updates ([#1023](https://github.com/dnpm-dip/portal/issues/1023)) ([fbfdebf](https://github.com/dnpm-dip/portal/commit/fbfdebf2a17c9b4a1eefe6cc220991494360efff))
+* **deps:** bump the minorandpatch group with 3 updates ([#1024](https://github.com/dnpm-dip/portal/issues/1024)) ([488ad17](https://github.com/dnpm-dip/portal/commit/488ad179b8dce6a9f96b6ce860ffc80224c28157))
+* rename DNPM:DIP to DIP in header/footer components ([aea67a3](https://github.com/dnpm-dip/portal/commit/aea67a3d7032b0c7c94a3465f81ed981b8ca7208))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.32.1 to ^1.33.0
+    * @dnpm-dip/kit bumped from ^1.27.0 to ^1.27.1
+    * @dnpm-dip/mtb bumped from ^1.32.0 to ^1.33.0
+    * @dnpm-dip/rd bumped from ^1.31.0 to ^1.32.0
+
 ## [1.31.0](https://github.com/dnpm-dip/portal/compare/v1.30.0...v1.31.0) (2025-03-04)
 
 
