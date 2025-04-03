@@ -6,7 +6,7 @@
  */
 
 import type { Store } from '@authup/client-web-kit';
-import type { PolicyIdentity } from '@authup/kit';
+import type { PolicyIdentity } from '@authup/access';
 import type { NavigationItemMeta } from '@dnpm-dip/core';
 import { PageMetaKey } from '@dnpm-dip/core';
 import type { NavigationItem, NavigationItemNormalized } from '@vuecs/navigation';
@@ -50,6 +50,14 @@ export class Navigation {
                     icon: 'fas fa-sign',
                     meta: {
                         [PageMetaKey.REQUIRED_LOGGED_OUT]: true,
+                    },
+                }, {
+                    name: 'Settings',
+                    type: 'link',
+                    url: '/settings',
+                    icon: 'fas fa-cog',
+                    meta: {
+                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
                     },
                 },
                 {

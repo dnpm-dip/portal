@@ -104,6 +104,10 @@ Content
     padding-right: 1.5rem;
 }
 
+.content-wrapper > .content-container {
+    width: 100%
+}
+
 .content-sidebar {
     width: 200px;
     display: flex;
