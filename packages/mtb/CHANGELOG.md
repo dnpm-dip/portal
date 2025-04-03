@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.33.1](https://github.com/dnpm-dip/portal/compare/v1.33.0...v1.33.1) (2025-04-03)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/kit bumped from ^1.27.1 to ^1.28.0
+
 ## [1.33.0](https://github.com/dnpm-dip/portal/compare/v1.32.0...v1.33.0) (2025-03-31)
 
 
