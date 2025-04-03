@@ -51,6 +51,14 @@ export class Navigation {
                     meta: {
                         [PageMetaKey.REQUIRED_LOGGED_OUT]: true,
                     },
+                }, {
+                    name: 'Settings',
+                    type: 'link',
+                    url: '/settings',
+                    icon: 'fas fa-cog',
+                    meta: {
+                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                    },
                 },
                 {
                     name: 'Logout',
