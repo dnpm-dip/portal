@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.34.0](https://github.com/dnpm-dip/portal/compare/v1.33.0...v1.34.0) (2025-04-03)
+
+
+### Features
+
+* provide settings page to modify user profile ([0fb0bde](https://github.com/dnpm-dip/portal/commit/0fb0bdec146ea3d6a7865c2aa1942db744a9f4af))
+
 ## [1.33.0](https://github.com/dnpm-dip/portal/compare/v1.32.1...v1.33.0) (2025-03-31)
 
 
