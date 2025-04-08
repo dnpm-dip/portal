@@ -64,7 +64,7 @@ export default defineComponent({
                                 />
                             </li>
                             <li>
-                                <strong>&bull; Negiert?</strong>
+                                <strong>&bull; Wildtyp?</strong>
                                 <i
                                     class="fa ms-1"
                                     :class="{

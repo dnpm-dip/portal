@@ -267,7 +267,7 @@ export default defineComponent({
                     v-model="form.negated"
                     :group-class="'form-switch'"
                     :label="true"
-                    :label-content="'Negiert?'"
+                    :label-content="'Wildtyp?'"
                 />
             </div>
         </div>

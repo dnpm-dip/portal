@@ -174,7 +174,7 @@ export default defineComponent({
         </div>
         <div class="d-flex flex-column gap-2">
             <div class="entity-card text-center mb-3 w-100">
-                <h6>Durchschnittliche Dauer <small>(in Wochen)</small></h6>
+                <h6>Mittlere Therapiedauer <small>(in Wochen)</small></h6>
                 <DKVChartTableSwitch
                     :data="entity.therapies.meanDurations"
                     :clickable="true"
