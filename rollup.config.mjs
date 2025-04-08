@@ -37,13 +37,6 @@ export function createConfig(
         external,
         output: [
             {
-                format: 'cjs',
-                file: pkg.main,
-                exports: 'named',
-                ...(defaultExport ? { footer: 'module.exports = Object.assign(exports.default, exports);' } : {}),
-                sourcemap: true,
-            },
-            {
                 format: 'es',
                 file: pkg.module,
                 sourcemap: true,
