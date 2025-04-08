@@ -1,5 +1,36 @@
 # Changelog
 
+## [1.28.0](https://github.com/dnpm-dip/portal/compare/v1.27.1...v1.28.0) (2025-04-08)
+
+
+### Features
+
+* add initial module boxes on home view ([d0e94cd](https://github.com/dnpm-dip/portal/commit/d0e94cd019c0c8bbbe7dca7f42db9100b912f546))
+* bump authup & vuecs dependencies ([f9fc12b](https://github.com/dnpm-dip/portal/commit/f9fc12bcb427e2fb1a4eff0f31dd52ba19a5d410))
+* bump authup & vuecs packages ([6e433a3](https://github.com/dnpm-dip/portal/commit/6e433a3633f81cf2ef384a30f462e1cadd6ab0c2))
+* bump nuxt to v3.13.0 and fixed pages ([ad4c47b](https://github.com/dnpm-dip/portal/commit/ad4c47bc438f68b8c848c8547ae1313db98f6fd7))
+* consistent component naming + minor style and component issues ([#323](https://github.com/dnpm-dip/portal/issues/323)) ([2ed563e](https://github.com/dnpm-dip/portal/commit/2ed563ed71ce36551852bcd57b7909fb9dd2690e))
+* initial mtb domains, pages etc + initial type refactoring + fix page schema generation ([2befba6](https://github.com/dnpm-dip/portal/commit/2befba6ed6e169e5c88c8038985ca7d10ed0ded5))
+* initial permission implementation for rd & mtb use case ([9c58cf1](https://github.com/dnpm-dip/portal/commit/9c58cf1c401e68fad4db52480cc25185e7046d4a))
+* initial refactoring of module registration ([70467ff](https://github.com/dnpm-dip/portal/commit/70467ffe45acf1423d1085122e94a0337df3ee58))
+* move and prefix core components with letter D ([becfa81](https://github.com/dnpm-dip/portal/commit/becfa815683c284da58d899d5de0efbb36261619))
+* new kit package for registering modules + initial mtb module package ([71a8384](https://github.com/dnpm-dip/portal/commit/71a83848a3aeb5f633fea9172f5b423d3f58df20))
+
+
+### Bug Fixes
+
+* **deps:** bump @nuxt/schema from 3.11.1 to 3.11.2 ([#367](https://github.com/dnpm-dip/portal/issues/367)) ([605c375](https://github.com/dnpm-dip/portal/commit/605c37531fbbd94b7fe204b742afd1c10a6d9a1d))
+* **deps:** bump nuxt and reset lock file ([8de5687](https://github.com/dnpm-dip/portal/commit/8de5687a1a170877b15f0e1ec3bd20147b0b72d8))
+* **deps:** bump nuxt to v3.11.1 ([56b6c82](https://github.com/dnpm-dip/portal/commit/56b6c82db62519db6edc40ebb33cfceb10e9dedf))
+* **deps:** bump the minorandpatch group across 1 directory with 10 updates ([#977](https://github.com/dnpm-dip/portal/issues/977)) ([8aefa8b](https://github.com/dnpm-dip/portal/commit/8aefa8ba0aff238e21fbf599e19f612456be8860))
+* **deps:** bump the minorandpatch group across 1 directory with 12 updates ([#994](https://github.com/dnpm-dip/portal/issues/994)) ([dd35f9c](https://github.com/dnpm-dip/portal/commit/dd35f9c77f1e91105ea80d363c5d68bb864d9611))
+* **deps:** bump the minorandpatch group across 1 directory with 21 updates ([#952](https://github.com/dnpm-dip/portal/issues/952)) ([9dd812f](https://github.com/dnpm-dip/portal/commit/9dd812f43074ed8af7bc92f8026178f1e6065d45))
+* **deps:** bump the minorandpatch group across 1 directory with 3 updates ([#1023](https://github.com/dnpm-dip/portal/issues/1023)) ([fbfdebf](https://github.com/dnpm-dip/portal/commit/fbfdebf2a17c9b4a1eefe6cc220991494360efff))
+* **deps:** bump the minorandpatch group across 1 directory with 4 updates ([#1028](https://github.com/dnpm-dip/portal/issues/1028)) ([39f9053](https://github.com/dnpm-dip/portal/commit/39f905308671c52774cbc63f054e8cc57cdea3ef))
+* **deps:** bump the minorandpatch group with 3 updates ([#1024](https://github.com/dnpm-dip/portal/issues/1024)) ([488ad17](https://github.com/dnpm-dip/portal/commit/488ad179b8dce6a9f96b6ce860ffc80224c28157))
+* **deps:** bump ufo from 1.3.2 to 1.4.0 ([#259](https://github.com/dnpm-dip/portal/issues/259)) ([b7a7c9b](https://github.com/dnpm-dip/portal/commit/b7a7c9b0ca974f23952a014afff6c1b2dd58796a))
+* **deps:** bump ufo from 1.5.3 to 1.5.4 ([#614](https://github.com/dnpm-dip/portal/issues/614)) ([57a36be](https://github.com/dnpm-dip/portal/commit/57a36be1edd6add6231b197e8c3ca3bd032e8b1a))
+
 ## [1.27.1](https://github.com/dnpm-dip/portal/compare/v1.27.0...v1.27.1) (2025-03-31)
 
 
