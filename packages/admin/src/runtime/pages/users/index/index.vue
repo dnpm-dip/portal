@@ -2,7 +2,7 @@
 import { BTable } from 'bootstrap-vue-next';
 import type { User } from '@authup/core-kit';
 import {
-    PermissionName, isRealmResourceWritable,
+    PermissionName,
 } from '@authup/core-kit';
 import {
     AEntityDelete, APagination, ASearch, ATitle, AUsers, injectStore, storeToRefs,
@@ -35,10 +35,6 @@ export default defineNuxtComponent({
             },
         };
 
-        const isResourceWritable = (
-            resource: User,
-        ) => isRealmResourceWritable(realm.value, resource.realm_id);
-
         const hasEditPermission = usePermissionCheck({ name: PermissionName.USER_UPDATE });
         const hasDropPermission = usePermissionCheck({ name: PermissionName.USER_DELETE });
 
@@ -57,7 +53,6 @@ export default defineNuxtComponent({
 
         return {
             fields,
-            isResourceWritable,
             hasEditPermission,
             hasDropPermission,
             handleDeleted,
@@ -105,7 +100,7 @@ export default defineNuxtComponent({
                     <NuxtLink
                         :to="'/admin/users/'+ data.item.id"
                         class="btn btn-xs btn-outline-primary me-1"
-                        :disabled="!hasEditPermission || !isResourceWritable(data.item)"
+                        :disabled="!hasEditPermission"
                     >
                         <i class="fa-solid fa-bars" />
                     </NuxtLink>
@@ -114,7 +109,7 @@ export default defineNuxtComponent({
                         :entity-id="data.item.id"
                         entity-type="user"
                         :with-text="false"
-                        :disabled="!hasDropPermission || !isResourceWritable(data.item)"
+                        :disabled="!hasDropPermission"
                         @deleted="props.deleted"
                     />
                 </template>

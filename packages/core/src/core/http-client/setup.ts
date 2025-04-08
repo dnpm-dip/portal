@@ -15,12 +15,11 @@ import type { App } from 'vue';
 export function setupBaseHTTPClient(app: App, client: BaseClient) {
     const storeFactory = injectStoreFactory(app);
     const store = storeFactory();
-    const { refreshToken } = storeToRefs(store);
+    const { accessToken, refreshToken } = storeToRefs(store);
 
     const authupClient = injectHTTPClient(app);
 
     const tokenHook = new ClientResponseErrorTokenHook(
-        client,
         {
             baseURL: authupClient.getBaseURL(),
             tokenCreator: () => {
@@ -32,15 +31,21 @@ export function setupBaseHTTPClient(app: App, client: BaseClient) {
                     refresh_token: refreshToken.value,
                 });
             },
-            tokenCreated: (response) => {
-                store.handleTokenGrantResponse(response);
-            },
-            tokenFailed: () => {
-                store.logout();
-            },
             timer: false,
         },
     );
+
+    tokenHook.on('refreshFinished', (response) => {
+        store.applyTokenGrantResponse(response);
+    });
+
+    tokenHook.on('refreshFailed', () => {
+        store.logout();
+    });
+
+    if (accessToken.value) {
+        tokenHook.mount(client);
+    }
 
     store.$subscribe((mutation, state) => {
         if (mutation.storeId !== STORE_ID) return;
@@ -51,11 +56,11 @@ export function setupBaseHTTPClient(app: App, client: BaseClient) {
                 token: state.accessToken,
             });
 
-            tokenHook.mount();
+            tokenHook.mount(client);
         } else {
             client.unsetAuthorizationHeader();
 
-            tokenHook.unmount();
+            tokenHook.unmount(client);
         }
     });
 }

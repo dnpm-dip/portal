@@ -6,13 +6,12 @@
   -->
 
 <script lang="ts">
-
 import type { IdentityProvider } from '@authup/core-kit';
-import { PermissionName, isRealmResourceWritable } from '@authup/core-kit';
+import { PermissionName } from '@authup/core-kit';
 import {
     DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
 } from '@dnpm-dip/core';
-import { injectHTTPClient, injectStore, storeToRefs } from '@authup/client-web-kit';
+import { injectHTTPClient } from '@authup/client-web-kit';
 import { defineComponent, ref } from 'vue';
 import type { Ref } from 'vue';
 import {
@@ -45,7 +44,6 @@ export default defineComponent({
         ];
 
         const toast = useToast();
-        const store = injectStore();
         const route = useRoute();
         const authup = injectHTTPClient();
 
@@ -56,13 +54,6 @@ export default defineComponent({
                 .identityProvider
                 .getOne(route.params.id as string);
         } catch (e) {
-            await navigateTo({ path: '/admin/identity-providers' });
-            throw createError({});
-        }
-
-        const { realmManagement } = storeToRefs(store);
-
-        if (!isRealmResourceWritable(realmManagement.value, entity.value.realm_id)) {
             await navigateTo({ path: '/admin/identity-providers' });
             throw createError({});
         }

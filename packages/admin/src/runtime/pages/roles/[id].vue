@@ -6,10 +6,9 @@
   -->
 
 <script lang="ts">
-
 import { injectHTTPClient, injectStore, storeToRefs } from '@authup/client-web-kit';
 import type { Role } from '@authup/core-kit';
-import { PermissionName, isRealmResourceWritable } from '@authup/core-kit';
+import { PermissionName } from '@authup/core-kit';
 import {
     DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
 } from '@dnpm-dip/core';
@@ -51,7 +50,6 @@ export default defineComponent({
         ];
 
         const toast = useToast();
-        const store = injectStore();
         const route = useRoute();
         const authup = injectHTTPClient();
 
@@ -62,13 +60,6 @@ export default defineComponent({
                 .role
                 .getOne(route.params.id as string);
         } catch (e) {
-            await navigateTo({ path: '/admin/roles' });
-            throw createError({});
-        }
-
-        const { realmManagement } = storeToRefs(store);
-
-        if (!isRealmResourceWritable(realmManagement.value, entity.value.realm_id)) {
             await navigateTo({ path: '/admin/roles' });
             throw createError({});
         }
