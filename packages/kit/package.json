@@ -43,6 +43,6 @@
     "dependencies": {
         "@nuxt/schema": "^3.16.2",
         "@nuxt/kit": "^3.16.2",
-        "ufo": "^1.6.0"
+        "ufo": "^1.6.1"
     }
 }
