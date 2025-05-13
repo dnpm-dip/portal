@@ -24,7 +24,7 @@ export default defineComponent({
         const toggleExtended = () => {
             expanded.value = !expanded.value;
 
-            emit('update:modelValue', expanded);
+            emit('update:modelValue', expanded.value);
         };
 
         return {

@@ -4,12 +4,11 @@ import { defineNuxtComponent } from '#app';
 import RCopyNumberVariant from '../../../../../components/core/RCopyNumberVariant.vue';
 import RSmallVariant from '../../../../../components/core/RSmallVariant.vue';
 import RStructuralVariant from '../../../../../components/core/RStructuralVariant.vue';
-import VariantEntity from '../../../../../components/core/RVariant.vue';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
     components: {
-        RStructuralVariant, RCopyNumberVariant, RSmallVariant, VariantEntity,
+        RStructuralVariant, RCopyNumberVariant, RSmallVariant,
     },
     props: {
         entity: {

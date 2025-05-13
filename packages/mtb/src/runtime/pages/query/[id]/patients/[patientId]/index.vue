@@ -150,8 +150,11 @@ export default defineNuxtComponent({
                     <div>
                         <strong><i class="far fa-sticky-note" /> Notiz</strong>
                         <div class="d-flex flex-column">
-                            <template v-for="(note, index) in item.notes">
-                                <div :key="index">
+                            <template
+                                v-for="(note, index) in item.notes"
+                                :key="index"
+                            >
+                                <div>
                                     {{ note }}
                                 </div>
                             </template>

@@ -12,13 +12,13 @@ import type { PreparedQuery } from '../../../domains';
 import { PreparedQueryAPI } from '../../../domains';
 
 export default defineComponent({
-    slots: Object as SlotsType<ResourceCollectionSlots<PreparedQuery>>,
     props: {
         useCase: {
             type: String,
             required: true,
         },
     },
+    slots: Object as SlotsType<ResourceCollectionSlots<PreparedQuery>>,
     emits: defineResourceCollectionEvents<PreparedQuery>(),
     setup(props, setup) {
         const api = injectHTTPClient();
