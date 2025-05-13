@@ -29,10 +29,17 @@ export default defineNuxtComponent({
                     <div class="row mb-3">
                         <div class="col">
                             <div>
-                                <strong><i class="fas fa-calculator" /> Indikation</strong>
-                                {{ item.indication.display || item.indication.type }}
+                                <strong><i class="fas fa-calculator" /> Grund</strong>
+                                {{ item.reason.display || item.reason.type }}
                             </div>
-                            <div><strong><i class="fas fa-shield" /> Notizen</strong> {{ item.notes }}</div>
+                            <div v-if="item.notes">
+                                <strong><i class="fas fa-shield" /> Notizen</strong>
+                                <div class="d-flex flex-column">
+                                    <template v-for="note in item.notes">
+                                        {{ note }}
+                                    </template>
+                                </div>
+                            </div>
                         </div>
                         <div class="col">
                             <div><strong><i class="fa fa-clock" /> Erfassungsdatum</strong> {{ item.issuedOn }}</div>

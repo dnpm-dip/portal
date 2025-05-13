@@ -1,4 +1,9 @@
-import type { Coding, Patient, PatientMatchBase } from '@dnpm-dip/core';
+import type {
+    Coding,
+    ExternalId,
+    Patient,
+    PatientMatchBase,
+} from '@dnpm-dip/core';
 import type { QueryCriteria } from '../query';
 
 type Reference = {
@@ -17,8 +22,12 @@ export type PatientMatch = PatientMatchBase<QueryCriteria>;
 export type NGSReportSNV = {
     id: string,
     patient: Record<string, any>,
-    externalIds: Coding[],
+    externalIds?: ExternalId[],
     chromosome: Coding,
+    /**
+     * todo: new prop
+     */
+    localization?: Coding[],
     gene: Coding,
     transcriptId: Coding,
     position: {
@@ -35,24 +44,25 @@ export type NGSReportSNV = {
 
 export type NGSReportCNV = {
     id: string,
-    patient: Record<string, any>,
+    patient: Reference,
+    externalIds?: ExternalId[],
     chromosome: Coding,
-    startRange: {
+    startRange?: {
         start: number,
         end: number
     },
-    endRange: {
+    endRange?: {
         start: number,
         end: number
     },
-    totalCopyNumber: number,
+    totalCopyNumber?: number,
     relativeCopyNumber: number,
-    cnA: number,
-    cnB: number,
-    reportedAffectedGenes: Coding[],
-    reportedFocality: string,
+    cnA?: number,
+    cnB?: number,
+    reportedAffectedGenes?: Coding[],
+    reportedFocality?: string,
     type: Coding,
-    copyNumberNeutralLoH: Coding[]
+    copyNumberNeutralLoH?: Coding[]
 };
 
 export type NGSReportBRCAness = {
@@ -85,7 +95,15 @@ export type NGSDNAFusionPartner = {
  */
 export type NGSDNAFusion = {
     id: string,
-    patient: { type: string, id: string },
+    patient: Reference,
+    /**
+     * todo: new prop
+     */
+    externalIds?: ExternalId[],
+    /**
+     * todo: new prop
+     */
+    localization?: Coding[],
     fusionPartner5prime: NGSDNAFusionPartner,
     fusionPartner3prime: NGSDNAFusionPartner,
     reportedNumReads: number
@@ -104,10 +122,17 @@ export type NGSRNAFusionPartner = {
 export type NGSRNAFusion = {
     id: string,
     patient: { type: string, id: string },
+    /**
+     * todo: new prop
+     */
+    externalIds?: ExternalId[],
+    /**
+     * todo: new prop
+     */
+    localization?: Coding[],
     fusionPartner5prime: NGSRNAFusionPartner,
     fusionPartner3prime: NGSRNAFusionPartner,
     effect?: string,
-    externalIds: Record<string, any>[],
     reportedNumReads: number
 };
 
@@ -157,26 +182,67 @@ type Episode = {
     diagnoses: Reference[]
 };
 
+type DiagnosisType = {
+    value: Coding[],
+    date: string
+};
+
+type TumorStaging = {
+    date: string,
+    method: Coding,
+    tmnClassification?: {
+        tumor: Coding,
+        nodes: Coding,
+        metastasis: Coding,
+    },
+    otherClassifications?: Coding[]
+};
+
+type TumorGrading = {
+    date: string,
+    codes: Coding[]
+};
+
 type Diagnosis = {
     id: string,
     patient: Reference,
-    recordedOn?: string,
+    recordedOn: string,
+    /**
+     * todo: new type
+     */
+    type: History<DiagnosisType>,
+    /**
+     * todo: new type
+     */
+    germlineCodes?: Coding[],
     code: Coding,
-    topography?: Coding,
-    whoGrading?: Coding,
-    stageHistory: Record<string, any>[], // todo fix type
+    topography: Coding,
+    staging?: History<TumorStaging>,
+    grading?: History<TumorGrading>,
     guidelineTreatmentStatus?: Coding,
+    /**
+     * todo: new prop
+     */
+    histology?: Reference[],
+    /**
+     * todo: new prop
+     */
+    notes?: string[]
 };
 
-type MedicationTherapy = {
+type SystemicTherapy = {
     id: string,
     patient: Reference,
-    indication: Reference,
+    reason?: Reference,
     therapyLine?: number,
     basedOn?: Reference,
     recordedOn: string,
-    status?: Coding,
+    status: Coding,
     statusReason?: Coding,
+    /**
+     * todo: new prop
+     */
+    recommendationFulfillmentStatus?: Coding,
     period?: Period,
     medication?: Coding[],
     notes?: string
@@ -185,15 +251,19 @@ type MedicationTherapy = {
 type OncoProcedure = {
     id: string,
     patient: Reference,
-    indication: Reference,
+    reason?: Reference,
+    therapyLine?: number,
+    /**
+     * todo: new prop
+     */
+    intent?: Coding,
+    basedOn?: Reference,
     code: Coding,
     status: Coding,
     statusReason?: Coding,
-    therapyLine?: number,
-    basedOn?: Reference,
-    recordedOn?:string,
-    period: Period,
-    note?: string
+    recordedOn:string,
+    period?: Period,
+    notes: string[]
 };
 
 type PerformanceStatus = {
@@ -203,9 +273,8 @@ type PerformanceStatus = {
     value: Coding
 };
 
-// todo: fix type
 type TumorSpecimenCollection = {
-    date: string,
+    date?: string,
     method: Coding,
     localization: Coding
 };
@@ -240,11 +309,17 @@ type IHCReport = {
     id: string,
     patient: Reference,
     specimen: Reference,
+    /**
+     * @deprecated
+     */
     date: string,
-    journalId: any, // todo: fix type
-    blockId: any, // todo: fix type
-    proteinExpressionResults: ProteinExpression[],
-    msiMmrResults: ProteinExpression[]
+    issuedOn: string,
+    journalId: string,
+    blockIds: string[],
+    results: {
+        proteinExpressionResults: ProteinExpression[],
+        msiMmrResults: ProteinExpression[]
+    },
 };
 
 type LevelOfEvidence = {
@@ -253,14 +328,25 @@ type LevelOfEvidence = {
     publications?: {pmid: string, doi: string}[]
 };
 
-type MedicationRecommendation = {
+type Recommendation = {
+    levelOfEvidence?: LevelOfEvidence,
+};
+
+type MedicationRecommendation = Recommendation & {
     id: string,
     patient: Reference,
-    indication: Reference,
-    levelOfEvidence?: LevelOfEvidence,
+    reason: Reference,
     priority: Coding,
     issuedOn: string,
     medication: Coding[],
+    /**
+     * todo: new type
+     */
+    category?: Coding,
+    /**
+     * todo: new prop
+     */
+    useType?: Coding,
     supportingVariants: { id: string, display: string, type: string }[]
 };
 
@@ -281,23 +367,68 @@ type StudyEnrollmentRecommendation = {
     studyIds: string[]
 };
 
+type ProcedureRecommendation = Recommendation & {
+    id: string,
+    patient: Reference,
+    reason?: Reference,
+    issuedOn: string,
+    priority: Coding,
+    code: Coding,
+    supportingVariants?: Reference[]
+};
+
+type HistologyReevaluationRequest = {
+    id: string,
+    patient: Reference,
+    specimen: Reference,
+    issuedOn: string,
+};
+
+type RebiopsyRequest = {
+    id: string,
+    patient: Reference,
+    tumorEntity: Reference,
+    issuedOn: string,
+};
+
 type CarePlan = {
     id: string,
     patient: Reference,
-    indication: Reference,
+    reason: Reference,
     issuedOn: string,
     statusReason?: Coding,
-    notes?: string,
+    notes?: string[],
     medicationRecommendations?: MedicationRecommendation[],
     geneticCounselingRecommendation?: GeneticCounselingRecommendation,
-    studyEnrollmentRecommendations?: StudyEnrollmentRecommendation[]
+    /**
+     * todo: new prop
+     */
+    procedureRecommendations?: ProcedureRecommendation[],
+    studyEnrollmentRecommendations?: StudyEnrollmentRecommendation[],
+
+    /**
+     * todo: new prop
+     */
+    histologyReevaluationRequests?: HistologyReevaluationRequest[],
+    rebiopsyRequests?: RebiopsyRequest[]
 };
 
 type Claim = {
     id: string,
     patient: Reference,
     recommendation: Reference,
+    /**
+     * todo: new prop
+     */
+    requestedMedication?: Coding[],
     issuedOn: string,
+    /**
+     * todo: new prop
+     */
+    stage?: Coding,
+    /**
+     * @deprecated
+     */
     status: Coding
 };
 
@@ -318,11 +449,28 @@ type Response = {
     value: Coding
 };
 
+type FollowUp = {
+    date: string,
+    patient: Reference,
+    lastContactDate?: string,
+    patientStatus?: Coding
+};
+
+type MolecularDiagnosticReport = {
+    id: string,
+    patient: Reference,
+    performer?: Reference,
+    issuedOn: string,
+    specimen: Reference,
+    type: Coding,
+    results?: string[]
+};
+
 export type PatientRecord = {
     patient: Patient,
     episodesOfCare: Episode[],
     diagnoses?: Diagnosis[],
-    guidelineTherapies: MedicationTherapy[],
+    guidelineTherapies: SystemicTherapy[],
     guidelineProcedures: OncoProcedure[],
     performanceStatus: PerformanceStatus[],
     specimens?: TumorSpecimen,
@@ -332,6 +480,14 @@ export type PatientRecord = {
     carePlans?: CarePlan[],
     claims?: Claim[],
     claimResponses?: ClaimResponse[],
-    therapies?: History<MedicationTherapy>[],
-    responses?: Response[]
+    /**
+     * todo: new prop
+     */
+    followUps?: FollowUp[],
+    systemicTherapies?: History<SystemicTherapy>[],
+    responses?: Response[],
+    /**
+     * todo: new prop
+     */
+    priorDiagnosticReports?: MolecularDiagnosticReport[]
 };

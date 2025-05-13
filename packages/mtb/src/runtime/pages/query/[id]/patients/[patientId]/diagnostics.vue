@@ -123,7 +123,7 @@ export default defineNuxtComponent({
                         <template #default>
                             <div class="entity-card-group">
                                 <template
-                                    v-for="per in item.proteinExpressionResults"
+                                    v-for="per in item.results.proteinExpressionResults"
                                     :key="per.id"
                                 >
                                     <div class="entity-card mb-3">
@@ -148,7 +148,7 @@ export default defineNuxtComponent({
                         <template #default>
                             <div class="entity-card-group">
                                 <template
-                                    v-for="per in item.msiMmrResults"
+                                    v-for="per in item.results.msiMmrResults"
                                     :key="per.id"
                                 >
                                     <div class="entity-card mb-3">

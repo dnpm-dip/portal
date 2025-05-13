@@ -78,9 +78,9 @@ export default defineNuxtComponent({
                                     {{ idx > 0 ? ', ' : '' }} {{ el.display || el.code }}
                                 </template>
                             </div>
-                            <div>
-                                <strong><i class="fas fa-calculator" /> Indikation</strong>
-                                {{ item.indication.display || item.indication.type }}
+                            <div v-if="item.reason">
+                                <strong><i class="fas fa-calculator" /> Grund</strong>
+                                {{ item.reason.display || item.reason.type }}
                             </div>
                             <div v-if="item.period">
                                 <strong><i class="fas fa-calendar-alt" /> Zeitraum</strong>
@@ -122,13 +122,13 @@ export default defineNuxtComponent({
                     class="entity-card"
                     style="max-width: 350px"
                 >
-                    <div>
-                        <strong><i class="fas fa-calculator" /> Indikation</strong>
-                        {{ item.indication.display || item.indication.type }}
+                    <div v-if="item.reason">
+                        <strong><i class="fas fa-calculator" /> Grund</strong>
+                        {{ item.reason.display || item.reason.type }}
                     </div>
                     <div><strong><i class="fa fa-code" /> Code</strong> {{ item.code.display }}</div>
                     <div><strong><i class="fa fa-clock" /> Erfassungsdatum</strong> {{ item.recordedOn }}</div>
-                    <div>
+                    <div v-if="item.period">
                         <strong><i class="fas fa-calendar-alt" /> Zeitraum</strong>
                         {{ item.period.start }}
                         <template v-if="item.period.end">
@@ -149,7 +149,13 @@ export default defineNuxtComponent({
                     </div>
                     <div>
                         <strong><i class="far fa-sticky-note" /> Notiz</strong>
-                        {{ item.note }}
+                        <div class="d-flex flex-column">
+                            <template v-for="(note, index) in item.notes">
+                                <div :key="index">
+                                    {{ note }}
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </template>

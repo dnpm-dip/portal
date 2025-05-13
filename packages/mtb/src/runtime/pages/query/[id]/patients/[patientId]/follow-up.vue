@@ -19,12 +19,12 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <template v-if="record.therapies">
+    <template v-if="record.systemicTherapies">
         <div>
             <h5>Durchgeführte Therapien</h5>
         </div>
         <template
-            v-for="(history, key) in record.therapies"
+            v-for="(history, key) in record.systemicTherapies"
             :key="key"
         >
             <template
