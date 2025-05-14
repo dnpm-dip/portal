@@ -43,7 +43,7 @@
     },
     "dependencies": {
         "@posva/event-emitter": "^1.0.2",
-        "hapic": "^2.5.2",
+        "hapic": "^2.6.0",
         "smob": "^1.5.0",
         "ufo": "^1.6.0"
     },
@@ -54,7 +54,7 @@
         "chart.js": "^4.4.9",
         "@ilingo/vuelidate": "^5.0.4",
         "@nuxt/schema": "^3.16.2",
-        "@nuxt/kit": "^3.17.2",
+        "@nuxt/kit": "^3.17.3",
         "@vuecs/form-controls": "^2.3.0",
         "@vuecs/navigation": "^2.4.0",
         "@vuecs/link": "^1.0.0",
@@ -70,7 +70,7 @@
         "@authup/client-web-kit": "^1.0.0-beta.25",
         "chart.js": "^4.4.3",
         "@ilingo/vuelidate": "^5.0.4",
-        "@nuxt/kit": "^3.17.2",
+        "@nuxt/kit": "^3.17.3",
         "@vuecs/link": "^1.0.0",
         "@vuecs/form-controls": "^2.3.0",
         "@vuecs/navigation": "^2.4.0",
