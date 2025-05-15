@@ -24,9 +24,6 @@ export type NGSReportSNV = {
     patient: Record<string, any>,
     externalIds?: ExternalId[],
     chromosome: Coding,
-    /**
-     * todo: new prop
-     */
     localization?: Coding[],
     gene: Coding,
     transcriptId: Coding,
@@ -96,13 +93,7 @@ export type NGSDNAFusionPartner = {
 export type NGSDNAFusion = {
     id: string,
     patient: Reference,
-    /**
-     * todo: new prop
-     */
     externalIds?: ExternalId[],
-    /**
-     * todo: new prop
-     */
     localization?: Coding[],
     fusionPartner5prime: NGSDNAFusionPartner,
     fusionPartner3prime: NGSDNAFusionPartner,
@@ -122,13 +113,7 @@ export type NGSRNAFusionPartner = {
 export type NGSRNAFusion = {
     id: string,
     patient: Reference,
-    /**
-     * todo: new prop
-     */
     externalIds?: ExternalId[],
-    /**
-     * todo: new prop
-     */
     localization?: Coding[],
     fusionPartner5prime: NGSRNAFusionPartner,
     fusionPartner3prime: NGSRNAFusionPartner,
@@ -239,16 +224,10 @@ type SystemicTherapy = {
     recordedOn: string,
     status: Coding,
     statusReason?: Coding,
-    /**
-     * todo: new prop
-     */
     recommendationFulfillmentStatus?: Coding,
     period?: Period,
     medication?: Coding[],
-    notes?: string
-    /**
-     * todo: new prop
-     */
+    notes?: string[],
     dosage?: Coding,
 };
 
@@ -257,9 +236,6 @@ type OncoProcedure = {
     patient: Reference,
     reason?: Reference,
     therapyLine?: number,
-    /**
-     * todo: new prop
-     */
     intent?: Coding,
     basedOn?: Reference,
     code: Coding,
@@ -350,13 +326,7 @@ type MedicationRecommendation = Recommendation & {
     priority: Coding,
     issuedOn: string,
     medication: Coding[],
-    /**
-     * todo: new type
-     */
     category?: Coding,
-    /**
-     * todo: new prop
-     */
     useType?: Coding,
     supportingVariants: { id: string, display: string, type: string }[]
 };
@@ -407,7 +377,8 @@ type CarePlan = {
     patient: Reference,
     reason: Reference,
     issuedOn: string,
-    statusReason?: Coding,
+    noSequencingPerformedReason?: Coding,
+    recommendationsMissingReason?: Coding,
     notes?: string[],
     medicationRecommendations?: MedicationRecommendation[],
     geneticCounselingRecommendation?: GeneticCounselingRecommendation,

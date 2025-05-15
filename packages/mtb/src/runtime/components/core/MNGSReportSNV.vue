@@ -1,9 +1,11 @@
 <script lang="ts">
+import { DCodingCommaList } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineComponent, ref } from 'vue';
 import type { NGSReportSNV } from '../../domains';
 
 export default defineComponent({
+    components: { DCodingCommaList },
     props: {
         entity: {
             type: Object as PropType<NGSReportSNV>,
@@ -47,6 +49,10 @@ export default defineComponent({
                 class="d-flex flex-column"
                 style="flex: 1 1 0;"
             >
+                <div v-if="entity.localization">
+                    <strong>Lokalisierung</strong>
+                    <DCodingCommaList :items="entity.localization" />
+                </div>
                 <div>
                     <strong>Interpretation</strong> <small>{{ entity.interpretation.display }}</small>
                 </div>

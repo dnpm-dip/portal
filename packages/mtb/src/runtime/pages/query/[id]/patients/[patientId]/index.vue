@@ -1,11 +1,11 @@
 <script lang="ts">
-import { DPatient } from '@dnpm-dip/core';
+import { DCommaList, DPatient } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
-    components: { DPatient },
+    components: { DCommaList, DPatient },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -98,9 +98,13 @@ export default defineNuxtComponent({
                                 <strong><i class="fas fa-stethoscope" /> Therapie Linie</strong>
                                 {{ item.therapyLine }}
                             </div>
-                            <div>
+                            <div v-if="item.dosage">
+                                <strong><i class="fas fa-syringe" /> Dosierung</strong>
+                                {{ item.dosage.display || item.dosage.code }}
+                            </div>
+                            <div v-if="item.notes">
                                 <strong><i class="far fa-sticky-note" /> Notiz</strong>
-                                {{ item.notes }}
+                                <DCommaList :items="item.notes" />
                             </div>
                         </div>
                     </div>
@@ -146,6 +150,10 @@ export default defineNuxtComponent({
                     <div v-if="item.therapyLine">
                         <strong><i class="fas fa-stethoscope" /> Therapie Linie</strong>
                         {{ item.therapyLine }}
+                    </div>
+                    <div v-if="item.intent">
+                        <strong><i class="fas fa-bullseye" /> Absicht</strong>
+                        {{ item.intent.display || item.intent.code }}
                     </div>
                     <div>
                         <strong><i class="far fa-sticky-note" /> Notiz</strong>

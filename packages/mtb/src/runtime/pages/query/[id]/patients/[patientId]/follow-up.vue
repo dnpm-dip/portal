@@ -1,9 +1,11 @@
 <script lang="ts">
+import { DCodingCommaList, DCommaList } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
+    components: { DCodingCommaList, DCommaList },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -33,30 +35,24 @@ export default defineNuxtComponent({
                     <div class="row">
                         <div class="col">
                             <div>
-                                <div v-if="item.status">
-                                    <strong><i class="fas fa-check-circle" /> Status</strong> {{ item.status.display || item.status.code }}
-                                </div>
-                            </div>
-                            <div v-if="item.statusReason">
-                                <div>
-                                    <strong><i class="fas fa-info-circle" /> Status Grund</strong>
-                                    {{ item.statusReason.display || item.statusReason.code }}
-                                </div>
+                                <div><strong><i class="fa fa-clock" /> Erfassungsdatum</strong> {{ item.recordedOn }}</div>
                             </div>
                             <div>
+                                <div v-if="item.status">
+                                    <strong><i class="fas fa-check-circle" /> Status</strong>
+                                    {{ item.status.display || item.status.code }}
+
+                                    <template v-if="item.statusReason">
+                                        aufgrund von {{ item.statusReason.display || item.statusReason.code }}
+                                    </template>
+                                </div>
+                            </div>
+                            <div v-if="item.medication">
                                 <strong><i class="fa fa-pills" /> Medikation</strong>
-                                <template
-                                    v-for="(el, idx) in item.medication"
-                                    :key="el"
-                                >
-                                    {{ idx > 0 ? ', ' : '' }} {{ el.display || el.code }}
-                                </template>
+                                <DCodingCommaList :items="item.medication" />
                             </div>
                         </div>
                         <div class="col">
-                            <div>
-                                <div><strong><i class="fa fa-clock" /> Erfassungsdatum</strong> {{ item.recordedOn }}</div>
-                            </div>
                             <div v-if="item.period">
                                 <div>
                                     <strong><i class="fas fa-calendar-alt" /> Zeitraum</strong>
@@ -65,8 +61,15 @@ export default defineNuxtComponent({
                                     </template>
                                 </div>
                             </div>
-                            <div>
-                                <div><strong><i class="far fa-sticky-note" /> Notiz</strong> {{ item.notes }}</div>
+                            <div v-if="item.dosage">
+                                <strong><i class="fas fa-syringe" /> Dosierung</strong>
+                                {{ item.dosage.display || item.dosage.code }}
+                            </div>
+                            <div v-if="item.notes">
+                                <div>
+                                    <strong><i class="far fa-sticky-note" /> Notiz</strong>
+                                    <DCommaList :items="item.notes" />
+                                </div>
                             </div>
                         </div>
                     </div>

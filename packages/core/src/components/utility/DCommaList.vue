@@ -22,6 +22,6 @@ export default defineComponent({
         v-for="(item, index) in items"
         :key="item"
     >
-        {{ index > 0 ? ',' : '' }} item
+        {{ index > 0 ? ',' : '' }} {{ item }}
     </template>
 </template>

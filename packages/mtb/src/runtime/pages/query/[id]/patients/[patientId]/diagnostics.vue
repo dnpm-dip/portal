@@ -87,7 +87,7 @@ export default defineNuxtComponent({
                                 </div>
 
                                 <div><strong><i class="fa fa-code" /> Code</strong> {{ item.results.tumorMorphology.value.display }}</div>
-                                <div><strong><i class="far fa-sticky-note" /> Notiz</strong> {{ item.results.tumorMorphology.notes }}</div>
+                                <div><strong><i class="far fa-sticky-note" /> Notiz</strong> {{ item.results.tumorMorphology.note }}</div>
                             </div>
                             <div
                                 v-if="item.results.tumorCellContent"
