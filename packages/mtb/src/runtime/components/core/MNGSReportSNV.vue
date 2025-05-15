@@ -14,9 +14,10 @@ export default defineComponent({
 </script>
 <template>
     <div class="entity-card">
-        <div class="d-flex flex-row justify-content-between">
+        <div class="d-flex flex-row">
             <div
-                class="d-flex justify-content-between mb-2 flex-column"
+                class="d-flex flex-column"
+                style="flex: 1 1 0;"
             >
                 <div>
                     <strong>Gene</strong> {{ entity.gene.display }}
@@ -42,7 +43,10 @@ export default defineComponent({
                     <strong>Read Depth</strong> <small>{{ entity.readDepth }}</small>
                 </div>
             </div>
-            <div class="ms-3 d-flex flex-column justify-content-between mb-2 mt-2">
+            <div
+                class="d-flex flex-column"
+                style="flex: 1 1 0;"
+            >
                 <div>
                     <strong>Interpretation</strong> <small>{{ entity.interpretation.display }}</small>
                 </div>

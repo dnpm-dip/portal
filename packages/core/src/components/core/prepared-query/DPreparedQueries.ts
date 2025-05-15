@@ -18,8 +18,8 @@ export default defineComponent({
             required: true,
         },
     },
-    slots: Object as SlotsType<ResourceCollectionSlots<PreparedQuery>>,
     emits: defineResourceCollectionEvents<PreparedQuery>(),
+    slots: Object as SlotsType<ResourceCollectionSlots<PreparedQuery>>,
     setup(props, setup) {
         const api = injectHTTPClient();
         const preparedQueryAPI = new PreparedQueryAPI({ client: api, useCase: props.useCase });

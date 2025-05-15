@@ -121,7 +121,7 @@ export type NGSRNAFusionPartner = {
  */
 export type NGSRNAFusion = {
     id: string,
-    patient: { type: string, id: string },
+    patient: Reference,
     /**
      * todo: new prop
      */
@@ -160,13 +160,13 @@ export type NgsReportResults = {
     }
 };
 
-export type NGSReport = {
+export type SomaticNGSReport = {
     id: string,
     issuedOn: string,
     metadata: Record<string, any>[],
-    patient: { id: string, type: string },
+    patient: Reference,
     results: NgsReportResults,
-    sequencingType: Coding<string>
+    type: Coding<string>
 };
 
 type History<T = any> = {
@@ -246,6 +246,10 @@ type SystemicTherapy = {
     period?: Period,
     medication?: Coding[],
     notes?: string
+    /**
+     * todo: new prop
+     */
+    dosage?: Coding,
 };
 
 type OncoProcedure = {
@@ -287,12 +291,23 @@ type TumorSpecimen = {
     collection?: TumorSpecimenCollection
 };
 
+type HistologyReportResults = {
+    tumorMorphology: {
+        id: string,
+        patient: Reference,
+        specimen: Reference,
+        value: Coding,
+        notes?: string
+    }
+    tumorCellContent?: Record<string, any>
+};
+
 type HistologyReport = {
     id: string,
+    issuedOn: string,
     patient: Reference,
     specimen: Reference,
-    value: Coding,
-    notes?: string
+    results: HistologyReportResults
 };
 
 type ProteinExpression = {
@@ -309,16 +324,12 @@ type IHCReport = {
     id: string,
     patient: Reference,
     specimen: Reference,
-    /**
-     * @deprecated
-     */
-    date: string,
     issuedOn: string,
     journalId: string,
     blockIds: string[],
     results: {
-        proteinExpressionResults: ProteinExpression[],
-        msiMmrResults: ProteinExpression[]
+        proteinExpression: ProteinExpression[],
+        msiMmr: ProteinExpression[]
     },
 };
 
@@ -473,10 +484,10 @@ export type PatientRecord = {
     guidelineTherapies: SystemicTherapy[],
     guidelineProcedures: OncoProcedure[],
     performanceStatus: PerformanceStatus[],
-    specimens?: TumorSpecimen,
+    specimens?: TumorSpecimen[],
     histologyReports?: HistologyReport[],
     ihcReports?: IHCReport[],
-    ngsReports?: NGSReport[],
+    ngsReports?: SomaticNGSReport[],
     carePlans?: CarePlan[],
     claims?: Claim[],
     claimResponses?: ClaimResponse[],
