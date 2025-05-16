@@ -1,21 +1,13 @@
 import type {
     Coding,
     ExternalId,
+    History,
     Patient,
     PatientMatchBase,
+    Period,
+    Reference,
 } from '@dnpm-dip/core';
 import type { QueryCriteria } from '../query';
-
-type Reference = {
-    id: string,
-    type: string,
-    display?: string
-};
-
-type Period = {
-    start: string,
-    end?: string
-};
 
 export type PatientMatch = PatientMatchBase<QueryCriteria>;
 
@@ -154,10 +146,6 @@ export type SomaticNGSReport = {
     type: Coding<string>
 };
 
-type History<T = any> = {
-    history: T[]
-};
-
 type Episode = {
     id: string,
     ttan?: string
@@ -215,11 +203,22 @@ type Diagnosis = {
     notes?: string[]
 };
 
+/**
+ * @see https://github.com/dnpm-dip/mtb-model/blob/870b45145bf852c6d74ff755badcc0ff87a276e7/dto_model/src/main/scala/de/dnpm/dip/mtb/model/Therapies.scala
+ */
 type SystemicTherapy = {
     id: string,
     patient: Reference,
     reason?: Reference,
     therapyLine?: number,
+    /**
+     * todo new prop
+     */
+    intent?: Coding,
+    /**
+     * todo new prop
+     */
+    category?: Coding,
     basedOn?: Reference,
     recordedOn: string,
     status: Coding,
