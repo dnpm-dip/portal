@@ -3,13 +3,18 @@ import { DExpandableContent } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import MNGSReportCNV from '../../../../../components/core/MNGSReportCNV.vue';
-import MNGSReportFusion from '../../../../../components/core/MNGSReportFusion.vue';
+import MngsReportDnaFusion from '../../../../../components/core/MNGSReportDNAFusion.vue';
+import MNGSReportRNAFusion from '../../../../../components/core/MNGSReportRNAFusion.vue';
 import MNgsReportSNV from '../../../../../components/core/MNGSReportSNV.vue';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
     components: {
-        MNGSReportFusion, DExpandableContent, MNGSReportCNV, MNgsReportSNV,
+        MNGSReportRNAFusion,
+        MngsReportDnaFusion,
+        DExpandableContent,
+        MNGSReportCNV,
+        MNgsReportSNV,
     },
     props: {
         entity: {
@@ -38,18 +43,20 @@ export default defineNuxtComponent({
                                 <strong><i class="fas fa-shield" /> Art</strong>
                                 {{ item.type.display || item.type.code }}
                             </div>
-                            <div>
-                                <strong><i class="fa fa-clock" /> Entnahmedatum</strong>
-                                {{ item.collection.date }}
-                            </div>
-                            <div>
-                                <strong><i class="fas fa-flask" /> Entnahmemethode</strong>
-                                {{ item.collection.method.display || item.collection.method.code }}
-                            </div>
-                            <div>
-                                <strong><i class="fas fa-compass" /> Lokalisierung</strong>
-                                {{ item.collection.localization.display || item.collection.localization.code }}
-                            </div>
+                            <template v-if="item.collection">
+                                <div>
+                                    <strong><i class="fa fa-clock" /> Entnahmedatum</strong>
+                                    {{ item.collection.date }}
+                                </div>
+                                <div>
+                                    <strong><i class="fas fa-flask" /> Entnahmemethode</strong>
+                                    {{ item.collection.method.display || item.collection.method.code }}
+                                </div>
+                                <div>
+                                    <strong><i class="fas fa-compass" /> Lokalisierung</strong>
+                                    {{ item.collection.localization.display || item.collection.localization.code }}
+                                </div>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -80,9 +87,12 @@ export default defineNuxtComponent({
                                 </div>
 
                                 <div><strong><i class="fa fa-code" /> Code</strong> {{ item.results.tumorMorphology.value.display }}</div>
-                                <div><strong><i class="far fa-sticky-note" /> Notiz</strong> {{ item.results.tumorMorphology.notes }}</div>
+                                <div><strong><i class="far fa-sticky-note" /> Notiz</strong> {{ item.results.tumorMorphology.note }}</div>
                             </div>
-                            <div class="col">
+                            <div
+                                v-if="item.results.tumorCellContent"
+                                class="col"
+                            >
                                 <div class="text-center">
                                     <strong>Tumor-Zellgehalt</strong>
                                 </div>
@@ -114,7 +124,7 @@ export default defineNuxtComponent({
             >
                 <div class="entity-card">
                     <div class="mb-3">
-                        <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.date }}</div>
+                        <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.issuedOn }}</div>
                     </div>
                     <DExpandableContent>
                         <template #header>
@@ -123,7 +133,7 @@ export default defineNuxtComponent({
                         <template #default>
                             <div class="entity-card-group">
                                 <template
-                                    v-for="per in item.proteinExpressionResults"
+                                    v-for="per in item.results.proteinExpression"
                                     :key="per.id"
                                 >
                                     <div class="entity-card mb-3">
@@ -148,7 +158,7 @@ export default defineNuxtComponent({
                         <template #default>
                             <div class="entity-card-group">
                                 <template
-                                    v-for="per in item.msiMmrResults"
+                                    v-for="per in item.results.msiMmr"
                                     :key="per.id"
                                 >
                                     <div class="entity-card mb-3">
@@ -188,8 +198,8 @@ export default defineNuxtComponent({
                                 </div>
                                 <div>
                                     <strong>
-                                        <i class="fa fa-dna" /> Sequenzierungs-Typ</strong>
-                                    {{ item.sequencingType.display || item.sequencingType.code }}
+                                        <i class="fa fa-dna" /> Typ</strong>
+                                    {{ item.type.display || item.type.code }}
                                 </div>
                             </div>
                         </div>
@@ -255,7 +265,7 @@ export default defineNuxtComponent({
                                     v-for="el in item.results.dnaFusions"
                                     :key="el.id"
                                 >
-                                    <MNGSReportFusion
+                                    <MngsReportDnaFusion
                                         :entity="el"
                                         class="mb-1"
                                     />
@@ -273,7 +283,7 @@ export default defineNuxtComponent({
                                     v-for="el in item.results.rnaFusions"
                                     :key="el.id"
                                 >
-                                    <MNGSReportFusion
+                                    <MNGSReportRNAFusion
                                         :entity="el"
                                         class="mb-1"
                                     />

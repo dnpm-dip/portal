@@ -4,15 +4,12 @@ import {
     DNav, DQueryFilterContainer, DQueryInfoBox, DQueryPatientFilters, type QueryBase, injectQueryEventBus,
 } from '@dnpm-dip/core';
 import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
-import { BModal } from 'bootstrap-vue-next';
 import type { PropType } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
 import MQueryCriteriaModal from '../../../components/core/query-criteria/MQueryCriteriaModal.vue';
 import MQueryCriteriaSummary from '../../../components/core/query-criteria/MQueryCriteriaSummary.vue';
-import MQueryCriteriaSummaryBox from '../../../components/core/query-criteria/MQueryCriteriaSummaryBox.vue';
 import MQueryDiagnosisFilter from '../../../components/core/query-filter/MQueryDiagnosisFilter.vue';
 import MQueryMedicationFilter from '../../../components/core/query-filter/MQueryMedicationFilter.vue';
-import MSearchForm from '../../../components/core/search/MSearchForm.vue';
 import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
@@ -21,10 +18,7 @@ export default defineNuxtComponent({
         DQueryFilterContainer,
         MQueryMedicationFilter,
         MQueryDiagnosisFilter,
-        MQueryCriteriaSummaryBox,
         MQueryCriteriaSummary,
-        BModal,
-        MSearchForm,
         DQueryPatientFilters,
         DQueryInfoBox,
         DNav,
@@ -35,6 +29,7 @@ export default defineNuxtComponent({
             required: true,
         },
     },
+    emits: ['updated', 'failed'],
     setup(props, { emit }) {
         const route = useRoute();
         const queryEventBus = injectQueryEventBus();

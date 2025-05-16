@@ -12,7 +12,6 @@ import type { PreparedQuery } from '../../../domains';
 import { PreparedQueryAPI } from '../../../domains';
 
 export default defineComponent({
-    slots: Object as SlotsType<ResourceCollectionSlots<PreparedQuery>>,
     props: {
         useCase: {
             type: String,
@@ -20,6 +19,7 @@ export default defineComponent({
         },
     },
     emits: defineResourceCollectionEvents<PreparedQuery>(),
+    slots: Object as SlotsType<ResourceCollectionSlots<PreparedQuery>>,
     setup(props, setup) {
         const api = injectHTTPClient();
         const preparedQueryAPI = new PreparedQueryAPI({ client: api, useCase: props.useCase });

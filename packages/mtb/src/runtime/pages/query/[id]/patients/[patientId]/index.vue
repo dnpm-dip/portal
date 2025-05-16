@@ -1,11 +1,11 @@
 <script lang="ts">
-import { DPatient } from '@dnpm-dip/core';
+import { DCommaList, DPatient } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
-    components: { DPatient },
+    components: { DCommaList, DPatient },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -78,9 +78,9 @@ export default defineNuxtComponent({
                                     {{ idx > 0 ? ', ' : '' }} {{ el.display || el.code }}
                                 </template>
                             </div>
-                            <div>
-                                <strong><i class="fas fa-calculator" /> Indikation</strong>
-                                {{ item.indication.display || item.indication.type }}
+                            <div v-if="item.reason">
+                                <strong><i class="fas fa-calculator" /> Grund</strong>
+                                {{ item.reason.display || item.reason.type }}
                             </div>
                             <div v-if="item.period">
                                 <strong><i class="fas fa-calendar-alt" /> Zeitraum</strong>
@@ -98,9 +98,13 @@ export default defineNuxtComponent({
                                 <strong><i class="fas fa-stethoscope" /> Therapie Linie</strong>
                                 {{ item.therapyLine }}
                             </div>
-                            <div>
+                            <div v-if="item.dosage">
+                                <strong><i class="fas fa-syringe" /> Dosierung</strong>
+                                {{ item.dosage.display || item.dosage.code }}
+                            </div>
+                            <div v-if="item.notes">
                                 <strong><i class="far fa-sticky-note" /> Notiz</strong>
-                                {{ item.notes }}
+                                <DCommaList :items="item.notes" />
                             </div>
                         </div>
                     </div>
@@ -122,13 +126,13 @@ export default defineNuxtComponent({
                     class="entity-card"
                     style="max-width: 350px"
                 >
-                    <div>
-                        <strong><i class="fas fa-calculator" /> Indikation</strong>
-                        {{ item.indication.display || item.indication.type }}
+                    <div v-if="item.reason">
+                        <strong><i class="fas fa-calculator" /> Grund</strong>
+                        {{ item.reason.display || item.reason.type }}
                     </div>
                     <div><strong><i class="fa fa-code" /> Code</strong> {{ item.code.display }}</div>
                     <div><strong><i class="fa fa-clock" /> Erfassungsdatum</strong> {{ item.recordedOn }}</div>
-                    <div>
+                    <div v-if="item.period">
                         <strong><i class="fas fa-calendar-alt" /> Zeitraum</strong>
                         {{ item.period.start }}
                         <template v-if="item.period.end">
@@ -147,9 +151,22 @@ export default defineNuxtComponent({
                         <strong><i class="fas fa-stethoscope" /> Therapie Linie</strong>
                         {{ item.therapyLine }}
                     </div>
+                    <div v-if="item.intent">
+                        <strong><i class="fas fa-bullseye" /> Absicht</strong>
+                        {{ item.intent.display || item.intent.code }}
+                    </div>
                     <div>
                         <strong><i class="far fa-sticky-note" /> Notiz</strong>
-                        {{ item.note }}
+                        <div class="d-flex flex-column">
+                            <template
+                                v-for="(note, index) in item.notes"
+                                :key="index"
+                            >
+                                <div>
+                                    {{ note }}
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </template>

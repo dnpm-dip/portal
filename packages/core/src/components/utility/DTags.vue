@@ -79,7 +79,7 @@ export default defineComponent({
                 emit('deleted', tags.value[index]);
             }
 
-            emit('update:modelValue', tags);
+            emit('update:modelValue', tags.value);
         };
 
         return {

@@ -14,9 +14,10 @@ export default defineComponent({
 </script>
 <template>
     <div class="entity-card">
-        <div class="d-flex flex-row justify-content-between">
+        <div class="d-flex flex-row">
             <div
-                class="d-flex justify-content-between mb-2 flex-column"
+                class="d-flex flex-column"
+                style="flex: 1 1 0;"
             >
                 <div>
                     <strong>Chromosome</strong> <small>{{ entity.chromosome.display }}</small>
@@ -24,7 +25,7 @@ export default defineComponent({
                 <div>
                     <strong>Type</strong> <small>{{ entity.type.display || entity.type.code }}</small>
                 </div>
-                <div>
+                <div v-if="entity.reportedAffectedGenes">
                     <strong>Betroffene Gene</strong>
                     <template
                         v-for="(item, idx) in entity.reportedAffectedGenes"
@@ -33,22 +34,25 @@ export default defineComponent({
                         {{ idx > 0 ? ', ' : '' }} {{ item.display || item.code }}
                     </template>
                 </div>
-                <div>
+                <div v-if="entity.startRange">
                     <strong>Anfangsbereich</strong> <small>{{ entity.startRange.start }} - {{ entity.startRange.end }}</small>
                 </div>
 
-                <div>
+                <div v-if="entity.endRange">
                     <strong>Endbereich</strong> <small>{{ entity.endRange.start }} - {{ entity.endRange.end }}</small>
                 </div>
             </div>
-            <div class="ms-3 d-flex flex-column justify-content-between mb-2 mt-2">
-                <div>
+            <div
+                class="ms-3 d-flex flex-column"
+                style="flex: 1 1 0;"
+            >
+                <div v-if="entity.totalCopyNumber">
                     <strong>Kopienzahl (insgesamt)</strong> <small>{{ entity.totalCopyNumber }}</small>
                 </div>
-                <div>
+                <div v-if="entity.relativeCopyNumber">
                     <strong>Kopienzahl (relativ)</strong> <small>{{ entity.relativeCopyNumber }}</small>
                 </div>
-                <div>
+                <div v-if="entity.copyNumberNeutralLoH">
                     <strong>Kopienzahl (LoH)</strong>
                     <template
                         v-for="(item, idx) in entity.copyNumberNeutralLoH"
@@ -58,11 +62,11 @@ export default defineComponent({
                     </template>
                 </div>
 
-                <div>
+                <div v-if="entity.cnA">
                     <strong>CNA</strong> <small>{{ entity.cnA.toFixed(2) }}</small>
                 </div>
 
-                <div>
+                <div v-if="entity.cnB">
                     <strong>CNB</strong> <small>{{ entity.cnB.toFixed(2) }}</small>
                 </div>
             </div>

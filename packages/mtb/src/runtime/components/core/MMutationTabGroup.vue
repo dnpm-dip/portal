@@ -26,13 +26,13 @@ export default defineComponent({
     components: {
         DCollectionTransform, VCFormSelectSearch, DCodeSystem, VCFormSelect,
     },
-    emit: ['saved'],
     props: {
         entity: {
             type: Object as PropType<FormTabInput<QueryGeneAlterationCriteria>>,
             required: true,
         },
     },
+    emits: ['saved'],
     setup(props, { emit }) {
         const entity = toRef(props, 'entity');
         const form = reactive<Partial<QueryGeneAlterationCriteria<string>>>({

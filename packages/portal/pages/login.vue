@@ -6,8 +6,6 @@ import {
     AIdentityProviderIcon,
     AIdentityProviders,
     APagination,
-    ASearch,
-    ATitle,
     injectHTTPClient,
     injectStore,
 } from '@authup/client-web-kit';
@@ -30,8 +28,6 @@ import {
 export default defineNuxtComponent({
     components: {
         APagination,
-        ASearch,
-        ATitle,
         AIdentityProviders,
         AIdentityProviderIcon,
         IVuelidate,

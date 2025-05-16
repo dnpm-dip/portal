@@ -1,4 +1,4 @@
-import type { Patient } from '@dnpm-dip/core';
+import type { ExternalId, Patient } from '@dnpm-dip/core';
 import type { Diagnosis } from '../diagnosis';
 
 type Period = {
@@ -11,10 +11,7 @@ type Period = {
  */
 export type Case = {
     id: string,
-    externalId?: {
-        value: string,
-        system?: string
-    },
+    externalId?: ExternalId,
     patient: Patient,
     transferTan?: string,
     period: Period,

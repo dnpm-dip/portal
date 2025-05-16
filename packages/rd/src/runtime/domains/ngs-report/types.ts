@@ -1,11 +1,4 @@
-import type { Coding, Patient } from '@dnpm-dip/core';
-
-type Reference = {
-    id: string,
-    type: string,
-    extId?: { value: string, system: string },
-    display?: string
-};
+import type { Coding, Patient, Reference } from '@dnpm-dip/core';
 
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-rd-model/blob/main/dto_model/src/main/scala/de/dnpm/dip/rd/model/Observations.scala
@@ -54,25 +47,25 @@ export type CopyNumberVariant = Variant & {
     type?: Coding,
 };
 
+type SequencingInfo = {
+    platform: Coding,
+    kit: string
+};
+
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-rd-model/blob/main/dto_model/src/main/scala/de/dnpm/dip/rd/model/RDNGSReport.scala
  */
 export type NGSReport = {
     id: string,
     patient: Patient,
-    performingLab: {
-        display: string
-    },
-    issuedOn?: string,
-    sequencingType: Coding,
-    familyControls: Coding,
-    sequencingInfo: {
-        platform: Coding,
-        kit: string
-    },
-    autozygosity?: Pick<Autozygosity, 'value'>,
-
-    smallVariants?: SmallVariant[],
-    copyNumberVariants?: CopyNumberVariant[],
-    structuralVariants?: StructuralVariant[],
+    issuedOn: string,
+    type: Coding,
+    sequencingInfo: SequencingInfo,
+    conclusion?: Coding,
+    results?: {
+        autozygosity?: Pick<Autozygosity, 'value'>,
+        smallVariants?: SmallVariant[],
+        copyNumberVariants?: CopyNumberVariant[],
+        structuralVariants?: StructuralVariant[],
+    }
 };

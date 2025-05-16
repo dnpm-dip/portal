@@ -6,8 +6,10 @@ import type { Coding, Patient } from '@dnpm-dip/core';
 export type Diagnosis = {
     id: string,
     patient: Patient,
-    recordedOn?: string,
-    categories: Coding[], // todo: check type
-    onsetAge?: unknown, // todo: check type
+    recordedOn: string,
+    onsetDate: string,
+    familyControlLevel: Coding<'single-genome' | 'duo-genome' | 'trio-genome'>,
     verificationStatus: Coding<'solved' | 'partially-solved' | 'unclear' | 'unsolved'>
+    codes: Coding[],
+    missingCodeReason?: Coding,
 };

@@ -31,6 +31,7 @@ export default defineNuxtComponent({
             required: true,
         },
     },
+    emits: ['failed', 'updated'],
     setup(props, { emit }) {
         const route = useRoute();
         const queryEventBus = injectQueryEventBus();

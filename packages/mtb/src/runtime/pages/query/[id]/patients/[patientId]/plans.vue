@@ -1,11 +1,11 @@
 <script lang="ts">
-import { DPatient } from '@dnpm-dip/core';
+import { DCodingCommaList } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
-    components: { DPatient },
+    components: { DCodingCommaList },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -29,17 +29,30 @@ export default defineNuxtComponent({
                     <div class="row mb-3">
                         <div class="col">
                             <div>
-                                <strong><i class="fas fa-calculator" /> Indikation</strong>
-                                {{ item.indication.display || item.indication.type }}
+                                <strong><i class="fas fa-calculator" /> Grund</strong>
+                                {{ item.reason.display || item.reason.type }}
                             </div>
-                            <div><strong><i class="fas fa-shield" /> Notizen</strong> {{ item.notes }}</div>
+                            <div v-if="item.notes">
+                                <strong><i class="fas fa-shield" /> Notizen</strong>
+                                <div class="d-flex flex-column">
+                                    <template v-for="note in item.notes">
+                                        {{ note }}
+                                    </template>
+                                </div>
+                            </div>
                         </div>
                         <div class="col">
                             <div><strong><i class="fa fa-clock" /> Erfassungsdatum</strong> {{ item.issuedOn }}</div>
-                            <div v-if="item.statusReason">
+                            <div v-if="item.noSequencingPerformedReason">
                                 <div>
-                                    <strong><i class="fas fa-info-circle" /> Status Grund</strong>
-                                    {{ item.statusReason.display || item.statusReason.code }}
+                                    <strong><i class="fas fa-info-circle" /> Grund für keine Sequenzierung</strong>
+                                    {{ item.noSequencingPerformedReason.display || item.noSequencingPerformedReason.code }}
+                                </div>
+                            </div>
+                            <div v-if="item.recommendationsMissingReason">
+                                <div>
+                                    <strong><i class="fas fa-info-circle" /> Grund für fehlende Empfehlung</strong>
+                                    {{ item.recommendationsMissingReason.display || item.recommendationsMissingReason.code }}
                                 </div>
                             </div>
                         </div>
@@ -61,12 +74,15 @@ export default defineNuxtComponent({
                                         <div><strong><i class="fa fa-clock" /> Datum</strong> {{ recommendation.issuedOn }}</div>
                                         <div v-if="recommendation.medication">
                                             <strong><i class="fa fa-pills" /> Medikation</strong>
-                                            <template
-                                                v-for="(el, idx) in recommendation.medication"
-                                                :key="el"
-                                            >
-                                                {{ idx > 0 ? ', ' : '' }} {{ el.display || el.code }}
-                                            </template>
+                                            <DCodingCommaList :items="recommendation.medication" />
+                                        </div>
+                                        <div v-if="recommendation.category">
+                                            <strong><i class="fa fa-tags" /> Kategorie</strong>
+                                            {{ recommendation.category.display || recommendation.category.code }}
+                                        </div>
+                                        <div v-if="recommendation.useType">
+                                            <strong><i class="fa fa-toolbox" /> Verwendungstyp</strong>
+                                            {{ recommendation.useType.display || recommendation.useType.code }}
                                         </div>
                                         <div v-if="recommendation.supportingVariants">
                                             <strong><i class="fas fa-check-circle" /> Stützende molekulare Alterationen</strong><br>
@@ -87,12 +103,7 @@ export default defineNuxtComponent({
                                                 {{ recommendation.levelOfEvidence.grading.display || recommendation.levelOfEvidence.grading.code }}
 
                                                 (<template v-if="recommendation.levelOfEvidence.addendums">
-                                                    <template
-                                                        v-for="(el, idx) in recommendation.levelOfEvidence?.addendums"
-                                                        :key="el"
-                                                    >
-                                                        {{ idx > 0 ? ', ' : '' }} {{ el.display || el.code }}
-                                                    </template>
+                                                    <DCodingCommaList :items="recommendation.levelOfEvidence.addendums" />
                                                 </template>)
                                             </div>
                                         </template>

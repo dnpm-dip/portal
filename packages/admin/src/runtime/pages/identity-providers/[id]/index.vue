@@ -20,7 +20,7 @@ export default defineNuxtComponent({
         },
     },
     emits: ['updated', 'failed'],
-    setup(props, { emit }) {
+    setup(_props, { emit }) {
         definePageMeta({
             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
             [PageMetaKey.REQUIRED_PERMISSIONS]: [
@@ -40,7 +40,6 @@ export default defineNuxtComponent({
 
         return {
             apiUrl: runtimeConfig.public.apiUrl as string,
-            entity: props.entity,
             handleUpdated,
             handleFailed,
         };

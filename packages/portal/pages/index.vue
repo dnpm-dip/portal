@@ -15,7 +15,6 @@
 <script lang="ts">
 import { computed } from 'vue';
 import { ModuleType, PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
-import { VCLink } from '@vuecs/link';
 import { storeToRefs } from '@authup/client-web-kit';
 import { defineNuxtComponent, definePageMeta } from '#imports';
 import ModuleMetaCard from '../components/ModuleMetaCard.vue';
@@ -26,7 +25,6 @@ export default defineNuxtComponent({
     components: {
         ModuleMetaCard,
         WorldHealth,
-        VCLink,
     },
     setup() {
         definePageMeta({

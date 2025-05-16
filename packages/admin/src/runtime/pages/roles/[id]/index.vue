@@ -17,7 +17,7 @@ export default defineNuxtComponent({
         },
     },
     emits: ['updated', 'failed'],
-    setup(props, { emit }) {
+    setup(_props, { emit }) {
         definePageMeta({
             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
         });
@@ -31,7 +31,6 @@ export default defineNuxtComponent({
         };
 
         return {
-            entity: props.entity,
             handleUpdated,
             handleFailed,
         };
