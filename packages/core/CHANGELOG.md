@@ -1,5 +1,13 @@
 # @dnpm-dip/core
 
+## [1.34.1](https://github.com/dnpm-dip/portal/compare/v1.34.0...v1.34.1) (2025-05-16)
+
+
+### Bug Fixes
+
+* **deps:** bump the minorandpatch group across 1 directory with 23 updates ([#1044](https://github.com/dnpm-dip/portal/issues/1044)) ([4f807e2](https://github.com/dnpm-dip/portal/commit/4f807e2b199c95778cc850aa0127843e8a01ca7f))
+* **deps:** bump the minorandpatch group across 1 directory with 6 updates ([#1054](https://github.com/dnpm-dip/portal/issues/1054)) ([7c2b3b2](https://github.com/dnpm-dip/portal/commit/7c2b3b273bf99188eec7281862e97b4bb642b8f2))
+
 ## [1.34.0](https://github.com/dnpm-dip/portal/compare/v1.33.0...v1.34.0) (2025-04-08)
 
 

@@ -1,5 +1,27 @@
 # @dnpm-dip/rare-diseases
 
+## [1.34.0](https://github.com/dnpm-dip/portal/compare/v1.33.0...v1.34.0) (2025-05-16)
+
+
+### Features
+
+* migrated to authup v1.0.0-beta.25 ([d30b4d4](https://github.com/dnpm-dip/portal/commit/d30b4d4e1057aac9ecfafb2a95cedcce97866633))
+
+
+### Bug Fixes
+
+* **deps:** bump the minorandpatch group across 1 directory with 23 updates ([#1044](https://github.com/dnpm-dip/portal/issues/1044)) ([4f807e2](https://github.com/dnpm-dip/portal/commit/4f807e2b199c95778cc850aa0127843e8a01ca7f))
+* **deps:** bump the minorandpatch group across 1 directory with 4 updates ([#1028](https://github.com/dnpm-dip/portal/issues/1028)) ([39f9053](https://github.com/dnpm-dip/portal/commit/39f905308671c52774cbc63f054e8cc57cdea3ef))
+* **deps:** bump the minorandpatch group across 1 directory with 6 updates ([#1054](https://github.com/dnpm-dip/portal/issues/1054)) ([7c2b3b2](https://github.com/dnpm-dip/portal/commit/7c2b3b273bf99188eec7281862e97b4bb642b8f2))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.34.0 to ^1.34.1
+    * @dnpm-dip/kit bumped from ^1.28.0 to ^1.28.1
+
 ## [1.33.0](https://github.com/dnpm-dip/portal/compare/v1.32.0...v1.33.0) (2025-04-08)
 
 
