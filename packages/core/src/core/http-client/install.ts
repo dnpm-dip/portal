@@ -8,11 +8,11 @@
 import type { App } from 'vue';
 import { HTTPClient as Client } from './module';
 import { setupBaseHTTPClient } from './setup';
-import { isAPIClientInjected, provideHTTPClient } from './di';
+import { isHTTPIClientInjected, provideHTTPClient } from './di';
 import type { BaseHTTPClientInstallOptions } from './types';
 
 export function installHTTPClient(app: App, options: BaseHTTPClientInstallOptions) {
-    if (isAPIClientInjected(app)) {
+    if (isHTTPIClientInjected(app)) {
         return;
     }
 

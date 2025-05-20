@@ -5,7 +5,7 @@ import type { HTTPClient } from './module';
 
 export const APIClientSymbol = Symbol.for('APIClient');
 
-export function isAPIClientInjected(app?: App) {
+export function isHTTPIClientInjected(app?: App) {
     return !!inject(APIClientSymbol, app);
 }
 
