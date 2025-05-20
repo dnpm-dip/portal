@@ -24,6 +24,7 @@ export default defineComponent({
     props: {
         entity: Object as PropType<QueryGeneAlterationSNVCriteria>,
     },
+    emits: ['updated'],
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
         const form = reactive<Partial<QueryGeneAlterationSNVCriteria<string>>>({

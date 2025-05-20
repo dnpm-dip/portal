@@ -14,3 +14,5 @@ export * from './utility';
 export * from './api';
 export * from './check';
 export * from './types';
+
+export * from './core';

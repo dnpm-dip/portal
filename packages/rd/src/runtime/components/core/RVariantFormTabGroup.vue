@@ -19,13 +19,13 @@ export default defineComponent({
     components: {
         IVuelidate, DCollectionTransform, DCodeSystem, VCFormSelectSearch,
     },
-    emit: ['saved'],
     props: {
         entity: {
             type: Object as PropType<FormTab<QueryCriteriaVariant<string>>>,
             required: true,
         },
     },
+    emits: ['saved'],
     setup(props, { emit }) {
         const entity = toRef(props, 'entity');
 

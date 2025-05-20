@@ -26,6 +26,7 @@ export default defineComponent({
     props: {
         entity: Object as PropType<QueryGeneAlterationFusionCriteria>,
     },
+    emits: ['updated'],
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
         const form = reactive<QueryGeneAlterationFusionCriteria<string>>({
