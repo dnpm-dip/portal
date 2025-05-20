@@ -315,7 +315,7 @@ export default defineComponent({
                     <div class="form-group">
                         <label>Kategorie</label>
                         <DValueSet
-                            :code="'dnpm-dip/rd/disease-category'"
+                            :code="'dnpm-dip/rd/diagnosis/code-systems'"
                             :lazy-load="true"
                         >
                             <template #default="{ data }">
