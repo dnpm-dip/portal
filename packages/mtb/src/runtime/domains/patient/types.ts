@@ -300,8 +300,6 @@ type IHCReport = {
     patient: Reference,
     specimen: Reference,
     issuedOn: string,
-    journalId: string,
-    blockIds: string[],
     results: {
         proteinExpression: ProteinExpression[],
         msiMmr: ProteinExpression[]
@@ -418,8 +416,8 @@ type ClaimResponse = {
     patient: Reference,
     claim: Reference,
     issuedOn: string,
-    status: Coding,
-    statusReason?: Coding
+    status?: Coding,
+    statusReason?: Coding[]
 };
 
 type Response = {
