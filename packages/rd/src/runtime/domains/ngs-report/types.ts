@@ -31,7 +31,8 @@ export type Variant = {
 
 export type SmallVariant = Variant & {
     chromosome: Coding,
-    position: number,
+    startPosition: number,
+    endPosition: number,
     ref: string,
     alt: string,
 };

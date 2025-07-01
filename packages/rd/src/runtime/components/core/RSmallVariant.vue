@@ -37,14 +37,19 @@ export default defineComponent({
             </div>
         </div>
         <div
-            v-if="entity.position"
+            v-if="entity.startPosition || entity.endPosition"
             class="d-flex flex-grow-1 align-items-center flex-row"
         >
             <div>
                 <strong>Position</strong>
             </div>
-            <div class="ms-1">
-                <small>{{ entity.position }}</small>
+            <div class="ms-1 d-flex flex-row gap-1">
+                <template v-if="entity.startPosition">
+                    <small>{{ entity.startPosition }}</small>
+                </template>
+                <template v-if="entity.endPosition">
+                    <small>{{ entity.endPosition }}</small>
+                </template>
             </div>
         </div>
         <div
