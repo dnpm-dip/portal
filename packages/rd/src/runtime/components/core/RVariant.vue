@@ -61,7 +61,7 @@ export default defineComponent({
                         <small>{{ entity.proteinChange.code }}</small>
                     </div>
                 </div>
-                <div>
+                <div v-if="entity.acmgClass">
                     <strong>ACMG-Klasse</strong> {{ entity.acmgClass.display }}
                 </div>
                 <div v-if="entity.acmgCriteria">
@@ -73,7 +73,7 @@ export default defineComponent({
                         {{ idx > 0 ? ', ' : '' }} {{ item.display }}
                     </template>
                 </div>
-                <div>
+                <div v-if="entity.zygosity">
                     <strong>Zygosity</strong> {{ entity.zygosity.display }}
                 </div>
                 <div v-if="entity.segregationAnalysis">
