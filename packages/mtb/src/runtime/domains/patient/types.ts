@@ -323,7 +323,7 @@ type MedicationRecommendation = Recommendation & {
     priority: Coding,
     issuedOn: string,
     medication: Coding[],
-    category?: Coding,
+    category?: Coding[],
     useType?: Coding,
     supportingVariants: { id: string, display: string, type: string }[]
 };

@@ -77,8 +77,8 @@ export default defineNuxtComponent({
                                             <DCodingCommaList :items="recommendation.medication" />
                                         </div>
                                         <div v-if="recommendation.category">
-                                            <strong><i class="fa fa-tags" /> Kategorie</strong>
-                                            {{ recommendation.category.display || recommendation.category.code }}
+                                            <strong><i class="fa fa-tags" /> Kategorien</strong>
+                                            <DCodingCommaList :items="recommendation.category" />
                                         </div>
                                         <div v-if="recommendation.useType">
                                             <strong><i class="fa fa-toolbox" /> Verwendungstyp</strong>
