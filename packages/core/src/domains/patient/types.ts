@@ -1,5 +1,12 @@
+import type { Address } from '../address';
 import type { Coding } from '../coding';
+import type { Reference } from '../core';
 import type { MinMaxRange } from '../utility';
+
+export type PatientInsurance = {
+    type: Coding,
+    reference?: Reference
+};
 
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-core/blob/main/src/main/scala/de/dnpm/dip/model/Patient.scala
@@ -11,11 +18,11 @@ export type Patient = {
      */
     gender: Coding<'male' | 'female' | 'other' | 'unknown'>
     birthDate: string,
-    age: { value: number, unit: string },
     dateOfDeath?: string,
     managingSite?: Coding,
     vitalStatus?: Coding,
-    healthInsurance?: unknown // todo: type is not defined ?!
+    healthInsurance?: PatientInsurance,
+    address?: Address
 };
 
 /**
@@ -47,13 +54,6 @@ export type PatientFilterSite = Coding[];
 export type PatientFilter = {
     gender?: PatientFilterGender,
     ageRange?: PatientFilterAgeRange,
-    vitalStatus?: PatientFilterVitalStatus,
-    site?: PatientFilterSite
-};
-
-export type PatientFilterInput = {
-    gender?: PatientFilterGender,
-    ageRange?: Partial<PatientFilterAgeRange>,
     vitalStatus?: PatientFilterVitalStatus,
     site?: PatientFilterSite
 };
