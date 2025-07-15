@@ -1,11 +1,14 @@
 <script lang="ts">
-import { DCodingCommaList, DCommaList, DPatient } from '@dnpm-dip/core';
+import {
+    DCodingCommaList, DCodingText, DCommaList, DPatient,
+} from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        DCodingText,
         DCodingCommaList,
         DCommaList,
         DPatient,
@@ -71,7 +74,7 @@ export default defineNuxtComponent({
                             </div>
                             <div v-if="diagnosis.familyControlLevel">
                                 <strong><i class="fas fa-house-user" /> Family Control Level</strong>
-                                {{ diagnosis.familyControlLevel.display || diagnosis.familyControlLevel.code }}
+                                <DCodingText :entity="diagnosis.familyControlLevel" />
                             </div>
                             <div v-if="diagnosis.missingCodeReason">
                                 <strong><i class="fas fa-question-circle" /> Grund für fehlenden Code</strong>
