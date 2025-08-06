@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/kit",
     "type": "module",
-    "version": "1.28.0",
+    "version": "1.28.1",
     "description": "Kit for DNPM:DIP apps and packages.",
     "exports": {
         "./package.json": "./package.json",

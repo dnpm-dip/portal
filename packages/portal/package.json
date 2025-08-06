@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/portal",
     "type": "module",
-    "version": "1.33.0",
+    "version": "1.34.0",
     "private": true,
     "description": "Portal of DNPM DIP.",
     "repository": {
@@ -22,10 +22,10 @@
         "@authup/core-http-kit": "^1.0.0-beta.26",
         "@authup/core-kit": "^1.0.0-beta.26",
         "@authup/kit": "^1.0.0-beta.26",
-        "@dnpm-dip/core": "^1.34.0",
-        "@dnpm-dip/kit": "^1.28.0",
-        "@dnpm-dip/mtb": "^1.34.0",
-        "@dnpm-dip/rd": "^1.33.0",
+        "@dnpm-dip/core": "^1.35.0",
+        "@dnpm-dip/kit": "^1.28.1",
+        "@dnpm-dip/mtb": "^1.35.0",
+        "@dnpm-dip/rd": "^1.34.0",
         "@fortawesome/fontawesome-free": "^6.7.2",
         "@ilingo/vuelidate": "^5.0.4",
         "@vuecs/countdown": "^1.0.0",
