@@ -49,7 +49,7 @@
     },
     "devDependencies": {
         "@authup/core-http-kit": "^1.0.0-beta.26",
-        "@authup/client-web-kit": "^1.0.0-beta.26",
+        "@authup/client-web-kit": "^1.0.0-beta.27",
         "bootstrap-vue-next": "^0.30.4",
         "chart.js": "^4.5.0",
         "@ilingo/vuelidate": "^5.0.4",
