@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.35.0](https://github.com/dnpm-dip/portal/compare/v1.34.0...v1.35.0) (2025-08-06)
+
+
+### Features
+
+* adjust patient entity dto and rendering ([92a65af](https://github.com/dnpm-dip/portal/commit/92a65af24d947ad43e95ff4e7d45f085306ca94e))
+* adjust small variant dto due mvh changes ([8198fa0](https://github.com/dnpm-dip/portal/commit/8198fa03cde179cc35da0a620332074529e348fe))
+* bump authup & common token hook ([26df00d](https://github.com/dnpm-dip/portal/commit/26df00dc87e3c07ec47d9268187d68cc975d0dca))
+* mvh changes ([#1045](https://github.com/dnpm-dip/portal/issues/1045)) ([910ad96](https://github.com/dnpm-dip/portal/commit/910ad96c153648807ba7a8f5bad5174ee4c0f363))
+* set zygosity and amgClass of variant type as optional ([edb97fb](https://github.com/dnpm-dip/portal/commit/edb97fbe9d4c5430274e5f79173315174a055f63))
+
+
+### Bug Fixes
+
+* adjust to latest mtb model changes ([b13d245](https://github.com/dnpm-dip/portal/commit/b13d245108baa0d821a7dacd3364870573a2e3ab))
+* cardinality of mtb medication recommendation ([703b9d3](https://github.com/dnpm-dip/portal/commit/703b9d352ea59e90260da368ecb0dccb9a6811a3))
+* **deps:** bump the minorandpatch group across 1 directory with 13 updates ([#1067](https://github.com/dnpm-dip/portal/issues/1067)) ([5f6a7dc](https://github.com/dnpm-dip/portal/commit/5f6a7dc1bb5c03d2e462dc6b17692375f6cc3acb))
+* **deps:** bump the minorandpatch group across 1 directory with 13 updates ([#1078](https://github.com/dnpm-dip/portal/issues/1078)) ([021fa77](https://github.com/dnpm-dip/portal/commit/021fa774afd9c60fe53d612dbdd7caed7c9ef248))
+* **deps:** bump the minorandpatch group across 1 directory with 13 updates ([#1093](https://github.com/dnpm-dip/portal/issues/1093)) ([d713a24](https://github.com/dnpm-dip/portal/commit/d713a24131a2e7fcd3d125acdbe907c0ab3af392))
+* **deps:** bump the minorandpatch group across 1 directory with 23 updates ([#1044](https://github.com/dnpm-dip/portal/issues/1044)) ([4f807e2](https://github.com/dnpm-dip/portal/commit/4f807e2b199c95778cc850aa0127843e8a01ca7f))
+* **deps:** bump the minorandpatch group across 1 directory with 6 updates ([#1054](https://github.com/dnpm-dip/portal/issues/1054)) ([7c2b3b2](https://github.com/dnpm-dip/portal/commit/7c2b3b273bf99188eec7281862e97b4bb642b8f2))
+* **rd:** make diagnosis onsetDate optional ([09a057a](https://github.com/dnpm-dip/portal/commit/09a057a5b5a08e86e92ee07319979a7ccb70a5cf))
+* styling in patient view ([1ae1b92](https://github.com/dnpm-dip/portal/commit/1ae1b9257eda1730d771b0ca88d0ab29ce7c3e71))
+* updated value-set in rd search form ([1e8f3d3](https://github.com/dnpm-dip/portal/commit/1e8f3d3f04bc34cb8152f36b4b245cb53944d2c6))
+
 ## [1.34.0](https://github.com/dnpm-dip/portal/compare/v1.33.0...v1.34.0) (2025-04-08)
 
 

@@ -1,5 +1,35 @@
 # @dnpm-dip/portal
 
+## [1.34.0](https://github.com/dnpm-dip/portal/compare/v1.33.0...v1.34.0) (2025-08-06)
+
+
+### Features
+
+* bump authup & common token hook ([26df00d](https://github.com/dnpm-dip/portal/commit/26df00dc87e3c07ec47d9268187d68cc975d0dca))
+* migrated to authup v1.0.0-beta.25 ([d30b4d4](https://github.com/dnpm-dip/portal/commit/d30b4d4e1057aac9ecfafb2a95cedcce97866633))
+* mvh changes ([#1045](https://github.com/dnpm-dip/portal/issues/1045)) ([910ad96](https://github.com/dnpm-dip/portal/commit/910ad96c153648807ba7a8f5bad5174ee4c0f363))
+* provide settings page to modify user profile ([0fb0bde](https://github.com/dnpm-dip/portal/commit/0fb0bdec146ea3d6a7865c2aa1942db744a9f4af))
+
+
+### Bug Fixes
+
+* **deps:** bump the minorandpatch group across 1 directory with 13 updates ([#1067](https://github.com/dnpm-dip/portal/issues/1067)) ([5f6a7dc](https://github.com/dnpm-dip/portal/commit/5f6a7dc1bb5c03d2e462dc6b17692375f6cc3acb))
+* **deps:** bump the minorandpatch group across 1 directory with 13 updates ([#1078](https://github.com/dnpm-dip/portal/issues/1078)) ([021fa77](https://github.com/dnpm-dip/portal/commit/021fa774afd9c60fe53d612dbdd7caed7c9ef248))
+* **deps:** bump the minorandpatch group across 1 directory with 13 updates ([#1093](https://github.com/dnpm-dip/portal/issues/1093)) ([d713a24](https://github.com/dnpm-dip/portal/commit/d713a24131a2e7fcd3d125acdbe907c0ab3af392))
+* **deps:** bump the minorandpatch group across 1 directory with 23 updates ([#1044](https://github.com/dnpm-dip/portal/issues/1044)) ([4f807e2](https://github.com/dnpm-dip/portal/commit/4f807e2b199c95778cc850aa0127843e8a01ca7f))
+* **deps:** bump the minorandpatch group across 1 directory with 4 updates ([#1028](https://github.com/dnpm-dip/portal/issues/1028)) ([39f9053](https://github.com/dnpm-dip/portal/commit/39f905308671c52774cbc63f054e8cc57cdea3ef))
+* **deps:** bump the minorandpatch group across 1 directory with 6 updates ([#1054](https://github.com/dnpm-dip/portal/issues/1054)) ([7c2b3b2](https://github.com/dnpm-dip/portal/commit/7c2b3b273bf99188eec7281862e97b4bb642b8f2))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.34.0 to ^1.35.0
+    * @dnpm-dip/kit bumped from ^1.28.0 to ^1.28.1
+    * @dnpm-dip/mtb bumped from ^1.34.0 to ^1.35.0
+    * @dnpm-dip/rd bumped from ^1.33.0 to ^1.34.0
+
 ## [1.33.0](https://github.com/dnpm-dip/portal/compare/v1.32.0...v1.33.0) (2025-04-08)
 
 
