@@ -32,7 +32,7 @@
         "@authup/client-web-kit": "^1.0.0-beta.26",
         "@dnpm-dip/core": "^1.35.0",
         "@dnpm-dip/kit": "^1.28.1",
-        "@nuxt/kit": "^3.17.6"
+        "@nuxt/kit": "^4.0.3"
     },
     "devDependencies": {
         "@ilingo/vuelidate": "^5.0.4",
