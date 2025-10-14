@@ -1,6 +1,6 @@
 <script lang="ts">
 
-import { BToastOrchestrator } from 'bootstrap-vue-next';
+import { BOrchestrator } from 'bootstrap-vue-next';
 import PageHeader from '../components/header.vue';
 import PageSidebar from '../components/sidebar.vue';
 import PageFooter from '../components/footer.vue';
@@ -8,7 +8,7 @@ import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
     components: {
-        BToastOrchestrator, PageHeader, PageSidebar, PageFooter,
+        BOrchestrator, PageHeader, PageSidebar, PageFooter,
     },
 });
 </script>
@@ -22,7 +22,7 @@ export default defineNuxtComponent({
                 <NuxtPage />
             </div>
         </div>
-        <BToastOrchestrator />
+        <BOrchestrator />
         <PageFooter />
     </div>
 </template>
