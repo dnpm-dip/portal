@@ -6,7 +6,7 @@
   -->
 <script lang="ts">
 import { BTooltip } from 'bootstrap-vue-next';
-import type { Coding, DistributionConceptsCount } from '@dnpm-dip/core';
+import { type Coding, type DistributionConceptsCount, isCoding } from '@dnpm-dip/core';
 import { type PropType, computed, defineComponent } from 'vue';
 import { RecistColor } from '../../domains';
 
@@ -34,11 +34,22 @@ export default defineComponent({
             for (let i = 0; i < props.distribution.elements.length; i++) {
                 const element = props.distribution.elements[i];
 
+                let code : string | undefined;
+                let title : string | undefined;
+
+                if (isCoding(element.key)) {
+                    title = element.key.display || element.key.code;
+                    code = element.key.code;
+                } else if (typeof element.key === 'string') {
+                    title = element.key;
+                    code = element.key;
+                }
+
                 output.push({
-                    title: `${element.key.display || element.key.code} (${element.value.count}/${props.distribution.total}; ${Math.round(element.value.percent)}%)`,
-                    code: element.key.code,
+                    title: `${title} (${element.value.count}/${props.distribution.total}; ${Math.round(element.value.percent)}%)`,
+                    code,
                     percent: element.value.percent,
-                    color: RecistColor[element.key.code as keyof typeof RecistColor],
+                    color: RecistColor[code as keyof typeof RecistColor],
                 });
             }
 

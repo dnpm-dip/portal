@@ -153,9 +153,9 @@ export default defineComponent({
         :fields="fields"
         outlined
     >
-        <template #cell(key)="data">
+        <template #cell(key)="cell">
             <DKVTableEntry
-                :data="data.item"
+                :data="cell.item"
                 :clickable="clickable"
                 :coding-verbose-label="codingVerboseLabel"
                 @item-clicked="handleItemClick"

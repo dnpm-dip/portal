@@ -39,10 +39,16 @@ export default defineNuxtComponent({
                 id: 'medication', name: 'Medikation', icon: 'fas fa-pills', urlSuffix: '/medication',
             },
             {
-                id: 'therapyResponses', name: 'Therapie Responses', icon: 'fas fa-comment-medical', urlSuffix: '/therapy-responses',
+                id: 'therapyResponses', name: 'Therapie Responses (v1)', icon: 'fas fa-comment-medical', urlSuffix: '/therapy-responses',
             },
             {
-                id: 'therapyResponsesByVariant', name: 'Therapie Responses By Variant', icon: 'fas fa-comment-medical', urlSuffix: '/therapy-responses-by-variant',
+                id: 'therapyResponsesByVariant', name: 'Therapie Responses (v2)', icon: 'fas fa-comment-medical', urlSuffix: '/therapy-responses-by-variant',
+            },
+            {
+                id: 'therapyResponseInfos', name: 'Therapie Responses (v3)', icon: 'fas fa-comment-medical', urlSuffix: '/therapy-response-infos',
+            },
+            {
+                id: 'geneAlterations', name: 'Gen Alterationen', icon: 'fas fa-dna', urlSuffix: '/gene-alterations',
             },
             {
                 id: 'survivalReport', name: 'Überlebensbericht', icon: 'fas fa-book-open', urlSuffix: '/survival-report',

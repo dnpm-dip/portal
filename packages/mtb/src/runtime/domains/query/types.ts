@@ -114,3 +114,21 @@ export type QueryTherapyResponseByVariant = {
     supportingVariant: string,
     responseDistribution: DistributionConceptsCount<Coding>
 };
+
+export type QueryTherapyResponseInfo = {
+    entity: Coding,
+    medications: string[],
+    supportingAlteration: string,
+    count: number,
+    orr: number,
+    responseDistribution: DistributionConceptsCount<Coding>,
+    meanDuration: number
+};
+
+export type QueryGeneAlterationInfo = {
+    entity: Coding,
+    gene: Coding,
+    alteration: string,
+    count: number,
+    supporting: boolean
+};

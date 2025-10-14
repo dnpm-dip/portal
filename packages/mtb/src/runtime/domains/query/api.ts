@@ -8,12 +8,12 @@ import type {
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
 import type { PatientMatch, PatientRecord } from '../patient';
 import type {
-    QueryDiagnosisFilter, QuerySession,
+    QueryDiagnosisFilter, QueryGeneAlterationInfo, QuerySession,
     QuerySessionCreate,
     QuerySummaryMedication,
     QuerySummaryTumorDiagnostics, QueryTherapyImplementedFilter,
     QueryTherapyRecommendedFilter,
-    QueryTherapyResponse, QueryTherapyResponseByVariant,
+    QueryTherapyResponse, QueryTherapyResponseByVariant, QueryTherapyResponseInfo,
 } from './types';
 
 export class QueryAPI extends BaseAPI {
@@ -130,6 +130,16 @@ export class QueryAPI extends BaseAPI {
 
     async getTherapyResponsesByVariant(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QueryTherapyResponseByVariant>> {
         const response = await this.client.get(`mtb/queries/${queryId}/therapy-responses-by-variant${this.buildRequestQueryString(query)}`);
+        return response.data;
+    }
+
+    async getTherapyResponseInfos(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QueryTherapyResponseInfo>> {
+        const response = await this.client.get(`mtb/queries/${queryId}/therapy-response-infos${this.buildRequestQueryString(query)}`);
+        return response.data;
+    }
+
+    async getGeneAlterationInfos(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QueryGeneAlterationInfo>> {
+        const response = await this.client.get(`mtb/queries/${queryId}/gene-alterations${this.buildRequestQueryString(query)}`);
         return response.data;
     }
 
