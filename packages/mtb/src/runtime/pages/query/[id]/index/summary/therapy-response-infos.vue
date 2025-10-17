@@ -7,8 +7,9 @@
 <script lang="ts">
 import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import { QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore } from '@dnpm-dip/core';
+import type { PaginationMeta } from '@vuecs/pagination';
 import {
-    type PropType, defineComponent, ref,
+    type PropType, computed, defineComponent, ref,
 } from 'vue';
 import { injectHTTPClient } from '../../../../../core/http-client';
 import type { QuerySession, QueryTherapyResponse, QueryTherapyResponseInfo } from '../../../../../domains';
@@ -31,27 +32,63 @@ export default defineComponent({
 
         const busy = ref(false);
         const items = ref<QueryTherapyResponseInfo[]>([]);
-        const load = wrapFnWithBusyState(busy, async () => {
+
+        const total = ref(0);
+        const offset = ref(0);
+        const limit = ref(50);
+
+        const resolve = wrapFnWithBusyState(busy, async () => {
             const response = await api.query.getTherapyResponseInfos(props.entity.id, queryFilterStore.buildURLRecord());
+
+            total.value = response.size || response.entries.length;
+            limit.value = response.limit ?? limit.value;
+            offset.value = response.offset ?? offset.value;
             items.value = response.entries;
         });
 
-        Promise.resolve()
-            .then(() => load());
+        const subItems = computed(() => items.value.slice(offset.value, offset.value + limit.value));
 
-        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
-        queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => load());
+        const load = (meta: PaginationMeta) => {
+            offset.value = meta.offset;
+            limit.value = meta.limit;
+        };
+
+        Promise.resolve()
+            .then(() => resolve());
+
+        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => resolve());
+        queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => resolve());
 
         return {
             busy,
-            items,
+            subItems,
+            load,
+            total,
+            offset,
+            limit,
         };
     },
 });
 </script>
 <template>
+    <VCPagination
+        :busy="busy"
+        :total="total"
+        :limit="limit"
+        :offset="offset"
+        @load="load"
+    />
+
     <MQuerySummaryTherapyResponseInfos
         :busy="busy"
-        :items="items"
+        :items="subItems"
+    />
+
+    <VCPagination
+        :busy="busy"
+        :total="total"
+        :limit="limit"
+        :offset="offset"
+        @load="load"
     />
 </template>
