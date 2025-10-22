@@ -1,9 +1,9 @@
-import type {
-    KMSurvivalReport, PatientFilter,
-    QuerySummaryDemographics,
-    ResourceCollectionLoadMeta,
-    ResourceCollectionResponse,
-    URLQueryRecord,
+import {
+    type KMSurvivalReport,
+    type QuerySummaryDemographics,
+    type ResourceCollectionLoadMeta,
+    type ResourceCollectionResponse, type URLQueryRecord,
+    stringifyResourceCollectionMeta,
 } from '@dnpm-dip/core';
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
 import type { PatientMatch, PatientRecord } from '../patient';
@@ -13,7 +13,9 @@ import type {
     QuerySummaryMedication,
     QuerySummaryTumorDiagnostics, QueryTherapyImplementedFilter,
     QueryTherapyRecommendedFilter,
-    QueryTherapyResponse, QueryTherapyResponseByVariant, QueryTherapyResponseInfo,
+    QueryTherapyResponse,
+    QueryTherapyResponseByVariant,
+    QueryTherapyResponseInfo,
 } from './types';
 
 export class QueryAPI extends BaseAPI {
@@ -73,28 +75,7 @@ export class QueryAPI extends BaseAPI {
      * @throws ClientError
      */
     async getPatients(id: string, meta?: ResourceCollectionLoadMeta) : Promise<ResourceCollectionResponse<PatientMatch>> {
-        let qs : string = '';
-        if (typeof meta !== 'undefined') {
-            const { filters, limit, offset } = meta;
-
-            const queryRecord : URLQueryRecord = {
-                ...(filters || {}),
-            };
-            if (typeof limit !== 'undefined') {
-                queryRecord.limit = limit;
-            }
-
-            if (typeof offset !== 'undefined') {
-                queryRecord.offset = offset;
-            }
-
-            qs = serializeURLQueryRecord(queryRecord);
-            if (qs.length > 0) {
-                qs = `?${qs}`;
-            }
-        }
-
-        const response = await this.client.get(`mtb/queries/${id}/patient-matches${qs}`);
+        const response = await this.client.get(`mtb/queries/${id}/patient-matches${stringifyResourceCollectionMeta(meta)}`);
         return response.data;
     }
 
@@ -133,13 +114,19 @@ export class QueryAPI extends BaseAPI {
         return response.data;
     }
 
-    async getTherapyResponseInfos(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QueryTherapyResponseInfo>> {
-        const response = await this.client.get(`mtb/queries/${queryId}/therapy-response-infos${this.buildRequestQueryString(query)}`);
+    async getTherapyResponseInfos(
+        queryId: string,
+        meta: ResourceCollectionLoadMeta = {},
+    ) : Promise<ResourceCollectionResponse<QueryTherapyResponseInfo>> {
+        const response = await this.client.get(`mtb/queries/${queryId}/therapy-response-infos${stringifyResourceCollectionMeta(meta)}`);
         return response.data;
     }
 
-    async getGeneAlterationInfos(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QueryGeneAlterationInfo>> {
-        const response = await this.client.get(`mtb/queries/${queryId}/gene-alterations${this.buildRequestQueryString(query)}`);
+    async getGeneAlterationInfos(
+        queryId: string,
+        meta: ResourceCollectionLoadMeta = {},
+    ) : Promise<ResourceCollectionResponse<QueryGeneAlterationInfo>> {
+        const response = await this.client.get(`mtb/queries/${queryId}/gene-alterations${stringifyResourceCollectionMeta(meta)}`);
         return response.data;
     }
 

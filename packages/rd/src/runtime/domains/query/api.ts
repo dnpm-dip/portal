@@ -1,6 +1,9 @@
-import type {
-    QuerySummaryDemographics,
-    ResourceCollectionLoadMeta, ResourceCollectionResponse, URLQueryRecord,
+import {
+    type QuerySummaryDemographics,
+    type ResourceCollectionLoadMeta,
+    type ResourceCollectionResponse,
+    type URLQueryRecord,
+    stringifyResourceCollectionMeta,
 } from '@dnpm-dip/core';
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
 import type { PatientMatch, PatientRecord } from '../patient';
@@ -35,7 +38,7 @@ export class QueryAPI extends BaseAPI {
      * @param id
      * @param query
      */
-    async update(id: string, query?: QuerySessionCreate) : Promise<QuerySession> {
+    async update(id: string, query?: Partial<QuerySessionCreate>) : Promise<QuerySession> {
         const response = await this.client.get(`rd/queries/${id}`, query);
         return response.data;
     }
@@ -57,28 +60,7 @@ export class QueryAPI extends BaseAPI {
      * @throws ClientError
      */
     async getPatients(id: string, meta?: ResourceCollectionLoadMeta) : Promise<ResourceCollectionResponse<PatientMatch>> {
-        let qs : string = '';
-        if (typeof meta !== 'undefined') {
-            const { filters, limit, offset } = meta;
-
-            const queryRecord : URLQueryRecord = {
-                ...(filters || {}),
-            };
-            if (typeof limit !== 'undefined') {
-                queryRecord.limit = limit;
-            }
-
-            if (typeof offset !== 'undefined') {
-                queryRecord.offset = offset;
-            }
-
-            qs = serializeURLQueryRecord(queryRecord);
-            if (qs.length > 0) {
-                qs = `?${qs}`;
-            }
-        }
-
-        const response = await this.client.get(`rd/queries/${id}/patient-matches${qs}`);
+        const response = await this.client.get(`rd/queries/${id}/patient-matches${stringifyResourceCollectionMeta(meta)}`);
         return response.data;
     }
 

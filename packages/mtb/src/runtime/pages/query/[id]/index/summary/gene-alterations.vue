@@ -6,10 +6,15 @@
   -->
 <script lang="ts">
 import { wrapFnWithBusyState } from '@authup/client-web-kit';
-import { QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore } from '@dnpm-dip/core';
+import {
+    QueryEventBusEventName,
+    type ResourceCollectionLoadMeta,
+    injectQueryEventBus,
+    useQueryFilterStore,
+} from '@dnpm-dip/core';
 import type { PaginationMeta } from '@vuecs/pagination';
 import {
-    type PropType, computed, defineComponent, ref,
+    type PropType, defineComponent, ref,
 } from 'vue';
 import { injectHTTPClient } from '../../../../../core/http-client';
 import type {
@@ -39,8 +44,8 @@ export default defineComponent({
         const offset = ref(0);
         const limit = ref(50);
 
-        const resolve = wrapFnWithBusyState(busy, async () => {
-            const response = await api.query.getGeneAlterationInfos(props.entity.id, queryFilterStore.buildURLRecord());
+        const resolve = wrapFnWithBusyState(busy, async (meta: ResourceCollectionLoadMeta = {}) => {
+            const response = await api.query.getGeneAlterationInfos(props.entity.id, meta);
 
             total.value = response.size || response.entries.length;
             limit.value = response.limit ?? limit.value;
@@ -48,22 +53,28 @@ export default defineComponent({
             items.value = response.entries;
         });
 
-        const subItems = computed(() => items.value.slice(offset.value, offset.value + limit.value));
-
-        const load = (meta: PaginationMeta) => {
+        const load = async (meta: PaginationMeta) => {
             offset.value = meta.offset;
             limit.value = meta.limit;
+
+            return resolve({ limit: limit.value, offset: offset.value });
         };
 
         Promise.resolve()
-            .then(() => resolve());
+            .then(() => resolve({ filters: queryFilterStore.buildURLRecord(), limit: limit.value }));
 
-        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => resolve());
-        queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => resolve());
+        queryEventBus.on(
+            QueryEventBusEventName.SESSION_UPDATED,
+            () => resolve({ filters: queryFilterStore.buildURLRecord(), limit: limit.value }),
+        );
+        queryEventBus.on(
+            QueryEventBusEventName.FILTERS_COMMITED,
+            () => resolve({ filters: queryFilterStore.buildURLRecord(), limit: limit.value }),
+        );
 
         return {
             busy,
-            subItems,
+            items,
             load,
             total,
             offset,
@@ -83,7 +94,7 @@ export default defineComponent({
 
     <MQuerySummaryGeneAlterations
         :busy="busy"
-        :items="subItems"
+        :items="items"
     />
 
     <VCPagination
