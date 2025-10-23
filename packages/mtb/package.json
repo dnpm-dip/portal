@@ -37,7 +37,7 @@
     "devDependencies": {
         "@ilingo/vuelidate": "^5.0.4",
         "@nuxt/module-builder": "^1.0.2",
-        "@types/node": "^24.2.0",
+        "@types/node": "^24.9.1",
         "@vuecs/form-controls": "^2.3.0",
         "@vuecs/pagination": "^1.3.0",
         "@vuecs/timeago": "^1.1.1",
