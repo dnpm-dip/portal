@@ -40,13 +40,13 @@ export default defineComponent({
                 key: 'supportingAlteration', label: 'Stützende Variante', thClass: 'text-left', tdClass: 'text-left',
             },
             {
-                key: 'count', label: 'Anzahl', thClass: 'text-center', tdClass: 'text-center align-middle',
+                key: 'count', label: 'Anzahl Therapien', thClass: 'text-center', tdClass: 'text-center align-middle',
             },
             {
-                key: 'orr', label: 'ORR', thClass: 'text-center', tdClass: 'text-center align-middle',
+                key: 'orr', label: 'ORR (%)', thClass: 'text-center', tdClass: 'text-center align-middle',
             },
             {
-                key: 'meanDuration', label: 'Dauer (Ø)', thClass: 'text-center', tdClass: 'text-center align-middle',
+                key: 'meanDuration', label: 'Dauer in Wochen (Ø)', thClass: 'text-center', tdClass: 'text-center align-middle',
             },
             {
                 key: 'responseDistribution', label: 'Response Verteilung', thClass: 'text-center', tdClass: 'text-center align-middle',
