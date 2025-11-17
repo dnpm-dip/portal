@@ -8,11 +8,13 @@
 <script lang="ts">
 import { type PropType, defineComponent } from 'vue';
 import { BTable } from 'bootstrap-vue-next';
+import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
 import type { QueryTherapyResponse } from '../../../domains';
 import MTherapyResponseDistributionBar from '../MTherapyResponseDistributionBar.vue';
 
 export default defineComponent({
     components: {
+        DCodingText,
         MTherapyResponseDistributionBar,
         BTable,
     },
@@ -29,13 +31,22 @@ export default defineComponent({
     setup() {
         const fields = [
             {
-                key: 'medicationClasses', label: 'Medikationsklasse', thClass: 'text-left', tdClass: 'text-left',
+                key: 'entity', label: 'Entität', thClass: 'text-left', tdClass: 'text-left',
             },
             {
-                key: 'medications', label: 'Medikation', thClass: 'text-left', tdClass: 'text-left',
+                key: 'medications', label: 'Medikationen', thClass: 'text-left', tdClass: 'text-left',
             },
             {
-                key: 'supportingVariants', label: 'Stützende Varianten', thClass: 'text-left', tdClass: 'text-left',
+                key: 'supportingAlteration', label: 'Stützende Variante', thClass: 'text-left', tdClass: 'text-left',
+            },
+            {
+                key: 'count', label: 'Anzahl Therapien', thClass: 'text-center', tdClass: 'text-center align-middle',
+            },
+            {
+                key: 'orr', label: 'ORR (%)', thClass: 'text-center', tdClass: 'text-center align-middle',
+            },
+            {
+                key: 'meanDuration', label: 'Dauer in Wochen (Ø)', thClass: 'text-center', tdClass: 'text-center align-middle',
             },
             {
                 key: 'responseDistribution', label: 'Response Verteilung', thClass: 'text-center', tdClass: 'text-center align-middle',
@@ -56,30 +67,13 @@ export default defineComponent({
         :busy="busy"
         outlined
     >
-        <template #cell(medicationClasses)="data">
-            <ul class="column">
-                <li
-                    v-for="(item,key) in data.item.medicationClasses"
-                    :key="key"
-                >
-                    {{ item.display }}
-                </li>
-            </ul>
+        <template #cell(entity)="data">
+            <DCodingText :entity="data.item.entity" />
         </template>
         <template #cell(medications)="data">
             <ul class="column">
                 <li
                     v-for="(item,key) in data.item.medications"
-                    :key="key"
-                >
-                    {{ item.display }}
-                </li>
-            </ul>
-        </template>
-        <template #cell(supportingVariants)="data">
-            <ul class="column">
-                <li
-                    v-for="(item,key) in data.item.supportingVariants"
                     :key="key"
                 >
                     {{ item }}

@@ -102,20 +102,6 @@ export type QuerySessionCreate = {
 export type QuerySession = QueryBase<QueryCriteria>;
 
 export type QueryTherapyResponse = {
-    medicationClasses: Coding[],
-    medications: Coding[],
-    supportingVariants: string[],
-    responseDistribution: DistributionConceptsCount<Coding>
-};
-
-export type QueryTherapyResponseByVariant = {
-    medicationClasses: Coding[],
-    medications: Coding[],
-    supportingVariant: string,
-    responseDistribution: DistributionConceptsCount<Coding>
-};
-
-export type QueryTherapyResponseInfo = {
     entity: Coding,
     medications: string[],
     supportingAlteration: string,

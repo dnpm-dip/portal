@@ -11,11 +11,10 @@ import type {
     QueryDiagnosisFilter, QueryGeneAlterationInfo, QuerySession,
     QuerySessionCreate,
     QuerySummaryMedication,
-    QuerySummaryTumorDiagnostics, QueryTherapyImplementedFilter,
+    QuerySummaryTumorDiagnostics,
+    QueryTherapyImplementedFilter,
     QueryTherapyRecommendedFilter,
     QueryTherapyResponse,
-    QueryTherapyResponseByVariant,
-    QueryTherapyResponseInfo,
 } from './types';
 
 export class QueryAPI extends BaseAPI {
@@ -104,20 +103,10 @@ export class QueryAPI extends BaseAPI {
         return response.data;
     }
 
-    async getTherapyResponses(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QueryTherapyResponse>> {
-        const response = await this.client.get(`mtb/queries/${queryId}/therapy-responses${this.buildRequestQueryString(query)}`);
-        return response.data;
-    }
-
-    async getTherapyResponsesByVariant(queryId: string, query?: URLQueryRecord) : Promise<ResourceCollectionResponse<QueryTherapyResponseByVariant>> {
-        const response = await this.client.get(`mtb/queries/${queryId}/therapy-responses-by-variant${this.buildRequestQueryString(query)}`);
-        return response.data;
-    }
-
     async getTherapyResponseInfos(
         queryId: string,
         meta: ResourceCollectionLoadMeta = {},
-    ) : Promise<ResourceCollectionResponse<QueryTherapyResponseInfo>> {
+    ) : Promise<ResourceCollectionResponse<QueryTherapyResponse>> {
         const response = await this.client.get(`mtb/queries/${queryId}/therapy-response-infos${stringifyResourceCollectionMeta(meta)}`);
         return response.data;
     }
