@@ -79,8 +79,15 @@ export function buildNav(
             },
             {
                 default: () => [
-                    h('i', { class: `${item.icon} pe-1` }),
-                    item.name,
+                    h('div', { class: 'd-flex flex-row gap-1' }, [
+                        h('div', [
+
+                            h('i', { class: `${item.icon}` }),
+                        ]),
+                        h('div', [
+                            item.name,
+                        ]),
+                    ]),
                 ],
             },
         ),
