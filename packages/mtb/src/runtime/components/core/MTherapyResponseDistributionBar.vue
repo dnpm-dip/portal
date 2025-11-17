@@ -14,7 +14,8 @@ type Item = {
     title: string,
     code: string,
     percent: number,
-    color: string
+    color: string,
+    count: number
 };
 
 export default defineComponent({
@@ -33,6 +34,9 @@ export default defineComponent({
 
             for (let i = 0; i < props.distribution.elements.length; i++) {
                 const element = props.distribution.elements[i];
+                if (!element) {
+                    continue;
+                }
 
                 let code : string | undefined;
                 let title : string | undefined;
@@ -40,9 +44,9 @@ export default defineComponent({
                 if (isCoding(element.key)) {
                     title = element.key.display || element.key.code;
                     code = element.key.code;
-                } else if (typeof element.key === 'string') {
-                    title = element.key;
-                    code = element.key;
+                } else {
+                    title = `${element.key}`;
+                    code = `${element.key}`;
                 }
 
                 output.push({
@@ -50,6 +54,7 @@ export default defineComponent({
                     code,
                     percent: element.value.percent,
                     color: RecistColor[code as keyof typeof RecistColor],
+                    count: element.value.count,
                 });
             }
 
@@ -76,7 +81,7 @@ export default defineComponent({
                     'background-color': item.color
                 }"
             >
-                {{ item.code }}
+                {{ item.code }} ({{ item.count }})
             </div>
         </template>
     </div>
