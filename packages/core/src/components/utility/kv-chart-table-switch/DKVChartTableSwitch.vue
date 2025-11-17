@@ -34,7 +34,7 @@ export default defineComponent({
     },
     emits: ['clicked'],
     setup(_, { emit }) {
-        const variant = ref('chart');
+        const variant = ref('table');
 
         const setVariant = (input: string) => {
             variant.value = input;
