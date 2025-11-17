@@ -20,7 +20,7 @@ export default defineNuxtComponent({
             <i class="fa fa-map-marker-alt" /> Standorte
         </h6>
     </div>
-    <div class="d-flex flex-row gap-2">
+    <div class="d-flex flex-row flex-wrap gap-2">
         <template
             v-for="(item, key) in entity.peers"
             :key="key"
