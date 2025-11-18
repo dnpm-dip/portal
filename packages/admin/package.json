@@ -41,6 +41,6 @@
     },
     "devDependencies": {
         "@nuxt/module-builder": "^1.0.2",
-        "nuxt": "^4.2.0"
+        "nuxt": "^4.2.1"
     }
 }
