@@ -43,7 +43,7 @@ export default defineComponent({
         const limit = ref(50);
 
         const resolve = wrapFnWithBusyState(busy, async (meta: ResourceCollectionLoadMeta = {}) => {
-            const response = await api.query.getTherapyResponseInfos(props.entity.id, meta);
+            const response = await api.query.getTherapyResponses(props.entity.id, meta);
 
             total.value = response.size || response.entries.length;
             limit.value = response.limit ?? limit.value;

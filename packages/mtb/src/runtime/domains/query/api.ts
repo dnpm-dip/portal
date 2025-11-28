@@ -103,11 +103,11 @@ export class QueryAPI extends BaseAPI {
         return response.data;
     }
 
-    async getTherapyResponseInfos(
+    async getTherapyResponses(
         queryId: string,
         meta: ResourceCollectionLoadMeta = {},
     ) : Promise<ResourceCollectionResponse<QueryTherapyResponse>> {
-        const response = await this.client.get(`mtb/queries/${queryId}/therapy-response-infos${stringifyResourceCollectionMeta(meta)}`);
+        const response = await this.client.get(`mtb/queries/${queryId}/therapy-responses${stringifyResourceCollectionMeta(meta)}`);
         return response.data;
     }
 
