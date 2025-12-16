@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import {
-    HGVS_CODE_REGEX, toCoding,
+    HGVS_CODE_REGEX,
 } from '@dnpm-dip/core';
 import { IVuelidate } from '@ilingo/vuelidate';
 import useVuelidate from '@vuelidate/core';
@@ -51,8 +51,8 @@ export default defineComponent({
         const init = () => {
             if (!props.entity) return;
 
-            form.dnaChange = props.entity?.dnaChange?.code || '';
-            form.proteinChange = props.entity?.proteinChange?.code || '';
+            form.dnaChange = props.entity?.dnaChange || '';
+            form.proteinChange = props.entity?.proteinChange || '';
         };
 
         init();
@@ -68,12 +68,14 @@ export default defineComponent({
             };
 
             if (form.dnaChange) {
-                output.dnaChange = toCoding(form.dnaChange);
+                output.dnaChange = form.dnaChange;
             }
 
             if (form.proteinChange) {
-                output.proteinChange = toCoding(form.proteinChange);
+                output.proteinChange = form.proteinChange;
             }
+
+            console.log(output);
 
             emit('updated', output);
         };

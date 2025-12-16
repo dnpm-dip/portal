@@ -86,14 +86,10 @@ export default defineComponent({
                             <template v-if="item.variant">
                                 <template v-if="item.variant.type === 'SNV'">
                                     <li v-if="item.variant.dnaChange">
-                                        <strong>&bull; DNA-Änderung</strong> <DCodingText
-                                            :entity="item.variant.dnaChange"
-                                        />
+                                        <strong>&bull; DNA-Änderung</strong> {{ item.variant.dnaChange }}
                                     </li>
                                     <li v-if="item.variant.proteinChange">
-                                        <strong>&bull; Proteinänderung</strong> <DCodingText
-                                            :entity="item.variant.proteinChange"
-                                        />
+                                        <strong>&bull; Proteinänderung</strong> {{ item.variant.proteinChange }}
                                     </li>
                                 </template>
                                 <template v-else-if="item.variant.type === 'CNV'">

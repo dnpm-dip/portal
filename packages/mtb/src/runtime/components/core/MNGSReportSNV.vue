@@ -31,14 +31,14 @@ export default defineComponent({
                     v-if="entity.proteinChange"
                 >
                     <div>
-                        <strong>Protein-Änderung</strong> <small>{{ entity.proteinChange.code }}</small>
+                        <strong>Protein-Änderung</strong> <small>{{ entity.proteinChange }}</small>
                     </div>
                 </template>
                 <template
                     v-if="entity.dnaChange"
                 >
                     <div>
-                        <strong>DNA-Änderung</strong> <small>{{ entity.dnaChange.display || entity.dnaChange.code }}</small>
+                        <strong>DNA-Änderung</strong> <small>{{ entity.dnaChange }}</small>
                     </div>
                 </template>
                 <div>
