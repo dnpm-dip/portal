@@ -160,8 +160,6 @@ export default defineComponent({
                     ...(mutationData.value ? { variant: { ...mutationData.value } } : {}),
                 };
 
-                console.log(data);
-
                 emit('saved', {
                     ...props.entity,
                     data,

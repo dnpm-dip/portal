@@ -75,8 +75,6 @@ export default defineComponent({
                 output.proteinChange = form.proteinChange;
             }
 
-            console.log(output);
-
             emit('updated', output);
         };
 
