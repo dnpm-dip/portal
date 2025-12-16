@@ -24,8 +24,8 @@ export type NGSReportSNV = {
     },
     altAllele: string,
     refAllele: string,
-    dnaChange: Coding,
-    proteinChange: Coding,
+    dnaChange: string,
+    proteinChange: string,
     readDepth: number,
     allelicFrequency: number,
     interpretation: Coding

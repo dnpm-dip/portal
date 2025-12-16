@@ -106,6 +106,11 @@ export default defineComponent({
                 props.entity.data.variant.type
             ) {
                 changeMutationType(props.entity.data.variant.type);
+
+                mutationData.value = {
+                    ...(mutationData.value || {}),
+                    ...props.entity.data.variant,
+                };
             } else {
                 changeMutationType(null);
             }
@@ -152,7 +157,7 @@ export default defineComponent({
                     gene: { code, display },
                     supporting: form.supporting,
                     negated: form.negated,
-                    ...(mutationData.value ? { variant: mutationData.value } : {}),
+                    ...(mutationData.value ? { variant: { ...mutationData.value } } : {}),
                 };
 
                 emit('saved', {
@@ -249,7 +254,7 @@ export default defineComponent({
         <template v-if="comp && mutationType">
             <component
                 :is="comp"
-                :entity="entity.data"
+                :entity="entity.data?.variant"
                 @updated="handleVariantChanged"
             />
         </template>

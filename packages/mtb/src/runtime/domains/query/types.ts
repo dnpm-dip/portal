@@ -45,8 +45,8 @@ export type QueryMedicationCriteria<V = Coding> = {
 
 export type QueryGeneAlterationSNVCriteria<T = Coding> = {
     type: `${QueryMutationType.SNV}`,
-    dnaChange?: T,
-    proteinChange?: T,
+    dnaChange?: string,
+    proteinChange?: string,
 };
 
 export type QueryGeneAlterationCNVCriteria<T = Coding> = {
