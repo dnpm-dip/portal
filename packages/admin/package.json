@@ -30,8 +30,8 @@
         "test:watch": "vitest watch"
     },
     "dependencies": {
-        "@authup/core-kit": "^1.0.0-beta.27",
-        "@authup/client-web-kit": "^1.0.0-beta.27",
+        "@authup/core-kit": "^1.0.0-beta.28",
+        "@authup/client-web-kit": "^1.0.0-beta.28",
         "@dnpm-dip/core": "^1.11.0",
         "@dnpm-dip/kit": "^1.10.0",
         "@nuxt/kit": "^4.2.2",

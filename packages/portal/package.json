@@ -17,11 +17,11 @@
         "start": "node .output/server/index.mjs"
     },
     "devDependencies": {
-        "@authup/client-web-kit": "^1.0.0-beta.27",
-        "@authup/client-web-nuxt": "^1.0.0-beta.27",
-        "@authup/core-http-kit": "^1.0.0-beta.27",
-        "@authup/core-kit": "^1.0.0-beta.27",
-        "@authup/kit": "^1.0.0-beta.27",
+        "@authup/client-web-kit": "^1.0.0-beta.28",
+        "@authup/client-web-nuxt": "^1.0.0-beta.28",
+        "@authup/core-http-kit": "^1.0.0-beta.28",
+        "@authup/core-kit": "^1.0.0-beta.28",
+        "@authup/kit": "^1.0.0-beta.28",
         "@dnpm-dip/core": "^1.35.0",
         "@dnpm-dip/kit": "^1.28.1",
         "@dnpm-dip/mtb": "^1.35.0",
