@@ -99,7 +99,7 @@ export default defineComponent({
                                     <DTags
                                         :emit-only="true"
                                         :items="items"
-                                        tag-variant="dark"
+                                        tag-variant="light"
                                         @deleted="toggle"
                                     />
                                 </template>

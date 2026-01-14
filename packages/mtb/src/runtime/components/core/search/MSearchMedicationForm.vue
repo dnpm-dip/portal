@@ -288,7 +288,7 @@ export default defineComponent({
             class="mt-2"
             :emit-only="true"
             :items="allDrugs"
-            tag-variant="dark"
+            tag-variant="light"
             @deleted="dropCustom"
         >
             <template #between>
