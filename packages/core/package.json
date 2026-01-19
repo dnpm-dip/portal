@@ -44,7 +44,7 @@
         "@posva/event-emitter": "^1.0.3",
         "hapic": "^2.8.0",
         "smob": "^1.5.0",
-        "ufo": "^1.6.2"
+        "ufo": "^1.6.3"
     },
     "devDependencies": {
         "@authup/core-http-kit": "^1.0.0-beta.28",
