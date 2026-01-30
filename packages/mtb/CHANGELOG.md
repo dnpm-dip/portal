@@ -1,5 +1,42 @@
 # Changelog
 
+## [1.36.0](https://github.com/dnpm-dip/portal/compare/v1.35.0...v1.36.0) (2026-01-30)
+
+
+### Features
+
+* initial gene-alterations & therapy-response-infos table ([2aa5ff0](https://github.com/dnpm-dip/portal/commit/2aa5ff0f8bb69cf21a469d76efcc5572013f9601))
+* pagination capabilities for gene-alterations & therapy-infos view ([666fd27](https://github.com/dnpm-dip/portal/commit/666fd27106de7729ab503b2f3ab477ad5f2c845c))
+* refactored views in mtb medication section ([9827c04](https://github.com/dnpm-dip/portal/commit/9827c04e00e49061dd1c2032b207d83db5580b73))
+* remove alternative therapy response views ([a5fa516](https://github.com/dnpm-dip/portal/commit/a5fa516a5b2d97db9bcd035e34b65096aaf8c23c))
+* show total in response distribution bar ([#1123](https://github.com/dnpm-dip/portal/issues/1123)) ([b9c4daf](https://github.com/dnpm-dip/portal/commit/b9c4daf4c4c57dabd51bcdbaeff65aaac4d5e913))
+
+
+### Bug Fixes
+
+* add score column & updated therapy responses api path ([aad0b44](https://github.com/dnpm-dip/portal/commit/aad0b4427ac1750a8160107c44e640ada2d8d165))
+* change tags button color ([cf5f455](https://github.com/dnpm-dip/portal/commit/cf5f455c589f463d606400cafc901c0ded292a66))
+* **deps:** bump (dev-) dependencies ([8184011](https://github.com/dnpm-dip/portal/commit/818401134f1f2ae35bd67efa31cc96bef25c654d))
+* **deps:** bump @nuxt/kit in the majorprod group across 1 directory ([#1111](https://github.com/dnpm-dip/portal/issues/1111)) ([0c076da](https://github.com/dnpm-dip/portal/commit/0c076da557a0b0115cb8d58de6066b8f39a24ba5))
+* **deps:** bump authup to v1.0.0-beta.28 ([438a5a5](https://github.com/dnpm-dip/portal/commit/438a5a52e2ed1acbdbc01b838be6e722b46a97cd))
+* **deps:** bump the minorandpatch group across 1 directory with 10 updates ([#1138](https://github.com/dnpm-dip/portal/issues/1138)) ([631a93e](https://github.com/dnpm-dip/portal/commit/631a93e9bde0bd6033b069efbe33178812af26c3))
+* **deps:** bump the minorandpatch group across 1 directory with 11 updates ([#1133](https://github.com/dnpm-dip/portal/issues/1133)) ([70e39dc](https://github.com/dnpm-dip/portal/commit/70e39dcda239a9036e27cf458071937b99aec523))
+* **deps:** bump the minorandpatch group across 1 directory with 11 updates ([#1152](https://github.com/dnpm-dip/portal/issues/1152)) ([ab4dab0](https://github.com/dnpm-dip/portal/commit/ab4dab0e888fbea0c37f7a9591fe7b822231d908))
+* **deps:** bump the minorandpatch group across 1 directory with 20 updates ([#1121](https://github.com/dnpm-dip/portal/issues/1121)) ([3a29fb4](https://github.com/dnpm-dip/portal/commit/3a29fb462c2689452f762954c83e821e4ff86d05))
+* **deps:** bump the minorandpatch group across 1 directory with 8 updates ([#1145](https://github.com/dnpm-dip/portal/issues/1145)) ([91fc60a](https://github.com/dnpm-dip/portal/commit/91fc60ac778b6ad4fc675bf4907a9fd240fae646))
+* flex wrap site list in query overview ([9110d4b](https://github.com/dnpm-dip/portal/commit/9110d4b51017c0846b083f0b2740253aab4f36d7))
+* minor naming changes for therapy response infos view ([59c4260](https://github.com/dnpm-dip/portal/commit/59c4260c9a3b8cba6c23f2200182a412cd9b1b0c))
+* paginate therapy responses and gene alterations via api ([a874cee](https://github.com/dnpm-dip/portal/commit/a874ceed96944942d2f867070cb39e5bcb679a6b))
+* reading and submitting dnaChange & proteinChange ([#1137](https://github.com/dnpm-dip/portal/issues/1137)) ([7a0a64b](https://github.com/dnpm-dip/portal/commit/7a0a64b2bad494d7e1e6381a973711cc00654e4d))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.35.0 to ^1.36.0
+    * @dnpm-dip/kit bumped from ^1.28.1 to ^1.29.0
+
 ## [1.35.0](https://github.com/dnpm-dip/portal/compare/v1.34.0...v1.35.0) (2025-08-06)
 
 

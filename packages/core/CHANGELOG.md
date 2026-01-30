@@ -1,5 +1,28 @@
 # @dnpm-dip/core
 
+## [1.36.0](https://github.com/dnpm-dip/portal/compare/v1.35.0...v1.36.0) (2026-01-30)
+
+
+### Features
+
+* add display_name & description to role-, user- & permission-assignment ([170c8d3](https://github.com/dnpm-dip/portal/commit/170c8d3fded84e8c9322034546d80a3d38f41420))
+* initial gene-alterations & therapy-response-infos table ([2aa5ff0](https://github.com/dnpm-dip/portal/commit/2aa5ff0f8bb69cf21a469d76efcc5572013f9601))
+* make table view default ([#1122](https://github.com/dnpm-dip/portal/issues/1122)) ([0cd49fd](https://github.com/dnpm-dip/portal/commit/0cd49fd0dd6628ad58761b97e4eabc9ab0b32b3b))
+* refactored views in mtb medication section ([9827c04](https://github.com/dnpm-dip/portal/commit/9827c04e00e49061dd1c2032b207d83db5580b73))
+
+
+### Bug Fixes
+
+* **deps:** bump (dev-) dependencies ([8184011](https://github.com/dnpm-dip/portal/commit/818401134f1f2ae35bd67efa31cc96bef25c654d))
+* **deps:** bump @nuxt/kit in the majorprod group across 1 directory ([#1111](https://github.com/dnpm-dip/portal/issues/1111)) ([0c076da](https://github.com/dnpm-dip/portal/commit/0c076da557a0b0115cb8d58de6066b8f39a24ba5))
+* **deps:** bump authup to v1.0.0-beta.28 ([438a5a5](https://github.com/dnpm-dip/portal/commit/438a5a52e2ed1acbdbc01b838be6e722b46a97cd))
+* **deps:** bump the minorandpatch group across 1 directory with 10 updates ([#1138](https://github.com/dnpm-dip/portal/issues/1138)) ([631a93e](https://github.com/dnpm-dip/portal/commit/631a93e9bde0bd6033b069efbe33178812af26c3))
+* **deps:** bump the minorandpatch group across 1 directory with 11 updates ([#1133](https://github.com/dnpm-dip/portal/issues/1133)) ([70e39dc](https://github.com/dnpm-dip/portal/commit/70e39dcda239a9036e27cf458071937b99aec523))
+* **deps:** bump the minorandpatch group across 1 directory with 11 updates ([#1152](https://github.com/dnpm-dip/portal/issues/1152)) ([ab4dab0](https://github.com/dnpm-dip/portal/commit/ab4dab0e888fbea0c37f7a9591fe7b822231d908))
+* **deps:** bump the minorandpatch group across 1 directory with 20 updates ([#1121](https://github.com/dnpm-dip/portal/issues/1121)) ([3a29fb4](https://github.com/dnpm-dip/portal/commit/3a29fb462c2689452f762954c83e821e4ff86d05))
+* **deps:** bump the minorandpatch group across 1 directory with 8 updates ([#1145](https://github.com/dnpm-dip/portal/issues/1145)) ([91fc60a](https://github.com/dnpm-dip/portal/commit/91fc60ac778b6ad4fc675bf4907a9fd240fae646))
+* paginate therapy responses and gene alterations via api ([a874cee](https://github.com/dnpm-dip/portal/commit/a874ceed96944942d2f867070cb39e5bcb679a6b))
+
 ## [1.35.0](https://github.com/dnpm-dip/portal/compare/v1.34.0...v1.35.0) (2025-08-06)
 
 
