@@ -100,6 +100,9 @@ export default defineComponent({
                     name="table"
                     :data="data"
                     :type="type"
+                    :clickable="clickable"
+                    :coding-verbose-label="codingVerboseLabel"
+                    :clicked="handleClick"
                 >
                     <DKVTable
                         :data="data"

@@ -8,14 +8,24 @@
 <script lang="ts">
 import {
     type Coding,
-    DKVChartTableSwitch, DQuerySummaryGrouped, DQuerySummaryNested, toCodingGroup, useQueryFilterStore,
+    DKVChartTableSwitch,
+    DKVTableEntryKey,
+    DQuerySummaryGrouped,
+    DQuerySummaryNested,
+    toCodingGroup,
+    useQueryFilterStore,
 } from '@dnpm-dip/core';
+import DKVTableEntry from "@dnpm-dip/core/components/utility/kv-table/DKVTableEntry.vue";
+import {BTable} from "bootstrap-vue-next";
 import { type PropType, defineComponent, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import type { QuerySummaryMedication } from '../../../domains';
 
 export default defineComponent({
     components: {
+        DKVTableEntryKey,
+        DKVTableEntry,
+        BTable,
         DKVChartTableSwitch,
         DQuerySummaryNested,
         DQuerySummaryGrouped,
@@ -130,7 +140,7 @@ export default defineComponent({
                 </DQuerySummaryGrouped>
             </div>
             <div class="entity-card text-center mb-3 w-100">
-                <h6>Gesamtverteilung ({{ entity.recommendations.overallDistribution.total }})</h6>
+                <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse ({{ entity.recommendations.overallDistribution.total }})</h6>
 
                 <DQuerySummaryNested
                     ref="recommendedVNode"
@@ -154,7 +164,7 @@ export default defineComponent({
         <h5>Umgesetzte Therapien</h5>
         <div class="d-flex flex-column gap-2">
             <div class="entity-card text-center mb-3 w-100">
-                <h6>Gesamtverteilung ({{ entity.therapies.overallDistribution.total }})</h6>
+                <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse ({{ entity.therapies.overallDistribution.total }})</h6>
 
                 <DQuerySummaryNested
                     ref="usedVNode"
@@ -174,12 +184,40 @@ export default defineComponent({
         </div>
         <div class="d-flex flex-column gap-2">
             <div class="entity-card text-center mb-3 w-100">
-                <h6>Mittlere Therapiedauer <small>(in Wochen)</small></h6>
+                <h6>Mittlere Therapiedauer</h6>
                 <DKVChartTableSwitch
                     :data="entity.therapies.meanDurations"
                     :clickable="true"
                     @clicked="handleUsedClick"
-                />
+                >
+                    <template #table="data">
+                        <BTable
+                            :items="data.data"
+                            :fields="[
+                                {
+                                    key: 'key',
+                                    label: 'Element',
+                                    thClass: 'text-left',
+                                    tdClass: 'text-left',
+                                },
+                                {
+                                    key: 'value',
+                                    label: 'Dauer in Wochen',
+                                    thClass: 'text-center',
+                                    tdClass: 'text-center',
+                                }
+                            ]"
+                            outlined
+                        >
+                            <template #cell(key)="cell">
+                                <DKVTableEntryKey :entity="cell.item" />
+                            </template>
+                            <template #cell(value)="cell">
+                                {{ Number(cell.item.value).toFixed(2) }}
+                            </template>
+                        </BTable>
+                    </template>
+                </DKVChartTableSwitch>
             </div>
         </div>
     </div>

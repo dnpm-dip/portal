@@ -6,3 +6,4 @@
  */
 
 export { default as DKVTable } from './DKVTable.vue';
+export { default as DKVTableEntryKey } from './DKVTableEntryKey.vue';
