@@ -5,26 +5,26 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import {computed, defineComponent, PropType} from "vue";
-import type {KeyValueRecord} from "../../../domains";
-import {generateChartLabelsForKeyValueRecord} from "../chart/utils";
+import type { PropType } from 'vue';
+import { computed, defineComponent } from 'vue';
+import type { KeyValueRecord } from '../../../domains';
+import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
+
 export default defineComponent({
     props: {
         entity: {
             type: Object as PropType<KeyValueRecord>,
-            required: true
-        }
+            required: true,
+        },
     },
     setup(props) {
-        const label = computed(() => {
-            return generateChartLabelsForKeyValueRecord(props.entity) || 'Unknown';
-        })
+        const label = computed(() => generateChartLabelsForKeyValueRecord(props.entity) || 'Unknown');
 
         return {
-            label
-        }
-    }
-})
+            label,
+        };
+    },
+});
 </script>
 <template>
     {{ label }}

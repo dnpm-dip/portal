@@ -14,12 +14,18 @@ import {
 import {
     type PropType, defineComponent, ref,
 } from 'vue';
+import MQuerySummaryGeneAlterationsDistribution
+    from '../../../../../components/core/query-summary/MQuerySummaryGeneAlterationsDistribution.vue';
 import { injectHTTPClient } from '../../../../../core/http-client';
-import type { QuerySession, QuerySummaryTumorDiagnostics } from '../../../../../domains';
+import type {
+    QuerySession,
+    QuerySummaryGeneAlterationDistribution,
+    QuerySummaryTumorDiagnostics,
+} from '../../../../../domains';
 import MQuerySummaryTumorDiagnostics from '../../../../../components/core/query-summary/MQuerySummaryTumorDiagnostics.vue';
 
 export default defineComponent({
-    components: { MQuerySummaryTumorDiagnostics },
+    components: { MQuerySummaryGeneAlterationsDistribution, MQuerySummaryTumorDiagnostics },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -32,9 +38,13 @@ export default defineComponent({
         const queryFilterStore = useQueryFilterStore();
 
         const busy = ref(false);
-        const data = ref<null | QuerySummaryTumorDiagnostics>(null);
+        const tumorDiagnostics = ref<null | QuerySummaryTumorDiagnostics>(null);
+        const distributions = ref<null | QuerySummaryGeneAlterationDistribution>(null);
         const load = wrapFnWithBusyState(busy, async () => {
-            data.value = await api.query.getTumorDiagnostics(props.entity.id, queryFilterStore.buildURLRecord());
+            tumorDiagnostics.value = await api.query.getTumorDiagnostics(props.entity.id, queryFilterStore.buildURLRecord());
+            const response = await api.query.getGeneAlterationDistributions(props.entity.id, queryFilterStore.buildURLRecord());
+
+            distributions.value = response.entries;
         });
 
         queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
@@ -44,17 +54,25 @@ export default defineComponent({
             .then(() => load());
 
         return {
-            data,
+            tumorDiagnostics,
+            distributions,
         };
     },
 });
 </script>
 <template>
-    <template v-if="data">
+    <template v-if="tumorDiagnostics">
         <MQuerySummaryTumorDiagnostics
             :key="entity.lastUpdate"
-            :entity="data"
+            :entity="tumorDiagnostics"
             :query-id="entity.id"
+        />
+    </template>
+    <template v-if="distributions">
+        <hr>
+        <MQuerySummaryGeneAlterationsDistribution
+            :query-id="entity.id"
+            :entity="distributions"
         />
     </template>
 </template>

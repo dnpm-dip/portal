@@ -3,7 +3,7 @@ import type {
     Coding,
     Distribution,
     DistributionConceptsCount,
-    DistributionNested,
+    DistributionNested, KeyValueRecord,
     KeyValueRecords,
     QueryBase,
     QueryRequestMode,
@@ -21,6 +21,8 @@ export type QuerySummaryTumorDiagnostics = {
         tumorMorphologies: Distribution<Coding>
     }>,
 };
+
+export type QuerySummaryGeneAlterationDistribution = KeyValueRecord<string, DistributionNested<string>>;
 
 type MedicationRecommendations = {
     overallDistribution: DistributionNested<Coding>,

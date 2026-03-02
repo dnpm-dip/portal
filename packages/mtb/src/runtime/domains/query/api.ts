@@ -9,7 +9,7 @@ import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/co
 import type { PatientMatch, PatientRecord } from '../patient';
 import type {
     QueryDiagnosisFilter, QueryGeneAlterationInfo, QuerySession,
-    QuerySessionCreate,
+    QuerySessionCreate, QuerySummaryGeneAlterationDistribution,
     QuerySummaryMedication,
     QuerySummaryTumorDiagnostics,
     QueryTherapyImplementedFilter,
@@ -116,6 +116,14 @@ export class QueryAPI extends BaseAPI {
         meta: ResourceCollectionLoadMeta = {},
     ) : Promise<ResourceCollectionResponse<QueryGeneAlterationInfo>> {
         const response = await this.client.get(`mtb/queries/${queryId}/gene-alterations${stringifyResourceCollectionMeta(meta)}`);
+        return response.data;
+    }
+
+    async getGeneAlterationDistributions(
+        queryId: string,
+        meta: ResourceCollectionLoadMeta = {},
+    ) : Promise<ResourceCollectionResponse<QuerySummaryGeneAlterationDistribution>> {
+        const response = await this.client.get(`mtb/queries/${queryId}/altered-gene-distributions${stringifyResourceCollectionMeta(meta)}`);
         return response.data;
     }
 
