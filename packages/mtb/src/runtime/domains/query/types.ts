@@ -66,7 +66,7 @@ QueryGeneAlterationFusionCriteria<T>;
 export type QueryGeneAlterationCriteria<T = Coding> = {
     gene: T,
     supporting?: boolean,
-    negated?: boolean,
+    wildtype?: boolean,
     variant?: QueryGeneAlterationVariantCriteria<T>
 };
 

@@ -38,7 +38,7 @@ export default defineComponent({
         const form = reactive<Partial<QueryGeneAlterationCriteria<string>>>({
             gene: '',
             supporting: false,
-            negated: false,
+            wildtype: false,
         });
 
         const mutationType = ref<null | `${QueryMutationType}`>(null);
@@ -135,11 +135,11 @@ export default defineComponent({
 
             if (
                 props.entity.data &&
-                typeof props.entity.data.negated !== 'undefined'
+                typeof props.entity.data.wildtype !== 'undefined'
             ) {
-                form.negated = props.entity.data.negated;
+                form.wildtype = props.entity.data.wildtype;
             } else {
-                form.negated = false;
+                form.wildtype = false;
             }
         };
 
@@ -156,7 +156,7 @@ export default defineComponent({
                 const data : QueryGeneAlterationCriteria = {
                     gene: { code, display },
                     supporting: form.supporting,
-                    negated: form.negated,
+                    wildtype: form.wildtype,
                     ...(mutationData.value ? { variant: { ...mutationData.value } } : {}),
                 };
 
@@ -269,7 +269,7 @@ export default defineComponent({
             </div>
             <div>
                 <VCFormInputCheckbox
-                    v-model="form.negated"
+                    v-model="form.wildtype"
                     :group-class="'form-switch'"
                     :label="true"
                     :label-content="'Wildtyp?'"

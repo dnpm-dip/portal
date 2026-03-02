@@ -15,8 +15,7 @@ import {
     toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import DKVTableEntry from "@dnpm-dip/core/components/utility/kv-table/DKVTableEntry.vue";
-import {BTable} from "bootstrap-vue-next";
+import { BTable } from 'bootstrap-vue-next';
 import { type PropType, defineComponent, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import type { QuerySummaryMedication } from '../../../domains';
@@ -24,7 +23,6 @@ import type { QuerySummaryMedication } from '../../../domains';
 export default defineComponent({
     components: {
         DKVTableEntryKey,
-        DKVTableEntry,
         BTable,
         DKVChartTableSwitch,
         DQuerySummaryNested,

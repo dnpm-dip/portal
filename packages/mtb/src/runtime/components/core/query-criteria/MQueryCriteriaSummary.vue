@@ -68,8 +68,8 @@ export default defineComponent({
                                 <i
                                     class="fa ms-1"
                                     :class="{
-                                        'fa-check text-success': item.negated,
-                                        'fa-times text-danger': !item.negated
+                                        'fa-check text-success': item.wildtype,
+                                        'fa-times text-danger': !item.wildtype
                                     }"
                                 />
                             </li>
