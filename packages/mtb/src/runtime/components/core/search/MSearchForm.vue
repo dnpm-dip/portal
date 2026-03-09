@@ -125,8 +125,8 @@ export default defineComponent({
             mutations.value = [];
 
             if (criteria.value) {
-                if (criteria.value.diagnoses) {
-                    diagnoses.value = transformCodingsToFormSelectOptions(criteria.value.diagnoses);
+                if (criteria.value.tumorEntities) {
+                    diagnoses.value = transformCodingsToFormSelectOptions(criteria.value.tumorEntities);
                 }
 
                 if (criteria.value.tumorMorphologies) {
@@ -186,7 +186,7 @@ export default defineComponent({
                 diagnoses.value &&
                 diagnoses.value.length > 0
             ) {
-                payload.diagnoses = transformFormSelectOptionsToCodings(diagnoses.value);
+                payload.tumorEntities = transformFormSelectOptionsToCodings(diagnoses.value);
             }
 
             if (

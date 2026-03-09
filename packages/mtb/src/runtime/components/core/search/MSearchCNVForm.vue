@@ -40,7 +40,7 @@ export default defineComponent({
             if (props.entity.copyNumberType) {
                 form.copyNumberType = props.entity.copyNumberType.map((coding) => ({
                     id: coding.code,
-                    value: coding.display,
+                    value: coding.display || coding.code,
                 }));
             }
         };

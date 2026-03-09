@@ -16,8 +16,8 @@ export function buildQueryGeneAlterationCriteriaLabel(criteria: QueryGeneAlterat
 
     parts.push(criteria.gene.display || criteria.gene.code);
 
-    if (criteria.variant) {
-        parts.push(criteria.variant.type);
+    if (criteria.alteration) {
+        parts.push(criteria.alteration.type);
     }
 
     return parts.join(' ');

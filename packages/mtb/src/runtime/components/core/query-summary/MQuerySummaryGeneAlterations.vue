@@ -10,10 +10,12 @@ import { type PropType, defineComponent } from 'vue';
 import { BTable } from 'bootstrap-vue-next';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
 import type { QueryGeneAlterationInfo } from '../../../domains';
+import MGeneAlterationText from '../MGeneAlterationText.vue';
 import MTherapyResponseDistributionBar from '../MTherapyResponseDistributionBar.vue';
 
 export default defineComponent({
     components: {
+        MGeneAlterationText,
         DCodingText,
         MTherapyResponseDistributionBar,
         BTable,
@@ -31,7 +33,7 @@ export default defineComponent({
     setup() {
         const fields = [
             {
-                key: 'entity', label: 'Entität', thClass: 'text-left', tdClass: 'text-left',
+                key: 'tumorEntity', label: 'Entität', thClass: 'text-left', tdClass: 'text-left',
             },
             {
                 key: 'gene', label: 'Gen', thClass: 'text-left', tdClass: 'text-left',
@@ -61,11 +63,14 @@ export default defineComponent({
         :busy="busy"
         outlined
     >
-        <template #cell(entity)="data">
-            <DCodingText :entity="data.item.entity" />
+        <template #cell(tumorEntity)="data">
+            <DCodingText :entity="data.item.tumorEntity" />
         </template>
         <template #cell(gene)="data">
-            <DCodingText :entity="data.item.gene" />
+            <DCodingText :entity="data.item.alteration.gene" />
+        </template>
+        <template #cell(alteration)="data">
+            <MGeneAlterationText :entity="data.item.alteration" />
         </template>
         <template #cell(responseDistribution)="data">
             <MTherapyResponseDistributionBar :distribution="data.item.responseDistribution" />

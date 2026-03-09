@@ -48,13 +48,13 @@ export default defineComponent({
                             style="align-items: center; justify-content: center;"
                         >
                             <strong>
-                                {{ entity.geneAlterations.operator.toUpperCase() }}
+                                {{ entity.geneAlterations.operator?.toUpperCase() }}
                             </strong>
                         </div>
                     </template>
                     <div class="entity-card variant-box">
-                        <template v-if="item.variant">
-                            <span class="text-muted">{{ item.variant.type }}</span>
+                        <template v-if="item.alteration">
+                            <span class="text-muted">{{ item.alteration.type }}</span>
                         </template>
 
                         <ul class="list-unstyled">
@@ -83,24 +83,32 @@ export default defineComponent({
                                     }"
                                 />
                             </li>
-                            <template v-if="item.variant">
-                                <template v-if="item.variant.type === 'SNV'">
-                                    <li v-if="item.variant.dnaChange">
-                                        <strong>&bull; DNA-Änderung</strong> {{ item.variant.dnaChange }}
+                            <template v-if="item.alteration">
+                                <template v-if="item.alteration.type === 'SNV'">
+                                    <li v-if="item.alteration.dnaChange">
+                                        <strong>&bull; DNA-Änderung</strong> {{ item.alteration.dnaChange }}
                                     </li>
-                                    <li v-if="item.variant.proteinChange">
-                                        <strong>&bull; Proteinänderung</strong> {{ item.variant.proteinChange }}
+                                    <li v-if="item.alteration.proteinChange">
+                                        <strong>&bull; Proteinänderung</strong> {{ item.alteration.proteinChange }}
                                     </li>
                                 </template>
-                                <template v-else-if="item.variant.type === 'CNV'">
-                                    <li v-if="item.variant.copyNumberType">
+                                <template v-else-if="item.alteration.type === 'CNV'">
+                                    <li v-if="item.alteration.copyNumberType">
                                         <strong>&bull; Type</strong>
-                                        {{ item.variant.copyNumberType.display || item.variant.copyNumberType.code }}
+                                        <template
+                                            v-for="(cnt, cntKey) in item.alteration.copyNumberType"
+                                            :key="cntKey"
+                                        >
+                                            <span>
+                                                <DCodingText :entity="cnt" />
+                                            </span>
+                                        </template>
                                     </li>
                                 </template>
                                 <template v-else>
-                                    <li v-if="item.variant.partner">
-                                        <strong>&bull; 5'-Gen</strong> {{ item.variant.partner.display || item.variant.partner.code }}
+                                    <li v-if="item.alteration.partner">
+                                        <strong>&bull; 5'-Gen</strong>
+                                        {{ item.alteration.partner.display || item.alteration.partner.code }}
                                     </li>
                                 </template>
                             </template>
@@ -110,17 +118,17 @@ export default defineComponent({
             </div>
         </div>
         <div
-            v-if="entity.diagnoses || entity.tumorMorphologies"
+            v-if="entity.tumorEntities || entity.tumorMorphologies"
             class="d-flex flex-column gap-1"
         >
             <strong>Diagnose</strong>
 
-            <div v-if="entity.diagnoses">
+            <div v-if="entity.tumorEntities">
                 <span class="text-muted">Kategorien</span>
 
                 <div class="d-flex flex-row gap-1">
                     <template
-                        v-for="item in entity.diagnoses"
+                        v-for="item in entity.tumorEntities"
                         :key="item.code"
                     >
                         <div>
@@ -160,11 +168,11 @@ export default defineComponent({
             class="d-flex flex-column gap-1"
         >
             <strong>Medikation</strong>
-            <div v-if="entity.medication.drugs">
+            <div v-if="entity.medication.items">
                 <span class="text-muted">Name(n)</span>
                 <div class="d-flex flex-row gap-1">
                     <template
-                        v-for="(item, index) in entity.medication.drugs"
+                        v-for="(item, index) in entity.medication.items"
                         :key="item.code"
                     >
                         <div v-if="index > 0">

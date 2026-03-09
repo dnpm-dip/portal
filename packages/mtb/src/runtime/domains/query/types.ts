@@ -58,7 +58,7 @@ export type QueryGeneAlterationCNVCriteria<T = Coding> = {
 
 export type QueryGeneAlterationFusionCriteria<T = Coding> = {
     type: `${QueryMutationType.FUSION}`,
-    partner?: T
+    partner?: T,
 };
 
 export type QueryGeneAlterationVariantCriteria<T = Coding> = QueryGeneAlterationCNVCriteria |
@@ -69,7 +69,7 @@ export type QueryGeneAlterationCriteria<T = Coding> = {
     gene: T,
     supporting?: boolean,
     wildtype?: boolean,
-    variant?: QueryGeneAlterationVariantCriteria<T>
+    alteration?: QueryGeneAlterationVariantCriteria<T>
 };
 
 export type QueryGeneAlterationsCriteria = {
@@ -78,7 +78,7 @@ export type QueryGeneAlterationsCriteria = {
 };
 
 export type QueryCriteria = {
-    diagnoses?: Coding<string>[],
+    tumorEntities?: Coding<string>[],
     tumorMorphologies?: Coding<string>[],
     medication?:QueryMedicationCriteria,
     responses?: Coding<string>[],
@@ -103,10 +103,33 @@ export type QuerySessionCreate = {
 
 export type QuerySession = QueryBase<QueryCriteria>;
 
+//
+
+export type QueryGeneAlterationSNV<T = Coding> = {
+    gene: T,
+    type: `${QueryMutationType.SNV}`,
+    dnaChange: string,
+    proteinChange: string,
+};
+
+export type QueryGeneAlterationCNV<T = Coding> = {
+    gene: T,
+    type: `${QueryMutationType.CNV}`,
+    copyNumberType: T
+};
+
+export type QueryGeneAlterationFusion<T = Coding> = {
+    gene: T,
+    type: `${QueryMutationType.FUSION}`,
+    partner: T,
+};
+
+export type QueryGeneAlteration = QueryGeneAlterationSNV | QueryGeneAlterationCNV | QueryGeneAlterationFusion;
+
 export type QueryTherapyResponse = {
-    entity: Coding,
+    tumorEntity: Coding,
     medications: string[],
-    supportingAlteration: string,
+    supportingAlteration: QueryGeneAlteration,
     count: number,
     orr: number,
     responseDistribution: DistributionConceptsCount<Coding>,
@@ -114,9 +137,9 @@ export type QueryTherapyResponse = {
 };
 
 export type QueryGeneAlterationInfo = {
-    entity: Coding,
+    tumorEntity: Coding,
+    alteration: QueryGeneAlteration,
     gene: Coding,
-    alteration: string,
     count: number,
     supporting: boolean
 };

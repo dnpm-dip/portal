@@ -10,10 +10,12 @@ import { type PropType, defineComponent } from 'vue';
 import { BTable } from 'bootstrap-vue-next';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
 import type { QueryTherapyResponse } from '../../../domains';
+import MGeneAlterationText from '../MGeneAlterationText.vue';
 import MTherapyResponseDistributionBar from '../MTherapyResponseDistributionBar.vue';
 
 export default defineComponent({
     components: {
+        MGeneAlterationText,
         DCodingText,
         MTherapyResponseDistributionBar,
         BTable,
@@ -31,7 +33,7 @@ export default defineComponent({
     setup() {
         const fields = [
             {
-                key: 'entity', label: 'Entität', thClass: 'text-left', tdClass: 'text-left',
+                key: 'tumorEntity', label: 'Entität', thClass: 'text-left', tdClass: 'text-left',
             },
             {
                 key: 'medications', label: 'Medikationen', thClass: 'text-left', tdClass: 'text-left',
@@ -69,8 +71,11 @@ export default defineComponent({
         :busy="busy"
         outlined
     >
-        <template #cell(entity)="data">
-            <DCodingText :entity="data.item.entity" />
+        <template #cell(tumorEntity)="data">
+            <DCodingText :entity="data.item.tumorEntity" />
+        </template>
+        <template #cell(supportingAlteration)="data">
+            <MGeneAlterationText :entity="data.item.supportingAlteration" />
         </template>
         <template #cell(medications)="data">
             <ul class="column">
@@ -78,7 +83,7 @@ export default defineComponent({
                     v-for="(item,key) in data.item.medications"
                     :key="key"
                 >
-                    {{ item }}
+                    <DCodingText :entity="item" />
                 </li>
             </ul>
         </template>
