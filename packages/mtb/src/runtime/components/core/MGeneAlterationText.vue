@@ -26,10 +26,10 @@ export default defineComponent({
         <DCodingText :entity="entity.gene" /> {{ entity.proteinChange || 'SNV ' }}
     </template>
     <template v-else-if="entity.type === 'CNV'">
-        <DCodingText :entity="entity.gene" />/> <DCodingText :entity="entity.copyNumberType" />
+        <DCodingText :entity="entity.gene" /> <DCodingText :entity="entity.copyNumberType" />
     </template>
     <template v-else-if="entity.type === 'Fusion'">
-        <DCodingText :entity="entity.gene" /> <DCodingText :entity="entity.gene" />-<DCodingText :entity="entity.partner" />
+        <DCodingText :entity="entity.gene" />-<DCodingText :entity="entity.partner" /> Fusion
     </template>
     <template v-else>
         ???
