@@ -49,9 +49,12 @@ export default defineComponent({
             },
             {
                 key: 'meanDuration', label: 'Dauer in Wochen (Ø)', thClass: 'text-center', tdClass: 'text-center align-middle',
-            }, {
+            },
+            /**
+            {
                 key: 'score', label: 'Score', thClass: 'text-center', tdClass: 'text-center align-middle',
             },
+                * */
             {
                 key: 'responseDistribution', label: 'Response Verteilung', thClass: 'text-center', tdClass: 'text-center align-middle',
             },
