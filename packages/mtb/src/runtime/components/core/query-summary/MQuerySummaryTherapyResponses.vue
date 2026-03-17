@@ -6,7 +6,9 @@
   -->
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import {
+    defineComponent, onUnmounted, ref, watch,
+} from 'vue';
 import type { BTableSortBy, TableFieldRaw } from 'bootstrap-vue-next';
 import { BTable } from 'bootstrap-vue-next';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
@@ -123,20 +125,25 @@ export default defineComponent({
             tableRef.value?.refresh();
         };
 
-        queryEventBus.on(
+        const removeSessionHandler = queryEventBus.on(
             QueryEventBusEventName.SESSION_UPDATED,
             () => {
                 offset.value = 0;
                 tableRef.value?.refresh();
             },
         );
-        queryEventBus.on(
+        const removeFiltersHandler = queryEventBus.on(
             QueryEventBusEventName.FILTERS_COMMITED,
             () => {
                 offset.value = 0;
                 tableRef.value?.refresh();
             },
         );
+
+        onUnmounted(() => {
+            removeSessionHandler();
+            removeFiltersHandler();
+        });
 
         watch(sortBy, (value) => {
             const hasActive = value.some((s) => s.order);

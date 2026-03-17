@@ -6,7 +6,9 @@
   -->
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import {
+    defineComponent, onUnmounted, ref, watch,
+} from 'vue';
 import type { BTableSortBy, TableFieldRaw } from 'bootstrap-vue-next';
 import { BTable } from 'bootstrap-vue-next';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
@@ -21,14 +23,12 @@ import type { PaginationMeta } from '@vuecs/pagination';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QueryGeneAlterationInfo } from '../../../domains';
 import MGeneAlterationText from '../MGeneAlterationText.vue';
-import MTherapyResponseDistributionBar from '../MTherapyResponseDistributionBar.vue';
 
 export default defineComponent({
     components: {
         MGeneAlterationText,
         DCodingText,
         DSortIndicator,
-        MTherapyResponseDistributionBar,
         BTable,
     },
     props: {
@@ -117,20 +117,25 @@ export default defineComponent({
             tableRef.value?.refresh();
         };
 
-        queryEventBus.on(
+        const removeSessionHandler = queryEventBus.on(
             QueryEventBusEventName.SESSION_UPDATED,
             () => {
                 offset.value = 0;
                 tableRef.value?.refresh();
             },
         );
-        queryEventBus.on(
+        const removeFiltersHandler = queryEventBus.on(
             QueryEventBusEventName.FILTERS_COMMITED,
             () => {
                 offset.value = 0;
                 tableRef.value?.refresh();
             },
         );
+
+        onUnmounted(() => {
+            removeSessionHandler();
+            removeFiltersHandler();
+        });
 
         watch(sortBy, (value) => {
             const hasActive = value.some((s) => s.order);
@@ -205,10 +210,6 @@ export default defineComponent({
         <template #cell(alteration)="data">
             <MGeneAlterationText :entity="data.item.alteration" />
         </template>
-        <template #cell(responseDistribution)="data">
-            <MTherapyResponseDistributionBar :distribution="data.item.responseDistribution" />
-        </template>
-
         <template #cell(supporting)="data">
             <i
                 class="fa"

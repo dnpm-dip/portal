@@ -12,7 +12,7 @@ import {
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import {
-    type PropType, defineComponent, ref,
+    type PropType, defineComponent, onUnmounted, ref,
 } from 'vue';
 import MQuerySummaryGeneAlterationsDistribution
     from '../../../../../components/core/query-summary/MQuerySummaryGeneAlterationsDistribution.vue';
@@ -47,8 +47,13 @@ export default defineComponent({
             distributions.value = response.entries;
         });
 
-        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
-        queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => load());
+        const removeSessionHandler = queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
+        const removeFiltersHandler = queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => load());
+
+        onUnmounted(() => {
+            removeSessionHandler();
+            removeFiltersHandler();
+        });
 
         Promise.resolve()
             .then(() => load());

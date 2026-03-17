@@ -5,7 +5,7 @@ import { VCPagination } from '@vuecs/pagination';
 import {
     type PropType, type Ref,
 } from 'vue';
-import { inject, ref } from 'vue';
+import { inject, onUnmounted, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import QueryPatientMatchEntity from '../../../../components/core/query-patient/MQueryPatientMatch.vue';
 import QueryPatientMatchList from '../../../../components/core/query-patient/MQueryPatientMatches';
@@ -29,16 +29,21 @@ export default defineNuxtComponent({
 
         const listRef = ref(null) as Ref<typeof QueryPatientMatchList | null>;
 
-        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => {
+        const removeSessionHandler = queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => {
             if (listRef.value) {
                 listRef.value.load({ filters: queryFilterStore.buildURLRecord() });
             }
         });
 
-        queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => {
+        const removeFiltersHandler = queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => {
             if (listRef.value) {
                 listRef.value.load({ filters: queryFilterStore.buildURLRecord() });
             }
+        });
+
+        onUnmounted(() => {
+            removeSessionHandler();
+            removeFiltersHandler();
         });
 
         const applyPagination = ({ limit, offset } : PaginationMeta) => {
