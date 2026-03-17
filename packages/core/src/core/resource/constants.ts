@@ -4,3 +4,8 @@ export enum ResourceSlotName {
     ERRORS = 'errors',
     LOADING = 'loading',
 }
+
+export enum ResourceCollectionSortDirection {
+    DESC = 'desc',
+    ASC = 'asc',
+}

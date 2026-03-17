@@ -5,6 +5,7 @@ export * from './expandable-content';
 export * from './form-tab';
 export * from './logical-operator-switch';
 export * from './nav';
+export * from './sort-indicator';
 
 export * from './kv-chart';
 export * from './kv-chart-table-switch';
