@@ -12,7 +12,7 @@ import {
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import {
-    type PropType, type Ref, defineComponent, ref,
+    type PropType, type Ref, defineComponent, onUnmounted, ref,
 } from 'vue';
 import { injectHTTPClient } from '../../../../../core';
 import type { QuerySession, QuerySummaryDiagnostics } from '../../../../../domains';
@@ -40,8 +40,13 @@ export default defineComponent({
         Promise.resolve()
             .then(() => load());
 
-        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
-        queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => load());
+        const removeSessionHandler = queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
+        const removeFiltersHandler = queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => load());
+
+        onUnmounted(() => {
+            removeSessionHandler();
+            removeFiltersHandler();
+        });
 
         return {
             data,

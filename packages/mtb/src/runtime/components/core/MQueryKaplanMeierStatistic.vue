@@ -13,7 +13,7 @@ import {
     injectQueryEventBus,
 } from '@dnpm-dip/core';
 import {
-    defineComponent, ref, toRef, watch,
+    defineComponent, onUnmounted, ref, toRef, watch,
 } from 'vue';
 import { injectHTTPClient } from '../../core/http-client';
 
@@ -81,7 +81,11 @@ export default defineComponent({
             }
         });
 
-        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => resolve());
+        const removeSessionHandler = queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => resolve());
+
+        onUnmounted(() => {
+            removeSessionHandler();
+        });
 
         return {
             data,

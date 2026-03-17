@@ -4,13 +4,14 @@ import type {
 } from 'vue';
 import type { ObjectLiteral } from '../../../types';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
-import type { ResourceSlotName } from '../constants';
+import type { ResourceCollectionSortDirection, ResourceSlotName } from '../constants';
 
 export type ResourceCollectionLoadMeta = {
     limit?: number,
     offset?: number,
     total?: number,
     filters?: Record<string, any>,
+    sort?: Record<string, `${ResourceCollectionSortDirection}`>,
 };
 
 export type ResourceCollectionLoadResponse<

@@ -8,6 +8,7 @@ import type {
 import {
     computed,
     defineComponent,
+    onUnmounted,
     ref,
     watch,
 } from 'vue';
@@ -88,8 +89,13 @@ export default defineComponent({
 
         init();
 
-        queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => render());
-        queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => render());
+        const removeSessionHandler = queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => render());
+        const removeFiltersHandler = queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => render());
+
+        onUnmounted(() => {
+            removeSessionHandler();
+            removeFiltersHandler();
+        });
 
         return {
             options,
