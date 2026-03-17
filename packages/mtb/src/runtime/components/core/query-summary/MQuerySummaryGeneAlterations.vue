@@ -102,7 +102,7 @@ export default defineComponent({
                 };
 
                 const response = await api.query.getGeneAlterationInfos(props.queryId, meta);
-                total.value = response.size || response.entries.length;
+                total.value = response.size ?? response.entries.length;
                 limit.value = response.limit ?? limit.value;
                 offset.value = response.offset ?? offset.value;
                 return response.entries;
