@@ -86,11 +86,11 @@ export default defineComponent({
                         if (s.order) {
                             switch (s.key) {
                                 case 'tumorEntity': {
-                                    sort['tumorEntity.code'] = s.order;
+                                    sort['tumorEntity.display'] = s.order;
                                     break;
                                 }
                                 case 'supportingAlteration': {
-                                    sort['supportingAlteration.gene.code'] = s.order;
+                                    sort['supportingAlteration.gene.display'] = s.order;
                                     break;
                                 }
                                 default: {
