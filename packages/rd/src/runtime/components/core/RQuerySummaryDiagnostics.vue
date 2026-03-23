@@ -26,7 +26,7 @@ export default defineComponent({
                     <h6 class="text-center">
                         Diagnose Kategorien
                     </h6>
-                    <DKVChart :items="entity.overallDistributions.diseaseCategories.elements" />
+                    <DKVChart :items="entity.overallDistributions.diagnoses.elements" />
                 </div>
             </div>
             <div class="col-12 col-xl-6">
@@ -56,7 +56,7 @@ export default defineComponent({
                             <h6 class="text-center">
                                 Diagnose Kategorien
                             </h6>
-                            <DKVChart :items="item.value.diseaseCategories.elements" />
+                            <DKVChart :items="item.value.diagnoses.elements" />
                         </div>
                     </div>
                     <div class="col-12 col-xl-6">

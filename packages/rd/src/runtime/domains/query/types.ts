@@ -51,10 +51,10 @@ export type QuerySession = QueryBase<QueryCriteria>;
 export type QuerySummaryDiagnostics = {
     overallDistributions: {
         hpoTerms: Distribution<Coding>,
-        diseaseCategories: Distribution<Coding>
+        diagnoses: Distribution<Coding>
     },
     distributionsByVariant: KeyValueRecords<Coding, {
-        diseaseCategories: Distribution<Coding>,
+        diagnoses: Distribution<Coding>,
         hpoTerms: Distribution<Coding>
     }>
 };
