@@ -42,7 +42,7 @@ export function stringifyResourceCollectionMeta(meta: ResourceCollectionLoadMeta
                 }
             }
 
-            queryRecord.sort = items;
+            queryRecord.sort = items.join(',');
         }
 
         qs = serializeURLQueryRecord(queryRecord);
