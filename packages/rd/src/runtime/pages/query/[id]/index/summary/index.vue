@@ -12,6 +12,7 @@ import {
     type QuerySummaryDemographics,
     injectQueryEventBus, useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { BPlaceholder } from 'bootstrap-vue-next';
 import {
     type PropType, defineComponent, onUnmounted, ref,
 } from 'vue';
@@ -19,7 +20,7 @@ import { injectHTTPClient } from '../../../../../core';
 import type { QuerySession } from '../../../../../domains';
 
 export default defineComponent({
-    components: { DQuerySummaryDemographics },
+    components: { BPlaceholder, DQuerySummaryDemographics },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -49,6 +50,7 @@ export default defineComponent({
         });
 
         return {
+            busy,
             data,
         };
     },
@@ -59,5 +61,42 @@ export default defineComponent({
         <DQuerySummaryDemographics
             :entity="data"
         />
+    </template>
+    <template v-else-if="busy">
+        <div>
+            <h5>Allgemein</h5>
+            <div class="d-flex flex-row gap-2">
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Patienten pro Standort</h6>
+                    <BPlaceholder
+                        v-for="i in 4"
+                        :key="i"
+                        :width="50 + i * 10 + '%'"
+                        animation="wave"
+                        class="mb-2"
+                    />
+                </div>
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Geschlechterverteilung</h6>
+                    <BPlaceholder
+                        v-for="i in 4"
+                        :key="i"
+                        :width="50 + i * 10 + '%'"
+                        animation="wave"
+                        class="mb-2"
+                    />
+                </div>
+            </div>
+            <div class="entity-card text-center mb-3 w-100">
+                <h6>Altersverteilung</h6>
+                <BPlaceholder
+                    v-for="i in 4"
+                    :key="i"
+                    :width="40 + i * 15 + '%'"
+                    animation="wave"
+                    class="mb-2"
+                />
+            </div>
+        </div>
     </template>
 </template>

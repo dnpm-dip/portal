@@ -11,6 +11,7 @@ import {
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { BPlaceholder } from 'bootstrap-vue-next';
 import {
     type PropType, type Ref, defineComponent, onUnmounted, ref,
 } from 'vue';
@@ -19,7 +20,7 @@ import type { QuerySession, QuerySummaryDiagnostics } from '../../../../../domai
 import RQuerySummaryDiagnostics from '../../../../../components/core/RQuerySummaryDiagnostics.vue';
 
 export default defineComponent({
-    components: { RQuerySummaryDiagnostics },
+    components: { BPlaceholder, RQuerySummaryDiagnostics },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -49,6 +50,7 @@ export default defineComponent({
         });
 
         return {
+            busy,
             data,
         };
     },
@@ -57,5 +59,53 @@ export default defineComponent({
 <template>
     <template v-if="data">
         <RQuerySummaryDiagnostics :entity="data" />
+    </template>
+    <template v-else-if="busy">
+        <div>
+            <h5>Gesamtverteilung</h5>
+            <div class="row">
+                <div class="col-12 col-xl-6">
+                    <div class="entity-card text-center mb-3 w-100">
+                        <h6 class="text-center">
+                            Diagnose Kategorien
+                        </h6>
+                        <BPlaceholder
+                            v-for="i in 5"
+                            :key="i"
+                            :width="40 + i * 10 + '%'"
+                            animation="wave"
+                            class="mb-2"
+                        />
+                    </div>
+                </div>
+                <div class="col-12 col-xl-6">
+                    <div class="entity-card text-center mb-3 w-100">
+                        <h6 class="text-center">
+                            HPOTermen
+                        </h6>
+                        <BPlaceholder
+                            v-for="i in 5"
+                            :key="i"
+                            :width="40 + i * 10 + '%'"
+                            animation="wave"
+                            class="mb-2"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <h5>Verteilung nach Varianten</h5>
+            <div class="entity-card text-center mb-3 w-100">
+                <BPlaceholder
+                    v-for="i in 5"
+                    :key="i"
+                    :width="40 + i * 10 + '%'"
+                    animation="wave"
+                    class="mb-2"
+                />
+            </div>
+        </div>
     </template>
 </template>

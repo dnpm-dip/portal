@@ -11,6 +11,7 @@ import {
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { BPlaceholder } from 'bootstrap-vue-next';
 import {
     type PropType, defineComponent, onUnmounted, ref,
 } from 'vue';
@@ -25,7 +26,7 @@ import type {
 import MQuerySummaryTumorDiagnostics from '../../../../../components/core/query-summary/MQuerySummaryTumorDiagnostics.vue';
 
 export default defineComponent({
-    components: { MQuerySummaryGeneAlterationsDistribution, MQuerySummaryTumorDiagnostics },
+    components: { BPlaceholder, MQuerySummaryGeneAlterationsDistribution, MQuerySummaryTumorDiagnostics },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -59,6 +60,7 @@ export default defineComponent({
             .then(() => load());
 
         return {
+            busy,
             tumorDiagnostics,
             distributions,
         };
@@ -79,5 +81,45 @@ export default defineComponent({
             :query-id="entity.id"
             :entity="distributions"
         />
+    </template>
+    <template v-if="busy && !tumorDiagnostics && !distributions">
+        <div>
+            <h5>Gesamtverteilung</h5>
+            <div class="d-flex flex-column gap-2">
+                <div class="entity-card text-center mb-3">
+                    <h6>Tumor-Entitäten (ICD-10-GM)</h6>
+                    <BPlaceholder
+                        v-for="i in 5"
+                        :key="i"
+                        :width="40 + i * 10 + '%'"
+                        animation="wave"
+                        class="mb-2"
+                    />
+                </div>
+                <div class="entity-card text-center mb-3">
+                    <h6>Tumor-Morphologie (ICD-O-3-M)</h6>
+                    <BPlaceholder
+                        v-for="i in 5"
+                        :key="i"
+                        :width="40 + i * 10 + '%'"
+                        animation="wave"
+                        class="mb-2"
+                    />
+                </div>
+            </div>
+
+            <hr>
+
+            <h5>Verteilung nach Alteration</h5>
+            <div class="entity-card text-center mb-3">
+                <BPlaceholder
+                    v-for="i in 5"
+                    :key="i"
+                    :width="40 + i * 10 + '%'"
+                    animation="wave"
+                    class="mb-2"
+                />
+            </div>
+        </div>
     </template>
 </template>
