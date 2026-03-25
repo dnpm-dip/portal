@@ -2,6 +2,7 @@
 import { QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore } from '@dnpm-dip/core';
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCPagination } from '@vuecs/pagination';
+import { BPlaceholder } from 'bootstrap-vue-next';
 import {
     type PropType, type Ref,
 } from 'vue';
@@ -13,6 +14,7 @@ import type { QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        BPlaceholder,
         QueryPatientMatchEntity,
         QueryPatientMatchList,
         VCPagination,
@@ -69,6 +71,30 @@ export default defineNuxtComponent({
             :query-id="entity.id"
             :filters="queryFilters"
         >
+            <template #loading>
+                <div class="list">
+                    <ul class="list-body list-unstyled">
+                        <li
+                            v-for="i in 5"
+                            :key="i"
+                            class="list-item flex-row"
+                        >
+                            <div class="entity-card w-100 mb-2">
+                                <BPlaceholder
+                                    :width="60 + i * 5 + '%'"
+                                    animation="wave"
+                                    class="mb-1"
+                                />
+                                <BPlaceholder
+                                    :width="40 + i * 8 + '%'"
+                                    animation="wave"
+                                    size="sm"
+                                />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </template>
             <template #default="props">
                 <div class="d-flex flex-row">
                     <div class="ms-auto">
@@ -93,7 +119,7 @@ export default defineNuxtComponent({
                         </ul>
                     </div>
                 </template>
-                <template v-else>
+                <template v-else-if="!props.busy">
                     <div class="alert alert-sm alert-info">
                         Es wurden keine Patienten gefunden, die die Suchkriterien erfüllen.
                     </div>
@@ -106,6 +132,6 @@ export default defineNuxtComponent({
                     @load="applyPagination"
                 />
             </template>
-        </querypatientmatchlist>
+        </QueryPatientMatchList>
     </div>
 </template>
