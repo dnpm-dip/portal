@@ -6,22 +6,27 @@
   -->
 
 <script lang="ts">
+import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
     type Coding,
     DKVChartTableSwitch,
     DKVTableEntryKey,
     DQuerySummaryGrouped,
     DQuerySummaryNested,
+    QueryEventBusEventName,
+    injectQueryEventBus,
     toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { BTable } from 'bootstrap-vue-next';
-import { type PropType, defineComponent, ref } from 'vue';
+import { BPlaceholder, BTable } from 'bootstrap-vue-next';
+import { defineComponent, onUnmounted, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
+import { injectHTTPClient } from '../../../core/http-client';
 import type { QuerySummaryMedication } from '../../../domains';
 
 export default defineComponent({
     components: {
+        BPlaceholder,
         DKVTableEntryKey,
         BTable,
         DKVChartTableSwitch,
@@ -29,17 +34,38 @@ export default defineComponent({
         DQuerySummaryGrouped,
     },
     props: {
-        entity: {
-            type: Object as PropType<QuerySummaryMedication>,
-            required: true,
-        },
         queryId: {
             type: String,
             required: true,
         },
     },
-    setup() {
+    setup(props) {
+        const api = injectHTTPClient();
+        const queryEventBus = injectQueryEventBus();
         const queryFilterStore = useQueryFilterStore();
+
+        const busy = ref(false);
+        const data = ref<null | QuerySummaryMedication>(null);
+        const error = ref<Error | null>(null);
+        const load = wrapFnWithBusyState(busy, async () => {
+            try {
+                error.value = null;
+                data.value = await api.query.getMedication(props.queryId, queryFilterStore.buildURLRecord());
+            } catch (e) {
+                error.value = e instanceof Error ? e : new Error('Failed to load medication');
+            }
+        });
+
+        Promise.resolve()
+            .then(() => load());
+
+        const removeSessionHandler = queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
+        const removeFiltersHandler = queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => load());
+
+        onUnmounted(() => {
+            removeSessionHandler();
+            removeFiltersHandler();
+        });
         const recommendedVNode = ref<null | typeof DQuerySummaryNested>(null);
         const recommendedByVariantVNode = ref<null | typeof DQuerySummaryGrouped>(null);
         const usedVNode = ref<null | typeof DQuerySummaryNested>(null);
@@ -104,6 +130,10 @@ export default defineComponent({
         };
 
         return {
+            busy,
+            data,
+            error,
+
             recommendedVNode,
             recommendedByVariantVNode,
             handleRecommendationClick,
@@ -115,108 +145,168 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div>
-        <h5>Therapie Empfehlungen</h5>
-        <div class="d-flex flex-column gap-2">
-            <div class="entity-card text-center mb-3 w-100">
-                <h6>Empfehlungen nach stützender molekularer Alteration</h6>
+    <template v-if="data">
+        <div>
+            <h5>Therapie Empfehlungen</h5>
+            <div class="d-flex flex-column gap-2">
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Empfehlungen nach stützender molekularer Alteration</h6>
 
-                <DQuerySummaryGrouped
-                    ref="recommendedByVariantVNode"
-                    :select-first="true"
-                    :items="entity.recommendations.distributionBySupportingVariant"
-                    :label="'Variante'"
-                >
-                    <template #default="{ item }">
-                        <DKVChartTableSwitch
-                            :type="'bar'"
-                            :data="item.value.elements"
-                            :clickable="true"
-                            @clicked="(keys) => handleRecommendationClick(keys, 'recommendedByVariant')"
-                        />
-                    </template>
-                </DQuerySummaryGrouped>
+                    <DQuerySummaryGrouped
+                        ref="recommendedByVariantVNode"
+                        :select-first="true"
+                        :items="data.recommendations.distributionBySupportingVariant"
+                        :label="'Variante'"
+                    >
+                        <template #default="{ item }">
+                            <DKVChartTableSwitch
+                                :type="'bar'"
+                                :data="item.value.elements"
+                                :clickable="true"
+                                @clicked="(keys) => handleRecommendationClick(keys, 'recommendedByVariant')"
+                            />
+                        </template>
+                    </DQuerySummaryGrouped>
+                </div>
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse ({{ data.recommendations.overallDistribution.total }})</h6>
+
+                    <DQuerySummaryNested
+                        ref="recommendedVNode"
+                        :label="'Kategorie'"
+                        :total="data.recommendations.overallDistribution.total"
+                        :data="data.recommendations.overallDistribution.elements"
+                    >
+                        <template #default="{ items }">
+                            <DKVChartTableSwitch
+                                :data="items"
+                                :clickable="true"
+                                @clicked="(keys) => handleRecommendationClick(keys, 'recommended')"
+                            />
+                        </template>
+                    </DQuerySummaryNested>
+                </div>
             </div>
-            <div class="entity-card text-center mb-3 w-100">
-                <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse ({{ entity.recommendations.overallDistribution.total }})</h6>
 
-                <DQuerySummaryNested
-                    ref="recommendedVNode"
-                    :label="'Kategorie'"
-                    :total="entity.recommendations.overallDistribution.total"
-                    :data="entity.recommendations.overallDistribution.elements"
-                >
-                    <template #default="{ items }">
-                        <DKVChartTableSwitch
-                            :data="items"
-                            :clickable="true"
-                            @clicked="(keys) => handleRecommendationClick(keys, 'recommended')"
-                        />
-                    </template>
-                </DQuerySummaryNested>
+            <hr>
+
+            <h5>Umgesetzte Therapien</h5>
+            <div class="d-flex flex-column gap-2">
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse ({{ data.therapies.overallDistribution.total }})</h6>
+
+                    <DQuerySummaryNested
+                        ref="usedVNode"
+                        :label="'Kategorie'"
+                        :data="data.therapies.overallDistribution.elements"
+                        :total="data.therapies.overallDistribution.total"
+                    >
+                        <template #default="{ items }">
+                            <DKVChartTableSwitch
+                                :data="items"
+                                :clickable="true"
+                                @clicked="handleUsedClick"
+                            />
+                        </template>
+                    </DQuerySummaryNested>
+                </div>
+            </div>
+            <div class="d-flex flex-column gap-2">
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Mittlere Therapiedauer</h6>
+                    <DKVChartTableSwitch
+                        :data="data.therapies.meanDurations"
+                        :clickable="true"
+                        @clicked="handleUsedClick"
+                    >
+                        <template #table="tableData">
+                            <BTable
+                                :items="tableData.data"
+                                :fields="[
+                                    {
+                                        key: 'key',
+                                        label: 'Element',
+                                        thClass: 'text-left',
+                                        tdClass: 'text-left',
+                                    },
+                                    {
+                                        key: 'value',
+                                        label: 'Dauer in Wochen',
+                                        thClass: 'text-center',
+                                        tdClass: 'text-center',
+                                    }
+                                ]"
+                                outlined
+                            >
+                                <template #cell(key)="cell">
+                                    <DKVTableEntryKey :entity="cell.item" />
+                                </template>
+                                <template #cell(value)="cell">
+                                    {{ Number(cell.item.value).toFixed(2) }}
+                                </template>
+                            </BTable>
+                        </template>
+                    </DKVChartTableSwitch>
+                </div>
             </div>
         </div>
+    </template>
+    <template v-else-if="busy">
+        <div>
+            <h5>Therapie Empfehlungen</h5>
+            <div class="d-flex flex-column gap-2">
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Empfehlungen nach stützender molekularer Alteration</h6>
+                    <BPlaceholder
+                        v-for="i in 5"
+                        :key="i"
+                        :width="40 + i * 10 + '%'"
+                        animation="wave"
+                        class="mb-2"
+                    />
+                </div>
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse</h6>
+                    <BPlaceholder
+                        v-for="i in 5"
+                        :key="i"
+                        :width="40 + i * 10 + '%'"
+                        animation="wave"
+                        class="mb-2"
+                    />
+                </div>
+            </div>
 
-        <hr>
+            <hr>
 
-        <h5>Umgesetzte Therapien</h5>
-        <div class="d-flex flex-column gap-2">
-            <div class="entity-card text-center mb-3 w-100">
-                <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse ({{ entity.therapies.overallDistribution.total }})</h6>
-
-                <DQuerySummaryNested
-                    ref="usedVNode"
-                    :label="'Kategorie'"
-                    :data="entity.therapies.overallDistribution.elements"
-                    :total="entity.therapies.overallDistribution.total"
-                >
-                    <template #default="{ items }">
-                        <DKVChartTableSwitch
-                            :data="items"
-                            :clickable="true"
-                            @clicked="handleUsedClick"
-                        />
-                    </template>
-                </DQuerySummaryNested>
+            <h5>Umgesetzte Therapien</h5>
+            <div class="d-flex flex-column gap-2">
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse</h6>
+                    <BPlaceholder
+                        v-for="i in 5"
+                        :key="i"
+                        :width="40 + i * 10 + '%'"
+                        animation="wave"
+                        class="mb-2"
+                    />
+                </div>
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Mittlere Therapiedauer</h6>
+                    <BPlaceholder
+                        v-for="i in 5"
+                        :key="i"
+                        :width="40 + i * 10 + '%'"
+                        animation="wave"
+                        class="mb-2"
+                    />
+                </div>
             </div>
         </div>
-        <div class="d-flex flex-column gap-2">
-            <div class="entity-card text-center mb-3 w-100">
-                <h6>Mittlere Therapiedauer</h6>
-                <DKVChartTableSwitch
-                    :data="entity.therapies.meanDurations"
-                    :clickable="true"
-                    @clicked="handleUsedClick"
-                >
-                    <template #table="data">
-                        <BTable
-                            :items="data.data"
-                            :fields="[
-                                {
-                                    key: 'key',
-                                    label: 'Element',
-                                    thClass: 'text-left',
-                                    tdClass: 'text-left',
-                                },
-                                {
-                                    key: 'value',
-                                    label: 'Dauer in Wochen',
-                                    thClass: 'text-center',
-                                    tdClass: 'text-center',
-                                }
-                            ]"
-                            outlined
-                        >
-                            <template #cell(key)="cell">
-                                <DKVTableEntryKey :entity="cell.item" />
-                            </template>
-                            <template #cell(value)="cell">
-                                {{ Number(cell.item.value).toFixed(2) }}
-                            </template>
-                        </BTable>
-                    </template>
-                </DKVChartTableSwitch>
-            </div>
+    </template>
+    <template v-else-if="error">
+        <div class="alert alert-sm alert-danger">
+            Daten konnten nicht geladen werden.
         </div>
-    </div>
+    </template>
 </template>

@@ -10,7 +10,7 @@ import {
     defineComponent, onUnmounted, ref, watch,
 } from 'vue';
 import type { BTableSortBy, TableFieldRaw } from 'bootstrap-vue-next';
-import { BTable } from 'bootstrap-vue-next';
+import { BPlaceholderTable, BTable } from 'bootstrap-vue-next';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
 import {
     DSortIndicator,
@@ -29,6 +29,7 @@ export default defineComponent({
         MGeneAlterationText,
         DCodingText,
         DSortIndicator,
+        BPlaceholderTable,
         BTable,
     },
     props: {
@@ -175,59 +176,67 @@ export default defineComponent({
 });
 </script>
 <template>
-    <VCPagination
-        :busy="busy"
-        :total="total"
-        :limit="limit"
-        :offset="offset"
-        @load="load"
+    <BPlaceholderTable
+        v-if="busy && total === 0"
+        :rows="5"
+        :columns="5"
+        animation="wave"
     />
+    <div v-show="!busy || total > 0">
+        <VCPagination
+            :busy="busy"
+            :total="total"
+            :limit="limit"
+            :offset="offset"
+            @load="load"
+        />
 
-    <DSortIndicator
-        :sort-by="sortBy"
-        :fields="fields"
-        :label-map="sortLabelMap"
-        @reset="resetSort"
-    />
+        <DSortIndicator
+            :sort-by="sortBy"
+            :fields="fields"
+            :label-map="sortLabelMap"
+            @reset="resetSort"
+        />
 
-    <BTable
-        ref="tableRef"
-        v-model:sort-by="sortBy"
-        :provider="provider"
-        :fields="fields"
-        :busy="busy"
-        :variant="'light'"
-        no-provider-paging
-        outlined
-        :multisort="true"
-    >
-        <template #cell(tumorEntity)="data">
-            <DCodingText :entity="data.item.tumorEntity" />
-        </template>
-        <template #cell(gene)="data">
-            <DCodingText :entity="data.item.alteration.gene" />
-        </template>
-        <template #cell(alteration)="data">
-            <MGeneAlterationText :entity="data.item.alteration" />
-        </template>
-        <template #cell(supporting)="data">
-            <i
-                class="fa"
-                :class="{
-                    'fa-check text-success': data.item.supporting,
-                    'fa-times text-danger': !data.item.supporting
-                }"
-            />
-        </template>
-    </BTable>
+        <BTable
+            ref="tableRef"
+            v-model:sort-by="sortBy"
+            :provider="provider"
+            :fields="fields"
+            :busy="busy"
+            :variant="'light'"
+            no-provider-paging
+            outlined
+            :multisort="true"
+        >
+            <template #cell(tumorEntity)="data">
+                <DCodingText :entity="data.item.tumorEntity" />
+            </template>
+            <template #cell(gene)="data">
+                <DCodingText :entity="data.item.alteration.gene" />
+            </template>
+            <template #cell(alteration)="data">
+                <MGeneAlterationText :entity="data.item.alteration" />
+            </template>
+            <template #cell(supporting)="data">
+                <i
+                    class="fa"
+                    :class="{
+                        'fa-check text-success': data.item.supporting,
+                        'fa-times text-danger': !data.item.supporting
+                    }"
+                />
+            </template>
+        </BTable>
 
-    <VCPagination
-        :busy="busy"
-        :total="total"
-        :limit="limit"
-        :offset="offset"
-        @load="load"
-    />
+        <VCPagination
+            :busy="busy"
+            :total="total"
+            :limit="limit"
+            :offset="offset"
+            @load="load"
+        />
+    </div>
 </template>
 <style scoped>
 .column {

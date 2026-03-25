@@ -5,17 +5,10 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
-    QueryEventBusEventName,
-    injectQueryEventBus,
-    useQueryFilterStore,
-} from '@dnpm-dip/core';
-import {
-    type PropType, type Ref, defineComponent, onUnmounted, ref,
+    type PropType, defineComponent,
 } from 'vue';
-import { injectHTTPClient } from '../../../../../core';
-import type { QuerySession, QuerySummaryDiagnostics } from '../../../../../domains';
+import type { QuerySession } from '../../../../../domains';
 import RQuerySummaryDiagnostics from '../../../../../components/core/RQuerySummaryDiagnostics.vue';
 
 export default defineComponent({
@@ -26,36 +19,8 @@ export default defineComponent({
             required: true,
         },
     },
-    setup(props) {
-        const api = injectHTTPClient();
-        const queryEventBus = injectQueryEventBus();
-        const queryFilterStore = useQueryFilterStore();
-
-        const busy = ref(false);
-        const data = ref<null | QuerySummaryDiagnostics>(null);
-        const load = wrapFnWithBusyState(busy, async () => {
-            data.value = await api.query.getDiagnostics(props.entity.id, queryFilterStore.buildURLRecord());
-        });
-
-        Promise.resolve()
-            .then(() => load());
-
-        const removeSessionHandler = queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
-        const removeFiltersHandler = queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => load());
-
-        onUnmounted(() => {
-            removeSessionHandler();
-            removeFiltersHandler();
-        });
-
-        return {
-            data,
-        };
-    },
 });
 </script>
 <template>
-    <template v-if="data">
-        <RQuerySummaryDiagnostics :entity="data" />
-    </template>
+    <RQuerySummaryDiagnostics :query-id="entity.id" />
 </template>
