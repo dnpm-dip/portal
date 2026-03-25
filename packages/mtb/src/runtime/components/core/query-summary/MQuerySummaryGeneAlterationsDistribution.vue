@@ -38,9 +38,15 @@ export default defineComponent({
 
         const busy = ref(false);
         const data = ref<null | QuerySummaryGeneAlterationDistribution[]>(null);
+        const error = ref<Error | null>(null);
         const load = wrapFnWithBusyState(busy, async () => {
-            const response = await api.query.getGeneAlterationDistributions(props.queryId, queryFilterStore.buildURLRecord());
-            data.value = response.entries;
+            try {
+                error.value = null;
+                const response = await api.query.getGeneAlterationDistributions(props.queryId, queryFilterStore.buildURLRecord());
+                data.value = response.entries;
+            } catch (e) {
+                error.value = e instanceof Error ? e : new Error('Failed to load gene alteration distributions');
+            }
         });
 
         Promise.resolve()
@@ -57,6 +63,7 @@ export default defineComponent({
         return {
             busy,
             data,
+            error,
         };
     },
 });
@@ -91,6 +98,11 @@ export default defineComponent({
                     class="mb-2"
                 />
             </div>
+        </div>
+    </template>
+    <template v-else-if="error">
+        <div class="alert alert-sm alert-danger">
+            Daten konnten nicht geladen werden.
         </div>
     </template>
 </template>

@@ -44,8 +44,14 @@ export default defineComponent({
 
         const busy = ref(false);
         const data = ref<null | QuerySummaryTumorDiagnostics>(null);
+        const error = ref<Error | null>(null);
         const load = wrapFnWithBusyState(busy, async () => {
-            data.value = await api.query.getTumorDiagnostics(props.queryId, queryFilterStore.buildURLRecord());
+            try {
+                error.value = null;
+                data.value = await api.query.getTumorDiagnostics(props.queryId, queryFilterStore.buildURLRecord());
+            } catch (e) {
+                error.value = e instanceof Error ? e : new Error('Failed to load tumor diagnostics');
+            }
         });
 
         Promise.resolve()
@@ -90,6 +96,7 @@ export default defineComponent({
         return {
             busy,
             data,
+            error,
             handleClick,
         };
     },
@@ -163,7 +170,7 @@ export default defineComponent({
 
                             <div class="entity-card text-center mb-3 w-100">
                                 <h6 class="text-center">
-                                    Tumor-Morphologie (IDC-O-3-M)
+                                    Tumor-Morphologie (ICD-O-3-M)
                                 </h6>
                                 <DKVChartTableSwitch
                                     :coding-verbose-label="true"
@@ -214,6 +221,11 @@ export default defineComponent({
                     class="mb-2"
                 />
             </div>
+        </div>
+    </template>
+    <template v-else-if="error">
+        <div class="alert alert-sm alert-danger">
+            Daten konnten nicht geladen werden.
         </div>
     </template>
 </template>

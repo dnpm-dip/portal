@@ -46,8 +46,14 @@ export default defineComponent({
 
         const busy = ref(false);
         const data = ref<null | QuerySummaryMedication>(null);
+        const error = ref<Error | null>(null);
         const load = wrapFnWithBusyState(busy, async () => {
-            data.value = await api.query.getMedication(props.queryId, queryFilterStore.buildURLRecord());
+            try {
+                error.value = null;
+                data.value = await api.query.getMedication(props.queryId, queryFilterStore.buildURLRecord());
+            } catch (e) {
+                error.value = e instanceof Error ? e : new Error('Failed to load medication');
+            }
         });
 
         Promise.resolve()
@@ -126,6 +132,7 @@ export default defineComponent({
         return {
             busy,
             data,
+            error,
 
             recommendedVNode,
             recommendedByVariantVNode,
@@ -295,6 +302,11 @@ export default defineComponent({
                     />
                 </div>
             </div>
+        </div>
+    </template>
+    <template v-else-if="error">
+        <div class="alert alert-sm alert-danger">
+            Daten konnten nicht geladen werden.
         </div>
     </template>
 </template>
