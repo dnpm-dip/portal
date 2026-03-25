@@ -6,38 +6,60 @@
   -->
 
 <script lang="ts">
+import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
     type Coding,
     DKVChartTableSwitch,
     DQuerySummaryGrouped,
     DQuerySummaryNested,
+    QueryEventBusEventName,
+    injectQueryEventBus,
     toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { type PropType, defineComponent, ref } from 'vue';
+import { BPlaceholder } from 'bootstrap-vue-next';
+import { defineComponent, onUnmounted, ref } from 'vue';
 import { navigateTo } from '#imports';
 import { QueryFilterURLKey } from '../../../constants';
+import { injectHTTPClient } from '../../../core/http-client';
 import type { QuerySummaryTumorDiagnostics } from '../../../domains';
 
 export default defineComponent({
     components: {
+        BPlaceholder,
         DQuerySummaryNested,
         DKVChartTableSwitch,
         DQuerySummaryGrouped,
     },
     props: {
-        entity: {
-            type: Object as PropType<QuerySummaryTumorDiagnostics>,
-            required: true,
-        },
         queryId: {
             type: String,
             required: true,
         },
     },
     setup(props) {
-        const tumorEntitiesVNode = ref<null | typeof DQuerySummaryNested>(null);
+        const api = injectHTTPClient();
+        const queryEventBus = injectQueryEventBus();
         const queryFilterStore = useQueryFilterStore();
+
+        const busy = ref(false);
+        const data = ref<null | QuerySummaryTumorDiagnostics>(null);
+        const load = wrapFnWithBusyState(busy, async () => {
+            data.value = await api.query.getTumorDiagnostics(props.queryId, queryFilterStore.buildURLRecord());
+        });
+
+        Promise.resolve()
+            .then(() => load());
+
+        const removeSessionHandler = queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
+        const removeFiltersHandler = queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => load());
+
+        onUnmounted(() => {
+            removeSessionHandler();
+            removeFiltersHandler();
+        });
+
+        const tumorEntitiesVNode = ref<null | typeof DQuerySummaryNested>(null);
 
         const handleClick = (keys: Coding[]) => {
             const [coding] = keys;
@@ -66,88 +88,132 @@ export default defineComponent({
         };
 
         return {
+            busy,
+            data,
             handleClick,
         };
     },
 });
 </script>
 <template>
-    <div>
+    <template v-if="data">
+        <div>
+            <div>
+                <h5>Gesamtverteilung</h5>
+
+                <div class="d-flex flex-column gap-2">
+                    <div class="entity-card text-center mb-3">
+                        <h6>Tumor-Entitäten (ICD-10-GM)</h6>
+                        <DQuerySummaryNested
+                            ref="tumorEntitiesVNode"
+                            :label="'Kategorie'"
+                            :data="data.overallDistributions.tumorEntities.elements"
+                            :total="data.overallDistributions.tumorEntities.total"
+                            :key-verbose="true"
+                        >
+                            <template #default="{items}">
+                                <DKVChartTableSwitch
+                                    :coding-verbose-label="true"
+                                    :data="items"
+                                    :clickable="true"
+                                    @clicked="handleClick"
+                                />
+                            </template>
+                        </DQuerySummaryNested>
+                    </div>
+
+                    <div class="entity-card text-center mb-3">
+                        <h6>Tumor-Morphologie (ICD-O-3-M)</h6>
+                        <DQuerySummaryNested
+                            :label="'Kategorie'"
+                            :data="data.overallDistributions.tumorMorphologies.elements"
+                            :total="data.overallDistributions.tumorMorphologies.total"
+                            :key-verbose="true"
+                        >
+                            <template #default="{items}">
+                                <DKVChartTableSwitch
+                                    :coding-verbose-label="true"
+                                    :data="items"
+                                />
+                            </template>
+                        </DQuerySummaryNested>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div>
+                <h5>Verteilung nach Variante</h5>
+                <DQuerySummaryGrouped
+                    :label="'Variante'"
+                    :items="data.distributionsByVariant"
+                >
+                    <template #default="{ item }">
+                        <div class="d-flex flex-column gap-2">
+                            <div class="entity-card text-center mb-3 w-100">
+                                <h6 class="text-center">
+                                    Tumor-Entitäten (ICD-10-GM)
+                                </h6>
+                                <DKVChartTableSwitch
+                                    :coding-verbose-label="true"
+                                    :data="item.value.tumorEntities.elements"
+                                />
+                            </div>
+
+                            <div class="entity-card text-center mb-3 w-100">
+                                <h6 class="text-center">
+                                    Tumor-Morphologie (IDC-O-3-M)
+                                </h6>
+                                <DKVChartTableSwitch
+                                    :coding-verbose-label="true"
+                                    :data="item.value.tumorMorphologies.elements"
+                                />
+                            </div>
+                        </div>
+                    </template>
+                </DQuerySummaryGrouped>
+            </div>
+        </div>
+    </template>
+    <template v-else-if="busy">
         <div>
             <h5>Gesamtverteilung</h5>
-
             <div class="d-flex flex-column gap-2">
                 <div class="entity-card text-center mb-3">
                     <h6>Tumor-Entitäten (ICD-10-GM)</h6>
-                    <DQuerySummaryNested
-                        ref="tumorEntitiesVNode"
-                        :label="'Kategorie'"
-                        :data="entity.overallDistributions.tumorEntities.elements"
-                        :total="entity.overallDistributions.tumorEntities.total"
-                        :key-verbose="true"
-                    >
-                        <template #default="{items}">
-                            <DKVChartTableSwitch
-                                :coding-verbose-label="true"
-                                :data="items"
-                                :clickable="true"
-                                @clicked="handleClick"
-                            />
-                        </template>
-                    </DQuerySummaryNested>
+                    <BPlaceholder
+                        v-for="i in 5"
+                        :key="i"
+                        :width="40 + i * 10 + '%'"
+                        animation="wave"
+                        class="mb-2"
+                    />
                 </div>
-
                 <div class="entity-card text-center mb-3">
                     <h6>Tumor-Morphologie (ICD-O-3-M)</h6>
-                    <DQuerySummaryNested
-                        :label="'Kategorie'"
-                        :data="entity.overallDistributions.tumorMorphologies.elements"
-                        :total="entity.overallDistributions.tumorMorphologies.total"
-                        :key-verbose="true"
-                    >
-                        <template #default="{items}">
-                            <DKVChartTableSwitch
-                                :coding-verbose-label="true"
-                                :data="items"
-                            />
-                        </template>
-                    </DQuerySummaryNested>
+                    <BPlaceholder
+                        v-for="i in 5"
+                        :key="i"
+                        :width="40 + i * 10 + '%'"
+                        animation="wave"
+                        class="mb-2"
+                    />
                 </div>
             </div>
-        </div>
 
-        <hr>
+            <hr>
 
-        <div>
             <h5>Verteilung nach Variante</h5>
-            <DQuerySummaryGrouped
-                :label="'Variante'"
-                :items="entity.distributionsByVariant"
-            >
-                <template #default="{ item }">
-                    <div class="d-flex flex-column gap-2">
-                        <div class="entity-card text-center mb-3 w-100">
-                            <h6 class="text-center">
-                                Tumor-Entitäten (ICD-10-GM)
-                            </h6>
-                            <DKVChartTableSwitch
-                                :coding-verbose-label="true"
-                                :data="item.value.tumorEntities.elements"
-                            />
-                        </div>
-
-                        <div class="entity-card text-center mb-3 w-100">
-                            <h6 class="text-center">
-                                Tumor-Morphologie (IDC-O-3-M)
-                            </h6>
-                            <DKVChartTableSwitch
-                                :coding-verbose-label="true"
-                                :data="item.value.tumorMorphologies.elements"
-                            />
-                        </div>
-                    </div>
-                </template>
-            </DQuerySummaryGrouped>
+            <div class="entity-card text-center mb-3">
+                <BPlaceholder
+                    v-for="i in 5"
+                    :key="i"
+                    :width="40 + i * 10 + '%'"
+                    animation="wave"
+                    class="mb-2"
+                />
+            </div>
         </div>
-    </div>
+    </template>
 </template>
