@@ -23,6 +23,7 @@ import { defineComponent, onUnmounted, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QuerySummaryMedication } from '../../../domains';
+import { queryGeneAlterationToString } from '../../../domains';
 
 export default defineComponent({
     components: {
@@ -136,6 +137,9 @@ export default defineComponent({
 
             recommendedVNode,
             recommendedByVariantVNode,
+            variantLabelFn: (item: { key: unknown }) => (typeof item.key === 'string' ?
+                item.key :
+                queryGeneAlterationToString(item.key as any)),
             handleRecommendationClick,
 
             usedVNode,
@@ -157,6 +161,7 @@ export default defineComponent({
                         :select-first="true"
                         :items="data.recommendations.distributionBySupportingVariant"
                         :label="'Variante'"
+                        :label-fn="variantLabelFn"
                     >
                         <template #default="{ item }">
                             <DKVChartTableSwitch

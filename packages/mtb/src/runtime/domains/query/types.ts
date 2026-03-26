@@ -16,7 +16,7 @@ export type QuerySummaryTumorDiagnostics = {
         tumorEntities: DistributionNested<Coding>,
         tumorMorphologies: DistributionNested<Coding>
     },
-    distributionsByVariant: KeyValueRecords<string, {
+    distributionsByVariant: KeyValueRecords<QueryGeneAlteration, {
         tumorEntities: Distribution<Coding>,
         tumorMorphologies: Distribution<Coding>
     }>,
@@ -26,7 +26,7 @@ export type QuerySummaryGeneAlterationDistribution = KeyValueRecord<string, Dist
 
 type MedicationRecommendations = {
     overallDistribution: DistributionNested<Coding>,
-    distributionBySupportingVariant: KeyValueRecords<string, Distribution<string[]>>
+    distributionBySupportingVariant: KeyValueRecords<QueryGeneAlteration, Distribution<string[]>>
 };
 
 type MedicationTherapies = {

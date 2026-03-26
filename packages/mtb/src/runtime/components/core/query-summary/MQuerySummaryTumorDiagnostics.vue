@@ -23,6 +23,7 @@ import { navigateTo } from '#imports';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QuerySummaryTumorDiagnostics } from '../../../domains';
+import { queryGeneAlterationToString } from '../../../domains';
 
 export default defineComponent({
     components: {
@@ -98,6 +99,9 @@ export default defineComponent({
             data,
             error,
             handleClick,
+            variantLabelFn: (item: { key: unknown }) => (typeof item.key === 'string' ?
+                item.key :
+                queryGeneAlterationToString(item.key as any)),
         };
     },
 });
@@ -155,6 +159,7 @@ export default defineComponent({
                 <DQuerySummaryGrouped
                     :label="'Variante'"
                     :items="data.distributionsByVariant"
+                    :label-fn="variantLabelFn"
                 >
                     <template #default="{ item }">
                         <div class="d-flex flex-column gap-2">

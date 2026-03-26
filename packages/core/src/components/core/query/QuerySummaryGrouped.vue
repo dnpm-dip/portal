@@ -16,6 +16,8 @@ import type { KeyValueRecord, KeyValueRecords } from '../../../domains';
 import { QueryEventBusEventName, injectQueryEventBus } from '../../../services';
 import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils';
 
+type LabelFn = (item: KeyValueRecord) => string | undefined;
+
 export default defineComponent({
     components: {
         VCFormSelectSearch,
@@ -32,6 +34,10 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
+        labelFn: {
+            type: Function as PropType<LabelFn>,
+            default: undefined,
+        },
     },
     setup(props) {
         const queryEventBus = injectQueryEventBus();
@@ -45,7 +51,9 @@ export default defineComponent({
 
             return props.items.map((el, id) => ({
                 id,
-                value: generateChartLabelsForKeyValueRecord(el),
+                value: props.labelFn ?
+                    props.labelFn(el) :
+                    generateChartLabelsForKeyValueRecord(el),
             }));
         });
 

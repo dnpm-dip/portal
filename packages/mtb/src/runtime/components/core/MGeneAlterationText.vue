@@ -6,32 +6,25 @@
   -->
 
 <script lang="ts">
-import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import type { PropType } from 'vue';
 import type { QueryGeneAlteration } from '../../domains/index';
+import { queryGeneAlterationToString } from '../../domains/index';
 
 export default defineComponent({
-    components: { DCodingText },
     props: {
         entity: {
             type: Object as PropType<QueryGeneAlteration>,
             required: true,
         },
     },
+    setup(props) {
+        const text = computed(() => queryGeneAlterationToString(props.entity));
+
+        return { text };
+    },
 });
 </script>
 <template>
-    <template v-if="entity.type === 'SNV'">
-        <DCodingText :entity="entity.gene" /> {{ entity.proteinChange || 'SNV ' }}
-    </template>
-    <template v-else-if="entity.type === 'CNV'">
-        <DCodingText :entity="entity.gene" /> <DCodingText :entity="entity.copyNumberType" />
-    </template>
-    <template v-else-if="entity.type === 'Fusion'">
-        <DCodingText :entity="entity.gene" />-<DCodingText :entity="entity.partner" /> Fusion
-    </template>
-    <template v-else>
-        ???
-    </template>
+    {{ text }}
 </template>
