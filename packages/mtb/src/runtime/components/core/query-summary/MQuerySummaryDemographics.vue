@@ -8,23 +8,18 @@
 <script lang="ts">
 import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
-    DKVChartTableSwitch,
-    DQuerySummaryGrouped,
+    DQuerySummaryDemographics,
     QueryEventBusEventName,
+    type QuerySummaryDemographics,
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { BPlaceholder } from 'bootstrap-vue-next';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';
-import type { QuerySummaryGeneAlterationDistribution } from '../../../domains';
 
 export default defineComponent({
-    components: {
-        BPlaceholder,
-        DQuerySummaryGrouped,
-        DKVChartTableSwitch,
-    },
+    components: { BPlaceholder, DQuerySummaryDemographics },
     props: {
         queryId: {
             type: String,
@@ -37,15 +32,14 @@ export default defineComponent({
         const queryFilterStore = useQueryFilterStore();
 
         const busy = ref(false);
-        const data = ref<null | QuerySummaryGeneAlterationDistribution[]>(null);
+        const data = ref<null | QuerySummaryDemographics>(null);
         const error = ref<Error | null>(null);
         const load = wrapFnWithBusyState(busy, async () => {
             try {
                 error.value = null;
-                const response = await api.query.getGeneAlterationDistributions(props.queryId, queryFilterStore.buildURLRecord());
-                data.value = response.entries;
+                data.value = await api.query.getDemographics(props.queryId, queryFilterStore.buildURLRecord());
             } catch (e) {
-                error.value = e instanceof Error ? e : new Error('Failed to load gene alteration distributions');
+                error.value = e instanceof Error ? e : new Error('Failed to load demographics');
             }
         });
 
@@ -70,30 +64,39 @@ export default defineComponent({
 </script>
 <template>
     <template v-if="data">
-        <div>
-            <h5>Verteilung nach Alteration</h5>
-            <DQuerySummaryGrouped
-                :select-first="true"
-                :items="data"
-                :label="'Alteration'"
-            >
-                <template #default="{ item }">
-                    <DKVChartTableSwitch
-                        :type="'bar'"
-                        :data="item.value.elements"
-                    />
-                </template>
-            </DQuerySummaryGrouped>
-        </div>
+        <DQuerySummaryDemographics :entity="data" />
     </template>
     <template v-else-if="busy">
         <div>
-            <h5>Verteilung nach Alteration</h5>
-            <div class="entity-card text-center mb-3">
+            <h5>Allgemein</h5>
+            <div class="d-flex flex-row gap-2">
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Patienten pro Standort</h6>
+                    <BPlaceholder
+                        v-for="i in 4"
+                        :key="i"
+                        :width="50 + i * 10 + '%'"
+                        animation="wave"
+                        class="mb-2"
+                    />
+                </div>
+                <div class="entity-card text-center mb-3 w-100">
+                    <h6>Geschlechterverteilung</h6>
+                    <BPlaceholder
+                        v-for="i in 4"
+                        :key="i"
+                        :width="50 + i * 10 + '%'"
+                        animation="wave"
+                        class="mb-2"
+                    />
+                </div>
+            </div>
+            <div class="entity-card text-center mb-3 w-100">
+                <h6>Altersverteilung</h6>
                 <BPlaceholder
-                    v-for="i in 5"
+                    v-for="i in 4"
                     :key="i"
-                    :width="40 + i * 10 + '%'"
+                    :width="40 + i * 15 + '%'"
                     animation="wave"
                     class="mb-2"
                 />

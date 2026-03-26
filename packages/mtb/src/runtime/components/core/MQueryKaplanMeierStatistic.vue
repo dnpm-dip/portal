@@ -12,13 +12,14 @@ import {
     QueryEventBusEventName,
     injectQueryEventBus,
 } from '@dnpm-dip/core';
+import { BPlaceholder } from 'bootstrap-vue-next';
 import {
     defineComponent, onUnmounted, ref, toRef, watch,
 } from 'vue';
 import { injectHTTPClient } from '../../core/http-client';
 
 export default defineComponent({
-    components: { DChartLineKM },
+    components: { BPlaceholder, DChartLineKM },
     props: {
         queryId: {
             type: String,
@@ -96,7 +97,15 @@ export default defineComponent({
 </script>
 <template>
     <div class="entity-card text-center mb-3 w-100">
-        <template v-if="busy || !data" />
+        <template v-if="busy || !data">
+            <BPlaceholder
+                v-for="i in 6"
+                :key="i"
+                :width="30 + i * 10 + '%'"
+                animation="wave"
+                class="mb-2"
+            />
+        </template>
         <template v-else>
             <h6>{{ data.survivalType.display }} (Gruppierung: {{ data.grouping.display }})</h6>
             <DChartLineKM :report="data" />

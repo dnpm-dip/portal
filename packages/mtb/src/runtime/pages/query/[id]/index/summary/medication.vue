@@ -5,16 +5,10 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
-    injectQueryEventBus, useQueryFilterStore,
-} from '@dnpm-dip/core';
-import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
-import {
-    type PropType, defineComponent, onUnmounted, ref,
+    type PropType, defineComponent,
 } from 'vue';
-import { injectHTTPClient } from '../../../../../core/http-client';
-import type { QuerySession, QuerySummaryMedication } from '../../../../../domains';
+import type { QuerySession } from '../../../../../domains';
 import MQuerySummaryMedication from '../../../../../components/core/query-summary/MQuerySummaryMedication.vue';
 
 export default defineComponent({
@@ -25,39 +19,8 @@ export default defineComponent({
             required: true,
         },
     },
-    setup(props) {
-        const api = injectHTTPClient();
-        const queryEventBus = injectQueryEventBus();
-        const queryFilterStore = useQueryFilterStore();
-
-        const busy = ref(false);
-        const data = ref<null | QuerySummaryMedication>(null);
-        const load = wrapFnWithBusyState(busy, async () => {
-            data.value = await api.query.getMedication(props.entity.id, queryFilterStore.buildURLRecord());
-        });
-
-        Promise.resolve()
-            .then(() => load());
-
-        const removeSessionHandler = queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => load());
-        const removeFiltersHandler = queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => load());
-
-        onUnmounted(() => {
-            removeSessionHandler();
-            removeFiltersHandler();
-        });
-
-        return {
-            data,
-        };
-    },
 });
 </script>
 <template>
-    <template v-if="data">
-        <MQuerySummaryMedication
-            :entity="data"
-            :query-id="entity.id"
-        />
-    </template>
+    <MQuerySummaryMedication :query-id="entity.id" />
 </template>
