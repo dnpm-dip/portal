@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import {
-    defineComponent, onUnmounted, ref, watch,
+    defineComponent, onUnmounted, ref,
 } from 'vue';
 import type { BTableSortBy, TableFieldRaw } from 'bootstrap-vue-next';
 import { BTable } from 'bootstrap-vue-next';
@@ -47,9 +47,7 @@ export default defineComponent({
         const total = ref(0);
         const offset = ref(0);
         const limit = ref(50);
-        const defaultSort: BTableSortBy[] = [{ key: 'score', order: 'desc' }];
-        const sortBy = ref<BTableSortBy[]>([...defaultSort]);
-        const sortLabelMap: Record<string, string> = { score: 'Relevanz' };
+        const sortBy = ref<BTableSortBy[]>([]);
 
         const fields : TableFieldRaw[] = [
             {
@@ -137,24 +135,8 @@ export default defineComponent({
             removeFiltersHandler();
         });
 
-        watch(sortBy, (value) => {
-            const hasActive = value.some((s) => s.order);
-            if (!hasActive) {
-                sortBy.value = [...defaultSort];
-                return;
-            }
-
-            const hasNonScore = value.some((s) => s.key !== 'score' && s.order);
-            if (hasNonScore) {
-                const filtered = value.filter((s) => s.key !== 'score');
-                if (filtered.length !== value.length) {
-                    sortBy.value = filtered;
-                }
-            }
-        });
-
         const resetSort = () => {
-            sortBy.value = [...defaultSort];
+            sortBy.value = [];
             tableRef.value?.refresh();
         };
 
@@ -165,7 +147,6 @@ export default defineComponent({
             offset,
             limit,
             sortBy,
-            sortLabelMap,
             fields,
             provider,
             load,
@@ -186,7 +167,6 @@ export default defineComponent({
     <DSortIndicator
         :sort-by="sortBy"
         :fields="fields"
-        :label-map="sortLabelMap"
         @reset="resetSort"
     />
 
