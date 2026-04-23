@@ -42,6 +42,13 @@ export default defineNuxtComponent({
         <h1 class="title no-border mb-3">
             <i class="fa fa-search" /> Suche
         </h1>
+
+        <div class="alert alert-info alert-sm">
+            Die Datenabfrage ist auch ohne Auswahl von Suchparametern möglich.
+            In diesem Fall werden alle auf DNPM:DIP verfügbaren Daten angezeigt.
+            Die Abfrage kann nachfolgend angepasst werden.
+        </div>
+
         <DPreparedQueryContainer
             use-case="mtb"
             @submitted="handleSubmitted"

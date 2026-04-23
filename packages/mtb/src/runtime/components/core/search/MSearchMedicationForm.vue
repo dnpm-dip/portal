@@ -160,7 +160,6 @@ export default defineComponent({
 </script>
 <template>
     <div class="mb-3">
-        <h6><i class="fa fa-pills" /> Medikation</h6>
         <div class="d-flex flex-row">
             <div>
                 <VCFormInputCheckbox
