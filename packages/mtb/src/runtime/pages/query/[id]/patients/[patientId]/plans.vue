@@ -58,7 +58,10 @@ export default defineNuxtComponent({
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col">
+                        <div
+                            v-if="item.medicationRecommendations"
+                            class="col"
+                        >
                             <div class="entity-card">
                                 <div class="text-center mb-3">
                                     <strong>Therapie-Empfehlungen</strong>
