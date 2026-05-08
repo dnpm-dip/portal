@@ -32,21 +32,21 @@
         "@authup/client-web-kit": "^1.0.0-beta.28",
         "@dnpm-dip/core": "^1.35.0",
         "@dnpm-dip/kit": "^1.28.1",
-        "@nuxt/kit": "^4.4.2"
+        "@nuxt/kit": "^4.4.4"
     },
     "devDependencies": {
         "@ilingo/vuelidate": "^6.0.0",
         "@nuxt/module-builder": "^1.0.2",
-        "@types/node": "^25.5.0",
+        "@types/node": "^25.6.2",
         "@vuecs/form-controls": "^2.5.0",
         "@vuecs/pagination": "^1.3.1",
         "@vuecs/timeago": "^1.1.2",
         "@vuelidate/core": "^2.0.3",
         "@vuelidate/validators": "^2.0.4",
-        "bootstrap-vue-next": "^0.43.9",
+        "bootstrap-vue-next": "^0.45.1",
         "chart.js": "^4.5.0",
-        "nuxt": "^4.4.2",
-        "vue": "^3.5.30",
+        "nuxt": "^4.4.4",
+        "vue": "^3.5.34",
         "vue-chartjs": "^5.3.3"
     }
 }
