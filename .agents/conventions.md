@@ -5,10 +5,11 @@
 | Tool             | Purpose                                           |
 |------------------|---------------------------------------------------|
 | Nx               | Monorepo task runner (dependency-ordered builds)   |
-| Rollup + SWC     | Library package bundling (core, kit)               |
+| tsdown           | Library package bundling (core, kit)               |
 | Nuxt 4           | Portal application framework                       |
-| Jest + SWC       | Test runner with fast compilation                  |
-| ESLint           | Linting (`@tada5hi/eslint-config-vue-typescript`)  |
+| Vitest           | Test runner                                        |
+| ESLint v10       | Linting (`@tada5hi/eslint-config`, flat config)    |
+| monoship         | Publishing workspace packages                      |
 | Husky            | Pre-commit hooks via lint-staged                   |
 | commitlint       | Commit message convention enforcement              |
 
@@ -39,7 +40,7 @@ Scopes typically match package names: `core`, `portal`, `mtb`, `rd`, `admin`, `k
 
 - **TypeScript** with strict typing and **ESM** module syntax throughout
 - **Vue 3** Single File Components (SFC) with `<script setup lang="ts">`
-- Follow the existing `@tada5hi/eslint-config-vue-typescript` rules
+- Follow the existing `@tada5hi/eslint-config` rules
 - No explanatory comments unless explicitly requested — rely on existing patterns and clear naming
 
 ## File Organization

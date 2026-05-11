@@ -2,14 +2,18 @@ import {
     type KMSurvivalReport,
     type QuerySummaryDemographics,
     type ResourceCollectionLoadMeta,
-    type ResourceCollectionResponse, type URLQueryRecord,
+    type ResourceCollectionResponse, 
+    type URLQueryRecord,
     stringifyResourceCollectionMeta,
 } from '@dnpm-dip/core';
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
 import type { PatientMatch, PatientRecord } from '../patient';
 import type {
-    QueryDiagnosisFilter, QueryGeneAlterationInfo, QuerySession,
-    QuerySessionCreate, QuerySummaryGeneAlterationDistribution,
+    QueryDiagnosisFilter, 
+    QueryGeneAlterationInfo, 
+    QuerySession,
+    QuerySessionCreate, 
+    QuerySummaryGeneAlterationDistribution,
     QuerySummaryMedication,
     QuerySummaryTumorDiagnostics,
     QueryTherapyImplementedFilter,
@@ -24,9 +28,7 @@ export class QueryAPI extends BaseAPI {
      * @param query
      */
     async submit(query: QuerySessionCreate) : Promise<QuerySession> {
-        query.mode = query.mode || {
-            code: QueryRequestMode.LOCAL,
-        };
+        query.mode = query.mode || { code: QueryRequestMode.LOCAL };
 
         const response = await this.client.post('mtb/queries', query);
         return response.data;

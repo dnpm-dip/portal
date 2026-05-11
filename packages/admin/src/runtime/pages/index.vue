@@ -16,9 +16,7 @@ export default defineNuxtComponent({
     setup() {
         const connectionReportRead = usePermissionCheck({ name: PermissionName.CONNECTION_REPORT_READ });
 
-        return {
-            connectionReportRead,
-        };
+        return { connectionReportRead };
     },
 });
 </script>

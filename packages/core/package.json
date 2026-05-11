@@ -6,20 +6,20 @@
     "exports": {
         "./package.json": "./package.json",
         ".": {
-            "types": "./dist/index.d.mts",
+            "types": "./dist/index.d.ts",
             "import": "./dist/index.mjs"
         },
         "./index.css": "./dist/index.css"
     },
     "module": "./dist/index.mjs",
-    "types": "./dist/index.d.mts",
+    "types": "./dist/index.d.ts",
     "files": [
         "dist/"
     ],
     "scripts": {
         "build:types": "vue-tsc --declaration --emitDeclarationOnly -p tsconfig.build.json",
-        "build:js": "rollup -c",
-        "build": "rimraf ./dist && cross-env NODE_ENV=production npm run build:js"
+        "build:js": "tsdown",
+        "build": "npm run build:js && npm run build:types"
     },
     "keywords": [],
     "author": {

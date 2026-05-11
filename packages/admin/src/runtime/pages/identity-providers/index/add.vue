@@ -7,9 +7,7 @@ import { defineNuxtComponent, navigateTo } from '#app';
 import { definePageMeta } from '#imports';
 
 export default defineNuxtComponent({
-    components: {
-        AIdentityProviderForm,
-    },
+    components: { AIdentityProviderForm },
     emits: ['failed', 'created'],
     setup(props, { emit }) {
         definePageMeta({

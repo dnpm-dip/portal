@@ -1,46 +1,50 @@
-import type { ColorVariant, OrchestratedToast } from 'bootstrap-vue-next';
-import { useToastController as _useToast } from 'bootstrap-vue-next';
+import type { ColorVariant, ToastOrchestratorParam } from 'bootstrap-vue-next';
+import { useToast as _useToast } from 'bootstrap-vue-next';
 import { isClientError } from 'hapic';
 import { isObject } from 'smob';
 import { APIClientErrorIssueSeverity, extractAPIClientErrorIssues } from '../core';
 
-export function useToast() {
+type ToastInput = ToastOrchestratorParam;
+
+type UseToastReturn = {
+    show: (el: string | ToastInput, options?: ToastInput) => unknown;
+    showError: (error: Error, options?: ToastInput) => void;
+};
+
+export function useToast(): UseToastReturn {
     const toast = _useToast();
 
     const show = (
-        el: string | OrchestratedToast,
-        options: OrchestratedToast = {},
+        el: string | ToastInput,
+        options: ToastInput = {},
     ) => {
-        if (typeof toast.show === 'undefined') {
-            return Symbol('');
+        if (typeof toast.create === 'undefined') {
+            return undefined;
         }
 
         if (isObject(el)) {
-            el.pos = el.pos || 'top-center';
-            return toast.show({
-                props: el,
+            return toast.create({
+                position: 'top-center',
+                ...el,
             });
         }
 
-        options.pos = options.pos || 'top-center';
-
-        return toast.show({
-            props: {
-                ...(options || {}),
-                body: el,
-            },
+        return toast.create({
+            position: 'top-center',
+            ...options,
+            body: el,
         });
     };
     const showError = (
         error: Error,
-        options: OrchestratedToast = {},
+        options: ToastInput = {},
     ) => {
         if (isClientError(error)) {
             const issues = extractAPIClientErrorIssues(error);
             if (issues.length > 0) {
-                for (let i = 0; i < issues.length; i++) {
+                for (const issue of issues) {
                     let variant: ColorVariant;
-                    switch (issues[i].severity) {
+                    switch (issue.severity) {
                         case APIClientErrorIssueSeverity.WARNING: {
                             variant = 'warning';
                             break;
@@ -50,7 +54,7 @@ export function useToast() {
                         }
                     }
 
-                    show(issues[i].details, {
+                    show(issue.details, {
                         variant,
                         ...options,
                     });
@@ -67,13 +71,6 @@ export function useToast() {
     };
 
     return {
-        hide(el: symbol) {
-            if (typeof toast.remove === 'undefined') {
-                return;
-            }
-
-            toast.remove(el);
-        },
         show,
         showError,
     };

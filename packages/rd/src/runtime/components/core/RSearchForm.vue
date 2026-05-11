@@ -11,13 +11,18 @@ import {
 import {
     DCollectionTransform,
     DFormTabGroups,
-    DSitePicker, DTags, DValueSet, QueryRequestMode, useQueryFilterStore,
+    DSitePicker, 
+    DTags, 
+    DValueSet, 
+    QueryRequestMode, 
+    useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { VCFormSelectSearch } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import { type PropType, toRef, watch } from 'vue';
 import {
-    defineComponent, ref,
+    defineComponent, 
+    ref,
 } from 'vue';
 import { injectHTTPClient } from '../../core';
 import type {
@@ -40,18 +45,10 @@ export default defineComponent({
         DValueSet,
     },
     props: {
-        criteria: {
-            type: Object as PropType<QueryCriteria | null>,
-        },
-        queryId: {
-            type: String,
-        },
-        queryMode: {
-            type: String as PropType<QueryRequestMode>,
-        },
-        queryPeers: {
-            type: Array as PropType<ConnectionPeer[]>,
-        },
+        criteria: { type: Object as PropType<QueryCriteria | null> },
+        queryId: { type: String },
+        queryMode: { type: String as PropType<QueryRequestMode> },
+        queryPeers: { type: Array as PropType<ConnectionPeer[]> },
     },
     emits: [
         'failed',
@@ -109,28 +106,26 @@ export default defineComponent({
                         const data: QueryCriteriaVariant<string> = {};
 
                         const keys = Object.keys(variant);
-                        for (let j = 0; j < keys.length; j++) {
-                            data[keys[j] as keyof typeof data] = variant[keys[j] as keyof QueryCriteriaVariant]?.code;
+                        for (const key of keys) {
+                            data[key as keyof typeof data] = variant[key as keyof QueryCriteriaVariant]?.code;
                         }
 
-                        variants.value.push({
-                            data,
-                        });
+                        variants.value.push({ data });
                     }
                 }
 
                 if (criteria.value.hpoTerms) {
-                    for (let i = 0; i < criteria.value.hpoTerms.length; i++) {
+                    for (const term of criteria.value.hpoTerms) {
                         hpoTerms.value.push({
-                            id: criteria.value.hpoTerms[i].code,
-                            value: criteria.value.hpoTerms[i].display || criteria.value.hpoTerms[i].code,
+                            id: term.code,
+                            value: term.display || term.code,
                         });
                     }
                 }
 
                 if (criteria.value.diagnoses) {
-                    for (let i = 0; i < criteria.value.diagnoses.length; i++) {
-                        categories.value.push(parseCategory(criteria.value.diagnoses[i]));
+                    for (const diagnosis of criteria.value.diagnoses) {
+                        categories.value.push(parseCategory(diagnosis as Coding));
                     }
                 }
             }
@@ -146,9 +141,7 @@ export default defineComponent({
             reset();
         });
 
-        expose({
-            reset,
-        });
+        expose({ reset });
 
         Promise.resolve()
             .then(() => reset());
@@ -174,8 +167,8 @@ export default defineComponent({
         const buildCriteria = () : QueryCriteria => {
             const payload : QueryCriteria = {};
             if (variants.value.length > 0) {
-                for (let i = 0; i < variants.value.length; i++) {
-                    const variant = variants.value[i].data;
+                for (const entry of variants.value) {
+                    const variant = entry.data;
                     if (!variant) {
                         continue;
                     }
@@ -184,12 +177,10 @@ export default defineComponent({
                     let isValid = false;
                     const group : Record<string, CodeRecord> = {};
 
-                    for (let j = 0; j < keys.length; j++) {
-                        const code = variant[keys[j] as keyof typeof variant];
+                    for (const key of keys) {
+                        const code = variant[key as keyof typeof variant];
                         if (code && code.length > 0) {
-                            group[keys[j]] = {
-                                code,
-                            };
+                            group[key] = { code };
                             isValid = true;
                         }
                     }
@@ -207,18 +198,16 @@ export default defineComponent({
             if (hpoTerms.value.length > 0) {
                 payload.hpoTerms = [];
 
-                for (let i = 0; i < hpoTerms.value.length; i++) {
-                    payload.hpoTerms.push({
-                        code: `${hpoTerms.value[i].id}`,
-                    });
+                for (const term of hpoTerms.value) {
+                    payload.hpoTerms.push({ code: `${term.id}` });
                 }
             }
 
             if (categories.value.length > 0) {
                 payload.diagnoses = [];
 
-                for (let i = 0; i < categories.value.length; i++) {
-                    const id = `${categories.value[i].id}`;
+                for (const category of categories.value) {
+                    const id = `${category.id}`;
                     const index = id.indexOf(':::');
 
                     payload.diagnoses.push({
@@ -251,9 +240,7 @@ export default defineComponent({
                 if (props.queryId) {
                     query = await apiClient.query.update(props.queryId, {
                         criteria: payload,
-                        mode: {
-                            code: mode.value,
-                        },
+                        mode: { code: mode.value },
                         sites: modeSites.value,
                     });
 
@@ -261,9 +248,7 @@ export default defineComponent({
                 } else {
                     query = await apiClient.query.submit({
                         criteria: payload,
-                        mode: {
-                            code: mode.value,
-                        },
+                        mode: { code: mode.value },
                         sites: modeSites.value,
                     });
 
@@ -320,7 +305,7 @@ export default defineComponent({
                         >
                             <template #default="{ data }">
                                 <DCollectionTransform
-                                    :items="data.codings"
+                                    :items="data.codings || []"
                                     :transform="parseCategory"
                                 >
                                     <template #default="options">
@@ -363,7 +348,7 @@ export default defineComponent({
                         >
                             <template #default="{ data }">
                                 <DCollectionTransform
-                                    :items="data.codings"
+                                    :items="data.codings || []"
                                     :transform="transformCodings"
                                 >
                                     <template #default="options">

@@ -16,8 +16,6 @@ export default defineNuxtPlugin({
             baseURL = runtimeConfig.public.apiUrl;
         }
 
-        install(ctx.vueApp, {
-            baseURL,
-        });
+        install(ctx.vueApp, { baseURL });
     },
 });

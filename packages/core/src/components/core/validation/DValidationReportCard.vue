@@ -1,7 +1,9 @@
 <script lang="ts">
 import { VCTimeago } from '@vuecs/timeago';
 import {
-    type PropType, defineComponent, ref,
+    type PropType, 
+    defineComponent, 
+    ref,
 } from 'vue';
 import DValidationReport from './DValidationReport';
 import type { ValidationReportInfo } from '../../../domains';

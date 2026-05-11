@@ -1,8 +1,8 @@
 <script lang="ts">
 import { DCodingCommaList } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
-import { defineComponent, ref } from 'vue';
-import type { NGSDNAFusion, NGSReportSNV } from '../../domains';
+import { defineComponent } from 'vue';
+import type { NGSDNAFusion } from '../../domains';
 
 export default defineComponent({
     components: { DCodingCommaList },

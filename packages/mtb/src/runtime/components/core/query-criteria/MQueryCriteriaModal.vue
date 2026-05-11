@@ -17,9 +17,7 @@ export default defineComponent({
             type: Object as PropType<QuerySession>,
             required: true,
         },
-        preparedQueryId: {
-            type: String,
-        },
+        preparedQueryId: { type: String },
     },
     emits: ['updated', 'failed'],
     setup(props, { emit }) {

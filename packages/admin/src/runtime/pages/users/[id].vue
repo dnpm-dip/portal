@@ -8,7 +8,11 @@
 <script lang="ts">
 import { injectHTTPClient } from '@authup/client-web-kit';
 import {
-    DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
+    DNav, 
+    PageMetaKey, 
+    PageNavigationTopID, 
+    extendRefRecord, 
+    useToast,
 } from '@dnpm-dip/core';
 import type { User } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
@@ -39,13 +43,19 @@ export default defineComponent({
 
         const items = [
             {
-                name: 'Allgemein', icon: 'fas fa-bars', urlSuffix: '',
+                name: 'Allgemein', 
+                icon: 'fas fa-bars', 
+                urlSuffix: '',
             },
             {
-                name: 'Berechtigungen', icon: 'fas fa-user-secret', urlSuffix: 'permissions',
+                name: 'Berechtigungen', 
+                icon: 'fas fa-user-secret', 
+                urlSuffix: 'permissions',
             },
             {
-                name: 'Rollen', icon: 'fa-solid fa-user-group', urlSuffix: 'roles',
+                name: 'Rollen', 
+                icon: 'fa-solid fa-user-group', 
+                urlSuffix: 'roles',
             },
         ];
 
@@ -53,13 +63,13 @@ export default defineComponent({
         const route = useRoute();
         const authup = injectHTTPClient();
 
-        const entity : Ref<User> = ref(null) as any;
+        const entity = ref(null) as unknown as Ref<User>;
 
         try {
             entity.value = await authup
                 .user
                 .getOne(route.params.id as string, { fields: ['+email'] });
-        } catch (e) {
+        } catch {
             await navigateTo({ path: '/admin/users' });
             throw createError({});
         }

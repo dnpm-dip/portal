@@ -18,15 +18,9 @@ export default defineNuxtPlugin({
                 fontAwesome,
             },
             defaults: {
-                list: {
-                    class: 'list',
-                },
-                listBody: {
-                    class: 'list-body',
-                },
-                listItem: {
-                    class: 'list-item',
-                },
+                list: { class: 'list' },
+                listBody: { class: 'list-body' },
+                listItem: { class: 'list-item' },
                 pagination: {
                     class: 'pagination',
                     itemClass: 'page-item',
@@ -37,11 +31,7 @@ export default defineNuxtPlugin({
         installPagination(nuxt.vueApp);
 
         nuxt.vueApp.use(installFormControls);
-        nuxt.vueApp.use(installTimeago, {
-            locales: {
-                de,
-            },
-        });
+        nuxt.vueApp.use(installTimeago, { locales: { de } });
 
         const locale = injectTranslatorLocale();
         locale.value = 'de';

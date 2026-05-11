@@ -7,9 +7,7 @@ import type { PropType } from 'vue';
 import { defineNuxtComponent, definePageMeta } from '#imports';
 
 export default defineNuxtComponent({
-    components: {
-        ARoleForm,
-    },
+    components: { ARoleForm },
     props: {
         entity: {
             type: Object as PropType<Role>,
@@ -18,9 +16,7 @@ export default defineNuxtComponent({
     },
     emits: ['updated', 'failed'],
     setup(_props, { emit }) {
-        definePageMeta({
-            [PageMetaKey.REQUIRED_LOGGED_IN]: true,
-        });
+        definePageMeta({ [PageMetaKey.REQUIRED_LOGGED_IN]: true });
 
         const handleUpdated = (e: Role) => {
             emit('updated', e);

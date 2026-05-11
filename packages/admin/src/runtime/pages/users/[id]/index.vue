@@ -5,7 +5,8 @@ import type { User } from '@authup/core-kit';
 import { PageMetaKey } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import {
-    defineNuxtComponent, definePageMeta,
+    defineNuxtComponent, 
+    definePageMeta,
 } from '#imports';
 
 export default defineNuxtComponent({
@@ -21,9 +22,7 @@ export default defineNuxtComponent({
     },
     emits: ['updated', 'failed'],
     async setup(_props, { emit }) {
-        definePageMeta({
-            [PageMetaKey.REQUIRED_LOGGED_IN]: true,
-        });
+        definePageMeta({ [PageMetaKey.REQUIRED_LOGGED_IN]: true });
 
         const handleUpdated = (e: User) => {
             emit('updated', e);

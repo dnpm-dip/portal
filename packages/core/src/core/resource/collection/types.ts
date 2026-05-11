@@ -1,6 +1,10 @@
 import type {
-    EmitsOptions, MaybeRef, Ref, SetupContext,
-    Slots, VNodeChild,
+    EmitsOptions, 
+    MaybeRef, 
+    Ref, 
+    SetupContext,
+    Slots, 
+    VNodeChild,
 } from 'vue';
 import type { ObjectLiteral } from '../../../types';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
@@ -15,7 +19,7 @@ export type ResourceCollectionLoadMeta = {
 };
 
 export type ResourceCollectionLoadResponse<
-DATA extends ObjectLiteral = ObjectLiteral,
+    DATA extends ObjectLiteral = ObjectLiteral,
 > = {
     data: DATA[],
     total?: number,

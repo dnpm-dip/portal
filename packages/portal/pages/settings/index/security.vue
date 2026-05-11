@@ -6,13 +6,9 @@ import { definePageMeta } from '#imports';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
-    components: {
-        AUserPasswordForm,
-    },
+    components: { AUserPasswordForm },
     setup() {
-        definePageMeta({
-            [PageMetaKey.REQUIRED_LOGGED_IN]: true,
-        });
+        definePageMeta({ [PageMetaKey.REQUIRED_LOGGED_IN]: true });
 
         const toast = useToast();
 

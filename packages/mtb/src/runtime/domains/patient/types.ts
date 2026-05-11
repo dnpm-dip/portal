@@ -309,7 +309,7 @@ type IHCReport = {
 type LevelOfEvidence = {
     grading?: Coding,
     addendums?: Coding[],
-    publications?: {pmid: string, doi: string}[]
+    publications?: { pmid: string, doi: string }[]
 };
 
 type Recommendation = {
@@ -325,7 +325,11 @@ type MedicationRecommendation = Recommendation & {
     medication: Coding[],
     category?: Coding[],
     useType?: Coding,
-    supportingVariants: { id: string, display: string, type: string }[]
+    supportingVariants: {
+        id: string, 
+        display: string, 
+        type: string 
+    }[]
 };
 
 type GeneticCounselingRecommendation = {
@@ -341,7 +345,11 @@ type StudyEnrollmentRecommendation = {
     reason: Reference,
     issuedOn: string,
     levelOfEvidence?: Coding,
-    supportingVariants: { id: string, display: string, type: string }[],
+    supportingVariants: {
+        id: string, 
+        display: string, 
+        type: string 
+    }[],
     studyIds: string[]
 };
 

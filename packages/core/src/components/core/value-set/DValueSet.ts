@@ -13,12 +13,8 @@ export default defineComponent({
             type: String,
             required: true,
         },
-        lazyLoad: {
-            type: Boolean,
-        },
-        version: {
-            type: String,
-        },
+        lazyLoad: { type: Boolean },
+        version: { type: String },
         filter: {
             type: Array as PropType<string[]>,
             default: undefined,

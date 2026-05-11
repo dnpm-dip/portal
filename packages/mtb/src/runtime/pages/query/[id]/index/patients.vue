@@ -4,9 +4,10 @@ import type { PaginationMeta } from '@vuecs/pagination';
 import { VCPagination } from '@vuecs/pagination';
 import { BPlaceholder } from 'bootstrap-vue-next';
 import {
-    type PropType, type Ref,
+    type PropType, 
+    type Ref,
 } from 'vue';
-import { inject, onUnmounted, ref } from 'vue';
+import { onUnmounted, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import QueryPatientMatchEntity from '../../../../components/core/query-patient/MQueryPatientMatch.vue';
 import QueryPatientMatchList from '../../../../components/core/query-patient/MQueryPatientMatches';

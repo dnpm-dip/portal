@@ -20,9 +20,7 @@ export default defineComponent({
     setup(props) {
         const label = computed(() => generateChartLabelsForKeyValueRecord(props.entity) || 'Unknown');
 
-        return {
-            label,
-        };
+        return { label };
     },
 });
 </script>

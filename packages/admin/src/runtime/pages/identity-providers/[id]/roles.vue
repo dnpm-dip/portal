@@ -30,9 +30,7 @@ export default defineNuxtComponent({
             emit('failed', e);
         };
 
-        return {
-            handleFailed,
-        };
+        return { handleFailed };
     },
 });
 </script>

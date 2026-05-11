@@ -6,9 +6,7 @@ import { injectStore } from '@authup/client-web-kit';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
-    components: {
-        VCNavItems,
-    },
+    components: { VCNavItems },
     setup() {
         const store = injectStore();
         const { loggedIn, user } = storeToRefs(store);

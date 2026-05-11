@@ -14,15 +14,13 @@ import {
     DQuerySummaryNested,
     QueryEventBusEventName,
     injectQueryEventBus,
-    toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { BPlaceholder } from 'bootstrap-vue-next';
 import { defineComponent, onUnmounted, ref } from 'vue';
-import { navigateTo } from '#imports';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
-import type { QuerySummaryTumorDiagnostics } from '../../../domains';
+import type { QueryGeneAlteration, QuerySummaryTumorDiagnostics } from '../../../domains';
 import { queryGeneAlterationToString } from '../../../domains';
 
 export default defineComponent({
@@ -101,7 +99,7 @@ export default defineComponent({
             handleClick,
             variantLabelFn: (item: { key: unknown }) => (typeof item.key === 'string' ?
                 item.key :
-                queryGeneAlterationToString(item.key as any)),
+                queryGeneAlterationToString(item.key as QueryGeneAlteration)),
         };
     },
 });

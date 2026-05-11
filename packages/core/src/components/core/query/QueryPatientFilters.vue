@@ -40,7 +40,7 @@ export default defineComponent({
         const load = async () => {
             try {
                 available.value = await httpClient.query.getPatientFilter(props.useCase, props.queryId);
-            } catch (e) {
+            } catch {
                 available.value = {};
             } finally {
                 availableInitialized.value = true;
@@ -139,7 +139,7 @@ export default defineComponent({
                 .filter((el) => isCoding(el))
                 .map((el) => el.code);
             if (items.length > 0) {
-                age.value.min = parseInt(items[0], 10);
+                age.value.min = Number.parseInt(items[0], 10);
             } else {
                 resetAgeMin();
             }
@@ -148,7 +148,7 @@ export default defineComponent({
                 .filter((el) => isCoding(el))
                 .map((el) => el.code);
             if (items.length > 0) {
-                age.value.max = parseInt(items[0], 10);
+                age.value.max = Number.parseInt(items[0], 10);
             } else {
                 resetAgeMax();
             }
@@ -183,7 +183,7 @@ export default defineComponent({
 
         onUnmounted(() => removeFilterUpdatedHandler());
 
-        const handleAgeRangeChanged = (ctx: { min: number, max: number}) => {
+        const handleAgeRangeChanged = (ctx: { min: number, max: number }) => {
             if (!available.value.ageRange) {
                 return;
             }

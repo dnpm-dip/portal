@@ -16,12 +16,13 @@ export function stringifyResourceCollectionMeta(meta: ResourceCollectionLoadMeta
     let qs : string = '';
     if (typeof meta !== 'undefined') {
         const {
-            filters, limit, offset, sort,
+            filters, 
+            limit, 
+            offset, 
+            sort,
         } = meta;
 
-        const queryRecord : URLQueryRecord = {
-            ...(filters || {}),
-        };
+        const queryRecord : URLQueryRecord = { ...(filters || {}) };
         if (typeof limit !== 'undefined') {
             queryRecord.limit = limit;
         }
@@ -33,12 +34,11 @@ export function stringifyResourceCollectionMeta(meta: ResourceCollectionLoadMeta
         if (sort) {
             const items = [];
 
-            const keys = Object.keys(sort);
-            for (let i = 0; i < keys.length; i++) {
-                if (sort[keys[i]] === ResourceCollectionSortDirection.DESC) {
-                    items.push(`-${keys[i]}`);
+            for (const key of Object.keys(sort)) {
+                if (sort[key] === ResourceCollectionSortDirection.DESC) {
+                    items.push(`-${key}`);
                 } else {
-                    items.push(`${keys[i]}`);
+                    items.push(`${key}`);
                 }
             }
 

@@ -6,7 +6,7 @@
   -->
 
 <script lang="ts">
-import { type PropType, defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import MQueryKaplanMeierPicker from '../MQueryKaplanMeierPicker.vue';
 import MQueryKaplanMeierStatistic from '../MQueryKaplanMeierStatistic.vue';
 
@@ -25,7 +25,7 @@ export default defineComponent({
         const type = ref('');
         const grouping = ref('');
 
-        const handlePicked = (ctx: {type: string, grouping: string}) => {
+        const handlePicked = (ctx: { type: string, grouping: string }) => {
             type.value = ctx.type;
             grouping.value = ctx.grouping;
         };

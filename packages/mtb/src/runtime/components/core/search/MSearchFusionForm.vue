@@ -15,17 +15,23 @@ import {
 } from '@dnpm-dip/core';
 import { VCFormSelectSearch } from '@vuecs/form-controls';
 import {
-    type PropType, computed, defineComponent, reactive, toRef, watch,
+    type PropType, 
+    computed, 
+    defineComponent, 
+    reactive, 
+    toRef, 
+    watch,
 } from 'vue';
 import { type QueryGeneAlterationFusionCriteria, QueryMutationType } from '../../../domains';
 
 export default defineComponent({
     components: {
-        DTags, DCodeSystem, DCollectionTransform, VCFormSelectSearch,
+        DTags, 
+        DCodeSystem, 
+        DCollectionTransform, 
+        VCFormSelectSearch,
     },
-    props: {
-        entity: Object as PropType<QueryGeneAlterationFusionCriteria>,
-    },
+    props: { entity: Object as PropType<QueryGeneAlterationFusionCriteria> },
     emits: ['updated'],
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
@@ -55,9 +61,7 @@ export default defineComponent({
             if (form.partner) {
                 emit('updated', {
                     type: QueryMutationType.FUSION,
-                    partner: {
-                        code: form.partner,
-                    },
+                    partner: { code: form.partner },
                 } satisfies QueryGeneAlterationFusionCriteria);
             }
 

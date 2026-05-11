@@ -12,9 +12,7 @@ import type { PatientMatch } from '../../../domains';
 import MQueryCriteriaSummary from '../query-criteria/MQueryCriteriaSummary.vue';
 
 export default defineComponent({
-    components: {
-        MQueryCriteriaSummary,
-    },
+    components: { MQueryCriteriaSummary },
     props: {
         entity: {
             type: Object as PropType<PatientMatch>,
@@ -24,9 +22,7 @@ export default defineComponent({
             type: String,
             required: true,
         },
-        index: {
-            type: Number,
-        },
+        index: { type: Number },
     },
     setup(props) {
         const extended = ref<boolean>(true);
@@ -36,7 +32,7 @@ export default defineComponent({
         };
 
         const id = computed(() => {
-            if (Number.isInteger(props.index)) {
+            if (typeof props.index === 'number' && Number.isInteger(props.index)) {
                 return props.index + 1;
             }
 

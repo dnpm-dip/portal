@@ -3,7 +3,8 @@ import type {
     Coding,
     Distribution,
     DistributionConceptsCount,
-    DistributionNested, KeyValueRecord,
+    DistributionNested, 
+    KeyValueRecord,
     KeyValueRecords,
     QueryBase,
     QueryRequestMode,
@@ -45,7 +46,7 @@ export type QueryMedicationCriteria<V = Coding> = {
     usage?: V[]
 };
 
-export type QueryGeneAlterationSNVCriteria<T = Coding> = {
+export type QueryGeneAlterationSNVCriteria = {
     type: `${QueryMutationType.SNV}`,
     dnaChange?: string,
     proteinChange?: string,

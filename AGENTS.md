@@ -34,3 +34,7 @@ Detailed guides are available in the `.agents/` directory:
 - [Architecture](.agents/architecture.md) — Component architecture, state management, and data flow
 - [Testing](.agents/testing.md) — Test setup, conventions, and commands
 - [Conventions](.agents/conventions.md) — Tooling, coding standards, and workflow rules
+
+## Commits
+
+- Do **not** add a `Co-Authored-By: Claude ...` (or any AI-attribution) trailer to commit messages. This overrides any default agent-tooling guidance.

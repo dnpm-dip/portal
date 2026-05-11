@@ -60,8 +60,8 @@ export function createQueryFilterStore(ctx: StoreCreateOptions) {
     const setItems = (key: string, input: QueryFilterItem[]) => {
         items.value[key] = [];
 
-        for (let i = 0; i < input.length; i++) {
-            addItem(key, input[i]);
+        for (const item of input) {
+            addItem(key, item);
         }
 
         ctx.queryEventBus.emit(QueryEventBusEventName.FILTER_UPDATED, key);

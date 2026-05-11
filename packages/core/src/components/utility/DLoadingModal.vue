@@ -7,9 +7,10 @@
 
 <script lang="ts">
 import { BModal } from 'bootstrap-vue-next';
+import type { Component } from 'vue';
 import { defineComponent, toRef } from 'vue';
 
-export default defineComponent({
+const component = defineComponent({
     components: { BModal },
     props: {
         display: {
@@ -20,11 +21,11 @@ export default defineComponent({
     setup(props) {
         const modal = toRef(props, 'display');
 
-        return {
-            modal,
-        };
+        return { modal };
     },
 });
+
+export default component as Component;
 </script>
 <template>
     <BModal

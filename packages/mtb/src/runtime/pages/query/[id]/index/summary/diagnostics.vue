@@ -6,7 +6,8 @@
   -->
 <script lang="ts">
 import {
-    type PropType, defineComponent,
+    type PropType, 
+    defineComponent,
 } from 'vue';
 import MQuerySummaryGeneAlterationsDistribution
     from '../../../../../components/core/query-summary/MQuerySummaryGeneAlterationsDistribution.vue';

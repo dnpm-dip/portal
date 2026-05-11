@@ -1,6 +1,10 @@
 <script lang="ts">
 import {
-    type PropType, defineComponent, ref, toRef, watch,
+    type PropType, 
+    defineComponent, 
+    ref, 
+    toRef, 
+    watch,
 } from 'vue';
 import DFormTabGroup from './DFormTabGroup.vue';
 import type { FormTab, FormTabInput } from './types';
@@ -8,9 +12,7 @@ import type { FormTab, FormTabInput } from './types';
 export default defineComponent({
     components: { DFormTabGroup },
     props: {
-        modelValue: {
-            type: Array as PropType<FormTabInput[]>,
-        },
+        modelValue: { type: Array as PropType<FormTabInput[]> },
         label: {
             type: String,
             default: 'Neuer Tab',
@@ -19,9 +21,7 @@ export default defineComponent({
             type: Number,
             default: 1,
         },
-        maxItems: {
-            type: Number,
-        },
+        maxItems: { type: Number },
         createButton: {
             type: Boolean,
             default: true,
@@ -94,8 +94,11 @@ export default defineComponent({
         const close = (index: number) => {
             if (items.value.length === props.minItems) {
                 if (index === 0 && items.value.length === 1) {
-                    items.value[index].data = null;
-                    items.value[index].label = props.label;
+                    const first = items.value[index];
+                    if (first) {
+                        first.data = null;
+                        first.label = props.label;
+                    }
                 }
 
                 emit('update:modelValue', items.value);
@@ -108,7 +111,10 @@ export default defineComponent({
             }
 
             for (let i = 0; i < items.value.length; i++) {
-                items.value[i].index = i;
+                const item = items.value[i];
+                if (item) {
+                    item.index = i;
+                }
             }
 
             const nextIndex = index - 1;

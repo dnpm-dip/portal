@@ -32,7 +32,10 @@ import {
 } from 'ufo';
 import { SegmentTokenType } from './constants';
 import type {
-    NuxtPagesGenerateContext, RoutesPrepareContext, ScannedFile, SegmentToken,
+    NuxtPagesGenerateContext, 
+    RoutesPrepareContext, 
+    ScannedFile, 
+    SegmentToken,
 } from './types';
 import { parseSegment } from './segment';
 
@@ -58,8 +61,10 @@ export async function generateNuxtPages(context: NuxtPagesGenerateContext) : Pro
 
     const routes: NuxtPage[] = [];
 
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+    for (const file of files) {
+        if (!file) {
+            continue;
+        }
 
         const segments = file.relativePath
             .replace(new RegExp(`${escapeStringRegexp(path.extname(file.relativePath))}$`), '')
@@ -74,8 +79,10 @@ export async function generateNuxtPages(context: NuxtPagesGenerateContext) : Pro
 
         let parent = routes;
 
-        for (let i = 0; i < segments.length; i++) {
-            const segment = segments[i];
+        for (const segment of segments) {
+            if (segment === undefined) {
+                continue;
+            }
 
             const tokens = parseSegment(segment);
             const segmentName = tokens.map(({ value }) => value).join('');
@@ -102,14 +109,15 @@ export async function generateNuxtPages(context: NuxtPagesGenerateContext) : Pro
         parent.push(route);
     }
 
-    return prepareRoutes({
-        routes,
-    });
+    return prepareRoutes({ routes });
 }
 
 function prepareRoutes(context : RoutesPrepareContext) {
     for (let i = 0; i < context.routes.length; i++) {
         const route = context.routes[i];
+        if (!route) {
+            continue;
+        }
 
         // Remove -index
         if (route.name) {

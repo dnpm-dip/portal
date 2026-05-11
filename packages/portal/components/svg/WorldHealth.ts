@@ -14,9 +14,7 @@ export default defineComponent({
             type: [Number, String],
             default: '100%',
         },
-        height: {
-            type: [Number, String],
-        },
+        height: { type: [Number, String] },
     },
     setup(props) {
         return () => h('img', {

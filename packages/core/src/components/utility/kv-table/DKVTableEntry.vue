@@ -7,19 +7,20 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import {
-    computed, defineComponent, ref, resolveComponent,
+    computed, 
+    defineComponent, 
+    ref, 
+    resolveComponent,
 } from 'vue';
 import type { Coding, KeyValueRecord } from '../../../domains';
 
 export default defineComponent({
     props: {
         data: {
-            type: Object as PropType<KeyValueRecord<any, any>>,
+            type: Object as PropType<KeyValueRecord<unknown, unknown>>,
             required: true,
         },
-        codingVerboseLabel: {
-            type: Boolean,
-        },
+        codingVerboseLabel: { type: Boolean },
         clickable: {
             type: Boolean,
             default: false,
@@ -83,7 +84,7 @@ export default defineComponent({
             <template v-if="clickable">
                 <a
                     href="javascript:void(0)"
-                    @click.prevent="handleItemClick(data.key)"
+                    @click.prevent="handleItemClick(String(data.key))"
                 >
                     {{ data.key }}
                 </a>

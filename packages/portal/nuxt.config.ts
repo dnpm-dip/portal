@@ -5,27 +5,24 @@ import path from 'node:path';
 export default defineNuxtConfig({
     modules: [
         [
-            '@authup/client-web-nuxt', {
-                apiURLRuntimeKey: 'authupUrl',
-                cookieDomainRuntimeKey: 'cookieDomain',
-            } satisfies ModuleOptions,
+            '@authup/client-web-nuxt', 
+{
+    apiURLRuntimeKey: 'authupUrl',
+    cookieDomainRuntimeKey: 'cookieDomain',
+} satisfies ModuleOptions,
         ],
         '../admin/src/module',
         '../mtb/src/module',
         '../rd/src/module',
     ],
 
-    experimental: {
-        scanPageMeta: false,
-    },
+    experimental: { scanPageMeta: false },
 
-    devtools: {
-        componentInspector: false,
-    },
+    devtools: { componentInspector: false },
 
     css: [
         '@fortawesome/fontawesome-free/css/all.css',
-        '@authup/client-web-kit/dist/index.css',
+        '@authup/client-web-kit/dist/style.css',
         '@vuecs/navigation/dist/index.css',
         '@vuecs/pagination/dist/index.css',
         'bootstrap/dist/css/bootstrap.css',

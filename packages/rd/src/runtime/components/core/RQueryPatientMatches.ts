@@ -10,9 +10,7 @@ export default defineComponent({
             type: String,
             required: true,
         },
-        filters: {
-            type: Object as PropType<ObjectLiteral>,
-        },
+        filters: { type: Object as PropType<ObjectLiteral> },
     },
     slots: Object as SlotsType<ResourceCollectionSlots<PatientMatchBase>>,
     setup(props, setup) {

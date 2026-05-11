@@ -5,12 +5,17 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import { type PropType, defineComponent, ref } from 'vue';
+import { 
+    type Component, 
+    type PropType, 
+    defineComponent, 
+    ref, 
+} from 'vue';
 import type { KeyValueRecord } from '../../../domains';
 import { DKVChart } from '../kv-chart';
 import { DKVTable } from '../kv-table';
 
-export default defineComponent({
+const component = defineComponent({
     components: {
         DKVTable,
         DKVChart,
@@ -22,11 +27,9 @@ export default defineComponent({
         },
         data: {
             required: true,
-            type: Array as PropType<KeyValueRecord<any, unknown>[]>,
+            type: Array as PropType<KeyValueRecord<unknown, unknown>[]>,
         },
-        codingVerboseLabel: {
-            type: Boolean,
-        },
+        codingVerboseLabel: { type: Boolean },
         clickable: {
             type: Boolean,
             default: false,
@@ -40,7 +43,7 @@ export default defineComponent({
             variant.value = input;
         };
 
-        const handleClick = (key: any) => {
+        const handleClick = (key: unknown) => {
             emit('clicked', key);
         };
 
@@ -52,6 +55,8 @@ export default defineComponent({
         };
     },
 });
+
+export default component as Component;
 </script>
 <template>
     <div class="d-flex flex-column gap-2">

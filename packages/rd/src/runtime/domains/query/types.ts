@@ -3,7 +3,6 @@ import type {
     Coding,
     Distribution,
     KeyValueRecords,
-    PatientFilter,
     QueryBase,
     QueryRequestMode,
     QuerySummaryBase,

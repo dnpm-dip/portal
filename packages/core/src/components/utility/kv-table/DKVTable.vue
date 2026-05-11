@@ -7,7 +7,7 @@
 <script lang="ts">
 import type { TableFieldRaw } from 'bootstrap-vue-next';
 import { BTable } from 'bootstrap-vue-next';
-import type { PropType } from 'vue';
+import type { Component, PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 import type { Coding, KeyValueRecord } from '../../../domains';
 import { isCoding, isConceptCount, isMinMaxRange } from '../../../domains';
@@ -15,18 +15,13 @@ import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
 import DKVTableEntry from './DKVTableEntry.vue';
 
 export default defineComponent({
-    components: {
-        DKVTableEntry,
-        BTable,
-    },
+    components: { DKVTableEntry, BTable: BTable as unknown as Component },
     props: {
         data: {
-            type: Array as PropType<KeyValueRecord<any, any>[]>,
+            type: Array as PropType<KeyValueRecord<unknown, unknown>[]>,
             required: true,
         },
-        codingVerboseLabel: {
-            type: Boolean,
-        },
+        codingVerboseLabel: { type: Boolean },
         clickable: {
             type: Boolean,
             default: false,
@@ -48,9 +43,7 @@ export default defineComponent({
                 value = item.value.toFixed(2);
                 percent = '?%';
             } else if (isConceptCount(item)) {
-                key = `${generateChartLabelsForKeyValueRecord(item, {
-                    codingVerbose: props.codingVerboseLabel,
-                })}`;
+                key = `${generateChartLabelsForKeyValueRecord(item, { codingVerbose: props.codingVerboseLabel })}`;
                 value = item.value.count.toFixed(2);
                 percent = `${item.value.percent.toFixed(1)}%`;
             } else {
@@ -98,9 +91,11 @@ export default defineComponent({
                 return;
             }
 
-            const {
-                key: itemKey,
-            } = props.data[index];
+            const record = props.data[index];
+            if (!record) {
+                return;
+            }
+            const itemKey = record.key;
 
             if (isCoding(itemKey)) {
                 emit('clicked', [{ ...itemKey }]);
@@ -120,14 +115,14 @@ export default defineComponent({
 
             const value : Coding[] = [];
             if (Array.isArray(itemKey)) {
-                for (let i = 0; i < itemKey.length; i++) {
-                    if (isCoding(itemKey[i])) {
-                        value.push(itemKey[i]);
+                for (const k of itemKey) {
+                    if (isCoding(k)) {
+                        value.push(k);
                         continue;
                     }
 
-                    if (typeof itemKey[i] === 'string') {
-                        value.push({ code: itemKey[i] });
+                    if (typeof k === 'string') {
+                        value.push({ code: k });
                     }
                 }
             }
@@ -155,7 +150,7 @@ export default defineComponent({
     >
         <template #cell(key)="cell">
             <DKVTableEntry
-                :data="cell.item"
+                :data="(cell.item as any)"
                 :clickable="clickable"
                 :coding-verbose-label="codingVerboseLabel"
                 @item-clicked="handleItemClick"

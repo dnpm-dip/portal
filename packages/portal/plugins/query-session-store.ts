@@ -28,7 +28,7 @@ export default defineNuxtPlugin({
                 const newQuery = await coreAPI.query.getOne(useCase, session.id);
 
                 store.track(newQuery);
-            } catch (e) {
+            } catch {
                 eventBus.emit(QueryEventBusEventName.SESSION_REFRESH_FAILED, session, useCase);
             }
         });

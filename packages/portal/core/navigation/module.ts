@@ -6,7 +6,8 @@
  */
 
 import type { Store } from '@authup/client-web-kit';
-import type { PolicyIdentity } from '@authup/access';
+import type { IdentityPolicyData } from '@authup/access';
+import { BuiltInPolicyType, PolicyData } from '@authup/access';
 import type { NavigationItemMeta } from '@dnpm-dip/core';
 import { PageMetaKey } from '@dnpm-dip/core';
 import type { NavigationItem, NavigationItemNormalized } from '@vuecs/navigation';
@@ -39,35 +40,28 @@ export class Navigation {
                     name: 'Home',
                     icon: 'fa fa-home',
                     url: '/',
-                    meta: {
-                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
-                    },
+                    meta: { [PageMetaKey.REQUIRED_LOGGED_IN]: true },
                 },
                 {
                     name: 'Login',
                     type: 'link',
                     url: '/login',
                     icon: 'fas fa-sign',
-                    meta: {
-                        [PageMetaKey.REQUIRED_LOGGED_OUT]: true,
-                    },
-                }, {
+                    meta: { [PageMetaKey.REQUIRED_LOGGED_OUT]: true },
+                }, 
+                {
                     name: 'Settings',
                     type: 'link',
                     url: '/settings',
                     icon: 'fas fa-cog',
-                    meta: {
-                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
-                    },
+                    meta: { [PageMetaKey.REQUIRED_LOGGED_IN]: true },
                 },
                 {
                     name: 'Logout',
                     type: 'link',
                     url: '/logout',
                     icon: 'fa fa-power-off',
-                    meta: {
-                        [PageMetaKey.REQUIRED_LOGGED_IN]: true,
-                    },
+                    meta: { [PageMetaKey.REQUIRED_LOGGED_IN]: true },
                 },
             ],
         };
@@ -82,7 +76,7 @@ export class Navigation {
 
         try {
             await this.store.resolve();
-        } catch (e) {
+        } catch {
             // do nothing :)
         }
     }
@@ -102,11 +96,12 @@ export class Navigation {
 
         if (parent) {
             if (level === 1) {
-                if (this.sideElements[parent.name]) {
-                    return this.reduce(this.sideElements[parent.name]);
+                const parentElements = this.sideElements[parent.name];
+                if (parentElements) {
+                    return this.reduce(parentElements);
                 }
 
-                return this.reduce(this.sideElements[TopDefaultName]);
+                return this.reduce(this.sideElements[TopDefaultName] ?? []);
             }
         }
 
@@ -131,7 +126,7 @@ export class Navigation {
         }
 
         const { loggedIn } = this.store;
-        let identity: PolicyIdentity | undefined;
+        let identity: IdentityPolicyData | undefined;
         if (this.store.userId) {
             identity = {
                 type: 'user',
@@ -167,13 +162,13 @@ export class Navigation {
 
             if (permissions.length > 0) {
                 try {
-                    await this.store.permissionChecker.preCheckOneOf({
+                    const input = new PolicyData();
+                    input.set(BuiltInPolicyType.IDENTITY, identity);
+                    await this.store.permissionEvaluator.preEvaluateOneOf({
                         name: permissions,
-                        data: {
-                            identity,
-                        },
+                        input,
                     });
-                } catch (e) {
+                } catch {
                     canPass = false;
                 }
             }

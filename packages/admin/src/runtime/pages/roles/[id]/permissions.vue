@@ -1,7 +1,10 @@
 <script lang="ts">
 
 import {
-    APagination, ARolePermissionAssignment, ARolePermissionAssignments, ASearch,
+    APagination, 
+    ARolePermissionAssignment, 
+    ARolePermissionAssignments, 
+    ASearch,
 } from '@authup/client-web-kit';
 import type { Role } from '@authup/core-kit';
 import type { PropType } from 'vue';

@@ -14,7 +14,9 @@ import { IVuelidate } from '@ilingo/vuelidate';
 import useVuelidate from '@vuelidate/core';
 import { maxLength, minLength, required } from '@vuelidate/validators';
 import {
-    computed, toRef, watch,
+    computed, 
+    toRef, 
+    watch,
 } from 'vue';
 import {
     definePageMeta,
@@ -22,7 +24,9 @@ import {
     ref,
 } from '#imports';
 import {
-    defineNuxtComponent, navigateTo, useRoute, useRuntimeConfig,
+    defineNuxtComponent, 
+    navigateTo, 
+    useRoute,
 } from '#app';
 
 export default defineNuxtComponent({
@@ -60,12 +64,8 @@ export default defineNuxtComponent({
                 minLength: minLength(3),
                 maxLength: maxLength(255),
             },
-            realm_id: {
-
-            },
+            realm_id: {},
         }, form);
-
-        const runtimeConfig = useRuntimeConfig();
 
         const busy = ref(false);
 
@@ -78,7 +78,7 @@ export default defineNuxtComponent({
                 enabled: true,
             },
         }));
-        const identityProviderList = ref<null | { load:() => any, [key: string]: any}>(null);
+        const identityProviderList = ref<null | { load: () => unknown }>(null);
 
         watch(realmId, async (val, oldVal) => {
             if (val !== oldVal) {
@@ -103,8 +103,8 @@ export default defineNuxtComponent({
                     path: (redirect || '/') as string,
                     query,
                 });
-            } catch (e: any) {
-                if (isClientError(e) && toast) {
+            } catch (e) {
+                if (e instanceof Error && isClientError(e) && toast) {
                     toast.show({ variant: 'warning', body: e.message });
                 }
             }
@@ -113,10 +113,7 @@ export default defineNuxtComponent({
         Promise.resolve()
             .then(store.logout);
 
-        const buildIdentityProviderURL = (id: string) => apiClient.identityProvider.getAuthorizeUri(
-            runtimeConfig.public.authupUrl,
-            id,
-        );
+        const buildIdentityProviderURL = (id: string) => apiClient.identityProvider.getAuthorizeUri(id);
 
         return {
             vuelidate,

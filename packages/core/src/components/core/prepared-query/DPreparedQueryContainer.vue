@@ -1,15 +1,22 @@
 <script lang="ts">
 import { BModal } from 'bootstrap-vue-next';
-import type { Ref } from 'vue';
+import type { Component } from 'vue';
 import {
-    computed, defineComponent, ref,
+    computed, 
+    defineComponent, 
+    ref,
 } from 'vue';
 import type { PreparedQuery } from '../../../domains';
 import DPreparedQueries from './DPreparedQueries';
 import DPreparedQuery from './DPreparedQuery';
 import DPreparedQueryForm from './DPreparedQueryForm.vue';
 
-export default defineComponent({
+type PreparedQueriesInstance = {
+    created: (data: PreparedQuery) => void;
+    updated: (data: PreparedQuery) => void;
+};
+
+const component = defineComponent({
     components: {
         BModal,
         DPreparedQueryForm,
@@ -23,8 +30,8 @@ export default defineComponent({
         },
     },
     emits: ['submitted', 'failed'],
-    setup(props, { emit }) {
-        const preparedQueryNode = ref(null) as Ref<null | typeof DPreparedQueries>;
+    setup(_props, { emit }) {
+        const preparedQueryNode = ref<PreparedQueriesInstance | null>(null);
         const preparedQuery = ref<PreparedQuery | undefined>(undefined);
         const preparedQueryId = computed(() => {
             if (preparedQuery.value) {
@@ -34,7 +41,7 @@ export default defineComponent({
             return undefined;
         });
 
-        const criteria = ref<Record<string, any> | null>(null);
+        const criteria = ref<Record<string, unknown> | undefined>(undefined);
         const modal = ref<boolean>(false);
 
         const toggleModal = () => {
@@ -69,7 +76,7 @@ export default defineComponent({
             }
         };
 
-        const setCriteria = async (data: Record<string, any>) => {
+        const setCriteria = async (data: Record<string, unknown>) => {
             criteria.value = data;
 
             toggleModal();
@@ -81,7 +88,7 @@ export default defineComponent({
                 preparedQuery.value.id === data.id
             ) {
                 preparedQuery.value = undefined;
-                criteria.value = null;
+                criteria.value = undefined;
                 return;
             }
 
@@ -93,14 +100,14 @@ export default defineComponent({
             emit('failed', e);
         };
 
-        const handleQueryCreated = (data: Record<string, any>) => {
+        const handleQueryCreated = (data: Record<string, unknown>) => {
             emit('submitted', {
                 ...data,
                 ...(preparedQuery.value ? { preparedQueryId: preparedQueryId.value } : {}),
             });
         };
 
-        const handleQueryUpdated = (data: Record<string, any>) => {
+        const handleQueryUpdated = (data: Record<string, unknown>) => {
             emit('submitted', {
                 ...data,
                 ...(preparedQuery.value ? { preparedQueryId: preparedQueryId.value } : {}),
@@ -113,7 +120,7 @@ export default defineComponent({
                 preparedQuery.value.id === data.id
             ) {
                 preparedQuery.value = undefined;
-                criteria.value = null;
+                criteria.value = undefined;
             }
         };
 
@@ -139,6 +146,8 @@ export default defineComponent({
         };
     },
 });
+
+export default component as Component;
 </script>
 <template>
     <div class="row">
@@ -206,7 +215,7 @@ export default defineComponent({
                                                         <button
                                                             type="button"
                                                             class="btn btn-xs btn-danger"
-                                                            @click.prevent="entityProps.delete"
+                                                            @click.prevent="() => entityProps.delete()"
                                                         >
                                                             <i class="fa fa-trash" />
                                                         </button>
@@ -225,7 +234,6 @@ export default defineComponent({
 
         <BModal
             v-model="modal"
-            :size="'md'"
             :no-footer="true"
             :no-close-on-backdrop="true"
             :no-close-on-esc="true"

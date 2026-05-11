@@ -37,9 +37,7 @@ export default defineNuxtComponent({
 
         const items = computed(() => refs.items.value.filter((item) => item.type === ModuleType.USE_CASE));
 
-        return {
-            items,
-        };
+        return { items };
     },
 });
 </script>

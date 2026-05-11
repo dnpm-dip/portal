@@ -1,14 +1,21 @@
 <script lang="ts">
 
 import { VCTimeago } from '@vuecs/timeago';
-import { BTable } from 'bootstrap-vue-next';
 import type { IdentityProvider } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import {
-    AEntityDelete, AIdentityProviders, APagination, ASearch, ATitle, injectStore, storeToRefs,
+    AEntityDelete,
+    AIdentityProviders,
+    APagination,
+    ASearch,
+    ATitle,
+    injectStore,
+    storeToRefs,
     usePermissionCheck,
 } from '@authup/client-web-kit';
+import { BTable } from 'bootstrap-vue-next';
 import type { BuildInput } from 'rapiq';
+import type { Component } from 'vue';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
@@ -16,10 +23,10 @@ export default defineNuxtComponent({
         ATitle,
         APagination,
         ASearch,
-        BTable,
         AIdentityProviders,
         AEntityDelete,
         VCTimeago,
+        BTable: BTable as unknown as Component,
     },
     emits: ['deleted'],
     setup(props, { emit }) {
@@ -30,27 +37,34 @@ export default defineNuxtComponent({
         const store = injectStore();
         const { realmManagementId } = storeToRefs(store);
 
-        const query : BuildInput<IdentityProvider> = {
-            filter: {
-                realm_id: [realmManagementId.value, null],
-            },
-        };
+        const query : BuildInput<IdentityProvider> = { filter: { realm_id: [realmManagementId.value, null] } };
 
         const hasEditPermission = usePermissionCheck({ name: PermissionName.IDENTITY_PROVIDER_UPDATE });
         const hasDropPermission = usePermissionCheck({ name: PermissionName.IDENTITY_PROVIDER_DELETE });
 
         const fields = [
             {
-                key: 'name', label: 'Name', thClass: 'text-left', tdClass: 'text-left',
+                key: 'name', 
+                label: 'Name', 
+                thClass: 'text-left', 
+                tdClass: 'text-left',
             },
             {
-                key: 'created_at', label: 'Erstelldatum', thClass: 'text-center', tdClass: 'text-center',
+                key: 'created_at', 
+                label: 'Erstelldatum', 
+                thClass: 'text-center', 
+                tdClass: 'text-center',
             },
             {
-                key: 'updated_at', label: 'Aktualisierungsdatum', thClass: 'text-left', tdClass: 'text-left',
+                key: 'updated_at', 
+                label: 'Aktualisierungsdatum', 
+                thClass: 'text-left', 
+                tdClass: 'text-left',
             },
             {
-                key: 'options', label: '', tdClass: 'text-left',
+                key: 'options', 
+                label: '', 
+                tdClass: 'text-left',
             },
         ];
 
@@ -88,7 +102,6 @@ export default defineNuxtComponent({
                 :items="props.data"
                 :fields="fields"
                 :busy="props.busy"
-                head-variant="'dark'"
                 outlined
             >
                 <template #cell(created_at)="data">

@@ -8,9 +8,7 @@ export default defineComponent({
             type: String,
             required: true,
         },
-        lazyLoad: {
-            type: Boolean,
-        },
+        lazyLoad: { type: Boolean },
         filter: {
             type: Array as PropType<string[]>,
             default: undefined,

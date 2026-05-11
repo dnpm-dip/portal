@@ -7,16 +7,15 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import {
-    defineComponent, ref, toRef, watch,
+    defineComponent, 
+    ref, 
+    toRef, 
+    watch,
 } from 'vue';
 import { LogicalOperator } from '../../../constants';
 
 export default defineComponent({
-    props: {
-        modelValue: {
-            type: String as PropType<`${LogicalOperator}`>,
-        },
-    },
+    props: { modelValue: { type: String as PropType<`${LogicalOperator}`> } },
     emits: ['update:modelValue'],
     setup(props, { emit }) {
         const operator = ref<`${LogicalOperator}`>(`${LogicalOperator.OR}`);

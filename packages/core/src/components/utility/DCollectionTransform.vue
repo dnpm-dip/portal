@@ -6,12 +6,10 @@ import { hasNormalizedSlot, normalizeSlot } from '../../core';
 export default defineComponent({
     props: {
         items: {
-            type: Array as PropType<Record<string, any>[]>,
+            type: Array as PropType<Record<string, unknown>[]>,
             required: true,
         },
-        transform: {
-            type: Function,
-        },
+        transform: { type: Function },
     },
     emits: ['update:modelValue'],
     setup(props, { slots }) {

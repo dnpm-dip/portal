@@ -7,7 +7,10 @@ import {
     useToast,
 } from '@dnpm-dip/core';
 import {
-    defineComponent, onMounted, onUnmounted, ref,
+    defineComponent, 
+    onMounted, 
+    onUnmounted, 
+    ref,
 } from 'vue';
 import {
     definePageMeta,
@@ -35,9 +38,7 @@ export default defineComponent({
         const filtersCommitedUnsubscribeFn = evenBus.on(
             QueryEventBusEventName.FILTERS_COMMITED,
             () => {
-                toast.show('Die Filterkriterien wurden aktualisiert.', {
-                    variant: 'dark',
-                });
+                toast.show('Die Filterkriterien wurden aktualisiert.', { variant: 'dark' });
             },
         );
 
@@ -62,7 +63,7 @@ export default defineComponent({
         } else {
             try {
                 entity.value = await api.query.getOne(route.params.id);
-            } catch (e) {
+            } catch {
                 await navigateTo({ path: '/mtb/' });
             }
         }
@@ -72,10 +73,7 @@ export default defineComponent({
                 return;
             }
 
-            const keys = Object.keys(data);
-            for (let i = 0; i < keys.length; i++) {
-                entity.value[keys[i]] = data[keys[i]];
-            }
+            entity.value = { ...entity.value, ...data };
         };
 
         const handleFailed = (e: Error) => {

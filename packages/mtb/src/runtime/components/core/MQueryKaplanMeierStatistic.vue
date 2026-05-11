@@ -14,7 +14,11 @@ import {
 } from '@dnpm-dip/core';
 import { BPlaceholder } from 'bootstrap-vue-next';
 import {
-    defineComponent, onUnmounted, ref, toRef, watch,
+    defineComponent, 
+    onUnmounted, 
+    ref, 
+    toRef, 
+    watch,
 } from 'vue';
 import { injectHTTPClient } from '../../core/http-client';
 
@@ -44,7 +48,7 @@ export default defineComponent({
         const busy = ref(false);
         const data = ref<KMSurvivalReport | null>(null);
 
-        let resolvePromise : Promise<any> | undefined;
+        let resolvePromise : Promise<KMSurvivalReport> | undefined;
         const resolve = async () => {
             if (busy.value) {
                 return Promise.resolve();

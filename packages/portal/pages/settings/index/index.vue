@@ -7,9 +7,7 @@ import { useToast } from '@dnpm-dip/core';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
-    components: {
-        UserForm: AUserForm,
-    },
+    components: { UserForm: AUserForm },
     setup() {
         const toast = useToast();
 

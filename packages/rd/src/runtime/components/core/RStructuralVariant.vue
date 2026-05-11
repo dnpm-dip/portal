@@ -12,9 +12,7 @@ import type { StructuralVariant } from '../../domains';
 import RVariant from './RVariant.vue';
 
 export default defineComponent({
-    components: {
-        RVariant,
-    },
+    components: { RVariant },
     props: {
         entity: {
             type: Object as PropType<StructuralVariant>,

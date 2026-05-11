@@ -53,9 +53,7 @@ export function createResourceCollectionManager<
         if (typeof record.filters === 'undefined') {
             record.filters = filters.value;
         } else {
-            filters.value = {
-                ...record.filters,
-            };
+            filters.value = { ...record.filters };
         }
 
         if (typeof record.limit === 'number') {

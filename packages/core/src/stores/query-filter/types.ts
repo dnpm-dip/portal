@@ -19,17 +19,17 @@ import type { createQueryFilterStore } from './module';
 
 type StoreData = ReturnType<typeof createQueryFilterStore>;
 export type QueryFilterStore = BaseStore<
-string,
-_ExtractStateFromSetupStore<StoreData>,
-_ExtractGettersFromSetupStore<StoreData>,
-_ExtractActionsFromSetupStore<StoreData>
+    string,
+    _ExtractStateFromSetupStore<StoreData>,
+    _ExtractGettersFromSetupStore<StoreData>,
+    _ExtractActionsFromSetupStore<StoreData>
 >;
 
 export type QueryFilterStoreDefinition = BaseStoreDefinition<
-string,
-_ExtractStateFromSetupStore<StoreData>,
-_ExtractGettersFromSetupStore<StoreData>,
-_ExtractActionsFromSetupStore<StoreData>
+    string,
+    _ExtractStateFromSetupStore<StoreData>,
+    _ExtractGettersFromSetupStore<StoreData>,
+    _ExtractActionsFromSetupStore<StoreData>
 >;
 
 export type QueryFilterStoreInstallOptions = {

@@ -19,9 +19,7 @@ type Item = {
 };
 
 export default defineComponent({
-    directives: {
-        BTooltip,
-    },
+    directives: { BTooltip },
     props: {
         distribution: {
             type: Object as PropType<DistributionConceptsCount<Coding<string>>>,
@@ -61,9 +59,7 @@ export default defineComponent({
             return output;
         });
 
-        return {
-            items,
-        };
+        return { items };
     },
 });
 </script>

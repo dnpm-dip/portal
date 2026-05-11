@@ -3,11 +3,13 @@ import {
     DNav,
     DQueryFilterContainer,
     DQueryInfoBox,
-    DQueryPatientFilters, QueryEventBusEventName, injectQueryEventBus,
+    DQueryPatientFilters, 
+    QueryEventBusEventName, 
+    injectQueryEventBus,
 } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { BModal } from 'bootstrap-vue-next';
-import { provide, ref } from 'vue';
+import { ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
 import QueryDiagnosisFilter from '../../../components/core/RQueryDiagnosisFilter.vue';
 import QueryHPOFilter from '../../../components/core/RQueryHPOFilter.vue';
@@ -38,13 +40,19 @@ export default defineNuxtComponent({
 
         const navItems = [
             {
-                name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
+                name: 'Überblick', 
+                icon: 'fas fa-bars', 
+                urlSuffix: '',
             },
             {
-                name: 'Patienten', icon: 'fas fa-user-injured', urlSuffix: '/patients',
+                name: 'Patienten', 
+                icon: 'fas fa-user-injured', 
+                urlSuffix: '/patients',
             },
             {
-                name: 'Info', icon: 'fa fa-network-wired', urlSuffix: '/info',
+                name: 'Info', 
+                icon: 'fa fa-network-wired', 
+                urlSuffix: '/info',
             },
         ];
 

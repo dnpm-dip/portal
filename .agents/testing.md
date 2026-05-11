@@ -2,7 +2,7 @@
 
 ## Framework
 
-- **Jest** with **SWC** compiler for fast test execution
+- **Vitest** as the test runner
 - Tests are organized in `test/` directories within each package
 
 ## Commands
