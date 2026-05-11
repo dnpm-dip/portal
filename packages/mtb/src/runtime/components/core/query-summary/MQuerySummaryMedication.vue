@@ -160,7 +160,7 @@ export default defineComponent({
                     <DQuerySummaryGrouped
                         ref="recommendedByVariantVNode"
                         :select-first="true"
-                        :items="(data.recommendations.distributionBySupportingVariant as any)"
+                        :items="data.recommendations.distributionBySupportingVariant"
                         :label="'Variante'"
                         :label-fn="variantLabelFn"
                     >

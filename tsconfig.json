@@ -6,8 +6,6 @@
         "moduleResolution": "bundler",
         "lib": ["ESNext", "DOM"],
         "sourceMap": true,
-        "declaration": true,
-        "declarationMap": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "esModuleInterop": true,

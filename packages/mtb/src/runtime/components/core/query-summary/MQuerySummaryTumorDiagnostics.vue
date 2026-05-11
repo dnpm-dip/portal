@@ -156,7 +156,7 @@ export default defineComponent({
                 <h5>Verteilung nach Variante</h5>
                 <DQuerySummaryGrouped
                     :label="'Variante'"
-                    :items="(data.distributionsByVariant as any)"
+                    :items="data.distributionsByVariant"
                     :label-fn="variantLabelFn"
                 >
                     <template #default="{ item }">

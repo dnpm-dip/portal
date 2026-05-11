@@ -13,7 +13,7 @@ export class CodeSystemAPI extends BaseAPI {
         if (filter && filter.length > 0) {
             const searchParams = new URLSearchParams();
             for (const value of filter) {
-                searchParams.set('filter', value);
+                searchParams.append('filter', value);
             }
 
             queryString = `&${searchParams.toString()}`;

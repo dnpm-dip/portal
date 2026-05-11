@@ -8,16 +8,16 @@ import {
 import { VCFormSelect, VCFormSelectSearch } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import {
-    type PropType, 
-    type Ref, 
-    computed, 
-    reactive, 
-    toRef, 
+    type Component,
+    type PropType,
+    computed,
+    reactive,
+    toRef,
     watch,
 } from 'vue';
 import {
-    defineComponent, 
-    markRaw, 
+    defineComponent,
+    markRaw,
     ref,
 } from 'vue';
 import {
@@ -67,7 +67,7 @@ export default defineComponent({
             { id: QueryMutationType.FUSION, value: 'Fusion' },
         ];
 
-        const comp = ref(null) as Ref<null | Record<string, unknown>>;
+        const comp = ref<Component | null>(null);
         const changeMutationType = (type: `${QueryMutationType}` | null) => {
             switch (type) {
                 case QueryMutationType.CNV: {

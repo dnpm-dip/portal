@@ -29,24 +29,18 @@ export default defineComponent({
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
         const form = reactive<{
-            type: `${QueryMutationType.SNV}`, 
-            dnaChange: string, 
-            proteinChange: string, 
-            gene: string, 
-            supporting: boolean 
+            type: `${QueryMutationType.SNV}`,
+            dnaChange: string,
+            proteinChange: string,
         }>({
             type: QueryMutationType.SNV,
             dnaChange: '',
             proteinChange: '',
-            gene: '',
-            supporting: false,
         });
 
         const vuelidate = useVuelidate({
-            gene: {},
             dnaChange: {},
             proteinChange: { hgvs: helpers.regex(HGVS_CODE_REGEX) },
-            supporting: {},
         }, form);
 
         const init = () => {

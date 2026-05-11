@@ -12,11 +12,11 @@ import {
     ref,
     watch,
 } from 'vue';
-import type { KeyValueRecord, KeyValueRecords } from '../../../domains';
+import type { KeyValueRecord } from '../../../domains';
 import { QueryEventBusEventName, injectQueryEventBus } from '../../../services';
 import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils';
 
-type LabelFn = (item: KeyValueRecord) => string | undefined;
+type LabelFn = (item: KeyValueRecord<unknown, unknown>) => string | undefined;
 
 export default defineComponent({
     components: { VCFormSelectSearch },
@@ -25,7 +25,7 @@ export default defineComponent({
             type: String,
             default: 'Gruppe',
         },
-        items: { type: Array as PropType<KeyValueRecords> },
+        items: { type: Array as PropType<KeyValueRecord<unknown, unknown>[]> },
         selectFirst: {
             type: Boolean,
             default: false,
@@ -38,7 +38,7 @@ export default defineComponent({
     setup(props) {
         const queryEventBus = injectQueryEventBus();
         const id = ref(undefined) as Ref<string | number | undefined>;
-        const item = ref(null) as Ref<KeyValueRecord | null>;
+        const item = ref(null) as Ref<KeyValueRecord<unknown, unknown> | null>;
 
         const options = computed<FormSelectOption[]>(() => {
             if (!props.items) {
