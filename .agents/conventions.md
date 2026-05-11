@@ -66,3 +66,11 @@ Scopes typically match package names: `core`, `portal`, `mtb`, `rd`, `admin`, `k
 - Respect separation of concerns: shared logic → `core`, module registration → `kit`, domain UI → feature modules, app shell → `portal`
 - Prefer editing existing files over creating new ones
 - Keep changes minimal and focused on the task at hand
+
+## Keep MTB and RD Modules in Sync
+
+The `mtb` and `rd` feature modules expose parallel UI patterns (filters, query pages, summary views). When changing one, check the other for the equivalent component and mirror the change so the two modules stay consistent in behavior and appearance.
+
+- Naming parallels: `MQuery*` (mtb) ↔ `RQuery*` (rd), both consuming shared components from `core` (e.g. `DQueryFilterBox`).
+- Before finishing a task touching one module, grep the other for the matching component (`MQueryDiagnosisFilter` → `RQueryDiagnosisFilter`, etc.) and apply equivalent changes.
+- If a pattern only makes sense in one module, document why in a comment or commit message.
