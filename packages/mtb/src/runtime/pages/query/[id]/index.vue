@@ -77,6 +77,41 @@ export default defineNuxtComponent({
             },
         ];
 
+        const summaryNavItems = [
+            {
+                name: 'Demographie',
+                icon: 'fas fa-globe',
+                urlSuffix: '',
+            },
+            {
+                name: 'Diagnose',
+                icon: 'fas fa-stethoscope',
+                urlSuffix: '/diagnostics',
+            },
+            {
+                name: 'Medikation',
+                icon: 'fas fa-pills',
+                urlSuffix: '/medication',
+            },
+            {
+                name: 'Therapie Responses',
+                icon: 'fas fa-comment-medical',
+                urlSuffix: '/therapy-responses',
+            },
+            {
+                name: 'Gen Alterationen',
+                icon: 'fas fa-dna',
+                urlSuffix: '/gene-alterations',
+            },
+            {
+                name: 'Überlebensbericht',
+                icon: 'fas fa-book-open',
+                urlSuffix: '/survival-report',
+            },
+        ];
+
+        const isSummaryActive = computed(() => route.path.startsWith(`/mtb/query/${props.entity.id}/summary`));
+
         const handleUpdated = (entity: QueryBase) => {
             emit('updated', entity);
 
@@ -95,6 +130,8 @@ export default defineNuxtComponent({
             toggleCriteriaExpansion,
 
             navItems,
+            summaryNavItems,
+            isSummaryActive,
             preparedQueryId: route.query.preparedQueryId,
 
             handleUpdated,
@@ -119,14 +156,27 @@ export default defineNuxtComponent({
     </div>
 
     <div class="d-flex flex-column gap-3">
-        <div class="d-flex flex-row">
-            <div>
-                <DNav
-                    :items="navItems"
-                    :path="'/mtb/query/'+ entity.id"
-                >
-                    <template #end />
-                </DNav>
+        <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-row">
+                <div>
+                    <DNav
+                        :items="navItems"
+                        :path="'/mtb/query/'+ entity.id"
+                    >
+                        <template #end />
+                    </DNav>
+                </div>
+            </div>
+            <div
+                v-if="isSummaryActive"
+                class="d-flex flex-row"
+            >
+                <div>
+                    <DNav
+                        :items="summaryNavItems"
+                        :path="'/mtb/query/'+ entity.id + '/summary'"
+                    />
+                </div>
             </div>
         </div>
 

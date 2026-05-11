@@ -3,13 +3,13 @@ import {
     DNav,
     DQueryFilterContainer,
     DQueryInfoBox,
-    DQueryPatientFilters, 
-    QueryEventBusEventName, 
+    DQueryPatientFilters,
+    QueryEventBusEventName,
     injectQueryEventBus,
 } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { BModal } from 'bootstrap-vue-next';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
 import QueryDiagnosisFilter from '../../../components/core/RQueryDiagnosisFilter.vue';
 import QueryHPOFilter from '../../../components/core/RQueryHPOFilter.vue';
@@ -40,21 +40,36 @@ export default defineNuxtComponent({
 
         const navItems = [
             {
-                name: 'Überblick', 
-                icon: 'fas fa-bars', 
-                urlSuffix: '',
+                name: 'Überblick',
+                icon: 'fas fa-bars',
+                urlSuffix: '/summary',
             },
             {
-                name: 'Patienten', 
-                icon: 'fas fa-user-injured', 
+                name: 'Patienten',
+                icon: 'fas fa-user-injured',
                 urlSuffix: '/patients',
             },
             {
-                name: 'Info', 
-                icon: 'fa fa-network-wired', 
+                name: 'Info',
+                icon: 'fa fa-network-wired',
                 urlSuffix: '/info',
             },
         ];
+
+        const summaryNavItems = [
+            {
+                name: 'Demographie',
+                icon: 'fas fa-globe',
+                urlSuffix: '',
+            },
+            {
+                name: 'Diagnostik',
+                icon: 'fas fa-stethoscope',
+                urlSuffix: '/diagnostics',
+            },
+        ];
+
+        const isSummaryActive = computed(() => route.path.startsWith(`/rd/query/${props.entity.id}/summary`));
 
         const handleSubmit = () => {
             // do nothing
@@ -92,6 +107,8 @@ export default defineNuxtComponent({
             handleModalUpdated,
 
             navItems,
+            summaryNavItems,
+            isSummaryActive,
             preparedQueryId: route.query.preparedQueryId,
         };
     },
@@ -112,23 +129,31 @@ export default defineNuxtComponent({
         </div>
     </div>
 
-    <div class="mb-2">
-        <DNav
-            :items="navItems"
-            :path="'/rd/query/'+ entity.id"
-        >
-            <template #end>
-                <li class="nav-item">
-                    <button
-                        type="button"
-                        class="nav-link"
-                        @click.prevent="toggleModal"
-                    >
-                        <i class="fa fa-cog" /> Anpassen
-                    </button>
-                </li>
-            </template>
-        </DNav>
+    <div class="d-flex flex-column gap-2 mb-2">
+        <div>
+            <DNav
+                :items="navItems"
+                :path="'/rd/query/'+ entity.id"
+            >
+                <template #end>
+                    <li class="nav-item">
+                        <button
+                            type="button"
+                            class="nav-link"
+                            @click.prevent="toggleModal"
+                        >
+                            <i class="fa fa-cog" /> Anpassen
+                        </button>
+                    </li>
+                </template>
+            </DNav>
+        </div>
+        <div v-if="isSummaryActive">
+            <DNav
+                :items="summaryNavItems"
+                :path="'/rd/query/'+ entity.id + '/summary'"
+            />
+        </div>
     </div>
 
     <hr>

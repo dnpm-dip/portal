@@ -1,5 +1,6 @@
 import type { PropType, SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
+import { useRoute } from 'vue-router';
 import { buildNav } from './module';
 import type { NavItems } from './types';
 
@@ -23,10 +24,12 @@ export default defineComponent({
     setup(props, { slots }) {
         const items = toRef(props, 'items');
         const direction = toRef(props, 'direction');
+        const route = useRoute();
         return () => buildNav(props.path, items.value, {
             direction: direction.value,
             prevLink: props.prevLink,
             slots,
+            currentPath: route.path,
         });
     },
 });

@@ -12,5 +12,6 @@ export type NavItems = NavItem[];
 export type NavOptions = {
     direction?: 'vertical' | 'horizontal',
     prevLink?: boolean | string,
-    slots?: Slots
+    slots?: Slots,
+    currentPath?: string,
 };
