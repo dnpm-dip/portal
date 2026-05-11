@@ -49,19 +49,19 @@ export default defineComponent({
         const reset = () => {
             if (available.value.category) {
                 category.value = available.value.category.map((el) => el.code);
-                store.setItems(QueryURLFilterKey.DIAGNOSIS_CATEGORY, []);
             }
+            store.setItems(QueryURLFilterKey.DIAGNOSIS_CATEGORY, []);
         };
 
         const init = () => {
+            const availableCodes = (available.value.category || []).map((el) => el.code);
             const storeItems = store.getItems(QueryURLFilterKey.DIAGNOSIS_CATEGORY)
                 .filter((el) => isCoding(el))
-                .map((el) => el.code);
+                .map((el) => el.code)
+                .filter((code) => availableCodes.includes(code));
 
             if (storeItems.length === 0) {
-                if (available.value.category) {
-                    category.value = available.value.category.map((el) => el.code);
-                }
+                category.value = availableCodes;
                 return;
             }
 

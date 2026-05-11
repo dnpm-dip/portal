@@ -91,12 +91,14 @@ export default defineComponent({
         };
 
         const init = () => {
+            const availableCodes = itemsAvailable.value.map((el) => el.code);
             const storeItems = store.getItems(QueryFilterURLKey.DIAGNOSIS_CODE)
                 .filter((el) => isCoding(el))
-                .map((el) => el.code);
+                .map((el) => el.code)
+                .filter((code) => availableCodes.includes(code));
 
             if (storeItems.length === 0) {
-                items.value = itemsAvailable.value.map((el) => el.code);
+                items.value = availableCodes;
 
                 return;
             }

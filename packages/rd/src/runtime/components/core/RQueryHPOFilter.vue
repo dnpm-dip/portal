@@ -48,19 +48,19 @@ export default defineComponent({
         const reset = () => {
             if (available.value.value) {
                 items.value = available.value.value.map((el) => el.code);
-                store.setItems(QueryURLFilterKey.HPO_VALUE, []);
             }
+            store.setItems(QueryURLFilterKey.HPO_VALUE, []);
         };
 
         const init = () => {
+            const availableCodes = (available.value.value || []).map((el) => el.code);
             const storeItems = store.getItems(QueryURLFilterKey.HPO_VALUE)
                 .filter((el) => isCoding(el))
-                .map((el) => el.code);
+                .map((el) => el.code)
+                .filter((code) => availableCodes.includes(code));
 
             if (storeItems.length === 0) {
-                if (available.value.value) {
-                    items.value = available.value.value.map((el) => el.code);
-                }
+                items.value = availableCodes;
                 return;
             }
 

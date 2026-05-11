@@ -112,12 +112,14 @@ export default defineComponent({
 
         // todo: refactor
         const init = () => {
+            const availableIds = itemsAvailable.value.map((el) => el.id);
             const storeItems = store.getItems(storeKey.value)
                 .filter((el) => isCodingGroup(el))
-                .map((el) => el.id);
+                .map((el) => el.id)
+                .filter((id) => availableIds.includes(id));
 
             if (storeItems.length === 0) {
-                items.value = itemsAvailable.value.map((el) => el.id);
+                items.value = availableIds;
 
                 return;
             }
