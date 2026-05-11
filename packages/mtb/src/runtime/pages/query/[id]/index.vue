@@ -1,11 +1,11 @@
 <script lang="ts">
 import { computed, ref } from 'vue';
 import {
-    DNav, 
-    DQueryFilterContainer, 
-    DQueryInfoBox, 
-    DQueryPatientFilters, 
-    type QueryBase, 
+    DNav,
+    DQueryFilterContainer,
+    DQueryInfoBox,
+    DQueryPatientFilters,
+    type QueryBase,
     injectQueryEventBus,
 } from '@dnpm-dip/core';
 import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
@@ -61,18 +61,18 @@ export default defineNuxtComponent({
 
         const navItems = [
             {
-                name: 'Überblick', 
-                icon: 'fas fa-bars', 
+                name: 'Überblick',
+                icon: 'fas fa-bars',
                 urlSuffix: '/summary',
             },
             {
-                name: 'Patienten', 
-                icon: 'fas fa-user-injured', 
+                name: 'Patienten',
+                icon: 'fas fa-user-injured',
                 urlSuffix: '/patients',
             },
             {
-                name: 'Info', 
-                icon: 'fa fa-network-wired', 
+                name: 'Info',
+                icon: 'fa fa-network-wired',
                 urlSuffix: '/info',
             },
         ];
@@ -128,45 +128,47 @@ export default defineNuxtComponent({
                     <template #end />
                 </DNav>
             </div>
-            <div class="ms-auto">
-                <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <button
-                            class="nav-link"
-                            :class="{'active': criteriaExpansion }"
-                            @click.prevent="toggleCriteriaExpansion"
-                        >
-                            <i class="fa fa-bars" /> Kriterien
-                        </button>
-                    </li>
-                    <MQueryCriteriaModal
-                        :entity="entity"
-                        @updated="handleUpdated"
-                        @failed="handleFailed"
-                    >
-                        <template #default="props">
-                            <li class="nav-item">
-                                <button
-                                    class="nav-link"
-                                    @click.prevent="props.toggle()"
-                                >
-                                    <i class="fa fa-cog" /> Anpassen
-                                </button>
-                            </li>
-                        </template>
-                    </MQueryCriteriaModal>
-                </ul>
-            </div>
         </div>
 
-        <div v-if="criteriaExpansion">
-            <div class="entity-card w-100">
-                <template v-if="criteriaDefined && entity.criteria">
-                    <MQueryCriteriaSummary :entity="entity.criteria" />
-                </template>
-                <template v-else>
-                    Es sind keine Suchkriterien definiert.
-                </template>
+        <div class="entity-card w-100">
+            <div class="d-flex flex-column gap-2">
+                <div class="d-flex flex-row align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-0">
+                            Kriterien
+                        </h6>
+                    </div>
+                    <div class="ms-auto d-flex gap-1">
+                        <button
+                            class="btn btn-dark btn-xs"
+                            @click.prevent="toggleCriteriaExpansion"
+                        >
+                            <i :class="{'fa fa-chevron-down': !criteriaExpansion, 'fa fa-chevron-up': criteriaExpansion}" />
+                        </button>
+                        <MQueryCriteriaModal
+                            :entity="entity"
+                            @updated="handleUpdated"
+                            @failed="handleFailed"
+                        >
+                            <template #default="props">
+                                <button
+                                    class="btn btn-dark btn-xs"
+                                    @click.prevent="props.toggle()"
+                                >
+                                    <i class="fa fa-cog" />
+                                </button>
+                            </template>
+                        </MQueryCriteriaModal>
+                    </div>
+                </div>
+                <div v-show="criteriaExpansion">
+                    <template v-if="criteriaDefined && entity.criteria">
+                        <MQueryCriteriaSummary :entity="entity.criteria" />
+                    </template>
+                    <template v-else>
+                        Es sind keine Suchkriterien definiert.
+                    </template>
+                </div>
             </div>
         </div>
 
