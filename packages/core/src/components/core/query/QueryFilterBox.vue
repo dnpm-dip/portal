@@ -62,8 +62,9 @@ export default defineComponent({
                 </div>
                 <div class="ms-auto d-flex gap-1">
                     <button
-                        v-if="active"
-                        class="btn btn-secondary btn-xs"
+                        class="btn btn-xs"
+                        :class="active ? 'btn-danger' : 'btn-secondary'"
+                        :disabled="!active"
                         title="Filter zurücksetzen"
                         @click.prevent="reset"
                     >
