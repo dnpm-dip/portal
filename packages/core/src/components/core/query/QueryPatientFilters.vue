@@ -1,6 +1,11 @@
 <script lang="ts">
 import { VCFormRangeMultiSlider } from '@vuecs/form-controls';
-import { defineComponent, onUnmounted, ref } from 'vue';
+import { 
+    computed, 
+    defineComponent, 
+    onUnmounted, 
+    ref, 
+} from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core';
 import type { Coding, PatientFilter } from '../../../domains';
@@ -276,9 +281,19 @@ export default defineComponent({
             emit('submit');
         };
 
+        const active = computed(() => (
+            store.getItems(QueryFilterURLKey.GENDER).length > 0 ||
+            store.getItems(QueryFilterURLKey.VITAL_STATUS).length > 0 ||
+            store.getItems(QueryFilterURLKey.SITE).length > 0 ||
+            store.getItems(QueryFilterURLKey.AGE_MIN).length > 0 ||
+            store.getItems(QueryFilterURLKey.AGE_MAX).length > 0
+        ));
+
         return {
             available,
             availableInitialized,
+
+            active,
 
             age,
             gender,
@@ -297,7 +312,11 @@ export default defineComponent({
 });
 </script>
 <template>
-    <QueryFilterBox :name="'patient'">
+    <QueryFilterBox
+        :name="'patient'"
+        :active="active"
+        @reset="reset"
+    >
         <template #title>
             <i class="fa fa-user-injured" /> Patient
         </template>
@@ -383,17 +402,6 @@ export default defineComponent({
                         :max="age.max"
                         @change="handleAgeRangeChanged"
                     />
-                </div>
-            </div>
-            <div class="row">
-                <div>
-                    <button
-                        type="button"
-                        class="btn btn-xs btn-secondary btn-block"
-                        @click.prevent="reset"
-                    >
-                        Zurücksetzen
-                    </button>
                 </div>
             </div>
         </template>

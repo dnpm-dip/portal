@@ -173,14 +173,8 @@ export default defineComponent({
             listenForFilterUpdates.value = true;
         };
 
-        const selectAll = () => {
+        const reset = () => {
             items.value = itemsAvailable.value.map((el) => el.id);
-
-            setFilter();
-        };
-
-        const unselectAll = () => {
-            items.value = [];
 
             setFilter();
         };
@@ -193,13 +187,16 @@ export default defineComponent({
             setFilter();
         };
 
+        const active = computed(() => store.getItems(storeKey.value).length > 0);
+
         return {
             items,
             itemsAvailableInitialized,
 
+            active,
+
             handleChanged,
-            selectAll,
-            unselectAll,
+            reset,
 
             availableSubset,
             total,
@@ -211,7 +208,11 @@ export default defineComponent({
 });
 </script>
 <template>
-    <DQueryFilterBox :name="type">
+    <DQueryFilterBox
+        :name="type"
+        :active="active"
+        @reset="reset"
+    >
         <template #title>
             <template v-if="type === 'recommended'">
                 <i class="fa fa-pills" /> Therapien: Empfohlen
@@ -223,29 +224,6 @@ export default defineComponent({
         <template #default>
             <div class=" flex-column gap-1 d-flex">
                 <div class="d-flex flex-column gap-2">
-                    <div class="d-flex flex-row">
-                        <div>
-                            <button
-                                :disabled="!itemsAvailableInitialized"
-                                type="button"
-                                class="btn btn-xs btn-dark"
-                                @click.prevent="selectAll"
-                            >
-                                Alle auswählen
-                            </button>
-                        </div>
-                        <div class="ms-auto">
-                            <button
-                                :disabled="!itemsAvailableInitialized"
-                                type="button"
-                                class="btn btn-xs btn-dark"
-                                @click.prevent="unselectAll"
-                            >
-                                Alle abwählen
-                            </button>
-                        </div>
-                    </div>
-
                     <div>
                         <template
                             v-for="item in availableSubset"

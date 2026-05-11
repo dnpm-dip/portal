@@ -1,11 +1,13 @@
 <script lang="ts">
 import {
-    defineComponent, 
+    computed,
+    defineComponent,
     ref,
 } from 'vue';
 import {
-    type Coding, 
-    DQueryFilterBox, 
+    type Coding,
+    DQueryFilterBox,
+    isCoding,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { QueryURLFilterKey } from '../../constants';
@@ -51,9 +53,24 @@ export default defineComponent({
             }
         };
 
+        const init = () => {
+            const storeItems = store.getItems(QueryURLFilterKey.DIAGNOSIS_CATEGORY)
+                .filter((el) => isCoding(el))
+                .map((el) => el.code);
+
+            if (storeItems.length === 0) {
+                if (available.value.category) {
+                    category.value = available.value.category.map((el) => el.code);
+                }
+                return;
+            }
+
+            category.value = storeItems;
+        };
+
         Promise.resolve()
             .then(() => load())
-            .then(() => reset());
+            .then(() => init());
 
         const handleChanged = () => {
             if (!available.value.category) {
@@ -77,11 +94,15 @@ export default defineComponent({
             store.setItems(QueryURLFilterKey.DIAGNOSIS_CATEGORY, data);
         };
 
+        const active = computed(() => store.getItems(QueryURLFilterKey.DIAGNOSIS_CATEGORY).length > 0);
+
         return {
             available,
             availableInitialized,
 
             category,
+
+            active,
 
             handleChanged,
 
@@ -91,7 +112,11 @@ export default defineComponent({
 });
 </script>
 <template>
-    <DQueryFilterBox :name="'diagnosis'">
+    <DQueryFilterBox
+        :name="'diagnosis'"
+        :active="active"
+        @reset="reset"
+    >
         <template #title>
             <i class="fa fa-stethoscope" /> Diagnose
         </template>
@@ -117,19 +142,6 @@ export default defineComponent({
                             />
                         </div>
                     </template>
-                </div>
-            </div>
-
-            <div class="row">
-                <div>
-                    <button
-                        :disabled="!availableInitialized"
-                        type="button"
-                        class="btn btn-xs btn-secondary btn-block"
-                        @click.prevent="reset"
-                    >
-                        Zurücksetzen
-                    </button>
                 </div>
             </div>
         </template>

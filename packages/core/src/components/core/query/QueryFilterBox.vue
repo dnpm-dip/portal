@@ -15,8 +15,13 @@ export default defineComponent({
             type: String,
             required: true,
         },
+        active: {
+            type: Boolean,
+            default: false,
+        },
     },
-    setup(props) {
+    emits: ['reset'],
+    setup(props, { emit }) {
         const store = useQueryFilterStore();
         const storeRefs = storeToRefs(store);
 
@@ -26,9 +31,14 @@ export default defineComponent({
             store.setActive(props.name);
         };
 
+        const reset = () => {
+            emit('reset');
+        };
+
         return {
             extended,
             toggleExtended,
+            reset,
         };
     },
 });
@@ -36,15 +46,29 @@ export default defineComponent({
 <template>
     <div class="entity-card">
         <div class="d-flex flex-column gap-2">
-            <div class="d-flex flex-row">
+            <div class="d-flex flex-row align-items-center">
                 <div>
                     <h6 class="text-muted mb-0">
                         <slot name="title">
                             Filter
                         </slot>
+                        <i
+                            v-if="active"
+                            class="fa fa-circle text-success ms-1"
+                            style="font-size: 0.5em; vertical-align: middle;"
+                            aria-label="Filter aktiv"
+                        />
                     </h6>
                 </div>
-                <div class="ms-auto">
+                <div class="ms-auto d-flex gap-1">
+                    <button
+                        v-if="active"
+                        class="btn btn-secondary btn-xs"
+                        title="Filter zurücksetzen"
+                        @click.prevent="reset"
+                    >
+                        <i class="fa fa-rotate-left" />
+                    </button>
                     <button
                         class="btn btn-dark btn-xs"
                         :disabled="extended"
