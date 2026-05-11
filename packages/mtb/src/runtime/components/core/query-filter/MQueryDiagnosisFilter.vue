@@ -91,12 +91,14 @@ export default defineComponent({
         };
 
         const init = () => {
+            const availableCodes = itemsAvailable.value.map((el) => el.code);
             const storeItems = store.getItems(QueryFilterURLKey.DIAGNOSIS_CODE)
                 .filter((el) => isCoding(el))
-                .map((el) => el.code);
+                .map((el) => el.code)
+                .filter((code) => availableCodes.includes(code));
 
             if (storeItems.length === 0) {
-                items.value = itemsAvailable.value.map((el) => el.code);
+                items.value = availableCodes;
 
                 return;
             }
@@ -145,14 +147,8 @@ export default defineComponent({
             listenForFilterUpdates.value = true;
         };
 
-        const selectAll = () => {
+        const reset = () => {
             items.value = itemsAvailable.value.map((el) => el.code);
-
-            setFilter();
-        };
-
-        const unselectAll = () => {
-            items.value = [];
 
             setFilter();
         };
@@ -165,13 +161,16 @@ export default defineComponent({
             setFilter();
         };
 
+        const active = computed(() => store.getItems(QueryFilterURLKey.DIAGNOSIS_CODE).length > 0);
+
         return {
             items,
             itemsAvailableInitialized,
 
+            active,
+
             handleChanged,
-            selectAll,
-            unselectAll,
+            reset,
 
             availableSubset,
             total,
@@ -183,36 +182,17 @@ export default defineComponent({
 });
 </script>
 <template>
-    <DQueryFilterBox :name="'diagnosis'">
+    <DQueryFilterBox
+        :name="'diagnosis'"
+        :active="active"
+        @reset="reset"
+    >
         <template #title>
             <i class="fa fa-stethoscope" /> Diagnose
         </template>
         <template #default>
             <div class=" flex-column gap-1 d-flex">
                 <div class="d-flex flex-column gap-2">
-                    <div class="d-flex flex-row">
-                        <div>
-                            <button
-                                :disabled="!itemsAvailableInitialized"
-                                type="button"
-                                class="btn btn-xs btn-dark"
-                                @click.prevent="selectAll"
-                            >
-                                Alle auswählen
-                            </button>
-                        </div>
-                        <div class="ms-auto">
-                            <button
-                                :disabled="!itemsAvailableInitialized"
-                                type="button"
-                                class="btn btn-xs btn-dark"
-                                @click.prevent="unselectAll"
-                            >
-                                Alle abwählen
-                            </button>
-                        </div>
-                    </div>
-
                     <div>
                         <template
                             v-for="item in availableSubset"

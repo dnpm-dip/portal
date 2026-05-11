@@ -57,11 +57,19 @@ export function createQueryFilterStore(ctx: StoreCreateOptions) {
         items.value[key].push(input);
     };
 
+    const dirty = ref<boolean>(false);
+
     const setItems = (key: string, input: QueryFilterItem[]) => {
+        const previous = items.value[key] || [];
+
         items.value[key] = [];
 
         for (const item of input) {
             addItem(key, item);
+        }
+
+        if (!isEqual(previous, input)) {
+            dirty.value = true;
         }
 
         ctx.queryEventBus.emit(QueryEventBusEventName.FILTER_UPDATED, key);
@@ -72,6 +80,7 @@ export function createQueryFilterStore(ctx: StoreCreateOptions) {
     // ----------------------------------------------------------------
 
     const commit = () => {
+        dirty.value = false;
         ctx.queryEventBus.emit(QueryEventBusEventName.FILTERS_COMMITED);
     };
 
@@ -92,6 +101,8 @@ export function createQueryFilterStore(ctx: StoreCreateOptions) {
 
         setItems,
         getItems,
+
+        dirty,
 
         commit,
     };

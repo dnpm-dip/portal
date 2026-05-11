@@ -1,9 +1,15 @@
 <script lang="ts">
 import {
-    defineComponent, 
+    computed,
+    defineComponent,
     ref,
 } from 'vue';
-import { type Coding, DQueryFilterBox, useQueryFilterStore } from '@dnpm-dip/core';
+import {
+    type Coding,
+    DQueryFilterBox,
+    isCoding,
+    useQueryFilterStore,
+} from '@dnpm-dip/core';
 import { QueryURLFilterKey } from '../../constants';
 import { injectHTTPClient } from '../../core';
 import type { QueryHpoFilter } from '../../domains';
@@ -42,13 +48,28 @@ export default defineComponent({
         const reset = () => {
             if (available.value.value) {
                 items.value = available.value.value.map((el) => el.code);
-                store.setItems(QueryURLFilterKey.HPO_VALUE, []);
             }
+            store.setItems(QueryURLFilterKey.HPO_VALUE, []);
+        };
+
+        const init = () => {
+            const availableCodes = (available.value.value || []).map((el) => el.code);
+            const storeItems = store.getItems(QueryURLFilterKey.HPO_VALUE)
+                .filter((el) => isCoding(el))
+                .map((el) => el.code)
+                .filter((code) => availableCodes.includes(code));
+
+            if (storeItems.length === 0) {
+                items.value = availableCodes;
+                return;
+            }
+
+            items.value = storeItems;
         };
 
         Promise.resolve()
             .then(() => load())
-            .then(() => reset());
+            .then(() => init());
 
         const handleChanged = () => {
             if (!available.value.value) {
@@ -72,11 +93,15 @@ export default defineComponent({
             store.setItems(QueryURLFilterKey.HPO_VALUE, data);
         };
 
+        const active = computed(() => store.getItems(QueryURLFilterKey.HPO_VALUE).length > 0);
+
         return {
             available,
             availableInitialized,
 
             items,
+
+            active,
 
             handleChanged,
 
@@ -86,7 +111,11 @@ export default defineComponent({
 });
 </script>
 <template>
-    <DQueryFilterBox :name="'hpo'">
+    <DQueryFilterBox
+        :name="'hpo'"
+        :active="active"
+        @reset="reset"
+    >
         <template #title>
             <i class="fa fa-dna" /> HPO
         </template>
@@ -112,19 +141,6 @@ export default defineComponent({
                             />
                         </div>
                     </template>
-                </div>
-            </div>
-
-            <div class="row">
-                <div>
-                    <button
-                        :disabled="!availableInitialized"
-                        type="button"
-                        class="btn btn-xs btn-secondary btn-block"
-                        @click.prevent="reset"
-                    >
-                        Zurücksetzen
-                    </button>
                 </div>
             </div>
         </template>
