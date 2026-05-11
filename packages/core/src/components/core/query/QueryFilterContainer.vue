@@ -5,6 +5,7 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
+import { storeToRefs } from '@authup/client-web-kit';
 import { defineComponent } from 'vue';
 import { useQueryFilterStore } from '../../../stores';
 
@@ -12,6 +13,7 @@ export default defineComponent({
     emits: ['submitted'],
     setup(_props, { emit }) {
         const store = useQueryFilterStore();
+        const { dirty } = storeToRefs(store);
 
         const submit = () => {
             store.commit();
@@ -19,7 +21,7 @@ export default defineComponent({
             emit('submitted');
         };
 
-        return { submit };
+        return { submit, dirty };
     },
 });
 </script>
@@ -30,7 +32,9 @@ export default defineComponent({
         <div class="entity-card">
             <button
                 type="button"
-                class="btn btn-sm btn-primary btn-block"
+                class="btn btn-sm btn-block"
+                :class="dirty ? 'btn-primary' : 'btn-secondary'"
+                :disabled="!dirty"
                 @click.prevent="submit"
             >
                 Anwenden
