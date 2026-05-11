@@ -4,16 +4,18 @@ import {
     PermissionName,
 } from '@authup/core-kit';
 import {
-    AEntityDelete, 
-    APagination, 
-    ASearch, 
-    ATitle, 
-    AUsers, 
-    injectStore, 
+    AEntityDelete,
+    APagination,
+    ASearch,
+    ATitle,
+    AUsers,
+    injectStore,
     storeToRefs,
     usePermissionCheck,
 } from '@authup/client-web-kit';
+import { BTable } from 'bootstrap-vue-next';
 import type { BuildInput } from 'rapiq';
+import type { Component } from 'vue';
 import { defineNuxtComponent } from '#imports';
 
 export default defineNuxtComponent({
@@ -23,6 +25,7 @@ export default defineNuxtComponent({
         ASearch,
         AUsers,
         AEntityDelete,
+        BTable: BTable as unknown as Component,
     },
     emits: ['deleted'],
     setup(props, { emit }) {
@@ -40,27 +43,27 @@ export default defineNuxtComponent({
 
         const fields = [
             {
-                key: 'name', 
-                label: 'Name', 
-                thClass: 'text-left', 
+                key: 'name',
+                label: 'Name',
+                thClass: 'text-left',
                 tdClass: 'text-left',
             },
             {
-                key: 'created_at', 
-                label: 'Erstelldatum', 
-                thClass: 'text-center', 
+                key: 'created_at',
+                label: 'Erstelldatum',
+                thClass: 'text-center',
                 tdClass: 'text-center',
             },
             {
-                key: 'updated_at', 
-                label: 'Aktualisierungsdatum', 
-                thClass: 'text-left', 
+                key: 'updated_at',
+                label: 'Aktualisierungsdatum',
+                thClass: 'text-left',
                 tdClass: 'text-left',
             },
             {
-                key: 'options', 
-                label: '', 
-                tdClass: 'text-left', 
+                key: 'options',
+                label: '',
+                tdClass: 'text-left',
             },
         ];
 
@@ -100,7 +103,6 @@ export default defineNuxtComponent({
                 :items="props.data"
                 :fields="fields"
                 :busy="props.busy"
-                head-variant="dark"
                 outlined
             >
                 <template #cell(created_at)="data">

@@ -6,13 +6,14 @@
   -->
 
 <script lang="ts">
+import type { Component } from 'vue';
 import {
-    defineComponent, 
-    onUnmounted, 
+    defineComponent,
+    onUnmounted,
     ref,
 } from 'vue';
 import type { BTableSortBy, TableFieldRaw } from 'bootstrap-vue-next';
-import { BPlaceholderTable } from 'bootstrap-vue-next';
+import { BPlaceholderTable, BTable } from 'bootstrap-vue-next';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
 import {
     DSortIndicator,
@@ -34,6 +35,7 @@ export default defineComponent({
         DSortIndicator,
         MTherapyResponseDistributionBar,
         BPlaceholderTable,
+        BTable: BTable as unknown as Component,
     },
     props: {
         queryId: {

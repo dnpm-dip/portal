@@ -18,7 +18,8 @@ import {
     toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { BPlaceholder } from 'bootstrap-vue-next';
+import { BPlaceholder, BTable } from 'bootstrap-vue-next';
+import type { Component } from 'vue';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
@@ -32,6 +33,7 @@ export default defineComponent({
         DKVChartTableSwitch,
         DQuerySummaryNested,
         DQuerySummaryGrouped,
+        BTable: BTable as unknown as Component,
     },
     props: {
         queryId: {

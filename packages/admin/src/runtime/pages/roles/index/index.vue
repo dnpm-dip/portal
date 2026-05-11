@@ -3,16 +3,18 @@
 import type { Role } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import {
-    AEntityDelete, 
-    APagination, 
-    ARoles, 
-    ASearch, 
-    ATitle, 
-    injectStore, 
+    AEntityDelete,
+    APagination,
+    ARoles,
+    ASearch,
+    ATitle,
+    injectStore,
     storeToRefs,
     usePermissionCheck,
 } from '@authup/client-web-kit';
+import { BTable } from 'bootstrap-vue-next';
 import type { BuildInput } from 'rapiq';
+import type { Component } from 'vue';
 import { defineNuxtComponent } from '#imports';
 
 export default defineNuxtComponent({
@@ -22,6 +24,7 @@ export default defineNuxtComponent({
         ASearch,
         ARoles,
         AEntityDelete,
+        BTable: BTable as unknown as Component,
     },
     emits: ['deleted'],
     setup(props, { emit }) {
@@ -97,7 +100,6 @@ export default defineNuxtComponent({
                 :items="props.data"
                 :fields="fields"
                 :busy="props.busy"
-                head-variant="dark"
                 outlined
             >
                 <template #cell(name)="data">

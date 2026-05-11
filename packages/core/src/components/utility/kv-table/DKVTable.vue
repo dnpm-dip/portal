@@ -6,7 +6,8 @@
   -->
 <script lang="ts">
 import type { TableFieldRaw } from 'bootstrap-vue-next';
-import type { PropType } from 'vue';
+import { BTable } from 'bootstrap-vue-next';
+import type { Component, PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 import type { Coding, KeyValueRecord } from '../../../domains';
 import { isCoding, isConceptCount, isMinMaxRange } from '../../../domains';
@@ -14,7 +15,7 @@ import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
 import DKVTableEntry from './DKVTableEntry.vue';
 
 export default defineComponent({
-    components: { DKVTableEntry },
+    components: { DKVTableEntry, BTable: BTable as unknown as Component },
     props: {
         data: {
             type: Array as PropType<KeyValueRecord<unknown, unknown>[]>,

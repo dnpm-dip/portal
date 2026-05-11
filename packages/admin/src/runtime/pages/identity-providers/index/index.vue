@@ -4,16 +4,18 @@ import { VCTimeago } from '@vuecs/timeago';
 import type { IdentityProvider } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import {
-    AEntityDelete, 
-    AIdentityProviders, 
-    APagination, 
-    ASearch, 
-    ATitle, 
-    injectStore, 
+    AEntityDelete,
+    AIdentityProviders,
+    APagination,
+    ASearch,
+    ATitle,
+    injectStore,
     storeToRefs,
     usePermissionCheck,
 } from '@authup/client-web-kit';
+import { BTable } from 'bootstrap-vue-next';
 import type { BuildInput } from 'rapiq';
+import type { Component } from 'vue';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
@@ -24,6 +26,7 @@ export default defineNuxtComponent({
         AIdentityProviders,
         AEntityDelete,
         VCTimeago,
+        BTable: BTable as unknown as Component,
     },
     emits: ['deleted'],
     setup(props, { emit }) {
@@ -99,7 +102,6 @@ export default defineNuxtComponent({
                 :items="props.data"
                 :fields="fields"
                 :busy="props.busy"
-                head-variant="dark"
                 outlined
             >
                 <template #cell(created_at)="data">
