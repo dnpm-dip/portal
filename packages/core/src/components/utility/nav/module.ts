@@ -59,6 +59,22 @@ export function buildNav(
         return `${path}/${link}`;
     };
 
+    const itemLinks = items.map((item) => buildLink(item.urlSuffix));
+
+    let activeIndex = -1;
+    if (options.currentPath) {
+        const { currentPath } = options;
+        const matches = (link: string) => currentPath === link || currentPath.startsWith(`${link}/`);
+
+        let bestLength = -1;
+        for (const [i, link] of itemLinks.entries()) {
+            if (link && matches(link) && link.length > bestLength) {
+                bestLength = link.length;
+                activeIndex = i;
+            }
+        }
+    }
+
     const children : VNodeChild = [
         prevLink,
     ];
@@ -70,12 +86,13 @@ export function buildNav(
         children.push(normalizeSlot('start', {}, options.slots));
     }
 
-    children.push(...items.map((item) => h('li', { class: 'nav-item' }, [
+    children.push(...items.map((item, index) => h('li', { class: 'nav-item' }, [
         h(
             VCLink,
             {
                 class: 'nav-link',
-                to: buildLink(item.urlSuffix),
+                to: itemLinks[index],
+                active: index === activeIndex,
             },
             {
                 default: () => [
