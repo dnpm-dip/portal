@@ -1,7 +1,12 @@
 <script lang="ts">
 import { computed, ref } from 'vue';
 import {
-    DNav, DQueryFilterContainer, DQueryInfoBox, DQueryPatientFilters, type QueryBase, injectQueryEventBus,
+    DNav, 
+    DQueryFilterContainer, 
+    DQueryInfoBox, 
+    DQueryPatientFilters, 
+    type QueryBase, 
+    injectQueryEventBus,
 } from '@dnpm-dip/core';
 import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
 import type { PropType } from 'vue';
@@ -56,13 +61,19 @@ export default defineNuxtComponent({
 
         const navItems = [
             {
-                name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '/summary',
+                name: 'Überblick', 
+                icon: 'fas fa-bars', 
+                urlSuffix: '/summary',
             },
             {
-                name: 'Patienten', icon: 'fas fa-user-injured', urlSuffix: '/patients',
+                name: 'Patienten', 
+                icon: 'fas fa-user-injured', 
+                urlSuffix: '/patients',
             },
             {
-                name: 'Info', icon: 'fa fa-network-wired', urlSuffix: '/info',
+                name: 'Info', 
+                icon: 'fa fa-network-wired', 
+                urlSuffix: '/info',
             },
         ];
 
@@ -150,7 +161,7 @@ export default defineNuxtComponent({
 
         <div v-if="criteriaExpansion">
             <div class="entity-card w-100">
-                <template v-if="criteriaDefined">
+                <template v-if="criteriaDefined && entity.criteria">
                     <MQueryCriteriaSummary :entity="entity.criteria" />
                 </template>
                 <template v-else>

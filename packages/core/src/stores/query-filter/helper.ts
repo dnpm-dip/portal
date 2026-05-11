@@ -10,9 +10,7 @@ import type { QueryFilterItem, QueryFilters } from './types';
 
 export function buildQueryFilterURLValue(items: QueryFilterItem[]) {
     const output : string[] = [];
-    for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-
+    for (const item of items) {
         if (isCoding(item)) {
             output.push(serializeCoding(item));
         } else {
@@ -31,11 +29,14 @@ export function buildQueryFilterURLValue(items: QueryFilterItem[]) {
 export function buildQueryFiltersURLRecord(items: QueryFilters) {
     const output : Record<string, string> = {};
 
-    const keys = Object.keys(items);
-    for (let i = 0; i < keys.length; i++) {
-        const value = buildQueryFilterURLValue(items[keys[i]]);
+    for (const key of Object.keys(items)) {
+        const filterItems = items[key];
+        if (!filterItems) {
+            continue;
+        }
+        const value = buildQueryFilterURLValue(filterItems);
         if (value) {
-            output[keys[i]] = value;
+            output[key] = value;
         }
     }
 

@@ -6,7 +6,7 @@
   -->
 
 <script lang="ts">
-import { type ValueSetCoding } from '@dnpm-dip/core';
+import { type Coding } from '@dnpm-dip/core';
 import { VCFormSelect } from '@vuecs/form-controls';
 import { computed, defineComponent, ref } from 'vue';
 import { injectHTTPClient } from '../../core/http-client';
@@ -39,7 +39,7 @@ export default defineComponent({
         Promise.resolve()
             .then(resolve);
 
-        const transformCoding = (coding: ValueSetCoding) => ({
+        const transformCoding = (coding: Coding) => ({
             id: coding.code,
             value: coding.display ? `${coding.display}` : coding.code,
         });
@@ -51,12 +51,12 @@ export default defineComponent({
                 return [];
             }
 
-            const index = data.value.findIndex((v) => v.key.code === type.value);
-            if (index === -1) {
+            const entry = data.value.find((v) => v.key.code === type.value);
+            if (!entry) {
                 return [];
             }
 
-            return data.value[index].value.map((v) => transformCoding(v));
+            return entry.value.map((v) => transformCoding(v));
         });
 
         const handleTypeChanged = () => {

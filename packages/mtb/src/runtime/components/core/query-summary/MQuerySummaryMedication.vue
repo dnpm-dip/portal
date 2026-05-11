@@ -18,18 +18,17 @@ import {
     toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { BPlaceholder, BTable } from 'bootstrap-vue-next';
+import { BPlaceholder } from 'bootstrap-vue-next';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
-import type { QuerySummaryMedication } from '../../../domains';
+import type { QueryGeneAlteration, QuerySummaryMedication } from '../../../domains';
 import { queryGeneAlterationToString } from '../../../domains';
 
 export default defineComponent({
     components: {
         BPlaceholder,
         DKVTableEntryKey,
-        BTable,
         DKVChartTableSwitch,
         DQuerySummaryNested,
         DQuerySummaryGrouped,
@@ -139,7 +138,7 @@ export default defineComponent({
             recommendedByVariantVNode,
             variantLabelFn: (item: { key: unknown }) => (typeof item.key === 'string' ?
                 item.key :
-                queryGeneAlterationToString(item.key as any)),
+                queryGeneAlterationToString(item.key as QueryGeneAlteration)),
             handleRecommendationClick,
 
             usedVNode,
@@ -159,7 +158,7 @@ export default defineComponent({
                     <DQuerySummaryGrouped
                         ref="recommendedByVariantVNode"
                         :select-first="true"
-                        :items="data.recommendations.distributionBySupportingVariant"
+                        :items="(data.recommendations.distributionBySupportingVariant as any)"
                         :label="'Variante'"
                         :label-fn="variantLabelFn"
                     >
@@ -168,7 +167,7 @@ export default defineComponent({
                                 :type="'bar'"
                                 :data="item.value.elements"
                                 :clickable="true"
-                                @clicked="(keys) => handleRecommendationClick(keys, 'recommendedByVariant')"
+                                @clicked="(keys: Coding[]) => handleRecommendationClick(keys, 'recommendedByVariant')"
                             />
                         </template>
                     </DQuerySummaryGrouped>
@@ -180,13 +179,13 @@ export default defineComponent({
                         ref="recommendedVNode"
                         :label="'Kategorie'"
                         :total="data.recommendations.overallDistribution.total"
-                        :data="data.recommendations.overallDistribution.elements"
+                        :data="(data.recommendations.overallDistribution.elements as any)"
                     >
                         <template #default="{ items }">
                             <DKVChartTableSwitch
                                 :data="items"
                                 :clickable="true"
-                                @clicked="(keys) => handleRecommendationClick(keys, 'recommended')"
+                                @clicked="(keys: Coding[]) => handleRecommendationClick(keys, 'recommended')"
                             />
                         </template>
                     </DQuerySummaryNested>
@@ -203,7 +202,7 @@ export default defineComponent({
                     <DQuerySummaryNested
                         ref="usedVNode"
                         :label="'Kategorie'"
-                        :data="data.therapies.overallDistribution.elements"
+                        :data="(data.therapies.overallDistribution.elements as any)"
                         :total="data.therapies.overallDistribution.total"
                     >
                         <template #default="{ items }">
@@ -220,7 +219,7 @@ export default defineComponent({
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Mittlere Therapiedauer</h6>
                     <DKVChartTableSwitch
-                        :data="data.therapies.meanDurations"
+                        :data="(data.therapies.meanDurations as any)"
                         :clickable="true"
                         @clicked="handleUsedClick"
                     >
@@ -244,10 +243,10 @@ export default defineComponent({
                                 outlined
                             >
                                 <template #cell(key)="cell">
-                                    <DKVTableEntryKey :entity="cell.item" />
+                                    <DKVTableEntryKey :entity="(cell.item as any)" />
                                 </template>
                                 <template #cell(value)="cell">
-                                    {{ Number(cell.item.value).toFixed(2) }}
+                                    {{ Number((cell.item as { value: number }).value).toFixed(2) }}
                                 </template>
                             </BTable>
                         </template>

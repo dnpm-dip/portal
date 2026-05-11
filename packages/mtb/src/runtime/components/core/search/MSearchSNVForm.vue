@@ -13,39 +13,40 @@ import { IVuelidate } from '@ilingo/vuelidate';
 import useVuelidate from '@vuelidate/core';
 import { helpers } from '@vuelidate/validators';
 import {
-    type PropType, computed, defineComponent, reactive, toRef, watch,
+    type PropType, 
+    computed, 
+    defineComponent, 
+    reactive, 
+    toRef, 
+    watch,
 } from 'vue';
 import { type QueryGeneAlterationSNVCriteria, QueryMutationType } from '../../../domains';
 
 export default defineComponent({
-    components: {
-        IVuelidate,
-    },
-    props: {
-        entity: Object as PropType<QueryGeneAlterationSNVCriteria>,
-    },
+    components: { IVuelidate },
+    props: { entity: Object as PropType<QueryGeneAlterationSNVCriteria> },
     emits: ['updated'],
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
-        const form = reactive<Partial<QueryGeneAlterationSNVCriteria<string>>>({
+        const form = reactive<{
+            type: `${QueryMutationType.SNV}`, 
+            dnaChange: string, 
+            proteinChange: string, 
+            gene: string, 
+            supporting: boolean 
+        }>({
             type: QueryMutationType.SNV,
             dnaChange: '',
             proteinChange: '',
+            gene: '',
+            supporting: false,
         });
 
         const vuelidate = useVuelidate({
-            gene: {
-
-            },
-            dnaChange: {
-
-            },
-            proteinChange: {
-                hgvs: helpers.regex(HGVS_CODE_REGEX),
-            },
-            supporting: {
-
-            },
+            gene: {},
+            dnaChange: {},
+            proteinChange: { hgvs: helpers.regex(HGVS_CODE_REGEX) },
+            supporting: {},
         }, form);
 
         const init = () => {
@@ -63,9 +64,7 @@ export default defineComponent({
 
         const isEditing = computed(() => !!entityRef.value);
         const handleChanged = () => {
-            const output : QueryGeneAlterationSNVCriteria = {
-                type: QueryMutationType.SNV,
-            };
+            const output : QueryGeneAlterationSNVCriteria = { type: QueryMutationType.SNV };
 
             if (form.dnaChange) {
                 output.dnaChange = form.dnaChange;

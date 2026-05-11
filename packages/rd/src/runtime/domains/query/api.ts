@@ -8,8 +8,11 @@ import {
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
 import type { PatientMatch, PatientRecord } from '../patient';
 import type {
-    QueryDiagnosisFilter, QueryHpoFilter,
-    QuerySession, QuerySessionCreate, QuerySummary, QuerySummaryDiagnostics,
+    QueryDiagnosisFilter,
+    QueryHpoFilter,
+    QuerySession,
+    QuerySessionCreate,
+    QuerySummaryDiagnostics,
 } from './types';
 
 export class QueryAPI extends BaseAPI {
@@ -19,9 +22,7 @@ export class QueryAPI extends BaseAPI {
      * @param query
      */
     async submit(query: QuerySessionCreate) : Promise<QuerySession> {
-        query.mode = query.mode || {
-            code: QueryRequestMode.LOCAL,
-        };
+        query.mode = query.mode || { code: QueryRequestMode.LOCAL };
 
         const response = await this.client.post('rd/queries', query);
         return response.data;
@@ -39,7 +40,7 @@ export class QueryAPI extends BaseAPI {
      * @param query
      */
     async update(id: string, query?: Partial<QuerySessionCreate>) : Promise<QuerySession> {
-        const response = await this.client.get(`rd/queries/${id}`, query);
+        const response = await this.client.put(`rd/queries/${id}`, query);
         return response.data;
     }
 

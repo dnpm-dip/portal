@@ -69,6 +69,9 @@ export function parseSegment(segment: string): SegmentToken[] {
 
     while (i < segment.length) {
         const c = segment[i];
+        if (c === undefined) {
+            break;
+        }
 
         switch (state) {
             case SegmentParserState.initial:

@@ -7,10 +7,12 @@
 
 <script lang="ts">
 import {
-    defineComponent, onUnmounted, ref,
+    defineComponent, 
+    onUnmounted, 
+    ref,
 } from 'vue';
 import type { BTableSortBy, TableFieldRaw } from 'bootstrap-vue-next';
-import { BPlaceholderTable, BTable } from 'bootstrap-vue-next';
+import { BPlaceholderTable } from 'bootstrap-vue-next';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
 import {
     DSortIndicator,
@@ -32,7 +34,6 @@ export default defineComponent({
         DSortIndicator,
         MTherapyResponseDistributionBar,
         BPlaceholderTable,
-        BTable,
     },
     props: {
         queryId: {
@@ -45,7 +46,7 @@ export default defineComponent({
         const queryEventBus = injectQueryEventBus();
         const queryFilterStore = useQueryFilterStore();
 
-        const tableRef = ref<InstanceType<typeof BTable> | null>(null);
+        const tableRef = ref<{ refresh: () => void } | null>(null);
         const busy = ref(false);
         const total = ref(0);
         const offset = ref(0);
@@ -54,32 +55,58 @@ export default defineComponent({
 
         const fields : TableFieldRaw[] = [
             {
-                key: 'tumorEntity', label: 'Entität', thClass: 'text-left', tdClass: 'text-left', sortable: true,
+                key: 'tumorEntity', 
+                label: 'Entität', 
+                thClass: 'text-left', 
+                tdClass: 'text-left', 
+                sortable: true,
             },
             {
-                key: 'medications', label: 'Medikationen', thClass: 'text-left', tdClass: 'text-left',
+                key: 'medications', 
+                label: 'Medikationen', 
+                thClass: 'text-left', 
+                tdClass: 'text-left',
             },
             {
-                key: 'supportingAlteration', label: 'Stützende Variante', thClass: 'text-left', tdClass: 'text-left', sortable: true,
+                key: 'supportingAlteration', 
+                label: 'Stützende Variante', 
+                thClass: 'text-left', 
+                tdClass: 'text-left', 
+                sortable: true,
             },
             {
-                key: 'count', label: 'Anzahl Therapien', thClass: 'text-center', tdClass: 'text-center align-middle', sortable: true,
+                key: 'count', 
+                label: 'Anzahl Therapien', 
+                thClass: 'text-center', 
+                tdClass: 'text-center align-middle', 
+                sortable: true,
             },
             {
-                key: 'orr', label: 'ORR (%)', thClass: 'text-center', tdClass: 'text-center align-middle', sortable: true,
+                key: 'orr', 
+                label: 'ORR (%)', 
+                thClass: 'text-center', 
+                tdClass: 'text-center align-middle', 
+                sortable: true,
             },
             {
-                key: 'meanDuration', label: 'Dauer in Wochen (Ø)', thClass: 'text-center', tdClass: 'text-center align-middle', sortable: true,
+                key: 'meanDuration', 
+                label: 'Dauer in Wochen (Ø)', 
+                thClass: 'text-center', 
+                tdClass: 'text-center align-middle', 
+                sortable: true,
             },
             {
-                key: 'responseDistribution', label: 'Response Verteilung', thClass: 'text-center', tdClass: 'text-center align-middle',
+                key: 'responseDistribution', 
+                label: 'Response Verteilung', 
+                thClass: 'text-center', 
+                tdClass: 'text-center align-middle',
             },
         ];
 
         const provider = async (ctx: { sortBy?: readonly BTableSortBy[] }): Promise<QueryTherapyResponse[]> => {
             busy.value = true;
             try {
-                const sort: Record<string, string> = {};
+                const sort: Record<string, 'asc' | 'desc'> = {};
                 if (ctx.sortBy) {
                     ctx.sortBy.forEach((s) => {
                         if (s.order) {
@@ -198,23 +225,23 @@ export default defineComponent({
             outlined
         >
             <template #cell(tumorEntity)="data">
-                <DCodingText :entity="data.item.tumorEntity" />
+                <DCodingText :entity="(data.item as QueryTherapyResponse).tumorEntity" />
             </template>
             <template #cell(supportingAlteration)="data">
-                <MGeneAlterationText :entity="data.item.supportingAlteration" />
+                <MGeneAlterationText :entity="(data.item as QueryTherapyResponse).supportingAlteration" />
             </template>
             <template #cell(medications)="data">
                 <ul class="column">
                     <li
-                        v-for="(item,key) in data.item.medications"
+                        v-for="(item,key) in (data.item as QueryTherapyResponse).medications"
                         :key="key"
                     >
-                        <DCodingText :entity="item" />
+                        <DCodingText :entity="{ code: item }" />
                     </li>
                 </ul>
             </template>
             <template #cell(responseDistribution)="data">
-                <MTherapyResponseDistributionBar :distribution="data.item.responseDistribution" />
+                <MTherapyResponseDistributionBar :distribution="(data.item as QueryTherapyResponse).responseDistribution" />
             </template>
         </BTable>
 

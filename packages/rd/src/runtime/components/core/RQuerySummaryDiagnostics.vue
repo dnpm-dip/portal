@@ -92,7 +92,7 @@ export default defineComponent({
 
             <DQuerySummaryGrouped
                 :label="'Variante'"
-                :items="data.distributionsByVariant"
+                :items="(data.distributionsByVariant as any)"
             >
                 <template #default="{ item }">
                     <div class="row">

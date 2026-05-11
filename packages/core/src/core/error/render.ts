@@ -4,7 +4,10 @@ import type { VNodeArrayChildren, VNodeChild } from 'vue';
 import { APIClientErrorIssueSeverity, extractAPIClientErrorIssues } from '../http-client';
 import { hasNormalizedSlot, normalizeSlot } from '../utils';
 import type {
-    ErrorCollectionSlotProps, ErrorRenderContext, ErrorRenderElement, ErrorSlotProps,
+    ErrorCollectionSlotProps, 
+    ErrorRenderContext, 
+    ErrorRenderElement, 
+    ErrorSlotProps,
 } from './types';
 
 const toAlertClass = (severity: APIClientErrorIssueSeverity) => {
@@ -23,10 +26,10 @@ export function renderError(context: ErrorRenderContext) : VNodeChild {
 
     if (isClientError(context.error)) {
         const issues = extractAPIClientErrorIssues(context.error);
-        for (let i = 0; i < issues.length; i++) {
+        for (const issue of issues) {
             data.push({
-                severity: issues[i].severity,
-                message: issues[i].details,
+                severity: issue.severity,
+                message: issue.details,
             });
         }
     }
@@ -52,23 +55,23 @@ export function renderError(context: ErrorRenderContext) : VNodeChild {
     const output : VNodeArrayChildren = [];
 
     if (hasNormalizedSlot(context.slotName, context.slots)) {
-        for (let i = 0; i < data.length; i++) {
+        for (const item of data) {
             output.push(normalizeSlot(
                 context.slotName,
-                { data: data[i] } satisfies ErrorSlotProps,
+                { data: item } satisfies ErrorSlotProps,
                 context.slots,
             ));
         }
     } else {
-        for (let i = 0; i < data.length; i++) {
+        for (const item of data) {
             // todo: tag and class should be configurable
             output.push(h('div', {
                 class: [
                     'alert alert-sm alert-warning mb-2',
-                    toAlertClass(data[i].severity),
+                    toAlertClass(item.severity),
                 ],
             }, [
-                data[i].message,
+                item.message,
             ]));
         }
     }

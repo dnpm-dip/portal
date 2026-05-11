@@ -18,6 +18,9 @@ export type History<T = any> = {
 
 export type Reference = {
     id: string,
+    display?: string,
+    type?: string,
+    extId?: ExternalId,
 };
 
 export type InternalReference = Reference & {

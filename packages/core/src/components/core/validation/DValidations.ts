@@ -7,8 +7,9 @@
 
 import type { SlotsType } from 'vue';
 import { defineComponent } from 'vue';
-import type { ObjectLiteral, PatientMatchBase, ResourceCollectionSlots } from '../../../core';
+import type { ResourceCollectionSlots } from '../../../core';
 import { createResourceCollectionManager, injectHTTPClient } from '../../../core';
+import type { ValidationReportInfo } from '../../../domains';
 import { ValidationAPI } from '../../../domains';
 
 export default defineComponent({
@@ -18,7 +19,7 @@ export default defineComponent({
             required: true,
         },
     },
-    slots: Object as SlotsType<ResourceCollectionSlots<PatientMatchBase>>,
+    slots: Object as SlotsType<ResourceCollectionSlots<ValidationReportInfo>>,
     setup(props, setup) {
         const api = injectHTTPClient();
         const validationAPI = new ValidationAPI({ client: api, useCase: props.useCase });

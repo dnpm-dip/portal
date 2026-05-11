@@ -8,7 +8,8 @@
 <script lang="ts">
 import {
     type Coding,
-    type ConnectionPeer, DLoadingButton,
+    type ConnectionPeer, 
+    DLoadingButton,
     type FormTabInput,
     type ValueSetCoding,
 } from '@dnpm-dip/core';
@@ -30,7 +31,10 @@ import {
 } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import {
-    type PropType, reactive, toRef, watch,
+    type PropType, 
+    reactive, 
+    toRef, 
+    watch,
 } from 'vue';
 import { defineComponent, ref } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';
@@ -38,6 +42,7 @@ import {
     type QueryCriteria,
     type QueryGeneAlterationCriteria,
     type QueryMedicationCriteria,
+    type QuerySession,
     buildQueryGeneAlterationCriteriaLabel,
 } from '../../../domains';
 import MMutationTabGroup from '../MMutationTabGroup.vue';
@@ -57,18 +62,10 @@ export default defineComponent({
         DCollectionTransform,
     },
     props: {
-        criteria: {
-            type: Object as PropType<QueryCriteria | null>,
-        },
-        queryId: {
-            type: String,
-        },
-        queryMode: {
-            type: String as PropType<QueryRequestMode>,
-        },
-        queryPeers: {
-            type: Array as PropType<ConnectionPeer[]>,
-        },
+        criteria: { type: Object as PropType<QueryCriteria | null> },
+        queryId: { type: String },
+        queryMode: { type: String as PropType<QueryRequestMode> },
+        queryPeers: { type: Array as PropType<ConnectionPeer[]> },
     },
     emits: [
         'failed',
@@ -249,7 +246,7 @@ export default defineComponent({
             ) {
                 const mutationItems = mutations.value.map(
                     (item) => item.data,
-                ).filter(Boolean);
+                ).filter((item): item is QueryGeneAlterationCriteria<Coding> => item != null);
                 if (mutationItems.length > 0) {
                     payload.geneAlterations = {
                         items: mutationItems,
@@ -263,9 +260,7 @@ export default defineComponent({
             return payload;
         };
 
-        expose({
-            reset,
-        });
+        expose({ reset });
 
         Promise.resolve()
             .then(() => reset());
@@ -286,14 +281,12 @@ export default defineComponent({
                 filterStore.reset();
                 filterStore.resetActive();
 
-                let query : any;
+                let query : QuerySession;
 
                 if (props.queryId) {
                     query = await apiClient.query.update(props.queryId, {
                         criteria: payload,
-                        mode: {
-                            code: mode.value,
-                        },
+                        mode: { code: mode.value },
                         sites: modeSites.value,
                     });
 
@@ -301,9 +294,7 @@ export default defineComponent({
                 } else {
                     query = await apiClient.query.submit({
                         criteria: payload,
-                        mode: {
-                            code: mode.value,
-                        },
+                        mode: { code: mode.value },
                         sites: modeSites.value,
                     });
 
@@ -323,7 +314,15 @@ export default defineComponent({
             value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
-        const handleMedicationUpdated = ({ drugs, usage, combination }) => {
+        const handleMedicationUpdated = ({
+            drugs, 
+            usage, 
+            combination, 
+        }: {
+            drugs: Coding[]; 
+            usage: string[]; 
+            combination: boolean 
+        }) => {
             medicationDrugs.value = drugs;
             medicationUsage.value = usage;
             medicationInCombination.value = combination;
@@ -440,7 +439,7 @@ export default defineComponent({
                                 >
                                     <template #default="{ data }">
                                         <DCollectionTransform
-                                            :items="data.codings"
+                                            :items="data.codings || []"
                                             :transform="transformCodings"
                                         >
                                             <template #default="options">
@@ -483,7 +482,7 @@ export default defineComponent({
                                 >
                                     <template #default="{ data }">
                                         <DCollectionTransform
-                                            :items="data.codings"
+                                            :items="data.codings || []"
                                             :transform="transformCodings"
                                         >
                                             <template #default="options">
@@ -583,7 +582,7 @@ export default defineComponent({
                                 >
                                     <template #default="{ data }">
                                         <DCollectionTransform
-                                            :items="data.codings"
+                                            :items="data.codings || []"
                                             :transform="transformCodings"
                                         >
                                             <template #default="options">

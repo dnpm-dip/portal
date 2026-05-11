@@ -2,7 +2,7 @@ import { isObject } from './is-object';
 
 export type URlQueryRecordScalarValue = string | string[] | number | number[];
 export type URLQueryRecord = Record<
-string,
+    string,
 URlQueryRecordScalarValue | Record<string, URlQueryRecordScalarValue>
 >;
 
@@ -12,8 +12,8 @@ function extendQueryParts(
     value: URlQueryRecordScalarValue,
 ) {
     if (Array.isArray(value)) {
-        for (let i = 0; i < value.length; i++) {
-            parts.push(`${key}=${value[i]}`);
+        for (const item of value) {
+            parts.push(`${key}=${item}`);
         }
     } else {
         parts.push(`${key}=${value}`);
@@ -23,21 +23,20 @@ function extendQueryParts(
 export function serializeURLQueryRecord(record: URLQueryRecord) : string {
     const parts : string[] = [];
 
-    const keys = Object.keys(record);
-
-    for (let i = 0; i < keys.length; i++) {
-        const key = keys[i];
+    for (const key of Object.keys(record)) {
         const value = record[key];
 
         if (isObject(value)) {
-            const childKeys = Object.keys(value);
-            for (let j = 0; j < childKeys.length; j++) {
-                const childKey = childKeys[j];
-                const childValue = (value as Record<string, URlQueryRecordScalarValue>)[childKey];
+            const childRecord = value as Record<string, URlQueryRecordScalarValue>;
+            for (const childKey of Object.keys(childRecord)) {
+                const childValue = childRecord[childKey];
+                if (childValue === undefined) {
+                    continue;
+                }
 
-                extendQueryParts(parts, `${key}[${childKeys[j]}]`, childValue);
+                extendQueryParts(parts, `${key}[${childKey}]`, childValue);
             }
-        } else {
+        } else if (value !== undefined) {
             extendQueryParts(parts, key, value);
         }
     }

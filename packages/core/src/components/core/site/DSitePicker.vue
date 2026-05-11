@@ -11,7 +11,10 @@ import type { FormSelectOption } from '@vuecs/form-controls';
 import { VCFormSelectSearch } from '@vuecs/form-controls';
 import type { PropType } from 'vue';
 import {
-    defineComponent, ref, toRef, watch,
+    defineComponent, 
+    ref, 
+    toRef, 
+    watch,
 } from 'vue';
 import { injectHTTPClient } from '../../../core';
 import type { Coding } from '../../../domains';
@@ -27,9 +30,7 @@ export default defineComponent({
             type: String,
             required: true,
         },
-        modelValue: {
-            type: Array as PropType<Coding[]>,
-        },
+        modelValue: { type: Array as PropType<Coding[]> },
     },
     emits: ['update:modelValue'],
     setup(props, { emit }) {
@@ -59,7 +60,7 @@ export default defineComponent({
                 current.value = props.modelValue.map((coding) => ({
                     id: coding.code,
                     value: coding.display || coding.code,
-                }satisfies FormSelectOption));
+                } satisfies FormSelectOption));
 
                 return;
             }
@@ -70,7 +71,7 @@ export default defineComponent({
         const handleUpdated = (value: FormSelectOption[]) => {
             const data = value.map((item) => ({
                 code: `${item.id}`,
-                display: item.value,
+                display: typeof item.value === 'string' ? item.value : undefined,
             } satisfies Coding));
 
             emit('update:modelValue', data);

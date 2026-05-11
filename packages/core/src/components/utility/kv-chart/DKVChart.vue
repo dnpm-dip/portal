@@ -1,23 +1,24 @@
 <script lang="ts">
 import type {
-    ChartData, ChartOptions,
+    ChartData, 
+    ChartOptions,
 } from 'chart.js';
-import type { PropType } from 'vue';
+import type { Component, PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 import type { Coding, KeyValueRecord, MinMaxRange } from '../../../domains';
 import { isConceptCount } from '../../../domains';
 import {
-    generateRandomColorTuple, getColorInRange, rgbToHex,
+    generateRandomColorTuple, 
+    getColorInRange, 
+    rgbToHex,
 } from '../../../utils';
 import { DChart } from '../chart';
 import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
 
 type Key = MinMaxRange | Coding | string[] | string;
 
-export default defineComponent({
-    components: {
-        DChart,
-    },
+const component = defineComponent({
+    components: { DChart },
     props: {
         type: {
             type: String as PropType<'bar' | 'doughnut'>,
@@ -27,12 +28,8 @@ export default defineComponent({
             required: true,
             type: Array as PropType<KeyValueRecord<Key, unknown>[]>,
         },
-        options: {
-            type: Object as PropType<ChartOptions>,
-        },
-        codingVerboseLabel: {
-            type: Boolean,
-        },
+        options: { type: Object as PropType<ChartOptions> },
+        codingVerboseLabel: { type: Boolean },
         limit: {
             type: Number,
             default: 25,
@@ -71,9 +68,7 @@ export default defineComponent({
                 if (typeof item.value === 'number') {
                     text = `${generateChartLabelsForKeyValueRecord(item)}`;
                 } else if (isConceptCount(item)) {
-                    text = `${generateChartLabelsForKeyValueRecord(item, {
-                        codingVerbose: props.codingVerboseLabel,
-                    })} (${item.value.percent.toFixed(1)}%)`;
+                    text = `${generateChartLabelsForKeyValueRecord(item, { codingVerbose: props.codingVerboseLabel })} (${item.value.percent.toFixed(1)}%)`;
                 } else {
                     text = 'unknown';
                 }
@@ -94,6 +89,8 @@ export default defineComponent({
         };
     },
 });
+
+export default component as Component;
 </script>
 <template>
     <div class="d-flex flex-column gap-1">

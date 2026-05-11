@@ -9,12 +9,12 @@ import type { RGB } from './types';
 
 export function hexToRgb(hex: string) : RGB {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    if (!result) {
+    if (!result || !result[1] || !result[2] || !result[3]) {
         throw new SyntaxError('The input is not a valid hex string.');
     }
     return {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16),
+        r: Number.parseInt(result[1], 16),
+        g: Number.parseInt(result[2], 16),
+        b: Number.parseInt(result[3], 16),
     };
 }

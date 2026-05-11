@@ -5,13 +5,11 @@ import type {
 } from 'chart.js';
 import { merge } from 'smob';
 import { Chart as VChart } from 'vue-chartjs';
-import type { PropType } from 'vue';
+import type { Component, PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 
-export default defineComponent({
-    components: {
-        VChart,
-    },
+const component = defineComponent({
+    components: { VChart },
     props: {
         type: {
             type: String as PropType<'bar' | 'doughnut'>,
@@ -21,29 +19,21 @@ export default defineComponent({
             type: Object as PropType<ChartData>,
             required: true,
         },
-        options: {
-            type: Object as PropType<ChartOptions>,
-        },
+        options: { type: Object as PropType<ChartOptions> },
     },
     setup(props) {
         const optionsNormalized = computed(() => {
             let temp : ChartOptions;
             switch (props.type) {
                 case 'doughnut': {
-                    temp = {
-                        responsive: true,
-                    };
+                    temp = { responsive: true };
                     break;
                 }
                 default: {
                     temp = {
                         responsive: true,
                         indexAxis: 'y',
-                        plugins: {
-                            legend: {
-                                display: false,
-                            },
-                        },
+                        plugins: { legend: { display: false } },
                     };
                 }
             }
@@ -55,11 +45,11 @@ export default defineComponent({
             return temp;
         });
 
-        return {
-            optionsNormalized,
-        };
+        return { optionsNormalized };
     },
 });
+
+export default component as Component;
 </script>
 <template>
     <VChart

@@ -8,8 +8,9 @@ export function template(
             acc,
             match,
         ) => {
-            if (typeof data[match[1]] !== 'undefined') {
-                return acc.replace(match[0], data[match[1]]);
+            const key = match[1];
+            if (key !== undefined && typeof data[key] !== 'undefined') {
+                return acc.replace(match[0], data[key]);
             }
 
             return acc;

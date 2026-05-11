@@ -19,17 +19,13 @@ import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils'
 type LabelFn = (item: KeyValueRecord) => string | undefined;
 
 export default defineComponent({
-    components: {
-        VCFormSelectSearch,
-    },
+    components: { VCFormSelectSearch },
     props: {
         label: {
             type: String,
             default: 'Gruppe',
         },
-        items: {
-            type: Array as PropType<KeyValueRecords>,
-        },
+        items: { type: Array as PropType<KeyValueRecords> },
         selectFirst: {
             type: Boolean,
             default: false,
@@ -66,11 +62,12 @@ export default defineComponent({
             }
 
             const index = props.items.findIndex(
-                (_el, id) => id === parseInt(`${selected.value}`, 10),
+                (_el, id) => id === Number.parseInt(`${selected.value}`, 10),
             );
 
-            if (index !== -1) {
-                item.value = props.items[index];
+            const found = index !== -1 ? props.items[index] : undefined;
+            if (found) {
+                item.value = found;
             }
         };
 

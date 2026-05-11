@@ -3,15 +3,15 @@ import { DNav } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import { ref } from 'vue';
 import {
-    createError, navigateTo, useRoute,
+    createError, 
+    navigateTo, 
+    useRoute,
 } from '#app';
 import { injectHTTPClient } from '../../../../core';
 import type { PatientRecord, QuerySession } from '../../../../domains';
 
 export default defineComponent({
-    components: {
-        DNav,
-    },
+    components: { DNav },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -23,7 +23,7 @@ export default defineComponent({
         const api = injectHTTPClient();
         const route = useRoute();
 
-        const entity = ref<PatientRecord>(null) as any;
+        const entity = ref<PatientRecord | null>(null);
 
         if (typeof route.params.patientId !== 'string') {
             await navigateTo({ path: `/rd/query/${props.entity.id}` });
@@ -32,23 +32,27 @@ export default defineComponent({
 
         try {
             entity.value = await api.query.getPatientRecord(props.entity.id, route.params.patientId);
-        } catch (e) {
+        } catch {
             await navigateTo({ path: `/rd/query/${props.entity.id}` });
             throw createError({});
         }
 
         const navItems = [
             {
-                name: 'Überblick', icon: 'fas fa-bars', urlSuffix: '',
+                name: 'Überblick', 
+                icon: 'fas fa-bars', 
+                urlSuffix: '',
             },
             {
-                name: 'Diagnostik', icon: 'fas fa-stethoscope', urlSuffix: '/diagnostics',
+                name: 'Diagnostik', 
+                icon: 'fas fa-stethoscope', 
+                urlSuffix: '/diagnostics',
             },
         ];
 
         return {
             navItems,
-            record: entity.value,
+            record: entity.value as PatientRecord,
         };
     },
 });

@@ -7,10 +7,12 @@
 
 <script lang="ts">
 import {
-    defineComponent, onUnmounted, ref,
+    defineComponent,
+    onUnmounted,
+    ref,
 } from 'vue';
 import type { BTableSortBy, TableFieldRaw } from 'bootstrap-vue-next';
-import { BPlaceholderTable, BTable } from 'bootstrap-vue-next';
+import { BPlaceholderTable } from 'bootstrap-vue-next';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
 import {
     DSortIndicator,
@@ -30,7 +32,6 @@ export default defineComponent({
         DCodingText,
         DSortIndicator,
         BPlaceholderTable,
-        BTable,
     },
     props: {
         queryId: {
@@ -43,7 +44,7 @@ export default defineComponent({
         const queryEventBus = injectQueryEventBus();
         const queryFilterStore = useQueryFilterStore();
 
-        const tableRef = ref<InstanceType<typeof BTable> | null>(null);
+        const tableRef = ref<{ refresh: () => void } | null>(null);
         const busy = ref(false);
         const total = ref(0);
         const offset = ref(0);
@@ -52,26 +53,44 @@ export default defineComponent({
 
         const fields : TableFieldRaw[] = [
             {
-                key: 'tumorEntity', label: 'Entität', thClass: 'text-left', tdClass: 'text-left', sortable: true,
+                key: 'tumorEntity',
+                label: 'Entität',
+                thClass: 'text-left',
+                tdClass: 'text-left',
+                sortable: true,
             },
             {
-                key: 'gene', label: 'Gen', thClass: 'text-left', tdClass: 'text-left',
+                key: 'gene',
+                label: 'Gen',
+                thClass: 'text-left',
+                tdClass: 'text-left',
             },
             {
-                key: 'alteration', label: 'Variante', thClass: 'text-left', tdClass: 'text-left',
+                key: 'alteration',
+                label: 'Variante',
+                thClass: 'text-left',
+                tdClass: 'text-left',
             },
             {
-                key: 'count', label: 'Anzahl', thClass: 'text-center', tdClass: 'text-center align-middle', sortable: true,
+                key: 'count',
+                label: 'Anzahl',
+                thClass: 'text-center',
+                tdClass: 'text-center align-middle',
+                sortable: true,
             },
             {
-                key: 'supporting', label: 'Stützend?', thClass: 'text-center', tdClass: 'text-center align-middle', sortable: true,
+                key: 'supporting',
+                label: 'Stützend?',
+                thClass: 'text-center',
+                tdClass: 'text-center align-middle',
+                sortable: true,
             },
         ];
 
         const provider = async (ctx: { sortBy?: readonly BTableSortBy[] }): Promise<QueryGeneAlterationInfo[]> => {
             busy.value = true;
             try {
-                const sort: Record<string, string> = {};
+                const sort: Record<string, 'asc' | 'desc'> = {};
                 if (ctx.sortBy) {
                     ctx.sortBy.forEach((s) => {
                         if (s.order) {

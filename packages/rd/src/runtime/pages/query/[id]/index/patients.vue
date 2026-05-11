@@ -8,9 +8,10 @@ import {
 } from '@dnpm-dip/core';
 import { BPlaceholder } from 'bootstrap-vue-next';
 import {
-    type PropType, type Ref,
+    type PropType, 
+    type Ref,
 } from 'vue';
-import { inject, onUnmounted, ref } from 'vue';
+import { onUnmounted, ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import QueryPatientMatchEntity from '../../../../components/core/RQueryPatientMatch.vue';
 import QueryPatientMatchList from '../../../../components/core/RQueryPatientMatches';
@@ -112,7 +113,7 @@ export default defineNuxtComponent({
                                     <QueryPatientMatchEntity
                                         :entity="item"
                                         :query-id="entity.id"
-                                        :index="props.offset + index"
+                                        :index="(props.offset ?? 0) + index"
                                     />
                                 </li>
                             </template>

@@ -2,15 +2,23 @@
 import {
     type CodeSystemConcept,
     DCodeSystem,
-    DCollectionTransform, type FormTabInput,
+    DCollectionTransform, 
+    type FormTabInput,
 } from '@dnpm-dip/core';
 import { VCFormSelect, VCFormSelectSearch } from '@vuecs/form-controls';
 import type { FormSelectOption } from '@vuecs/form-controls';
 import {
-    type PropType, type Ref, computed, reactive, toRef, watch,
+    type PropType, 
+    type Ref, 
+    computed, 
+    reactive, 
+    toRef, 
+    watch,
 } from 'vue';
 import {
-    defineComponent, markRaw, ref,
+    defineComponent, 
+    markRaw, 
+    ref,
 } from 'vue';
 import {
     type QueryGeneAlterationCriteria,
@@ -24,7 +32,10 @@ import MSearchSNVForm from './search/MSearchSNVForm.vue';
 
 export default defineComponent({
     components: {
-        DCollectionTransform, VCFormSelectSearch, DCodeSystem, VCFormSelect,
+        DCollectionTransform, 
+        VCFormSelectSearch, 
+        DCodeSystem, 
+        VCFormSelect,
     },
     props: {
         entity: {
@@ -42,6 +53,12 @@ export default defineComponent({
         });
 
         const mutationType = ref<null | `${QueryMutationType}`>(null);
+        const mutationTypeModel = computed({
+            get: () => mutationType.value ?? undefined,
+            set: (value: `${QueryMutationType}` | undefined) => {
+                mutationType.value = value ?? null;
+            },
+        });
         const mutationData = ref<null | QueryGeneAlterationVariantCriteria>(null);
 
         const mutationOptions : FormSelectOption[] = [
@@ -50,33 +67,27 @@ export default defineComponent({
             { id: QueryMutationType.FUSION, value: 'Fusion' },
         ];
 
-        const comp = ref(null) as Ref<null | Record<string, any>>;
+        const comp = ref(null) as Ref<null | Record<string, unknown>>;
         const changeMutationType = (type: `${QueryMutationType}` | null) => {
             switch (type) {
                 case QueryMutationType.CNV: {
                     comp.value = markRaw(MSearchCNVForm);
 
-                    mutationData.value = {
-                        type: QueryMutationType.CNV,
-                    };
+                    mutationData.value = { type: QueryMutationType.CNV };
                     mutationType.value = QueryMutationType.CNV;
                     break;
                 }
                 case QueryMutationType.SNV: {
                     comp.value = markRaw(MSearchSNVForm);
 
-                    mutationData.value = {
-                        type: QueryMutationType.SNV,
-                    };
+                    mutationData.value = { type: QueryMutationType.SNV };
                     mutationType.value = QueryMutationType.SNV;
                     break;
                 }
                 case QueryMutationType.FUSION: {
                     comp.value = markRaw(MSearchFusionForm);
 
-                    mutationData.value = {
-                        type: QueryMutationType.FUSION,
-                    };
+                    mutationData.value = { type: QueryMutationType.FUSION };
                     mutationType.value = QueryMutationType.FUSION;
                     break;
                 }
@@ -95,7 +106,8 @@ export default defineComponent({
                 return;
             }
 
-            changeMutationType((event.target as Record<string, any>).value || null);
+            const { value } = (event.target as unknown as { value: string });
+            changeMutationType(value ? value as 'SNV' | 'CNV' | 'Fusion' : null);
         };
 
         const isEditing = computed(() => props.entity.data !== null);
@@ -195,6 +207,7 @@ export default defineComponent({
             comp,
 
             mutationType,
+            mutationTypeModel,
             mutationOptions,
 
             handleVariantChanged,
@@ -248,7 +261,7 @@ export default defineComponent({
             </template>
             <template #default>
                 <VCFormSelect
-                    v-model="mutationType"
+                    v-model="mutationTypeModel"
                     :options="mutationOptions"
                     @change="changeMutationTypeByEvent"
                 />

@@ -91,7 +91,7 @@ export default defineNuxtComponent({
                                             <strong><i class="fas fa-check-circle" /> Stützende molekulare Alterationen</strong><br>
                                             <template
                                                 v-for="el in recommendation.supportingVariants"
-                                                :key="el"
+                                                :key="el.id"
                                             >
                                                 <p>&bull; {{ el.display }}</p>
                                             </template>
@@ -148,7 +148,7 @@ export default defineNuxtComponent({
                                             <strong><i class="fas fa-check-circle" /> Stützende Evidenz</strong><br>
                                             <template
                                                 v-for="el in recommendation.supportingVariants"
-                                                :key="el"
+                                                :key="el.id"
                                             >
                                                 <p>&bull; {{ el.display }}</p>
                                             </template>

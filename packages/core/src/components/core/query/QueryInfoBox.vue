@@ -13,9 +13,7 @@ import type { QueryBase } from '../../../domains';
 import { ConnectionPeerStatus } from '../../../domains';
 
 export default defineComponent({
-    components: {
-        VCLink,
-    },
+    components: { VCLink },
     props: {
         entity: {
             type: Object as PropType<QueryBase>,
@@ -28,8 +26,8 @@ export default defineComponent({
     },
     setup(props) {
         const hasFailed = computed(() => {
-            for (let i = 0; i < props.entity.peers.length; i++) {
-                if (props.entity.peers[i].status === ConnectionPeerStatus.OFFLINE) {
+            for (const peer of props.entity.peers) {
+                if (peer.status === ConnectionPeerStatus.OFFLINE) {
                     return true;
                 }
             }
@@ -37,9 +35,7 @@ export default defineComponent({
             return false;
         });
 
-        return {
-            hasFailed,
-        };
+        return { hasFailed };
     },
 });
 </script>

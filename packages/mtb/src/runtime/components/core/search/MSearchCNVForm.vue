@@ -15,17 +15,23 @@ import {
 } from '@dnpm-dip/core';
 import { VCFormSelectSearch } from '@vuecs/form-controls';
 import {
-    type PropType, computed, defineComponent, reactive, toRef, watch,
+    type PropType, 
+    computed, 
+    defineComponent, 
+    reactive, 
+    toRef, 
+    watch,
 } from 'vue';
 import { type QueryGeneAlterationCNVCriteria, QueryMutationType } from '../../../domains';
 
 export default defineComponent({
     components: {
-        DTags, DValueSet, DCollectionTransform, VCFormSelectSearch,
+        DTags, 
+        DValueSet, 
+        DCollectionTransform, 
+        VCFormSelectSearch,
     },
-    props: {
-        entity: Object as PropType<QueryGeneAlterationCNVCriteria>,
-    },
+    props: { entity: Object as PropType<QueryGeneAlterationCNVCriteria> },
     emits: ['updated'],
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
@@ -58,9 +64,7 @@ export default defineComponent({
 
         const isEditing = computed(() => !!entityRef.value);
         const handleChanged = () => {
-            const output : QueryGeneAlterationCNVCriteria = {
-                type: QueryMutationType.CNV,
-            };
+            const output : QueryGeneAlterationCNVCriteria = { type: QueryMutationType.CNV };
 
             if (form.copyNumberType) {
                 output.copyNumberType = form.copyNumberType.map((code) => toCoding(code.id));
@@ -90,7 +94,7 @@ export default defineComponent({
             >
                 <template #default="{ data }">
                     <DCollectionTransform
-                        :items="data.codings"
+                        :items="data.codings || []"
                         :transform="transformCodings"
                     >
                         <template #default="options">

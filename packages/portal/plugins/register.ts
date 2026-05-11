@@ -23,9 +23,7 @@ declare module '#app' {
 }
 
 function extendNavigationItemsURL(items: NavigationItem[], baseURL: string) {
-    for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-
+    for (const item of items) {
         if (typeof item.url === 'undefined') {
             continue;
         }
@@ -45,9 +43,7 @@ function extendNavigationItemsURL(items: NavigationItem[], baseURL: string) {
 function extractNavigationItemsPermissions(items: NavigationItem<NavigationItemMeta>[]) : string[] {
     const permissions : string[] = [];
 
-    for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-
+    for (const item of items) {
         if (!item.meta) {
             continue;
         }

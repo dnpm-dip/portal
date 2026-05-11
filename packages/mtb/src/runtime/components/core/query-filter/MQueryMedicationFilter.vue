@@ -8,7 +8,10 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import {
-    computed, defineComponent, onUnmounted, ref,
+    computed, 
+    defineComponent, 
+    onUnmounted, 
+    ref,
 } from 'vue';
 import {
     type CodingGroup,
@@ -24,9 +27,7 @@ import { injectHTTPClient } from '../../../core/http-client';
 import type { QueryTherapyRecommendedFilter } from '../../../domains';
 
 export default defineComponent({
-    components: {
-        DQueryFilterBox,
-    },
+    components: { DQueryFilterBox },
     props: {
         busy: {
             type: Boolean,
@@ -42,7 +43,7 @@ export default defineComponent({
         },
     },
     emits: ['commited'],
-    async setup(props, { emit }) {
+    async setup(props) {
         const store = useQueryFilterStore();
         const eventBus = injectQueryEventBus();
         const httpClient = injectHTTPClient();
@@ -67,7 +68,7 @@ export default defineComponent({
                     itemsAvailable.value = response.medication
                         .map((group) => toCodingGroup(group));
                 }
-            } catch (e) {
+            } catch {
                 itemsAvailable.value = [];
             } finally {
                 itemsAvailableInitialized.value = true;
@@ -96,7 +97,7 @@ export default defineComponent({
                 .slice(startIndex, endIndex);
         });
 
-        const loadPage = (pagination: any) => {
+        const loadPage = (pagination: { limit: number; offset: number }) => {
             limit.value = pagination.limit;
             offset.value = pagination.offset;
         };
@@ -158,12 +159,12 @@ export default defineComponent({
 
             if (itemsAvailable.value.length !== items.value.length) {
                 for (let i = 0; i < items.value.length; i++) {
-                    const index = itemsAvailable.value.findIndex((el) => el.id === items.value[i]);
-                    if (index === -1) {
+                    const entry = itemsAvailable.value.find((el) => el.id === items.value[i]);
+                    if (!entry) {
                         continue;
                     }
 
-                    data.push(itemsAvailable.value[index]);
+                    data.push(entry);
                 }
             }
 

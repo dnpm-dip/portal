@@ -1,6 +1,7 @@
 <script lang="ts">
 import {
-    defineComponent, ref,
+    defineComponent, 
+    ref,
 } from 'vue';
 import { type Coding, DQueryFilterBox, useQueryFilterStore } from '@dnpm-dip/core';
 import { QueryURLFilterKey } from '../../constants';
@@ -20,7 +21,7 @@ export default defineComponent({
         },
     },
     emits: ['submit'],
-    async setup(props, { emit }) {
+    async setup(props) {
         const store = useQueryFilterStore();
         const httpClient = injectHTTPClient();
 
@@ -30,7 +31,7 @@ export default defineComponent({
         const load = async () => {
             try {
                 available.value = await httpClient.query.getHpoFilter(props.queryId);
-            } catch (e) {
+            } catch {
                 available.value = {};
             } finally {
                 availableInitialized.value = true;
@@ -62,8 +63,9 @@ export default defineComponent({
             const data : Coding[] = [];
             for (let i = 0; i < items.value.length; i++) {
                 const index = available.value.value.findIndex((el) => el.code === items.value[i]);
-                if (index !== -1) {
-                    data.push(available.value.value[index]);
+                const found = index !== -1 ? available.value.value[index] : undefined;
+                if (found) {
+                    data.push(found);
                 }
             }
 

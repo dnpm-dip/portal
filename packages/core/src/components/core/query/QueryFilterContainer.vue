@@ -10,7 +10,7 @@ import { useQueryFilterStore } from '../../../stores';
 
 export default defineComponent({
     emits: ['submitted'],
-    setup(props, { emit }) {
+    setup(_props, { emit }) {
         const store = useQueryFilterStore();
 
         const submit = () => {
@@ -19,9 +19,7 @@ export default defineComponent({
             emit('submitted');
         };
 
-        return {
-            submit,
-        };
+        return { submit };
     },
 });
 </script>

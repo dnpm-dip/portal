@@ -15,6 +15,7 @@ export default defineComponent({
         },
         index: {
             type: Number,
+            required: true,
         },
     },
     setup() {

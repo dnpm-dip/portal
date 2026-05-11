@@ -74,7 +74,7 @@ export default defineComponent({
             <h5>Verteilung nach Alteration</h5>
             <DQuerySummaryGrouped
                 :select-first="true"
-                :items="data"
+                :items="(data as any)"
                 :label="'Alteration'"
             >
                 <template #default="{ item }">

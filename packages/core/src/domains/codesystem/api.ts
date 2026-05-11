@@ -12,8 +12,8 @@ export class CodeSystemAPI extends BaseAPI {
         let queryString : string = '';
         if (filter && filter.length > 0) {
             const searchParams = new URLSearchParams();
-            for (let i = 0; i < filter.length; i++) {
-                searchParams.set('filter', filter[i]);
+            for (const value of filter) {
+                searchParams.set('filter', value);
             }
 
             queryString = `&${searchParams.toString()}`;

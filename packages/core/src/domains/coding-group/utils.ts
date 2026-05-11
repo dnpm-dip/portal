@@ -1,5 +1,6 @@
 import { isObject } from '../../utils';
-import type { Coding, CodingGroup } from './types';
+import type { Coding } from '../coding';
+import type { CodingGroup } from './types';
 
 export function isCodingGroup(input: unknown) : input is CodingGroup {
     return isObject(input) &&

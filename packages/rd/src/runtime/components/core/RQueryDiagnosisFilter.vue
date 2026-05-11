@@ -1,18 +1,19 @@
 <script lang="ts">
 import {
-    defineComponent, ref,
+    defineComponent, 
+    ref,
 } from 'vue';
 import {
-    type Coding, DQueryFilterBox, useQueryFilterStore,
+    type Coding, 
+    DQueryFilterBox, 
+    useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { QueryURLFilterKey } from '../../constants';
 import { injectHTTPClient } from '../../core';
 import type { QueryDiagnosisFilter } from '../../domains';
 
 export default defineComponent({
-    components: {
-        DQueryFilterBox,
-    },
+    components: { DQueryFilterBox },
     props: {
         queryId: {
             type: String,
@@ -24,7 +25,7 @@ export default defineComponent({
         },
     },
     emits: ['submit'],
-    async setup(props, { emit }) {
+    async setup(props) {
         const store = useQueryFilterStore();
         const httpClient = injectHTTPClient();
 
@@ -34,7 +35,7 @@ export default defineComponent({
         const load = async () => {
             try {
                 available.value = await httpClient.query.getDiagnosisFilter(props.queryId);
-            } catch (e) {
+            } catch {
                 available.value = {};
             } finally {
                 availableInitialized.value = true;
@@ -67,8 +68,9 @@ export default defineComponent({
             const data : Coding[] = [];
             for (let i = 0; i < category.value.length; i++) {
                 const index = available.value.category.findIndex((el) => el.code === category.value[i]);
-                if (index !== -1) {
-                    data.push(available.value.category[index]);
+                const found = index !== -1 ? available.value.category[index] : undefined;
+                if (found) {
+                    data.push(found);
                 }
             }
 

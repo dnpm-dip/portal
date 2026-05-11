@@ -8,16 +8,26 @@
 <script lang="ts">
 import {
     type Coding,
-    DCollectionTransform, DTags, DValueSet, type ValueSetCoding,
+    DCollectionTransform, 
+    DTags, 
+    DValueSet, 
+    type ValueSetCoding,
 } from '@dnpm-dip/core';
 import { type FormSelectOption, VCFormSelectSearch } from '@vuecs/form-controls';
 import {
-    type PropType, computed, defineComponent, nextTick, reactive, ref,
+    type PropType,
+    computed,
+    defineComponent,
+    reactive,
+    ref,
 } from 'vue';
 
 export default defineComponent({
     components: {
-        DValueSet, DTags, DCollectionTransform, VCFormSelectSearch,
+        DValueSet, 
+        DTags, 
+        DCollectionTransform, 
+        VCFormSelectSearch,
     },
     props: {
         drugs: {
@@ -55,19 +65,19 @@ export default defineComponent({
         });
 
         const init = () => {
-            for (let i = 0; i < props.drugs.length; i++) {
+            for (const drug of props.drugs) {
                 if (
-                    props.drugs[i].system &&
-                    props.drugs[i].system.includes('atc')
+                    drug.system &&
+                    drug.system.includes('atc')
                 ) {
                     form.atcDrugs.push({
-                        id: props.drugs[i].code,
-                        value: props.drugs[i].display || props.drugs[i].code,
+                        id: drug.code,
+                        value: drug.display || drug.code,
                     });
                 } else {
                     form.customDrugs.push({
-                        id: props.drugs[i].code,
-                        value: props.drugs[i].display || props.drugs[i].code,
+                        id: drug.code,
+                        value: drug.display || drug.code,
                     });
                 }
             }
@@ -78,7 +88,7 @@ export default defineComponent({
         const allDrugs = computed(() => [
             ...form.atcDrugs,
             ...form.customDrugs,
-        ]);
+        ].map((item) => ({ id: item.id, value: String(item.value) })));
 
         const currentTab = ref('atc');
         const tabs = ref([
@@ -92,16 +102,14 @@ export default defineComponent({
 
         const handleChanged = () => {
             const drugs: Coding[] = [];
-            for (let i = 0; i < form.atcDrugs.length; i++) {
+            for (const drug of form.atcDrugs) {
                 drugs.push({
-                    code: `${form.atcDrugs[i].id}`,
+                    code: `${drug.id}`,
                     system: 'atc',
                 });
             }
-            for (let i = 0; i < form.customDrugs.length; i++) {
-                drugs.push({
-                    code: `${form.customDrugs[i].id}`,
-                });
+            for (const drug of form.customDrugs) {
+                drugs.push({ code: `${drug.id}` });
             }
 
             emit('updated', {
@@ -126,7 +134,7 @@ export default defineComponent({
             handleChanged();
         };
 
-        const dropCustom = ({ id, value }: { id: string, value: string}) => {
+        const dropCustom = ({ id, value }: { id: string, value: string }) => {
             let index = form.atcDrugs.findIndex((el) => el.id === id && el.value === value);
             if (index !== -1) {
                 form.atcDrugs.splice(index, 1);
@@ -232,7 +240,7 @@ export default defineComponent({
                     >
                         <template #default="{ data }">
                             <DCollectionTransform
-                                :items="data.codings"
+                                :items="data.codings || []"
                                 :transform="transformCodings"
                             >
                                 <template #default="options">

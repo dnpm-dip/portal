@@ -1,6 +1,9 @@
 <script lang="ts">
 import {
-    DCodingCommaList, DCodingText, DCommaList, DPatient,
+    DCodingCommaList, 
+    DCodingText, 
+    DCommaList, 
+    DPatient,
 } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
@@ -129,7 +132,10 @@ export default defineNuxtComponent({
                     v-for="(item, index) in record.therapies"
                     :key="index"
                 >
-                    <div class="entity-card">
+                    <div
+                        v-if="item.history[0]"
+                        class="entity-card"
+                    >
                         <div>
                             <strong><i class="fa fa-pills" /> Medikation</strong>
                             <template

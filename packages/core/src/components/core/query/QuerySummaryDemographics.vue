@@ -1,11 +1,11 @@
 <script lang="ts">
-import { type PropType, defineComponent } from 'vue';
+import { type Component, type PropType, defineComponent } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import type { Coding, QuerySummaryDemographics } from '../../../domains';
 import { useQueryFilterStore } from '../../../stores';
 import { DKVChartTableSwitch } from '../../utility';
 
-export default defineComponent({
+const component = defineComponent({
     components: { DKVChartTableSwitch },
     props: {
         entity: {
@@ -101,6 +101,8 @@ export default defineComponent({
         };
     },
 });
+
+export default component as Component;
 </script>
 <template>
     <div>

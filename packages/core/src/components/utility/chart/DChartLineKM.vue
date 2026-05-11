@@ -1,8 +1,11 @@
 <script lang="ts">
 import type {
-    ChartData, ChartDataset, ChartOptions, Point,
+    ChartData, 
+    ChartDataset, 
+    ChartOptions, 
+    Point,
 } from 'chart.js';
-import type { PropType } from 'vue';
+import type { Component, PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 import { Line } from 'vue-chartjs';
 import {
@@ -12,10 +15,8 @@ import {
 } from '../../../utils';
 import type { KMSurvivalReport } from './types';
 
-export default defineComponent({
-    components: {
-        ChartLine: Line,
-    },
+const component = defineComponent({
+    components: { ChartLine: Line },
     props: {
         report: {
             required: true,
@@ -28,10 +29,10 @@ export default defineComponent({
         const datasets = computed<ChartDataset<'line'>[]>(() => props.report.data.map((item, key) => {
             const data : Point[] = [];
 
-            for (let i = 0; i < item.value.survivalRates.length; i++) {
+            for (const rate of item.value.survivalRates) {
                 data.push({
-                    x: item.value.survivalRates[i].time,
-                    y: Number(item.value.survivalRates[i].survRate.toFixed(2)),
+                    x: rate.time,
+                    y: Number(rate.survRate.toFixed(2)),
                 });
             }
 
@@ -57,9 +58,7 @@ export default defineComponent({
             } satisfies ChartDataset<'line'>;
         }));
 
-        const data = computed<ChartData<'line'>>(() => ({
-            datasets: datasets.value,
-        }));
+        const data = computed<ChartData<'line'>>(() => ({ datasets: datasets.value }));
 
         const options : ChartOptions<'line'> = {
             responsive: true,
@@ -76,9 +75,7 @@ export default defineComponent({
                 y: {
                     min: 0.0,
                     max: 1.1,
-                    ticks: {
-                        stepSize: 0.1,
-                    },
+                    ticks: { stepSize: 0.1 },
                     title: {
                         display: true,
                         align: 'center',
@@ -94,6 +91,8 @@ export default defineComponent({
         };
     },
 });
+
+export default component as Component;
 </script>
 <template>
     <ChartLine
