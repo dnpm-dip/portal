@@ -122,9 +122,7 @@ export function createResourceRecordManager<
     };
 
     if (typeof context.expose !== 'undefined') {
-        context.expose({
-            load,
-        });
+        context.expose({ load });
     }
 
     const render = () : VNodeChild => {

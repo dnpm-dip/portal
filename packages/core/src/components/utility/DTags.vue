@@ -2,7 +2,10 @@
 import { BFormTag } from 'bootstrap-vue-next';
 import type { PropType, SlotsType } from 'vue';
 import {
-    defineComponent, ref, toRef, watch,
+    defineComponent, 
+    ref, 
+    toRef, 
+    watch,
 } from 'vue';
 
 type ColorVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | null;
@@ -11,28 +14,14 @@ type Tag = {
     value: string
 };
 export default defineComponent({
-    components: {
-        BFormTag,
-    },
+    components: { BFormTag },
     props: {
-        modelValue: {
-            type: Array as PropType<Tag[]>,
-        },
-        items: {
-            type: Array as PropType<Tag[]>,
-        },
-        tagClass: {
-            type: String as PropType<any>,
-        },
-        tagPills: {
-            type: Boolean,
-        },
-        tagValidator: {
-            type: Function as PropType<(t: string) => boolean>,
-        },
-        tagVariant: {
-            type: String as PropType<ColorVariant>,
-        },
+        modelValue: { type: Array as PropType<Tag[]> },
+        items: { type: Array as PropType<Tag[]> },
+        tagClass: { type: String },
+        tagPills: { type: Boolean },
+        tagValidator: { type: Function as PropType<(t: string) => boolean> },
+        tagVariant: { type: String as PropType<ColorVariant> },
         emitOnly: {
             type: Boolean,
             default: false,
@@ -40,8 +29,8 @@ export default defineComponent({
     },
     emits: ['update:modelValue', 'deleted'],
     slots: Object as SlotsType<{
-        tag: Record<string, any>,
-        between: Record<string, any>,
+        tag: Record<string, unknown>,
+        between: Record<string, unknown>,
     }>,
     setup(props, { emit }) {
         const tags = ref<Tag[]>([]);

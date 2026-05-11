@@ -6,11 +6,15 @@
   -->
 
 <script lang="ts">
-import { injectHTTPClient, injectStore, storeToRefs } from '@authup/client-web-kit';
+import { injectHTTPClient } from '@authup/client-web-kit';
 import type { Role } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import {
-    DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
+    DNav, 
+    PageMetaKey, 
+    PageNavigationTopID, 
+    extendRefRecord, 
+    useToast,
 } from '@dnpm-dip/core';
 import { defineComponent, ref } from 'vue';
 import type { Ref } from 'vue';
@@ -18,13 +22,13 @@ import {
     definePageMeta,
 } from '#imports';
 import {
-    createError, navigateTo, useRoute,
+    createError, 
+    navigateTo, 
+    useRoute,
 } from '#app';
 
 export default defineComponent({
-    components: {
-        DNav,
-    },
+    components: { DNav },
     async setup() {
         definePageMeta({
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.ADMIN,
@@ -39,13 +43,19 @@ export default defineComponent({
 
         const items = [
             {
-                name: 'Allgemein', icon: 'fas fa-bars', urlSuffix: '',
+                name: 'Allgemein', 
+                icon: 'fas fa-bars', 
+                urlSuffix: '',
             },
             {
-                name: 'Berechtigungen', icon: 'fas fa-user-secret', urlSuffix: 'permissions',
+                name: 'Berechtigungen', 
+                icon: 'fas fa-user-secret', 
+                urlSuffix: 'permissions',
             },
             {
-                name: 'Benutzer', icon: 'fas fa-users', urlSuffix: 'users',
+                name: 'Benutzer', 
+                icon: 'fas fa-users', 
+                urlSuffix: 'users',
             },
         ];
 
@@ -53,13 +63,13 @@ export default defineComponent({
         const route = useRoute();
         const authup = injectHTTPClient();
 
-        const entity : Ref<Role> = ref(null) as any;
+        const entity = ref(null) as unknown as Ref<Role>;
 
         try {
             entity.value = await authup
                 .role
                 .getOne(route.params.id as string);
-        } catch (e) {
+        } catch {
             await navigateTo({ path: '/admin/roles' });
             throw createError({});
         }

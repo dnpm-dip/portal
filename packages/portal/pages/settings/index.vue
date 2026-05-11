@@ -13,16 +13,18 @@ export default defineComponent({
 
         const items = [
             {
-                name: 'Account', icon: 'fas fa-bars', urlSuffix: '',
+                name: 'Account', 
+                icon: 'fas fa-bars', 
+                urlSuffix: '',
             },
             {
-                name: 'Security', icon: 'fa fa-lock', urlSuffix: '/security',
+                name: 'Security', 
+                icon: 'fa fa-lock', 
+                urlSuffix: '/security',
             },
         ];
 
-        return {
-            items,
-        };
+        return { items };
     },
 });
 </script>

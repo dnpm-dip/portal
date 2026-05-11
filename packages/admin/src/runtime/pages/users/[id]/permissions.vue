@@ -1,6 +1,9 @@
 <script lang="ts">
 import {
-    APagination, ASearch, AUserPermissionAssignment, AUserPermissionAssignments,
+    APagination, 
+    ASearch, 
+    AUserPermissionAssignment, 
+    AUserPermissionAssignments,
 } from '@authup/client-web-kit';
 import type { User } from '@authup/core-kit';
 import type { PropType } from 'vue';

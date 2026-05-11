@@ -65,7 +65,7 @@ export type Distribution<KEY = any> = DistributionConceptsCount<KEY> |
 DistributionQuantities<KEY>;
 
 export type DistributionNestedElements<KEY> = KeyValueChildrenRecord<
-KEY,
+    KEY,
 ConceptCountValue | number,
 Quantities | ConceptsCount
 >[];

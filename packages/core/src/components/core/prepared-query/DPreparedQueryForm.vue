@@ -6,7 +6,12 @@ import { VCFormGroup, VCFormInput } from '@vuecs/form-controls';
 import { IVuelidate } from '@ilingo/vuelidate';
 import type { PropType } from 'vue';
 import {
-    computed, defineComponent, reactive, ref, toRef, watch,
+    computed, 
+    defineComponent, 
+    reactive, 
+    ref, 
+    toRef, 
+    watch,
 } from 'vue';
 import type { PreparedQuery } from '../../../domains';
 import { PreparedQueryAPI } from '../../../domains';
@@ -19,12 +24,8 @@ export default defineComponent({
         VCFormInput,
     },
     props: {
-        criteria: {
-            type: Object as PropType<Record<string, any>>,
-        },
-        entity: {
-            type: Object as PropType<PreparedQuery>,
-        },
+        criteria: { type: Object as PropType<Record<string, unknown>> },
+        entity: { type: Object as PropType<PreparedQuery> },
         useCase: {
             type: String,
             required: true,
@@ -48,9 +49,7 @@ export default defineComponent({
         });
 
         const isBusy = ref(false);
-        const form = reactive({
-            name: '',
-        });
+        const form = reactive({ name: '' });
 
         const init = () => {
             form.name = props.entity?.name || '';
@@ -100,9 +99,7 @@ export default defineComponent({
         };
 
         const handleChanged = (name: string) => {
-            emit('changed', {
-                name,
-            });
+            emit('changed', { name });
         };
 
         return {

@@ -9,7 +9,11 @@
 import type { IdentityProvider } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import {
-    DNav, PageMetaKey, PageNavigationTopID, extendRefRecord, useToast,
+    DNav, 
+    PageMetaKey, 
+    PageNavigationTopID, 
+    extendRefRecord, 
+    useToast,
 } from '@dnpm-dip/core';
 import { injectHTTPClient } from '@authup/client-web-kit';
 import { defineComponent, ref } from 'vue';
@@ -22,9 +26,7 @@ import {
 } from '#imports';
 
 export default defineComponent({
-    components: {
-        DNav,
-    },
+    components: { DNav },
     async setup() {
         definePageMeta({
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.ADMIN,
@@ -36,10 +38,14 @@ export default defineComponent({
 
         const items = [
             {
-                name: 'General', icon: 'fas fa-bars', urlSuffix: '',
+                name: 'General', 
+                icon: 'fas fa-bars', 
+                urlSuffix: '',
             },
             {
-                name: 'Roles', icon: 'fa-solid fa-theater-masks', urlSuffix: 'roles',
+                name: 'Roles', 
+                icon: 'fa-solid fa-theater-masks', 
+                urlSuffix: 'roles',
             },
         ];
 
@@ -47,13 +53,13 @@ export default defineComponent({
         const route = useRoute();
         const authup = injectHTTPClient();
 
-        const entity: Ref<IdentityProvider> = ref(null) as any;
+        const entity = ref(null) as unknown as Ref<IdentityProvider>;
 
         try {
             entity.value = await authup
                 .identityProvider
                 .getOne(route.params.id as string);
-        } catch (e) {
+        } catch {
             await navigateTo({ path: '/admin/identity-providers' });
             throw createError({});
         }

@@ -1,5 +1,10 @@
 import type {
-    EmitsOptions, MaybeRef, Ref, SetupContext, Slots, VNodeChild,
+    EmitsOptions, 
+    MaybeRef, 
+    Ref, 
+    SetupContext, 
+    Slots, 
+    VNodeChild,
 } from 'vue';
 import type { ObjectLiteral } from '../../../types';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
@@ -32,7 +37,7 @@ export type ResourceRecordManagerContext<
 };
 
 export type ResourceRecordManagerOutput<
-T extends ObjectLiteral = ObjectLiteral,
+    T extends ObjectLiteral = ObjectLiteral,
 > = {
     load: ResourceRecordFn,
     delete : ResourceRecordFn,

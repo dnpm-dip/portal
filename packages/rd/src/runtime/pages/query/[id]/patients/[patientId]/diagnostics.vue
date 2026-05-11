@@ -8,7 +8,9 @@ import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
     components: {
-        RStructuralVariant, RCopyNumberVariant, RSmallVariant,
+        RStructuralVariant, 
+        RCopyNumberVariant, 
+        RSmallVariant,
     },
     props: {
         entity: {

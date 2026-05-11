@@ -3,15 +3,15 @@ import { DNav } from '@dnpm-dip/core';
 import { type PropType, defineComponent } from 'vue';
 import { ref } from 'vue';
 import {
-    createError, navigateTo, useRoute,
+    createError, 
+    navigateTo, 
+    useRoute,
 } from '#app';
 import { injectHTTPClient } from '../../../../core/http-client';
 import type { PatientRecord, QuerySession } from '../../../../domains';
 
 export default defineComponent({
-    components: {
-        DNav,
-    },
+    components: { DNav },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -32,23 +32,31 @@ export default defineComponent({
 
         try {
             entity.value = await api.query.getPatientRecord(props.entity.id, route.params.patientId);
-        } catch (e) {
+        } catch {
             await navigateTo({ path: `/mtb/query/${props.entity.id}/patients` });
             throw createError({});
         }
 
         const navItems = [
             {
-                name: 'Anamnese', icon: 'fas fa-bars', urlSuffix: '',
+                name: 'Anamnese', 
+                icon: 'fas fa-bars', 
+                urlSuffix: '',
             },
             {
-                name: 'Diagnostik', icon: 'fas fa-stethoscope', urlSuffix: '/diagnostics',
+                name: 'Diagnostik', 
+                icon: 'fas fa-stethoscope', 
+                urlSuffix: '/diagnostics',
             },
             {
-                name: 'Beschlüsse', icon: 'fas fa-gavel', urlSuffix: '/plans',
+                name: 'Beschlüsse', 
+                icon: 'fas fa-gavel', 
+                urlSuffix: '/plans',
             },
             {
-                name: 'Follow-UP', icon: 'fas fa-arrow-circle-up', urlSuffix: '/follow-up',
+                name: 'Follow-UP', 
+                icon: 'fas fa-arrow-circle-up', 
+                urlSuffix: '/follow-up',
             },
         ];
 

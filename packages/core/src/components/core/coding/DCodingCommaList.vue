@@ -27,9 +27,7 @@ export default defineComponent({
             return item.code;
         }));
 
-        return {
-            formatted,
-        };
+        return { formatted };
     },
 });
 </script>

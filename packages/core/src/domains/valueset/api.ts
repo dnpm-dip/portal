@@ -22,8 +22,8 @@ export class ValueSetAPI extends BaseAPI {
         }
 
         if (filter && filter.length > 0) {
-            for (let i = 0; i < filter.length; i++) {
-                query.push(`filter=${filter[i]}`);
+            for (const element of filter) {
+                query.push(`filter=${element}`);
             }
         }
 

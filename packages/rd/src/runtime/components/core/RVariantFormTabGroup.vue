@@ -9,7 +9,12 @@ import { IVuelidate } from '@ilingo/vuelidate';
 import useVuelidate from '@vuelidate/core';
 import { helpers } from '@vuelidate/validators';
 import {
-    type PropType, computed, defineComponent, reactive, toRef, watch,
+    type PropType, 
+    computed, 
+    defineComponent, 
+    reactive, 
+    toRef, 
+    watch,
 } from 'vue';
 import { VCFormSelectSearch } from '@vuecs/form-controls';
 import { DCodeSystem, DCollectionTransform } from '@dnpm-dip/core';
@@ -17,7 +22,10 @@ import type { QueryCriteriaVariant } from '../../domains';
 
 export default defineComponent({
     components: {
-        IVuelidate, DCollectionTransform, DCodeSystem, VCFormSelectSearch,
+        IVuelidate, 
+        DCollectionTransform, 
+        DCodeSystem, 
+        VCFormSelectSearch,
     },
     props: {
         entity: {
@@ -46,18 +54,10 @@ export default defineComponent({
         init();
 
         const vuelidate = useVuelidate({
-            gene: {
-
-            },
-            cDNAChange: {
-
-            },
-            gDNAChange: {
-
-            },
-            proteinChange: {
-                hgvs: helpers.regex(HGVS_CODE_REGEX),
-            },
+            gene: {},
+            cDNAChange: {},
+            gDNAChange: {},
+            proteinChange: { hgvs: helpers.regex(HGVS_CODE_REGEX) },
         }, form);
 
         watch(entity, () => {

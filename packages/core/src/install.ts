@@ -8,17 +8,11 @@ import type { InstallOptions } from './types';
 export function install(app: App, options: InstallOptions) : void {
     app.component('DKVTable', DKVTable);
 
-    installHTTPClient(app, {
-        baseURL: options.baseURL,
-    });
+    installHTTPClient(app, { baseURL: options.baseURL });
 
     const queryEventBus = createQueryEventBus();
     provideQueryEventBus(queryEventBus, app);
 
-    installQueryFilterStore(app, {
-        queryEventBus,
-    });
-    installQuerySessionStore(app, {
-        queryEventBus,
-    });
+    installQueryFilterStore(app, { queryEventBus });
+    installQuerySessionStore(app, { queryEventBus });
 }

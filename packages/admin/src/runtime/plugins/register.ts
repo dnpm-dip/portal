@@ -31,9 +31,7 @@ export default defineNuxtPlugin({
                         type: 'link',
                         url: '',
                         icon: 'fa fa-home',
-                        meta: {
-                            [PageMetaKey.REQUIRED_PERMISSIONS]: [],
-                        },
+                        meta: { [PageMetaKey.REQUIRED_PERMISSIONS]: [] },
                     },
                     {
                         name: 'Identitätsanbieter',

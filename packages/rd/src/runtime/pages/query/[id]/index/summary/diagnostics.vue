@@ -6,7 +6,8 @@
   -->
 <script lang="ts">
 import {
-    type PropType, defineComponent,
+    type PropType, 
+    defineComponent,
 } from 'vue';
 import type { QuerySession } from '../../../../../domains';
 import RQuerySummaryDiagnostics from '../../../../../components/core/RQuerySummaryDiagnostics.vue';

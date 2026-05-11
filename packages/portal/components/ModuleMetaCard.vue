@@ -12,9 +12,7 @@ import { VCLink } from '@vuecs/link';
 import { type PropType, computed, defineComponent } from 'vue';
 
 export default defineComponent({
-    components: {
-        VCLink,
-    },
+    components: { VCLink },
     props: {
         entity: {
             type: Object as PropType<ModuleMeta>,
@@ -25,9 +23,7 @@ export default defineComponent({
         const permissions = computed<string[]>(() => props.entity[PageMetaKey.REQUIRED_PERMISSIONS] || []);
         const display = usePermissionCheck({ name: permissions.value });
 
-        return {
-            display,
-        };
+        return { display };
     },
 });
 </script>

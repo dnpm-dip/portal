@@ -12,7 +12,7 @@ export default defineNuxtModule({
     },
     // Default configuration options of the Nuxt module
     defaults: {},
-    async setup(options, nuxt) {
+    async setup() {
         const resolver = createResolver(import.meta.url);
 
         await registerPages({

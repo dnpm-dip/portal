@@ -10,13 +10,7 @@ import type { PropType } from 'vue';
 import { defineComponent } from 'vue';
 import type { ConnectionPeer } from '../../../domains';
 
-export default defineComponent({
-    props: {
-        entity: {
-            type: Object as PropType<ConnectionPeer>,
-        },
-    },
-});
+export default defineComponent({ props: { entity: { type: Object as PropType<ConnectionPeer> } } });
 </script>
 <template>
     <div

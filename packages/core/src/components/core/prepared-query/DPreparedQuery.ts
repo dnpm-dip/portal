@@ -13,12 +13,8 @@ import { PreparedQueryAPI } from '../../../domains';
 
 export default defineComponent({
     props: {
-        entity: {
-            type: Object as PropType<PreparedQuery>,
-        },
-        entityId: {
-            type: String,
-        },
+        entity: { type: Object as PropType<PreparedQuery> },
+        entityId: { type: String },
         useCase: {
             type: String,
             required: true,

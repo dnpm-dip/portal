@@ -7,18 +7,25 @@
 
 <script lang="ts">
 import {
-    computed, defineComponent, onUnmounted, ref,
+    computed, 
+    defineComponent, 
+    onUnmounted, 
+    ref,
 } from 'vue';
 import {
-    type Coding, DQueryFilterBox, QueryEventBusEventName, injectQueryEventBus, isCoding, toCoding, useQueryFilterStore,
+    type Coding, 
+    DQueryFilterBox, 
+    QueryEventBusEventName, 
+    injectQueryEventBus, 
+    isCoding, 
+    toCoding, 
+    useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
 
 export default defineComponent({
-    components: {
-        DQueryFilterBox,
-    },
+    components: { DQueryFilterBox },
     props: {
         busy: {
             type: Boolean,
@@ -30,7 +37,7 @@ export default defineComponent({
         },
     },
     emits: ['commited'],
-    async setup(props, { emit }) {
+    async setup(props) {
         const store = useQueryFilterStore();
         const eventBus = injectQueryEventBus();
         const httpClient = injectHTTPClient();
@@ -49,7 +56,7 @@ export default defineComponent({
                     itemsAvailable.value = response.code
                         .sort((a, b) => a.code.localeCompare(b.code));
                 }
-            } catch (e) {
+            } catch {
                 itemsAvailable.value = [];
             } finally {
                 itemsAvailableInitialized.value = true;
@@ -78,7 +85,7 @@ export default defineComponent({
                 .slice(startIndex, endIndex);
         });
 
-        const loadPage = (pagination: any) => {
+        const loadPage = (pagination: { limit: number; offset: number }) => {
             limit.value = pagination.limit;
             offset.value = pagination.offset;
         };

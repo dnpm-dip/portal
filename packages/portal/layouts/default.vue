@@ -8,7 +8,10 @@ import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
     components: {
-        BOrchestrator, PageHeader, PageSidebar, PageFooter,
+        BOrchestrator, 
+        PageHeader, 
+        PageSidebar, 
+        PageFooter,
     },
 });
 </script>

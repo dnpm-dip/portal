@@ -9,9 +9,7 @@ export default defineComponent({
             type: Object as PropType<FormTab>,
             required: true,
         },
-        currentIndex: {
-            type: Number,
-        },
+        currentIndex: { type: Number },
         minItems: {
             type: Number,
             required: true,

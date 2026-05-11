@@ -1,5 +1,8 @@
 import type {
-    Coding, Patient, Period, Reference,
+    Coding, 
+    Patient, 
+    Period, 
+    Reference,
 } from '@dnpm-dip/core';
 
 /**

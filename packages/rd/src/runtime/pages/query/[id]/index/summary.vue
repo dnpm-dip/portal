@@ -13,27 +13,31 @@ import {
 import {
     type PropType,
 } from 'vue';
-import { inject, ref } from 'vue';
+import { ref } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import type { QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
-    components: {
-        DNav,
-    },
+    components: { DNav },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
             required: true,
         },
     },
-    async setup(props) {
+    async setup() {
         const navItems = [
             {
-                id: 'default', name: 'Demographie', icon: 'fas fa-globe', urlSuffix: '',
+                id: 'default', 
+                name: 'Demographie', 
+                icon: 'fas fa-globe', 
+                urlSuffix: '',
             },
             {
-                id: 'diagnostics', name: 'Diagnostik', icon: 'fas fa-stethoscope', urlSuffix: '/diagnostics',
+                id: 'diagnostics', 
+                name: 'Diagnostik', 
+                icon: 'fas fa-stethoscope', 
+                urlSuffix: '/diagnostics',
             },
         ];
 

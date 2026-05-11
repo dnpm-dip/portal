@@ -13,12 +13,8 @@ export default defineComponent({
             type: Array as PropType<NavItems>,
             required: true,
         },
-        direction: {
-            type: String as PropType<'vertical' | 'horizontal'>,
-        },
-        prevLink: {
-            type: [String, Boolean],
-        },
+        direction: { type: String as PropType<'vertical' | 'horizontal'> },
+        prevLink: { type: [String, Boolean] },
     },
     slots: Object as SlotsType<{
         start: Record<string, any>,

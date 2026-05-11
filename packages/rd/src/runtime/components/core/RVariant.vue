@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { PropType } from 'vue';
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import type { Variant } from '../../domains';
 
 export default defineComponent({

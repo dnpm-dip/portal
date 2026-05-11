@@ -7,14 +7,12 @@
 
 <script lang="ts">
 import type { PropType } from 'vue';
-import { defineComponent, ref } from 'vue';
-import type { SmallVariant, Variant } from '../../domains';
+import { defineComponent } from 'vue';
+import type { SmallVariant } from '../../domains';
 import RVariant from './RVariant.vue';
 
 export default defineComponent({
-    components: {
-        RVariant,
-    },
+    components: { RVariant },
     props: {
         entity: {
             type: Object as PropType<SmallVariant>,

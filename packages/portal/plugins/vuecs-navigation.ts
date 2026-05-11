@@ -17,9 +17,7 @@ export default defineNuxtPlugin({
             'authup:middleware:end',
             async ({ to }) => {
                 navigationManager.reset();
-                await navigationManager.build({
-                    path: to.fullPath,
-                });
+                await navigationManager.build({ path: to.fullPath });
             },
         );
 

@@ -8,11 +8,7 @@ import { injectHTTPClient } from '../core';
 import type { ConnectionReport } from '../domains';
 
 export default defineComponent({
-    props: {
-        lazyLoad: {
-            type: Boolean,
-        },
-    },
+    props: { lazyLoad: { type: Boolean } },
     slots: Object as SlotsType<ResourceRecordSlots<ConnectionReport>>,
     async setup(props, setup) {
         const apiClient = injectHTTPClient();

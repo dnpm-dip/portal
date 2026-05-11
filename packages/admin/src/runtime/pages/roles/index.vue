@@ -9,15 +9,16 @@
 import type { Role } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import {
-    DNav, PageMetaKey, PageNavigationTopID, useToast,
+    DNav, 
+    PageMetaKey, 
+    PageNavigationTopID, 
+    useToast,
 } from '@dnpm-dip/core';
 import { definePageMeta } from '#imports';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
-    components: {
-        DNav,
-    },
+    components: { DNav },
     setup() {
         definePageMeta({
             [PageMetaKey.REQUIRED_LOGGED_IN]: true,

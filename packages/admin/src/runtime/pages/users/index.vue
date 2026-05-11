@@ -7,7 +7,10 @@
 
 <script lang="ts">
 import {
-    DNav, PageMetaKey, PageNavigationTopID, useToast,
+    DNav, 
+    PageMetaKey, 
+    PageNavigationTopID, 
+    useToast,
 } from '@dnpm-dip/core';
 import type { User } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
@@ -15,9 +18,7 @@ import { definePageMeta } from '#imports';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
-    components: {
-        DNav,
-    },
+    components: { DNav },
     setup() {
         definePageMeta({
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.ADMIN,

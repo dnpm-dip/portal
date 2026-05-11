@@ -23,7 +23,15 @@ export function generateRandomColorTuple(slices = 6) : [RGB, RGB] {
     const right = sectionMax / 360;
 
     return [
-        hslToRgb({ h: left, s: 0.4, l: 0.4 }),
-        hslToRgb({ h: right, s: 1.0, l: 0.8 }),
+        hslToRgb({
+            h: left, 
+            s: 0.4, 
+            l: 0.4, 
+        }),
+        hslToRgb({
+            h: right, 
+            s: 1.0, 
+            l: 0.8, 
+        }),
     ];
 }

@@ -14,9 +14,7 @@ import type { Coding, DistributionNestedElements, KeyValueChildrenRecord } from 
 import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils';
 
 export default defineComponent({
-    components: {
-        VCFormSelectSearch,
-    },
+    components: { VCFormSelectSearch },
     props: {
         label: {
             type: String,
@@ -42,16 +40,14 @@ export default defineComponent({
             if (typeof input === 'number') {
                 index = input - 1;
             } else if (typeof input === 'string') {
-                index = parseInt(input, 10) - 1;
+                index = Number.parseInt(input, 10) - 1;
             }
 
             return index;
         };
 
         const options = computed<FormSelectOption[]>(() => props.data.map((el, index) => {
-            const value = generateChartLabelsForKeyValueRecord(el as KeyValueChildrenRecord, {
-                codingVerbose: props.keyVerbose,
-            });
+            const value = generateChartLabelsForKeyValueRecord(el as KeyValueChildrenRecord, { codingVerbose: props.keyVerbose });
 
             return {
                 id: index + 1,
@@ -63,9 +59,7 @@ export default defineComponent({
             id.value = null;
         };
 
-        expose({
-            reset,
-        });
+        expose({ reset });
 
         const items = computed(() => {
             const index = transformToIndex(id.value);

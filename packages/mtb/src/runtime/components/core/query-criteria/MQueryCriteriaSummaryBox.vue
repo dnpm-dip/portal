@@ -15,7 +15,7 @@ export default defineComponent({
             required: true,
         },
     },
-    setup(props, { emit }) {
+    setup() {
         const extended = ref(false);
 
         const toggleExtended = () => {

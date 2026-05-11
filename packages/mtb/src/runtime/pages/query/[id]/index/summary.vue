@@ -18,34 +18,50 @@ import { defineNuxtComponent } from '#imports';
 import type { QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
-    components: {
-        DNav,
-    },
+    components: { DNav },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
             required: true,
         },
     },
-    async setup(props) {
+    async setup() {
         const navItems = [
             {
-                id: 'default', name: 'Demographie', icon: 'fas fa-globe', urlSuffix: '',
+                id: 'default', 
+                name: 'Demographie', 
+                icon: 'fas fa-globe', 
+                urlSuffix: '',
             },
             {
-                id: 'diagnostics', name: 'Diagnose', icon: 'fas fa-stethoscope', urlSuffix: '/diagnostics',
+                id: 'diagnostics', 
+                name: 'Diagnose', 
+                icon: 'fas fa-stethoscope', 
+                urlSuffix: '/diagnostics',
             },
             {
-                id: 'medication', name: 'Medikation', icon: 'fas fa-pills', urlSuffix: '/medication',
+                id: 'medication', 
+                name: 'Medikation', 
+                icon: 'fas fa-pills', 
+                urlSuffix: '/medication',
             },
             {
-                id: 'therapyResponses', name: 'Therapie Responses', icon: 'fas fa-comment-medical', urlSuffix: '/therapy-responses',
+                id: 'therapyResponses', 
+                name: 'Therapie Responses', 
+                icon: 'fas fa-comment-medical', 
+                urlSuffix: '/therapy-responses',
             },
             {
-                id: 'geneAlterations', name: 'Gen Alterationen', icon: 'fas fa-dna', urlSuffix: '/gene-alterations',
+                id: 'geneAlterations', 
+                name: 'Gen Alterationen', 
+                icon: 'fas fa-dna', 
+                urlSuffix: '/gene-alterations',
             },
             {
-                id: 'survivalReport', name: 'Überlebensbericht', icon: 'fas fa-book-open', urlSuffix: '/survival-report',
+                id: 'survivalReport', 
+                name: 'Überlebensbericht', 
+                icon: 'fas fa-book-open', 
+                urlSuffix: '/survival-report',
             },
         ];
 
