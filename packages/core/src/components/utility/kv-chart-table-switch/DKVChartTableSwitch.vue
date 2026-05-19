@@ -14,6 +14,7 @@ import {
 import type { KeyValueRecord } from '../../../domains';
 import { DKVChart } from '../kv-chart';
 import { DKVTable } from '../kv-table';
+import type { DKVTableColumnsFn } from '../kv-table/types';
 
 const component = defineComponent({
     components: {
@@ -33,6 +34,34 @@ const component = defineComponent({
         clickable: {
             type: Boolean,
             default: false,
+        },
+        keyLabel: {
+            type: String,
+            default: 'Element',
+        },
+        valueLabel: {
+            type: String,
+            default: 'Häufigkeit',
+        },
+        percentLabel: {
+            type: String,
+            default: 'Prozent (%)',
+        },
+        keyHidden: {
+            type: Boolean,
+            default: false,
+        },
+        valueHidden: {
+            type: Boolean,
+            default: false,
+        },
+        percentHidden: {
+            type: Boolean,
+            default: false,
+        },
+        columns: {
+            type: Function as PropType<DKVTableColumnsFn>,
+            default: undefined,
         },
     },
     emits: ['clicked'],
@@ -107,6 +136,13 @@ export default component as Component;
                     :type="type"
                     :clickable="clickable"
                     :coding-verbose-label="codingVerboseLabel"
+                    :key-label="keyLabel"
+                    :value-label="valueLabel"
+                    :percent-label="percentLabel"
+                    :key-hidden="keyHidden"
+                    :value-hidden="valueHidden"
+                    :percent-hidden="percentHidden"
+                    :columns="columns"
                     :clicked="handleClick"
                 >
                     <DKVTable
@@ -114,6 +150,13 @@ export default component as Component;
                         :type="type"
                         :clickable="clickable"
                         :coding-verbose-label="codingVerboseLabel"
+                        :key-label="keyLabel"
+                        :value-label="valueLabel"
+                        :percent-label="percentLabel"
+                        :key-hidden="keyHidden"
+                        :value-hidden="valueHidden"
+                        :percent-hidden="percentHidden"
+                        :columns="columns"
                         @clicked="handleClick"
                     />
                 </slot>
