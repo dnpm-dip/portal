@@ -19,7 +19,7 @@ export default defineComponent({
         },
     },
     emits: ['reset'],
-    setup(props, { emit }) {
+    setup(_props, { emit }) {
         // const store = useQueryFilterStore();
         // const storeRefs = storeToRefs(store);
 
