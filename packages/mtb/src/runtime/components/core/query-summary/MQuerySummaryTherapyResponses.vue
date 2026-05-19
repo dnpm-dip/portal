@@ -57,50 +57,50 @@ export default defineComponent({
 
         const fields : TableFieldRaw[] = [
             {
-                key: 'tumorEntity', 
-                label: 'Entität', 
-                thClass: 'text-left', 
-                tdClass: 'text-left', 
+                key: 'tumorEntity',
+                label: 'Entität',
+                thClass: 'text-left',
+                tdClass: 'text-left',
                 sortable: true,
             },
             {
-                key: 'medications', 
-                label: 'Medikationen', 
-                thClass: 'text-left', 
+                key: 'medications',
+                label: 'Medikationen',
+                thClass: 'text-left',
                 tdClass: 'text-left',
             },
             {
-                key: 'supportingAlteration', 
-                label: 'Stützende Variante', 
-                thClass: 'text-left', 
-                tdClass: 'text-left', 
+                key: 'supportingAlteration',
+                label: 'Stützende Variante',
+                thClass: 'text-left',
+                tdClass: 'text-left',
                 sortable: true,
             },
             {
-                key: 'count', 
-                label: 'Anzahl Therapien', 
-                thClass: 'text-center', 
-                tdClass: 'text-center align-middle', 
+                key: 'count',
+                label: 'Anzahl Therapien',
+                thClass: 'text-center',
+                tdClass: 'text-center align-middle',
                 sortable: true,
             },
             {
-                key: 'orr', 
-                label: 'ORR (%)', 
-                thClass: 'text-center', 
-                tdClass: 'text-center align-middle', 
+                key: 'orr',
+                label: 'ORR (%)',
+                thClass: 'text-center',
+                tdClass: 'text-center align-middle',
                 sortable: true,
             },
             {
-                key: 'meanDuration', 
-                label: 'Dauer in Wochen (Ø)', 
-                thClass: 'text-center', 
-                tdClass: 'text-center align-middle', 
+                key: 'meanDuration',
+                label: 'Dauer in Wochen (Ø)',
+                thClass: 'text-center',
+                tdClass: 'text-center align-middle',
                 sortable: true,
             },
             {
-                key: 'responseDistribution', 
-                label: 'Response Verteilung', 
-                thClass: 'text-center', 
+                key: 'responseDistribution',
+                label: 'Response Verteilung',
+                thClass: 'text-center',
                 tdClass: 'text-center align-middle',
             },
         ];
@@ -201,6 +201,10 @@ export default defineComponent({
         animation="wave"
     />
     <div v-show="!busy || total > 0">
+        <div class="alert alert-sm alert-warning alert-sm">
+            Bitte beachten: Ein Patient kann mehrere unterschiedliche Therapieumsetzungen erhalten haben.
+        </div>
+
         <VCPagination
             :busy="busy"
             :total="total"

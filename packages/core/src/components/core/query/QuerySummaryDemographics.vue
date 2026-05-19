@@ -117,6 +117,9 @@ export default component as Component;
                     :type="'doughnut'"
                     :data="entity.siteDistribution.elements"
                     :clickable="true"
+                    :key-label="'Standort'"
+                    :value-label="'Anzahl [n]'"
+                    :percent-label="'Anteil [%]'"
                     @clicked="handleLocationClick"
                 />
             </div>
@@ -129,6 +132,9 @@ export default component as Component;
                     :type="'doughnut'"
                     :data="entity.genderDistribution.elements"
                     :clickable="true"
+                    :key-label="'Geschlecht'"
+                    :value-label="'Anzahl [n]'"
+                    :percent-label="'Anteil [%]'"
                     @clicked="handleGenderClick"
                 />
             </div>
@@ -141,6 +147,9 @@ export default component as Component;
             <DKVChartTableSwitch
                 :data="entity.ageDistribution.elements"
                 :clickable="true"
+                :key-label="'Alter [Jahre]'"
+                :value-label="'Anzahl [n]'"
+                :percent-label="'Anteil [%]'"
                 @clicked="handleAgeClick"
             />
         </div>

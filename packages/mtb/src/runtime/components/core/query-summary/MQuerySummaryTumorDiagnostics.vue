@@ -120,11 +120,20 @@ export default defineComponent({
                             :total="data.overallDistributions.tumorEntities.total"
                             :key-verbose="true"
                         >
-                            <template #default="{items}">
+                            <template #default="{items, id}">
                                 <DKVChartTableSwitch
                                     :coding-verbose-label="true"
                                     :data="items"
                                     :clickable="true"
+                                    :columns="(level: number) => level === 0 && !id ? [
+                                        {key: 'key', label: 'Tumorentität [ICD-10 GM]'},
+                                        {key: 'value', label: 'Anzahl [n]'},
+                                        {key: 'percent', label: 'Anteil [%]'},
+                                    ] : [
+                                        {key: 'key', label: 'Tumorentität [ICD-10 GM]'},
+                                        {key: 'value', label: 'Anzahl [n]'},
+                                        {key: 'percent', label: 'Anteil [%]'},
+                                    ]"
                                     @clicked="handleClick"
                                 />
                             </template>
@@ -139,10 +148,19 @@ export default defineComponent({
                             :total="data.overallDistributions.tumorMorphologies.total"
                             :key-verbose="true"
                         >
-                            <template #default="{items}">
+                            <template #default="{items, id}">
                                 <DKVChartTableSwitch
                                     :coding-verbose-label="true"
                                     :data="items"
+                                    :columns="(level: number) => level === 0 && !id ? [
+                                        {key: 'key', label: 'Tumor-Morphologie (ICD-O-3-M)'},
+                                        {key: 'value', label: 'Anzahl [n]'},
+                                        {key: 'percent', label: 'Anteil [%]'},
+                                    ] : [
+                                        {key: 'key', label: 'Tumor-Morphologie (ICD-O-3-M)'},
+                                        {key: 'value', label: 'Anzahl [n]'},
+                                        {key: 'percent', label: 'Anteil [%]'},
+                                    ]"
                                 />
                             </template>
                         </DQuerySummaryNested>
@@ -168,6 +186,9 @@ export default defineComponent({
                                 <DKVChartTableSwitch
                                     :coding-verbose-label="true"
                                     :data="item.value.tumorEntities.elements"
+                                    :key-label="'Tumorentität [ICD-10 GM]'"
+                                    :value-label="'Anzahl [n]'"
+                                    :percent-label="'Anteil [%]'"
                                 />
                             </div>
 
@@ -178,6 +199,9 @@ export default defineComponent({
                                 <DKVChartTableSwitch
                                     :coding-verbose-label="true"
                                     :data="item.value.tumorMorphologies.elements"
+                                    :key-label="'Tumor-Morphologie (ICD-O-3-M)'"
+                                    :value-label="'Anzahl [n]'"
+                                    :percent-label="'Anteil [%]'"
                                 />
                             </div>
                         </div>

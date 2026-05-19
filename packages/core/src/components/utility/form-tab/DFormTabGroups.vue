@@ -1,9 +1,9 @@
 <script lang="ts">
 import {
-    type PropType, 
-    defineComponent, 
-    ref, 
-    toRef, 
+    type PropType,
+    defineComponent,
+    ref,
+    toRef,
     watch,
 } from 'vue';
 import DFormTabGroup from './DFormTabGroup.vue';
@@ -187,7 +187,7 @@ export default defineComponent({
                     >
                         <a
                             href="javascript:void(0)"
-                            class="nav-link nav-link-dark text-center mb-1"
+                            class="nav-link nav-link-dark text-center mb-1 text-success"
                             :class="{'disabled': maxItems && maxItems === items.length}"
                             @click.prevent="add"
                         >
