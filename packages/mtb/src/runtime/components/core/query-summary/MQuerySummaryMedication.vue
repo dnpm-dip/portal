@@ -191,7 +191,7 @@ export default defineComponent({
                                 :data="items"
                                 :clickable="true"
                                 :columns="(level: number) => level === 0 && !id ? [
-                                    {key: 'key', label: 'Wirktsoffklasse'},
+                                    {key: 'key', label: 'Wirkstoffklasse'},
                                     {key: 'value', label: 'Anzahl [n]'},
                                     {key: 'percent', label: 'Anteil [%]'},
                                 ] : [
@@ -224,7 +224,7 @@ export default defineComponent({
                                 :data="items"
                                 :clickable="true"
                                 :columns="(level: number) => level === 0 && !id ? [
-                                    {key: 'key', label: 'Wirktsoffklasse'},
+                                    {key: 'key', label: 'Wirkstoffklasse'},
                                     {key: 'value', label: 'Anzahl [n]'},
                                     {key: 'percent', label: 'Anteil [%]'},
                                 ] : [
