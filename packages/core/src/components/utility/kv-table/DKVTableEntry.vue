@@ -26,6 +26,30 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
+        keyLabel: {
+            type: String,
+            default: undefined,
+        },
+        valueLabel: {
+            type: String,
+            default: undefined,
+        },
+        percentLabel: {
+            type: String,
+            default: undefined,
+        },
+        keyHidden: {
+            type: Boolean,
+            default: false,
+        },
+        valueHidden: {
+            type: Boolean,
+            default: false,
+        },
+        percentHidden: {
+            type: Boolean,
+            default: false,
+        },
         columns: {
             type: Function as PropType<DKVTableColumnsFn>,
             default: undefined,
@@ -110,6 +134,12 @@ export default defineComponent({
                     :data="data.children"
                     :coding-verbose-label="codingVerboseLabel"
                     :clickable="clickable"
+                    :key-label="keyLabel"
+                    :value-label="valueLabel"
+                    :percent-label="percentLabel"
+                    :key-hidden="keyHidden"
+                    :value-hidden="valueHidden"
+                    :percent-hidden="percentHidden"
                     :columns="columns"
                     :level="level + 1"
                     @clicked="handleClicked"

@@ -16,24 +16,24 @@ import DKVTableEntry from './DKVTableEntry.vue';
 import type { DKVTableColumnKey, DKVTableColumnsFn } from './types';
 
 const COLUMN_DEFAULTS: Record<DKVTableColumnKey, {
-    label: string; 
-    thClass: string; 
-    tdClass: string 
+    label: string;
+    thClass: string;
+    tdClass: string;
 }> = {
     key: {
-        label: 'Element', 
-        thClass: 'text-left', 
-        tdClass: 'text-left', 
+        label: 'Element',
+        thClass: 'text-left',
+        tdClass: 'text-left',
     },
     value: {
-        label: 'Häufigkeit', 
-        thClass: 'text-center', 
-        tdClass: 'text-center', 
+        label: 'Häufigkeit',
+        thClass: 'text-center',
+        tdClass: 'text-center',
     },
     percent: {
-        label: 'Prozent (%)', 
-        thClass: 'text-center', 
-        tdClass: 'text-center', 
+        label: 'Prozent (%)',
+        thClass: 'text-center',
+        tdClass: 'text-center',
     },
 };
 
@@ -51,15 +51,15 @@ export default defineComponent({
         },
         keyLabel: {
             type: String,
-            default: 'Element',
+            default: COLUMN_DEFAULTS.key.label,
         },
         valueLabel: {
             type: String,
-            default: 'Häufigkeit',
+            default: COLUMN_DEFAULTS.value.label,
         },
         percentLabel: {
             type: String,
-            default: 'Prozent (%)',
+            default: COLUMN_DEFAULTS.percent.label,
         },
         keyHidden: {
             type: Boolean,
@@ -228,6 +228,12 @@ export default defineComponent({
                 :data="(cell.item as any)"
                 :clickable="clickable"
                 :coding-verbose-label="codingVerboseLabel"
+                :key-label="keyLabel"
+                :value-label="valueLabel"
+                :percent-label="percentLabel"
+                :key-hidden="keyHidden"
+                :value-hidden="valueHidden"
+                :percent-hidden="percentHidden"
                 :columns="columns"
                 :level="level"
                 @item-clicked="handleItemClick"
