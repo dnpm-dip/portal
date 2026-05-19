@@ -13,12 +13,12 @@ import { buildQueryFiltersURLRecord } from './helper';
 import type { QueryFilterItem, QueryFilters } from './types';
 
 export function createQueryFilterStore(ctx: StoreCreateOptions) {
-    const active = ref<string>('patient');
+    const active = ref<string | null>(null);
     const setActive = (name: string) => {
         active.value = name;
     };
     const resetActive = () => {
-        active.value = 'patient';
+        active.value = null;
     };
 
     // ----------------------------------------------------------------

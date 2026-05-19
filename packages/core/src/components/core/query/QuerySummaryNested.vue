@@ -100,6 +100,7 @@ export default defineComponent({
         </div>
     </VCFormGroup>
     <slot
+        :id="id"
         :items="items"
     />
 </template>

@@ -169,6 +169,9 @@ export default defineComponent({
                                 :type="'bar'"
                                 :data="item.value.elements"
                                 :clickable="true"
+                                :key-label="'Wirkstoff'"
+                                :value-label="'Anzahl [n]'"
+                                :percent-label="'Anteil [%]'"
                                 @clicked="(keys: Coding[]) => handleRecommendationClick(keys, 'recommendedByVariant')"
                             />
                         </template>
@@ -183,10 +186,19 @@ export default defineComponent({
                         :total="data.recommendations.overallDistribution.total"
                         :data="(data.recommendations.overallDistribution.elements as any)"
                     >
-                        <template #default="{ items }">
+                        <template #default="{ items, id }">
                             <DKVChartTableSwitch
                                 :data="items"
                                 :clickable="true"
+                                :columns="(level: number) => level === 0 && !id ? [
+                                    {key: 'key', label: 'Wirkstoffklasse'},
+                                    {key: 'value', label: 'Anzahl [n]'},
+                                    {key: 'percent', label: 'Anteil [%]'},
+                                ] : [
+                                    {key: 'key', label: 'Wirkstoff'},
+                                    {key: 'value', label: 'Anzahl [n]'},
+                                    {key: 'percent', label: 'Anteil [%]'},
+                                ]"
                                 @clicked="(keys: Coding[]) => handleRecommendationClick(keys, 'recommended')"
                             />
                         </template>
@@ -207,10 +219,19 @@ export default defineComponent({
                         :data="(data.therapies.overallDistribution.elements as any)"
                         :total="data.therapies.overallDistribution.total"
                     >
-                        <template #default="{ items }">
+                        <template #default="{ items, id }">
                             <DKVChartTableSwitch
                                 :data="items"
                                 :clickable="true"
+                                :columns="(level: number) => level === 0 && !id ? [
+                                    {key: 'key', label: 'Wirkstoffklasse'},
+                                    {key: 'value', label: 'Anzahl [n]'},
+                                    {key: 'percent', label: 'Anteil [%]'},
+                                ] : [
+                                    {key: 'key', label: 'Wirkstoff'},
+                                    {key: 'value', label: 'Anzahl [n]'},
+                                    {key: 'percent', label: 'Anteil [%]'},
+                                ]"
                                 @clicked="handleUsedClick"
                             />
                         </template>

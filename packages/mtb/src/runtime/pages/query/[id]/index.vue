@@ -205,7 +205,7 @@ export default defineNuxtComponent({
                                     class="btn btn-dark btn-xs"
                                     @click.prevent="props.toggle()"
                                 >
-                                    <i class="fa fa-cog" />
+                                    <i class="fa fa-edit" /> Anpassen
                                 </button>
                             </template>
                         </MQueryCriteriaModal>

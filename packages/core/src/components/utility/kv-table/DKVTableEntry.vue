@@ -7,12 +7,13 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import {
-    computed, 
-    defineComponent, 
-    ref, 
+    computed,
+    defineComponent,
+    ref,
     resolveComponent,
 } from 'vue';
 import type { Coding, KeyValueRecord } from '../../../domains';
+import type { DKVTableColumnsFn } from './types';
 
 export default defineComponent({
     props: {
@@ -24,6 +25,38 @@ export default defineComponent({
         clickable: {
             type: Boolean,
             default: false,
+        },
+        keyLabel: {
+            type: String,
+            default: undefined,
+        },
+        valueLabel: {
+            type: String,
+            default: undefined,
+        },
+        percentLabel: {
+            type: String,
+            default: undefined,
+        },
+        keyHidden: {
+            type: Boolean,
+            default: false,
+        },
+        valueHidden: {
+            type: Boolean,
+            default: false,
+        },
+        percentHidden: {
+            type: Boolean,
+            default: false,
+        },
+        columns: {
+            type: Function as PropType<DKVTableColumnsFn>,
+            default: undefined,
+        },
+        level: {
+            type: Number,
+            default: 0,
         },
     },
     emits: ['clicked', 'itemClicked'],
@@ -101,6 +134,14 @@ export default defineComponent({
                     :data="data.children"
                     :coding-verbose-label="codingVerboseLabel"
                     :clickable="clickable"
+                    :key-label="keyLabel"
+                    :value-label="valueLabel"
+                    :percent-label="percentLabel"
+                    :key-hidden="keyHidden"
+                    :value-hidden="valueHidden"
+                    :percent-hidden="percentHidden"
+                    :columns="columns"
+                    :level="level + 1"
                     @clicked="handleClicked"
                 />
             </div>

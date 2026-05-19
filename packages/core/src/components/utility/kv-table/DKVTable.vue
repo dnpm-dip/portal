@@ -13,6 +13,29 @@ import type { Coding, KeyValueRecord } from '../../../domains';
 import { isCoding, isConceptCount, isMinMaxRange } from '../../../domains';
 import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
 import DKVTableEntry from './DKVTableEntry.vue';
+import type { DKVTableColumnKey, DKVTableColumnsFn } from './types';
+
+const COLUMN_DEFAULTS: Record<DKVTableColumnKey, {
+    label: string;
+    thClass: string;
+    tdClass: string;
+}> = {
+    key: {
+        label: 'Element',
+        thClass: 'text-left',
+        tdClass: 'text-left',
+    },
+    value: {
+        label: 'Häufigkeit',
+        thClass: 'text-center',
+        tdClass: 'text-center',
+    },
+    percent: {
+        label: 'Prozent (%)',
+        thClass: 'text-center',
+        tdClass: 'text-center',
+    },
+};
 
 export default defineComponent({
     components: { DKVTableEntry, BTable: BTable as unknown as Component },
@@ -25,6 +48,38 @@ export default defineComponent({
         clickable: {
             type: Boolean,
             default: false,
+        },
+        keyLabel: {
+            type: String,
+            default: COLUMN_DEFAULTS.key.label,
+        },
+        valueLabel: {
+            type: String,
+            default: COLUMN_DEFAULTS.value.label,
+        },
+        percentLabel: {
+            type: String,
+            default: COLUMN_DEFAULTS.percent.label,
+        },
+        keyHidden: {
+            type: Boolean,
+            default: false,
+        },
+        valueHidden: {
+            type: Boolean,
+            default: false,
+        },
+        percentHidden: {
+            type: Boolean,
+            default: false,
+        },
+        columns: {
+            type: Function as PropType<DKVTableColumnsFn>,
+            default: undefined,
+        },
+        level: {
+            type: Number,
+            default: 0,
         },
     },
     emits: ['clicked'],
@@ -60,26 +115,46 @@ export default defineComponent({
             };
         }));
 
-        const fields : TableFieldRaw[] = [
-            {
-                key: 'key',
-                label: 'Element',
-                thClass: 'text-left',
-                tdClass: 'text-left',
-            },
-            {
-                key: 'value',
-                label: 'Häufigkeit',
-                thClass: 'text-center',
-                tdClass: 'text-center',
-            },
-            {
-                key: 'percent',
-                label: 'Prozent (%)',
-                thClass: 'text-center',
-                tdClass: 'text-center',
-            },
-        ];
+        const fields = computed<TableFieldRaw[]>(() => {
+            if (props.columns) {
+                return props.columns(props.level).map((column) => {
+                    const defaults = COLUMN_DEFAULTS[column.key];
+                    return {
+                        key: column.key,
+                        label: column.label ?? defaults.label,
+                        thClass: defaults.thClass,
+                        tdClass: defaults.tdClass,
+                    };
+                });
+            }
+
+            const result: TableFieldRaw[] = [];
+            if (!props.keyHidden) {
+                result.push({
+                    key: 'key',
+                    label: props.keyLabel,
+                    thClass: COLUMN_DEFAULTS.key.thClass,
+                    tdClass: COLUMN_DEFAULTS.key.tdClass,
+                });
+            }
+            if (!props.valueHidden) {
+                result.push({
+                    key: 'value',
+                    label: props.valueLabel,
+                    thClass: COLUMN_DEFAULTS.value.thClass,
+                    tdClass: COLUMN_DEFAULTS.value.tdClass,
+                });
+            }
+            if (!props.percentHidden) {
+                result.push({
+                    key: 'percent',
+                    label: props.percentLabel,
+                    thClass: COLUMN_DEFAULTS.percent.thClass,
+                    tdClass: COLUMN_DEFAULTS.percent.tdClass,
+                });
+            }
+            return result;
+        });
 
         const handleClicked = (items: Coding[]) => {
             emit('clicked', items);
@@ -153,6 +228,14 @@ export default defineComponent({
                 :data="(cell.item as any)"
                 :clickable="clickable"
                 :coding-verbose-label="codingVerboseLabel"
+                :key-label="keyLabel"
+                :value-label="valueLabel"
+                :percent-label="percentLabel"
+                :key-hidden="keyHidden"
+                :value-hidden="valueHidden"
+                :percent-hidden="percentHidden"
+                :columns="columns"
+                :level="level"
                 @item-clicked="handleItemClick"
                 @clicked="handleClicked"
             />

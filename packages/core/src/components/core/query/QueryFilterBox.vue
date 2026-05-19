@@ -5,9 +5,7 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import { storeToRefs } from '@authup/client-web-kit';
-import { computed, defineComponent } from 'vue';
-import { useQueryFilterStore } from '../../../stores';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
     props: {
@@ -21,14 +19,16 @@ export default defineComponent({
         },
     },
     emits: ['reset'],
-    setup(props, { emit }) {
-        const store = useQueryFilterStore();
-        const storeRefs = storeToRefs(store);
+    setup(_props, { emit }) {
+        // const store = useQueryFilterStore();
+        // const storeRefs = storeToRefs(store);
 
-        const extended = computed(() => storeRefs.active.value === props.name);
+        // const extended = computed(() => storeRefs.active.value === props.name);
+        const extended = ref(false);
 
         const toggleExtended = () => {
-            store.setActive(props.name);
+            // store.setActive(props.name);
+            extended.value = !extended.value;
         };
 
         const reset = () => {
@@ -76,7 +76,6 @@ export default defineComponent({
                     <button
                         type="button"
                         class="btn btn-dark btn-xs"
-                        :disabled="extended"
                         :title="extended ? 'Filter ausgeklappt' : 'Filter ausklappen'"
                         :aria-label="extended ? 'Filter ausgeklappt' : 'Filter ausklappen'"
                         @click.prevent="toggleExtended"
