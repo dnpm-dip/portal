@@ -15,7 +15,7 @@ export default defineComponent({
         modelValue: { type: Array as PropType<FormTabInput[]> },
         label: {
             type: String,
-            default: 'Neuer Tab',
+            default: '.....',
         },
         minItems: {
             type: Number,
@@ -196,12 +196,14 @@ export default defineComponent({
                     </li>
                 </ul>
             </div>
+            <!--
             <div
                 :class="{'ms-auto': direction === 'col', 'mt-auto': direction !== 'col'}"
                 :style="{'order': direction === 'col' ? '1' : 0}"
             >
                 <ul class="nav nav-pills" />
             </div>
+            -->
         </div>
     </div>
 </template>
