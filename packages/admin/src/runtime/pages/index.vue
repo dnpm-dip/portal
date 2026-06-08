@@ -32,12 +32,12 @@ export default defineNuxtComponent({
         </div>
         <AConnectionReport>
             <template #default="{ data }">
-                <div class="d-flex flex-column gap-3">
+                <div class="flex flex-col gap-3">
                     <div>
                         <h5 class="title no-border">
                             <i class="fa fa-map-marker-alt" /> Mein Standort
                         </h5>
-                        <div class="d-flex flex-row flex-wrap gap-2">
+                        <div class="flex flex-row flex-wrap gap-2">
                             <DConnectionPeerCard :entity="data.self" />
                         </div>
                     </div>
@@ -46,7 +46,7 @@ export default defineNuxtComponent({
                         <h5 class="title no-border">
                             <i class="fa fa-map-marker-alt" /> Externe Standorte
                         </h5>
-                        <div class="d-flex flex-row flex-wrap gap-2">
+                        <div class="flex flex-row flex-wrap gap-2">
                             <template
                                 v-for="(item, key) in data.peers"
                                 :key="key"

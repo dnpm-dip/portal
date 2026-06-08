@@ -78,7 +78,7 @@ export default defineNuxtComponent({
                             :key="i"
                             class="list-item flex-row"
                         >
-                            <div class="entity-card w-100 mb-2">
+                            <div class="entity-card w-full mb-2">
                                 <VCPlaceholder
                                     :width="60 + i * 5 + '%'"
                                     animation="wave"
@@ -95,7 +95,7 @@ export default defineNuxtComponent({
                 </div>
             </template>
             <template #default="props">
-                <div class="d-flex flex-row">
+                <div class="flex flex-row">
                     <div class="ms-auto">
                         Es gibt insgesamt {{ props.total }} Patienten
                     </div>

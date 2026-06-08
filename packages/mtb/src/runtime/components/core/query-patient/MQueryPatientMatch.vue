@@ -48,8 +48,8 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="entity-card w-100">
-        <div class="d-flex flex-row">
+    <div class="entity-card w-full">
+        <div class="flex flex-row">
             <div>
                 <strong># {{ id }}</strong>
             </div>
@@ -71,16 +71,16 @@ export default defineComponent({
         </div>
         <div
             class=" mb-2 mt-2"
-            :class="{'d-flex flex-row': extended}"
+            :class="{'flex flex-row': extended}"
         >
             <div
-                class="d-flex justify-content-between"
-                :class="{'flex-row': !extended, 'flex-column me-3': extended}"
+                class="flex justify-between"
+                :class="{'flex-row': !extended, 'flex-col me-3': extended}"
             >
                 <div
                     v-if="entity.managingSite"
-                    class="d-flex flex-grow-1 align-items-center"
-                    :class="{'flex-row': extended, 'flex-column': !extended}"
+                    class="flex grow items-center"
+                    :class="{'flex-row': extended, 'flex-col': !extended}"
                 >
                     <div>
                         <strong>Standort</strong>
@@ -90,8 +90,8 @@ export default defineComponent({
                     </div>
                 </div>
                 <div
-                    class="d-flex flex-grow-1 align-items-center"
-                    :class="{'flex-row': extended, 'flex-column': !extended}"
+                    class="flex grow items-center"
+                    :class="{'flex-row': extended, 'flex-col': !extended}"
                 >
                     <div>
                         <strong>Alter</strong>
@@ -101,8 +101,8 @@ export default defineComponent({
                     </div>
                 </div>
                 <div
-                    class="d-flex flex-grow-1 align-items-center"
-                    :class="{'flex-row': extended, 'flex-column': !extended}"
+                    class="flex grow items-center"
+                    :class="{'flex-row': extended, 'flex-col': !extended}"
                 >
                     <div>
                         <strong>Geschlecht</strong>
@@ -112,18 +112,18 @@ export default defineComponent({
                     </div>
                 </div>
                 <div
-                    class="d-flex flex-grow-1 align-items-center"
-                    :class="{'flex-row': extended, 'flex-column': !extended}"
+                    class="flex grow items-center"
+                    :class="{'flex-row': extended, 'flex-col': !extended}"
                 >
                     <div>
                         <strong>Vital Status</strong>
                     </div>
                     <div :class="{'ms-1': extended}">
                         <template v-if="entity.vitalStatus.code === 'alive'">
-                            <span class="text-success">{{ entity.vitalStatus.display }}</span>
+                            <span class="text-success-600">{{ entity.vitalStatus.display }}</span>
                         </template>
                         <template v-else-if="entity.vitalStatus.code === 'deceased'">
-                            <span class="text-danger">{{ entity.vitalStatus.display }}</span>
+                            <span class="text-error-600">{{ entity.vitalStatus.display }}</span>
                         </template>
                         <template v-else>
                             {{ entity.vitalStatus.display }}

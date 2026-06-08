@@ -108,7 +108,7 @@ export default defineComponent({
             <div>
                 <h5>Gesamtverteilung</h5>
 
-                <div class="d-flex flex-column gap-2">
+                <div class="flex flex-col gap-2">
                     <div class="entity-card text-center mb-3">
                         <h6>Tumor-Entitäten (ICD-10-GM)</h6>
                         <DQuerySummaryNested
@@ -176,8 +176,8 @@ export default defineComponent({
                     :label-fn="variantLabelFn"
                 >
                     <template #default="{ item }">
-                        <div class="d-flex flex-column gap-2">
-                            <div class="entity-card text-center mb-3 w-100">
+                        <div class="flex flex-col gap-2">
+                            <div class="entity-card text-center mb-3 w-full">
                                 <h6 class="text-center">
                                     Tumor-Entitäten (ICD-10-GM)
                                 </h6>
@@ -190,7 +190,7 @@ export default defineComponent({
                                 />
                             </div>
 
-                            <div class="entity-card text-center mb-3 w-100">
+                            <div class="entity-card text-center mb-3 w-full">
                                 <h6 class="text-center">
                                     Tumor-Morphologie (ICD-O-3-M)
                                 </h6>
@@ -211,7 +211,7 @@ export default defineComponent({
     <template v-else-if="busy">
         <div>
             <h5>Gesamtverteilung</h5>
-            <div class="d-flex flex-column gap-2">
+            <div class="flex flex-col gap-2">
                 <div class="entity-card text-center mb-3">
                     <h6>Tumor-Entitäten (ICD-10-GM)</h6>
                     <VCPlaceholder

@@ -39,7 +39,7 @@ export default defineComponent({
 </script>
 <template>
     <div>
-        <div class="d-flex flex-row">
+        <div class="flex flex-row">
             <div>
                 <slot name="header">
                     Header

@@ -60,7 +60,7 @@ export default defineComponent({
     <VCModal v-model:open="modal">
         <VCModalContent class="modal-lg">
             <div class="modal-header">
-                <div class="d-flex flex-row w-100">
+                <div class="flex flex-row w-full">
                     <div>
                         <h5 class="mb-0">
                             <i class="fa fa-search" /> Suche

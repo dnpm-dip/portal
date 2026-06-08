@@ -65,13 +65,13 @@ export default defineComponent({
 <template>
     <div
         v-if="hasActiveSorts"
-        class="d-sort-indicator d-flex align-items-center gap-2 mb-2 p-2 bg-light border rounded"
+        class="d-sort-indicator flex items-center gap-2 mb-2 p-2 bg-bg-elevated border rounded"
     >
-        <small class="text-muted fw-bold">Sortierung:</small>
+        <small class="text-fg-muted font-bold">Sortierung:</small>
         <span
             v-for="(sort, index) in activeSorts"
             :key="sort.key"
-            class="badge bg-secondary d-flex align-items-center gap-1"
+            class="badge bg-bg-muted flex items-center gap-1"
         >
             {{ sort.label }}
             <i
@@ -80,7 +80,7 @@ export default defineComponent({
             />
             <span
                 v-if="index < activeSorts.length - 1"
-                class="text-muted"
+                class="text-fg-muted"
             />
         </span>
         <button

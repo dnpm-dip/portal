@@ -25,7 +25,7 @@ export default defineComponent({
     <RVariant :entity="entity">
         <div
             v-if="entity.chromosome"
-            class="d-flex flex-grow-1 align-items-center flex-row"
+            class="flex grow items-center flex-row"
         >
             <div>
                 <strong>Chromosme</strong>
@@ -36,7 +36,7 @@ export default defineComponent({
         </div>
         <div
             v-if="entity.startPosition"
-            class="d-flex flex-grow-1 align-items-center flex-row"
+            class="flex grow items-center flex-row"
         >
             <div>
                 <strong>Start Position</strong>
@@ -47,7 +47,7 @@ export default defineComponent({
         </div>
         <div
             v-if="entity.endPosition"
-            class="d-flex flex-grow-1 align-items-center flex-row"
+            class="flex grow items-center flex-row"
         >
             <div>
                 <strong>End Position</strong>
@@ -58,7 +58,7 @@ export default defineComponent({
         </div>
         <div
             v-if="entity.type"
-            class="d-flex flex-grow-1 align-items-center flex-row"
+            class="flex grow items-center flex-row"
         >
             <div>
                 <strong>Typ</strong>

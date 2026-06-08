@@ -149,23 +149,23 @@ export default defineComponent({
 </script>
 <template>
     <div
-        class="d-flex"
-        :class="{'flex-row': direction === 'row', 'flex-column': direction === 'col'}"
+        class="flex"
+        :class="{'flex-row': direction === 'row', 'flex-col': direction === 'col'}"
     >
-        <div class="w-100">
+        <div class="w-full">
             <slot
                 :data="items[currentIndex]"
                 :saved="handleSaved"
             />
         </div>
         <div
-            class="d-flex"
-            :class="{'flex-column ms-2': direction === 'row', 'flex-row mt-2': direction === 'col'}"
+            class="flex"
+            :class="{'flex-col ms-2': direction === 'row', 'flex-row mt-2': direction === 'col'}"
         >
             <div>
                 <ul
                     class="form-tabs"
-                    :class="{'flex-column': direction === 'row'}"
+                    :class="{'flex-col': direction === 'row'}"
                 >
                     <template
                         v-for="item in items"
@@ -187,7 +187,7 @@ export default defineComponent({
                     >
                         <a
                             href="javascript:void(0)"
-                            class="nav-link nav-link-dark text-center mb-1 text-success"
+                            class="nav-link nav-link-dark text-center mb-1 text-success-600"
                             :class="{'disabled': maxItems && maxItems === items.length}"
                             @click.prevent="add"
                         >

@@ -2,7 +2,7 @@
     <div class="container text-center">
         <WorldHealth :style="{'width': '800px'}" />
 
-        <div class="d-flex flex-row gap-2">
+        <div class="flex flex-row gap-2">
             <template
                 v-for="(item) in items"
                 :key="item.name"

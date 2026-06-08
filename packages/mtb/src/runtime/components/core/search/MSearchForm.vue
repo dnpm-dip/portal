@@ -363,7 +363,7 @@ export default defineComponent({
     <div>
         <form>
             <div>
-                <div class="d-flex flex-row align-items-center">
+                <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
                             <i class="fa fa-dna" /> Alteration
@@ -409,7 +409,7 @@ export default defineComponent({
             <hr>
 
             <div class="mb-3">
-                <div class="d-flex flex-row align-items-center">
+                <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
                             <i class="fa fa-diagnoses" /> Diagnose
@@ -521,7 +521,7 @@ export default defineComponent({
             <hr>
 
             <div>
-                <div class="d-flex flex-row align-items-center">
+                <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
                             <i class="fa fa-pills" /> Medikation
@@ -553,7 +553,7 @@ export default defineComponent({
             <hr>
 
             <div class="mb-3">
-                <div class="d-flex flex-row align-items-center">
+                <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
                             <i class="fas fa-chart-line" /> Response
@@ -621,7 +621,7 @@ export default defineComponent({
             <hr>
 
             <div>
-                <div class="d-flex flex-row align-items-center">
+                <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
                             <i class="fas fa-filter" /> Suchmodus

@@ -188,7 +188,7 @@ export default component as Component;
                                             @deleted="props.deleted"
                                         >
                                             <template #default="entityProps">
-                                                <div class="entity-card d-flex flex-row w-100">
+                                                <div class="entity-card flex flex-row w-full">
                                                     <div>
                                                         {{ entityProps.data.name || entityProps.data.id }}
                                                     </div>
@@ -246,7 +246,7 @@ export default component as Component;
                         @updated="handleUpdated"
                     >
                         <template #default="fProps">
-                            <div class="d-flex flex-row">
+                            <div class="flex flex-row">
                                 <div>
                                     <button
                                         :disabled="fProps.isBusy"

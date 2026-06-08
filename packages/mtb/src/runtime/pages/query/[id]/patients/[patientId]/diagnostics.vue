@@ -188,7 +188,7 @@ export default defineNuxtComponent({
             v-for="(item) in record.ngsReports"
             :key="item.id"
         >
-            <div class="entity-card gap-1 d-flex flex-column">
+            <div class="entity-card gap-1 flex flex-col">
                 <div class="mb-3">
                     <div class="row">
                         <div class="col">

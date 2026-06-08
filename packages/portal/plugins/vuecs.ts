@@ -3,6 +3,7 @@ import { de } from 'date-fns/locale/de';
 import { watch } from 'vue';
 
 import vuecs from '@vuecs/core';
+import dnpmTheme, { clientWebKitTheme } from '@dnpm-dip/theme';
 import installButton from '@vuecs/button';
 import installElements from '@vuecs/elements';
 import installForms from '@vuecs/forms';
@@ -21,7 +22,7 @@ export default defineNuxtPlugin({
         const app = nuxt.vueApp;
 
         app.use(vuecs, {
-            themes: [],
+            themes: [clientWebKitTheme(), dnpmTheme()],
             icons: [],
         });
 

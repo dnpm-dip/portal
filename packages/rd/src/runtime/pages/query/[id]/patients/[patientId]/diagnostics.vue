@@ -26,7 +26,7 @@ export default defineNuxtComponent({
 </script>
 <template>
     <h5>NGS Berichte</h5>
-    <div class="entity-card-group flex-column">
+    <div class="entity-card-group flex-col">
         <template
             v-for="(item, key) in record.ngsReports"
             :key="key"

@@ -88,8 +88,8 @@ const component = defineComponent({
 export default component as Component;
 </script>
 <template>
-    <div class="d-flex flex-column gap-2">
-        <div class="d-flex flex-row">
+    <div class="flex flex-col gap-2">
+        <div class="flex flex-row">
             <div class="ms-auto">
                 <ul class="nav-pills nav">
                     <li class="nav-item">

@@ -149,8 +149,8 @@ export default defineComponent({
     <template v-if="data">
         <div>
             <h5>Therapie Empfehlungen</h5>
-            <div class="d-flex flex-column gap-2">
-                <div class="entity-card text-center mb-3 w-100">
+            <div class="flex flex-col gap-2">
+                <div class="entity-card text-center mb-3 w-full">
                     <h6>Empfehlungen nach stützender molekularer Alteration</h6>
 
                     <DQuerySummaryGrouped
@@ -173,7 +173,7 @@ export default defineComponent({
                         </template>
                     </DQuerySummaryGrouped>
                 </div>
-                <div class="entity-card text-center mb-3 w-100">
+                <div class="entity-card text-center mb-3 w-full">
                     <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse ({{ data.recommendations.overallDistribution.total }})</h6>
 
                     <DQuerySummaryNested
@@ -205,8 +205,8 @@ export default defineComponent({
             <hr>
 
             <h5>Umgesetzte Therapien</h5>
-            <div class="d-flex flex-column gap-2">
-                <div class="entity-card text-center mb-3 w-100">
+            <div class="flex flex-col gap-2">
+                <div class="entity-card text-center mb-3 w-full">
                     <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse ({{ data.therapies.overallDistribution.total }})</h6>
 
                     <DQuerySummaryNested
@@ -234,8 +234,8 @@ export default defineComponent({
                     </DQuerySummaryNested>
                 </div>
             </div>
-            <div class="d-flex flex-column gap-2">
-                <div class="entity-card text-center mb-3 w-100">
+            <div class="flex flex-col gap-2">
+                <div class="entity-card text-center mb-3 w-full">
                     <h6>Mittlere Therapiedauer</h6>
                     <DKVChartTableSwitch
                         :data="(data.therapies.meanDurations as any)"
@@ -277,8 +277,8 @@ export default defineComponent({
     <template v-else-if="busy">
         <div>
             <h5>Therapie Empfehlungen</h5>
-            <div class="d-flex flex-column gap-2">
-                <div class="entity-card text-center mb-3 w-100">
+            <div class="flex flex-col gap-2">
+                <div class="entity-card text-center mb-3 w-full">
                     <h6>Empfehlungen nach stützender molekularer Alteration</h6>
                     <VCPlaceholder
                         v-for="i in 5"
@@ -288,7 +288,7 @@ export default defineComponent({
                         class="mb-2"
                     />
                 </div>
-                <div class="entity-card text-center mb-3 w-100">
+                <div class="entity-card text-center mb-3 w-full">
                     <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse</h6>
                     <VCPlaceholder
                         v-for="i in 5"
@@ -303,8 +303,8 @@ export default defineComponent({
             <hr>
 
             <h5>Umgesetzte Therapien</h5>
-            <div class="d-flex flex-column gap-2">
-                <div class="entity-card text-center mb-3 w-100">
+            <div class="flex flex-col gap-2">
+                <div class="entity-card text-center mb-3 w-full">
                     <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse</h6>
                     <VCPlaceholder
                         v-for="i in 5"
@@ -314,7 +314,7 @@ export default defineComponent({
                         class="mb-2"
                     />
                 </div>
-                <div class="entity-card text-center mb-3 w-100">
+                <div class="entity-card text-center mb-3 w-full">
                     <h6>Mittlere Therapiedauer</h6>
                     <VCPlaceholder
                         v-for="i in 5"

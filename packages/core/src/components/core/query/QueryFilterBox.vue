@@ -45,23 +45,23 @@ export default defineComponent({
 </script>
 <template>
     <div class="entity-card">
-        <div class="d-flex flex-column gap-2">
-            <div class="d-flex flex-row align-items-center">
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-row items-center">
                 <div>
-                    <h6 class="text-muted mb-0">
+                    <h6 class="text-fg-muted mb-0">
                         <slot name="title">
                             Filter
                         </slot>
                         <i
                             v-if="active"
-                            class="fa fa-circle text-success ms-1"
+                            class="fa fa-circle text-success-600 ms-1"
                             style="font-size: 0.5em; vertical-align: middle;"
                             role="img"
                             aria-label="Filter aktiv"
                         />
                     </h6>
                 </div>
-                <div class="ms-auto d-flex gap-1">
+                <div class="ms-auto flex gap-1">
                     <button
                         type="button"
                         class="btn btn-xs"

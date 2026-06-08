@@ -22,7 +22,7 @@ export default defineComponent({
         </h1>
         <DValidations :use-case="'rd'">
             <template #default="props">
-                <div class="d-flex flex-row mb-2">
+                <div class="flex flex-row mb-2">
                     <div class="ms-auto">
                         Es gibt insgesamt {{ props.total }} Meldung(en).
                     </div>

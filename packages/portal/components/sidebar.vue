@@ -40,14 +40,14 @@ export default defineNuxtComponent({
             <div class="mt-auto">
                 <div
                     v-if="loggedIn"
-                    class="d-flex flex-column ms-3 me-3 mb-3 mt-auto"
+                    class="flex flex-col ms-3 me-3 mb-3 mt-auto"
                     style="color: #848484"
                 >
                     <small>
                         <VCCountdown :time="tokenExpiresIn">
                             <template #default="props">
                                 <i class="fa fa-clock pr-1" /> Die Sitzung erneuert sich in
-                                <span class="text-success">{{ props.minutes }} Minute(n), {{ props.seconds }} Sekunde(n)</span>.
+                                <span class="text-success-600">{{ props.minutes }} Minute(n), {{ props.seconds }} Sekunde(n)</span>.
                             </template>
                         </VCCountdown>
                     </small>

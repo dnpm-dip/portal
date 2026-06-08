@@ -68,8 +68,8 @@ export default defineComponent({
     <template v-else-if="busy">
         <div>
             <h5>Allgemein</h5>
-            <div class="d-flex flex-row gap-2">
-                <div class="entity-card text-center mb-3 w-100">
+            <div class="flex flex-row gap-2">
+                <div class="entity-card text-center mb-3 w-full">
                     <h6>Patienten pro Standort</h6>
                     <VCPlaceholder
                         v-for="i in 4"
@@ -79,7 +79,7 @@ export default defineComponent({
                         class="mb-2"
                     />
                 </div>
-                <div class="entity-card text-center mb-3 w-100">
+                <div class="entity-card text-center mb-3 w-full">
                     <h6>Geschlechterverteilung</h6>
                     <VCPlaceholder
                         v-for="i in 4"
@@ -90,7 +90,7 @@ export default defineComponent({
                     />
                 </div>
             </div>
-            <div class="entity-card text-center mb-3 w-100">
+            <div class="entity-card text-center mb-3 w-full">
                 <h6>Altersverteilung</h6>
                 <VCPlaceholder
                     v-for="i in 4"

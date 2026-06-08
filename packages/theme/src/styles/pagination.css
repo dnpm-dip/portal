@@ -1,8 +1,8 @@
 .pagination > li > .page-link {
-    color: #333;
-    background-color: #eee;
-    border: 1px solid #eee;
-    cursor:pointer;
+    color: var(--vc-color-fg);
+    background-color: var(--vc-color-bg-muted);
+    border: 1px solid var(--vc-color-bg-muted);
+    cursor: pointer;
     padding: 5px 8px;
     font-size: 0.75rem;
 }
@@ -13,7 +13,7 @@
 .pagination > li > .page-link:focus,
 .pagination > li > .page-link:hover,
 .pagination > li > .page-link.active {
-    background-color: #30373e;
-    color: #FFF;
-    border: 1px solid #30373e;
+    background-color: var(--vc-color-primary-600);
+    color: var(--vc-color-on-primary);
+    border: 1px solid var(--vc-color-primary-600);
 }

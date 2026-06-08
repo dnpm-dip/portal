@@ -38,7 +38,7 @@ export default defineComponent({
             </span>
         </h1>
         <div class="content-wrapper">
-            <div class="content-sidebar flex-column">
+            <div class="content-sidebar flex-col">
                 <DNav
                     :items="items"
                     path="/settings"

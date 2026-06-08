@@ -20,12 +20,12 @@ export default defineNuxtComponent({
 </script>
 <template>
     <template v-if="record.carePlans">
-        <div class="entity-card-group flex-row justify-content-evenly">
+        <div class="entity-card-group flex-row justify-evenly">
             <template
                 v-for="(item) in record.carePlans"
                 :key="item.id"
             >
-                <div class="entity-card flex-grow-1 mb-3">
+                <div class="entity-card grow mb-3">
                     <div class="row mb-3">
                         <div class="col">
                             <div>
@@ -34,7 +34,7 @@ export default defineNuxtComponent({
                             </div>
                             <div v-if="item.notes">
                                 <strong><i class="fas fa-shield" /> Notizen</strong>
-                                <div class="d-flex flex-column">
+                                <div class="flex flex-col">
                                     <template v-for="note in item.notes">
                                         {{ note }}
                                     </template>

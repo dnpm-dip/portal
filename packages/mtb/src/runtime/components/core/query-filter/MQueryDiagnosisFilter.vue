@@ -191,8 +191,8 @@ export default defineComponent({
             <i class="fa fa-stethoscope" /> Diagnose
         </template>
         <template #default>
-            <div class=" flex-column gap-1 d-flex">
-                <div class="d-flex flex-column gap-2">
+            <div class=" flex-col gap-1 flex">
+                <div class="flex flex-col gap-2">
                     <div>
                         <template
                             v-for="item in availableSubset"

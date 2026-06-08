@@ -168,7 +168,7 @@ export default defineComponent({
 </script>
 <template>
     <div class="mb-3">
-        <div class="d-flex flex-row">
+        <div class="flex flex-row">
             <div>
                 <VCFormCheckbox
                     v-model="form.combination"

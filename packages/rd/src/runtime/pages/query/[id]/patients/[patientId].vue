@@ -67,7 +67,7 @@ export default defineComponent({
                 >
                     <i class="fa fa-arrow-left" />
                 </NuxtLink>
-                Patient <small class="text-muted"> {{ record.patient.id }}</small>
+                Patient <small class="text-fg-muted"> {{ record.patient.id }}</small>
             </h4>
         </div>
 

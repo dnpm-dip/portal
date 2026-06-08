@@ -38,8 +38,8 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="validation-report-card entity-card w-100 d-flex flex-column gap-1">
-        <div class="d-flex flex-row">
+    <div class="validation-report-card entity-card w-full flex flex-col gap-1">
+        <div class="flex flex-row">
             <div>
                 <strong>Meldung </strong>
                 <small>#{{ info.id }}</small>
@@ -62,13 +62,13 @@ export default defineComponent({
                     :lazy-load="true"
                 >
                     <template #default="props">
-                        <div class="d-flex flex-column">
+                        <div class="flex flex-col">
                             <template
                                 v-for="(item, key) in props.data.issues"
                                 :key="key"
                             >
                                 <div class="alert alert-sm alert-secondary row">
-                                    <div class="col-2 d-flex flex-grow-1 flex-column align-items-center">
+                                    <div class="col-2 flex grow flex-col items-center">
                                         <div>
                                             <strong>Level</strong>
                                         </div>
@@ -84,7 +84,7 @@ export default defineComponent({
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-6 d-flex flex-grow-1 flex-column">
+                                    <div class="col-6 flex grow flex-col">
                                         <div>
                                             <strong>Nachricht</strong>
                                         </div>
@@ -92,7 +92,7 @@ export default defineComponent({
                                             {{ item.message }}
                                         </div>
                                     </div>
-                                    <div class="col-4 d-flex flex-grow-1 flex-column">
+                                    <div class="col-4 flex grow flex-col">
                                         <div>
                                             <strong>Pfad</strong>
                                         </div>
@@ -108,8 +108,8 @@ export default defineComponent({
             </div>
         </template>
         <template v-else>
-            <div class="d-flex flex-row">
-                <div class="d-flex flex-grow-1 flex-column align-items-center">
+            <div class="flex flex-row">
+                <div class="flex grow flex-col items-center">
                     <div class="severity-header severity-info">
                         <strong>{{ info.issues.info }}</strong>
                     </div>
@@ -117,7 +117,7 @@ export default defineComponent({
                         Infomeldung(en)
                     </div>
                 </div>
-                <div class="d-flex flex-grow-1 flex-column align-items-center">
+                <div class="flex grow flex-col items-center">
                     <div class="severity-header severity-warning">
                         <strong>{{ info.issues.warning }}</strong>
                     </div>
@@ -125,7 +125,7 @@ export default defineComponent({
                         Warnungsmeldung(en)
                     </div>
                 </div>
-                <div class="d-flex flex-grow-1 flex-column align-items-center">
+                <div class="flex grow flex-col items-center">
                     <div class="severity-header severity-danger">
                         <strong>{{ info.issues.error }}</strong>
                     </div>
@@ -136,9 +136,9 @@ export default defineComponent({
             </div>
         </template>
         <hr>
-        <div class="d-flex flex-row">
+        <div class="flex flex-row">
             <div class="ms-auto">
-                <small class="text-muted">
+                <small class="text-fg-muted">
                     <VCTimeago :datetime="info.createdAt" />
                 </small>
             </div>

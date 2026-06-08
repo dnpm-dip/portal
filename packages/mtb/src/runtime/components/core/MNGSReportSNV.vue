@@ -16,9 +16,9 @@ export default defineComponent({
 </script>
 <template>
     <div class="entity-card">
-        <div class="d-flex flex-row">
+        <div class="flex flex-row">
             <div
-                class="d-flex flex-column"
+                class="flex flex-col"
                 style="flex: 1 1 0;"
             >
                 <div>
@@ -46,7 +46,7 @@ export default defineComponent({
                 </div>
             </div>
             <div
-                class="d-flex flex-column"
+                class="flex flex-col"
                 style="flex: 1 1 0;"
             >
                 <div v-if="entity.localization">

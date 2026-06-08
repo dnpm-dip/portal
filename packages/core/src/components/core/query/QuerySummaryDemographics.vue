@@ -108,8 +108,8 @@ export default component as Component;
     <div>
         <h5>Allgemein</h5>
 
-        <div class="d-flex flex-row gap-2">
-            <div class="entity-card text-center mb-3 w-100">
+        <div class="flex flex-row gap-2">
+            <div class="entity-card text-center mb-3 w-full">
                 <h6>
                     Patienten pro Standort
                 </h6>
@@ -124,7 +124,7 @@ export default component as Component;
                 />
             </div>
 
-            <div class="entity-card text-center mb-3 w-100">
+            <div class="entity-card text-center mb-3 w-full">
                 <h6>
                     Geschlechterverteilung
                 </h6>
@@ -140,7 +140,7 @@ export default component as Component;
             </div>
         </div>
 
-        <div class="entity-card text-center mb-3 w-100">
+        <div class="entity-card text-center mb-3 w-full">
             <h6>
                 Altersverteilung
             </h6>

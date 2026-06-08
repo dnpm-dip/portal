@@ -406,7 +406,7 @@ export default defineComponent({
                 v-if="available.ageRange"
                 class="mb-3"
             >
-                <h6><i class="fas fa-users" /> Alter <small class="text-muted">({{ age.min }} - {{ age.max }})</small></h6>
+                <h6><i class="fas fa-users" /> Alter <small class="text-fg-muted">({{ age.min }} - {{ age.max }})</small></h6>
 
                 <div class="mt-3">
                     <VCFormSlider

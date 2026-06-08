@@ -221,7 +221,7 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="d-flex flex-column gap-2">
+    <div class="flex flex-col gap-2">
         <VCFormGroup>
             <template #label>
                 Gen
@@ -274,7 +274,7 @@ export default defineComponent({
                 @updated="handleVariantChanged"
             />
         </template>
-        <div class="d-flex flex-row gap-2">
+        <div class="flex flex-row gap-2">
             <div>
                 <VCFormCheckbox
                     v-model="form.supporting"

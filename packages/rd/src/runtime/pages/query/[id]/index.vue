@@ -113,7 +113,7 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <div class="d-flex flex-row mb-2">
+    <div class="flex flex-row mb-2">
         <div>
             <h4>
                 <NuxtLink
@@ -127,7 +127,7 @@ export default defineNuxtComponent({
         </div>
     </div>
 
-    <div class="d-flex flex-column gap-2 mb-2">
+    <div class="flex flex-col gap-2 mb-2">
         <div>
             <DNav
                 :items="navItems"
@@ -198,7 +198,7 @@ export default defineNuxtComponent({
         <VCModal v-model:open="modal">
             <VCModalContent class="modal-lg">
                 <div class="modal-header">
-                    <div class="d-flex flex-row w-100">
+                    <div class="flex flex-row w-full">
                         <div>
                             <h5 class="mb-0">
                                 <i class="fa fa-search" /> Suche

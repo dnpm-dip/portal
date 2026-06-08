@@ -198,16 +198,16 @@ export default defineNuxtComponent({
                             />
                         </template>
                         <template #body="props">
-                            <div class="d-flex flex-row">
+                            <div class="flex flex-row">
                                 <div
                                     v-for="(item, key) in props.data"
                                     :key="key"
                                 >
                                     <a
                                         :href="buildIdentityProviderURL(item.id)"
-                                        class="btn btn-dark btn-xs p-2 me-1 identity-provider-box bg-dark"
+                                        class="btn btn-dark btn-xs p-2 me-1 identity-provider-box bg-fg"
                                     >
-                                        <div class="d-flex flex-column">
+                                        <div class="flex flex-col">
                                             <div class="text-center mb-1">
                                                 <AIdentityProviderIcon
                                                     class="fa-2x"

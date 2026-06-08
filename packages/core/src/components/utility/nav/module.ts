@@ -17,7 +17,7 @@ export function buildNav(
 
     switch (options.direction) {
         case 'vertical':
-            clazz.push('flex-column');
+            clazz.push('flex-col');
             break;
     }
 
@@ -96,7 +96,7 @@ export function buildNav(
             },
             {
                 default: () => [
-                    h('div', { class: 'd-flex flex-row gap-1' }, [
+                    h('div', { class: 'flex flex-row gap-1' }, [
                         h('div', [
 
                             h('i', { class: `${item.icon}` }),

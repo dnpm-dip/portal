@@ -84,12 +84,12 @@ export default defineNuxtComponent({
         <div>
             <h5>Responses</h5>
         </div>
-        <div class="entity-card-group flex-row justify-content-evenly">
+        <div class="entity-card-group flex-row justify-evenly">
             <template
                 v-for="(item) in record.responses"
                 :key="item.id"
             >
-                <div class="entity-card flex-grow-1 mb-3">
+                <div class="entity-card grow mb-3">
                     <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.effectiveDate }}</div>
                     <div><strong><i class="fas fa-calculator" /> Code</strong> {{ item.value.display || item.value.code }}</div>
                     <div v-if="item.therapy">

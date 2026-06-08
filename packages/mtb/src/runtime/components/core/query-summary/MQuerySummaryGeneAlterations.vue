@@ -184,7 +184,7 @@ export default defineComponent({
 <template>
     <table
         v-if="busy && total === 0"
-        class="table table-bordered w-100"
+        class="table table-bordered w-full"
     >
         <thead>
             <tr>
@@ -253,8 +253,8 @@ export default defineComponent({
                 <i
                     class="fa"
                     :class="{
-                        'fa-check text-success': row.supporting,
-                        'fa-times text-danger': !row.supporting
+                        'fa-check text-success-600': row.supporting,
+                        'fa-times text-error-600': !row.supporting
                     }"
                 />
             </template>

@@ -78,7 +78,7 @@ export default defineComponent({
 </script>
 <template>
     <slot>
-        <ul class="list-unstyled mb-0 d-flex flex-wrap align-items-center">
+        <ul class="list-unstyled mb-0 flex flex-wrap items-center">
             <template
                 v-for="(item, index) in tags"
                 :key="item.id"
@@ -96,10 +96,10 @@ export default defineComponent({
                     </template>
                     <li
                         :key="item.id"
-                        class="badge mt-1 d-inline-flex align-items-center"
+                        class="badge mt-1 inline-flex items-center"
                         :class="[
                             tagClass,
-                            tagVariant ? `bg-${tagVariant}` : 'bg-secondary',
+                            tagVariant ? `bg-${tagVariant}` : 'bg-bg-muted',
                             { 'rounded-pill': tagPills },
                         ]"
                     >

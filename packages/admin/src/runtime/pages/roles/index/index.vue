@@ -102,7 +102,7 @@ export default defineNuxtComponent({
             >
                 <template #cell-name="{ row }: { row: any }">
                     <template v-if="row.display_name">
-                        {{ row.display_name }} <span class="text-muted">({{ row.name }})</span>
+                        {{ row.display_name }} <span class="text-fg-muted">({{ row.name }})</span>
                     </template>
                     <template v-else>
                         {{ row.name }}

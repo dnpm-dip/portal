@@ -99,7 +99,7 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="entity-card text-center mb-3 w-100">
+    <div class="entity-card text-center mb-3 w-full">
         <template v-if="busy || !data">
             <VCPlaceholder
                 v-for="i in 6"

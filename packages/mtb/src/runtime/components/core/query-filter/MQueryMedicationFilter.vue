@@ -224,8 +224,8 @@ export default defineComponent({
             </template>
         </template>
         <template #default>
-            <div class=" flex-column gap-1 d-flex">
-                <div class="d-flex flex-column gap-2">
+            <div class=" flex-col gap-1 flex">
+                <div class="flex flex-col gap-2">
                     <div>
                         <template
                             v-for="item in availableSubset"
@@ -240,7 +240,7 @@ export default defineComponent({
                                 >
                                     <template #label="labelProps">
                                         <label :for="labelProps.id">
-                                            <div class="d-flex flex-column">
+                                            <div class="flex flex-col">
                                                 <template
                                                     v-for="sub in item.children"
                                                     :key="sub.code"

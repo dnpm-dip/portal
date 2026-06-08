@@ -83,7 +83,7 @@ export default defineNuxtComponent({
                             :key="i"
                             class="list-item flex-row"
                         >
-                            <div class="entity-card w-100 mb-2">
+                            <div class="entity-card w-full mb-2">
                                 <VCPlaceholder
                                     :width="60 + i * 5 + '%'"
                                     animation="wave"

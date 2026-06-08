@@ -20,9 +20,9 @@ export default defineComponent({
             <strong>Lokalisierung</strong>
             <DCodingCommaList :items="entity.localization" />
         </div>
-        <div class="d-flex flex-row">
+        <div class="flex flex-row">
             <div
-                class="d-flex flex-column"
+                class="flex flex-col"
                 style="flex: 1 1 0;"
             >
                 <h6>3'</h6>
@@ -37,7 +37,7 @@ export default defineComponent({
                 </div>
             </div>
             <div
-                class="d-flex flex-column"
+                class="flex flex-col"
                 style="flex: 1 1 0;"
             >
                 <h6>5'</h6>

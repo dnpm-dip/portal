@@ -41,7 +41,7 @@ export default defineNuxtComponent({
             <div class="col">
                 <h5>Fall</h5>
 
-                <div class="entity-card-group flex-column">
+                <div class="entity-card-group flex-col">
                     <template
                         v-for="(item) in record.episodesOfCare"
                         :key="item.id"
@@ -63,7 +63,7 @@ export default defineNuxtComponent({
             </div>
             <div class="col">
                 <h5>Diagnose</h5>
-                <div class="d-flex flex-column gap-2">
+                <div class="flex flex-col gap-2">
                     <template
                         v-for="(diagnosis, key) in record.diagnoses"
                         :key="key"
@@ -89,7 +89,7 @@ export default defineNuxtComponent({
                                     v-for="item in diagnosis.codes"
                                     :key="item.code"
                                 >
-                                    <span class="ms-1 badge bg-dark">{{ item.display || item.code }}</span>
+                                    <span class="ms-1 badge bg-fg">{{ item.display || item.code }}</span>
                                 </template>
                             </div>
                             <div>
@@ -115,7 +115,7 @@ export default defineNuxtComponent({
                         v-for="(item, key) in record.hpoTerms"
                         :key="key"
                     >
-                        <span class="badge bg-dark ms-1">{{ item.value.display || item.value.code }}</span>
+                        <span class="badge bg-fg ms-1">{{ item.value.display || item.value.code }}</span>
                     </template>
                 </div>
             </div>
@@ -127,7 +127,7 @@ export default defineNuxtComponent({
             <h5 class="mb-0">
                 Therapien
             </h5>
-            <div class="d-flex flex-column gap-2">
+            <div class="flex flex-col gap-2">
                 <template
                     v-for="(item, index) in record.therapies"
                     :key="index"

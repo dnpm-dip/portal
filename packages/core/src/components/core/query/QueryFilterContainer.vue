@@ -26,7 +26,7 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="d-flex flex-column gap-1">
+    <div class="flex flex-col gap-1">
         <slot name="default" />
 
         <div class="entity-card">

@@ -62,7 +62,7 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="d-flex flex-column distribution-bar">
+    <div class="flex flex-col distribution-bar">
         <template
             v-for="(item, key) in items"
             :key="key"

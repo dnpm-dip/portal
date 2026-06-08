@@ -141,7 +141,7 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <div class="d-flex flex-row">
+    <div class="flex flex-row">
         <div>
             <h4>
                 <NuxtLink
@@ -155,9 +155,9 @@ export default defineNuxtComponent({
         </div>
     </div>
 
-    <div class="d-flex flex-column gap-3">
-        <div class="d-flex flex-column gap-2">
-            <div class="d-flex flex-row">
+    <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-row">
                 <div>
                     <DNav
                         :items="navItems"
@@ -169,7 +169,7 @@ export default defineNuxtComponent({
             </div>
             <div
                 v-if="isSummaryActive"
-                class="d-flex flex-row"
+                class="flex flex-row"
             >
                 <div>
                     <DNav
@@ -180,15 +180,15 @@ export default defineNuxtComponent({
             </div>
         </div>
 
-        <div class="entity-card w-100">
-            <div class="d-flex flex-column gap-2">
-                <div class="d-flex flex-row align-items-center">
+        <div class="entity-card w-full">
+            <div class="flex flex-col gap-2">
+                <div class="flex flex-row items-center">
                     <div>
-                        <h6 class="text-muted mb-0">
+                        <h6 class="text-fg-muted mb-0">
                             Kriterien
                         </h6>
                     </div>
-                    <div class="ms-auto d-flex gap-1">
+                    <div class="ms-auto flex gap-1">
                         <button
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleCriteriaExpansion"
@@ -232,7 +232,7 @@ export default defineNuxtComponent({
         <template v-if="entity">
             <div class="row">
                 <div class="col-6 col-md-9 col-lg-10">
-                    <div class="d-flex flex-column gap-3">
+                    <div class="flex flex-col gap-3">
                         <div>
                             <NuxtPage
                                 :entity="entity"
@@ -242,7 +242,7 @@ export default defineNuxtComponent({
                     </div>
                 </div>
                 <div class="col-6 col-md-3 col-lg-2">
-                    <div class="d-flex flex-column gap-3">
+                    <div class="flex flex-col gap-3">
                         <DQueryFilterContainer>
                             <template #default>
                                 <DQueryPatientFilters

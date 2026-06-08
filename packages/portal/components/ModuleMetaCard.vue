@@ -30,7 +30,7 @@ export default defineComponent({
 <template>
     <div
         v-if="display"
-        class="entity-card w-100 ratio-1x1"
+        class="entity-card w-full ratio-1x1"
     >
         <h3 class="mb-0">
             <VCLink

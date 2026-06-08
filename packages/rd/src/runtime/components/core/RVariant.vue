@@ -13,9 +13,9 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="entity-card w-100">
-        <div class="mt-2 d-flex flex-column">
-            <div class="d-flex justify-content-between mb-2 flex-column">
+    <div class="entity-card w-full">
+        <div class="mt-2 flex flex-col">
+            <div class="flex justify-between mb-2 flex-col">
                 <div>
                     <strong>Gene</strong>
                     <template
@@ -28,7 +28,7 @@ export default defineComponent({
 
                 <div
                     v-if="entity.cDNAChange"
-                    class="d-flex flex-grow-1 align-items-center flex-row"
+                    class="flex grow items-center flex-row"
                 >
                     <div>
                         <strong>
@@ -41,7 +41,7 @@ export default defineComponent({
                 </div>
                 <div
                     v-if="entity.gDNAChange"
-                    class="d-flex flex-grow-1 align-items-center flex-row"
+                    class="flex grow items-center flex-row"
                 >
                     <div>
                         <strong>genomische DNA-Änderung</strong>
@@ -52,7 +52,7 @@ export default defineComponent({
                 </div>
                 <div
                     v-if="entity.proteinChange"
-                    class="d-flex flex-grow-1 align-items-center flex-row"
+                    class="flex grow items-center flex-row"
                 >
                     <div>
                         <strong>Proteinänderung</strong>

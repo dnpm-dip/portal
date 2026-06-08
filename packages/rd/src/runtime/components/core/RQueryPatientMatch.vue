@@ -33,8 +33,8 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="entity-card w-100">
-        <div class="d-flex flex-row">
+    <div class="entity-card w-full">
+        <div class="flex flex-row">
             <div>
                 <strong># {{ Number.isInteger(index) ? index + 1 : entity.id }}</strong>
             </div>
@@ -54,15 +54,15 @@ export default defineComponent({
                 </NuxtLink>
             </div>
         </div>
-        <div :class="{'d-flex flex-row': extended}">
+        <div :class="{'flex flex-row': extended}">
             <div
-                class="d-flex justify-content-between mb-2 mt-2"
-                :class="{'flex-row': !extended, 'flex-column': extended}"
+                class="flex justify-between mb-2 mt-2"
+                :class="{'flex-row': !extended, 'flex-col': extended}"
             >
                 <div
                     v-if="entity.managingSite"
-                    class="d-flex flex-grow-1 align-items-center"
-                    :class="{'flex-row': extended, 'flex-column': !extended}"
+                    class="flex grow items-center"
+                    :class="{'flex-row': extended, 'flex-col': !extended}"
                 >
                     <div>
                         <strong>Standort</strong>
@@ -72,8 +72,8 @@ export default defineComponent({
                     </div>
                 </div>
                 <div
-                    class="d-flex flex-grow-1 align-items-center"
-                    :class="{'flex-row': extended, 'flex-column': !extended}"
+                    class="flex grow items-center"
+                    :class="{'flex-row': extended, 'flex-col': !extended}"
                 >
                     <div>
                         <strong>Alter</strong>
@@ -83,8 +83,8 @@ export default defineComponent({
                     </div>
                 </div>
                 <div
-                    class="d-flex flex-grow-1 align-items-center"
-                    :class="{'flex-row': extended, 'flex-column': !extended}"
+                    class="flex grow items-center"
+                    :class="{'flex-row': extended, 'flex-col': !extended}"
                 >
                     <div>
                         <strong>Geschlecht</strong>
@@ -94,18 +94,18 @@ export default defineComponent({
                     </div>
                 </div>
                 <div
-                    class="d-flex flex-grow-1 align-items-center"
-                    :class="{'flex-row': extended, 'flex-column': !extended}"
+                    class="flex grow items-center"
+                    :class="{'flex-row': extended, 'flex-col': !extended}"
                 >
                     <div>
                         <strong>Vital Status</strong>
                     </div>
                     <div :class="{'ms-1': extended}">
                         <template v-if="entity.vitalStatus.code === 'alive'">
-                            <span class="text-success">{{ entity.vitalStatus.display }}</span>
+                            <span class="text-success-600">{{ entity.vitalStatus.display }}</span>
                         </template>
                         <template v-else-if="entity.vitalStatus.code === 'deceased'">
-                            <span class="text-danger">{{ entity.vitalStatus.display }}</span>
+                            <span class="text-error-600">{{ entity.vitalStatus.display }}</span>
                         </template>
                         <template v-else>
                             {{ entity.vitalStatus.display }}
@@ -115,7 +115,7 @@ export default defineComponent({
             </div>
             <div
                 v-if="extended && entity.matchingCriteria"
-                class="ms-3 d-flex flex-column justify-content-between mb-2 mt-2"
+                class="ms-3 flex flex-col justify-between mb-2 mt-2"
             >
                 <div v-if="entity.matchingCriteria.diagnoses">
                     <strong>Diagnose Kategorien</strong>
@@ -124,7 +124,7 @@ export default defineComponent({
                         v-for="item in entity.matchingCriteria.diagnoses"
                         :key="item.code"
                     >
-                        <span class="badge bg-dark ms-1">{{ item.code }}</span>
+                        <span class="badge bg-fg ms-1">{{ item.code }}</span>
                     </template>
                 </div>
                 <div v-if="entity.matchingCriteria.hpoTerms">
@@ -134,7 +134,7 @@ export default defineComponent({
                         v-for="item in entity.matchingCriteria.hpoTerms"
                         :key="item.code"
                     >
-                        <span class="badge bg-dark ms-1">{{ item.code }}</span>
+                        <span class="badge bg-fg ms-1">{{ item.code }}</span>
                     </template>
                 </div>
                 <div v-if="entity.matchingCriteria.variants">
