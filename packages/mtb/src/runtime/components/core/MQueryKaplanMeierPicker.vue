@@ -40,8 +40,8 @@ export default defineComponent({
             .then(resolve);
 
         const transformCoding = (coding: Coding) => ({
-            id: coding.code,
-            value: coding.display ? `${coding.display}` : coding.code,
+            value: coding.code,
+            label: coding.display ? `${coding.display}` : coding.code,
         });
 
         const typeOptions = computed(() => data.value.map((v) => transformCoding(v.key)));

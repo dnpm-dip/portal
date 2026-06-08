@@ -6,11 +6,12 @@
   -->
 
 <script lang="ts">
+import { VCFormCheckboxGroup } from '@vuecs/forms';
 import type { PropType } from 'vue';
 import {
-    computed, 
-    defineComponent, 
-    onUnmounted, 
+    computed,
+    defineComponent,
+    onUnmounted,
     ref,
 } from 'vue';
 import {
@@ -27,7 +28,7 @@ import { injectHTTPClient } from '../../../core/http-client';
 import type { QueryTherapyRecommendedFilter } from '../../../domains';
 
 export default defineComponent({
-    components: { DQueryFilterBox },
+    components: { DQueryFilterBox, VCFormCheckboxGroup },
     props: {
         busy: {
             type: Boolean,
@@ -226,17 +227,18 @@ export default defineComponent({
         <template #default>
             <div class=" flex-col gap-1 flex">
                 <div class="flex flex-col gap-2">
-                    <div>
+                    <VCFormCheckboxGroup
+                        v-model="items"
+                        @update:model-value="handleChanged"
+                    >
                         <template
                             v-for="item in availableSubset"
                             :key="item.id"
                         >
                             <div class="form-check">
                                 <VCFormCheckbox
-                                    v-model="items"
                                     :label="true"
                                     :value="item.id"
-                                    @change.prevent="handleChanged"
                                 >
                                     <template #label="labelProps">
                                         <label :for="labelProps.id">
@@ -255,7 +257,7 @@ export default defineComponent({
                                 </VCFormCheckbox>
                             </div>
                         </template>
-                    </div>
+                    </VCFormCheckboxGroup>
 
                     <div class="ms-auto me-auto">
                         <VCPagination

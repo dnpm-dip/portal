@@ -1,4 +1,6 @@
-import { injectTranslatorLocale } from '@authup/client-web-kit';
+import { buildSubmitButtonDefaults, injectTranslatorLocale } from '@authup/client-web-kit';
+import { createValidup } from '@validup/vue';
+import { OptionalValue } from 'validup';
 import { de } from 'date-fns/locale/de';
 import { watch } from 'vue';
 
@@ -26,14 +28,20 @@ addCollection(faBrands);
 
 export default defineNuxtPlugin({
     name: 'vuecs',
-    dependsOn: ['authup'],
+    dependsOn: ['authup', 'dnpm:ilingo'],
     async setup(nuxt) {
         const app = nuxt.vueApp;
 
         app.use(vuecs, {
             themes: [clientWebKitTheme(), dnpmTheme()],
             icons: [fontAwesome()],
+            defaults: { submitButton: buildSubmitButtonDefaults() },
         });
+
+        app.use(createValidup({
+            optionalValue: [OptionalValue.UNDEFINED, OptionalValue.NULL, OptionalValue.EMPTY_STRING],
+            optionalAs: null,
+        }));
 
         app.use(installButton);
         app.use(installElements);

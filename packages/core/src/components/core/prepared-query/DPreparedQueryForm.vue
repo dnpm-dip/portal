@@ -1,25 +1,34 @@
 <script lang="ts">
-import useVuelidate from '@vuelidate/core';
-import { maxLength, minLength, required } from '@vuelidate/validators';
+import { useValidup } from '@validup/vue';
+import { createValidator } from '@validup/zod';
+import { Container } from 'validup';
+import { z } from 'zod';
 import { VCFormGroup, VCFormInput } from '@vuecs/forms';
 
-import { IVuelidate } from '@ilingo/vuelidate';
+import { IFieldValidation } from '@ilingo/validup-vue';
 import type { PropType } from 'vue';
 import {
-    computed, 
-    defineComponent, 
-    reactive, 
-    ref, 
-    toRef, 
+    computed,
+    defineComponent,
+    reactive,
+    ref,
+    toRef,
     watch,
 } from 'vue';
 import type { PreparedQuery } from '../../../domains';
 import { PreparedQueryAPI } from '../../../domains';
 import { injectHTTPClient } from '../../../core';
 
+class PreparedQueryValidator extends Container<{ name: string }> {
+    protected override initialize() {
+        super.initialize();
+        this.mount('name', createValidator(z.string().min(3).max(128)));
+    }
+}
+
 export default defineComponent({
     components: {
-        IVuelidate,
+        IFieldValidation,
         VCFormGroup,
         VCFormInput,
     },
@@ -59,13 +68,7 @@ export default defineComponent({
 
         watch(entityId, () => init());
 
-        const vuelidate = useVuelidate({
-            name: {
-                required,
-                minLength: minLength(3),
-                maxLength: maxLength(128),
-            },
-        }, form);
+        const v = useValidup(new PreparedQueryValidator(), form);
 
         const submit = async () => {
             if (isBusy.value) return;
@@ -106,41 +109,39 @@ export default defineComponent({
             handleChanged,
             isBusy,
             submit,
-            vuelidate,
+            v,
         };
     },
 });
 </script>
 <template>
     <div>
-        <IVuelidate :validation="vuelidate.name">
-            <template #default="props">
-                <VCFormGroup
-                    :validation-messages="props.data"
-                    :validation-severity="props.severity"
-                >
-                    <template #label>
-                        Name
-                    </template>
-                    <VCFormInput
-                        v-model="vuelidate.name.$model"
-                        @change="handleChanged"
-                    />
-                </VCFormGroup>
-            </template>
-        </IVuelidate>
+        <IFieldValidation
+            v-slot="{ value }"
+            :field="v.fields.name"
+        >
+            <VCFormGroup :validation="value">
+                <template #label>
+                    Name
+                </template>
+                <VCFormInput
+                    v-model="v.fields.name.$model.value"
+                    @change="handleChanged"
+                />
+            </VCFormGroup>
+        </IFieldValidation>
     </div>
     <div>
         <slot
             name="default"
             :is-busy="isBusy"
-            :is-invalid="vuelidate.$invalid"
+            :is-invalid="v.$invalid.value"
             :submit="submit"
         >
             <button
                 type="button"
                 class="btn btn-xs btn-dark"
-                :disabled="isBusy || vuelidate.$invalid"
+                :disabled="isBusy || v.$invalid.value"
                 @click.prevent="submit"
             >
                 Speichern

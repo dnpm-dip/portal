@@ -1,3 +1,4 @@
+import type { FormOption } from '@vuecs/forms';
 import { isObject } from '../../utils';
 import type { Coding } from './types';
 
@@ -14,10 +15,7 @@ export function toCoding(input: number | string | Coding) : Coding {
     return input;
 }
 
-type FormSelectOption = {
-    value: string | number,
-    label: any
-};
+type FormSelectOption = FormOption;
 
 export function transformCodingsToFormSelectOptions(
     input: Coding[],

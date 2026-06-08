@@ -10,12 +10,14 @@ import {
     injectStore,
 } from '@authup/client-web-kit';
 import { type IdentityProvider, IdentityProviderProtocol } from '@authup/core-kit';
-import { IVuelidate } from '@ilingo/vuelidate';
-import useVuelidate from '@vuelidate/core';
-import { maxLength, minLength, required } from '@vuelidate/validators';
+import { IFieldValidation } from '@ilingo/validup-vue';
+import { useValidup } from '@validup/vue';
+import { createValidator } from '@validup/zod';
+import { Container } from 'validup';
+import { z } from 'zod';
 import {
-    computed, 
-    toRef, 
+    computed,
+    toRef,
     watch,
 } from 'vue';
 import {
@@ -29,12 +31,25 @@ import {
     useRoute,
 } from '#app';
 
+class LoginCredentialsValidator extends Container<{
+    name: string;
+    password: string;
+    realm_id: string;
+}> {
+    protected override initialize() {
+        super.initialize();
+        this.mount('name', createValidator(z.string().min(3).max(255)));
+        this.mount('password', createValidator(z.string().min(3).max(255)));
+        this.mount('realm_id', { optional: true }, createValidator(z.string()));
+    }
+}
+
 export default defineNuxtComponent({
     components: {
         APagination,
         AIdentityProviders,
         AIdentityProviderIcon,
-        IVuelidate,
+        IFieldValidation,
     },
     setup() {
         definePageMeta({
@@ -53,19 +68,7 @@ export default defineNuxtComponent({
             realm_id: '',
         });
 
-        const vuelidate = useVuelidate({
-            name: {
-                required,
-                minLength: minLength(3),
-                maxLength: maxLength(255),
-            },
-            password: {
-                required,
-                minLength: minLength(3),
-                maxLength: maxLength(255),
-            },
-            realm_id: {},
-        }, form);
+        const v = useValidup(new LoginCredentialsValidator(), form);
 
         const busy = ref(false);
 
@@ -116,7 +119,7 @@ export default defineNuxtComponent({
         const buildIdentityProviderURL = (id: string) => apiClient.identityProvider.getAuthorizeUri(id);
 
         return {
-            vuelidate,
+            v,
             form,
             submit,
             busy,
@@ -140,49 +143,39 @@ export default defineNuxtComponent({
         <form @submit.prevent="submit">
             <div class="row">
                 <div class="col-8">
-                    <IVuelidate :validation="vuelidate.name">
-                        <template #default="props">
-                            <VCFormGroup
-                                :validation-messages="props.data"
-                                :validation-severity="props.severity"
-                            >
-                                <template #label>
-                                    Name
-                                </template>
-                                <template #default>
-                                    <VCFormInput
-                                        v-model="vuelidate.name.$model"
-                                    />
-                                </template>
-                            </VCFormGroup>
-                        </template>
-                    </IVuelidate>
+                    <IFieldValidation
+                        v-slot="{ value }"
+                        :field="v.fields.name"
+                    >
+                        <VCFormGroup :validation="value">
+                            <template #label>
+                                Name
+                            </template>
+                            <VCFormInput v-model="v.fields.name.$model.value" />
+                        </VCFormGroup>
+                    </IFieldValidation>
 
-                    <IVuelidate :validation="vuelidate.password">
-                        <template #default="props">
-                            <VCFormGroup
-                                :validation-messages="props.data"
-                                :validation-severity="props.severity"
-                            >
-                                <template #label>
-                                    Password
-                                </template>
-                                <template #default>
-                                    <VCFormInput
-                                        v-model="vuelidate.password.$model"
-                                        type="password"
-                                    />
-                                </template>
-                            </VCFormGroup>
-                        </template>
-                    </IVuelidate>
+                    <IFieldValidation
+                        v-slot="{ value }"
+                        :field="v.fields.password"
+                    >
+                        <VCFormGroup :validation="value">
+                            <template #label>
+                                Password
+                            </template>
+                            <VCFormInput
+                                v-model="v.fields.password.$model.value"
+                                type="password"
+                            />
+                        </VCFormGroup>
+                    </IFieldValidation>
 
                     <VCButton
                         type="submit"
                         color="primary"
                         label="Login"
                         :loading="busy"
-                        :disabled="busy || vuelidate.$invalid"
+                        :disabled="busy || v.$invalid.value"
                     />
 
                     <hr>

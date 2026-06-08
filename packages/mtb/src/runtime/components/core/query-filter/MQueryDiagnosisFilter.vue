@@ -6,26 +6,27 @@
   -->
 
 <script lang="ts">
+import { VCFormCheckboxGroup } from '@vuecs/forms';
 import {
-    computed, 
-    defineComponent, 
-    onUnmounted, 
+    computed,
+    defineComponent,
+    onUnmounted,
     ref,
 } from 'vue';
 import {
-    type Coding, 
-    DQueryFilterBox, 
-    QueryEventBusEventName, 
-    injectQueryEventBus, 
-    isCoding, 
-    toCoding, 
+    type Coding,
+    DQueryFilterBox,
+    QueryEventBusEventName,
+    injectQueryEventBus,
+    isCoding,
+    toCoding,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
 
 export default defineComponent({
-    components: { DQueryFilterBox },
+    components: { DQueryFilterBox, VCFormCheckboxGroup },
     props: {
         busy: {
             type: Boolean,
@@ -193,22 +194,23 @@ export default defineComponent({
         <template #default>
             <div class=" flex-col gap-1 flex">
                 <div class="flex flex-col gap-2">
-                    <div>
+                    <VCFormCheckboxGroup
+                        v-model="items"
+                        @update:model-value="handleChanged"
+                    >
                         <template
                             v-for="item in availableSubset"
                             :key="item.code"
                         >
                             <div class="form-check">
                                 <VCFormCheckbox
-                                    v-model="items"
                                     :label="true"
                                     :label-content="item.code +':' + item.display"
                                     :value="item.code"
-                                    @change.prevent="handleChanged"
                                 />
                             </div>
                         </template>
-                    </div>
+                    </VCFormCheckboxGroup>
 
                     <div class="ms-auto me-auto">
                         <VCPagination

@@ -34,17 +34,22 @@
         "@nuxt/kit": "^4.4.5"
     },
     "devDependencies": {
-        "@ilingo/vuelidate": "^6.0.0",
+        "@ilingo/validup": "^1.0.1",
+        "@ilingo/validup-vue": "^1.0.1",
+        "@ilingo/vue": "^6.0.0",
         "@nuxt/module-builder": "^1.0.2",
         "@types/node": "^25.8.0",
         "@vuecs/forms": "^5.1.0",
         "@vuecs/overlays": "^1.0.2",
         "@vuecs/pagination": "^2.1.1",
         "@vuecs/placeholder": "^1.0.2",
-        "@vuelidate/core": "^2.0.3",
-        "@vuelidate/validators": "^2.0.4",
+        "@validup/vue": "^0.3.3",
+        "@validup/zod": "^0.3.3",
+        "ilingo": "^6.0.0",
         "nuxt": "^4.4.5",
-        "vue": "^3.5.34",
-        "vue-chartjs": "^5.3.3"
+        "validup": "^0.5.1",
+        "vue": "^3.5.35",
+        "vue-chartjs": "^5.3.3",
+        "zod": "^4.3.6"
     }
 }

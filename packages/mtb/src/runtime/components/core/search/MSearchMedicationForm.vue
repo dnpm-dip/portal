@@ -13,7 +13,7 @@ import {
     DValueSet, 
     type ValueSetCoding,
 } from '@dnpm-dip/core';
-import { type FormOption, VCFormSelectSearch } from '@vuecs/forms';
+import { type FormOption, VCFormCheckboxGroup, VCFormSelectSearch } from '@vuecs/forms';
 import {
     type PropType,
     computed,
@@ -24,9 +24,10 @@ import {
 
 export default defineComponent({
     components: {
-        DValueSet, 
-        DTags, 
-        DCollectionTransform, 
+        DValueSet,
+        DTags,
+        DCollectionTransform,
+        VCFormCheckboxGroup,
         VCFormSelectSearch,
     },
     props: {
@@ -88,7 +89,7 @@ export default defineComponent({
         const allDrugs = computed(() => [
             ...form.atcDrugs,
             ...form.customDrugs,
-        ].map((item) => ({ id: item.value, value: String(item.label) })));
+        ].map((item) => ({ id: String(item.value), value: String(item.label) })));
 
         const currentTab = ref('atc');
         const tabs = ref([
@@ -178,34 +179,33 @@ export default defineComponent({
                     @change="handleChanged"
                 />
             </div>
-            <div class="ms-3">
-                <VCFormCheckbox
-                    v-model="form.usage"
-                    :group-class="'form-switch'"
-                    :value="'recommended'"
-                    :label="true"
-                    :group="true"
-                    @change="handleChanged"
-                >
-                    <template #label="{id}">
-                        <label :for="id">Empfohlen?</label>
-                    </template>
-                </VCFormCheckbox>
-            </div>
-            <div class="ms-3">
-                <VCFormCheckbox
-                    v-model="form.usage"
-                    :group-class="'form-switch'"
-                    :value="'used'"
-                    :label="true"
-                    :group="true"
-                    @change="handleChanged"
-                >
-                    <template #label="{id}">
-                        <label :for="id">Verabreicht?</label>
-                    </template>
-                </VCFormCheckbox>
-            </div>
+            <VCFormCheckboxGroup
+                v-model="form.usage"
+                @update:model-value="handleChanged"
+            >
+                <div class="ms-3">
+                    <VCFormCheckbox
+                        :group-class="'form-switch'"
+                        :value="'recommended'"
+                        :label="true"
+                    >
+                        <template #label="{id}">
+                            <label :for="id">Empfohlen?</label>
+                        </template>
+                    </VCFormCheckbox>
+                </div>
+                <div class="ms-3">
+                    <VCFormCheckbox
+                        :group-class="'form-switch'"
+                        :value="'used'"
+                        :label="true"
+                    >
+                        <template #label="{id}">
+                            <label :for="id">Verabreicht?</label>
+                        </template>
+                    </VCFormCheckbox>
+                </div>
+            </VCFormCheckboxGroup>
         </div>
 
         <ul class="nav nav-pills mt-1 mb-1">

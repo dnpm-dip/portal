@@ -1,4 +1,5 @@
 <script lang="ts">
+import { VCFormCheckboxGroup } from '@vuecs/forms';
 import {
     computed,
     defineComponent,
@@ -15,7 +16,7 @@ import { injectHTTPClient } from '../../core';
 import type { QueryHpoFilter } from '../../domains';
 
 export default defineComponent({
-    components: { DQueryFilterBox },
+    components: { DQueryFilterBox, VCFormCheckboxGroup },
     props: {
         queryId: {
             type: String,
@@ -126,22 +127,23 @@ export default defineComponent({
             >
                 <h6><VCIcon name="fa6-solid:tags" /> Term</h6>
 
-                <div>
+                <VCFormCheckboxGroup
+                    v-model="items"
+                    @update:model-value="handleChanged"
+                >
                     <template
                         v-for="item in available.value"
                         :key="item.code"
                     >
                         <div class="form-check">
                             <VCFormCheckbox
-                                v-model="items"
                                 :label="true"
                                 :label-content="(item.display || item.code)"
                                 :value="item.code"
-                                @change="handleChanged"
                             />
                         </div>
                     </template>
-                </div>
+                </VCFormCheckboxGroup>
             </div>
         </template>
     </DQueryFilterBox>
