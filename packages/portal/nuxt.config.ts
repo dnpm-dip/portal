@@ -21,7 +21,15 @@ export default defineNuxtConfig({
         '../admin/src/module',
         '../mtb/src/module',
         '../rd/src/module',
+        '@vuecs/nuxt',
     ],
+
+    vuecs: {
+        injectTokens: false,
+        themes: [],
+        colorMode: { value: 'system' },
+        colorPalette: false,
+    },
 
     experimental: { scanPageMeta: false },
 
