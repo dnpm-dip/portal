@@ -1,7 +1,7 @@
 <script lang="ts">
 import useVuelidate from '@vuelidate/core';
 import { maxLength, minLength, required } from '@vuelidate/validators';
-import { VCFormGroup, VCFormInput } from '@vuecs/form-controls';
+import { VCFormGroup, VCFormInput } from '@vuecs/forms';
 
 import { IVuelidate } from '@ilingo/vuelidate';
 import type { PropType } from 'vue';

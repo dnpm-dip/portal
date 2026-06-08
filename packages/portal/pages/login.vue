@@ -174,13 +174,12 @@ export default defineNuxtComponent({
                         </template>
                     </IVuelidate>
 
-                    <VCFormSubmit
-                        v-model="busy"
-                        :invalid="vuelidate.$invalid"
-                        :create-text="'Login'"
-                        :create-button-class="{value: 'btn btn-sm btn-dark btn-block', presets: { bootstrap: false }}"
-                        :create-icon-class="'fa-solid fa-right-to-bracket'"
-                        :submit="submit"
+                    <VCButton
+                        type="submit"
+                        color="primary"
+                        label="Login"
+                        :loading="busy"
+                        :disabled="busy || vuelidate.$invalid"
                     />
 
                     <hr>

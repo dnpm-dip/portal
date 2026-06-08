@@ -1,10 +1,9 @@
 <script lang="ts">
-import { BFormTag } from 'bootstrap-vue-next';
 import type { PropType, SlotsType } from 'vue';
 import {
-    defineComponent, 
-    ref, 
-    toRef, 
+    defineComponent,
+    ref,
+    toRef,
     watch,
 } from 'vue';
 
@@ -14,7 +13,6 @@ type Tag = {
     value: string
 };
 export default defineComponent({
-    components: { BFormTag },
     props: {
         modelValue: { type: Array as PropType<Tag[]> },
         items: { type: Array as PropType<Tag[]> },
@@ -96,17 +94,23 @@ export default defineComponent({
                     <template v-if="index > 0">
                         <slot name="between" />
                     </template>
-                    <BFormTag
+                    <li
                         :key="item.id"
-                        class="mt-1"
-                        :class="tagClass"
-                        tag="li"
-                        :variant="tagVariant"
-                        :pill="tagPills"
-                        @remove="drop"
+                        class="badge mt-1 d-inline-flex align-items-center"
+                        :class="[
+                            tagClass,
+                            tagVariant ? `bg-${tagVariant}` : 'bg-secondary',
+                            { 'rounded-pill': tagPills },
+                        ]"
                     >
                         {{ item.value }}
-                    </BFormTag>
+                        <button
+                            type="button"
+                            class="btn-close btn-close-white ms-1"
+                            aria-label="Remove"
+                            @click.prevent="drop(item.value)"
+                        />
+                    </li>
                 </slot>
             </template>
         </ul>

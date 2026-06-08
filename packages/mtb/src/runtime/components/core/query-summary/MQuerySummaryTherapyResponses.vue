@@ -6,14 +6,13 @@
   -->
 
 <script lang="ts">
-import type { Component } from 'vue';
 import {
     defineComponent,
+    onMounted,
     onUnmounted,
     ref,
 } from 'vue';
-import type { BTableSortBy, TableFieldRaw } from 'bootstrap-vue-next';
-import { BPlaceholderTable, BTable } from 'bootstrap-vue-next';
+import type { SortDescriptor, TableColumn, TableSortState } from '@vuecs/table';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
 import {
     DSortIndicator,
@@ -34,8 +33,6 @@ export default defineComponent({
         DCodingText,
         DSortIndicator,
         MTherapyResponseDistributionBar,
-        BPlaceholderTable,
-        BTable: BTable as unknown as Component,
     },
     props: {
         queryId: {
@@ -48,87 +45,85 @@ export default defineComponent({
         const queryEventBus = injectQueryEventBus();
         const queryFilterStore = useQueryFilterStore();
 
-        const tableRef = ref<{ refresh: () => void } | null>(null);
+        const items = ref<QueryTherapyResponse[]>([]);
         const busy = ref(false);
         const total = ref(0);
         const offset = ref(0);
         const limit = ref(50);
-        const sortBy = ref<BTableSortBy[]>([]);
+        const sortBy = ref<TableSortState>([]);
 
-        const fields : TableFieldRaw[] = [
+        const fields : TableColumn[] = [
             {
                 key: 'tumorEntity',
                 label: 'Entität',
-                thClass: 'text-left',
-                tdClass: 'text-left',
+                headerClass: 'text-left',
+                cellClass: 'text-left',
                 sortable: true,
             },
             {
                 key: 'medications',
                 label: 'Medikationen',
-                thClass: 'text-left',
-                tdClass: 'text-left',
+                headerClass: 'text-left',
+                cellClass: 'text-left',
             },
             {
                 key: 'supportingAlteration',
                 label: 'Stützende Variante',
-                thClass: 'text-left',
-                tdClass: 'text-left',
+                headerClass: 'text-left',
+                cellClass: 'text-left',
                 sortable: true,
             },
             {
                 key: 'count',
                 label: 'Anzahl Therapien',
-                thClass: 'text-center',
-                tdClass: 'text-center align-middle',
+                headerClass: 'text-center',
+                cellClass: 'text-center align-middle',
                 sortable: true,
             },
             {
                 key: 'orr',
                 label: 'ORR (%)',
-                thClass: 'text-center',
-                tdClass: 'text-center align-middle',
+                headerClass: 'text-center',
+                cellClass: 'text-center align-middle',
                 sortable: true,
             },
             {
                 key: 'meanDuration',
                 label: 'Dauer in Wochen (Ø)',
-                thClass: 'text-center',
-                tdClass: 'text-center align-middle',
+                headerClass: 'text-center',
+                cellClass: 'text-center align-middle',
                 sortable: true,
             },
             {
                 key: 'responseDistribution',
                 label: 'Response Verteilung',
-                thClass: 'text-center',
-                tdClass: 'text-center align-middle',
+                headerClass: 'text-center',
+                cellClass: 'text-center align-middle',
             },
         ];
 
-        const provider = async (ctx: { sortBy?: readonly BTableSortBy[] }): Promise<QueryTherapyResponse[]> => {
+        const refresh = async (): Promise<void> => {
             busy.value = true;
             try {
                 const sort: Record<string, 'asc' | 'desc'> = {};
-                if (ctx.sortBy) {
-                    ctx.sortBy.forEach((s) => {
-                        if (s.order) {
-                            switch (s.key) {
-                                case 'tumorEntity': {
-                                    sort['tumorEntity.display'] = s.order;
-                                    break;
-                                }
-                                case 'supportingAlteration': {
-                                    sort['supportingAlteration.gene.display'] = s.order;
-                                    break;
-                                }
-                                default: {
-                                    sort[s.key] = s.order;
-                                    break;
-                                }
+                sortBy.value.forEach((s: SortDescriptor) => {
+                    if (s.direction) {
+                        switch (s.key) {
+                            case 'tumorEntity': {
+                                sort['tumorEntity.display'] = s.direction;
+                                break;
+                            }
+                            case 'supportingAlteration': {
+                                sort['supportingAlteration.gene.display'] = s.direction;
+                                break;
+                            }
+                            default: {
+                                sort[s.key] = s.direction;
+                                break;
                             }
                         }
-                    });
-                }
+                    }
+                });
 
                 const meta: ResourceCollectionLoadMeta = {
                     limit: limit.value,
@@ -141,7 +136,7 @@ export default defineComponent({
                 total.value = response.size ?? response.entries.length;
                 limit.value = response.limit ?? limit.value;
                 offset.value = response.offset ?? offset.value;
-                return response.entries;
+                items.value = response.entries;
             } finally {
                 busy.value = false;
             }
@@ -150,21 +145,30 @@ export default defineComponent({
         const load = (meta: PaginationMeta) => {
             offset.value = meta.offset;
             limit.value = meta.limit;
-            tableRef.value?.refresh();
+            void refresh();
         };
+
+        const onSortUpdate = (next: TableSortState) => {
+            sortBy.value = next;
+            void refresh();
+        };
+
+        onMounted(() => {
+            void refresh();
+        });
 
         const removeSessionHandler = queryEventBus.on(
             QueryEventBusEventName.SESSION_UPDATED,
             () => {
                 offset.value = 0;
-                tableRef.value?.refresh();
+                void refresh();
             },
         );
         const removeFiltersHandler = queryEventBus.on(
             QueryEventBusEventName.FILTERS_COMMITED,
             () => {
                 offset.value = 0;
-                tableRef.value?.refresh();
+                void refresh();
             },
         );
 
@@ -175,31 +179,59 @@ export default defineComponent({
 
         const resetSort = () => {
             sortBy.value = [];
-            tableRef.value?.refresh();
+            void refresh();
         };
 
         return {
-            tableRef,
+            items,
             busy,
             total,
             offset,
             limit,
             sortBy,
             fields,
-            provider,
             load,
+            onSortUpdate,
             resetSort,
         };
     },
 });
 </script>
 <template>
-    <BPlaceholderTable
+    <table
         v-if="busy && total === 0"
-        :rows="5"
-        :columns="7"
-        animation="wave"
-    />
+        class="table table-bordered w-100"
+    >
+        <thead>
+            <tr>
+                <th
+                    v-for="c in 7"
+                    :key="c"
+                >
+                    <VCPlaceholder
+                        width="80%"
+                        animation="wave"
+                    />
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                v-for="r in 5"
+                :key="r"
+            >
+                <td
+                    v-for="c in 7"
+                    :key="c"
+                >
+                    <VCPlaceholder
+                        width="100%"
+                        animation="wave"
+                    />
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <div v-show="!busy || total > 0">
         <div class="alert alert-sm alert-warning alert-sm">
             Bitte beachten: Ein Patient kann mehrere unterschiedliche Therapieumsetzungen erhalten haben.
@@ -219,37 +251,35 @@ export default defineComponent({
             @reset="resetSort"
         />
 
-        <BTable
-            ref="tableRef"
-            v-model:sort-by="sortBy"
-            :provider="provider"
-            :fields="fields"
+        <VCTable
+            :data="items"
+            :columns="fields"
             :busy="busy"
-            :variant="'light'"
-            no-provider-paging
-            :multisort="true"
-            outlined
+            :sort="sortBy"
+            multi-sort
+            bordered
+            @update:sort="onSortUpdate"
         >
-            <template #cell(tumorEntity)="data">
-                <DCodingText :entity="(data.item as QueryTherapyResponse).tumorEntity" />
+            <template #cell-tumorEntity="{ row }: { row: any }">
+                <DCodingText :entity="(row as QueryTherapyResponse).tumorEntity" />
             </template>
-            <template #cell(supportingAlteration)="data">
-                <MGeneAlterationText :entity="(data.item as QueryTherapyResponse).supportingAlteration" />
+            <template #cell-supportingAlteration="{ row }: { row: any }">
+                <MGeneAlterationText :entity="(row as QueryTherapyResponse).supportingAlteration" />
             </template>
-            <template #cell(medications)="data">
+            <template #cell-medications="{ row }: { row: any }">
                 <ul class="column">
                     <li
-                        v-for="(item,key) in (data.item as QueryTherapyResponse).medications"
+                        v-for="(item,key) in (row as QueryTherapyResponse).medications"
                         :key="key"
                     >
                         <DCodingText :entity="{ code: item }" />
                     </li>
                 </ul>
             </template>
-            <template #cell(responseDistribution)="data">
-                <MTherapyResponseDistributionBar :distribution="(data.item as QueryTherapyResponse).responseDistribution" />
+            <template #cell-responseDistribution="{ row }: { row: any }">
+                <MTherapyResponseDistributionBar :distribution="(row as QueryTherapyResponse).responseDistribution" />
             </template>
-        </BTable>
+        </VCTable>
 
         <VCPagination
             :busy="busy"

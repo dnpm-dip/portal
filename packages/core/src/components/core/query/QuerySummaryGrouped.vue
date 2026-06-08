@@ -1,6 +1,6 @@
 <script lang="ts">
-import { VCFormSelectSearch } from '@vuecs/form-controls';
-import type { FormSelectOption } from '@vuecs/form-controls';
+import { VCFormSelectSearch } from '@vuecs/forms';
+import type { FormOption } from '@vuecs/forms';
 import type {
     PropType,
     Ref,
@@ -40,16 +40,16 @@ export default defineComponent({
         const id = ref(undefined) as Ref<string | number | undefined>;
         const item = ref(null) as Ref<KeyValueRecord<unknown, unknown> | null>;
 
-        const options = computed<FormSelectOption[]>(() => {
+        const options = computed<FormOption[]>(() => {
             if (!props.items) {
                 return [];
             }
 
             return props.items.map((el, id) => ({
-                id,
-                value: props.labelFn ?
+                value: id,
+                label: (props.labelFn ?
                     props.labelFn(el) :
-                    generateChartLabelsForKeyValueRecord(el),
+                    generateChartLabelsForKeyValueRecord(el)) || '',
             }));
         });
 

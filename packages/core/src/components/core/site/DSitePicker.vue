@@ -7,8 +7,8 @@
 
 <script lang="ts">
 import { wrapFnWithBusyState } from '@authup/client-web-kit';
-import type { FormSelectOption } from '@vuecs/form-controls';
-import { VCFormSelectSearch } from '@vuecs/form-controls';
+import type { FormOption } from '@vuecs/forms';
+import { VCFormSelectSearch } from '@vuecs/forms';
 import type { PropType } from 'vue';
 import {
     defineComponent, 
@@ -38,12 +38,12 @@ export default defineComponent({
         const httpClient = injectHTTPClient();
 
         const busy = ref(false);
-        const items = ref<FormSelectOption[]>([]);
-        const current = ref<FormSelectOption[]>([]);
+        const items = ref<FormOption[]>([]);
+        const current = ref<FormOption[]>([]);
 
-        const transform = (input: Coding) : FormSelectOption => ({
-            id: input.code,
-            value: input.display || input.code,
+        const transform = (input: Coding) : FormOption => ({
+            value: input.code,
+            label: input.display || input.code,
         });
 
         const load = wrapFnWithBusyState(busy, async () => {
@@ -58,9 +58,9 @@ export default defineComponent({
         const init = () => {
             if (props.modelValue) {
                 current.value = props.modelValue.map((coding) => ({
-                    id: coding.code,
-                    value: coding.display || coding.code,
-                } satisfies FormSelectOption));
+                    value: coding.code,
+                    label: coding.display || coding.code,
+                } satisfies FormOption));
 
                 return;
             }
@@ -68,10 +68,10 @@ export default defineComponent({
             current.value = [];
         };
 
-        const handleUpdated = (value: FormSelectOption[]) => {
+        const handleUpdated = (value: FormOption[]) => {
             const data = value.map((item) => ({
-                code: `${item.id}`,
-                display: typeof item.value === 'string' ? item.value : undefined,
+                code: `${item.value}`,
+                display: typeof item.label === 'string' ? item.label : undefined,
             } satisfies Coding));
 
             emit('update:modelValue', data);

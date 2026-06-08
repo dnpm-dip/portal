@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { type Coding } from '@dnpm-dip/core';
-import { VCFormSelect } from '@vuecs/form-controls';
+import { VCFormSelect } from '@vuecs/forms';
 import { computed, defineComponent, ref } from 'vue';
 import { injectHTTPClient } from '../../core/http-client';
 import type { KaplanMeierOptions } from '../../domains';

@@ -18,8 +18,6 @@ import {
     toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { BPlaceholder, BTable } from 'bootstrap-vue-next';
-import type { Component } from 'vue';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
@@ -28,12 +26,10 @@ import { queryGeneAlterationToString } from '../../../domains';
 
 export default defineComponent({
     components: {
-        BPlaceholder,
         DKVTableEntryKey,
         DKVChartTableSwitch,
         DQuerySummaryNested,
         DQuerySummaryGrouped,
-        BTable: BTable as unknown as Component,
     },
     props: {
         queryId: {
@@ -247,31 +243,31 @@ export default defineComponent({
                         @clicked="handleUsedClick"
                     >
                         <template #table="tableData">
-                            <BTable
-                                :items="tableData.data"
-                                :fields="[
+                            <VCTable
+                                :data="tableData.data"
+                                :columns="[
                                     {
                                         key: 'key',
                                         label: 'Element',
-                                        thClass: 'text-left',
-                                        tdClass: 'text-left',
+                                        headerClass: 'text-left',
+                                        cellClass: 'text-left',
                                     },
                                     {
                                         key: 'value',
                                         label: 'Dauer in Wochen',
-                                        thClass: 'text-center',
-                                        tdClass: 'text-center',
+                                        headerClass: 'text-center',
+                                        cellClass: 'text-center',
                                     }
                                 ]"
-                                outlined
+                                bordered
                             >
-                                <template #cell(key)="cell">
-                                    <DKVTableEntryKey :entity="(cell.item as any)" />
+                                <template #cell-key="{ row }: { row: any }">
+                                    <DKVTableEntryKey :entity="(row as any)" />
                                 </template>
-                                <template #cell(value)="cell">
-                                    {{ Number((cell.item as { value: number }).value).toFixed(2) }}
+                                <template #cell-value="{ row }: { row: any }">
+                                    {{ Number((row as { value: number }).value).toFixed(2) }}
                                 </template>
-                            </BTable>
+                            </VCTable>
                         </template>
                     </DKVChartTableSwitch>
                 </div>
@@ -284,7 +280,7 @@ export default defineComponent({
             <div class="d-flex flex-column gap-2">
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Empfehlungen nach stützender molekularer Alteration</h6>
-                    <BPlaceholder
+                    <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
                         :width="40 + i * 10 + '%'"
@@ -294,7 +290,7 @@ export default defineComponent({
                 </div>
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse</h6>
-                    <BPlaceholder
+                    <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
                         :width="40 + i * 10 + '%'"
@@ -310,7 +306,7 @@ export default defineComponent({
             <div class="d-flex flex-column gap-2">
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse</h6>
-                    <BPlaceholder
+                    <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
                         :width="40 + i * 10 + '%'"
@@ -320,7 +316,7 @@ export default defineComponent({
                 </div>
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Mittlere Therapiedauer</h6>
-                    <BPlaceholder
+                    <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
                         :width="40 + i * 10 + '%'"

@@ -2,9 +2,8 @@
 import { QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore } from '@dnpm-dip/core';
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCPagination } from '@vuecs/pagination';
-import { BPlaceholder } from 'bootstrap-vue-next';
 import {
-    type PropType, 
+    type PropType,
     type Ref,
 } from 'vue';
 import { onUnmounted, ref } from 'vue';
@@ -15,7 +14,6 @@ import type { QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
     components: {
-        BPlaceholder,
         QueryPatientMatchEntity,
         QueryPatientMatchList,
         VCPagination,
@@ -81,12 +79,12 @@ export default defineNuxtComponent({
                             class="list-item flex-row"
                         >
                             <div class="entity-card w-100 mb-2">
-                                <BPlaceholder
+                                <VCPlaceholder
                                     :width="60 + i * 5 + '%'"
                                     animation="wave"
                                     class="mb-1"
                                 />
-                                <BPlaceholder
+                                <VCPlaceholder
                                     :width="40 + i * 8 + '%'"
                                     animation="wave"
                                     size="sm"

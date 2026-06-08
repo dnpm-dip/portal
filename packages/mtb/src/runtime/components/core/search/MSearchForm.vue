@@ -28,8 +28,8 @@ import {
 } from '@dnpm-dip/core';
 import {
     VCFormSelectSearch,
-} from '@vuecs/form-controls';
-import type { FormSelectOption } from '@vuecs/form-controls';
+} from '@vuecs/forms';
+import type { FormOption } from '@vuecs/forms';
 import {
     type PropType, 
     reactive, 
@@ -81,10 +81,10 @@ export default defineComponent({
 
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
         const modeSites = ref<Coding[]>([]);
-        const modeOptions : FormSelectOption[] = [
-            { id: QueryRequestMode.LOCAL, value: 'Lokal' },
-            { id: QueryRequestMode.FEDERATED, value: 'Föderiert' },
-            { id: QueryRequestMode.CUSTOM, value: 'Benutzerdefiniert' },
+        const modeOptions : FormOption[] = [
+            { value: QueryRequestMode.LOCAL, label: 'Lokal' },
+            { value: QueryRequestMode.FEDERATED, label: 'Föderiert' },
+            { value: QueryRequestMode.CUSTOM, label: 'Benutzerdefiniert' },
         ];
 
         const busy = ref(false);
@@ -105,14 +105,14 @@ export default defineComponent({
         const mutations = ref<FormTabInput<QueryGeneAlterationCriteria>[]>([]);
         const mutationsInCombination = ref(false);
 
-        const diagnoses = ref<FormSelectOption[]>([]);
-        const tumorMorphologies = ref<FormSelectOption[]>([]);
+        const diagnoses = ref<FormOption[]>([]);
+        const tumorMorphologies = ref<FormOption[]>([]);
 
         const medicationDrugs = ref<Coding[]>([]);
         const medicationUsage = ref<string[]>([]);
         const medicationInCombination = ref(false);
 
-        const responses = ref<FormSelectOption[]>([]);
+        const responses = ref<FormOption[]>([]);
 
         const reset = async () => {
             if (busy.value) return;
@@ -310,8 +310,8 @@ export default defineComponent({
         };
 
         const transformCodings = (coding: ValueSetCoding) => ({
-            id: coding.code,
-            value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
+            value: coding.code,
+            label: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
         const handleMedicationUpdated = ({
@@ -397,7 +397,7 @@ export default defineComponent({
                         </template>
                     </DFormTabGroups>
 
-                    <VCFormInputCheckbox
+                    <VCFormCheckbox
                         v-model="mutationsInCombination"
                         :group-class="'form-switch'"
                         :label="true"

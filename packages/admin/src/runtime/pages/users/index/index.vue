@@ -1,4 +1,5 @@
 <script lang="ts">
+import type { TableColumn } from '@vuecs/table';
 import type { User } from '@authup/core-kit';
 import {
     PermissionName,
@@ -13,9 +14,7 @@ import {
     storeToRefs,
     usePermissionCheck,
 } from '@authup/client-web-kit';
-import { BTable } from 'bootstrap-vue-next';
 import type { BuildInput } from 'rapiq';
-import type { Component } from 'vue';
 import { defineNuxtComponent } from '#imports';
 
 export default defineNuxtComponent({
@@ -25,7 +24,6 @@ export default defineNuxtComponent({
         ASearch,
         AUsers,
         AEntityDelete,
-        BTable: BTable as unknown as Component,
     },
     emits: ['deleted'],
     setup(props, { emit }) {
@@ -41,34 +39,34 @@ export default defineNuxtComponent({
         const hasEditPermission = usePermissionCheck({ name: PermissionName.USER_UPDATE });
         const hasDropPermission = usePermissionCheck({ name: PermissionName.USER_DELETE });
 
-        const fields = [
+        const columns: TableColumn[] = [
             {
                 key: 'name',
                 label: 'Name',
-                thClass: 'text-left',
-                tdClass: 'text-left',
+                headerClass: 'text-left',
+                cellClass: 'text-left',
             },
             {
                 key: 'created_at',
                 label: 'Erstelldatum',
-                thClass: 'text-center',
-                tdClass: 'text-center',
+                headerClass: 'text-center',
+                cellClass: 'text-center',
             },
             {
                 key: 'updated_at',
                 label: 'Aktualisierungsdatum',
-                thClass: 'text-left',
-                tdClass: 'text-left',
+                headerClass: 'text-left',
+                cellClass: 'text-left',
             },
             {
                 key: 'options',
                 label: '',
-                tdClass: 'text-left',
+                cellClass: 'text-left',
             },
         ];
 
         return {
-            fields,
+            columns,
             hasEditPermission,
             hasDropPermission,
             handleDeleted,
@@ -99,21 +97,21 @@ export default defineNuxtComponent({
             />
         </template>
         <template #body="props">
-            <BTable
-                :items="props.data"
-                :fields="fields"
+            <VCTable
+                :data="props.data"
+                :columns="columns"
                 :busy="props.busy"
-                outlined
+                bordered
             >
-                <template #cell(created_at)="data">
-                    <VCTimeago :datetime="data.item.created_at" />
+                <template #cell-created_at="{ row }: { row: any }">
+                    <VCTimeago :datetime="row.created_at" />
                 </template>
-                <template #cell(updated_at)="data">
-                    <VCTimeago :datetime="data.item.created_at" />
+                <template #cell-updated_at="{ row }: { row: any }">
+                    <VCTimeago :datetime="row.created_at" />
                 </template>
-                <template #cell(options)="data">
+                <template #cell-options="{ row }: { row: any }">
                     <NuxtLink
-                        :to="'/admin/users/'+ data.item.id"
+                        :to="'/admin/users/'+ row.id"
                         class="btn btn-xs btn-outline-primary me-1"
                         :disabled="!hasEditPermission"
                     >
@@ -121,14 +119,14 @@ export default defineNuxtComponent({
                     </NuxtLink>
                     <AEntityDelete
                         class="btn btn-xs btn-outline-danger"
-                        :entity-id="data.item.id"
+                        :entity-id="row.id"
                         entity-type="user"
                         :with-text="false"
                         :disabled="!hasDropPermission"
                         @deleted="props.deleted"
                     />
                 </template>
-            </BTable>
+            </VCTable>
         </template>
     </AUsers>
 </template>

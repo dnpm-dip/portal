@@ -16,7 +16,7 @@ import {
     toRef, 
     watch,
 } from 'vue';
-import { VCFormSelectSearch } from '@vuecs/form-controls';
+import { VCFormSelectSearch } from '@vuecs/forms';
 import { DCodeSystem, DCollectionTransform } from '@dnpm-dip/core';
 import type { QueryCriteriaVariant } from '../../domains';
 

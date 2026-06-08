@@ -8,7 +8,6 @@ import {
     injectQueryEventBus,
 } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
-import { BModal } from 'bootstrap-vue-next';
 import { computed, ref } from 'vue';
 import { defineNuxtComponent, useRoute } from '#imports';
 import QueryDiagnosisFilter from '../../../components/core/RQueryDiagnosisFilter.vue';
@@ -19,7 +18,6 @@ import type { QuerySession } from '../../../domains';
 export default defineNuxtComponent({
     components: {
         DQueryFilterContainer,
-        BModal,
         DQueryInfoBox,
         QueryHPOFilter,
         QueryDiagnosisFilter,
@@ -197,39 +195,38 @@ export default defineNuxtComponent({
             </div>
         </div>
 
-        <BModal
-            v-model="modal"
-            :no-footer="true"
-            :size="'lg'"
-        >
-            <template #header="props">
-                <div class="d-flex flex-row w-100">
-                    <div>
-                        <h5 class="mb-0">
-                            <i class="fa fa-search" /> Suche
-                        </h5>
-                    </div>
-                    <div class="ms-auto">
-                        <button
-                            type="button"
-                            class="btn btn-xs btn-secondary"
-                            @click.prevent="props.close()"
-                        >
-                            <i class="fa fa-times" />
-                        </button>
+        <VCModal v-model:open="modal">
+            <VCModalContent class="modal-lg">
+                <div class="modal-header">
+                    <div class="d-flex flex-row w-100">
+                        <div>
+                            <h5 class="mb-0">
+                                <i class="fa fa-search" /> Suche
+                            </h5>
+                        </div>
+                        <div class="ms-auto">
+                            <button
+                                type="button"
+                                class="btn btn-xs btn-secondary"
+                                @click.prevent="modal = false"
+                            >
+                                <i class="fa fa-times" />
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </template>
-
-            <SearchForm
-                :query-mode="entity.mode.code"
-                :query-peers="entity.peers"
-                :query-id="entity.id"
-                :criteria="entity.criteria"
-                :prepared-query-id="preparedQueryId"
-                @query-updated="handleModalUpdated"
-                @failed="handleFailed"
-            />
-        </BModal>
+                <div class="modal-body">
+                    <SearchForm
+                        :query-mode="entity.mode.code"
+                        :query-peers="entity.peers"
+                        :query-id="entity.id"
+                        :criteria="entity.criteria"
+                        :prepared-query-id="preparedQueryId"
+                        @query-updated="handleModalUpdated"
+                        @failed="handleFailed"
+                    />
+                </div>
+            </VCModalContent>
+        </VCModal>
     </template>
 </template>

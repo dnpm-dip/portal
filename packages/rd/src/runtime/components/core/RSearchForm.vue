@@ -17,8 +17,8 @@ import {
     QueryRequestMode, 
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { VCFormSelectSearch } from '@vuecs/form-controls';
-import type { FormSelectOption } from '@vuecs/form-controls';
+import { VCFormSelectSearch } from '@vuecs/forms';
+import type { FormOption } from '@vuecs/forms';
 import { type PropType, toRef, watch } from 'vue';
 import {
     defineComponent, 
@@ -64,22 +64,22 @@ export default defineComponent({
 
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
         const modeSites = ref<Coding[]>([]);
-        const modeOptions : FormSelectOption[] = [
-            { id: QueryRequestMode.LOCAL, value: 'Lokal' },
-            { id: QueryRequestMode.FEDERATED, value: 'Föderiert' },
-            { id: QueryRequestMode.CUSTOM, value: 'Benutzerdefiniert' },
+        const modeOptions : FormOption[] = [
+            { value: QueryRequestMode.LOCAL, label: 'Lokal' },
+            { value: QueryRequestMode.FEDERATED, label: 'Föderiert' },
+            { value: QueryRequestMode.CUSTOM, label: 'Benutzerdefiniert' },
         ];
 
         const busy = ref(false);
         const criteria = toRef(props, 'criteria');
 
-        const categories = ref<FormSelectOption[]>([]);
-        const hpoTerms = ref<FormSelectOption[]>([]);
+        const categories = ref<FormOption[]>([]);
+        const hpoTerms = ref<FormOption[]>([]);
         const variants = ref<FormTabInput<QueryCriteriaVariant<string>>[]>([]);
 
         const parseCategory = (coding: Coding) => ({
-            id: `${coding.system}:::${coding.code}`,
-            value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
+            value: `${coding.system}:::${coding.code}`,
+            label: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
         const reset = async () => {
@@ -117,8 +117,8 @@ export default defineComponent({
                 if (criteria.value.hpoTerms) {
                     for (const term of criteria.value.hpoTerms) {
                         hpoTerms.value.push({
-                            id: term.code,
-                            value: term.display || term.code,
+                            value: term.code,
+                            label: term.display || term.code,
                         });
                     }
                 }
@@ -146,8 +146,8 @@ export default defineComponent({
         Promise.resolve()
             .then(() => reset());
 
-        const selectCategory = (item: FormSelectOption) => {
-            const index = categories.value.findIndex((el) => el.id === item.id);
+        const selectCategory = (item: FormOption) => {
+            const index = categories.value.findIndex((el) => el.value === item.value);
             if (index === -1) {
                 categories.value.push(item);
             } else {
@@ -155,8 +155,8 @@ export default defineComponent({
             }
         };
 
-        const selectHPOTerm = (item: FormSelectOption) => {
-            const index = hpoTerms.value.findIndex((el) => el.id === item.id);
+        const selectHPOTerm = (item: FormOption) => {
+            const index = hpoTerms.value.findIndex((el) => el.value === item.value);
             if (index === -1) {
                 hpoTerms.value.push(item);
             } else {
@@ -199,7 +199,7 @@ export default defineComponent({
                 payload.hpoTerms = [];
 
                 for (const term of hpoTerms.value) {
-                    payload.hpoTerms.push({ code: `${term.id}` });
+                    payload.hpoTerms.push({ code: `${term.value}` });
                 }
             }
 
@@ -207,7 +207,7 @@ export default defineComponent({
                 payload.diagnoses = [];
 
                 for (const category of categories.value) {
-                    const id = `${category.id}`;
+                    const id = `${category.value}`;
                     const index = id.indexOf(':::');
 
                     payload.diagnoses.push({
@@ -264,8 +264,8 @@ export default defineComponent({
         };
 
         const transformCodings = (coding: ValueSetCoding) => ({
-            id: coding.code,
-            value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
+            value: coding.code,
+            label: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
         return {

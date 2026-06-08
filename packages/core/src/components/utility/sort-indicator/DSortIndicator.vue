@@ -7,17 +7,17 @@
 
 <script lang="ts">
 import { type PropType, computed, defineComponent } from 'vue';
-import type { BTableSortBy, TableFieldRaw } from 'bootstrap-vue-next';
+import type { SortDescriptor, TableColumn } from '@vuecs/table';
 import { isObject } from 'smob';
 
 export default defineComponent({
     props: {
         sortBy: {
-            type: Array as PropType<BTableSortBy[]>,
+            type: Array as PropType<SortDescriptor[]>,
             default: () => [],
         },
         fields: {
-            type: Array as PropType<TableFieldRaw[]>,
+            type: Array as PropType<TableColumn[]>,
             default: () => [],
         },
         labelMap: {
@@ -28,7 +28,7 @@ export default defineComponent({
     emits: ['reset'],
     setup(props, { emit }) {
         const activeSorts = computed(() => props.sortBy
-            .filter((s) => s.order)
+            .filter((s) => s.direction)
             .map((s) => {
                 let label: string | undefined = props.labelMap[s.key];
 
@@ -44,7 +44,7 @@ export default defineComponent({
                 return {
                     key: s.key,
                     label,
-                    order: s.order,
+                    order: s.direction,
                 };
             }));
 

@@ -5,8 +5,8 @@ import {
     DCollectionTransform, 
     type FormTabInput,
 } from '@dnpm-dip/core';
-import { VCFormSelect, VCFormSelectSearch } from '@vuecs/form-controls';
-import type { FormSelectOption } from '@vuecs/form-controls';
+import { VCFormSelect, VCFormSelectSearch } from '@vuecs/forms';
+import type { FormOption } from '@vuecs/forms';
 import {
     type Component,
     type PropType,
@@ -61,10 +61,10 @@ export default defineComponent({
         });
         const mutationData = ref<null | QueryGeneAlterationVariantCriteria>(null);
 
-        const mutationOptions : FormSelectOption[] = [
-            { id: QueryMutationType.CNV, value: 'CNV' },
-            { id: QueryMutationType.SNV, value: 'SNV' },
-            { id: QueryMutationType.FUSION, value: 'Fusion' },
+        const mutationOptions : FormOption[] = [
+            { value: QueryMutationType.CNV, label: 'CNV' },
+            { value: QueryMutationType.SNV, label: 'SNV' },
+            { value: QueryMutationType.FUSION, label: 'Fusion' },
         ];
 
         const comp = ref<Component | null>(null);
@@ -192,9 +192,9 @@ export default defineComponent({
         const transformConcepts = (
             concept: CodeSystemConcept,
         ) => {
-            const option : FormSelectOption = {
-                id: `${concept.code}+++${concept.display}`,
-                value: concept.display,
+            const option : FormOption = {
+                value: `${concept.code}+++${concept.display}`,
+                label: concept.display,
             };
 
             return option;
@@ -276,7 +276,7 @@ export default defineComponent({
         </template>
         <div class="d-flex flex-row gap-2">
             <div>
-                <VCFormInputCheckbox
+                <VCFormCheckbox
                     v-model="form.supporting"
                     :group-class="'form-switch'"
                     :label="true"
@@ -284,7 +284,7 @@ export default defineComponent({
                 />
             </div>
             <div>
-                <VCFormInputCheckbox
+                <VCFormCheckbox
                     v-model="form.wildtype"
                     :group-class="'form-switch'"
                     :label="true"

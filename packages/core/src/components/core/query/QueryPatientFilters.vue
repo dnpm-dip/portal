@@ -1,10 +1,10 @@
 <script lang="ts">
-import { VCFormRangeMultiSlider } from '@vuecs/form-controls';
-import { 
-    computed, 
-    defineComponent, 
-    onUnmounted, 
-    ref, 
+import { VCFormCheckboxGroup, VCFormSlider } from '@vuecs/forms';
+import {
+    computed,
+    defineComponent,
+    onUnmounted,
+    ref,
 } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core';
@@ -17,7 +17,8 @@ import QueryFilterBox from './QueryFilterBox.vue';
 export default defineComponent({
     components: {
         QueryFilterBox,
-        VCFormRangeMultiSlider,
+        VCFormCheckboxGroup,
+        VCFormSlider,
     },
     props: {
         queryId: {
@@ -188,13 +189,21 @@ export default defineComponent({
 
         onUnmounted(() => removeFilterUpdatedHandler());
 
-        const handleAgeRangeChanged = (ctx: { min: number, max: number }) => {
+        const handleAgeRangeChanged = (value: number | number[]) => {
             if (!available.value.ageRange) {
                 return;
             }
 
-            const minRounded = Math.round(ctx.min);
-            const maxRounded = Math.round(ctx.max);
+            const [nextMin, nextMax] = Array.isArray(value) ?
+                value :
+                [value, value];
+
+            if (typeof nextMin === 'undefined' || typeof nextMax === 'undefined') {
+                return;
+            }
+
+            const minRounded = Math.round(nextMin);
+            const maxRounded = Math.round(nextMax);
 
             if (minRounded < available.value.ageRange.min) {
                 return;
@@ -327,22 +336,23 @@ export default defineComponent({
             >
                 <h6><i class="fas fa-transgender-alt" /> Geschlecht</h6>
 
-                <div>
+                <VCFormCheckboxGroup
+                    v-model="gender"
+                    @update:model-value="handleGenderChanged"
+                >
                     <template
                         v-for="item in available.gender"
                         :key="item.code"
                     >
                         <div class="form-check">
-                            <VCFormInputCheckbox
-                                v-model="gender"
+                            <VCFormCheckbox
                                 :label="true"
                                 :label-content="(item.display || item.code)"
                                 :value="item.code"
-                                @change="handleGenderChanged"
                             />
                         </div>
                     </template>
-                </div>
+                </VCFormCheckboxGroup>
             </div>
             <div
                 v-if="available.vitalStatus"
@@ -350,22 +360,23 @@ export default defineComponent({
             >
                 <h6><i class="fas fa-heartbeat" /> Vital Status</h6>
 
-                <div>
+                <VCFormCheckboxGroup
+                    v-model="vitalStatus"
+                    @update:model-value="handleVitalStatusChanged"
+                >
                     <template
                         v-for="item in available.vitalStatus"
                         :key="item.code"
                     >
                         <div class="form-check">
-                            <VCFormInputCheckbox
-                                v-model="vitalStatus"
+                            <VCFormCheckbox
                                 :label="true"
                                 :label-content="(item.display || item.code)"
                                 :value="item.code"
-                                @change="handleVitalStatusChanged"
                             />
                         </div>
                     </template>
-                </div>
+                </VCFormCheckboxGroup>
             </div>
             <div
                 v-if="available.site"
@@ -373,22 +384,23 @@ export default defineComponent({
             >
                 <h6><i class="fas fa-hospital" /> Standort</h6>
 
-                <div>
+                <VCFormCheckboxGroup
+                    v-model="site"
+                    @update:model-value="handleSiteChanged"
+                >
                     <template
                         v-for="item in available.site"
                         :key="item.code"
                     >
                         <div class="form-check">
-                            <VCFormInputCheckbox
-                                v-model="site"
+                            <VCFormCheckbox
                                 :label="true"
                                 :label-content="(item.display || item.code)"
                                 :value="item.code"
-                                @change="handleSiteChanged"
                             />
                         </div>
                     </template>
-                </div>
+                </VCFormCheckboxGroup>
             </div>
             <div
                 v-if="available.ageRange"
@@ -397,10 +409,11 @@ export default defineComponent({
                 <h6><i class="fas fa-users" /> Alter <small class="text-muted">({{ age.min }} - {{ age.max }})</small></h6>
 
                 <div class="mt-3">
-                    <VCFormRangeMultiSlider
-                        :min="age.min"
-                        :max="age.max"
-                        @change="handleAgeRangeChanged"
+                    <VCFormSlider
+                        :model-value="[age.min, age.max]"
+                        :min="available.ageRange.min"
+                        :max="available.ageRange.max"
+                        @update:model-value="handleAgeRangeChanged"
                     />
                 </div>
             </div>

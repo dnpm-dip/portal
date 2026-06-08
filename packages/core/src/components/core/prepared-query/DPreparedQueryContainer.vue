@@ -1,9 +1,8 @@
 <script lang="ts">
-import { BModal } from 'bootstrap-vue-next';
 import type { Component } from 'vue';
 import {
-    computed, 
-    defineComponent, 
+    computed,
+    defineComponent,
     ref,
 } from 'vue';
 import type { PreparedQuery } from '../../../domains';
@@ -18,7 +17,6 @@ type PreparedQueriesInstance = {
 
 const component = defineComponent({
     components: {
-        BModal,
         DPreparedQueryForm,
         DPreparedQuery,
         DPreparedQueries,
@@ -232,51 +230,48 @@ export default component as Component;
             </DPreparedQueries>
         </div>
 
-        <BModal
-            v-model="modal"
-            :no-footer="true"
-            :no-close-on-backdrop="true"
-            :no-close-on-esc="true"
-        >
-            <template #header>
-                <h6 class="mb-0">
-                    Vordefinierte Anfrage
-                </h6>
-            </template>
-            <template #default="props">
-                <DPreparedQueryForm
-                    :criteria="criteria"
-                    :use-case="useCase"
-                    :entity="preparedQuery"
-                    @created="handleCreated"
-                    @updated="handleUpdated"
-                >
-                    <template #default="fProps">
-                        <div class="d-flex flex-row">
-                            <div>
-                                <button
-                                    :disabled="fProps.isBusy"
-                                    type="button"
-                                    class="btn btn-secondary btn-xs"
-                                    @click.prevent="props.cancel()"
-                                >
-                                    Cancel
-                                </button>
+        <VCModal v-model:open="modal">
+            <VCModalContent>
+                <div class="modal-header">
+                    <h6 class="mb-0">
+                        Vordefinierte Anfrage
+                    </h6>
+                </div>
+                <div class="modal-body">
+                    <DPreparedQueryForm
+                        :criteria="criteria"
+                        :use-case="useCase"
+                        :entity="preparedQuery"
+                        @created="handleCreated"
+                        @updated="handleUpdated"
+                    >
+                        <template #default="fProps">
+                            <div class="d-flex flex-row">
+                                <div>
+                                    <button
+                                        :disabled="fProps.isBusy"
+                                        type="button"
+                                        class="btn btn-secondary btn-xs"
+                                        @click.prevent="modal = false"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                                <div class="ms-auto">
+                                    <button
+                                        type="button"
+                                        class="btn btn-xs btn-dark"
+                                        :disabled="fProps.isBusy || fProps.isInvalid"
+                                        @click.prevent="fProps.submit"
+                                    >
+                                        Speichern
+                                    </button>
+                                </div>
                             </div>
-                            <div class="ms-auto">
-                                <button
-                                    type="button"
-                                    class="btn btn-xs btn-dark"
-                                    :disabled="fProps.isBusy || fProps.isInvalid"
-                                    @click.prevent="fProps.submit"
-                                >
-                                    Speichern
-                                </button>
-                            </div>
-                        </div>
-                    </template>
-                </DPreparedQueryForm>
-            </template>
-        </BModal>
+                        </template>
+                    </DPreparedQueryForm>
+                </div>
+            </VCModalContent>
+        </VCModal>
     </div>
 </template>

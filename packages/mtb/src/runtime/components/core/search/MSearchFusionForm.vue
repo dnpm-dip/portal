@@ -13,7 +13,7 @@ import {
     DTags,
     transformConceptToFormSelectOption,
 } from '@dnpm-dip/core';
-import { VCFormSelectSearch } from '@vuecs/form-controls';
+import { VCFormSelectSearch } from '@vuecs/forms';
 import {
     type PropType, 
     computed, 

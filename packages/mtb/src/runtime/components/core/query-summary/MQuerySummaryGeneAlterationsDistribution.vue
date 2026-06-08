@@ -14,14 +14,12 @@ import {
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { BPlaceholder } from 'bootstrap-vue-next';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QuerySummaryGeneAlterationDistribution } from '../../../domains';
 
 export default defineComponent({
     components: {
-        BPlaceholder,
         DQuerySummaryGrouped,
         DKVChartTableSwitch,
     },
@@ -90,7 +88,7 @@ export default defineComponent({
         <div>
             <h5>Verteilung nach Alteration</h5>
             <div class="entity-card text-center mb-3">
-                <BPlaceholder
+                <VCPlaceholder
                     v-for="i in 5"
                     :key="i"
                     :width="40 + i * 10 + '%'"

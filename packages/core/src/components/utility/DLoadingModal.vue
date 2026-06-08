@@ -6,12 +6,10 @@
   -->
 
 <script lang="ts">
-import { BModal } from 'bootstrap-vue-next';
 import type { Component } from 'vue';
 import { defineComponent, toRef } from 'vue';
 
 const component = defineComponent({
-    components: { BModal },
     props: {
         display: {
             type: Boolean,
@@ -28,25 +26,21 @@ const component = defineComponent({
 export default component as Component;
 </script>
 <template>
-    <BModal
-        v-model="modal"
-        class="modal-loading"
-        :no-header="true"
-        :no-footer="true"
-        :no-close-on-backdrop="true"
-    >
-        <template #default>
-            <div class="modal-loading-wrapper">
-                <div>
-                    <div class="modal-loading-box" />
-                    <div class="modal-loading-box" />
-                    <div class="modal-loading-box" />
-                    <div class="modal-loading-box" />
-                    <div class="modal-loading-box" />
+    <VCModal :open="modal">
+        <VCModalContent class="modal-loading">
+            <div class="modal-body">
+                <div class="modal-loading-wrapper">
+                    <div>
+                        <div class="modal-loading-box" />
+                        <div class="modal-loading-box" />
+                        <div class="modal-loading-box" />
+                        <div class="modal-loading-box" />
+                        <div class="modal-loading-box" />
+                    </div>
                 </div>
             </div>
-        </template>
-    </BModal>
+        </VCModalContent>
+    </VCModal>
 </template>
 <style>
 .modal-loading .modal-content,

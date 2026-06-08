@@ -5,7 +5,6 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import { BTooltip } from 'bootstrap-vue-next';
 import { type Coding, type DistributionConceptsCount, isCoding } from '@dnpm-dip/core';
 import { type PropType, computed, defineComponent } from 'vue';
 import { RecistColor } from '../../domains';
@@ -19,7 +18,6 @@ type Item = {
 };
 
 export default defineComponent({
-    directives: { BTooltip },
     props: {
         distribution: {
             type: Object as PropType<DistributionConceptsCount<Coding<string>>>,
@@ -70,7 +68,6 @@ export default defineComponent({
             :key="key"
         >
             <div
-                v-b-tooltip.hover.top
                 :title="item.title"
                 :style="{
                     height: (item.percent * 1.25) + 'px',

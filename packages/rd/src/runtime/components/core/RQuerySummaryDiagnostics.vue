@@ -7,14 +7,12 @@ import {
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { BPlaceholder } from 'bootstrap-vue-next';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { injectHTTPClient } from '../../core';
 import type { QuerySummaryDiagnostics } from '../../domains';
 
 export default defineComponent({
     components: {
-        BPlaceholder,
         DKVChart,
         DQuerySummaryGrouped,
     },
@@ -126,7 +124,7 @@ export default defineComponent({
                         <h6 class="text-center">
                             Diagnose Kategorien
                         </h6>
-                        <BPlaceholder
+                        <VCPlaceholder
                             v-for="i in 5"
                             :key="i"
                             :width="40 + i * 10 + '%'"
@@ -140,7 +138,7 @@ export default defineComponent({
                         <h6 class="text-center">
                             HPOTermen
                         </h6>
-                        <BPlaceholder
+                        <VCPlaceholder
                             v-for="i in 5"
                             :key="i"
                             :width="40 + i * 10 + '%'"
@@ -155,7 +153,7 @@ export default defineComponent({
 
             <h5>Verteilung nach Varianten</h5>
             <div class="entity-card text-center mb-3 w-100">
-                <BPlaceholder
+                <VCPlaceholder
                     v-for="i in 5"
                     :key="i"
                     :width="40 + i * 10 + '%'"

@@ -232,7 +232,7 @@ export default defineComponent({
                             :key="item.id"
                         >
                             <div class="form-check">
-                                <VCFormInputCheckbox
+                                <VCFormCheckbox
                                     v-model="items"
                                     :label="true"
                                     :value="item.id"
@@ -252,7 +252,7 @@ export default defineComponent({
                                             </div>
                                         </label>
                                     </template>
-                                </VCFormInputCheckbox>
+                                </VCFormCheckbox>
                             </div>
                         </template>
                     </div>

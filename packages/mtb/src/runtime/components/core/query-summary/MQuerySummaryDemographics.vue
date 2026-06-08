@@ -14,12 +14,11 @@ import {
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { BPlaceholder } from 'bootstrap-vue-next';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';
 
 export default defineComponent({
-    components: { BPlaceholder, DQuerySummaryDemographics },
+    components: { DQuerySummaryDemographics },
     props: {
         queryId: {
             type: String,
@@ -72,7 +71,7 @@ export default defineComponent({
             <div class="d-flex flex-row gap-2">
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Patienten pro Standort</h6>
-                    <BPlaceholder
+                    <VCPlaceholder
                         v-for="i in 4"
                         :key="i"
                         :width="50 + i * 10 + '%'"
@@ -82,7 +81,7 @@ export default defineComponent({
                 </div>
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Geschlechterverteilung</h6>
-                    <BPlaceholder
+                    <VCPlaceholder
                         v-for="i in 4"
                         :key="i"
                         :width="50 + i * 10 + '%'"
@@ -93,7 +92,7 @@ export default defineComponent({
             </div>
             <div class="entity-card text-center mb-3 w-100">
                 <h6>Altersverteilung</h6>
-                <BPlaceholder
+                <VCPlaceholder
                     v-for="i in 4"
                     :key="i"
                     :width="40 + i * 15 + '%'"

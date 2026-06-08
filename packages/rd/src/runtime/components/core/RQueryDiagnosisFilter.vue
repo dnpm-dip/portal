@@ -133,7 +133,7 @@ export default defineComponent({
                         :key="item.code"
                     >
                         <div class="form-check">
-                            <VCFormInputCheckbox
+                            <VCFormCheckbox
                                 v-model="category"
                                 :label="true"
                                 :label-content="(item.display || item.code)"
