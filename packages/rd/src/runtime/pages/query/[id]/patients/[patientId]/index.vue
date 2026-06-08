@@ -48,11 +48,11 @@ export default defineNuxtComponent({
                     >
                         <div class="entity-card">
                             <div v-if="item.transferTan">
-                                <strong><i class="fa fa-id-card" /> TransferTan</strong>
+                                <strong><VCIcon name="fa6-solid:id-card" /> TransferTan</strong>
                                 {{ item.transferTan }}
                             </div>
                             <div>
-                                <strong><i class="fa fa-clock" /> Datum</strong>
+                                <strong><VCIcon name="fa6-solid:clock" /> Datum</strong>
                                 {{ item.period.start }} <template v-if="item.period.end">
                                     - {{ item.period.end }}
                                 </template>
@@ -72,19 +72,19 @@ export default defineNuxtComponent({
                             class="entity-card"
                         >
                             <div>
-                                <strong><i class="fa fa-clock" /> Datum</strong>
+                                <strong><VCIcon name="fa6-solid:clock" /> Datum</strong>
                                 {{ diagnosis.recordedOn }}
                             </div>
                             <div v-if="diagnosis.familyControlLevel">
-                                <strong><i class="fas fa-house-user" /> Family Control Level</strong>
+                                <strong><VCIcon name="fa6-solid:house-user" /> Family Control Level</strong>
                                 <DCodingText :entity="diagnosis.familyControlLevel" />
                             </div>
                             <div v-if="diagnosis.missingCodeReason">
-                                <strong><i class="fas fa-question-circle" /> Grund für fehlenden Code</strong>
+                                <strong><VCIcon name="fa6-solid:circle-question" /> Grund für fehlenden Code</strong>
                                 {{ diagnosis.missingCodeReason }}
                             </div>
                             <div>
-                                <strong><i class="fa-solid fa-tags" /> Kategorien</strong>
+                                <strong><VCIcon name="fa6-solid:tags" /> Kategorien</strong>
                                 <template
                                     v-for="item in diagnosis.codes"
                                     :key="item.code"
@@ -93,7 +93,7 @@ export default defineNuxtComponent({
                                 </template>
                             </div>
                             <div>
-                                <strong><i class="fas fa-spinner" /> Status</strong>
+                                <strong><VCIcon name="fa6-solid:spinner" /> Status</strong>
                                 {{ diagnosis.verificationStatus.display }}
                             </div>
                         </div>
@@ -110,7 +110,7 @@ export default defineNuxtComponent({
             </h5>
             <div class="entity-card">
                 <div>
-                    <strong><i class="fa fa-tags" /> Terme</strong>
+                    <strong><VCIcon name="fa6-solid:tags" /> Terme</strong>
                     <template
                         v-for="(item, key) in record.hpoTerms"
                         :key="key"
@@ -137,7 +137,7 @@ export default defineNuxtComponent({
                         class="entity-card"
                     >
                         <div>
-                            <strong><i class="fa fa-pills" /> Medikation</strong>
+                            <strong><VCIcon name="fa6-solid:pills" /> Medikation</strong>
                             <template
                                 v-for="(el, idx) in item.history[0].medication"
                                 :key="el"
@@ -146,30 +146,30 @@ export default defineNuxtComponent({
                             </template>
                         </div>
                         <div v-if="item.history[0].period">
-                            <strong><i class="fas fa-calendar-alt" /> Zeitraum</strong>
+                            <strong><VCIcon name="fa6-solid:calendar-days" /> Zeitraum</strong>
                             {{ item.history[0].period.start }} - {{ item.history[0].period.end }}
                         </div>
                         <div v-if="item.history[0].category">
-                            <strong><i class="fas fa-tags" /> Status</strong>
+                            <strong><VCIcon name="fa6-solid:tags" /> Status</strong>
                             {{ item.history[0].category.display || item.history[0].category.code }}
                         </div>
                         <div v-if="item.history[0].type">
-                            <strong><i class="fas fa-layer-group" /> Type</strong>
+                            <strong><VCIcon name="fa6-solid:layer-group" /> Type</strong>
                             {{ item.history[0].type.display || item.history[0].type.code }}
                         </div>
                         <div v-if="item.history[0].medication">
-                            <strong><i class="fas fa-pills" /> Medikation</strong>
+                            <strong><VCIcon name="fa6-solid:pills" /> Medikation</strong>
                             <DCodingCommaList :items="item.history[0].medication" />
                         </div>
                         <div v-if="item.history[0].period">
-                            <strong><i class="fas fa-calendar-alt" /> Zeitraum</strong>
+                            <strong><VCIcon name="fa6-solid:calendar-days" /> Zeitraum</strong>
                             {{ item.history[0].period.start }}
                             <template v-if="item.history[0].period.end">
                                 - {{ item.history[0].period.end }}
                             </template>
                         </div>
                         <div v-if="item.history[0].notes">
-                            <strong><i class="far fa-sticky-note" /> Notiz</strong>
+                            <strong><VCIcon name="fa6-solid:note-sticky" /> Notiz</strong>
                             <DCommaList :items="item.history[0].notes" />
                         </div>
                     </div>

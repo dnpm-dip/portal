@@ -24,7 +24,7 @@ export default defineNuxtComponent({
     <template v-if="connectionReportRead">
         <div>
             <h1 class="title no-border mb-3">
-                <i class="fa fa-plug" /> Verbindungen
+                <VCIcon name="fa6-solid:plug" /> Verbindungen
                 <span class="sub-title">
                     Übersicht
                 </span>
@@ -35,7 +35,7 @@ export default defineNuxtComponent({
                 <div class="flex flex-col gap-3">
                     <div>
                         <h5 class="title no-border">
-                            <i class="fa fa-map-marker-alt" /> Mein Standort
+                            <VCIcon name="fa6-solid:location-dot" /> Mein Standort
                         </h5>
                         <div class="flex flex-row flex-wrap gap-2">
                             <DConnectionPeerCard :entity="data.self" />
@@ -44,7 +44,7 @@ export default defineNuxtComponent({
 
                     <div>
                         <h5 class="title no-border">
-                            <i class="fa fa-map-marker-alt" /> Externe Standorte
+                            <VCIcon name="fa6-solid:location-dot" /> Externe Standorte
                         </h5>
                         <div class="flex flex-row flex-wrap gap-2">
                             <template

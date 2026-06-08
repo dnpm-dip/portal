@@ -40,7 +40,7 @@ export default defineNuxtComponent({
 <template>
     <div class="">
         <h1 class="title no-border mb-3">
-            <i class="fa fa-search" /> Suche
+            <VCIcon name="fa6-solid:magnifying-glass" /> Suche
         </h1>
 
         <DPreparedQueryContainer

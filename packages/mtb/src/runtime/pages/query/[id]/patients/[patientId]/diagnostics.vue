@@ -40,20 +40,20 @@ export default defineNuxtComponent({
                     <div class="mb-3">
                         <div>
                             <div v-if="item.type">
-                                <strong><i class="fas fa-shield" /> Art</strong>
+                                <strong><VCIcon name="fa6-solid:shield" /> Art</strong>
                                 {{ item.type.display || item.type.code }}
                             </div>
                             <template v-if="item.collection">
                                 <div>
-                                    <strong><i class="fa fa-clock" /> Entnahmedatum</strong>
+                                    <strong><VCIcon name="fa6-solid:clock" /> Entnahmedatum</strong>
                                     {{ item.collection.date }}
                                 </div>
                                 <div>
-                                    <strong><i class="fas fa-flask" /> Entnahmemethode</strong>
+                                    <strong><VCIcon name="fa6-solid:flask" /> Entnahmemethode</strong>
                                     {{ item.collection.method.display || item.collection.method.code }}
                                 </div>
                                 <div>
-                                    <strong><i class="fas fa-compass" /> Lokalisierung</strong>
+                                    <strong><VCIcon name="fa6-solid:compass" /> Lokalisierung</strong>
                                     {{ item.collection.localization.display || item.collection.localization.code }}
                                 </div>
                             </template>
@@ -78,7 +78,7 @@ export default defineNuxtComponent({
                 >
                     <div class="mb-3">
                         <div>
-                            <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.issuedOn }}</div>
+                            <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.issuedOn }}</div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
@@ -86,8 +86,8 @@ export default defineNuxtComponent({
                                     <strong>Tumor-Morphologie</strong>
                                 </div>
 
-                                <div><strong><i class="fa fa-code" /> Code</strong> {{ item.results.tumorMorphology.value.display }}</div>
-                                <div><strong><i class="far fa-sticky-note" /> Notiz</strong> {{ item.results.tumorMorphology.notes }}</div>
+                                <div><strong><VCIcon name="fa6-solid:code" /> Code</strong> {{ item.results.tumorMorphology.value.display }}</div>
+                                <div><strong><VCIcon name="fa6-solid:note-sticky" /> Notiz</strong> {{ item.results.tumorMorphology.notes }}</div>
                             </div>
                             <div
                                 v-if="item.results.tumorCellContent"
@@ -98,11 +98,11 @@ export default defineNuxtComponent({
                                 </div>
 
                                 <div>
-                                    <strong><i class="fa fa-code" /> Wert</strong>
+                                    <strong><VCIcon name="fa6-solid:code" /> Wert</strong>
                                     {{ (item.results.tumorCellContent.value * 100).toFixed(2) }}%
                                 </div>
                                 <div>
-                                    <strong><i class="fas fa-flask" /> Methode</strong>
+                                    <strong><VCIcon name="fa6-solid:flask" /> Methode</strong>
                                     {{ item.results.tumorCellContent.method.display || item.results.tumorCellContent.method.code }}
                                 </div>
                             </div>
@@ -124,7 +124,7 @@ export default defineNuxtComponent({
             >
                 <div class="entity-card">
                     <div class="mb-3">
-                        <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.issuedOn }}</div>
+                        <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.issuedOn }}</div>
                     </div>
                     <DExpandableContent>
                         <template #header>
@@ -137,14 +137,16 @@ export default defineNuxtComponent({
                                     :key="per.id"
                                 >
                                     <div class="entity-card mb-3">
-                                        <div><strong><i class="fa fa-code" /> Code</strong> {{ per.protein.display || per.protein.code }}</div>
-                                        <div><strong><i class="fa fa-code" /> Wert</strong> {{ per.value.display || per.value.code }}</div>
-                                        <div><strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.tpsScore }}</div>
+                                        <div>
+                                            <strong><VCIcon name="fa6-solid:code" /> Code</strong> {{ per.protein.display || per.protein.code }}
+                                        </div>
+                                        <div><strong><VCIcon name="fa6-solid:code" /> Wert</strong> {{ per.value.display || per.value.code }}</div>
+                                        <div><strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.tpsScore }}</div>
                                         <div v-if="per.icScore">
-                                            <strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.icScore.display || per.icScore.code }}
+                                            <strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.icScore.display || per.icScore.code }}
                                         </div>
                                         <div v-if="per.tcScore">
-                                            <strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.tcScore.display || per.tcScore.code }}
+                                            <strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.tcScore.display || per.tcScore.code }}
                                         </div>
                                     </div>
                                 </template>
@@ -162,14 +164,16 @@ export default defineNuxtComponent({
                                     :key="per.id"
                                 >
                                     <div class="entity-card mb-3">
-                                        <div><strong><i class="fa fa-code" /> Code</strong> {{ per.protein.display || per.protein.code }}</div>
-                                        <div><strong><i class="fa fa-code" /> Wert</strong> {{ per.value.display || per.value.code }}</div>
-                                        <div><strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.tpsScore }}</div>
+                                        <div>
+                                            <strong><VCIcon name="fa6-solid:code" /> Code</strong> {{ per.protein.display || per.protein.code }}
+                                        </div>
+                                        <div><strong><VCIcon name="fa6-solid:code" /> Wert</strong> {{ per.value.display || per.value.code }}</div>
+                                        <div><strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.tpsScore }}</div>
                                         <div v-if="per.icScore">
-                                            <strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.icScore.display || per.icScore.code }}
+                                            <strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.icScore.display || per.icScore.code }}
                                         </div>
                                         <div v-if="per.tcScore">
-                                            <strong><i class="fa fa-code" /> TPS-Score</strong> {{ per.tcScore.display || per.tcScore.code }}
+                                            <strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.tcScore.display || per.tcScore.code }}
                                         </div>
                                     </div>
                                 </template>
@@ -194,11 +198,11 @@ export default defineNuxtComponent({
                         <div class="col">
                             <div>
                                 <div>
-                                    <strong><i class="fa fa-clock" /> Datum</strong> {{ item.issuedOn }}
+                                    <strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.issuedOn }}
                                 </div>
                                 <div>
                                     <strong>
-                                        <i class="fa fa-dna" /> Typ</strong>
+                                        <VCIcon name="fa6-solid:dna" /> Typ</strong>
                                     {{ item.type.display || item.type.code }}
                                 </div>
                             </div>

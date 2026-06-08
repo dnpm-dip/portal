@@ -250,12 +250,9 @@ export default defineComponent({
                 <MGeneAlterationText :entity="row.alteration" />
             </template>
             <template #cell-supporting="{ row }: { row: any }">
-                <i
-                    class="fa"
-                    :class="{
-                        'fa-check text-success-600': row.supporting,
-                        'fa-times text-error-600': !row.supporting
-                    }"
+                <VCIcon
+                    :name="row.supporting ? 'fa6-solid:check' : 'fa6-solid:xmark'"
+                    :class="row.supporting ? 'text-success-600' : 'text-error-600'"
                 />
             </template>
         </VCTable>

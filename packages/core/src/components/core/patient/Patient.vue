@@ -20,15 +20,15 @@ export default defineComponent({
         <div class="col">
             <div class="entity-card">
                 <div>
-                    <strong class="me-1"><i class="fas fa-user" /> Geschlecht</strong>
+                    <strong class="me-1"><VCIcon name="fa6-solid:user" /> Geschlecht</strong>
                     <DCodingText :entity="entity.gender" />
                 </div>
                 <div>
-                    <strong class="me-1"><i class="fas fa-birthday-cake" /> Geburtstag</strong>
+                    <strong class="me-1"><VCIcon name="fa6-solid:cake-candles" /> Geburtstag</strong>
                     {{ entity.birthDate }}
                 </div>
                 <div v-if="entity.dateOfDeath">
-                    <strong class="me-1"><i class="fas fa-skull" /> Todestag</strong>
+                    <strong class="me-1"><VCIcon name="fa6-solid:skull" /> Todestag</strong>
                     {{ entity.dateOfDeath }}
                 </div>
             </div>
@@ -37,18 +37,18 @@ export default defineComponent({
             <div class="entity-card">
                 <template v-if="entity.managingSite">
                     <div>
-                        <strong class="me-1"><i class="fas fa-hospital" /> Standort</strong>
+                        <strong class="me-1"><VCIcon name="fa6-solid:hospital" /> Standort</strong>
                         <DCodingText :entity="entity.managingSite" />
                     </div>
                 </template>
                 <template v-if="entity.vitalStatus">
                     <div>
-                        <strong class="me-1"><i class="fas fa-heartbeat" /> VitalStatus</strong>
+                        <strong class="me-1"><VCIcon name="fa6-solid:heart-pulse" /> VitalStatus</strong>
                         <DCodingText :entity="entity.vitalStatus" />
                     </div>
                 </template>
                 <div v-if="entity.address">
-                    <strong class="me-1"><i class="fa fa-map-marker-alt" /> Addresse</strong>
+                    <strong class="me-1"><VCIcon name="fa6-solid:location-dot" /> Addresse</strong>
                     {{ entity.address.municipalityCode }}
                 </div>
             </div>

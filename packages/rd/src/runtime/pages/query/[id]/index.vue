@@ -39,17 +39,17 @@ export default defineNuxtComponent({
         const navItems = [
             {
                 name: 'Überblick',
-                icon: 'fas fa-bars',
+                icon: 'fa6-solid:bars',
                 urlSuffix: '/summary',
             },
             {
                 name: 'Patienten',
-                icon: 'fas fa-user-injured',
+                icon: 'fa6-solid:user-injured',
                 urlSuffix: '/patients',
             },
             {
                 name: 'Info',
-                icon: 'fa fa-network-wired',
+                icon: 'fa6-solid:network-wired',
                 urlSuffix: '/info',
             },
         ];
@@ -57,12 +57,12 @@ export default defineNuxtComponent({
         const summaryNavItems = [
             {
                 name: 'Demographie',
-                icon: 'fas fa-globe',
+                icon: 'fa6-solid:globe',
                 urlSuffix: '',
             },
             {
                 name: 'Diagnostik',
-                icon: 'fas fa-stethoscope',
+                icon: 'fa6-solid:stethoscope',
                 urlSuffix: '/diagnostics',
             },
         ];
@@ -120,7 +120,7 @@ export default defineNuxtComponent({
                     class="btn btn-xs btn-dark me-1"
                     :to="'/rd/'"
                 >
-                    <i class="fa fa-arrow-left" />
+                    <VCIcon name="fa6-solid:arrow-left" />
                 </NuxtLink>
                 Abfrage
             </h4>
@@ -140,7 +140,7 @@ export default defineNuxtComponent({
                             class="nav-link"
                             @click.prevent="toggleModal"
                         >
-                            <i class="fa fa-cog" /> Anpassen
+                            <VCIcon name="fa6-solid:gear" /> Anpassen
                         </button>
                     </li>
                 </template>
@@ -201,7 +201,7 @@ export default defineNuxtComponent({
                     <div class="flex flex-row w-full">
                         <div>
                             <h5 class="mb-0">
-                                <i class="fa fa-search" /> Suche
+                                <VCIcon name="fa6-solid:magnifying-glass" /> Suche
                             </h5>
                         </div>
                         <div class="ms-auto">
@@ -210,7 +210,7 @@ export default defineNuxtComponent({
                                 class="btn btn-xs btn-secondary"
                                 @click.prevent="modal = false"
                             >
-                                <i class="fa fa-times" />
+                                <VCIcon name="fa6-solid:xmark" />
                             </button>
                         </div>
                     </div>

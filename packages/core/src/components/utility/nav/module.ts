@@ -1,3 +1,4 @@
+import { VCIcon } from '@vuecs/icon';
 import { VCLink } from '@vuecs/link';
 import { h } from 'vue';
 import type { VNodeChild } from 'vue';
@@ -40,7 +41,7 @@ export function buildNav(
                 },
                 {
                     default: () => [
-                        h('i', { class: 'fa fa-arrow-left' }),
+                        h(VCIcon, { name: 'fa6-solid:arrow-left' }),
                     ],
                 },
             ),
@@ -99,7 +100,7 @@ export function buildNav(
                     h('div', { class: 'flex flex-row gap-1' }, [
                         h('div', [
 
-                            h('i', { class: `${item.icon}` }),
+                            h(VCIcon, { name: item.icon }),
                         ]),
                         h('div', [
                             item.name,

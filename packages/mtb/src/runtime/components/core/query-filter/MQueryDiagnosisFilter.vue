@@ -188,7 +188,7 @@ export default defineComponent({
         @reset="reset"
     >
         <template #title>
-            <i class="fa fa-stethoscope" /> Diagnose
+            <VCIcon name="fa6-solid:stethoscope" /> Diagnose
         </template>
         <template #default>
             <div class=" flex-col gap-1 flex">

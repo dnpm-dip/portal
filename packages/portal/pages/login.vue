@@ -131,7 +131,10 @@ export default defineNuxtComponent({
 <template>
     <div class="container">
         <h4>
-            <i class="fa-solid fa-arrow-right-to-bracket pe-2" />
+            <VCIcon
+                name="fa6-solid:arrow-right-to-bracket"
+                class="pe-2"
+            />
             Login
         </h4>
         <form @submit.prevent="submit">
@@ -210,7 +213,7 @@ export default defineNuxtComponent({
                                         <div class="flex flex-col">
                                             <div class="text-center mb-1">
                                                 <AIdentityProviderIcon
-                                                    class="fa-2x"
+                                                    class="text-2xl"
                                                     :entity="item"
                                                 />
                                             </div>

@@ -39,23 +39,23 @@ export default defineComponent({
 
         const navItems = [
             {
-                name: 'Anamnese', 
-                icon: 'fas fa-bars', 
+                name: 'Anamnese',
+                icon: 'fa6-solid:bars',
                 urlSuffix: '',
             },
             {
-                name: 'Diagnostik', 
-                icon: 'fas fa-stethoscope', 
+                name: 'Diagnostik',
+                icon: 'fa6-solid:stethoscope',
                 urlSuffix: '/diagnostics',
             },
             {
-                name: 'Beschlüsse', 
-                icon: 'fas fa-gavel', 
+                name: 'Beschlüsse',
+                icon: 'fa6-solid:gavel',
                 urlSuffix: '/plans',
             },
             {
-                name: 'Follow-UP', 
-                icon: 'fas fa-arrow-circle-up', 
+                name: 'Follow-UP',
+                icon: 'fa6-solid:circle-arrow-up',
                 urlSuffix: '/follow-up',
             },
         ];
@@ -75,7 +75,7 @@ export default defineComponent({
                     class="btn btn-xs btn-dark me-1"
                     :to="'/mtb/query/'+ entity.id +'/patients'"
                 >
-                    <i class="fa fa-arrow-left" />
+                    <VCIcon name="fa6-solid:arrow-left" />
                 </NuxtLink>
                 Patient <small class="text-fg-muted"> {{ record.patient.id }}</small>
             </h4>

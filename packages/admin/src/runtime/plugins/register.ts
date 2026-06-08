@@ -30,14 +30,14 @@ export default defineNuxtPlugin({
                         name: 'Overview',
                         type: 'link',
                         url: '',
-                        icon: 'fa fa-home',
+                        icon: 'fa6-solid:house',
                         meta: { [PageMetaKey.REQUIRED_PERMISSIONS]: [] },
                     },
                     {
                         name: 'Identitätsanbieter',
                         type: 'link',
                         url: 'identity-providers',
-                        icon: 'fa-solid fa-atom',
+                        icon: 'fa6-solid:atom',
                         meta: {
                             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
                             [PageMetaKey.REQUIRED_PERMISSIONS]: [
@@ -52,7 +52,7 @@ export default defineNuxtPlugin({
                         name: 'Benutzer',
                         type: 'link',
                         url: 'users',
-                        icon: 'fas fa-user',
+                        icon: 'fa6-solid:user',
                         meta: {
                             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
                             [PageMetaKey.REQUIRED_PERMISSIONS]: [
@@ -67,7 +67,7 @@ export default defineNuxtPlugin({
                         name: 'Rollen',
                         type: 'link',
                         url: 'roles',
-                        icon: 'fa-solid fa-theater-masks',
+                        icon: 'fa6-solid:masks-theater',
                         meta: {
                             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
                             [PageMetaKey.REQUIRED_PERMISSIONS]: [

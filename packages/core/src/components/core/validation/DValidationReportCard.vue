@@ -49,7 +49,7 @@ export default defineComponent({
                     class="btn btn-dark btn-xs"
                     @click.prevent="toggleExtended"
                 >
-                    <i :class="{'fa fa-chevron-down': !extended, 'fa fa-chevron-up': extended}" />
+                    <VCIcon :name="extended ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                 </button>
             </div>
         </div>

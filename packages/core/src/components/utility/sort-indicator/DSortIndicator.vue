@@ -74,9 +74,9 @@ export default defineComponent({
             class="badge bg-bg-muted flex items-center gap-1"
         >
             {{ sort.label }}
-            <i
-                class="fa fa-sm"
-                :class="sort.order === 'asc' ? 'fa-arrow-up' : 'fa-arrow-down'"
+            <VCIcon
+                class="text-sm"
+                :name="sort.order === 'asc' ? 'fa6-solid:arrow-up' : 'fa6-solid:arrow-down'"
             />
             <span
                 v-if="index < activeSorts.length - 1"
@@ -88,7 +88,10 @@ export default defineComponent({
             class="btn btn-sm btn-outline-secondary ms-auto"
             @click="reset"
         >
-            <i class="fa fa-times me-1" />
+            <VCIcon
+                name="fa6-solid:xmark"
+                class="me-1"
+            />
             Zurücksetzen
         </button>
     </div>

@@ -118,14 +118,14 @@ export default defineComponent({
         @reset="reset"
     >
         <template #title>
-            <i class="fa fa-stethoscope" /> Diagnose
+            <VCIcon name="fa6-solid:stethoscope" /> Diagnose
         </template>
         <template #default>
             <div
                 v-if="available.category"
                 class="mb-3"
             >
-                <h6><i class="fas fa-tags" /> Kategorie</h6>
+                <h6><VCIcon name="fa6-solid:tags" /> Kategorie</h6>
 
                 <div>
                     <template

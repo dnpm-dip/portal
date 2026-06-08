@@ -191,7 +191,7 @@ export default defineComponent({
                             :class="{'disabled': maxItems && maxItems === items.length}"
                             @click.prevent="add"
                         >
-                            <i class="fa fa-plus" />
+                            <VCIcon name="fa6-solid:plus" />
                         </a>
                     </li>
                 </ul>

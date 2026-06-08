@@ -217,10 +217,10 @@ export default defineComponent({
     >
         <template #title>
             <template v-if="type === 'recommended'">
-                <i class="fa fa-pills" /> Therapien: Empfohlen
+                <VCIcon name="fa6-solid:pills" /> Therapien: Empfohlen
             </template>
             <template v-else>
-                <i class="fa fa-pills" /> Therapien: Umgesetzt
+                <VCIcon name="fa6-solid:pills" /> Therapien: Umgesetzt
             </template>
         </template>
         <template #default>

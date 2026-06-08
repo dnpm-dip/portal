@@ -366,7 +366,7 @@ export default defineComponent({
                 <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
-                            <i class="fa fa-dna" /> Alteration
+                            <VCIcon name="fa6-solid:dna" /> Alteration
                         </h6>
                     </div>
                     <div class="ms-auto">
@@ -375,7 +375,7 @@ export default defineComponent({
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleExpanded('alteration')"
                         >
-                            <i :class="{'fa fa-chevron-down': !expanded.alteration, 'fa fa-chevron-up': expanded.alteration}" />
+                            <VCIcon :name="expanded.alteration ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                         </button>
                     </div>
                 </div>
@@ -412,7 +412,7 @@ export default defineComponent({
                 <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
-                            <i class="fa fa-diagnoses" /> Diagnose
+                            <VCIcon name="fa6-solid:notes-medical" /> Diagnose
                         </h6>
                     </div>
                     <div class="ms-auto">
@@ -421,7 +421,7 @@ export default defineComponent({
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleExpanded('diagnosis')"
                         >
-                            <i :class="{'fa fa-chevron-down': !expanded.diagnosis, 'fa fa-chevron-up': expanded.diagnosis}" />
+                            <VCIcon :name="expanded.diagnosis ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                         </button>
                     </div>
                 </div>
@@ -524,7 +524,7 @@ export default defineComponent({
                 <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
-                            <i class="fa fa-pills" /> Medikation
+                            <VCIcon name="fa6-solid:pills" /> Medikation
                         </h6>
                     </div>
                     <div class="ms-auto">
@@ -533,7 +533,7 @@ export default defineComponent({
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleExpanded('medication')"
                         >
-                            <i :class="{'fa fa-chevron-down': !expanded.medication, 'fa fa-chevron-up': expanded.medication}" />
+                            <VCIcon :name="expanded.medication ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                         </button>
                     </div>
                 </div>
@@ -556,7 +556,7 @@ export default defineComponent({
                 <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
-                            <i class="fas fa-chart-line" /> Response
+                            <VCIcon name="fa6-solid:chart-line" /> Response
                         </h6>
                     </div>
                     <div class="ms-auto">
@@ -565,7 +565,7 @@ export default defineComponent({
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleExpanded('response')"
                         >
-                            <i :class="{'fa fa-chevron-down': !expanded.response, 'fa fa-chevron-up': expanded.response}" />
+                            <VCIcon :name="expanded.response ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                         </button>
                     </div>
                 </div>
@@ -624,7 +624,7 @@ export default defineComponent({
                 <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
-                            <i class="fas fa-filter" /> Suchmodus
+                            <VCIcon name="fa6-solid:filter" /> Suchmodus
                         </h6>
                     </div>
                     <div class="ms-auto">
@@ -633,7 +633,7 @@ export default defineComponent({
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleExpanded('mode')"
                         >
-                            <i :class="{'fa fa-chevron-down': !expanded.mode, 'fa fa-chevron-up': expanded.mode}" />
+                            <VCIcon :name="expanded.mode ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                         </button>
                     </div>
                 </div>
@@ -667,7 +667,10 @@ export default defineComponent({
                             :loading="busy"
                             @click.prevent="submit()"
                         >
-                            <i class="fa fa-search me-1" /> Suchen
+                            <VCIcon
+                                name="fa6-solid:magnifying-glass"
+                                class="me-1"
+                            /> Suchen
                         </DLoadingButton>
                     </div>
 
@@ -678,7 +681,10 @@ export default defineComponent({
                             class="btn btn-block btn-primary"
                             @click.prevent="save()"
                         >
-                            <i class="fa fa-save me-1" /> Speichern
+                            <VCIcon
+                                name="fa6-solid:floppy-disk"
+                                class="me-1"
+                            /> Speichern
                         </button>
                     </div>
                 </div>

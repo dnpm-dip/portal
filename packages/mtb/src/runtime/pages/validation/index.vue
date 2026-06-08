@@ -18,7 +18,7 @@ export default defineComponent({
 <template>
     <div>
         <h1 class="title no-border mb-3">
-            <i class="fa fa-shield" /> Validierungsmeldungen
+            <VCIcon name="fa6-solid:shield" /> Validierungsmeldungen
         </h1>
         <DValidations :use-case="'mtb'">
             <template #default="props">

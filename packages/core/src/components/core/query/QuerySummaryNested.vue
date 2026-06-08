@@ -95,7 +95,7 @@ export default defineComponent({
                 class="btn btn-secondary"
                 @click.prevent="reset"
             >
-                <i class="fa fa-times" />
+                <VCIcon name="fa6-solid:xmark" />
             </button>
         </div>
     </VCFormGroup>

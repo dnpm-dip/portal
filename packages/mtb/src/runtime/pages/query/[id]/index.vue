@@ -62,17 +62,17 @@ export default defineNuxtComponent({
         const navItems = [
             {
                 name: 'Überblick',
-                icon: 'fas fa-bars',
+                icon: 'fa6-solid:bars',
                 urlSuffix: '/summary',
             },
             {
                 name: 'Patienten',
-                icon: 'fas fa-user-injured',
+                icon: 'fa6-solid:user-injured',
                 urlSuffix: '/patients',
             },
             {
                 name: 'Info',
-                icon: 'fa fa-network-wired',
+                icon: 'fa6-solid:network-wired',
                 urlSuffix: '/info',
             },
         ];
@@ -80,32 +80,32 @@ export default defineNuxtComponent({
         const summaryNavItems = [
             {
                 name: 'Demographie',
-                icon: 'fas fa-globe',
+                icon: 'fa6-solid:globe',
                 urlSuffix: '',
             },
             {
                 name: 'Diagnose',
-                icon: 'fas fa-stethoscope',
+                icon: 'fa6-solid:stethoscope',
                 urlSuffix: '/diagnostics',
             },
             {
                 name: 'Medikation',
-                icon: 'fas fa-pills',
+                icon: 'fa6-solid:pills',
                 urlSuffix: '/medication',
             },
             {
                 name: 'Therapie Responses',
-                icon: 'fas fa-comment-medical',
+                icon: 'fa6-solid:comment-medical',
                 urlSuffix: '/therapy-responses',
             },
             {
                 name: 'Gen Alterationen',
-                icon: 'fas fa-dna',
+                icon: 'fa6-solid:dna',
                 urlSuffix: '/gene-alterations',
             },
             {
                 name: 'Überlebensbericht',
-                icon: 'fas fa-book-open',
+                icon: 'fa6-solid:book-open',
                 urlSuffix: '/survival-report',
             },
         ];
@@ -148,7 +148,7 @@ export default defineNuxtComponent({
                     class="btn btn-xs btn-dark me-1"
                     :to="'/mtb/'"
                 >
-                    <i class="fa fa-arrow-left" />
+                    <VCIcon name="fa6-solid:arrow-left" />
                 </NuxtLink>
                 Abfrage
             </h4>
@@ -193,7 +193,7 @@ export default defineNuxtComponent({
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleCriteriaExpansion"
                         >
-                            <i :class="{'fa fa-chevron-down': !criteriaExpansion, 'fa fa-chevron-up': criteriaExpansion}" />
+                            <VCIcon :name="criteriaExpansion ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                         </button>
                         <MQueryCriteriaModal
                             :entity="entity"
@@ -205,7 +205,7 @@ export default defineNuxtComponent({
                                     class="btn btn-dark btn-xs"
                                     @click.prevent="props.toggle()"
                                 >
-                                    <i class="fa fa-edit" /> Anpassen
+                                    <VCIcon name="fa6-solid:pen-to-square" /> Anpassen
                                 </button>
                             </template>
                         </MQueryCriteriaModal>

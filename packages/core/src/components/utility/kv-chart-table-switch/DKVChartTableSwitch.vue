@@ -99,7 +99,7 @@ export default component as Component;
                             :class="{'router-link-exact-active': variant === 'chart'}"
                             @click.prevent="setVariant('chart')"
                         >
-                            <i class="fas fa-chart-bar" />
+                            <VCIcon name="fa6-solid:chart-bar" />
                         </button>
                     </li>
                     <li class="nav-item">
@@ -109,7 +109,7 @@ export default component as Component;
                             :class="{'router-link-exact-active': variant === 'table'}"
                             @click.prevent="setVariant('table')"
                         >
-                            <i class="fas fa-table" />
+                            <VCIcon name="fa6-solid:table" />
                         </button>
                     </li>
                 </ul>

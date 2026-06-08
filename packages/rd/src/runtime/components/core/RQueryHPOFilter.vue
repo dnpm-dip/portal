@@ -117,14 +117,14 @@ export default defineComponent({
         @reset="reset"
     >
         <template #title>
-            <i class="fa fa-dna" /> HPO
+            <VCIcon name="fa6-solid:dna" /> HPO
         </template>
         <template #default>
             <div
                 v-if="available.value"
                 class="mb-3"
             >
-                <h6><i class="fas fa-tags" /> Term</h6>
+                <h6><VCIcon name="fa6-solid:tags" /> Term</h6>
 
                 <div>
                     <template

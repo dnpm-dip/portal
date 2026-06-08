@@ -43,18 +43,18 @@ export default defineComponent({
 
         const items = [
             {
-                name: 'Allgemein', 
-                icon: 'fas fa-bars', 
+                name: 'Allgemein',
+                icon: 'fa6-solid:bars',
                 urlSuffix: '',
             },
             {
-                name: 'Berechtigungen', 
-                icon: 'fas fa-user-secret', 
+                name: 'Berechtigungen',
+                icon: 'fa6-solid:user-secret',
                 urlSuffix: 'permissions',
             },
             {
-                name: 'Benutzer', 
-                icon: 'fas fa-users', 
+                name: 'Benutzer',
+                icon: 'fa6-solid:users',
                 urlSuffix: 'users',
             },
         ];
@@ -100,7 +100,10 @@ export default defineComponent({
 <template>
     <div>
         <h1 class="title no-border mb-3">
-            <i class="fa-solid fa-theater-masks me-1" /> {{ entity.name }}
+            <VCIcon
+                name="fa6-solid:masks-theater"
+                class="me-1"
+            /> {{ entity.name }}
             <span class="sub-title ms-1">Details</span>
         </h1>
         <div class="mb-2">

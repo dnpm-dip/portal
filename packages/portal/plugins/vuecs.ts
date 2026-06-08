@@ -4,9 +4,14 @@ import { watch } from 'vue';
 
 import vuecs from '@vuecs/core';
 import dnpmTheme, { clientWebKitTheme } from '@dnpm-dip/theme';
+import fontAwesome from '@vuecs/icons-font-awesome';
+import { addCollection } from '@iconify/vue';
+import faBrands from '@iconify-json/fa6-brands/icons.json';
+import faSolid from '@iconify-json/fa6-solid/icons.json';
 import installButton from '@vuecs/button';
 import installElements from '@vuecs/elements';
 import installForms from '@vuecs/forms';
+import installIcon from '@vuecs/icon';
 import installNavigation from '@vuecs/navigation';
 import installOverlays from '@vuecs/overlays';
 import installPagination from '@vuecs/pagination';
@@ -16,6 +21,9 @@ import installTimeago, { injectLocale as injectTimeagoLocale } from '@vuecs/time
 
 import { defineNuxtPlugin } from '#app';
 
+addCollection(faSolid);
+addCollection(faBrands);
+
 export default defineNuxtPlugin({
     name: 'vuecs',
     dependsOn: ['authup'],
@@ -24,7 +32,7 @@ export default defineNuxtPlugin({
 
         app.use(vuecs, {
             themes: [clientWebKitTheme(), dnpmTheme()],
-            icons: [],
+            icons: [fontAwesome()],
         });
 
         app.use(installButton);
@@ -36,6 +44,7 @@ export default defineNuxtPlugin({
         app.use(installPlaceholder);
         app.use(installTable);
         app.use(installTimeago, { locales: { de } });
+        app.use(installIcon);
 
         const locale = injectTranslatorLocale();
         locale.value = 'de';

@@ -17,7 +17,7 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h6>
-            <i class="fa fa-map-marker-alt" /> Standorte
+            <VCIcon name="fa6-solid:location-dot" /> Standorte
         </h6>
     </div>
     <div class="flex flex-row flex-wrap gap-2">

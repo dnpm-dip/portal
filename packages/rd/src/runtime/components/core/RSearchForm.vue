@@ -295,7 +295,7 @@ export default defineComponent({
         <form>
             <div class="row mb-3">
                 <div class="col">
-                    <h6><i class="fa fa-diagnoses" /> Diagnose </h6>
+                    <h6><VCIcon name="fa6-solid:notes-medical" /> Diagnose </h6>
 
                     <div class="form-group">
                         <label>Kategorie</label>
@@ -338,7 +338,7 @@ export default defineComponent({
                     </div>
                 </div>
                 <div class="col">
-                    <h6><i class="fas fa-microscope" /> HPO</h6>
+                    <h6><VCIcon name="fa6-solid:microscope" /> HPO</h6>
 
                     <div class="form-group">
                         <label>Term</label>
@@ -386,7 +386,7 @@ export default defineComponent({
 
             <div class="row mb-2">
                 <div class="col">
-                    <h6><i class="fa fa-dna" /> Varianten</h6>
+                    <h6><VCIcon name="fa6-solid:dna" /> Varianten</h6>
                 </div>
 
                 <DFormTabGroups
@@ -408,7 +408,7 @@ export default defineComponent({
             <hr>
 
             <div>
-                <h6><i class="fas fa-filter" /> Suchmodus</h6>
+                <h6><VCIcon name="fa6-solid:filter" /> Suchmodus</h6>
 
                 <VCFormSelect
                     v-model="mode"
@@ -435,7 +435,10 @@ export default defineComponent({
                             :loading="busy"
                             @click.prevent="submit()"
                         >
-                            <i class="fa fa-search me-1" /> Suchen
+                            <VCIcon
+                                name="fa6-solid:magnifying-glass"
+                                class="me-1"
+                            /> Suchen
                         </DLoadingButton>
                     </div>
 
@@ -446,7 +449,10 @@ export default defineComponent({
                             class="btn btn-block btn-primary"
                             @click.prevent="save()"
                         >
-                            <i class="fa fa-save me-1" /> Speichern
+                            <VCIcon
+                                name="fa6-solid:floppy-disk"
+                                class="me-1"
+                            /> Speichern
                         </button>
                     </div>
                 </div>

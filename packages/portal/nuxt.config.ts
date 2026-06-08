@@ -38,7 +38,6 @@ export default defineNuxtConfig({
         '@/assets/css/tailwind.css',
         '@authup/client-web-kit/dist/style.css',
         '@dnpm-dip/core/../dist/index.css',
-        '@fortawesome/fontawesome-free/css/all.css',
     ],
 
     alias: {

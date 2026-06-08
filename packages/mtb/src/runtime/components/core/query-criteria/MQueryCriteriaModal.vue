@@ -53,7 +53,7 @@ export default defineComponent({
             class="btn btn-xs btn-primary ms-1"
             @click.prevent="toggleModal"
         >
-            <i class="fa-solid fa-cog" />
+            <VCIcon name="fa6-solid:gear" />
         </NuxtLink>
     </slot>
 
@@ -63,7 +63,7 @@ export default defineComponent({
                 <div class="flex flex-row w-full">
                     <div>
                         <h5 class="mb-0">
-                            <i class="fa fa-search" /> Suche
+                            <VCIcon name="fa6-solid:magnifying-glass" /> Suche
                         </h5>
                     </div>
                     <div class="ms-auto">
@@ -72,7 +72,7 @@ export default defineComponent({
                             class="btn btn-xs btn-secondary"
                             @click.prevent="modal = false"
                         >
-                            <i class="fa fa-times" />
+                            <VCIcon name="fa6-solid:xmark" />
                         </button>
                     </div>
                 </div>

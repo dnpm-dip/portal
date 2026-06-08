@@ -59,8 +59,9 @@
     padding-left: 6px;
 }
 
-.page-navbar .navbar-content > .navbar-gadgets > li > a i {
-    font-size: 16px;
+.page-navbar .navbar-content > .navbar-gadgets > li > a svg.iconify {
+    width: 1rem;
+    height: 1rem;
 }
 
 .page-navbar .navbar-content .dropdown-menu {

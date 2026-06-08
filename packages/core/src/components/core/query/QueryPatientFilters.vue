@@ -327,14 +327,14 @@ export default defineComponent({
         @reset="reset"
     >
         <template #title>
-            <i class="fa fa-user-injured" /> Patient
+            <VCIcon name="fa6-solid:user-injured" /> Patient
         </template>
         <template #default>
             <div
                 v-if="available.gender"
                 class="mb-3"
             >
-                <h6><i class="fas fa-transgender-alt" /> Geschlecht</h6>
+                <h6><VCIcon name="fa6-solid:transgender" /> Geschlecht</h6>
 
                 <VCFormCheckboxGroup
                     v-model="gender"
@@ -358,7 +358,7 @@ export default defineComponent({
                 v-if="available.vitalStatus"
                 class="mb-3"
             >
-                <h6><i class="fas fa-heartbeat" /> Vital Status</h6>
+                <h6><VCIcon name="fa6-solid:heart-pulse" /> Vital Status</h6>
 
                 <VCFormCheckboxGroup
                     v-model="vitalStatus"
@@ -382,7 +382,7 @@ export default defineComponent({
                 v-if="available.site"
                 class="mb-3"
             >
-                <h6><i class="fas fa-hospital" /> Standort</h6>
+                <h6><VCIcon name="fa6-solid:hospital" /> Standort</h6>
 
                 <VCFormCheckboxGroup
                     v-model="site"
@@ -406,7 +406,7 @@ export default defineComponent({
                 v-if="available.ageRange"
                 class="mb-3"
             >
-                <h6><i class="fas fa-users" /> Alter <small class="text-fg-muted">({{ age.min }} - {{ age.max }})</small></h6>
+                <h6><VCIcon name="fa6-solid:users" /> Alter <small class="text-fg-muted">({{ age.min }} - {{ age.max }})</small></h6>
 
                 <div class="mt-3">
                     <VCFormSlider

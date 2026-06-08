@@ -58,14 +58,14 @@ export default defineComponent({
                     class="btn btn-dark btn-xs"
                     @click.prevent="toggleExtended"
                 >
-                    <i :class="{'fa fa-chevron-down': !extended, 'fa fa-chevron-up': extended}" />
+                    <VCIcon :name="extended ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                 </button>
 
                 <NuxtLink
                     :to="'/mtb/query/'+ queryId + '/patients/' +entity.id"
                     class="btn btn-xs btn-outline-primary ms-1"
                 >
-                    <i class="fa-solid fa-bars" />
+                    <VCIcon name="fa6-solid:bars" />
                 </NuxtLink>
             </div>
         </div>

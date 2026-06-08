@@ -160,7 +160,7 @@ export default component as Component;
             />
         </div>
         <div class="col-4">
-            <h6><i class="fa fa-history" /> Gespeicherte Anfragen</h6>
+            <h6><VCIcon name="fa6-solid:clock-rotate-left" /> Gespeicherte Anfragen</h6>
             <DPreparedQueries
                 ref="preparedQueryNode"
                 :use-case="useCase"
@@ -202,12 +202,8 @@ export default component as Component;
                                                             }"
                                                             @click.prevent="togglePreparedQuery(entityProps.data)"
                                                         >
-                                                            <i
-                                                                class="fa"
-                                                                :class="{
-                                                                    'fa-plus': preparedQueryId !== entityProps.data.id,
-                                                                    'fa-minus': preparedQueryId === entityProps.data.id
-                                                                }"
+                                                            <VCIcon
+                                                                :name="preparedQueryId !== entityProps.data.id ? 'fa6-solid:plus' : 'fa6-solid:minus'"
                                                             />
                                                         </button>
                                                         <button
@@ -215,7 +211,7 @@ export default component as Component;
                                                             class="btn btn-xs btn-danger"
                                                             @click.prevent="() => entityProps.delete()"
                                                         >
-                                                            <i class="fa fa-trash" />
+                                                            <VCIcon name="fa6-solid:trash" />
                                                         </button>
                                                     </div>
                                                 </div>

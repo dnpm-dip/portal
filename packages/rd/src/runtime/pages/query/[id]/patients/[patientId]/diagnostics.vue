@@ -36,31 +36,31 @@ export default defineNuxtComponent({
                     <div class="row">
                         <div class="col">
                             <div>
-                                <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.issuedOn }}</div>
+                                <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.issuedOn }}</div>
                                 <div>
-                                    <strong><i class="fa fa-keyboard" /> Type</strong>
+                                    <strong><VCIcon name="fa6-solid:keyboard" /> Type</strong>
                                     {{ item.type.display || item.type.display }}
                                 </div>
                                 <!--
-                                <div><strong><i class="fa fa-microscope" /> Labor</strong> {{ item.performingLab.display }}</div>
+                                <div><strong><VCIcon name="fa6-solid:microscope" /> Labor</strong> {{ item.performingLab.display }}</div>
                                 -->
                             </div>
                         </div>
                         <div class="col">
                             <div>
-                                <strong><i class="fa fa-dna" /> Sequenzierungs-Typ</strong>
+                                <strong><VCIcon name="fa6-solid:dna" /> Sequenzierungs-Typ</strong>
                                 {{ item.sequencingInfo.platform.display || item.sequencingInfo.platform.code }}
                             </div>
                             <div v-if="item.conclusion">
-                                <strong><i class="fas fa-lightbulb" /> Schlussfolgerung</strong>
+                                <strong><VCIcon name="fa6-solid:lightbulb" /> Schlussfolgerung</strong>
                                 {{ item.conclusion.display || item.conclusion.code }}
                             </div>
                         </div>
                         <div class="col">
-                            <div><strong><i class="fas fa-toolbox" /> Kit</strong> {{ item.sequencingInfo.kit }}</div>
+                            <div><strong><VCIcon name="fa6-solid:toolbox" /> Kit</strong> {{ item.sequencingInfo.kit }}</div>
                             <template v-if="item.results && item.results.autozygosity">
                                 <div>
-                                    <strong><i class="fa fa-retweet" /> Autozygosity</strong>
+                                    <strong><VCIcon name="fa6-solid:retweet" /> Autozygosity</strong>
                                     {{ item.results.autozygosity.value }}
                                 </div>
                             </template>

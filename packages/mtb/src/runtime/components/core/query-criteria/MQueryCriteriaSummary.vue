@@ -65,22 +65,18 @@ export default defineComponent({
                             </li>
                             <li>
                                 <strong>&bull; Wildtyp?</strong>
-                                <i
-                                    class="fa ms-1"
-                                    :class="{
-                                        'fa-check text-success-600': item.wildtype,
-                                        'fa-times text-error-600': !item.wildtype
-                                    }"
+                                <VCIcon
+                                    class="ms-1"
+                                    :name="item.wildtype ? 'fa6-solid:check' : 'fa6-solid:xmark'"
+                                    :class="item.wildtype ? 'text-success-600' : 'text-error-600'"
                                 />
                             </li>
                             <li>
                                 <strong>&bull; Stützend?</strong>
-                                <i
-                                    class="fa ms-1"
-                                    :class="{
-                                        'fa-check text-success-600': item.supporting,
-                                        'fa-times text-error-600': !item.supporting
-                                    }"
+                                <VCIcon
+                                    class="ms-1"
+                                    :name="item.supporting ? 'fa6-solid:check' : 'fa6-solid:xmark'"
+                                    :class="item.supporting ? 'text-success-600' : 'text-error-600'"
                                 />
                             </li>
                             <template v-if="item.alteration">

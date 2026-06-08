@@ -36,12 +36,12 @@ export default defineNuxtComponent({
             {
                 name: 'Übersicht',
                 urlSuffix: '',
-                icon: 'fa fa-bars',
+                icon: 'fa6-solid:bars',
             },
             {
                 name: 'Hinzufügen',
                 urlSuffix: '/add',
-                icon: 'fa fa-plus',
+                icon: 'fa6-solid:plus',
             },
         ];
 
@@ -68,7 +68,10 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h1 class="title no-border mb-3">
-            <i class="fa-solid fa-theater-masks me-1" /> Rollen
+            <VCIcon
+                name="fa6-solid:masks-theater"
+                class="me-1"
+            /> Rollen
             <span class="sub-title ms-1">Verwaltung</span>
         </h1>
         <div class="content-wrapper">

@@ -46,7 +46,10 @@ export default defineComponent({
         <span v-show="showLoader">
             <span class="spinner">
                 <slot name="spinner">
-                    <i class="fa fa-refresh fa-spin" />
+                    <VCIcon
+                        name="fa6-solid:arrows-rotate"
+                        class="animate-spin"
+                    />
                 </slot>
             </span>
         </span>
@@ -81,7 +84,7 @@ export default defineComponent({
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.loading-button .spinner i {
+.loading-button .spinner svg.iconify {
     transform-origin: center center;
 }
 .loading-button .spinner {

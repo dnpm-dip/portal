@@ -85,7 +85,7 @@ export default defineComponent({
                 class="nav-link text-center"
                 @click="close"
             >
-                <i class="fa fa-times" />
+                <VCIcon name="fa6-solid:xmark" />
             </a>
         </div>
     </li>

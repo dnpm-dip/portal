@@ -30,7 +30,7 @@ export default defineNuxtPlugin({
                 navigationItems: [
                     {
                         name: 'Suche',
-                        icon: 'fa fa-search',
+                        icon: 'fa6-solid:magnifying-glass',
                         url: '',
                         meta: {
                             [PageMetaKey.REQUIRED_PERMISSIONS]: [
@@ -40,7 +40,7 @@ export default defineNuxtPlugin({
                     },
                     {
                         name: 'Validierungsmeldungen',
-                        icon: 'fas fa-shield',
+                        icon: 'fa6-solid:shield',
                         url: 'validation',
                         meta: {
                             [PageMetaKey.REQUIRED_PERMISSIONS]: [
