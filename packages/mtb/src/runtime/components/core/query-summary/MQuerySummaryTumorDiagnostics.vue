@@ -10,7 +10,6 @@ import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
     type Coding,
     DKVChartTableSwitch,
-    DQuerySummaryGrouped,
     DQuerySummaryNested,
     QueryEventBusEventName,
     injectQueryEventBus,
@@ -20,15 +19,13 @@ import { BPlaceholder } from 'bootstrap-vue-next';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
-import type { QueryGeneAlteration, QuerySummaryTumorDiagnostics } from '../../../domains';
-import { queryGeneAlterationToString } from '../../../domains';
+import type { QuerySummaryTumorDiagnostics } from '../../../domains';
 
 export default defineComponent({
     components: {
         BPlaceholder,
         DQuerySummaryNested,
         DKVChartTableSwitch,
-        DQuerySummaryGrouped,
     },
     props: {
         queryId: {
@@ -97,9 +94,6 @@ export default defineComponent({
             data,
             error,
             handleClick,
-            variantLabelFn: (item: { key: unknown }) => (typeof item.key === 'string' ?
-                item.key :
-                queryGeneAlterationToString(item.key as QueryGeneAlteration)),
         };
     },
 });
@@ -167,47 +161,6 @@ export default defineComponent({
                     </div>
                 </div>
             </div>
-
-            <hr>
-
-            <div>
-                <h5>Verteilung nach Variante</h5>
-                <DQuerySummaryGrouped
-                    :label="'Variante'"
-                    :items="data.distributionsByVariant"
-                    :label-fn="variantLabelFn"
-                >
-                    <template #default="{ item }">
-                        <div class="d-flex flex-column gap-2">
-                            <div class="entity-card text-center mb-3 w-100">
-                                <h6 class="text-center">
-                                    Tumor-Entitäten (ICD-10-GM)
-                                </h6>
-                                <DKVChartTableSwitch
-                                    :coding-verbose-label="true"
-                                    :data="item.value.tumorEntities.elements"
-                                    :key-label="'Tumorentität [ICD-10 GM]'"
-                                    :value-label="'Anzahl [n]'"
-                                    :percent-label="'Anteil [%]'"
-                                />
-                            </div>
-
-                            <div class="entity-card text-center mb-3 w-100">
-                                <h6 class="text-center">
-                                    Tumor-Morphologie (ICD-O-3-M)
-                                </h6>
-                                <DKVChartTableSwitch
-                                    :coding-verbose-label="true"
-                                    :data="item.value.tumorMorphologies.elements"
-                                    :key-label="'Tumor-Morphologie (ICD-O-3-M)'"
-                                    :value-label="'Anzahl [n]'"
-                                    :percent-label="'Anteil [%]'"
-                                />
-                            </div>
-                        </div>
-                    </template>
-                </DQuerySummaryGrouped>
-            </div>
         </div>
     </template>
     <template v-else-if="busy">
@@ -234,19 +187,6 @@ export default defineComponent({
                         class="mb-2"
                     />
                 </div>
-            </div>
-
-            <hr>
-
-            <h5>Verteilung nach Variante</h5>
-            <div class="entity-card text-center mb-3">
-                <BPlaceholder
-                    v-for="i in 5"
-                    :key="i"
-                    :width="40 + i * 10 + '%'"
-                    animation="wave"
-                    class="mb-2"
-                />
             </div>
         </div>
     </template>

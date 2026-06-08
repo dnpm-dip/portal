@@ -241,39 +241,47 @@ export default defineComponent({
             <div class="d-flex flex-column gap-2">
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Mittlere Therapiedauer</h6>
-                    <DKVChartTableSwitch
-                        :data="(data.therapies.meanDurations as any)"
-                        :clickable="true"
-                        @clicked="handleUsedClick"
+                    <DQuerySummaryGrouped
+                        :select-first="true"
+                        :items="data.therapies.meanDurations"
+                        :label="'Wirkstoffklasse'"
                     >
-                        <template #table="tableData">
-                            <BTable
-                                :items="tableData.data"
-                                :fields="[
-                                    {
-                                        key: 'key',
-                                        label: 'Element',
-                                        thClass: 'text-left',
-                                        tdClass: 'text-left',
-                                    },
-                                    {
-                                        key: 'value',
-                                        label: 'Dauer in Wochen',
-                                        thClass: 'text-center',
-                                        tdClass: 'text-center',
-                                    }
-                                ]"
-                                outlined
+                        <template #default="{ item }">
+                            <DKVChartTableSwitch
+                                :data="(item.value as any)"
+                                :clickable="true"
+                                @clicked="handleUsedClick"
                             >
-                                <template #cell(key)="cell">
-                                    <DKVTableEntryKey :entity="(cell.item as any)" />
+                                <template #table="tableData">
+                                    <BTable
+                                        :items="tableData.data"
+                                        :fields="[
+                                            {
+                                                key: 'key',
+                                                label: 'Element',
+                                                thClass: 'text-left',
+                                                tdClass: 'text-left',
+                                            },
+                                            {
+                                                key: 'value',
+                                                label: 'Dauer in Wochen',
+                                                thClass: 'text-center',
+                                                tdClass: 'text-center',
+                                            }
+                                        ]"
+                                        outlined
+                                    >
+                                        <template #cell(key)="cell">
+                                            <DKVTableEntryKey :entity="(cell.item as any)" />
+                                        </template>
+                                        <template #cell(value)="cell">
+                                            {{ Number((cell.item as { value: number }).value).toFixed(2) }}
+                                        </template>
+                                    </BTable>
                                 </template>
-                                <template #cell(value)="cell">
-                                    {{ Number((cell.item as { value: number }).value).toFixed(2) }}
-                                </template>
-                            </BTable>
+                            </DKVChartTableSwitch>
                         </template>
-                    </DKVChartTableSwitch>
+                    </DQuerySummaryGrouped>
                 </div>
             </div>
         </div>
