@@ -1,10 +1,12 @@
-<script>
+<script lang="ts">
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
+import type { NavigationResolverContext } from '@vuecs/navigation';
 import { VCNavItems } from '@vuecs/navigation';
 import { VCCountdown } from '@vuecs/countdown';
 import { injectStore } from '@authup/client-web-kit';
 import { defineNuxtComponent } from '#app';
+import { LayoutTopNavigationRegistryId, injectNavigation } from '../core';
 
 export default defineNuxtComponent({
     components: {
@@ -23,9 +25,23 @@ export default defineNuxtComponent({
             return tokenExpireDate.value.getTime() - Date.now();
         });
 
+        const navigation = injectNavigation();
+        const sideItems = (ctx: NavigationResolverContext) => {
+            const activeTopName = ctx.registry(LayoutTopNavigationRegistryId)
+                .activeTrail.value[0]?.name;
+
+            return navigation.getSideItems(activeTopName);
+        };
+        const sideItemsWatch = [
+            () => store.loggedIn,
+            () => store.userId,
+        ];
+
         return {
             loggedIn,
             tokenExpiresIn,
+            sideItems,
+            sideItemsWatch,
         };
     },
 });
@@ -35,7 +51,10 @@ export default defineNuxtComponent({
         <div class="page-sidebar">
             <VCNavItems
                 class="sidebar-menu navbar-nav"
-                :level="1"
+                :data="sideItems"
+                :watch="sideItemsWatch"
+                variant="pills"
+                orientation="vertical"
             />
             <div class="mt-auto">
                 <div

@@ -23,15 +23,8 @@
 }
 
 .vc-nav-items .vc-nav-link.active,
-
 .vc-nav-items .vc-nav-link:active,
-.vc-nav-items .vc-nav-link:hover,
-
-.vc-nav-items .vc-nav-link.router-link-active,
-.vc-nav-items .vc-nav-link.nuxt-link-active,
-
-.vc-nav-items .vc-nav-link.router-link-exact-active,
-.vc-nav-items .vc-nav-link.nuxt-link-exact-active {
+.vc-nav-items .vc-nav-link:hover {
     cursor: pointer;
     color: #fff;
     background: var(--dnpm-brand-purple) !important;
@@ -49,6 +42,26 @@
     border-left-width: 6px;
     border-left-style: solid;
     border-left-color: var(--dnpm-chrome-bg-nested);
+}
+
+.vc-nav-items.vc-nav-items--pills.vc-nav-items--vertical {
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.vc-nav-link.vc-nav-link--pills {
+    color: var(--dnpm-chrome-fg-muted);
+}
+
+.vc-nav-link.vc-nav-link--pills:hover,
+.vc-nav-link.vc-nav-link--pills:active {
+    color: var(--dnpm-chrome-fg-muted);
+    background: var(--dnpm-chrome-bg-elevated);
+}
+
+.vc-nav-link.vc-nav-link--pills.active {
+    color: var(--vc-color-on-primary) !important;
+    background: var(--vc-color-primary-600) !important;
 }
 
 @media (max-width: 768px) {

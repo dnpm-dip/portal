@@ -7,6 +7,7 @@ import dnpmTheme, { clientWebKitTheme } from '@dnpm-dip/theme';
 import installButton from '@vuecs/button';
 import installElements from '@vuecs/elements';
 import installForms from '@vuecs/forms';
+import installNavigation from '@vuecs/navigation';
 import installOverlays from '@vuecs/overlays';
 import installPagination from '@vuecs/pagination';
 import installPlaceholder from '@vuecs/placeholder';
@@ -29,6 +30,7 @@ export default defineNuxtPlugin({
         app.use(installButton);
         app.use(installElements);
         app.use(installForms);
+        app.use(installNavigation);
         app.use(installOverlays);
         app.use(installPagination);
         app.use(installPlaceholder);

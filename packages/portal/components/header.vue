@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { VCNavItems } from '@vuecs/navigation';
 import { injectStore } from '@authup/client-web-kit';
 import { defineNuxtComponent } from '#app';
+import { LayoutTopNavigationRegistryId, injectNavigation } from '../core';
 
 export default defineNuxtComponent({
     components: { VCNavItems },
@@ -17,11 +18,21 @@ export default defineNuxtComponent({
             displayNav.value = !displayNav.value;
         };
 
+        const navigation = injectNavigation();
+        const topItems = () => navigation.getTopItems();
+        const topItemsWatch = [
+            () => store.loggedIn,
+            () => store.userId,
+        ];
+
         return {
             loggedIn,
             user,
             toggleNav,
             displayNav,
+            topItems,
+            topItemsWatch,
+            topRegistryId: LayoutTopNavigationRegistryId,
         };
     },
 });
@@ -54,7 +65,10 @@ export default defineNuxtComponent({
                 >
                     <VCNavItems
                         class="navbar-nav"
-                        :level="0"
+                        :data="topItems"
+                        :watch="topItemsWatch"
+                        registry
+                        :registry-id="topRegistryId"
                     />
 
                     <ul

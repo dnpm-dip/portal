@@ -10,9 +10,11 @@ import type { IdentityPolicyData } from '@authup/access';
 import { BuiltInPolicyType, PolicyData } from '@authup/access';
 import type { NavigationItemMeta } from '@dnpm-dip/core';
 import { PageMetaKey } from '@dnpm-dip/core';
-import type { NavigationItem, NavigationItemNormalized } from '@vuecs/navigation';
+import type { NavigationItem } from '@vuecs/navigation';
 
 const TopDefaultName = 'Home';
+
+export const LayoutTopNavigationRegistryId = 'top';
 
 export class Navigation {
     protected topElements: NavigationItem[];
@@ -89,23 +91,16 @@ export class Navigation {
         this.sideElements[id] = elements;
     }
 
-    async getItems(level: number, parent?: NavigationItemNormalized): Promise<NavigationItem[]> {
-        if (level === 0) {
-            return this.reduce(this.topElements);
-        }
+    getTopItems(): Promise<NavigationItem[]> {
+        return this.reduce(this.topElements);
+    }
 
-        if (parent) {
-            if (level === 1) {
-                const parentElements = this.sideElements[parent.name];
-                if (parentElements) {
-                    return this.reduce(parentElements);
-                }
+    getSideItems(activeTopName?: string): Promise<NavigationItem[]> {
+        const elements = (activeTopName ? this.sideElements[activeTopName] : undefined) ??
+            this.sideElements[TopDefaultName] ??
+            [];
 
-                return this.reduce(this.sideElements[TopDefaultName] ?? []);
-            }
-        }
-
-        return [];
+        return this.reduce(elements);
     }
 
     protected async reduce(items: NavigationItem[]) : Promise<NavigationItem[]> {
