@@ -64,7 +64,11 @@ export default defineComponent({
 </script>
 <template>
     <template v-if="data">
-        <DQuerySummaryDemographics :entity="data" />
+        <DQuerySummaryDemographics
+            :entity="data"
+            :with-totals="true"
+            :with-axis-labels="true"
+        />
     </template>
     <template v-else-if="busy">
         <div>

@@ -71,16 +71,24 @@ export default defineComponent({
 <template>
     <template v-if="data">
         <div>
-            <h5>Verteilung nach Alteration</h5>
+            <h5>TOP 20 der alterierten Gene (SNV/ CNV/ Fusion)</h5>
             <DQuerySummaryGrouped
-                :select-first="true"
                 :items="data"
                 :label="'Alteration'"
+                :placeholder="'Alterationsart auswählen'"
             >
                 <template #default="{ item }">
+                    <p class="text-start mb-2">
+                        N (alterierte Gene) = {{ item.value.elements.length }}
+                    </p>
                     <DKVChartTableSwitch
                         :type="'bar'"
-                        :data="item.value.elements"
+                        :data="item.value.elements.slice(0, 20)"
+                        :key-label="'alteriertes Gen'"
+                        :value-label="'Anzahl [n]'"
+                        :percent-label="'Anteil [%]'"
+                        :x-axis-label="'Anzahl [n]'"
+                        :y-axis-label="'alteriertes Gen (Anteil [%])'"
                     />
                 </template>
             </DQuerySummaryGrouped>
@@ -88,7 +96,7 @@ export default defineComponent({
     </template>
     <template v-else-if="busy">
         <div>
-            <h5>Verteilung nach Alteration</h5>
+            <h5>TOP 20 der alterierten Gene (SNV/ CNV/ Fusion)</h5>
             <div class="entity-card text-center mb-3">
                 <BPlaceholder
                     v-for="i in 5"
