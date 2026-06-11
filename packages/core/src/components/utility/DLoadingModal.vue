@@ -92,7 +92,7 @@ export default component as Component;
     position: absolute;
     top: 0;
     right: 0;
-    background-color: var(--dnpm-brand-steel);
+    background-color: var(--dnpm-brand-slate);
     border-radius: var(--modal-loading-box-border-radius);
     /*
     box-shadow: 0px 0px 10px 0px rgba(28, 159, 255, 0.4);
@@ -129,25 +129,25 @@ export default component as Component;
     animation: squidge-4 var(--modal-loading-duration) ease-in-out infinite alternate;
 }
 .modal-loading-box:nth-child(2):after {
-    background-color: var(--dnpm-brand-steel);
+    background-color: var(--dnpm-brand-slate);
 }
 .modal-loading-box:nth-child(3):after {
-    background-color: color-mix(in oklab, var(--dnpm-brand-steel) 80%, white);
+    background-color: color-mix(in oklab, var(--dnpm-brand-slate) 80%, white);
 }
 .modal-loading-box:nth-child(4):after {
-    background-color: color-mix(in oklab, var(--dnpm-brand-steel) 60%, white);
+    background-color: color-mix(in oklab, var(--dnpm-brand-slate) 60%, white);
 }
 .modal-loading-box:nth-child(5):after {
-    background-color: color-mix(in oklab, var(--dnpm-brand-steel) 40%, white);
+    background-color: color-mix(in oklab, var(--dnpm-brand-slate) 40%, white);
 }
 
 @keyframes slide {
     0% {
-        background-color: var(--dnpm-brand-steel);
+        background-color: var(--dnpm-brand-slate);
         transform: translatex(0vw);
     }
     100% {
-        background-color: color-mix(in oklab, var(--dnpm-brand-steel) 40%, white);
+        background-color: color-mix(in oklab, var(--dnpm-brand-slate) 40%, white);
         transform: translatex(
             calc(var(--modal-loading-container-duration) - (var(--modal-loading-box-size) * 1.25))
         );
@@ -156,10 +156,10 @@ export default component as Component;
 
 @keyframes color-change {
     0% {
-        background-color: var(--dnpm-brand-steel);
+        background-color: var(--dnpm-brand-slate);
     }
     100% {
-        background-color: color-mix(in oklab, var(--dnpm-brand-steel) 40%, white);
+        background-color: color-mix(in oklab, var(--dnpm-brand-slate) 40%, white);
     }
 }
 

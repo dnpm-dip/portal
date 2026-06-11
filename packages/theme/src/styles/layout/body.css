@@ -12,10 +12,6 @@ body {
     background: var(--vc-color-bg);
 }
 
-ul {
-    padding-inline-start: 1rem;
-}
-
 b, strong {
     font-weight: 700;
 }
@@ -28,7 +24,7 @@ small, .small {
 h1, h2, h3, h4, h5, h6 {
     font-family: Asap, sans-serif;
     font-weight: 700;
-    color: var(--dnpm-brand-blue);
+    color: var(--dnpm-brand-ink);
 }
 
 h1.title,
@@ -47,7 +43,7 @@ h5.title:before {
     content: "";
     width: 4px;
     padding-right: 4px;
-    background: var(--dnpm-brand-blue);
+    background: var(--dnpm-brand-ink);
     margin-right: 0.75rem;
 }
 
@@ -61,7 +57,7 @@ h5.title:before {
 
 .title .sub-title {
     font-size: .65em;
-    color: var(--dnpm-brand-blue);
+    color: var(--dnpm-brand-ink);
 }
 
 #__nuxt,

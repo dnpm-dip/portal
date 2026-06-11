@@ -70,18 +70,18 @@
      *      on the light surface, and are pinned to the warm-dark palette
      *      under `.dark` below.
      *
-     *   2. Brand accents (coral, teal, purple, blue, gold) carry DIP's
+     *   2. Brand accents (slate, coral, mauve, silver) carry DIP's
      *      identity and are hard-coded; they read on both modes and are
      *      used as text/accent colors on chrome surfaces.
      */
     :root {
         /* Chrome — surface bands + alias-light text/border. The dark
-           bands (elevated/nested, shared by both modes) are steel-tinted
-           slates mixed from the brand anchor, so the chrome family
-           derives from the same color the primary scale does. */
+           bands (elevated/nested, shared by both modes) are slates mixed
+           from the brand anchor, so the chrome family derives from the
+           same color the primary scale does. */
         --dnpm-chrome-bg:            #D9D9D9;
-        --dnpm-chrome-bg-elevated:   color-mix(in oklab, var(--dnpm-brand-steel) 20%, #1E232A);
-        --dnpm-chrome-bg-nested:     color-mix(in oklab, var(--dnpm-brand-steel) 28%, #1E232A);
+        --dnpm-chrome-bg-elevated:   color-mix(in oklab, var(--dnpm-brand-slate) 20%, #1E232A);
+        --dnpm-chrome-bg-nested:     color-mix(in oklab, var(--dnpm-brand-slate) 28%, #1E232A);
         --dnpm-chrome-fg:            var(--vc-color-fg);
         --dnpm-chrome-fg-muted:      var(--vc-color-fg-muted);
         --dnpm-chrome-border:        var(--vc-color-border);
@@ -97,53 +97,49 @@
         --dnpm-chrome-edge-shadow-right:  2px 0 8px 0 rgba(0, 0, 0, 0.06);
 
         /* Navbar dropdown menu — dark surface over the light chrome;
-           reuses the steel-slate chrome bands. */
+           reuses the slate chrome bands. */
         --dnpm-navbar-menu-bg:       var(--dnpm-chrome-bg-nested);
         --dnpm-navbar-menu-bg-hover: var(--dnpm-chrome-bg-elevated);
         --dnpm-navbar-menu-fg:       #9d9d9d;
 
         /*
-         * Brand accents — drawn from the project's healthcare palette
-         * (colors.webp, row-1 mint/green + row-3 aqua/steel/periwinkle):
-         * the muted steel blue anchors the primary scale below — calm
-         * and clinical, the right register for a clinical decision
-         * support system — flanked by the mint/green vitality pair and
-         * the soft aqua, staying clear of the semantic colors at their
-         * interactive steps. All mode-stable except `-blue`
-         * (headings/wordmark), which sits on the content/chrome
-         * surfaces and flips to the periwinkle tone in dark mode.
+         * Brand accents — "Slate & Coral" (design-review pick from the
+         * project's healthcare palette, colors.webp): a sober neutral
+         * slate anchors the primary scale below — calm chrome that lets
+         * the clinical content speak — while the coral carries the
+         * energy as the accent (logo strand, sidebar accent, footer
+         * links) and the mauve softens the mark's rungs. Mode-stable
+         * except `-ink` (headings/wordmark), which sits on the
+         * content/chrome surfaces and flips to the silver tone in dark
+         * mode.
          */
         --dnpm-brand-coral:          #F65552;
-        --dnpm-brand-steel:          #648DA6;
-        --dnpm-brand-mint:           #54E2B0;
-        --dnpm-brand-green:          #5AC87C;
-        --dnpm-brand-aqua:           #83D6DA;
-        --dnpm-brand-periwinkle:     #A0AED9;
-        --dnpm-brand-blue:           var(--dnpm-brand-steel);
+        --dnpm-brand-slate:          #5C6670;
+        --dnpm-brand-mauve:          #C7B1BD;
+        --dnpm-brand-silver:         #AEB2B5;
+        --dnpm-brand-ink:            var(--dnpm-brand-slate);
 
         /*
-         * Primary palette → DIP clinical steel blue. Overrides the vuecs
-         * primary scale (which @vuecs/design aliases to blue);
-         * theme-tailwind bridges `--color-primary-*` from these, so every
-         * `primary` utility/component (buttons, active states, rings,
-         * pagination) adopts the brand color. Tints/shades are
-         * color-mixed from the brand var so the whole scale stays in
-         * sync with it. The pure brand sits at 500; 600 — the shade
-         * buttons and active states use — mixes toward black so white
-         * text clears WCAG contrast (the raw #648DA6 is too light under
-         * white text).
+         * Primary palette → DIP slate. Overrides the vuecs primary
+         * scale (which @vuecs/design aliases to blue); theme-tailwind
+         * bridges `--color-primary-*` from these, so every `primary`
+         * utility/component (buttons, active states, rings, pagination)
+         * adopts the brand color. Tints/shades are color-mixed from the
+         * brand var so the whole scale stays in sync with it. The pure
+         * brand sits at 500; 600 — the shade buttons and active states
+         * use — mixes toward black so white text clears WCAG contrast.
          */
-        --vc-color-primary-50:  color-mix(in oklab, var(--dnpm-brand-steel) 8%,  white);
-        --vc-color-primary-100: color-mix(in oklab, var(--dnpm-brand-steel) 16%, white);
-        --vc-color-primary-200: color-mix(in oklab, var(--dnpm-brand-steel) 32%, white);
-        --vc-color-primary-300: color-mix(in oklab, var(--dnpm-brand-steel) 52%, white);
-        --vc-color-primary-400: color-mix(in oklab, var(--dnpm-brand-steel) 76%, white);
-        --vc-color-primary-500: var(--dnpm-brand-steel);
-        --vc-color-primary-600: color-mix(in oklab, var(--dnpm-brand-steel) 78%, black);
-        --vc-color-primary-700: color-mix(in oklab, var(--dnpm-brand-steel) 64%, black);
-        --vc-color-primary-800: color-mix(in oklab, var(--dnpm-brand-steel) 52%, black);
-        --vc-color-primary-900: color-mix(in oklab, var(--dnpm-brand-steel) 42%, black);
-        --vc-color-primary-950: color-mix(in oklab, var(--dnpm-brand-steel) 28%, black);
+        --vc-color-primary-50:  color-mix(in oklab, var(--dnpm-brand-slate) 8%,  white);
+        --vc-color-primary-100: color-mix(in oklab, var(--dnpm-brand-slate) 16%, white);
+        --vc-color-primary-200: color-mix(in oklab, var(--dnpm-brand-slate) 32%, white);
+        --vc-color-primary-300: color-mix(in oklab, var(--dnpm-brand-slate) 52%, white);
+        --vc-color-primary-400: color-mix(in oklab, var(--dnpm-brand-slate) 76%, white);
+        --vc-color-primary-500: var(--dnpm-brand-slate);
+        --vc-color-primary-600: color-mix(in oklab, var(--dnpm-brand-slate) 78%, black);
+        --vc-color-primary-700: color-mix(in oklab, var(--dnpm-brand-slate) 64%, black);
+        --vc-color-primary-800: color-mix(in oklab, var(--dnpm-brand-slate) 52%, black);
+        --vc-color-primary-900: color-mix(in oklab, var(--dnpm-brand-slate) 42%, black);
+        --vc-color-primary-950: color-mix(in oklab, var(--dnpm-brand-slate) 28%, black);
     }
 
     /*
@@ -151,7 +147,7 @@
      *
      *   a) Recess the dark chrome BELOW the content surface (the
      *      conventional dark-UI tonal model: darkest fixed chrome,
-     *      lifted content) with a subtle steel cast from the brand
+     *      lifted content) with a subtle slate cast from the brand
      *      anchor — instead of the historical lighter warm-grey band.
      *      The elevated band stays the lightest step, so hover/active
      *      rows pop above both chrome and content.
@@ -161,14 +157,14 @@
      *      content surface pairs with the chrome as a gentle tonal step.
      */
     .dark {
-        --dnpm-chrome-bg:            color-mix(in oklab, var(--dnpm-brand-steel) 14%, #14181D);
+        --dnpm-chrome-bg:            color-mix(in oklab, var(--dnpm-brand-slate) 14%, #14181D);
         --dnpm-chrome-fg:            #ffffff;
         --dnpm-chrome-fg-muted:      #aeb2b7;
         --dnpm-chrome-border:        #333333;
 
-        /* Headings/wordmark blue — the light-mode steel drops too
-           close to the dark surfaces; flip to the palette's periwinkle. */
-        --dnpm-brand-blue:           var(--dnpm-brand-periwinkle);
+        /* Headings/wordmark ink — the light-mode slate drops too
+           close to the dark surfaces; flip to the palette's silver. */
+        --dnpm-brand-ink:            var(--dnpm-brand-silver);
 
         /* Recessed band — DIP's historical raised-dark-chrome edge. The
            sidebar's right edge stays shadow-free: the chrome/content tonal
@@ -178,7 +174,7 @@
         --dnpm-chrome-edge-shadow-right:  none;
 
         /*
-         * Content surface — soft cool dark that pairs with the steel
+         * Content surface — soft cool dark that pairs with the slate
          * chrome. The raw neutral scale does NOT flip with the mode:
          * aliasing `--vc-color-bg` to neutral-400 (a light-mid grey)
          * left the light `fg` tokens from @vuecs/design at ~1.7:1 —

@@ -22,7 +22,7 @@
 }
 
 .page-sidebar .sidebar-header span {
-    color: var(--dnpm-brand-mint);
+    color: var(--dnpm-brand-coral);
 }
 
 @media only screen and (max-width: 768px) {
