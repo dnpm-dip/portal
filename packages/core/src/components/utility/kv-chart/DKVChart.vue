@@ -16,7 +16,7 @@ import {
 import { DChart } from '../chart';
 import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
 
-type Key = MinMaxRange | Coding | string[] | string;
+type Key = MinMaxRange | Coding | Coding[] | string[] | string;
 
 const component = defineComponent({
     components: { DChart },

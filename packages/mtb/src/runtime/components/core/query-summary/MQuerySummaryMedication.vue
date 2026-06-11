@@ -9,10 +9,12 @@
 import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
     type Coding,
+    type ConceptCountValue,
     DKVChart,
     DKVChartTableSwitch,
     DQuerySummaryGrouped,
     DQuerySummaryNested,
+    type KeyValueRecord,
     QueryEventBusEventName,
     injectQueryEventBus,
     toCodingGroup,
@@ -150,8 +152,10 @@ export default defineComponent({
             }));
         });
 
-        const flattenMeanDurations = (items: { children?: unknown[] }[]) => items.flatMap(
-            (item) => (Array.isArray(item.children) && item.children.length > 0 ?
+        const flattenMeanDurations = (
+            items: KeyValueRecord<Coding | Coding[], number | ConceptCountValue>[],
+        ) : KeyValueRecord<Coding | Coding[], number | ConceptCountValue>[] => items.flatMap(
+            (item) => (item.children && item.children.length > 0 ?
                 item.children :
                 [item]),
         );
@@ -250,7 +254,7 @@ export default defineComponent({
                                     {key: 'percent', label: 'Anteil Empfehlungen [%]'},
                                 ] : [
                                     {key: 'key', label: 'Wirkstoff'},
-                                    {key: 'value', label: 'Anzahl [n]'},
+                                    {key: 'value', label: 'Anzahl Empfehlungen [n]'},
                                     {key: 'percent', label: 'Anteil bzgl. Wirkstoffklasse [%]'},
                                 ]"
                                 @clicked="(keys: Coding[]) => handleRecommendationClick(keys, 'recommended')"
@@ -286,7 +290,7 @@ export default defineComponent({
                                     {key: 'percent', label: 'Anteil umgesetzter Therapien [%]'},
                                 ] : [
                                     {key: 'key', label: 'Wirkstoff'},
-                                    {key: 'value', label: 'Anzahl [n]'},
+                                    {key: 'value', label: 'Anzahl umgesetzter Therapien [n]'},
                                     {key: 'percent', label: 'Anteil bzgl. Wirkstoffklasse [%]'},
                                 ]"
                                 @clicked="handleUsedClick"
