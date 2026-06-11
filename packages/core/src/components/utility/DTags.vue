@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { PropType, SlotsType } from 'vue';
 import {
+    computed,
     defineComponent,
     ref,
     toRef,
@@ -69,9 +70,29 @@ export default defineComponent({
             emit('update:modelValue', tags.value);
         };
 
+        /*
+         * The bg-* variant aliases pin mode-stable fills (see the theme's
+         * compat layer), so the chip text and close glyph must be pinned
+         * to match: a flipping token (text-fg-muted) turns invisible on a
+         * pinned-light fill in dark mode. No variant → mode-flipping
+         * bg-bg-muted, and text/glyph inherit the flipping defaults.
+         */
+        const variantClasses = computed(() => {
+            if (!props.tagVariant) {
+                return { badge: 'bg-bg-muted', close: '' };
+            }
+
+            const lightFill = props.tagVariant === 'light' || props.tagVariant === 'warning';
+            return {
+                badge: `bg-${props.tagVariant} ${lightFill ? 'text-neutral-900' : 'text-white'}`,
+                close: lightFill ? 'text-neutral-900' : 'btn-close-white',
+            };
+        });
+
         return {
             tags,
             drop,
+            variantClasses,
         };
     },
 });
@@ -99,8 +120,7 @@ export default defineComponent({
                         class="badge mt-1 inline-flex items-center"
                         :class="[
                             tagClass,
-                            tagVariant ? `bg-${tagVariant}` : 'bg-bg-muted',
-                            tagVariant ? (tagVariant !== 'light' && tagVariant !== 'warning' ? 'text-white' : 'text-neutral-900') : '',
+                            variantClasses.badge,
                             { 'rounded-pill': tagPills },
                         ]"
                     >
@@ -108,7 +128,7 @@ export default defineComponent({
                         <button
                             type="button"
                             class="btn-close ms-1"
-                            :class="tagVariant && tagVariant !== 'light' && tagVariant !== 'warning' ? 'btn-close-white' : ''"
+                            :class="variantClasses.close"
                             aria-label="Remove"
                             @click.prevent="drop(item.value)"
                         />
