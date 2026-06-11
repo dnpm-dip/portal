@@ -29,7 +29,7 @@
  * display:block, which would otherwise stack them). */
 .page-header .header-title .logo {
     font-size: 22px;
-    color: var(--dnpm-brand-blue);
+    color: var(--dnpm-brand-ink);
     font-weight: 600;
     flex: auto;
     display: flex;
