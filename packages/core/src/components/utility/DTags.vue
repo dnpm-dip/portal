@@ -1,14 +1,12 @@
 <script lang="ts">
 import type { PropType, SlotsType } from 'vue';
 import {
-    computed,
     defineComponent,
     ref,
     toRef,
     watch,
 } from 'vue';
 
-type ColorVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | null;
 type Tag = {
     id: string | number,
     value: string
@@ -18,9 +16,6 @@ export default defineComponent({
         modelValue: { type: Array as PropType<Tag[]> },
         items: { type: Array as PropType<Tag[]> },
         tagClass: { type: String },
-        tagPills: { type: Boolean },
-        tagValidator: { type: Function as PropType<(t: string) => boolean> },
-        tagVariant: { type: String as PropType<ColorVariant> },
         emitOnly: {
             type: Boolean,
             default: false,
@@ -70,36 +65,20 @@ export default defineComponent({
             emit('update:modelValue', tags.value);
         };
 
-        /*
-         * The bg-* variant aliases pin mode-stable fills (see the theme's
-         * compat layer), so the chip text and close glyph must be pinned
-         * to match: a flipping token (text-fg-muted) turns invisible on a
-         * pinned-light fill in dark mode. No variant → mode-flipping
-         * bg-bg-muted, and text/glyph inherit the flipping defaults.
-         */
-        const variantClasses = computed(() => {
-            if (!props.tagVariant) {
-                return { badge: 'bg-bg-muted', close: '' };
-            }
-
-            const lightFill = props.tagVariant === 'light' || props.tagVariant === 'warning';
-            return {
-                badge: `bg-${props.tagVariant} ${lightFill ? 'text-neutral-900' : 'text-white'}`,
-                close: lightFill ? 'text-neutral-900' : 'btn-close-white',
-            };
-        });
-
         return {
             tags,
             drop,
-            variantClasses,
         };
     },
 });
 </script>
 <template>
     <slot>
-        <ul class="list-unstyled mb-0 flex flex-wrap items-center">
+        <!-- The @vuecs/forms chip rules are scoped under
+             .vc-form-select-search, so the list carries that scope class —
+             this renders standalone tags identical to the select-search
+             chips (clickable pill removes the item). -->
+        <ul class="vc-form-select-search vc-form-select-search-selected list-unstyled mb-0">
             <template
                 v-for="(item, index) in tags"
                 :key="item.id"
@@ -108,30 +87,25 @@ export default defineComponent({
                     name="tag"
                     :tag="item.id"
                     :tag-class="tagClass"
-                    :tag-variant="tagVariant"
-                    :tag-pills="tagPills"
                     :remove-tag="drop"
                 >
                     <template v-if="index > 0">
                         <slot name="between" />
                     </template>
-                    <li
-                        :key="item.id"
-                        class="badge mt-1 inline-flex items-center"
-                        :class="[
-                            tagClass,
-                            variantClasses.badge,
-                            { 'rounded-pill': tagPills },
-                        ]"
-                    >
-                        {{ item.value }}
+                    <li :key="item.id">
                         <button
                             type="button"
-                            class="btn-close ms-1"
-                            :class="variantClasses.close"
-                            aria-label="Remove"
+                            class="vc-form-select-search-selected-item"
+                            :class="tagClass"
+                            title="Entfernen"
                             @click.prevent="drop(item.value)"
-                        />
+                        >
+                            {{ item.value }}
+                            <span
+                                class="vc-form-select-search-selected-item-remove"
+                                aria-hidden="true"
+                            >&times;</span>
+                        </button>
                     </li>
                 </slot>
             </template>

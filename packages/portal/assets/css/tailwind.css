@@ -19,6 +19,16 @@
  */
 @import "@vuecs/navigation/style.css";
 
+/*
+ * Structural CSS for @vuecs/forms (<VCFormSelectSearch> & friends):
+ * positions the dropdown as an absolute overlay panel and styles the
+ * selected chips as clickable remove-pills (label + ×, pointer cursor,
+ * hover state). Without it the option list renders inline below the
+ * input and the chips are bare unstyled buttons. Same direct-dependency
+ * rationale and theme-overrides ordering as @vuecs/navigation above.
+ */
+@import "@vuecs/forms/style.css";
+
 @import "@dnpm-dip/theme";
 
 /*

@@ -302,10 +302,8 @@ export default defineComponent({
             </button>
         </div>
         <DTags
-            class="mt-2"
             :emit-only="true"
             :items="allDrugs"
-            tag-variant="light"
             @deleted="dropCustom"
         >
             <template #between>

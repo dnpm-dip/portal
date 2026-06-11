@@ -129,7 +129,7 @@ against tada5hi/vuecs):
 /*
 Input group — joined input + addon (form-select-search / button).
 */
-.input-group > .form-select-search {
+.input-group > .vc-form-select-search {
     position: relative;
     flex: 1 1 auto;
     width: 1%;
@@ -153,8 +153,8 @@ Input group — joined input + addon (form-select-search / button).
     line-height: 1rem;
 }
 
-.form-select-search .form-select-search-content {
-    text-align: left !important;
+.vc-form-select-search .vc-form-select-search-content {
+    text-align: left;
 }
 
 /*
