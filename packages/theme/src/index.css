@@ -83,6 +83,16 @@
         --dnpm-chrome-fg-muted:      var(--vc-color-fg-muted);
         --dnpm-chrome-border:        var(--vc-color-border);
 
+        /* Chrome edge where it meets the content — `-bottom` for top chrome
+           (header / sidebar-header), `-top` for bottom chrome (footer),
+           `-right` for the sidebar. Light mode: a soft drop shadow so the
+           fixed chrome reads as raised above the content (the dark inset
+           band used in dark mode would be a muddy grey stripe on the light
+           surface). */
+        --dnpm-chrome-edge-shadow-bottom: 0 2px 8px 0 rgba(0, 0, 0, 0.06);
+        --dnpm-chrome-edge-shadow-top:    0 -2px 8px 0 rgba(0, 0, 0, 0.06);
+        --dnpm-chrome-edge-shadow-right:  2px 0 8px 0 rgba(0, 0, 0, 0.06);
+
         /* Navbar dropdown menu — dark surface over the light chrome. */
         --dnpm-navbar-menu-bg:       #40434E;
         --dnpm-navbar-menu-bg-hover: #32333B;
@@ -113,6 +123,13 @@
         --dnpm-chrome-fg:            #ffffff;
         --dnpm-chrome-fg-muted:      #aeb2b7;
         --dnpm-chrome-border:        #333333;
+
+        /* Recessed band — DIP's historical raised-dark-chrome edge. The
+           sidebar's right edge stays shadow-free: the chrome/content tonal
+           step carries the separation in dark mode. */
+        --dnpm-chrome-edge-shadow-bottom: 0 -6px 0 0 rgba(0, 0, 0, 0.3) inset;
+        --dnpm-chrome-edge-shadow-top:    0 6px 0 0 rgba(0, 0, 0, 0.1) inset;
+        --dnpm-chrome-edge-shadow-right:  none;
 
         /*
          * Content surface — soft dark that pairs with the warm chrome.

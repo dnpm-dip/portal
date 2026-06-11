@@ -1,5 +1,9 @@
 .page-footer {
-    box-shadow: 0px 6px 0px 0px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: var(--dnpm-chrome-edge-shadow-top);
+    /* Lift above `.page-content` (positioned, own background) so the
+       outset edge shadow paints over the content surface. */
+    position: relative;
+    z-index: 1;
     padding: 10px 0px 4px 0px;
     text-align: center;
     color: var(--dnpm-chrome-fg-muted);
