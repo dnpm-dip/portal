@@ -1,47 +1,79 @@
-.vc-nav-items .vc-nav-link {
+/*
+ * Chrome navigation (header top-nav + sidebar) on top of
+ * @vuecs/navigation's structural style.css (imported by the app CSS
+ * entry, BEFORE this theme — so equal-specificity rules here win by
+ * source order). The sidebar renders <VCNavItems variant="pills"
+ * orientation="vertical"> on the chrome surface; the header renders a
+ * plain (non-pills) <VCNavItems>. Content-area tab strips use the
+ * Bootstrap-shaped `.nav-pills` markup styled in domain.css.
+ */
+
+/*
+ * `.vc-nav-trigger` is the clickable element of an item WITH children
+ * (collapse mode). It is a sibling shape to `.vc-nav-link`, so it must
+ * inherit the same base color/metrics to line up with its leaf siblings.
+ */
+.vc-nav-items .vc-nav-link,
+.vc-nav-items .vc-nav-trigger {
     color: var(--dnpm-chrome-fg-muted);
     line-height: 1rem;
+    font-size: 0.875rem;
 }
 
-.vc-nav-items .vc-nav-item.vc-nav-item-nested:hover > .vc-nav-link,
-.vc-nav-items .vc-nav-item.vc-nav-item-nested:active > .vc-nav-link,
-.vc-nav-items .vc-nav-item.vc-nav-item-nested.active > .vc-nav-link {
-    background: none;
-    color: inherit;
+/*
+ * Sidebar rows: the structural pills padding (.375rem .75rem) is sized
+ * for content-area tab strips; chrome rows need the larger touch
+ * target. Higher specificity than `.vc-nav-link--pills`, so it wins.
+ */
+.page-sidebar .vc-nav-link,
+.page-sidebar .vc-nav-trigger {
+    padding: 1rem 1.25rem;
 }
 
-.vc-nav-items .vc-nav-item .vc-nav-link.dropdown-toggle {
-    background: none;
-    display: block;
-    border: none;
-}
-
-.vc-nav-items .vc-nav-item .vc-nav-link,
-.vc-nav-items .vc-nav-item:hover .vc-nav-link,
-.vc-nav-items .vc-nav-item.active .vc-nav-link {
-    border-left-color: var(--vc-color-primary-500) !important;
-}
-
-.vc-nav-items .vc-nav-link.active,
-.vc-nav-items .vc-nav-link:active,
-.vc-nav-items .vc-nav-link:hover {
+/*
+ * Chrome nav-link accent (header top-nav). Excluded from `--pills` so
+ * it does not clobber the sidebar pills' own paint below — without the
+ * `:not()` this rule ties the pills hover rule at 0-3-0 and the two
+ * fight over `color`/`background` by source order.
+ */
+.vc-nav-items:not(.vc-nav-items--pills) .vc-nav-link.active,
+.vc-nav-items:not(.vc-nav-items--pills) .vc-nav-link:active,
+.vc-nav-items:not(.vc-nav-items--pills) .vc-nav-link:hover,
+.vc-nav-items:not(.vc-nav-items--pills) .vc-nav-link.router-link-exact-active,
+.vc-nav-items:not(.vc-nav-items--pills) .vc-nav-link.nuxt-link-exact-active {
     cursor: pointer;
-    color: #fff;
-    background: var(--vc-color-primary-600) !important;
+    color: var(--vc-color-on-primary);
+    background: var(--vc-color-primary-600);
 }
 
-.vc-nav-items .vc-nav-separator:before,
-.vc-nav-items .vc-nav-separator:after {
-    content: '';
-    flex: 1;
-    height: 3px;
+/*
+ * Sidebar pills on the chrome surface — flat, flush, full-width rows
+ * (the hub chrome look): no structural pill radius, no inter-row gap.
+ */
+.page-sidebar .vc-nav-link--pills {
+    border-radius: 0;
+}
+
+.page-sidebar .vc-nav-items--pills.vc-nav-items--vertical {
+    gap: 0;
+}
+
+/*
+ * The elevated band is dark in BOTH modes, so hover text must be
+ * pinned light — a flipping token (chrome-fg-muted) reads dark-on-dark
+ * in light mode. Outranks the structural `.vc-nav-link--pills:hover`
+ * currentColor tint.
+ */
+.page-sidebar .vc-nav-link--pills:hover,
+.page-sidebar .vc-nav-trigger:hover {
+    color: #fff;
     background: var(--dnpm-chrome-bg-elevated);
 }
 
-.vc-nav-item-nested .vc-nav-items .vc-nav-link {
-    border-left-width: 6px;
-    border-left-style: solid;
-    border-left-color: var(--dnpm-chrome-bg-nested);
+.page-sidebar .vc-nav-link--pills.active,
+.page-sidebar .vc-nav-item-nested.active > .vc-nav-trigger {
+    color: var(--vc-color-on-primary);
+    background: var(--vc-color-primary-600);
 }
 
 .vc-nav-items.vc-nav-items--pills.vc-nav-items--vertical {
@@ -49,19 +81,33 @@
     gap: 0.25rem;
 }
 
-.vc-nav-link.vc-nav-link--pills {
-    color: var(--dnpm-chrome-fg-muted);
+/*
+ * Section dividers: the structural CSS supplies the flex row + gap; the
+ * flanking lines are drawn here. 1px lines in the mid-tone fg-muted
+ * (with opacity) instead of a chrome surface color — surface-colored
+ * lines vanish against the chrome in dark mode, where the two surface
+ * bands are only a sliver of lightness apart.
+ */
+.vc-nav-items .vc-nav-separator:before,
+.vc-nav-items .vc-nav-separator:after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--dnpm-chrome-fg-muted);
+    opacity: 0.3;
 }
 
-.vc-nav-link.vc-nav-link--pills:hover,
-.vc-nav-link.vc-nav-link--pills:active {
-    color: var(--dnpm-chrome-fg-muted);
+/*
+ * Nested groups: keep the open group as one raised block (fill the
+ * expanded body with the elevated chrome surface) and rail the child
+ * rows with the brand accent.
+ */
+.page-sidebar .vc-nav-item-nested.active > .vc-nav-content {
     background: var(--dnpm-chrome-bg-elevated);
 }
 
-.vc-nav-link.vc-nav-link--pills.active {
-    color: var(--vc-color-on-primary) !important;
-    background: var(--vc-color-primary-600) !important;
+.vc-nav-item-nested .vc-nav-items .vc-nav-link {
+    border-left: 6px solid var(--vc-color-primary-500);
 }
 
 @media (max-width: 768px) {

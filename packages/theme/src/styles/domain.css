@@ -10,12 +10,32 @@ a:focus {
 }
 
 /*
-Nav pills — joined tab-style nav (carried over from the Bootstrap era).
+Nav pills — content-area tab strips (horizontal, or vertical via
+`.flex-column`) rendered as a JOINED SEGMENTED CONTROL: each segment
+carries a 1px border, neighbours are pulled onto each other so the two
+borders collapse into one shared seam, and the active segment fills
+with the brand primary, raised so its accent border isn't clipped by
+the overlapping seams.
 */
 .nav-pills .nav-link {
     color: var(--vc-color-fg-muted);
     background-color: var(--vc-color-bg-muted);
-    border-color: var(--vc-color-border);
+    border: 1px solid var(--vc-color-border);
+}
+
+.nav-pills .nav-link:hover {
+    color: var(--vc-color-fg);
+}
+
+/* Pull each segment onto its neighbour so the two 1px borders collapse
+   into one shared seam. */
+.nav-pills .nav-item:not(:first-child) {
+    margin-left: -1px;
+}
+
+.nav-pills.flex-column .nav-item:not(:first-child) {
+    margin-left: 0;
+    margin-top: -1px;
 }
 
 .nav-pills .nav-item .nav-link {
@@ -49,9 +69,11 @@ Nav pills — joined tab-style nav (carried over from the Bootstrap era).
 .nav-pills .nav-link.active,
 .nav-pills .nav-link.router-link-exact-active,
 .nav-pills .show > .nav-link {
+    position: relative;
+    z-index: 1;
     color: var(--vc-color-on-primary);
     background-color: var(--vc-color-primary-600);
-    border-color: var(--vc-color-border);
+    border-color: var(--vc-color-primary-600);
 }
 
 .nav-pills .nav-link.nav-link-dark {

@@ -1,6 +1,12 @@
 <template>
     <div class="container text-center">
-        <WorldHealth :style="{'width': '800px'}" />
+        <!-- Tailwind preflight makes <img> display:block — without
+             mx-auto the fixed-width illustration left-aligns; the fixed
+             height keeps the page from jumping while the SVG loads. -->
+        <WorldHealth
+            class="mx-auto"
+            :style="{ width: '800px', height: '400px' }"
+        />
 
         <div class="flex flex-row gap-2">
             <template
