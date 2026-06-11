@@ -30,13 +30,13 @@
         "test:watch": "vitest watch"
     },
     "dependencies": {
-        "@authup/core-kit": "^1.0.0-beta.44",
-        "@authup/client-web-kit": "^1.0.0-beta.44",
+        "@authup/core-kit": "^1.0.0-beta.46",
+        "@authup/client-web-kit": "^1.0.0-beta.46",
         "@dnpm-dip/core": "^1.11.0",
         "@dnpm-dip/kit": "^1.10.0",
         "@nuxt/kit": "^4.4.5",
-        "@vuecs/table": "^1.1.2",
-        "@vuecs/timeago": "^2.0.2",
+        "@vuecs/table": "^1.2.1",
+        "@vuecs/timeago": "^2.1.0",
         "vue": "^3.5.34"
     },
     "devDependencies": {

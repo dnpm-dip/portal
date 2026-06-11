@@ -1,25 +1,31 @@
+/*
+ * Portal-owned list markup — the query/patient/validation templates
+ * render `.list` > `.list-body` > `.list-item` directly (not via
+ * @vuecs/list, whose `vc-list-*` chrome lives in kit-list.css).
+ */
+
 .list {
     display: flex;
     flex-direction: column;
 }
 
-.list .list-items {
-    padding: 0;
-    margin: 0;
-}
-
-.list-header,
-.list-search {
-    margin-bottom: 0.5rem;
-}
-
 .list .list-item {
-    padding: 0.25rem 0.25rem;
-    margin-bottom: 0.5rem;
-    vertical-align: middle;
     display: flex;
     flex-direction: column;
 
     background-color: var(--vc-color-bg-muted);
     border: 1px solid var(--vc-color-border);
+
+    box-shadow: 0 4px 25px 0 rgba(0, 0, 0, .1);
+    transition: color .3s ease-in-out, background-color .3s ease-in-out, border-color .3s ease-in-out, box-shadow .3s ease-in-out;
+
+    border-radius: 4px;
+
+    padding: 0.25rem 0.25rem;
+    margin-bottom: 0.5rem;
+    vertical-align: middle;
+}
+
+.list .list-item.active {
+    background-color: var(--vc-color-bg-elevated);
 }

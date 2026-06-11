@@ -2,7 +2,6 @@ import { buildSubmitButtonDefaults, injectTranslatorLocale } from '@authup/clien
 import { createValidup } from '@validup/vue';
 import { OptionalValue } from 'validup';
 import { de } from 'date-fns/locale/de';
-import { watch } from 'vue';
 
 import vuecs from '@vuecs/core';
 import dnpmTheme, { clientWebKitTheme } from '@dnpm-dip/theme';
@@ -19,7 +18,7 @@ import installOverlays from '@vuecs/overlays';
 import installPagination from '@vuecs/pagination';
 import installPlaceholder from '@vuecs/placeholder';
 import installTable from '@vuecs/table';
-import installTimeago, { injectLocale as injectTimeagoLocale } from '@vuecs/timeago';
+import installTimeago from '@vuecs/timeago';
 
 import { defineNuxtPlugin } from '#app';
 
@@ -32,9 +31,18 @@ export default defineNuxtPlugin({
     async setup(nuxt) {
         const app = nuxt.vueApp;
 
+        // The ilingo locale provider is installed by the `authup` plugin
+        // chain this plugin `dependsOn`. Bridge the active ilingo locale
+        // into vuecs's `Config['locale']` as a reactive ref; @vuecs/timeago
+        // 2.1+ reads the active locale via `useLocale()` — its per-package
+        // `injectLocale()` ref was removed.
+        const locale = injectTranslatorLocale();
+        locale.value = 'de';
+
         app.use(vuecs, {
             themes: [clientWebKitTheme(), dnpmTheme()],
             icons: [fontAwesome()],
+            config: { locale },
             defaults: { submitButton: buildSubmitButtonDefaults() },
         });
 
@@ -51,16 +59,10 @@ export default defineNuxtPlugin({
         app.use(installPagination);
         app.use(installPlaceholder);
         app.use(installTable);
+        // Register the date-fns German locale so timeago can format relative
+        // times in German when the active locale (driven by `config.locale`
+        // above) is `de`.
         app.use(installTimeago, { locales: { de } });
         app.use(installIcon);
-
-        const locale = injectTranslatorLocale();
-        locale.value = 'de';
-
-        const timeagoLocale = injectTimeagoLocale();
-        timeagoLocale.value = locale.value;
-        watch(locale, (val) => {
-            timeagoLocale.value = val;
-        });
     },
 });
