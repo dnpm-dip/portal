@@ -73,6 +73,40 @@ the overlapping seams.
 }
 
 /*
+VCFormCheckbox — two upstream gaps patched at the theme level (filed
+against tada5hi/vuecs):
+
+  1. Baseline jump: reka-ui mounts the indicator element only while
+     checked, and an EMPTY inline-flex box exposes a different baseline
+     than a non-empty one — every toggle shifts the surrounding line
+     box. `vertical-align: middle` detaches the root from the
+     content-dependent baseline.
+
+  2. No visible glyph: the indicator's default slot content is an empty
+     string, so "checked" reads as a bare color fill. Draw a check mark
+     on the root via mask-image (paints with the themed currentColor,
+     `text-on-primary` on the checked fill). The `::after` box is
+     ALWAYS present (transparent when unchecked) so the glyph cannot
+     re-introduce the layout shift.
+*/
+.vc-form-checkbox {
+    vertical-align: middle;
+}
+
+.vc-form-checkbox::after {
+    content: "";
+    width: 0.7rem;
+    height: 0.7rem;
+    flex-shrink: 0;
+    background-color: transparent;
+    mask: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"%3E%3Cpath d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/%3E%3C/svg%3E') center / contain no-repeat;
+}
+
+.vc-form-checkbox[data-state="checked"]::after {
+    background-color: currentColor;
+}
+
+/*
 Input group — joined input + addon (form-select-search / button).
 */
 .input-group > .form-select-search {
