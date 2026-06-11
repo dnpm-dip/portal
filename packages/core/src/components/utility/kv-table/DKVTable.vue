@@ -239,5 +239,6 @@ export default defineComponent({
                 @clicked="handleClicked"
             />
         </template>
+        <VCTableEmpty />
     </VCTable>
 </template>

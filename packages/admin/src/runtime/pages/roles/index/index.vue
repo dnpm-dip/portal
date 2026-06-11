@@ -112,7 +112,7 @@ export default defineNuxtComponent({
                     <VCTimeago :datetime="row.created_at" />
                 </template>
                 <template #cell-updated_at="{ row }: { row: any }">
-                    <VCTimeago :datetime="row.created_at" />
+                    <VCTimeago :datetime="row.updated_at" />
                 </template>
                 <template #cell-options="{ row }: { row: any }">
                     <NuxtLink
@@ -131,6 +131,8 @@ export default defineNuxtComponent({
                         @deleted="props.deleted"
                     />
                 </template>
+                <VCTableLoading />
+                <VCTableEmpty />
             </VCTable>
         </template>
     </ARoles>

@@ -100,13 +100,15 @@ export default defineComponent({
                         :class="[
                             tagClass,
                             tagVariant ? `bg-${tagVariant}` : 'bg-bg-muted',
+                            tagVariant ? (tagVariant !== 'light' && tagVariant !== 'warning' ? 'text-white' : 'text-neutral-900') : '',
                             { 'rounded-pill': tagPills },
                         ]"
                     >
                         {{ item.value }}
                         <button
                             type="button"
-                            class="btn-close btn-close-white ms-1"
+                            class="btn-close ms-1"
+                            :class="tagVariant && tagVariant !== 'light' && tagVariant !== 'warning' ? 'btn-close-white' : ''"
                             aria-label="Remove"
                             @click.prevent="drop(item.value)"
                         />

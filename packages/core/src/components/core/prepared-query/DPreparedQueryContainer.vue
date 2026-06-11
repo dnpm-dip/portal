@@ -227,7 +227,14 @@ export default component as Component;
         </div>
 
         <VCModal v-model:open="modal">
-            <VCModalContent>
+            <!-- attrs forward to reka-ui DialogContent: preventing
+                 escapeKeyDown / interactOutside restores the pre-migration
+                 no-close-on-esc / no-close-on-backdrop guards (the form
+                 inside holds in-progress input). -->
+            <VCModalContent
+                @escape-key-down="(event: Event) => event.preventDefault()"
+                @interact-outside="(event: Event) => event.preventDefault()"
+            >
                 <div class="modal-header">
                     <h6 class="mb-0">
                         Vordefinierte Anfrage

@@ -255,6 +255,7 @@ export default defineComponent({
                     :class="row.supporting ? 'text-success-600' : 'text-error-600'"
                 />
             </template>
+            <VCTableEmpty />
         </VCTable>
 
         <VCPagination

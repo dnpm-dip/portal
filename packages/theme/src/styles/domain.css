@@ -129,7 +129,3 @@ Skeleton placeholder — animated loading bar. Templates use bare
         transform: translateX(100%);
     }
 }
-
-.b-form-tag {
-    margin-bottom: 0.25rem;
-}

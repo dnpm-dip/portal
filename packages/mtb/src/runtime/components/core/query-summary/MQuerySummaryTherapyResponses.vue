@@ -279,6 +279,7 @@ export default defineComponent({
             <template #cell-responseDistribution="{ row }: { row: any }">
                 <MTherapyResponseDistributionBar :distribution="(row as QueryTherapyResponse).responseDistribution" />
             </template>
+            <VCTableEmpty />
         </VCTable>
 
         <VCPagination

@@ -207,6 +207,20 @@
     .btn-outline-info      { @apply border-info-500     text-info-600    hover:bg-info-500    hover:text-on-info; }
     .btn-outline-dark      { @apply border-fg           text-fg          hover:bg-fg          hover:text-bg; }
 
+    /* Semantic color aliases — <DTags> builds `bg-${tagVariant}`
+       dynamically, which the Tailwind scanner cannot see; these map the
+       Bootstrap-era bare names onto the token scale. `bg-secondary` /
+       `bg-light` / `bg-dark` pin the RAW neutral scale (mode-stable), so
+       chips keep their contrast pairing in both color modes. */
+    .bg-primary   { @apply bg-primary-600; }
+    .bg-secondary { background-color: var(--vc-color-neutral-500); }
+    .bg-success   { @apply bg-success-600; }
+    .bg-danger    { @apply bg-error-500; }
+    .bg-warning   { @apply bg-warning-500; }
+    .bg-info      { @apply bg-info-500; }
+    .bg-light     { background-color: var(--vc-color-neutral-100); }
+    .bg-dark      { background-color: var(--vc-color-neutral-800); }
+
     /* Grid — Bootstrap-style 12-col layout via flex (not CSS grid). */
     .row     { @apply flex flex-wrap; margin-left: -0.5rem; margin-right: -0.5rem; }
     .col     { @apply flex-1 basis-0 px-2; }

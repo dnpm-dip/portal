@@ -267,6 +267,7 @@ export default defineComponent({
                                 <template #cell-value="{ row }: { row: any }">
                                     {{ Number((row as { value: number }).value).toFixed(2) }}
                                 </template>
+                                <VCTableEmpty />
                             </VCTable>
                         </template>
                     </DKVChartTableSwitch>
