@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /*
  * DNPM:DIP brand mark — a double helix drawn from the brand tokens:
- * the indigo primary strand, the teal strand and gold base-pair rungs.
+ * the steel primary strand, the mint strand and aqua base-pair rungs.
  * Strokes consume the CSS custom properties, so the mark follows the
  * active theme (and stays legible on both the light and dark chrome).
  */
@@ -18,7 +18,7 @@ withDefaults(defineProps<{ height?: number }>(), { height: 28 });
         aria-label="DNPM:DIP Logo"
     >
         <g
-            stroke="var(--dnpm-brand-gold)"
+            stroke="var(--dnpm-brand-aqua)"
             stroke-width="2"
             stroke-linecap="round"
             opacity="0.9"
@@ -39,7 +39,7 @@ withDefaults(defineProps<{ height?: number }>(), { height: 28 });
         />
         <path
             d="M11 2 C11 16, 29 14, 29 28 C29 42, 11 40, 11 54"
-            stroke="var(--dnpm-brand-teal)"
+            stroke="var(--dnpm-brand-mint)"
             stroke-width="3.5"
             stroke-linecap="round"
         />

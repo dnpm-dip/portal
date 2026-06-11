@@ -232,12 +232,12 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
 
-    color: #5b646c;
-    background-color: #ececec;
+    color: var(--vc-color-fg-muted);
+    background-color: var(--vc-color-bg-muted);
 }
 .form-tab.active {
-    color: #fff;
-    background-color: #6d7fcc;
+    color: var(--vc-color-on-primary);
+    background-color: var(--vc-color-primary-600);
 }
 
 .form-tab-text {
