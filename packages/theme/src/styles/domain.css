@@ -50,7 +50,7 @@ Nav pills — joined tab-style nav (carried over from the Bootstrap era).
 .nav-pills .nav-link.router-link-exact-active,
 .nav-pills .show > .nav-link {
     color: var(--vc-color-on-primary);
-    background-color: var(--dnpm-brand-purple);
+    background-color: var(--vc-color-primary-600);
     border-color: var(--vc-color-border);
 }
 

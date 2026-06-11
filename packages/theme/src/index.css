@@ -104,6 +104,30 @@
         --dnpm-brand-purple:         #6d7fcc;
         --dnpm-brand-blue:           #829dc5;
         --dnpm-brand-gold:           #baa875;
+
+        /*
+         * Primary palette → DIP indigo (the brand purple). Overrides the
+         * vuecs primary scale (which @vuecs/design aliases to blue);
+         * theme-tailwind bridges `--color-primary-*` from these, so every
+         * `primary` utility/component (buttons, active states, rings,
+         * pagination) adopts the brand color. Tints/shades are
+         * color-mixed from the brand var so the whole scale stays in
+         * sync with it. The pure brand sits at 500; 600 — the shade
+         * buttons and active states use — mixes toward black so white
+         * button text clears WCAG contrast (the raw #6d7fcc is too
+         * light under white text).
+         */
+        --vc-color-primary-50:  color-mix(in oklab, var(--dnpm-brand-purple) 8%,  white);
+        --vc-color-primary-100: color-mix(in oklab, var(--dnpm-brand-purple) 16%, white);
+        --vc-color-primary-200: color-mix(in oklab, var(--dnpm-brand-purple) 32%, white);
+        --vc-color-primary-300: color-mix(in oklab, var(--dnpm-brand-purple) 52%, white);
+        --vc-color-primary-400: color-mix(in oklab, var(--dnpm-brand-purple) 76%, white);
+        --vc-color-primary-500: var(--dnpm-brand-purple);
+        --vc-color-primary-600: color-mix(in oklab, var(--dnpm-brand-purple) 84%, black);
+        --vc-color-primary-700: color-mix(in oklab, var(--dnpm-brand-purple) 70%, black);
+        --vc-color-primary-800: color-mix(in oklab, var(--dnpm-brand-purple) 56%, black);
+        --vc-color-primary-900: color-mix(in oklab, var(--dnpm-brand-purple) 44%, black);
+        --vc-color-primary-950: color-mix(in oklab, var(--dnpm-brand-purple) 30%, black);
     }
 
     /*

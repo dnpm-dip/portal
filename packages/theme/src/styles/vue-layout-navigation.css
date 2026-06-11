@@ -19,7 +19,7 @@
 .vc-nav-items .vc-nav-item .vc-nav-link,
 .vc-nav-items .vc-nav-item:hover .vc-nav-link,
 .vc-nav-items .vc-nav-item.active .vc-nav-link {
-    border-left-color: var(--dnpm-brand-purple) !important;
+    border-left-color: var(--vc-color-primary-500) !important;
 }
 
 .vc-nav-items .vc-nav-link.active,
@@ -27,7 +27,7 @@
 .vc-nav-items .vc-nav-link:hover {
     cursor: pointer;
     color: #fff;
-    background: var(--dnpm-brand-purple) !important;
+    background: var(--vc-color-primary-600) !important;
 }
 
 .vc-nav-items .vc-nav-separator:before,

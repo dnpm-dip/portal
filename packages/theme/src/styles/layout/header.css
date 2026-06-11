@@ -28,19 +28,10 @@
     color: var(--dnpm-brand-blue);
     font-weight: 600;
     flex: auto;
-}
-
-.page-header .logo span:not(.info-text) {
-    color: var(--dnpm-brand-gold);
-}
-
-.page-header .logo .info-text {
-    font-size: 15px;
-}
-
-.page-header .logo .info-text:before {
-    content: "-";
-    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .page-header .toggle-box {
@@ -63,7 +54,7 @@
     width: 20px;
     height: 2px;
     margin-top: 2px;
-    background: var(--dnpm-brand-purple);
+    background: var(--vc-color-primary-500);
 }
 
 @media (min-width: 768px) {
