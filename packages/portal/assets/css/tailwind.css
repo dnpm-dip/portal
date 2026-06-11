@@ -29,31 +29,19 @@
 @source "../..";
 
 /*
- * The four sibling workspace packages render their own `.vue` SFC
+ * The four sibling WORKSPACE packages render their own `.vue` SFC
  * templates (and `.ts` hyperscript that emits class strings) inside the
- * portal app. Their class strings live outside the portal tree, so each
- * needs its own `@source`. Miss one and that module renders with `vc-*`
- * defaults / no Tailwind styling.
+ * portal app — scanned via their local `src` trees (which also keeps
+ * Nuxt HMR rebuilding utilities while editing them). Miss one and that
+ * module renders with `vc-*` defaults / no Tailwind styling.
+ *
+ * EXTERNAL deps (@authup/client-web-kit dist, @vuecs element class
+ * maps) are NOT scanned here — those scopes belong to the theme's
+ * vendored kit-theme cascade (@dnpm-dip/theme src/index.css), which
+ * anchors them at the hoisted root node_modules. If npm ever nests
+ * those packages portal-locally instead, re-add local anchors there.
  */
 @source "../../../core/src";
 @source "../../../admin/src";
 @source "../../../mtb/src";
 @source "../../../rd/src";
-
-/*
- * Nested vuecs deps. npm workspaces hoist some `@vuecs/*` to the repo
- * root, but several land under portal-local node_modules due to peer
- * deduplication. Tailwind v4 silently skips missing paths, so listing
- * both the portal-local and root trees is safe and keeps the JIT corpus
- * complete regardless of the hoist layout.
- */
-@source "../../node_modules/@vuecs";
-@source "../../../../node_modules/@vuecs";
-
-/*
- * @authup/client-web-kit ships compiled component class strings under
- * its dist tree. Re-anchor from both the portal-local and root hoist
- * layouts to be safe.
- */
-@source "../../node_modules/@authup/client-web-kit/dist";
-@source "../../../../node_modules/@authup/client-web-kit/dist";
