@@ -1,17 +1,28 @@
 /*
- * Chrome navigation (header top-nav + sidebar) on top of
- * @vuecs/navigation's structural style.css (imported by the app CSS
- * entry, BEFORE this theme — so equal-specificity rules here win by
- * source order). The sidebar renders <VCNavItems variant="pills"
- * orientation="vertical"> on the chrome surface; the header renders a
- * plain (non-pills) <VCNavItems>. Content-area tab strips use the
- * Bootstrap-shaped `.nav-pills` markup styled in domain.css.
+ * Navigation styling on top of @vuecs/navigation's structural
+ * style.css (imported by the app CSS entry, BEFORE this theme — so
+ * equal-specificity rules here win by source order).
+ *
+ * Two disjoint contexts, kept deliberately separate (the hub model):
+ *
+ *   1. CHROME nav — the header's plain <VCNavItems> and the sidebar's
+ *      <VCNavItems variant="pills" orientation="vertical">. Flat rows
+ *      on the chrome surfaces; scoped under `.page-sidebar` /
+ *      `:not(--pills)`.
+ *
+ *   2. CONTENT entity tabs — <VCNavItems variant="pills"> rendered by
+ *      the pages (the hub DomainEntityNav pattern), drawn as a joined
+ *      segmented control; scoped under `.page-content` so none of it
+ *      leaks into the sidebar. (Pills portaled OUTSIDE `.page-content`
+ *      — e.g. into a modal — would render with structural defaults
+ *      only; no such consumer exists today.)
  */
 
 /*
- * `.vc-nav-trigger` is the clickable element of an item WITH children
- * (collapse mode). It is a sibling shape to `.vc-nav-link`, so it must
- * inherit the same base color/metrics to line up with its leaf siblings.
+ * Base — `.vc-nav-trigger` is the clickable element of an item WITH
+ * children (collapse mode). It is a sibling shape to `.vc-nav-link`,
+ * so it must inherit the same color/metrics to line up with its leaf
+ * siblings.
  */
 .vc-nav-items .vc-nav-link,
 .vc-nav-items .vc-nav-trigger {
@@ -21,20 +32,10 @@
 }
 
 /*
- * Sidebar rows: the structural pills padding (.375rem .75rem) is sized
- * for content-area tab strips; chrome rows need the larger touch
- * target. Higher specificity than `.vc-nav-link--pills`, so it wins.
- */
-.page-sidebar .vc-nav-link,
-.page-sidebar .vc-nav-trigger {
-    padding: 1rem 1.25rem;
-}
-
-/*
  * Chrome nav-link accent (header top-nav). Excluded from `--pills` so
- * it does not clobber the sidebar pills' own paint below — without the
- * `:not()` this rule ties the pills hover rule at 0-3-0 and the two
- * fight over `color`/`background` by source order.
+ * it does not clobber the pills' own paint — without the `:not()` this
+ * rule ties the pills rules at equal specificity and the two fight
+ * over `color`/`background` by source order.
  */
 .vc-nav-items:not(.vc-nav-items--pills) .vc-nav-link.active,
 .vc-nav-items:not(.vc-nav-items--pills) .vc-nav-link:active,
@@ -47,25 +48,83 @@
 }
 
 /*
- * Content-area entity tabs (variant="pills" on <VCNavItems>, the hub
- * DomainEntityNav pattern) — rendered as a JOINED SEGMENTED CONTROL on
- * top of @vuecs/navigation's structural style.css: drop the structural
- * inter-pill gap + per-pill radius, draw the segments as one bordered
- * strip sharing 1px seams, and fill the active segment with the brand
- * primary. Matches the structural selector's specificity
- * (`.vc-nav-items.vc-nav-items--pills` sets `gap: .25rem`); source
- * order then breaks the tie in our favour.
+ * Sidebar (chrome) pills — flat, flush, square, full-width rows (the
+ * hub chrome look). The structural pills radius/gap is undone here;
+ * the segmented-control chrome below never applies (content-scoped).
  */
-.vc-nav-items.vc-nav-items--pills {
+.page-sidebar .vc-nav-items--pills {
     gap: 0;
 }
 
-.vc-nav-items.vc-nav-items--pills.vc-nav-items--vertical {
+.page-sidebar .vc-nav-link--pills,
+.page-sidebar .vc-nav-trigger {
+    border-radius: 0;
+    padding: 1rem 1.25rem;
+}
+
+/*
+ * The elevated band is dark in BOTH modes, so hover text must be
+ * pinned light — a flipping token (chrome-fg-muted) reads dark-on-dark
+ * in light mode. Outranks the structural currentColor hover tint.
+ */
+.page-sidebar .vc-nav-link--pills:hover,
+.page-sidebar .vc-nav-trigger:hover {
+    color: #fff;
+    background-color: var(--dnpm-chrome-bg-elevated);
+}
+
+.page-sidebar .vc-nav-link--pills.active,
+.page-sidebar .vc-nav-item-nested.active > .vc-nav-trigger {
+    color: var(--vc-color-on-primary);
+    background-color: var(--vc-color-primary-600);
+}
+
+/*
+ * Nested groups (sidebar): keep the open group as one raised block
+ * (fill the expanded body with the elevated chrome surface) and rail
+ * the child rows with the brand accent.
+ */
+.page-sidebar .vc-nav-item-nested.active > .vc-nav-content {
+    background: var(--dnpm-chrome-bg-elevated);
+}
+
+.vc-nav-item-nested .vc-nav-items .vc-nav-link {
+    border-left: 6px solid var(--vc-color-primary-500);
+}
+
+/*
+ * Section dividers: the structural CSS supplies the flex row + gap;
+ * the flanking lines are drawn here. 1px lines in the mid-tone
+ * fg-muted (with opacity) instead of a chrome surface color —
+ * surface-colored lines vanish against the chrome in dark mode, where
+ * the two surface bands are only a sliver of lightness apart.
+ */
+.vc-nav-items .vc-nav-separator:before,
+.vc-nav-items .vc-nav-separator:after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--dnpm-chrome-fg-muted);
+    opacity: 0.3;
+}
+
+/*
+ * Content-area entity tabs (variant="pills", the hub DomainEntityNav
+ * pattern) — a JOINED SEGMENTED CONTROL: drop the structural
+ * inter-pill gap + per-pill radius, draw the segments as one bordered
+ * strip sharing 1px seams, and fill the active segment with the brand
+ * primary.
+ */
+.page-content .vc-nav-items--pills {
+    gap: 0;
+}
+
+.page-content .vc-nav-items--pills.vc-nav-items--vertical {
     flex-direction: column;
 }
 
-.vc-nav-items--pills .vc-nav-link--pills,
-.vc-nav-items--pills .vc-nav-item-nested .vc-nav-trigger {
+.page-content .vc-nav-items--pills .vc-nav-link--pills,
+.page-content .vc-nav-items--pills .vc-nav-item-nested .vc-nav-trigger {
     padding: 0.375rem 0.75rem;
     border: 1px solid var(--vc-color-border);
     border-radius: 0;
@@ -78,37 +137,37 @@
  * into one shared seam. The negative margin lives on the flex ITEM
  * (the `<li>`), which is what flexbox lays out.
  */
-.vc-nav-items--pills:not(.vc-nav-items--vertical) .vc-nav-item--pills:not(:first-child) {
+.page-content .vc-nav-items--pills:not(.vc-nav-items--vertical) .vc-nav-item--pills:not(:first-child) {
     margin-left: -1px;
 }
-.vc-nav-items--pills:not(.vc-nav-items--vertical) .vc-nav-item--pills:first-child .vc-nav-link--pills,
-.vc-nav-items--pills:not(.vc-nav-items--vertical) .vc-nav-item--pills:first-child .vc-nav-trigger {
+.page-content .vc-nav-items--pills:not(.vc-nav-items--vertical) .vc-nav-item--pills:first-child .vc-nav-link--pills,
+.page-content .vc-nav-items--pills:not(.vc-nav-items--vertical) .vc-nav-item--pills:first-child .vc-nav-trigger {
     border-top-left-radius: 0.375rem;
     border-bottom-left-radius: 0.375rem;
 }
-.vc-nav-items--pills:not(.vc-nav-items--vertical) .vc-nav-item--pills:last-child .vc-nav-link--pills,
-.vc-nav-items--pills:not(.vc-nav-items--vertical) .vc-nav-item--pills:last-child .vc-nav-trigger {
+.page-content .vc-nav-items--pills:not(.vc-nav-items--vertical) .vc-nav-item--pills:last-child .vc-nav-link--pills,
+.page-content .vc-nav-items--pills:not(.vc-nav-items--vertical) .vc-nav-item--pills:last-child .vc-nav-trigger {
     border-top-right-radius: 0.375rem;
     border-bottom-right-radius: 0.375rem;
 }
 
 /* Vertical strip — seam on the top edge. */
-.vc-nav-items--pills.vc-nav-items--vertical .vc-nav-item--pills:not(:first-child) {
+.page-content .vc-nav-items--pills.vc-nav-items--vertical .vc-nav-item--pills:not(:first-child) {
     margin-top: -1px;
 }
-.vc-nav-items--pills.vc-nav-items--vertical .vc-nav-item--pills:first-child .vc-nav-link--pills,
-.vc-nav-items--pills.vc-nav-items--vertical .vc-nav-item--pills:first-child .vc-nav-trigger {
+.page-content .vc-nav-items--pills.vc-nav-items--vertical .vc-nav-item--pills:first-child .vc-nav-link--pills,
+.page-content .vc-nav-items--pills.vc-nav-items--vertical .vc-nav-item--pills:first-child .vc-nav-trigger {
     border-top-left-radius: 0.375rem;
     border-top-right-radius: 0.375rem;
 }
-.vc-nav-items--pills.vc-nav-items--vertical .vc-nav-item--pills:last-child .vc-nav-link--pills,
-.vc-nav-items--pills.vc-nav-items--vertical .vc-nav-item--pills:last-child .vc-nav-trigger {
+.page-content .vc-nav-items--pills.vc-nav-items--vertical .vc-nav-item--pills:last-child .vc-nav-link--pills,
+.page-content .vc-nav-items--pills.vc-nav-items--vertical .vc-nav-item--pills:last-child .vc-nav-trigger {
     border-bottom-left-radius: 0.375rem;
     border-bottom-right-radius: 0.375rem;
 }
 
-.vc-nav-items--pills .vc-nav-link--pills:hover,
-.vc-nav-items--pills .vc-nav-item-nested .vc-nav-trigger:hover {
+.page-content .vc-nav-items--pills .vc-nav-link--pills:hover,
+.page-content .vc-nav-items--pills .vc-nav-item-nested .vc-nav-trigger:hover {
     color: var(--vc-color-fg);
     background-color: var(--vc-color-bg-elevated);
 }
@@ -117,84 +176,13 @@
  * Active segment = brand fill. Raised above its neighbours so its
  * accent border isn't clipped by their overlapping seams.
  */
-.vc-nav-items--pills .vc-nav-link--pills.active,
-.vc-nav-items--pills .vc-nav-item-nested.active > .vc-nav-trigger {
+.page-content .vc-nav-items--pills .vc-nav-link--pills.active,
+.page-content .vc-nav-items--pills .vc-nav-item-nested.active > .vc-nav-trigger {
     position: relative;
     z-index: 1;
     background-color: var(--vc-color-primary-600);
     border-color: var(--vc-color-primary-600);
     color: var(--vc-color-on-primary);
-}
-
-/*
- * Section dividers: the structural CSS supplies the flex row + gap; the
- * flanking lines are drawn here. 1px lines in the mid-tone fg-muted
- * (with opacity) instead of a chrome surface color — surface-colored
- * lines vanish against the chrome in dark mode, where the two surface
- * bands are only a sliver of lightness apart.
- */
-.vc-nav-items .vc-nav-separator:before,
-.vc-nav-items .vc-nav-separator:after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--dnpm-chrome-fg-muted);
-    opacity: 0.3;
-}
-
-/*
- * Nested groups: keep the open group as one raised block (fill the
- * expanded body with the elevated chrome surface) and rail the child
- * rows with the brand accent.
- */
-.page-sidebar .vc-nav-item-nested.active > .vc-nav-content {
-    background: var(--dnpm-chrome-bg-elevated);
-}
-
-.vc-nav-item-nested .vc-nav-items .vc-nav-link {
-    border-left: 6px solid var(--vc-color-primary-500);
-}
-
-/*
- * Sidebar pills on the chrome surface — flat, flush, full-width rows
- * (the hub chrome look): no border/segment chrome, no radius, no
- * inter-row gap, transparent at rest. Declared AFTER the segmented
- * content-pills block at >= specificity so these win.
- */
-.page-sidebar .vc-nav-items.vc-nav-items--pills {
-    gap: 0;
-}
-
-.page-sidebar .vc-nav-items--pills .vc-nav-link--pills,
-.page-sidebar .vc-nav-items--pills .vc-nav-trigger {
-    border: 0;
-    border-radius: 0;
-    background-color: transparent;
-    color: var(--dnpm-chrome-fg-muted);
-    padding: 1rem 1.25rem;
-}
-
-.page-sidebar .vc-nav-items--pills .vc-nav-item--pills:not(:first-child) {
-    margin-top: 0;
-    margin-left: 0;
-}
-
-/*
- * The elevated band is dark in BOTH modes, so hover text must be
- * pinned light — a flipping token (chrome-fg-muted) reads dark-on-dark
- * in light mode.
- */
-.page-sidebar .vc-nav-items--pills .vc-nav-link--pills:hover,
-.page-sidebar .vc-nav-items--pills .vc-nav-trigger:hover {
-    color: #fff;
-    background-color: var(--dnpm-chrome-bg-elevated);
-}
-
-.page-sidebar .vc-nav-items--pills .vc-nav-link--pills.active,
-.page-sidebar .vc-nav-items--pills .vc-nav-item-nested.active > .vc-nav-trigger {
-    color: var(--vc-color-on-primary);
-    background-color: var(--vc-color-primary-600);
-    border-color: var(--vc-color-primary-600);
 }
 
 @media (max-width: 768px) {
