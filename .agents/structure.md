@@ -15,6 +15,7 @@ It is built on Nuxt 4 (Vue 3) with a modular architecture where domain-specific 
 |-----------------------------------------|-------------|----------------------------------------------------------------|
 | [core](../packages/core)                | Library     | Shared components, composables, domain models, services, stores, and utilities. |
 | [kit](../packages/kit)                  | Library     | Utilities for registering feature modules into the portal.     |
+| [theme](../packages/theme)              | Library     | Tailwind v4 / vuecs theme — design tokens, chrome styles, Bootstrap-compat shims. |
 | [admin](../packages/admin)              | Module      | Admin functionality (auto-installed as Nuxt module).           |
 | [mtb](../packages/mtb)                  | Module      | Molecular Tumor Board module (auto-installed as Nuxt module).  |
 | [rd](../packages/rd)                    | Module      | Rare Diseases module (auto-installed as Nuxt module).          |
@@ -27,6 +28,7 @@ Internal `@dnpm-dip/*` dependencies are declared in each package's `package.json
 ```
 Foundation (no internal deps):
   kit
+  theme
 
 Layer 1:
   core → kit
@@ -37,7 +39,7 @@ Feature Modules:
   rd    → core, kit
 
 Application:
-  portal → core, kit, admin, mtb, rd
+  portal → core, kit, theme, admin, mtb, rd
 ```
 
 ## Portal Structure
@@ -49,10 +51,10 @@ packages/portal/
 ├── pages/               — Route pages (index, login, logout, settings)
 ├── components/          — Layout components (header, footer, sidebar)
 ├── stores/              — Pinia stores (modules store)
-├── plugins/             — Nuxt plugins (bootstrap, chart.js, module registration)
+├── plugins/             — Nuxt plugins (vuecs, ilingo, chart.js, module registration)
 ├── layouts/             — Layout wrappers
 ├── middleware/           — Route middleware
-├── assets/css/          — Stylesheets (layout, forms, pagination, etc.)
+├── assets/css/          — Tailwind v4 entry (imports @dnpm-dip/theme + @source scopes)
 └── public/              — Static files
 ```
 
@@ -91,5 +93,6 @@ packages/{module}/
 
 - **Domain logic & shared components** → `packages/core`
 - **Module registration utilities** → `packages/kit`
+- **Design tokens, theme & chrome CSS** → `packages/theme`
 - **Feature-specific UI** → `packages/admin`, `packages/mtb`, `packages/rd`
 - **App shell & routing** → `packages/portal`
