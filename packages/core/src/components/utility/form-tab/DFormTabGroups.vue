@@ -26,10 +26,6 @@ export default defineComponent({
             type: Boolean,
             default: true,
         },
-        direction: {
-            type: String as PropType<'row' | 'col'>,
-            default: 'row',
-        },
     },
     emits: ['update:modelValue'],
     setup(props, { emit }) {
@@ -148,62 +144,42 @@ export default defineComponent({
 
 </script>
 <template>
-    <div
-        class="flex"
-        :class="{'flex-row': direction === 'row', 'flex-col': direction === 'col'}"
-    >
+    <div class="flex flex-col">
         <div class="w-full">
             <slot
                 :data="items[currentIndex]"
                 :saved="handleSaved"
             />
         </div>
-        <div
-            class="flex"
-            :class="{'flex-col ms-2': direction === 'row', 'flex-row mt-2': direction === 'col'}"
-        >
-            <div>
-                <ul
-                    class="form-tabs"
-                    :class="{'flex-col': direction === 'row'}"
+        <div class="mt-2">
+            <ul class="form-tabs">
+                <template
+                    v-for="item in items"
+                    :key="item.index"
                 >
-                    <template
-                        v-for="item in items"
-                        :key="item.index"
+                    <DFormTabGroup
+                        :item="item"
+                        :current-index="currentIndex"
+                        :min-items="minItems"
+                        :total-items="items.length"
+                        @picked="pick"
+                        @closed="close"
+                    />
+                </template>
+                <li
+                    v-if="createButton"
+                    class="form-tab"
+                >
+                    <a
+                        href="javascript:void(0)"
+                        class="form-tab-action text-success-600"
+                        :class="{'disabled': maxItems && maxItems === items.length}"
+                        @click.prevent="add"
                     >
-                        <DFormTabGroup
-                            :item="item"
-                            :current-index="currentIndex"
-                            :min-items="minItems"
-                            :max-items="maxItems"
-                            :total-items="items.length"
-                            @picked="pick"
-                            @closed="close"
-                        />
-                    </template>
-                    <li
-                        v-if="createButton"
-                        class="form-tab"
-                    >
-                        <a
-                            href="javascript:void(0)"
-                            class="nav-link nav-link-dark text-center mb-1 text-success-600"
-                            :class="{'disabled': maxItems && maxItems === items.length}"
-                            @click.prevent="add"
-                        >
-                            <VCIcon name="fa6-solid:plus" />
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!--
-            <div
-                :class="{'ms-auto': direction === 'col', 'mt-auto': direction !== 'col'}"
-                :style="{'order': direction === 'col' ? '1' : 0}"
-            >
-                <ul class="nav nav-pills" />
-            </div>
-            -->
+                        <VCIcon name="fa6-solid:plus" />
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -211,6 +187,8 @@ export default defineComponent({
 .form-tabs {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.375rem;
 
     list-style: none;
     padding: 0;
@@ -243,5 +221,22 @@ export default defineComponent({
 .form-tab-text {
     user-select: none;
     cursor: pointer;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.form-tab-action {
+    display: inline-flex;
+    align-items: center;
+
+    color: inherit;
+    text-decoration: none;
+}
+
+.form-tab-action.disabled {
+    pointer-events: none;
+    opacity: 0.65;
 }
 </style>
