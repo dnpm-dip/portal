@@ -110,7 +110,9 @@ export default defineComponent({
             />
         </template>
         <template v-else>
-            <h6>{{ data.survivalType.display }} (Gruppierung: {{ data.grouping.display }})</h6>
+            <h6 class="section-label">
+                {{ data.survivalType.display }} (Gruppierung: {{ data.grouping.display }})
+            </h6>
             <DChartLineKM :report="data" />
         </template>
     </div>

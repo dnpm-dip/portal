@@ -70,7 +70,9 @@ export default defineComponent({
             <h5>Allgemein</h5>
             <div class="flex flex-row gap-2">
                 <div class="entity-card text-center mb-3 w-full">
-                    <h6>Patienten pro Standort</h6>
+                    <h6 class="section-label">
+                        Patienten pro Standort
+                    </h6>
                     <VCPlaceholder
                         v-for="i in 4"
                         :key="i"
@@ -80,7 +82,9 @@ export default defineComponent({
                     />
                 </div>
                 <div class="entity-card text-center mb-3 w-full">
-                    <h6>Geschlechterverteilung</h6>
+                    <h6 class="section-label">
+                        Geschlechterverteilung
+                    </h6>
                     <VCPlaceholder
                         v-for="i in 4"
                         :key="i"
@@ -91,7 +95,9 @@ export default defineComponent({
                 </div>
             </div>
             <div class="entity-card text-center mb-3 w-full">
-                <h6>Altersverteilung</h6>
+                <h6 class="section-label">
+                    Altersverteilung
+                </h6>
                 <VCPlaceholder
                     v-for="i in 4"
                     :key="i"

@@ -110,7 +110,9 @@ export default defineComponent({
 
                 <div class="flex flex-col gap-2">
                     <div class="entity-card text-center mb-3">
-                        <h6>Tumor-Entitäten (ICD-10-GM)</h6>
+                        <h6 class="section-label">
+                            Tumor-Entitäten (ICD-10-GM)
+                        </h6>
                         <DQuerySummaryNested
                             ref="tumorEntitiesVNode"
                             :label="'Kategorie'"
@@ -139,7 +141,9 @@ export default defineComponent({
                     </div>
 
                     <div class="entity-card text-center mb-3">
-                        <h6>Tumor-Morphologie (ICD-O-3-M)</h6>
+                        <h6 class="section-label">
+                            Tumor-Morphologie (ICD-O-3-M)
+                        </h6>
                         <DQuerySummaryNested
                             :label="'Kategorie'"
                             :data="data.overallDistributions.tumorMorphologies.elements"
@@ -178,7 +182,7 @@ export default defineComponent({
                     <template #default="{ item }">
                         <div class="flex flex-col gap-2">
                             <div class="entity-card text-center mb-3 w-full">
-                                <h6 class="text-center">
+                                <h6 class="section-label text-center">
                                     Tumor-Entitäten (ICD-10-GM)
                                 </h6>
                                 <DKVChartTableSwitch
@@ -191,7 +195,7 @@ export default defineComponent({
                             </div>
 
                             <div class="entity-card text-center mb-3 w-full">
-                                <h6 class="text-center">
+                                <h6 class="section-label text-center">
                                     Tumor-Morphologie (ICD-O-3-M)
                                 </h6>
                                 <DKVChartTableSwitch
@@ -213,7 +217,9 @@ export default defineComponent({
             <h5>Gesamtverteilung</h5>
             <div class="flex flex-col gap-2">
                 <div class="entity-card text-center mb-3">
-                    <h6>Tumor-Entitäten (ICD-10-GM)</h6>
+                    <h6 class="section-label">
+                        Tumor-Entitäten (ICD-10-GM)
+                    </h6>
                     <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
@@ -223,7 +229,9 @@ export default defineComponent({
                     />
                 </div>
                 <div class="entity-card text-center mb-3">
-                    <h6>Tumor-Morphologie (ICD-O-3-M)</h6>
+                    <h6 class="section-label">
+                        Tumor-Morphologie (ICD-O-3-M)
+                    </h6>
                     <VCPlaceholder
                         v-for="i in 5"
                         :key="i"

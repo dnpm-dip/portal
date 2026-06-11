@@ -69,7 +69,9 @@ export default defineComponent({
 <template>
     <template v-if="data">
         <div>
-            <h5>Verteilung nach Alteration</h5>
+            <h5 class="section-label">
+                Verteilung nach Alteration
+            </h5>
             <DQuerySummaryGrouped
                 :select-first="true"
                 :items="data"
@@ -86,7 +88,9 @@ export default defineComponent({
     </template>
     <template v-else-if="busy">
         <div>
-            <h5>Verteilung nach Alteration</h5>
+            <h5 class="section-label">
+                Verteilung nach Alteration
+            </h5>
             <div class="entity-card text-center mb-3">
                 <VCPlaceholder
                     v-for="i in 5"

@@ -106,11 +106,13 @@ export default component as Component;
 </script>
 <template>
     <div>
-        <h5>Allgemein</h5>
+        <h5 class="section-label">
+            Allgemein
+        </h5>
 
         <div class="flex flex-row gap-2">
             <div class="entity-card text-center mb-3 w-full">
-                <h6>
+                <h6 class="section-label">
                     Patienten pro Standort
                 </h6>
                 <DKVChartTableSwitch
@@ -125,7 +127,7 @@ export default component as Component;
             </div>
 
             <div class="entity-card text-center mb-3 w-full">
-                <h6>
+                <h6 class="section-label">
                     Geschlechterverteilung
                 </h6>
                 <DKVChartTableSwitch
@@ -141,7 +143,7 @@ export default component as Component;
         </div>
 
         <div class="entity-card text-center mb-3 w-full">
-            <h6>
+            <h6 class="section-label">
                 Altersverteilung
             </h6>
             <DKVChartTableSwitch

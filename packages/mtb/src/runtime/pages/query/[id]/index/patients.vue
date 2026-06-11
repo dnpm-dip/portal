@@ -71,51 +71,47 @@ export default defineNuxtComponent({
             :filters="queryFilters"
         >
             <template #loading>
-                <div class="list">
-                    <ul class="list-body list-unstyled">
-                        <li
-                            v-for="i in 5"
-                            :key="i"
-                            class="list-item flex-row"
-                        >
-                            <div class="entity-card w-full mb-2">
-                                <VCPlaceholder
-                                    :width="60 + i * 5 + '%'"
-                                    animation="wave"
-                                    class="mb-1"
-                                />
-                                <VCPlaceholder
-                                    :width="40 + i * 8 + '%'"
-                                    animation="wave"
-                                    size="sm"
-                                />
-                            </div>
-                        </li>
-                    </ul>
+                <div class="flex flex-col gap-3">
+                    <div
+                        v-for="i in 5"
+                        :key="i"
+                        class="entity-card w-full"
+                    >
+                        <VCPlaceholder
+                            :width="60 + i * 5 + '%'"
+                            animation="wave"
+                            class="mb-1"
+                        />
+                        <VCPlaceholder
+                            :width="40 + i * 8 + '%'"
+                            animation="wave"
+                            size="sm"
+                        />
+                    </div>
                 </div>
             </template>
             <template #default="props">
-                <div class="flex flex-row">
-                    <div class="ms-auto">
-                        Es gibt insgesamt {{ props.total }} Patienten
-                    </div>
+                <div class="mb-2 flex items-center">
+                    <span class="section-label">
+                        <VCIcon name="fa6-solid:user-injured" />
+                        Patienten
+                    </span>
+                    <span class="ms-auto text-sm text-fg-muted">
+                        {{ props.total }} insgesamt
+                    </span>
                 </div>
                 <template v-if="props.data.length > 0">
-                    <div class="list">
-                        <ul class="list-body list-unstyled">
-                            <template
-                                v-for="(item, index) in props.data"
-                                :key="item.id"
-                            >
-                                <li class="list-item flex-row">
-                                    <QueryPatientMatchEntity
-                                        :entity="item"
-                                        :query-id="entity.id"
-                                        :index="props.offset ? props.offset + index : index"
-                                    />
-                                </li>
-                            </template>
-                        </ul>
+                    <div class="flex flex-col gap-3">
+                        <template
+                            v-for="(item, index) in props.data"
+                            :key="item.id"
+                        >
+                            <QueryPatientMatchEntity
+                                :entity="item"
+                                :query-id="entity.id"
+                                :index="props.offset ? props.offset + index : index"
+                            />
+                        </template>
                     </div>
                 </template>
                 <template v-else-if="!props.busy">
@@ -124,6 +120,7 @@ export default defineNuxtComponent({
                     </div>
                 </template>
                 <VCPagination
+                    class="mt-3"
                     :busy="props.busy"
                     :total="props.total"
                     :limit="props.limit"

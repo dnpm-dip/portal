@@ -151,7 +151,9 @@ export default defineComponent({
             <h5>Therapie Empfehlungen</h5>
             <div class="flex flex-col gap-2">
                 <div class="entity-card text-center mb-3 w-full">
-                    <h6>Empfehlungen nach stützender molekularer Alteration</h6>
+                    <h6 class="section-label">
+                        Empfehlungen nach stützender molekularer Alteration
+                    </h6>
 
                     <DQuerySummaryGrouped
                         ref="recommendedByVariantVNode"
@@ -174,7 +176,9 @@ export default defineComponent({
                     </DQuerySummaryGrouped>
                 </div>
                 <div class="entity-card text-center mb-3 w-full">
-                    <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse ({{ data.recommendations.overallDistribution.total }})</h6>
+                    <h6 class="section-label">
+                        Gesamtverteilung der Empfehlungen nach Wirkstoffklasse ({{ data.recommendations.overallDistribution.total }})
+                    </h6>
 
                     <DQuerySummaryNested
                         ref="recommendedVNode"
@@ -207,7 +211,9 @@ export default defineComponent({
             <h5>Umgesetzte Therapien</h5>
             <div class="flex flex-col gap-2">
                 <div class="entity-card text-center mb-3 w-full">
-                    <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse ({{ data.therapies.overallDistribution.total }})</h6>
+                    <h6 class="section-label">
+                        Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse ({{ data.therapies.overallDistribution.total }})
+                    </h6>
 
                     <DQuerySummaryNested
                         ref="usedVNode"
@@ -236,7 +242,9 @@ export default defineComponent({
             </div>
             <div class="flex flex-col gap-2">
                 <div class="entity-card text-center mb-3 w-full">
-                    <h6>Mittlere Therapiedauer</h6>
+                    <h6 class="section-label">
+                        Mittlere Therapiedauer
+                    </h6>
                     <DKVChartTableSwitch
                         :data="(data.therapies.meanDurations as any)"
                         :clickable="true"
@@ -279,7 +287,9 @@ export default defineComponent({
             <h5>Therapie Empfehlungen</h5>
             <div class="flex flex-col gap-2">
                 <div class="entity-card text-center mb-3 w-full">
-                    <h6>Empfehlungen nach stützender molekularer Alteration</h6>
+                    <h6 class="section-label">
+                        Empfehlungen nach stützender molekularer Alteration
+                    </h6>
                     <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
@@ -289,7 +299,9 @@ export default defineComponent({
                     />
                 </div>
                 <div class="entity-card text-center mb-3 w-full">
-                    <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse</h6>
+                    <h6 class="section-label">
+                        Gesamtverteilung der Empfehlungen nach Wirkstoffklasse
+                    </h6>
                     <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
@@ -305,7 +317,9 @@ export default defineComponent({
             <h5>Umgesetzte Therapien</h5>
             <div class="flex flex-col gap-2">
                 <div class="entity-card text-center mb-3 w-full">
-                    <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse</h6>
+                    <h6 class="section-label">
+                        Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse
+                    </h6>
                     <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
@@ -315,7 +329,9 @@ export default defineComponent({
                     />
                 </div>
                 <div class="entity-card text-center mb-3 w-full">
-                    <h6>Mittlere Therapiedauer</h6>
+                    <h6 class="section-label">
+                        Mittlere Therapiedauer
+                    </h6>
                     <VCPlaceholder
                         v-for="i in 5"
                         :key="i"

@@ -77,7 +77,7 @@ export default defineNuxtComponent({
         const handleUpdated = (entity: QuerySession) => {
             emit('updated', entity);
 
-            queryEventBus.emit(QueryEventBusEventName.SESSION_UPDATED, entity, 'mtb');
+            queryEventBus.emit(QueryEventBusEventName.SESSION_UPDATED, entity, 'rd');
         };
 
         const handleFailed = (e: Error) => {
@@ -114,19 +114,29 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <div class="flex flex-row mb-2">
-        <div>
-            <h4>
-                <NuxtLink
-                    class="btn btn-xs btn-dark me-1"
-                    :to="'/rd/'"
-                >
-                    <VCIcon name="fa6-solid:arrow-left" />
-                </NuxtLink>
+    <header class="mb-4 flex items-center gap-4">
+        <span
+            class="flex size-12 shrink-0 items-center justify-center rounded-xl
+                   bg-gradient-to-br from-primary-500 to-primary-700 text-xl text-on-primary shadow-md"
+        >
+            <VCIcon name="fa6-solid:magnifying-glass-chart" />
+        </span>
+        <div class="min-w-0">
+            <h1 class="mb-0 text-2xl font-bold tracking-tight">
                 Abfrage
-            </h4>
+            </h1>
+            <p class="mb-0 text-sm text-fg-muted">
+                Seltene Erkrankungen
+            </p>
         </div>
-    </div>
+        <NuxtLink
+            class="btn btn-sm btn-secondary ms-auto"
+            :to="'/rd/'"
+        >
+            <VCIcon name="fa6-solid:arrow-left" />
+            Zur Suche
+        </NuxtLink>
+    </header>
 
     <div class="flex flex-col gap-2 mb-2">
         <div>

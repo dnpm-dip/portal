@@ -66,7 +66,7 @@ export default defineComponent({
             <div class="row">
                 <div class="col-12 col-xl-6">
                     <div class="entity-card text-center mb-3 w-full">
-                        <h6 class="text-center">
+                        <h6 class="section-label text-center">
                             Diagnose Kategorien
                         </h6>
                         <DKVChart :items="data.overallDistributions.diagnoses.elements" />
@@ -74,7 +74,7 @@ export default defineComponent({
                 </div>
                 <div class="col-12 col-xl-6">
                     <div class="entity-card text-center mb-3 w-full">
-                        <h6 class="text-center">
+                        <h6 class="section-label text-center">
                             HPOTermen
                         </h6>
                         <DKVChart
@@ -96,7 +96,7 @@ export default defineComponent({
                     <div class="row">
                         <div class="col-12 col-xl-6">
                             <div class="entity-card text-center mb-3 w-full">
-                                <h6 class="text-center">
+                                <h6 class="section-label text-center">
                                     Diagnose Kategorien
                                 </h6>
                                 <DKVChart :items="item.value.diagnoses.elements" />
@@ -104,7 +104,7 @@ export default defineComponent({
                         </div>
                         <div class="col-12 col-xl-6">
                             <div class="entity-card text-center mb-3 w-full">
-                                <h6 class="text-center">
+                                <h6 class="section-label text-center">
                                     HPO Termen
                                 </h6>
                                 <DKVChart :items="item.value.hpoTerms.elements" />
@@ -121,7 +121,7 @@ export default defineComponent({
             <div class="row">
                 <div class="col-12 col-xl-6">
                     <div class="entity-card text-center mb-3 w-full">
-                        <h6 class="text-center">
+                        <h6 class="section-label text-center">
                             Diagnose Kategorien
                         </h6>
                         <VCPlaceholder
@@ -135,7 +135,7 @@ export default defineComponent({
                 </div>
                 <div class="col-12 col-xl-6">
                     <div class="entity-card text-center mb-3 w-full">
-                        <h6 class="text-center">
+                        <h6 class="section-label text-center">
                             HPOTermen
                         </h6>
                         <VCPlaceholder
