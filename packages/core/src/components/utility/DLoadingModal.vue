@@ -27,13 +27,11 @@ export default component as Component;
 </script>
 <template>
     <VCModal :open="modal">
-        <!-- attrs forward to reka-ui DialogContent: preventing
-             interactOutside restores the pre-migration
-             no-close-on-backdrop guard (a busy overlay must not be
-             dismissed by a stray click). -->
+        <!-- a busy overlay must not be dismissed by a stray click
+             (the pre-migration no-close-on-backdrop guard) -->
         <VCModalContent
             class="modal-loading"
-            @interact-outside="(event: Event) => event.preventDefault()"
+            close-policy="no-outside"
         >
             <div class="modal-body">
                 <div class="modal-loading-wrapper">
