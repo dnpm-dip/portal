@@ -1,6 +1,5 @@
 <script lang="ts">
 import {
-    DNav,
     DQueryFilterContainer,
     DQueryInfoBox,
     DQueryPatientFilters,
@@ -9,6 +8,8 @@ import {
 } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { computed, ref } from 'vue';
+import { VCNavItems } from '@vuecs/navigation';
+import type { NavigationItem } from '@vuecs/navigation';
 import { defineNuxtComponent, useRoute } from '#imports';
 import QueryDiagnosisFilter from '../../../components/core/RQueryDiagnosisFilter.vue';
 import QueryHPOFilter from '../../../components/core/RQueryHPOFilter.vue';
@@ -17,13 +18,13 @@ import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        VCNavItems,
         DQueryFilterContainer,
         DQueryInfoBox,
         QueryHPOFilter,
         QueryDiagnosisFilter,
         DQueryPatientFilters,
         SearchForm,
-        DNav,
     },
     props: {
         entity: {
@@ -36,36 +37,36 @@ export default defineNuxtComponent({
         const route = useRoute();
         const queryEventBus = injectQueryEventBus();
 
-        const navItems = [
+        const navItems = computed<NavigationItem[]>(() => [
             {
-                name: 'Überblick',
-                icon: 'fa6-solid:bars',
-                urlSuffix: '/summary',
+                name: 'Überblick', 
+                icon: 'fa6-solid:bars', 
+                url: `/rd/query/${props.entity.id}/summary`, 
             },
             {
-                name: 'Patienten',
-                icon: 'fa6-solid:user-injured',
-                urlSuffix: '/patients',
+                name: 'Patienten', 
+                icon: 'fa6-solid:user-injured', 
+                url: `/rd/query/${props.entity.id}/patients`, 
             },
             {
-                name: 'Info',
-                icon: 'fa6-solid:network-wired',
-                urlSuffix: '/info',
+                name: 'Info', 
+                icon: 'fa6-solid:network-wired', 
+                url: `/rd/query/${props.entity.id}/info`, 
             },
-        ];
+        ]);
 
-        const summaryNavItems = [
+        const summaryNavItems = computed<NavigationItem[]>(() => [
             {
-                name: 'Demographie',
-                icon: 'fa6-solid:globe',
-                urlSuffix: '',
+                name: 'Demographie', 
+                icon: 'fa6-solid:globe', 
+                url: `/rd/query/${props.entity.id}/summary`, 
             },
             {
-                name: 'Diagnostik',
-                icon: 'fa6-solid:stethoscope',
-                urlSuffix: '/diagnostics',
+                name: 'Diagnostik', 
+                icon: 'fa6-solid:stethoscope', 
+                url: `/rd/query/${props.entity.id}/summary/diagnostics`, 
             },
-        ];
+        ]);
 
         const isSummaryActive = computed(() => route.path.startsWith(`/rd/query/${props.entity.id}/summary`));
 
@@ -129,27 +130,24 @@ export default defineNuxtComponent({
 
     <div class="flex flex-col gap-2 mb-2">
         <div>
-            <DNav
-                :items="navItems"
-                :path="'/rd/query/'+ entity.id"
-            >
-                <template #end>
-                    <li class="nav-item">
-                        <button
-                            type="button"
-                            class="nav-link"
-                            @click.prevent="toggleModal"
-                        >
-                            <VCIcon name="fa6-solid:gear" /> Anpassen
-                        </button>
-                    </li>
-                </template>
-            </DNav>
+            <div class="flex flex-row items-center gap-2">
+                <VCNavItems
+                    :data="navItems"
+                    variant="pills"
+                />
+                <button
+                    type="button"
+                    class="btn btn-sm btn-secondary"
+                    @click.prevent="toggleModal"
+                >
+                    <VCIcon name="fa6-solid:gear" /> Anpassen
+                </button>
+            </div>
         </div>
         <div v-if="isSummaryActive">
-            <DNav
-                :items="summaryNavItems"
-                :path="'/rd/query/'+ entity.id + '/summary'"
+            <VCNavItems
+                :data="summaryNavItems"
+                variant="pills"
             />
         </div>
     </div>

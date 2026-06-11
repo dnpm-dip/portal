@@ -1,7 +1,6 @@
 <script lang="ts">
 import { computed, ref } from 'vue';
 import {
-    DNav,
     DQueryFilterContainer,
     DQueryInfoBox,
     DQueryPatientFilters,
@@ -10,6 +9,8 @@ import {
 } from '@dnpm-dip/core';
 import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
 import type { PropType } from 'vue';
+import { VCNavItems } from '@vuecs/navigation';
+import type { NavigationItem } from '@vuecs/navigation';
 import { defineNuxtComponent, useRoute } from '#imports';
 import MQueryCriteriaModal from '../../../components/core/query-criteria/MQueryCriteriaModal.vue';
 import MQueryCriteriaSummary from '../../../components/core/query-criteria/MQueryCriteriaSummary.vue';
@@ -19,6 +20,7 @@ import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        VCNavItems,
         MQueryCriteriaModal,
         DQueryFilterContainer,
         MQueryMedicationFilter,
@@ -26,7 +28,6 @@ export default defineNuxtComponent({
         MQueryCriteriaSummary,
         DQueryPatientFilters,
         DQueryInfoBox,
-        DNav,
     },
     props: {
         entity: {
@@ -59,56 +60,56 @@ export default defineNuxtComponent({
 
         initCriteriaExpansion();
 
-        const navItems = [
+        const navItems = computed<NavigationItem[]>(() => [
             {
-                name: 'Überblick',
-                icon: 'fa6-solid:bars',
-                urlSuffix: '/summary',
+                name: 'Überblick', 
+                icon: 'fa6-solid:bars', 
+                url: `/mtb/query/${props.entity.id}/summary`, 
             },
             {
-                name: 'Patienten',
-                icon: 'fa6-solid:user-injured',
-                urlSuffix: '/patients',
+                name: 'Patienten', 
+                icon: 'fa6-solid:user-injured', 
+                url: `/mtb/query/${props.entity.id}/patients`, 
             },
             {
-                name: 'Info',
-                icon: 'fa6-solid:network-wired',
-                urlSuffix: '/info',
+                name: 'Info', 
+                icon: 'fa6-solid:network-wired', 
+                url: `/mtb/query/${props.entity.id}/info`, 
             },
-        ];
+        ]);
 
-        const summaryNavItems = [
+        const summaryNavItems = computed<NavigationItem[]>(() => [
             {
-                name: 'Demographie',
-                icon: 'fa6-solid:globe',
-                urlSuffix: '',
+                name: 'Demographie', 
+                icon: 'fa6-solid:globe', 
+                url: `/mtb/query/${props.entity.id}/summary`, 
             },
             {
-                name: 'Diagnose',
-                icon: 'fa6-solid:stethoscope',
-                urlSuffix: '/diagnostics',
+                name: 'Diagnose', 
+                icon: 'fa6-solid:stethoscope', 
+                url: `/mtb/query/${props.entity.id}/summary/diagnostics`, 
             },
             {
-                name: 'Medikation',
-                icon: 'fa6-solid:pills',
-                urlSuffix: '/medication',
+                name: 'Medikation', 
+                icon: 'fa6-solid:pills', 
+                url: `/mtb/query/${props.entity.id}/summary/medication`, 
             },
             {
-                name: 'Therapie Responses',
-                icon: 'fa6-solid:comment-medical',
-                urlSuffix: '/therapy-responses',
+                name: 'Therapie Responses', 
+                icon: 'fa6-solid:comment-medical', 
+                url: `/mtb/query/${props.entity.id}/summary/therapy-responses`, 
             },
             {
-                name: 'Gen Alterationen',
-                icon: 'fa6-solid:dna',
-                urlSuffix: '/gene-alterations',
+                name: 'Gen Alterationen', 
+                icon: 'fa6-solid:dna', 
+                url: `/mtb/query/${props.entity.id}/summary/gene-alterations`, 
             },
             {
-                name: 'Überlebensbericht',
-                icon: 'fa6-solid:book-open',
-                urlSuffix: '/survival-report',
+                name: 'Überlebensbericht', 
+                icon: 'fa6-solid:book-open', 
+                url: `/mtb/query/${props.entity.id}/summary/survival-report`, 
             },
-        ];
+        ]);
 
         const isSummaryActive = computed(() => route.path.startsWith(`/mtb/query/${props.entity.id}/summary`));
 
@@ -159,12 +160,10 @@ export default defineNuxtComponent({
         <div class="flex flex-col gap-2">
             <div class="flex flex-row">
                 <div>
-                    <DNav
-                        :items="navItems"
-                        :path="'/mtb/query/'+ entity.id"
-                    >
-                        <template #end />
-                    </DNav>
+                    <VCNavItems
+                        :data="navItems"
+                        variant="pills"
+                    />
                 </div>
             </div>
             <div
@@ -172,9 +171,9 @@ export default defineNuxtComponent({
                 class="flex flex-row"
             >
                 <div>
-                    <DNav
-                        :items="summaryNavItems"
-                        :path="'/mtb/query/'+ entity.id + '/summary'"
+                    <VCNavItems
+                        :data="summaryNavItems"
+                        variant="pills"
                     />
                 </div>
             </div>

@@ -9,15 +9,16 @@
 import type { IdentityProvider } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import {
-    DNav, 
     PageMetaKey, 
     PageNavigationTopID, 
     extendRefRecord, 
     useToast,
 } from '@dnpm-dip/core';
 import { injectHTTPClient } from '@authup/client-web-kit';
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import type { Ref } from 'vue';
+import { VCNavItems } from '@vuecs/navigation';
+import type { NavigationItem } from '@vuecs/navigation';
 import {
     createError,
     definePageMeta,
@@ -26,7 +27,7 @@ import {
 } from '#imports';
 
 export default defineComponent({
-    components: { DNav },
+    components: { VCNavItems },
     async setup() {
         definePageMeta({
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.ADMIN,
@@ -35,19 +36,6 @@ export default defineComponent({
                 PermissionName.IDENTITY_PROVIDER_UPDATE,
             ],
         });
-
-        const items = [
-            {
-                name: 'General',
-                icon: 'fa6-solid:bars',
-                urlSuffix: '',
-            },
-            {
-                name: 'Roles',
-                icon: 'fa6-solid:masks-theater',
-                urlSuffix: 'roles',
-            },
-        ];
 
         const toast = useToast();
         const route = useRoute();
@@ -63,6 +51,27 @@ export default defineComponent({
             await navigateTo({ path: '/admin/identity-providers' });
             throw createError({});
         }
+
+        const items = computed<NavigationItem[]>(() => {
+            const base = `/admin/identity-providers/${entity.value.id}`;
+            return [
+                {
+                    name: '', 
+                    icon: 'fa6-solid:arrow-left', 
+                    url: '/admin/identity-providers', 
+                },
+                {
+                    name: 'General', 
+                    icon: 'fa6-solid:bars', 
+                    url: base, 
+                },
+                {
+                    name: 'Roles', 
+                    icon: 'fa6-solid:masks-theater', 
+                    url: `${base}/roles`, 
+                },
+            ];
+        });
 
         const handleUpdated = (e: IdentityProvider) => {
             toast.show({ variant: 'success', body: 'The identity-provider was successfully updated.' });
@@ -93,10 +102,9 @@ export default defineComponent({
             <span class="sub-title ms-1">Details</span>
         </h1>
         <div class="mb-2">
-            <DNav
-                :path="'/admin/identity-providers/'+entity.id"
-                :items="items"
-                :prev-link="true"
+            <VCNavItems
+                :data="items"
+                variant="pills"
             />
         </div>
         <div>

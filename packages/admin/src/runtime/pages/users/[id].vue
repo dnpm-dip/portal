@@ -8,7 +8,6 @@
 <script lang="ts">
 import { injectHTTPClient } from '@authup/client-web-kit';
 import {
-    DNav, 
     PageMetaKey, 
     PageNavigationTopID, 
     extendRefRecord, 
@@ -16,8 +15,10 @@ import {
 } from '@dnpm-dip/core';
 import type { User } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import type { Ref } from 'vue';
+import { VCNavItems } from '@vuecs/navigation';
+import type { NavigationItem } from '@vuecs/navigation';
 import {
     createError,
     definePageMeta,
@@ -26,7 +27,7 @@ import {
 } from '#imports';
 
 export default defineComponent({
-    components: { DNav },
+    components: { VCNavItems },
     async setup() {
         definePageMeta({
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.ADMIN,
@@ -40,24 +41,6 @@ export default defineComponent({
                 PermissionName.USER_ROLE_DELETE,
             ],
         });
-
-        const items = [
-            {
-                name: 'Allgemein',
-                icon: 'fa6-solid:bars',
-                urlSuffix: '',
-            },
-            {
-                name: 'Berechtigungen',
-                icon: 'fa6-solid:user-secret',
-                urlSuffix: 'permissions',
-            },
-            {
-                name: 'Rollen',
-                icon: 'fa6-solid:user-group',
-                urlSuffix: 'roles',
-            },
-        ];
 
         const toast = useToast();
         const route = useRoute();
@@ -73,6 +56,32 @@ export default defineComponent({
             await navigateTo({ path: '/admin/users' });
             throw createError({});
         }
+
+        const items = computed<NavigationItem[]>(() => {
+            const base = `/admin/users/${entity.value.id}`;
+            return [
+                {
+                    name: '', 
+                    icon: 'fa6-solid:arrow-left', 
+                    url: '/admin/users', 
+                },
+                {
+                    name: 'Allgemein', 
+                    icon: 'fa6-solid:bars', 
+                    url: base, 
+                },
+                {
+                    name: 'Berechtigungen', 
+                    icon: 'fa6-solid:user-secret', 
+                    url: `${base}/permissions`, 
+                },
+                {
+                    name: 'Rollen', 
+                    icon: 'fa6-solid:user-group', 
+                    url: `${base}/roles`, 
+                },
+            ];
+        });
 
         const handleUpdated = (e: User) => {
             if (toast) {
@@ -110,10 +119,9 @@ export default defineComponent({
             </span>
         </h1>
         <div class="mb-2">
-            <DNav
-                :items="items"
-                :path="`/admin/users/${entity.id}`"
-                :prev-link="true"
+            <VCNavItems
+                :data="items"
+                variant="pills"
             />
         </div>
 

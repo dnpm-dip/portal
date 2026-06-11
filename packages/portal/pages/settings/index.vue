@@ -1,10 +1,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { DNav, PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
+import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
+import { VCNavItems } from '@vuecs/navigation';
 import { definePageMeta } from '#imports';
 
 export default defineComponent({
-    components: { DNav },
+    components: { VCNavItems },
     setup() {
         definePageMeta({
             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
@@ -15,12 +16,12 @@ export default defineComponent({
             {
                 name: 'Account',
                 icon: 'fa6-solid:bars',
-                urlSuffix: '',
+                url: '/settings',
             },
             {
                 name: 'Security',
                 icon: 'fa6-solid:lock',
-                urlSuffix: '/security',
+                url: '/settings/security',
             },
         ];
 
@@ -39,10 +40,10 @@ export default defineComponent({
         </h1>
         <div class="content-wrapper">
             <div class="content-sidebar flex-col">
-                <DNav
-                    :items="items"
-                    path="/settings"
-                    direction="vertical"
+                <VCNavItems
+                    :data="items"
+                    variant="pills"
+                    orientation="vertical"
                 />
             </div>
             <div class="content-container">
