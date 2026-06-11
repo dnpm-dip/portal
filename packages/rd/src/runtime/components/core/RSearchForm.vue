@@ -384,25 +384,25 @@ export default defineComponent({
 
             <hr>
 
-            <div class="row mb-2">
-                <div class="col">
-                    <h6><VCIcon name="fa6-solid:dna" /> Varianten</h6>
-                </div>
+            <div class="mb-2">
+                <h6><VCIcon name="fa6-solid:dna" /> Varianten</h6>
 
-                <DFormTabGroups
-                    v-model="variants"
-                    :min-items="1"
-                    :max-items="6"
-                >
-                    <!-- todo: label; max 15 zeichen; {{Gene}} ({{dnaÄnderung}} || -->
-                    <!-- todo: {{proteinänderung}}) || proteinänderung precedence vorrang dnaÄnderung -->
-                    <template #default="props">
-                        <RVariantFormTabGroup
-                            :entity="props.data"
-                            @saved="props.saved"
-                        />
-                    </template>
-                </DFormTabGroups>
+                <div class="mt-2">
+                    <DFormTabGroups
+                        v-model="variants"
+                        :min-items="1"
+                        :max-items="6"
+                    >
+                        <!-- todo: label; max 15 zeichen; {{Gene}} ({{dnaÄnderung}} || -->
+                        <!-- todo: {{proteinänderung}}) || proteinänderung precedence vorrang dnaÄnderung -->
+                        <template #default="props">
+                            <RVariantFormTabGroup
+                                :entity="props.data"
+                                @saved="props.saved"
+                            />
+                        </template>
+                    </DFormTabGroups>
+                </div>
             </div>
 
             <hr>
@@ -425,37 +425,31 @@ export default defineComponent({
                 </template>
             </div>
 
-            <hr>
+            <div
+                class="sticky bottom-0 z-10 mt-4 flex flex-wrap items-center justify-end gap-2
+                       border-t border-border bg-bg/85 py-3 backdrop-blur"
+            >
+                <button
+                    :disabled="busy"
+                    type="button"
+                    class="btn btn-secondary"
+                    title="Suchkriterien als gespeicherte Anfrage ablegen"
+                    @click.prevent="save()"
+                >
+                    <VCIcon name="fa6-solid:floppy-disk" />
+                    Speichern
+                </button>
 
-            <div>
-                <div class="row">
-                    <div class="col">
-                        <DLoadingButton
-                            class="btn btn-block btn-dark"
-                            :loading="busy"
-                            @click.prevent="submit()"
-                        >
-                            <VCIcon
-                                name="fa6-solid:magnifying-glass"
-                                class="me-1"
-                            /> Suchen
-                        </DLoadingButton>
-                    </div>
-
-                    <div class="col">
-                        <button
-                            :disabled="busy"
-                            type="button"
-                            class="btn btn-block btn-primary"
-                            @click.prevent="save()"
-                        >
-                            <VCIcon
-                                name="fa6-solid:floppy-disk"
-                                class="me-1"
-                            /> Speichern
-                        </button>
-                    </div>
-                </div>
+                <DLoadingButton
+                    class="btn btn-primary min-w-36"
+                    :loading="busy"
+                    @click.prevent="submit()"
+                >
+                    <VCIcon
+                        name="fa6-solid:magnifying-glass"
+                        class="me-1"
+                    /> Suchen
+                </DLoadingButton>
             </div>
         </form>
 

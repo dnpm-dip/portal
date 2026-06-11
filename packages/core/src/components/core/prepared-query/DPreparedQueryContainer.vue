@@ -41,9 +41,14 @@ const component = defineComponent({
 
         const criteria = ref<Record<string, unknown> | undefined>(undefined);
         const modal = ref<boolean>(false);
+        const manageModal = ref<boolean>(false);
 
         const toggleModal = () => {
             modal.value = !modal.value;
+        };
+
+        const toggleManageModal = () => {
+            manageModal.value = !manageModal.value;
         };
 
         const handleCreated = (data: PreparedQuery) => {
@@ -140,6 +145,9 @@ const component = defineComponent({
             modal,
             toggleModal,
 
+            manageModal,
+            toggleManageModal,
+
             setCriteria,
         };
     },
@@ -148,8 +156,126 @@ const component = defineComponent({
 export default component as Component;
 </script>
 <template>
-    <div class="row">
-        <div class="col-8">
+    <div class="flex flex-col gap-4">
+        <DPreparedQueries
+            ref="preparedQueryNode"
+            :use-case="useCase"
+            @deleted="handlePreparedQueryDeleted"
+        >
+            <template #default="props">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="section-label">
+                        <VCIcon name="fa6-solid:clock-rotate-left" />
+                        Gespeicherte Anfragen
+                    </span>
+
+                    <template v-if="!props.busy && props.data.length === 0">
+                        <span class="text-sm text-fg-muted">
+                            Es existieren keine gespeicherten Anfragen.
+                        </span>
+                    </template>
+
+                    <template
+                        v-for="(item) in props.data"
+                        :key="item.id"
+                    >
+                        <button
+                            type="button"
+                            class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium transition-colors"
+                            :class="preparedQueryId === item.id ?
+                                'border-primary-500 bg-primary-500/10 text-primary-600 dark:text-primary-200' :
+                                'border-border bg-bg-muted text-fg hover:border-primary-400 hover:text-primary-600 dark:hover:text-primary-200'"
+                            @click.prevent="togglePreparedQuery(item)"
+                        >
+                            <VCIcon :name="preparedQueryId === item.id ? 'fa6-solid:check' : 'fa6-solid:clock-rotate-left'" />
+                            {{ item.name || item.id }}
+                        </button>
+                    </template>
+
+                    <button
+                        v-if="props.data.length > 0"
+                        type="button"
+                        class="ms-auto inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-border
+                               text-fg-muted transition-colors hover:border-primary-400 hover:text-primary-600 dark:hover:text-primary-200"
+                        aria-label="Gespeicherte Anfragen verwalten"
+                        @click.prevent="toggleManageModal"
+                    >
+                        <VCIcon name="fa6-solid:gear" />
+                    </button>
+                </div>
+
+                <VCModal v-model:open="manageModal">
+                    <VCModalContent>
+                        <div class="modal-header">
+                            <h6 class="mb-0">
+                                <VCIcon name="fa6-solid:clock-rotate-left" />
+                                Gespeicherte Anfragen
+                            </h6>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="flex list-none flex-col divide-y divide-border ps-0">
+                                <template
+                                    v-for="(item) in props.data"
+                                    :key="item.id"
+                                >
+                                    <li class="flex items-center gap-3 py-2">
+                                        <DPreparedQuery
+                                            :use-case="useCase"
+                                            :entity="item"
+                                            @deleted="props.deleted"
+                                        >
+                                            <template #default="entityProps">
+                                                <span class="min-w-0 truncate">
+                                                    {{ entityProps.data.name || entityProps.data.id }}
+                                                </span>
+                                                <span class="ms-auto flex shrink-0 gap-1">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-xs"
+                                                        :class="{
+                                                            'btn-primary': preparedQueryId !== entityProps.data.id,
+                                                            'btn-secondary': preparedQueryId === entityProps.data.id
+                                                        }"
+                                                        @click.prevent="togglePreparedQuery(entityProps.data)"
+                                                    >
+                                                        <VCIcon
+                                                            :name="preparedQueryId !== entityProps.data.id ? 'fa6-solid:plus' : 'fa6-solid:minus'"
+                                                        />
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-xs btn-danger"
+                                                        @click.prevent="() => entityProps.delete()"
+                                                    >
+                                                        <VCIcon name="fa6-solid:trash" />
+                                                    </button>
+                                                </span>
+                                            </template>
+                                        </DPreparedQuery>
+                                    </li>
+                                </template>
+                            </ul>
+                            <template v-if="props.data.length === 0">
+                                <p class="mb-0 text-sm text-fg-muted">
+                                    Es existieren keine gespeicherten Anfragen.
+                                </p>
+                            </template>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                type="button"
+                                class="btn btn-secondary btn-xs"
+                                @click.prevent="manageModal = false"
+                            >
+                                Schließen
+                            </button>
+                        </div>
+                    </VCModalContent>
+                </VCModal>
+            </template>
+        </DPreparedQueries>
+
+        <div>
             <!-- ref="searchEl" -->
             <slot
                 :set-criteria="setCriteria"
@@ -158,72 +284,6 @@ export default component as Component;
                 :query-created="handleQueryCreated"
                 :query-updated="handleQueryUpdated"
             />
-        </div>
-        <div class="col-4">
-            <h6><VCIcon name="fa6-solid:clock-rotate-left" /> Gespeicherte Anfragen</h6>
-            <DPreparedQueries
-                ref="preparedQueryNode"
-                :use-case="useCase"
-                @deleted="handlePreparedQueryDeleted"
-            >
-                <template #default="props">
-                    <template
-                        v-if="!props.busy && props.data.length === 0"
-                    >
-                        <div class="alert alert-sm alert-secondary">
-                            Es existieren keine gespeicherten Anfragen.
-                        </div>
-                    </template>
-                    <template v-if="!props.busy && props.data.length > 0">
-                        <div class="list">
-                            <ul class="list-body list-unstyled">
-                                <template
-                                    v-for="(item) in props.data"
-                                    :key="item.id"
-                                >
-                                    <li class="list-item flex-row">
-                                        <DPreparedQuery
-                                            :use-case="useCase"
-                                            :entity="item"
-                                            @deleted="props.deleted"
-                                        >
-                                            <template #default="entityProps">
-                                                <div class="entity-card flex flex-row w-full">
-                                                    <div>
-                                                        {{ entityProps.data.name || entityProps.data.id }}
-                                                    </div>
-                                                    <div class="ms-auto">
-                                                        <button
-                                                            type="button"
-                                                            class="btn btn-xs me-1"
-                                                            :class="{
-                                                                'btn-primary': preparedQueryId !== entityProps.data.id,
-                                                                'btn-secondary': preparedQueryId === entityProps.data.id
-                                                            }"
-                                                            @click.prevent="togglePreparedQuery(entityProps.data)"
-                                                        >
-                                                            <VCIcon
-                                                                :name="preparedQueryId !== entityProps.data.id ? 'fa6-solid:plus' : 'fa6-solid:minus'"
-                                                            />
-                                                        </button>
-                                                        <button
-                                                            type="button"
-                                                            class="btn btn-xs btn-danger"
-                                                            @click.prevent="() => entityProps.delete()"
-                                                        >
-                                                            <VCIcon name="fa6-solid:trash" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </template>
-                                        </DPreparedQuery>
-                                    </li>
-                                </template>
-                            </ul>
-                        </div>
-                    </template>
-                </template>
-            </DPreparedQueries>
         </div>
 
         <VCModal v-model:open="modal">
