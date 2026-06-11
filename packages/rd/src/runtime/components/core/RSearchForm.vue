@@ -11,10 +11,9 @@ import {
 import {
     DCollectionTransform,
     DFormTabGroups,
-    DSitePicker, 
-    DTags, 
-    DValueSet, 
-    QueryRequestMode, 
+    DSitePicker,
+    DValueSet,
+    QueryRequestMode,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { VCFormSelectSearch } from '@vuecs/forms';
@@ -37,7 +36,6 @@ export default defineComponent({
         DLoadingButton,
         DLoadingModal,
         DSitePicker,
-        DTags,
         RVariantFormTabGroup,
         DFormTabGroups,
         DCollectionTransform,
@@ -73,8 +71,8 @@ export default defineComponent({
         const busy = ref(false);
         const criteria = toRef(props, 'criteria');
 
-        const categories = ref<FormOption[]>([]);
-        const hpoTerms = ref<FormOption[]>([]);
+        const categories = ref<string[]>([]);
+        const hpoTerms = ref<string[]>([]);
         const variants = ref<FormTabInput<QueryCriteriaVariant<string>>[]>([]);
 
         const parseCategory = (coding: Coding) => ({
@@ -116,16 +114,13 @@ export default defineComponent({
 
                 if (criteria.value.hpoTerms) {
                     for (const term of criteria.value.hpoTerms) {
-                        hpoTerms.value.push({
-                            value: term.code,
-                            label: term.display || term.code,
-                        });
+                        hpoTerms.value.push(`${term.code}`);
                     }
                 }
 
                 if (criteria.value.diagnoses) {
                     for (const diagnosis of criteria.value.diagnoses) {
-                        categories.value.push(parseCategory(diagnosis as Coding));
+                        categories.value.push(`${parseCategory(diagnosis as Coding).value}`);
                     }
                 }
             }
@@ -145,24 +140,6 @@ export default defineComponent({
 
         Promise.resolve()
             .then(() => reset());
-
-        const selectCategory = (item: FormOption) => {
-            const index = categories.value.findIndex((el) => el.value === item.value);
-            if (index === -1) {
-                categories.value.push(item);
-            } else {
-                categories.value.splice(index, 1);
-            }
-        };
-
-        const selectHPOTerm = (item: FormOption) => {
-            const index = hpoTerms.value.findIndex((el) => el.value === item.value);
-            if (index === -1) {
-                hpoTerms.value.push(item);
-            } else {
-                hpoTerms.value.splice(index, 1);
-            }
-        };
 
         const buildCriteria = () : QueryCriteria => {
             const payload : QueryCriteria = {};
@@ -199,7 +176,7 @@ export default defineComponent({
                 payload.hpoTerms = [];
 
                 for (const term of hpoTerms.value) {
-                    payload.hpoTerms.push({ code: `${term.value}` });
+                    payload.hpoTerms.push({ code: term });
                 }
             }
 
@@ -207,7 +184,7 @@ export default defineComponent({
                 payload.diagnoses = [];
 
                 for (const category of categories.value) {
-                    const id = `${category.value}`;
+                    const id = `${category}`;
                     const index = id.indexOf(':::');
 
                     payload.diagnoses.push({
@@ -277,9 +254,6 @@ export default defineComponent({
             hpoTerms,
             categories,
 
-            selectCategory,
-            selectHPOTerm,
-
             variants,
             save,
             submit,
@@ -311,19 +285,10 @@ export default defineComponent({
                                     <template #default="options">
                                         <VCFormSelectSearch
                                             v-model="categories"
-                                            :multiple="true"
                                             :options="options"
+                                            :close-on-select="true"
                                             placeholder="..."
-                                        >
-                                            <template #selected="{ items, toggle }">
-                                                <DTags
-                                                    :emit-only="true"
-                                                    :items="items"
-                                                    tag-variant="light"
-                                                    @deleted="toggle"
-                                                />
-                                            </template>
-                                        </VCFormSelectSearch>
+                                        />
                                     </template>
                                 </DCollectionTransform>
                             </template>
@@ -354,19 +319,10 @@ export default defineComponent({
                                     <template #default="options">
                                         <VCFormSelectSearch
                                             v-model="hpoTerms"
-                                            :multiple="true"
                                             :options="options"
+                                            :close-on-select="true"
                                             placeholder="Human Phenotype Ontology"
-                                        >
-                                            <template #selected="{ items, toggle }">
-                                                <DTags
-                                                    :emit-only="true"
-                                                    :items="items"
-                                                    tag-variant="light"
-                                                    @deleted="toggle"
-                                                />
-                                            </template>
-                                        </VCFormSelectSearch>
+                                        />
                                     </template>
                                 </DCollectionTransform>
                             </template>

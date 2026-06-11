@@ -11,20 +11,16 @@ import type { FormOption } from '@vuecs/forms';
 import { VCFormSelectSearch } from '@vuecs/forms';
 import type { PropType } from 'vue';
 import {
-    defineComponent, 
-    ref, 
-    toRef, 
+    defineComponent,
+    ref,
+    toRef,
     watch,
 } from 'vue';
 import { injectHTTPClient } from '../../../core';
 import type { Coding } from '../../../domains';
-import { DTags } from '../../utility';
 
 export default defineComponent({
-    components: {
-        DTags,
-        VCFormSelectSearch,
-    },
+    components: { VCFormSelectSearch },
     props: {
         useCase: {
             type: String,
@@ -39,7 +35,7 @@ export default defineComponent({
 
         const busy = ref(false);
         const items = ref<FormOption[]>([]);
-        const current = ref<FormOption[]>([]);
+        const current = ref<string[]>([]);
 
         const transform = (input: Coding) : FormOption => ({
             value: input.code,
@@ -57,10 +53,7 @@ export default defineComponent({
 
         const init = () => {
             if (props.modelValue) {
-                current.value = props.modelValue.map((coding) => ({
-                    value: coding.code,
-                    label: coding.display || coding.code,
-                } satisfies FormOption));
+                current.value = props.modelValue.map((coding) => `${coding.code}`);
 
                 return;
             }
@@ -68,11 +61,17 @@ export default defineComponent({
             current.value = [];
         };
 
-        const handleUpdated = (value: FormOption[]) => {
-            const data = value.map((item) => ({
-                code: `${item.value}`,
-                display: typeof item.label === 'string' ? item.label : undefined,
-            } satisfies Coding));
+        const handleUpdated = (input: unknown) => {
+            const values = Array.isArray(input) ? input : [];
+
+            const data = values.map((value) => {
+                const option = items.value.find((item) => item.value === value);
+
+                return {
+                    code: `${value}`,
+                    display: option ? option.label : undefined,
+                } satisfies Coding;
+            });
 
             emit('update:modelValue', data);
         };
@@ -99,15 +98,7 @@ export default defineComponent({
     <VCFormSelectSearch
         v-model="current"
         :options="items"
+        :close-on-select="true"
         @change="handleUpdated"
-    >
-        <template #selected="props">
-            <DTags
-                :emit-only="true"
-                :items="props.items"
-                tag-variant="dark"
-                @deleted="props.toggle"
-            />
-        </template>
-    </VCFormSelectSearch>
+    />
 </template>

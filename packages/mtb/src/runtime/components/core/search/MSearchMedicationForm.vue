@@ -46,15 +46,24 @@ export default defineComponent({
     },
     emits: ['updated'],
     setup(props, { emit }) {
-        const transformCodings = (coding: ValueSetCoding) => ({
-            value: coding.code,
-            label: coding.display || coding.code,
-        });
+        // label lookup for ATC codes — deliberately non-reactive: it is
+        // filled during option transform (render path) and read only when
+        // the selection changes afterwards.
+        const drugLabels = new Map<string, string>();
+
+        const transformCodings = (coding: ValueSetCoding) => {
+            drugLabels.set(`${coding.code}`, coding.display || `${coding.code}`);
+
+            return {
+                value: coding.code,
+                label: coding.display || coding.code,
+            };
+        };
 
         const form = reactive<{
             combination: boolean,
             usage: string[],
-            atcDrugs: FormOption[],
+            atcDrugs: string[],
             customDrugs: FormOption[],
             customDrug: '',
         }>({
@@ -71,10 +80,8 @@ export default defineComponent({
                     drug.system &&
                     drug.system.includes('atc')
                 ) {
-                    form.atcDrugs.push({
-                        value: drug.code,
-                        label: drug.display || drug.code,
-                    });
+                    drugLabels.set(`${drug.code}`, drug.display || `${drug.code}`);
+                    form.atcDrugs.push(`${drug.code}`);
                 } else {
                     form.customDrugs.push({
                         value: drug.code,
@@ -87,9 +94,9 @@ export default defineComponent({
         init();
 
         const allDrugs = computed(() => [
-            ...form.atcDrugs,
-            ...form.customDrugs,
-        ].map((item) => ({ id: String(item.value), value: String(item.label) })));
+            ...form.atcDrugs.map((code) => ({ id: code, value: drugLabels.get(code) || code })),
+            ...form.customDrugs.map((item) => ({ id: String(item.value), value: String(item.label) })),
+        ]);
 
         const currentTab = ref('atc');
         const tabs = ref([
@@ -105,7 +112,7 @@ export default defineComponent({
             const drugs: Coding[] = [];
             for (const drug of form.atcDrugs) {
                 drugs.push({
-                    code: `${drug.value}`,
+                    code: drug,
                     system: 'atc',
                 });
             }
@@ -136,7 +143,7 @@ export default defineComponent({
         };
 
         const dropCustom = ({ id, value }: { id: string, value: string }) => {
-            let index = form.atcDrugs.findIndex((el) => el.value === id && el.label === value);
+            let index = form.atcDrugs.findIndex((el) => el === id);
             if (index !== -1) {
                 form.atcDrugs.splice(index, 1);
                 handleChanged();
@@ -246,11 +253,14 @@ export default defineComponent({
                                 <template #default="options">
                                     <VCFormSelectSearch
                                         v-model="form.atcDrugs"
-                                        :multiple="true"
                                         :options="options"
+                                        :close-on-select="true"
                                         placeholder="ATC"
                                         @change="handleChanged"
                                     >
+                                        <!-- suppress the built-in chips: the merged
+                                             DTags below renders ATC + custom drugs
+                                             with the und/oder separator -->
                                         <template #selected>
                                             <span />
                                         </template>

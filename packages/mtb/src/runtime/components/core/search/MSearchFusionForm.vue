@@ -10,7 +10,6 @@ import {
     type CodeSystemConcept,
     DCodeSystem,
     DCollectionTransform,
-    DTags,
     transformConceptToFormSelectOption,
 } from '@dnpm-dip/core';
 import { VCFormSelectSearch } from '@vuecs/forms';
@@ -26,9 +25,8 @@ import { type QueryGeneAlterationFusionCriteria, QueryMutationType } from '../..
 
 export default defineComponent({
     components: {
-        DTags, 
-        DCodeSystem, 
-        DCollectionTransform, 
+        DCodeSystem,
+        DCollectionTransform,
         VCFormSelectSearch,
     },
     props: { entity: Object as PropType<QueryGeneAlterationFusionCriteria> },
@@ -98,16 +96,7 @@ export default defineComponent({
                                 :options="options"
                                 placeholder="HGNC"
                                 @change="handleChanged"
-                            >
-                                <template #selected="{ items, toggle }">
-                                    <DTags
-                                        :emit-only="true"
-                                        :items="items"
-                                        tag-variant="light"
-                                        @deleted="toggle"
-                                    />
-                                </template>
-                            </VCFormSelectSearch>
+                            />
                         </template>
                     </DCollectionTransform>
                 </template>

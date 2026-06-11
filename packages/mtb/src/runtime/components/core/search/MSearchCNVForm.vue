@@ -8,7 +8,6 @@
 <script lang="ts">
 import {
     DCollectionTransform,
-    DTags,
     DValueSet,
     type ValueSetCoding,
     toCoding,
@@ -26,16 +25,15 @@ import { type QueryGeneAlterationCNVCriteria, QueryMutationType } from '../../..
 
 export default defineComponent({
     components: {
-        DTags, 
-        DValueSet, 
-        DCollectionTransform, 
+        DValueSet,
+        DCollectionTransform,
         VCFormSelectSearch,
     },
     props: { entity: Object as PropType<QueryGeneAlterationCNVCriteria> },
     emits: ['updated'],
     setup(props, { emit }) {
         const entityRef = toRef(props, 'entity');
-        const form = reactive<QueryGeneAlterationCNVCriteria<{ id: string, value: string }>>({
+        const form = reactive<QueryGeneAlterationCNVCriteria<string>>({
             type: QueryMutationType.CNV,
             copyNumberType: [],
         });
@@ -44,10 +42,7 @@ export default defineComponent({
             if (!props.entity) return;
 
             if (props.entity.copyNumberType) {
-                form.copyNumberType = props.entity.copyNumberType.map((coding) => ({
-                    id: coding.code,
-                    value: coding.display || coding.code,
-                }));
+                form.copyNumberType = props.entity.copyNumberType.map((coding) => `${coding.code}`);
             }
         };
 
@@ -58,8 +53,8 @@ export default defineComponent({
         });
 
         const transformCodings = (coding: ValueSetCoding) => ({
-            id: coding.code,
-            value: coding.display ? `${coding.display}` : coding.code,
+            value: coding.code,
+            label: coding.display ? `${coding.display}` : coding.code,
         });
 
         const isEditing = computed(() => !!entityRef.value);
@@ -67,7 +62,7 @@ export default defineComponent({
             const output : QueryGeneAlterationCNVCriteria = { type: QueryMutationType.CNV };
 
             if (form.copyNumberType) {
-                output.copyNumberType = form.copyNumberType.map((code) => toCoding(code.id));
+                output.copyNumberType = form.copyNumberType.map((code) => toCoding(code));
             }
 
             emit('updated', output);
@@ -101,18 +96,10 @@ export default defineComponent({
                             <VCFormSelectSearch
                                 v-model="form.copyNumberType"
                                 :options="options"
+                                :close-on-select="true"
                                 placeholder="CNV Type"
                                 @change="handleChanged"
-                            >
-                                <template #selected="{ items, toggle }">
-                                    <DTags
-                                        :emit-only="true"
-                                        :items="items"
-                                        tag-variant="light"
-                                        @deleted="toggle"
-                                    />
-                                </template>
-                            </VCFormSelectSearch>
+                            />
                         </template>
                     </DCollectionTransform>
                 </template>

@@ -18,12 +18,9 @@ import {
     DFormTabGroups,
     DLoadingModal,
     DSitePicker,
-    DTags,
     DValueSet,
     LogicalOperator,
     QueryRequestMode,
-    transformCodingsToFormSelectOptions,
-    transformFormSelectOptionsToCodings,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import {
@@ -55,7 +52,6 @@ export default defineComponent({
         MSearchMedicationForm,
         MMutationTabGroup,
         DFormTabGroups,
-        DTags,
         DValueSet,
         VCFormSelectSearch,
         DLoadingModal,
@@ -105,14 +101,14 @@ export default defineComponent({
         const mutations = ref<FormTabInput<QueryGeneAlterationCriteria>[]>([]);
         const mutationsInCombination = ref(false);
 
-        const diagnoses = ref<FormOption[]>([]);
-        const tumorMorphologies = ref<FormOption[]>([]);
+        const diagnoses = ref<string[]>([]);
+        const tumorMorphologies = ref<string[]>([]);
 
         const medicationDrugs = ref<Coding[]>([]);
         const medicationUsage = ref<string[]>([]);
         const medicationInCombination = ref(false);
 
-        const responses = ref<FormOption[]>([]);
+        const responses = ref<string[]>([]);
 
         const reset = async () => {
             if (busy.value) return;
@@ -137,11 +133,11 @@ export default defineComponent({
 
             if (criteria.value) {
                 if (criteria.value.tumorEntities) {
-                    diagnoses.value = transformCodingsToFormSelectOptions(criteria.value.tumorEntities);
+                    diagnoses.value = criteria.value.tumorEntities.map((item) => `${item.code}`);
                 }
 
                 if (criteria.value.tumorMorphologies) {
-                    tumorMorphologies.value = transformCodingsToFormSelectOptions(criteria.value.tumorMorphologies);
+                    tumorMorphologies.value = criteria.value.tumorMorphologies.map((item) => `${item.code}`);
                 }
 
                 if (criteria.value.medication) {
@@ -159,7 +155,7 @@ export default defineComponent({
                 }
 
                 if (criteria.value.responses) {
-                    responses.value = transformCodingsToFormSelectOptions(criteria.value.responses);
+                    responses.value = criteria.value.responses.map((item) => `${item.code}`);
                 }
 
                 if (
@@ -197,14 +193,14 @@ export default defineComponent({
                 diagnoses.value &&
                 diagnoses.value.length > 0
             ) {
-                payload.tumorEntities = transformFormSelectOptionsToCodings(diagnoses.value);
+                payload.tumorEntities = diagnoses.value.map((code) => ({ code }));
             }
 
             if (
                 tumorMorphologies.value &&
                 tumorMorphologies.value.length > 0
             ) {
-                payload.tumorMorphologies = transformFormSelectOptionsToCodings(tumorMorphologies.value);
+                payload.tumorMorphologies = tumorMorphologies.value.map((code) => ({ code }));
             }
 
             const payloadMedication : QueryMedicationCriteria = {};
@@ -237,7 +233,7 @@ export default defineComponent({
                 responses.value &&
                 responses.value.length > 0
             ) {
-                payload.responses = transformFormSelectOptionsToCodings(responses.value);
+                payload.responses = responses.value.map((code) => ({ code }));
             }
 
             if (
@@ -444,19 +440,10 @@ export default defineComponent({
                                             <template #default="options">
                                                 <VCFormSelectSearch
                                                     v-model="diagnoses"
-                                                    :multiple="true"
                                                     :options="options"
+                                                    :close-on-select="true"
                                                     placeholder="ICD-10"
-                                                >
-                                                    <template #selected="{ items, toggle }">
-                                                        <DTags
-                                                            :emit-only="true"
-                                                            :items="items"
-                                                            tag-variant="light"
-                                                            @deleted="toggle"
-                                                        />
-                                                    </template>
-                                                </VCFormSelectSearch>
+                                                />
                                             </template>
                                         </DCollectionTransform>
                                     </template>
@@ -487,19 +474,10 @@ export default defineComponent({
                                             <template #default="options">
                                                 <VCFormSelectSearch
                                                     v-model="tumorMorphologies"
-                                                    :multiple="true"
                                                     :options="options"
+                                                    :close-on-select="true"
                                                     placeholder="Tumormorphologie oder ICD-0-3-M"
-                                                >
-                                                    <template #selected="{ items, toggle }">
-                                                        <DTags
-                                                            :emit-only="true"
-                                                            :items="items"
-                                                            tag-variant="light"
-                                                            @deleted="toggle"
-                                                        />
-                                                    </template>
-                                                </VCFormSelectSearch>
+                                                />
                                             </template>
                                         </DCollectionTransform>
                                     </template>
@@ -587,19 +565,10 @@ export default defineComponent({
                                             <template #default="options">
                                                 <VCFormSelectSearch
                                                     v-model="responses"
-                                                    :multiple="true"
                                                     :options="options"
+                                                    :close-on-select="true"
                                                     placeholder="RECIST"
-                                                >
-                                                    <template #selected="{ items, toggle }">
-                                                        <DTags
-                                                            :emit-only="true"
-                                                            :items="items"
-                                                            tag-variant="light"
-                                                            @deleted="toggle"
-                                                        />
-                                                    </template>
-                                                </VCFormSelectSearch>
+                                                />
                                             </template>
                                         </DCollectionTransform>
                                     </template>
