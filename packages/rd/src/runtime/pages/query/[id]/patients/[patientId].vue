@@ -63,26 +63,36 @@ export default defineComponent({
 </script>
 <template>
     <div>
-        <div class="mb-2">
-            <h4>
-                <NuxtLink
-                    class="btn btn-xs btn-dark me-1"
-                    :to="'/rd/query/'+ entity.id"
-                >
-                    <VCIcon name="fa6-solid:arrow-left" />
-                </NuxtLink>
-                Patient <small class="text-fg-muted"> {{ record.patient.id }}</small>
-            </h4>
-        </div>
+        <header class="mb-4 flex items-center gap-4">
+            <span
+                class="flex size-12 shrink-0 items-center justify-center rounded-xl
+                       bg-gradient-to-br from-primary-500 to-primary-700 text-xl text-on-primary shadow-md"
+            >
+                <VCIcon name="fa6-solid:hospital-user" />
+            </span>
+            <div class="min-w-0">
+                <h1 class="mb-0 text-2xl font-bold tracking-tight">
+                    Patient
+                </h1>
+                <p class="mb-0 truncate font-mono text-sm text-fg-muted">
+                    {{ record.patient.id }}
+                </p>
+            </div>
+            <NuxtLink
+                class="btn btn-sm btn-secondary ms-auto"
+                :to="'/rd/query/'+ entity.id + '/patients'"
+            >
+                <VCIcon name="fa6-solid:arrow-left" />
+                Zu den Patienten
+            </NuxtLink>
+        </header>
 
-        <div class="mb-2">
+        <div class="mb-3">
             <VCNavItems
                 :data="navItems"
                 variant="pills"
             />
         </div>
-
-        <hr>
 
         <template v-if="record">
             <NuxtPage

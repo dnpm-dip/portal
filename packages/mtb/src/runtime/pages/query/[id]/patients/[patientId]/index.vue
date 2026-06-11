@@ -25,18 +25,15 @@ export default defineNuxtComponent({
             :entity="record.patient"
         />
 
-        <hr>
-
-        <h5>Fälle</h5>
-        <div class="entity-card-group mb-3">
+        <h5 class="section-label mb-2">
+            Fälle
+        </h5>
+        <div class="mb-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             <template
                 v-for="item in record.episodesOfCare"
                 :key="item.id"
             >
-                <div
-                    class="entity-card"
-                    style="max-width: 350px"
-                >
+                <div class="entity-card">
                     <div class="row">
                         <div class="col">
                             <div>
@@ -55,18 +52,15 @@ export default defineNuxtComponent({
             </template>
         </div>
 
-        <hr>
-
-        <h5>Leitlinien-Therapien</h5>
-        <div class="entity-card-group mb-3">
+        <h5 class="section-label mb-2">
+            Leitlinien-Therapien
+        </h5>
+        <div class="mb-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             <template
                 v-for="item in record.guidelineTherapies"
                 :key="item.id"
             >
-                <div
-                    class="entity-card"
-                    style="max-width: 350px"
-                >
+                <div class="entity-card">
                     <div class="row">
                         <div class="col">
                             <div>
@@ -112,20 +106,17 @@ export default defineNuxtComponent({
             </template>
         </div>
 
-        <hr>
-
         <!-- todo: add diagnosis -->
 
-        <h5>Leitlinien-Prozeduren</h5>
-        <div class="entity-card-group mb-3">
+        <h5 class="section-label mb-2">
+            Leitlinien-Prozeduren
+        </h5>
+        <div class="mb-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             <template
                 v-for="item in record.guidelineProcedures"
                 :key="item.id"
             >
-                <div
-                    class="entity-card"
-                    style="max-width: 350px"
-                >
+                <div class="entity-card">
                     <div v-if="item.reason">
                         <strong><VCIcon name="fa6-solid:calculator" /> Grund</strong>
                         {{ item.reason.display || item.reason.type }}
@@ -172,19 +163,16 @@ export default defineNuxtComponent({
             </template>
         </div>
 
-        <hr>
-
         <!-- todo maybe visualisation ?? -->
-        <h5>ECOG Performance Status</h5>
-        <div class="entity-card-group mb-3">
+        <h5 class="section-label mb-2">
+            ECOG Performance Status
+        </h5>
+        <div class="mb-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             <template
                 v-for="item in record.performanceStatus"
                 :key="item.id"
             >
-                <div
-                    class="entity-card"
-                    style="max-width: 350px"
-                >
+                <div class="entity-card">
                     <div><strong><VCIcon name="fa6-solid:code" /> Code</strong> {{ item.value.display || item.value.code }}</div>
                     <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.effectiveDate }}</div>
                 </div>

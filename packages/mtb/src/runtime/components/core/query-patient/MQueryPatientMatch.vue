@@ -6,13 +6,14 @@
   -->
 
 <script lang="ts">
+import { DFact } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
 import type { PatientMatch } from '../../../domains';
 import MQueryCriteriaSummary from '../query-criteria/MQueryCriteriaSummary.vue';
 
 export default defineComponent({
-    components: { MQueryCriteriaSummary },
+    components: { DFact, MQueryCriteriaSummary },
     props: {
         entity: {
             type: Object as PropType<PatientMatch>,
@@ -39,23 +40,75 @@ export default defineComponent({
             return props.entity.id;
         });
 
+        const vitalStatusClass = computed(() => {
+            switch (props.entity.vitalStatus.code) {
+                case 'alive':
+                    return 'bg-success-500/10 text-success-600';
+                case 'deceased':
+                    return 'bg-error-500/10 text-error-600';
+                default:
+                    return 'bg-bg-elevated text-fg-muted';
+            }
+        });
+
         return {
             id,
             toggleExtended,
             extended,
+            vitalStatusClass,
         };
     },
 });
 </script>
 <template>
     <div class="entity-card w-full">
-        <div class="flex flex-row">
-            <div>
-                <strong># {{ id }}</strong>
+        <div class="flex items-center gap-3">
+            <span
+                class="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary-500/10
+                       text-sm font-semibold text-primary-600 dark:text-primary-200"
+            >
+                {{ id }}
+            </span>
+
+            <div class="flex flex-1 flex-wrap items-center gap-x-6 gap-y-2">
+                <DFact
+                    v-if="entity.managingSite"
+                    label="Standort"
+                    icon="fa6-solid:hospital"
+                >
+                    {{ entity.managingSite.display }}
+                </DFact>
+                <DFact
+                    label="Alter"
+                    icon="fa6-solid:cake-candles"
+                >
+                    {{ entity.age.value }}
+                </DFact>
+                <DFact
+                    label="Geschlecht"
+                    icon="fa6-solid:venus-mars"
+                >
+                    {{ entity.gender.display }}
+                </DFact>
+                <DFact
+                    label="Vitalstatus"
+                    icon="fa6-solid:heart-pulse"
+                >
+                    <span
+                        class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium"
+                        :class="vitalStatusClass"
+                    >
+                        {{ entity.vitalStatus.display }}
+                    </span>
+                </DFact>
             </div>
-            <div class="ms-auto">
+
+            <div class="flex shrink-0 gap-1">
                 <button
-                    class="btn btn-dark btn-xs"
+                    type="button"
+                    class="btn btn-xs btn-secondary"
+                    :aria-expanded="extended ? 'true' : 'false'"
+                    aria-label="Kriterien ein-/ausklappen"
                     @click.prevent="toggleExtended"
                 >
                     <VCIcon :name="extended ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
@@ -63,80 +116,22 @@ export default defineComponent({
 
                 <NuxtLink
                     :to="'/mtb/query/'+ queryId + '/patients/' +entity.id"
-                    class="btn btn-xs btn-outline-primary ms-1"
+                    class="btn btn-xs btn-primary"
+                    title="Patient öffnen"
                 >
-                    <VCIcon name="fa6-solid:bars" />
+                    <VCIcon name="fa6-solid:arrow-right" />
                 </NuxtLink>
             </div>
         </div>
+
         <div
-            class=" mb-2 mt-2"
-            :class="{'flex flex-row': extended}"
+            v-if="extended && entity.matchingCriteria"
+            class="mt-3 border-t border-border pt-3"
         >
-            <div
-                class="flex justify-between"
-                :class="{'flex-row': !extended, 'flex-col me-3': extended}"
-            >
-                <div
-                    v-if="entity.managingSite"
-                    class="flex grow items-center"
-                    :class="{'flex-row': extended, 'flex-col': !extended}"
-                >
-                    <div>
-                        <strong>Standort</strong>
-                    </div>
-                    <div :class="{'ms-1': extended}">
-                        {{ entity.managingSite.display }}
-                    </div>
-                </div>
-                <div
-                    class="flex grow items-center"
-                    :class="{'flex-row': extended, 'flex-col': !extended}"
-                >
-                    <div>
-                        <strong>Alter</strong>
-                    </div>
-                    <div :class="{'ms-1': extended}">
-                        {{ entity.age.value }}
-                    </div>
-                </div>
-                <div
-                    class="flex grow items-center"
-                    :class="{'flex-row': extended, 'flex-col': !extended}"
-                >
-                    <div>
-                        <strong>Geschlecht</strong>
-                    </div>
-                    <div :class="{'ms-1': extended}">
-                        {{ entity.gender.display }}
-                    </div>
-                </div>
-                <div
-                    class="flex grow items-center"
-                    :class="{'flex-row': extended, 'flex-col': !extended}"
-                >
-                    <div>
-                        <strong>Vital Status</strong>
-                    </div>
-                    <div :class="{'ms-1': extended}">
-                        <template v-if="entity.vitalStatus.code === 'alive'">
-                            <span class="text-success-600">{{ entity.vitalStatus.display }}</span>
-                        </template>
-                        <template v-else-if="entity.vitalStatus.code === 'deceased'">
-                            <span class="text-error-600">{{ entity.vitalStatus.display }}</span>
-                        </template>
-                        <template v-else>
-                            {{ entity.vitalStatus.display }}
-                        </template>
-                    </div>
-                </div>
-            </div>
-            <template v-if="extended && entity.matchingCriteria">
-                <MQueryCriteriaSummary
-                    :entity="entity.matchingCriteria"
-                    :direction="'horizontal'"
-                />
-            </template>
+            <MQueryCriteriaSummary
+                :entity="entity.matchingCriteria"
+                :direction="'horizontal'"
+            />
         </div>
     </div>
 </template>

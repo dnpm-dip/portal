@@ -31,15 +31,15 @@ export default defineNuxtComponent({
 <template>
     <div>
         <DPatient
-            class="mb-3"
+            class="mb-4"
             :entity="record.patient"
         />
 
-        <hr>
-
         <div class="row mb-3">
             <div class="col">
-                <h5>Fall</h5>
+                <h5 class="section-label mb-2">
+                    Fall
+                </h5>
 
                 <div class="entity-card-group flex-col">
                     <template
@@ -62,7 +62,9 @@ export default defineNuxtComponent({
                 </div>
             </div>
             <div class="col">
-                <h5>Diagnose</h5>
+                <h5 class="section-label mb-2">
+                    Diagnose
+                </h5>
                 <div class="flex flex-col gap-2">
                     <template
                         v-for="(diagnosis, key) in record.diagnoses"
@@ -89,7 +91,9 @@ export default defineNuxtComponent({
                                     v-for="item in diagnosis.codes"
                                     :key="item.code"
                                 >
-                                    <span class="ms-1 badge bg-fg">{{ item.display || item.code }}</span>
+                                    <span class="ms-1 inline-flex rounded-full border border-border bg-bg px-2 py-0.5 text-xs">
+                                        {{ item.display || item.code }}
+                                    </span>
                                 </template>
                             </div>
                             <div>
@@ -102,10 +106,8 @@ export default defineNuxtComponent({
             </div>
         </div>
 
-        <hr>
-
         <div class="mb-3">
-            <h5>
+            <h5 class="section-label mb-2">
                 HPO
             </h5>
             <div class="entity-card">
@@ -115,16 +117,16 @@ export default defineNuxtComponent({
                         v-for="(item, key) in record.hpoTerms"
                         :key="key"
                     >
-                        <span class="badge bg-fg ms-1">{{ item.value.display || item.value.code }}</span>
+                        <span class="ms-1 inline-flex rounded-full border border-border bg-bg px-2 py-0.5 text-xs">
+                            {{ item.value.display || item.value.code }}
+                        </span>
                     </template>
                 </div>
             </div>
         </div>
 
-        <hr>
-
         <div v-if="record.therapies">
-            <h5 class="mb-0">
+            <h5 class="section-label mb-2">
                 Therapien
             </h5>
             <div class="flex flex-col gap-2">

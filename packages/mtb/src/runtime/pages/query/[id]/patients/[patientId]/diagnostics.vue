@@ -30,7 +30,9 @@ export default defineNuxtComponent({
 </script>
 <template>
     <template v-if="record.specimens">
-        <h5>Tumorproben</h5>
+        <h5 class="section-label mb-2">
+            Tumorproben
+        </h5>
         <div class="entity-card-group mb-3">
             <template
                 v-for="item in record.specimens"
@@ -67,7 +69,9 @@ export default defineNuxtComponent({
     </template>
 
     <template v-if="record.histologyReports">
-        <h5>Histologie Berichte</h5>
+        <h5 class="section-label mb-2">
+            Histologie Berichte
+        </h5>
         <div class="entity-card-group mb-3">
             <template
                 v-for="(item) in record.histologyReports"
@@ -117,7 +121,9 @@ export default defineNuxtComponent({
 
     <template v-if="record.ihcReports">
         <div class="mb-3">
-            <h5>IHC Berichte</h5>
+            <h5 class="section-label mb-2">
+                IHC Berichte
+            </h5>
             <template
                 v-for="(item) in record.ihcReports"
                 :key="item.id"
@@ -128,7 +134,9 @@ export default defineNuxtComponent({
                     </div>
                     <DExpandableContent>
                         <template #header>
-                            <h6>Ergebnisse der Proteinexpression</h6>
+                            <h6 class="section-label mb-2">
+                                Ergebnisse der Proteinexpression
+                            </h6>
                         </template>
                         <template #default>
                             <div class="entity-card-group">
@@ -155,7 +163,9 @@ export default defineNuxtComponent({
                     </DExpandableContent>
                     <DExpandableContent>
                         <template #header>
-                            <h6>Ergebnisse der MSI-MMR</h6>
+                            <h6 class="section-label mb-2">
+                                Ergebnisse der MSI-MMR
+                            </h6>
                         </template>
                         <template #default>
                             <div class="entity-card-group">
@@ -187,7 +197,9 @@ export default defineNuxtComponent({
         <hr>
     </template>
     <template v-if="record.ngsReports">
-        <h5>NGS Berichte</h5>
+        <h5 class="section-label mb-2">
+            NGS Berichte
+        </h5>
         <template
             v-for="(item) in record.ngsReports"
             :key="item.id"
@@ -226,7 +238,9 @@ export default defineNuxtComponent({
 
                 <DExpandableContent>
                     <template #header>
-                        <h6>SNV</h6>
+                        <h6 class="section-label mb-2">
+                            SNV
+                        </h6>
                     </template>
                     <template #default>
                         <template
@@ -243,7 +257,9 @@ export default defineNuxtComponent({
 
                 <DExpandableContent>
                     <template #header>
-                        <h6>CNV</h6>
+                        <h6 class="section-label mb-2">
+                            CNV
+                        </h6>
                     </template>
                     <template #default>
                         <template
@@ -262,7 +278,9 @@ export default defineNuxtComponent({
                     <div class="col-6">
                         <DExpandableContent>
                             <template #header>
-                                <h6>DNA Fusions</h6>
+                                <h6 class="section-label mb-2">
+                                    DNA Fusions
+                                </h6>
                             </template>
                             <template #default>
                                 <template
@@ -280,7 +298,9 @@ export default defineNuxtComponent({
                     <div class="col-6">
                         <DExpandableContent>
                             <template #header>
-                                <h6>RNA Fusions</h6>
+                                <h6 class="section-label mb-2">
+                                    RNA Fusions
+                                </h6>
                             </template>
                             <template #default>
                                 <template

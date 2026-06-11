@@ -25,7 +25,9 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <h5>NGS Berichte</h5>
+    <h5 class="section-label mb-2">
+        NGS Berichte
+    </h5>
     <div class="entity-card-group flex-col">
         <template
             v-for="(item, key) in record.ngsReports"
@@ -73,63 +75,57 @@ export default defineNuxtComponent({
                         v-if="item.results && item.results.smallVariants"
                         class="col"
                     >
-                        <h6>Small Variants</h6>
-                        <div class="list">
-                            <ul class="list-body list-unstyled">
-                                <template
-                                    v-for="variant in item.results.smallVariants"
-                                    :key="variant.id"
-                                >
-                                    <li class="list-item flex-row">
-                                        <RSmallVariant
-                                            :query-id="entity.id"
-                                            :entity="variant"
-                                        />
-                                    </li>
-                                </template>
-                            </ul>
+                        <h6 class="section-label mb-2">
+                            Small Variants
+                        </h6>
+                        <div class="flex flex-col gap-2">
+                            <template
+                                v-for="variant in item.results.smallVariants"
+                                :key="variant.id"
+                            >
+                                <RSmallVariant
+                                    :query-id="entity.id"
+                                    :entity="variant"
+                                />
+                            </template>
                         </div>
                     </div>
                     <div
                         v-if="item.results && item.results.copyNumberVariants"
                         class="col"
                     >
-                        <h6>Copy Number Variants</h6>
-                        <div class="list">
-                            <ul class="list-body list-unstyled">
-                                <template
-                                    v-for="variant in item.results.copyNumberVariants"
-                                    :key="variant.id"
-                                >
-                                    <li class="list-item flex-row">
-                                        <RCopyNumberVariant
-                                            :query-id="entity.id"
-                                            :entity="variant"
-                                        />
-                                    </li>
-                                </template>
-                            </ul>
+                        <h6 class="section-label mb-2">
+                            Copy Number Variants
+                        </h6>
+                        <div class="flex flex-col gap-2">
+                            <template
+                                v-for="variant in item.results.copyNumberVariants"
+                                :key="variant.id"
+                            >
+                                <RCopyNumberVariant
+                                    :query-id="entity.id"
+                                    :entity="variant"
+                                />
+                            </template>
                         </div>
                     </div>
                     <div
                         v-if="item.results && item.results.structuralVariants"
                         class="col"
                     >
-                        <h6>Structural Variants</h6>
-                        <div class="list">
-                            <ul class="list-body list-unstyled">
-                                <template
-                                    v-for="variant in item.results.structuralVariants"
-                                    :key="variant.id"
-                                >
-                                    <li class="list-item flex-row">
-                                        <RStructuralVariant
-                                            :query-id="entity.id"
-                                            :entity="variant"
-                                        />
-                                    </li>
-                                </template>
-                            </ul>
+                        <h6 class="section-label mb-2">
+                            Structural Variants
+                        </h6>
+                        <div class="flex flex-col gap-2">
+                            <template
+                                v-for="variant in item.results.structuralVariants"
+                                :key="variant.id"
+                            >
+                                <RStructuralVariant
+                                    :query-id="entity.id"
+                                    :entity="variant"
+                                />
+                            </template>
                         </div>
                     </div>
                 </div>

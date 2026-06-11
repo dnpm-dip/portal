@@ -21,7 +21,9 @@ export default defineNuxtComponent({
 <template>
     <template v-if="record.systemicTherapies">
         <div>
-            <h5>Durchgeführte Therapien</h5>
+            <h5 class="section-label mb-2">
+                Durchgeführte Therapien
+            </h5>
         </div>
         <template
             v-for="(history, key) in record.systemicTherapies"
@@ -82,7 +84,9 @@ export default defineNuxtComponent({
 
     <template v-if="record.responses">
         <div>
-            <h5>Responses</h5>
+            <h5 class="section-label mb-2">
+                Responses
+            </h5>
         </div>
         <div class="entity-card-group flex-row justify-evenly">
             <template
