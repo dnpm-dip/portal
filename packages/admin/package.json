@@ -34,9 +34,9 @@
         "@authup/client-web-kit": "^1.0.0-beta.39",
         "@dnpm-dip/core": "^1.11.0",
         "@dnpm-dip/kit": "^1.10.0",
-        "@nuxt/kit": "^4.4.5",
+        "@nuxt/kit": "^4.4.8",
         "@vuecs/timeago": "^1.1.2",
-        "bootstrap-vue-next": "^0.45.3",
+        "bootstrap-vue-next": "^0.45.5",
         "vue": "^3.5.34"
     },
     "devDependencies": {
