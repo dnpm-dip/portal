@@ -37,18 +37,36 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * `@source` declarations for what THIS theme is responsible for: its
+ * own class strings plus the vendored kit-theme's scan scopes (the
+ * kit components' dist + the vuecs element class maps). Consumer apps
+ * own their template-tree and dependency scan scopes in their per-app
+ * CSS entry (packages/portal/assets/css/tailwind.css) — do not
+ * duplicate them here.
+ *
+ * NOTE: `@source` only takes file-system globs relative to this
+ * stylesheet — bare package specifiers are NOT resolved (a bare name
+ * is treated as a literal sub-path glob and silently scans nothing).
+ */
 @source ".";
-@source "../../core/src";
-@source "../../admin/src";
-@source "../../mtb/src";
-@source "../../rd/src";
-@source "../../portal";
 @source "../../../node_modules/@authup/client-web-kit/dist";
-@source "../../../node_modules/@authup/client-web-kit/src";
 @source "../../../node_modules/@vuecs";
-@source "../../portal/node_modules/@authup/client-web-kit/dist";
-@source "../../portal/node_modules/@authup/client-web-kit/src";
-@source "../../portal/node_modules/@vuecs";
+
+/*
+ * Project font stacks at the Tailwind theme level — anything that
+ * consumes `var(--font-sans)` / the `font-sans` utility (vuecs theme
+ * classes, kit components) must resolve to the same families the
+ * chrome declares (body.css: Nunito body, Asap headings), or the UI
+ * renders with mixed stacks. `--default-font-family` binds the
+ * preflight `html` default to the same stack. The faces themselves
+ * ship via @fontsource entries in the app's nuxt.config css[].
+ */
+@theme {
+    --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+    --font-heading: "Asap", ui-sans-serif, system-ui, sans-serif;
+    --default-font-family: var(--font-sans);
+}
 
 @import "./styles/kit-list.css";
 @import "./styles/kit-form-validation.css";

@@ -46,6 +46,15 @@ export default defineNuxtConfig({
         '@/assets/css/tailwind.css',
         '@authup/client-web-kit/dist/style.css',
         '@dnpm-dip/core/../dist/index.css',
+        // Self-hosted webfonts — the theme's font stacks (Nunito body,
+        // Asap headings) were declared but no @font-face ever shipped;
+        // without these the UI silently falls back to the browser
+        // default sans.
+        '@fontsource/nunito/300.css',
+        '@fontsource/nunito/400.css',
+        '@fontsource/nunito/600.css',
+        '@fontsource/nunito/700.css',
+        '@fontsource/asap/700.css',
     ],
 
     alias: {
