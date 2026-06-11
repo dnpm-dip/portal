@@ -114,9 +114,35 @@
         --dnpm-chrome-fg-muted:      #aeb2b7;
         --dnpm-chrome-border:        #333333;
 
-        --vc-color-bg: var(--vc-color-neutral-400);
-        --vc-color-bg-muted: var(--vc-color-neutral-500);
-        --vc-color-border: var(--vc-color-neutral-500);
+        /*
+         * Content surface — soft dark that pairs with the warm chrome.
+         * The raw neutral scale does NOT flip with the mode: aliasing
+         * `--vc-color-bg` to neutral-400 (a light-mid grey) left the
+         * light `fg` tokens from @vuecs/design at ~1.7:1 — unreadable.
+         */
+        --vc-color-bg: #2a2d35;
+        --vc-color-bg-muted: #343742;
+        --vc-color-border: #3e414c;
+
+        /*
+         * Warning / danger / info surfaces — tinted panels (alerts,
+         * list no-more / empty markers). Hand-tuned mid-lightness,
+         * low-chroma tones: the palette deep ends (orange-950 /
+         * red-950) read brown/black against the soft dark content
+         * surface. Border sits a step lighter than the fill (edge
+         * highlight); panel text is a hue-matched near-white.
+         */
+        --dnpm-warning-surface:        oklch(0.55 0.06 66.93);
+        --dnpm-warning-surface-border: oklch(0.65 0.08 66.93);
+        --dnpm-warning-surface-fg:     oklch(0.97 0.02 66.93);
+
+        --dnpm-danger-surface:         oklch(0.45 0.11 22.78);
+        --dnpm-danger-surface-border:  oklch(0.55 0.13 22.78);
+        --dnpm-danger-surface-fg:      oklch(0.97 0.015 22.78);
+
+        --dnpm-info-surface:           oklch(0.5 0.08 237);
+        --dnpm-info-surface-border:    oklch(0.6 0.1 237);
+        --dnpm-info-surface-fg:        oklch(0.97 0.015 237);
     }
 
     /*
@@ -257,16 +283,42 @@
     .card-footer { @apply border-t border-border px-3 py-2; }
     .card-title  { @apply font-semibold; }
 
-    /* Alerts --------------------------------------------------------- */
+    /* Alerts ---------------------------------------------------------
+       The tinted variants use raw palette steps that do NOT flip with
+       the mode — in dark mode the light `*-50` fills glare against the
+       dark surface, so each variant carries a deep-end dark recipe
+       (950 fill / 900 border / 300 text). `.alert-secondary` /
+       `.alert-dark` build on semantic tokens and adapt on their own. */
     .alert           { @apply relative mb-3 rounded-md border px-4 py-3; }
     .alert-sm        { @apply px-3 py-2 text-sm; }
-    .alert-primary   { @apply border-primary-200 bg-primary-50 text-primary-700; }
+    .alert-primary   { @apply border-primary-200 bg-primary-50 text-primary-700 dark:border-primary-900 dark:bg-primary-950 dark:text-primary-300; }
     .alert-secondary { @apply border-border bg-bg-muted text-fg; }
-    .alert-success   { @apply border-success-200 bg-success-50 text-success-700; }
-    .alert-warning   { @apply border-warning-200 bg-warning-50 text-warning-700; }
+    .alert-success   { @apply border-success-200 bg-success-50 text-success-700 dark:border-success-900 dark:bg-success-950 dark:text-success-300; }
+    /* Orange scale (not the amber `warning` tokens) — amber's dark end
+       reads brown; orange keeps the warm tone in both modes. */
+    .alert-warning   { @apply border-orange-200 bg-orange-50 text-orange-700; }
     .alert-danger    { @apply border-error-200   bg-error-50   text-error-700; }
     .alert-info      { @apply border-info-200    bg-info-50    text-info-700; }
     .alert-dark      { @apply border-border bg-bg-elevated text-fg; }
+
+    /* Warning / danger / info dark recipes use the hand-tuned surface
+       tokens (see the `.dark` token block above) — the palette deep
+       ends the other variants use read brown/black/near-navy. */
+    .dark .alert-warning {
+        background-color: var(--dnpm-warning-surface);
+        border-color: var(--dnpm-warning-surface-border);
+        color: var(--dnpm-warning-surface-fg);
+    }
+    .dark .alert-danger {
+        background-color: var(--dnpm-danger-surface);
+        border-color: var(--dnpm-danger-surface-border);
+        color: var(--dnpm-danger-surface-fg);
+    }
+    .dark .alert-info {
+        background-color: var(--dnpm-info-surface);
+        border-color: var(--dnpm-info-surface-border);
+        color: var(--dnpm-info-surface-fg);
+    }
 
     /* Badges --------------------------------------------------------- */
     .badge {
