@@ -259,7 +259,6 @@ export default defineComponent({
                                         cellClass: 'text-center',
                                     }
                                 ]"
-                                bordered
                             >
                                 <template #cell-key="{ row }: { row: any }">
                                     <DKVTableEntryKey :entity="(row as any)" />

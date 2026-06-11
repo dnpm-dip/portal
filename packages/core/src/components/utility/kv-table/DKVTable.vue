@@ -220,7 +220,6 @@ export default defineComponent({
     <VCTable
         :data="items"
         :columns="fields"
-        bordered
     >
         <template #cell-key="{ row }: { row: any }">
             <DKVTableEntry

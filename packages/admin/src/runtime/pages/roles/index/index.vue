@@ -98,7 +98,6 @@ export default defineNuxtComponent({
                 :data="props.data"
                 :columns="columns"
                 :busy="props.busy"
-                bordered
             >
                 <template #cell-name="{ row }: { row: any }">
                     <template v-if="row.display_name">

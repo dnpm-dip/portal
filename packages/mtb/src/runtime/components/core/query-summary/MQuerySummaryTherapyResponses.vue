@@ -257,7 +257,6 @@ export default defineComponent({
             :busy="busy"
             :sort="sortBy"
             multi-sort
-            bordered
             @update:sort="onSortUpdate"
         >
             <template #cell-tumorEntity="{ row }: { row: any }">
