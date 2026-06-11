@@ -89,6 +89,11 @@ export default defineNuxtComponent({
                 urlSuffix: '/diagnostics',
             },
             {
+                name: 'Gen Alterationen',
+                icon: 'fas fa-dna',
+                urlSuffix: '/gene-alterations',
+            },
+            {
                 name: 'Medikation',
                 icon: 'fas fa-pills',
                 urlSuffix: '/medication',
@@ -97,11 +102,6 @@ export default defineNuxtComponent({
                 name: 'Therapie Responses',
                 icon: 'fas fa-comment-medical',
                 urlSuffix: '/therapy-responses',
-            },
-            {
-                name: 'Gen Alterationen',
-                icon: 'fas fa-dna',
-                urlSuffix: '/gene-alterations',
             },
             {
                 name: 'Überlebensbericht',

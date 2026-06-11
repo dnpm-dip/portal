@@ -106,10 +106,11 @@ export default defineComponent({
 
                 <div class="d-flex flex-column gap-2">
                     <div class="entity-card text-center mb-3">
-                        <h6>Tumor-Entitäten (ICD-10-GM)</h6>
+                        <h6>Verteilung nach ICD-10 GM (N = {{ data.overallDistributions.tumorEntities.total }})</h6>
                         <DQuerySummaryNested
                             ref="tumorEntitiesVNode"
                             :label="'Kategorie'"
+                            :placeholder="'Kategorie auswählen'"
                             :data="data.overallDistributions.tumorEntities.elements"
                             :total="data.overallDistributions.tumorEntities.total"
                             :key-verbose="true"
@@ -119,6 +120,8 @@ export default defineComponent({
                                     :coding-verbose-label="true"
                                     :data="items"
                                     :clickable="true"
+                                    :x-axis-label="'Anzahl [n]'"
+                                    :y-axis-label="'Tumorentität [ICD-10 GM] (Anteil [%])'"
                                     :columns="(level: number) => level === 0 && !id ? [
                                         {key: 'key', label: 'Tumorentität [ICD-10 GM]'},
                                         {key: 'value', label: 'Anzahl [n]'},
@@ -135,9 +138,10 @@ export default defineComponent({
                     </div>
 
                     <div class="entity-card text-center mb-3">
-                        <h6>Tumor-Morphologie (ICD-O-3-M)</h6>
+                        <h6>Verteilung nach ICD-O-3-M (N = {{ data.overallDistributions.tumorMorphologies.total }})</h6>
                         <DQuerySummaryNested
                             :label="'Kategorie'"
+                            :placeholder="'Kategorie auswählen'"
                             :data="data.overallDistributions.tumorMorphologies.elements"
                             :total="data.overallDistributions.tumorMorphologies.total"
                             :key-verbose="true"
@@ -146,12 +150,14 @@ export default defineComponent({
                                 <DKVChartTableSwitch
                                     :coding-verbose-label="true"
                                     :data="items"
+                                    :x-axis-label="'Anzahl [n]'"
+                                    :y-axis-label="'Tumormorphologie [ICD-O-3-M] (Anteil [%])'"
                                     :columns="(level: number) => level === 0 && !id ? [
-                                        {key: 'key', label: 'Tumor-Morphologie (ICD-O-3-M)'},
+                                        {key: 'key', label: 'Tumormorphologie [ICD-O-3-M]'},
                                         {key: 'value', label: 'Anzahl [n]'},
                                         {key: 'percent', label: 'Anteil [%]'},
                                     ] : [
-                                        {key: 'key', label: 'Tumor-Morphologie (ICD-O-3-M)'},
+                                        {key: 'key', label: 'Tumormorphologie [ICD-O-3-M]'},
                                         {key: 'value', label: 'Anzahl [n]'},
                                         {key: 'percent', label: 'Anteil [%]'},
                                     ]"
@@ -168,7 +174,7 @@ export default defineComponent({
             <h5>Gesamtverteilung</h5>
             <div class="d-flex flex-column gap-2">
                 <div class="entity-card text-center mb-3">
-                    <h6>Tumor-Entitäten (ICD-10-GM)</h6>
+                    <h6>Verteilung nach ICD-10 GM</h6>
                     <BPlaceholder
                         v-for="i in 5"
                         :key="i"
@@ -178,7 +184,7 @@ export default defineComponent({
                     />
                 </div>
                 <div class="entity-card text-center mb-3">
-                    <h6>Tumor-Morphologie (ICD-O-3-M)</h6>
+                    <h6>Verteilung nach ICD-O-3-M</h6>
                     <BPlaceholder
                         v-for="i in 5"
                         :key="i"

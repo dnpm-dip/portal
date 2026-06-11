@@ -66,6 +66,7 @@ export default defineComponent({
                 label: 'Gen',
                 thClass: 'text-left',
                 tdClass: 'text-left',
+                sortable: true,
             },
             {
                 key: 'alteration',

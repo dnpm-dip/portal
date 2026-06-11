@@ -1,8 +1,9 @@
 <script lang="ts">
 import type {
-    ChartData, 
+    ChartData,
     ChartOptions,
 } from 'chart.js';
+import { merge } from 'smob';
 import type { Component, PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 import type { Coding, KeyValueRecord, MinMaxRange } from '../../../domains';
@@ -15,7 +16,7 @@ import {
 import { DChart } from '../chart';
 import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
 
-type Key = MinMaxRange | Coding | string[] | string;
+type Key = MinMaxRange | Coding | Coding[] | string[] | string;
 
 const component = defineComponent({
     components: { DChart },
@@ -30,6 +31,14 @@ const component = defineComponent({
         },
         options: { type: Object as PropType<ChartOptions> },
         codingVerboseLabel: { type: Boolean },
+        xAxisLabel: {
+            type: String,
+            default: undefined,
+        },
+        yAxisLabel: {
+            type: String,
+            default: undefined,
+        },
         limit: {
             type: Number,
             default: 25,
@@ -81,11 +90,29 @@ const component = defineComponent({
             }),
         }));
 
+        const chartOptions = computed<ChartOptions | undefined>(() => {
+            const scales: Record<string, unknown> = {};
+            if (props.xAxisLabel) {
+                scales.x = { title: { display: true, text: props.xAxisLabel } };
+            }
+            if (props.yAxisLabel) {
+                scales.y = { title: { display: true, text: props.yAxisLabel } };
+            }
+
+            const hasScales = Object.keys(scales).length > 0;
+            if (!props.options && !hasScales) {
+                return undefined;
+            }
+
+            return merge({}, props.options || {}, hasScales ? { scales } : {});
+        });
+
         return {
             itemsMissing,
             itemsDisplayed,
             itemsTotal,
             data,
+            chartOptions,
         };
     },
 });
@@ -105,7 +132,7 @@ export default component as Component;
             <DChart
                 :type="type"
                 :data="data"
-                :options="options"
+                :options="chartOptions"
             />
         </div>
     </div>

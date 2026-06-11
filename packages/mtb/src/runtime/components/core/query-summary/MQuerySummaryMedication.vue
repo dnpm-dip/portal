@@ -9,18 +9,24 @@
 import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
     type Coding,
+    type ConceptCountValue,
+    DKVChart,
     DKVChartTableSwitch,
-    DKVTableEntryKey,
     DQuerySummaryGrouped,
     DQuerySummaryNested,
+    type KeyValueRecord,
     QueryEventBusEventName,
     injectQueryEventBus,
     toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { BPlaceholder, BTable } from 'bootstrap-vue-next';
-import type { Component } from 'vue';
-import { defineComponent, onUnmounted, ref } from 'vue';
+import { BPlaceholder } from 'bootstrap-vue-next';
+import {
+    computed,
+    defineComponent,
+    onUnmounted,
+    ref,
+} from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QueryGeneAlteration, QuerySummaryMedication } from '../../../domains';
@@ -29,11 +35,10 @@ import { queryGeneAlterationToString } from '../../../domains';
 export default defineComponent({
     components: {
         BPlaceholder,
-        DKVTableEntryKey,
+        DKVChart,
         DKVChartTableSwitch,
         DQuerySummaryNested,
         DQuerySummaryGrouped,
-        BTable: BTable as unknown as Component,
     },
     props: {
         queryId: {
@@ -131,6 +136,42 @@ export default defineComponent({
             }
         };
 
+        const meanDurationTree = computed(() => {
+            if (!data.value) {
+                return [];
+            }
+
+            // The API provides no class-level duration; classes are only a grouping
+            // for the per-drug durations. The numeric value here is a placeholder so
+            // DKVTable can resolve the class label, and is never displayed (hidden at
+            // class level in the table, flattened past in the chart).
+            return data.value.therapies.meanDurations.map((group) => ({
+                key: group.key,
+                value: 0,
+                children: group.value,
+            }));
+        });
+
+        const flattenMeanDurations = (
+            items: KeyValueRecord<Coding | Coding[], number | ConceptCountValue>[],
+        ) : KeyValueRecord<Coding | Coding[], number | ConceptCountValue>[] => items.flatMap(
+            (item) => (item.children && item.children.length > 0 ?
+                item.children :
+                [item]),
+        );
+
+        const variantLabelFn = (item: { key: unknown }) => {
+            if (typeof item.key === 'string') {
+                return item.key;
+            }
+
+            if (item.key && typeof item.key === 'object') {
+                return queryGeneAlterationToString(item.key as QueryGeneAlteration);
+            }
+
+            return '???';
+        };
+
         return {
             busy,
             data,
@@ -138,13 +179,14 @@ export default defineComponent({
 
             recommendedVNode,
             recommendedByVariantVNode,
-            variantLabelFn: (item: { key: unknown }) => (typeof item.key === 'string' ?
-                item.key :
-                queryGeneAlterationToString(item.key as QueryGeneAlteration)),
+            variantLabelFn,
             handleRecommendationClick,
 
             usedVNode,
             handleUsedClick,
+
+            meanDurationTree,
+            flattenMeanDurations,
         };
     },
 });
@@ -157,32 +199,46 @@ export default defineComponent({
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Empfehlungen nach stützender molekularer Alteration</h6>
 
-                    <DQuerySummaryGrouped
-                        ref="recommendedByVariantVNode"
-                        :select-first="true"
-                        :items="data.recommendations.distributionBySupportingVariant"
-                        :label="'Variante'"
-                        :label-fn="variantLabelFn"
-                    >
-                        <template #default="{ item }">
-                            <DKVChartTableSwitch
-                                :type="'bar'"
-                                :data="item.value.elements"
-                                :clickable="true"
-                                :key-label="'Wirkstoff'"
-                                :value-label="'Anzahl [n]'"
-                                :percent-label="'Anteil [%]'"
-                                @clicked="(keys: Coding[]) => handleRecommendationClick(keys, 'recommendedByVariant')"
-                            />
-                        </template>
-                    </DQuerySummaryGrouped>
+                    <template v-if="data.recommendations.distributionBySupportingVariant.length > 0">
+                        <DQuerySummaryGrouped
+                            ref="recommendedByVariantVNode"
+                            :select-first="true"
+                            :items="data.recommendations.distributionBySupportingVariant"
+                            :label="'Variante'"
+                            :placeholder="'Variante auswählen'"
+                            :label-fn="variantLabelFn"
+                        >
+                            <template #default="{ item }">
+                                <p class="text-start mb-2">
+                                    Gesamtzahl Empfehlungen nach ausgewählter stützender molekularer Alteration: N = {{ item.value.total }}
+                                </p>
+                                <DKVChartTableSwitch
+                                    :type="'bar'"
+                                    :data="item.value.elements"
+                                    :clickable="true"
+                                    :key-label="'Wirkstoff'"
+                                    :value-label="'Anzahl Empfehlungen [n]'"
+                                    :percent-label="'Anteil Empfehlungen (basierend auf Variante) [%]'"
+                                    :x-axis-label="'Anzahl Empfehlungen [n]'"
+                                    :y-axis-label="'Wirkstoff'"
+                                    @clicked="(keys: Coding[]) => handleRecommendationClick(keys, 'recommendedByVariant')"
+                                />
+                            </template>
+                        </DQuerySummaryGrouped>
+                    </template>
+                    <template v-else>
+                        <div class="alert alert-sm alert-info mb-0">
+                            Es sind keine stützenden molekularen Alterationen hinterlegt.
+                        </div>
+                    </template>
                 </div>
                 <div class="entity-card text-center mb-3 w-100">
-                    <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse ({{ data.recommendations.overallDistribution.total }})</h6>
+                    <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse (N = {{ data.recommendations.overallDistribution.total }})</h6>
 
                     <DQuerySummaryNested
                         ref="recommendedVNode"
                         :label="'Kategorie'"
+                        :placeholder="'Kategorie auswählen'"
                         :total="data.recommendations.overallDistribution.total"
                         :data="(data.recommendations.overallDistribution.elements as any)"
                     >
@@ -190,14 +246,16 @@ export default defineComponent({
                             <DKVChartTableSwitch
                                 :data="items"
                                 :clickable="true"
+                                :x-axis-label="'Anzahl Empfehlungen [n]'"
+                                :y-axis-label="'Wirkstoffklasse bzw. Wirkstoff'"
                                 :columns="(level: number) => level === 0 && !id ? [
                                     {key: 'key', label: 'Wirkstoffklasse'},
-                                    {key: 'value', label: 'Anzahl [n]'},
-                                    {key: 'percent', label: 'Anteil [%]'},
+                                    {key: 'value', label: 'Anzahl Empfehlungen [n]'},
+                                    {key: 'percent', label: 'Anteil Empfehlungen [%]'},
                                 ] : [
                                     {key: 'key', label: 'Wirkstoff'},
-                                    {key: 'value', label: 'Anzahl [n]'},
-                                    {key: 'percent', label: 'Anteil [%]'},
+                                    {key: 'value', label: 'Anzahl Empfehlungen [n]'},
+                                    {key: 'percent', label: 'Anteil bzgl. Wirkstoffklasse [%]'},
                                 ]"
                                 @clicked="(keys: Coding[]) => handleRecommendationClick(keys, 'recommended')"
                             />
@@ -211,11 +269,12 @@ export default defineComponent({
             <h5>Umgesetzte Therapien</h5>
             <div class="d-flex flex-column gap-2">
                 <div class="entity-card text-center mb-3 w-100">
-                    <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse ({{ data.therapies.overallDistribution.total }})</h6>
+                    <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse (N = {{ data.therapies.overallDistribution.total }})</h6>
 
                     <DQuerySummaryNested
                         ref="usedVNode"
                         :label="'Kategorie'"
+                        :placeholder="'Kategorie auswählen'"
                         :data="(data.therapies.overallDistribution.elements as any)"
                         :total="data.therapies.overallDistribution.total"
                     >
@@ -223,14 +282,16 @@ export default defineComponent({
                             <DKVChartTableSwitch
                                 :data="items"
                                 :clickable="true"
+                                :x-axis-label="'Anzahl umgesetzter Therapien [n]'"
+                                :y-axis-label="'Wirkstoffklasse bzw. Wirkstoff'"
                                 :columns="(level: number) => level === 0 && !id ? [
                                     {key: 'key', label: 'Wirkstoffklasse'},
-                                    {key: 'value', label: 'Anzahl [n]'},
-                                    {key: 'percent', label: 'Anteil [%]'},
+                                    {key: 'value', label: 'Anzahl umgesetzter Therapien [n]'},
+                                    {key: 'percent', label: 'Anteil umgesetzter Therapien [%]'},
                                 ] : [
                                     {key: 'key', label: 'Wirkstoff'},
-                                    {key: 'value', label: 'Anzahl [n]'},
-                                    {key: 'percent', label: 'Anteil [%]'},
+                                    {key: 'value', label: 'Anzahl umgesetzter Therapien [n]'},
+                                    {key: 'percent', label: 'Anteil bzgl. Wirkstoffklasse [%]'},
                                 ]"
                                 @clicked="handleUsedClick"
                             />
@@ -241,47 +302,37 @@ export default defineComponent({
             <div class="d-flex flex-column gap-2">
                 <div class="entity-card text-center mb-3 w-100">
                     <h6>Mittlere Therapiedauer</h6>
-                    <DQuerySummaryGrouped
-                        :select-first="true"
-                        :items="data.therapies.meanDurations"
-                        :label="'Wirkstoffklasse'"
+                    <DQuerySummaryNested
+                        :label="'Kategorie'"
+                        :placeholder="'Kategorie auswählen'"
+                        :data="(meanDurationTree as any)"
                     >
-                        <template #default="{ item }">
+                        <template #default="{ items, id }">
                             <DKVChartTableSwitch
-                                :data="(item.value as any)"
+                                :data="items"
+                                :coding-verbose-label="true"
                                 :clickable="true"
+                                :x-axis-label="'Dauer in Wochen [Ø]'"
+                                :y-axis-label="'Wirkstoffklasse bzw. Wirkstoff'"
+                                :columns="(level: number) => level === 0 && !id ? [
+                                    {key: 'key', label: 'Wirkstoffklasse'},
+                                ] : [
+                                    {key: 'key', label: 'Wirkstoff'},
+                                    {key: 'value', label: 'Dauer in Wochen [Ø]'},
+                                ]"
                                 @clicked="handleUsedClick"
                             >
-                                <template #table="tableData">
-                                    <BTable
-                                        :items="tableData.data"
-                                        :fields="[
-                                            {
-                                                key: 'key',
-                                                label: 'Element',
-                                                thClass: 'text-left',
-                                                tdClass: 'text-left',
-                                            },
-                                            {
-                                                key: 'value',
-                                                label: 'Dauer in Wochen',
-                                                thClass: 'text-center',
-                                                tdClass: 'text-center',
-                                            }
-                                        ]"
-                                        outlined
-                                    >
-                                        <template #cell(key)="cell">
-                                            <DKVTableEntryKey :entity="(cell.item as any)" />
-                                        </template>
-                                        <template #cell(value)="cell">
-                                            {{ Number((cell.item as { value: number }).value).toFixed(2) }}
-                                        </template>
-                                    </BTable>
+                                <template #chart>
+                                    <DKVChart
+                                        :items="flattenMeanDurations(items)"
+                                        :coding-verbose-label="true"
+                                        :x-axis-label="'Dauer in Wochen [Ø]'"
+                                        :y-axis-label="'Wirkstoff'"
+                                    />
                                 </template>
                             </DKVChartTableSwitch>
                         </template>
-                    </DQuerySummaryGrouped>
+                    </DQuerySummaryNested>
                 </div>
             </div>
         </div>
