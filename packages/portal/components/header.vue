@@ -6,9 +6,10 @@ import { injectStore } from '@authup/client-web-kit';
 import { useColorMode } from '#imports';
 import { defineNuxtComponent } from '#app';
 import { LayoutTopNavigationRegistryId, injectNavigation } from '../core';
+import LogoSvg from './svg/LogoSvg.vue';
 
 export default defineNuxtComponent({
-    components: { VCNavItems },
+    components: { LogoSvg, VCNavItems },
     setup() {
         const store = injectStore();
         const { loggedIn, user } = storeToRefs(store);
@@ -61,7 +62,8 @@ export default defineNuxtComponent({
                     </button>
                 </div>
                 <div class="logo">
-                    DIP
+                    <LogoSvg :height="30" />
+                    <span>DIP</span>
                 </div>
             </div>
 
