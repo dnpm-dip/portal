@@ -6,7 +6,7 @@
     "description": "Molecular Tumor Board (MTB) module for the DNPM:DIP Portal.",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/KohlbacherLab/dnpm-dip.git",
+        "url": "git+https://github.com/dnpm-dip/portal.git",
         "directory": "packages/mtb"
     },
     "license": "MIT",

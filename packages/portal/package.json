@@ -6,7 +6,7 @@
     "description": "Portal of DNPM DIP.",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/KohlbacherLab/dnpm-dip.git",
+        "url": "git+https://github.com/dnpm-dip/portal.git",
         "directory": "packages/portal"
     },
     "scripts": {
