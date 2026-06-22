@@ -32,7 +32,7 @@
         "@authup/client-web-kit": "^1.0.0-beta.39",
         "@dnpm-dip/core": "^1.35.0",
         "@dnpm-dip/kit": "^1.28.1",
-        "@nuxt/kit": "^4.4.5"
+        "@nuxt/kit": "^4.4.8"
     },
     "devDependencies": {
         "@ilingo/vuelidate": "^6.0.0",
@@ -43,10 +43,10 @@
         "@vuecs/timeago": "^1.1.2",
         "@vuelidate/core": "^2.0.3",
         "@vuelidate/validators": "^2.0.4",
-        "bootstrap-vue-next": "^0.45.3",
+        "bootstrap-vue-next": "^0.45.6",
         "chart.js": "^4.5.0",
-        "nuxt": "^4.4.5",
-        "vue": "^3.5.34",
+        "nuxt": "^4.4.8",
+        "vue": "^3.5.38",
         "vue-chartjs": "^5.3.3"
     }
 }
