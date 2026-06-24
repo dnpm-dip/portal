@@ -183,7 +183,7 @@ export default defineComponent({
                     :group-class="'form-switch'"
                     :label="true"
                     :label-content="'In Kombination?'"
-                    @change="handleChanged"
+                    @update:model-value="handleChanged"
                 />
             </div>
             <VCFormCheckboxGroup

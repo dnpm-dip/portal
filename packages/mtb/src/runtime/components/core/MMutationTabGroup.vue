@@ -53,12 +53,6 @@ export default defineComponent({
         });
 
         const mutationType = ref<null | `${QueryMutationType}`>(null);
-        const mutationTypeModel = computed({
-            get: () => mutationType.value ?? undefined,
-            set: (value: `${QueryMutationType}` | undefined) => {
-                mutationType.value = value ?? null;
-            },
-        });
         const mutationData = ref<null | QueryGeneAlterationVariantCriteria>(null);
 
         const mutationOptions : FormOption[] = [
@@ -101,14 +95,15 @@ export default defineComponent({
             }
         };
 
-        const changeMutationTypeByEvent = (event: Event) => {
-            if (!event.target) {
-                return;
-            }
-
-            const { value } = (event.target as unknown as { value: string });
-            changeMutationType(value ? value as 'SNV' | 'CNV' | 'Fusion' : null);
-        };
+        // The reworked VCFormSelect emits update:modelValue only (no
+        // change event with a native target), so the type switch is
+        // driven through the model setter.
+        const mutationTypeModel = computed({
+            get: () => mutationType.value ?? undefined,
+            set: (value: `${QueryMutationType}` | undefined) => {
+                changeMutationType(value ?? null);
+            },
+        });
 
         const isEditing = computed(() => props.entity.data !== null);
         const init = () => {
@@ -203,7 +198,6 @@ export default defineComponent({
         return {
             form,
 
-            changeMutationTypeByEvent,
             comp,
 
             mutationType,
@@ -263,7 +257,6 @@ export default defineComponent({
                 <VCFormSelect
                     v-model="mutationTypeModel"
                     :options="mutationOptions"
-                    @change="changeMutationTypeByEvent"
                 />
             </template>
         </VCFormGroup>

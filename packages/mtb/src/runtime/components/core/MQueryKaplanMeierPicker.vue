@@ -94,12 +94,14 @@ export default defineComponent({
                     Type
                 </template>
                 <template #default>
+                    <!-- update:model-value instead of change: the reworked
+                         VCFormSelect no longer emits a (native) change event -->
                     <VCFormSelect
                         v-model="type"
                         :disabled="busy"
                         :options="typeOptions"
                         placeholder="..."
-                        @change="handleTypeChanged"
+                        @update:model-value="handleTypeChanged"
                     />
                 </template>
             </VCFormGroup>
@@ -115,7 +117,7 @@ export default defineComponent({
                         :disabled="busy || !type"
                         :options="groupingOptions"
                         placeholder="..."
-                        @change="handleGroupingChanged"
+                        @update:model-value="handleGroupingChanged"
                     />
                 </template>
             </VCFormGroup>
