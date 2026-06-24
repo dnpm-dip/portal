@@ -29,13 +29,13 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/KohlbacherLab/dnpm-dip.git",
+        "url": "git+https://github.com/dnpm-dip/portal.git",
         "directory": "packages/kit"
     },
     "bugs": {
-        "url": "https://github.com/KohlbacherLab/dnpm-dip/issues"
+        "url": "https://github.com/dnpm-dip/portal/issues"
     },
-    "homepage": "https://github.com/KohlbacherLab/dnpm-dip#readme",
+    "homepage": "https://github.com/dnpm-dip/portal#readme",
     "publishConfig": {
         "access": "public"
     },

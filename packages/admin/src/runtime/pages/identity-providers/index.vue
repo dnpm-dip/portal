@@ -10,16 +10,16 @@
 import type { IdentityProvider } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import {
-    DNav, 
     PageMetaKey, 
     PageNavigationTopID, 
     useToast,
 } from '@dnpm-dip/core';
+import { VCNavItems } from '@vuecs/navigation';
 import { definePageMeta } from '#imports';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
-    components: { DNav },
+    components: { VCNavItems },
     setup() {
         definePageMeta({
             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
@@ -36,13 +36,13 @@ export default defineNuxtComponent({
         const items = [
             {
                 name: 'Übersicht',
-                urlSuffix: '',
-                icon: 'fa fa-bars',
+                url: '/admin/identity-providers',
+                icon: 'fa6-solid:bars',
             },
             {
                 name: 'Hinzufügen',
-                urlSuffix: 'add',
-                icon: 'fa fa-plus',
+                url: '/admin/identity-providers/add',
+                icon: 'fa6-solid:plus',
             },
         ];
 
@@ -69,15 +69,18 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h1 class="title no-border mb-3">
-            <i class="fa-solid fa-atom me-1" /> Identitätsanbieter
+            <VCIcon
+                name="fa6-solid:atom"
+                class="me-1"
+            /> Identitätsanbieter
             <span class="sub-title ms-1">Verwaltung</span>
         </h1>
         <div class="content-wrapper">
-            <div class="content-sidebar flex-column">
-                <DNav
-                    :items="items"
-                    path="/admin/identity-providers"
-                    direction="vertical"
+            <div class="content-sidebar flex-col">
+                <VCNavItems
+                    :data="items"
+                    variant="pills"
+                    orientation="vertical"
                 />
             </div>
             <div class="content-main">

@@ -13,7 +13,7 @@ import {
     DValueSet, 
     type ValueSetCoding,
 } from '@dnpm-dip/core';
-import { type FormSelectOption, VCFormSelectSearch } from '@vuecs/form-controls';
+import { type FormOption, VCFormCheckboxGroup, VCFormSelectSearch } from '@vuecs/forms';
 import {
     type PropType,
     computed,
@@ -24,9 +24,10 @@ import {
 
 export default defineComponent({
     components: {
-        DValueSet, 
-        DTags, 
-        DCollectionTransform, 
+        DValueSet,
+        DTags,
+        DCollectionTransform,
+        VCFormCheckboxGroup,
         VCFormSelectSearch,
     },
     props: {
@@ -45,16 +46,25 @@ export default defineComponent({
     },
     emits: ['updated'],
     setup(props, { emit }) {
-        const transformCodings = (coding: ValueSetCoding) => ({
-            id: coding.code,
-            value: coding.display || coding.code,
-        });
+        // label lookup for ATC codes — deliberately non-reactive: it is
+        // filled during option transform (render path) and read only when
+        // the selection changes afterwards.
+        const drugLabels = new Map<string, string>();
+
+        const transformCodings = (coding: ValueSetCoding) => {
+            drugLabels.set(`${coding.code}`, coding.display || `${coding.code}`);
+
+            return {
+                value: coding.code,
+                label: coding.display || coding.code,
+            };
+        };
 
         const form = reactive<{
             combination: boolean,
             usage: string[],
-            atcDrugs: FormSelectOption[],
-            customDrugs: FormSelectOption[],
+            atcDrugs: string[],
+            customDrugs: FormOption[],
             customDrug: '',
         }>({
             combination: props.combination,
@@ -70,14 +80,12 @@ export default defineComponent({
                     drug.system &&
                     drug.system.includes('atc')
                 ) {
-                    form.atcDrugs.push({
-                        id: drug.code,
-                        value: drug.display || drug.code,
-                    });
+                    drugLabels.set(`${drug.code}`, drug.display || `${drug.code}`);
+                    form.atcDrugs.push(`${drug.code}`);
                 } else {
                     form.customDrugs.push({
-                        id: drug.code,
-                        value: drug.display || drug.code,
+                        value: drug.code,
+                        label: drug.display || drug.code,
                     });
                 }
             }
@@ -86,9 +94,9 @@ export default defineComponent({
         init();
 
         const allDrugs = computed(() => [
-            ...form.atcDrugs,
-            ...form.customDrugs,
-        ].map((item) => ({ id: item.id, value: String(item.value) })));
+            ...form.atcDrugs.map((code) => ({ id: code, value: drugLabels.get(code) || code })),
+            ...form.customDrugs.map((item) => ({ id: String(item.value), value: String(item.label) })),
+        ]);
 
         const currentTab = ref('atc');
         const tabs = ref([
@@ -104,12 +112,12 @@ export default defineComponent({
             const drugs: Coding[] = [];
             for (const drug of form.atcDrugs) {
                 drugs.push({
-                    code: `${drug.id}`,
+                    code: drug,
                     system: 'atc',
                 });
             }
             for (const drug of form.customDrugs) {
-                drugs.push({ code: `${drug.id}` });
+                drugs.push({ code: `${drug.value}` });
             }
 
             emit('updated', {
@@ -125,8 +133,8 @@ export default defineComponent({
             }
 
             form.customDrugs.push({
-                id: form.customDrug,
                 value: form.customDrug,
+                label: form.customDrug,
             });
 
             form.customDrug = '';
@@ -135,14 +143,14 @@ export default defineComponent({
         };
 
         const dropCustom = ({ id, value }: { id: string, value: string }) => {
-            let index = form.atcDrugs.findIndex((el) => el.id === id && el.value === value);
+            let index = form.atcDrugs.findIndex((el) => el === id);
             if (index !== -1) {
                 form.atcDrugs.splice(index, 1);
                 handleChanged();
                 return;
             }
 
-            index = form.customDrugs.findIndex((el) => el.id === id && el.value === value);
+            index = form.customDrugs.findIndex((el) => el.value === id && el.label === value);
             if (index !== -1) {
                 form.customDrugs.splice(index, 1);
                 handleChanged();
@@ -168,44 +176,43 @@ export default defineComponent({
 </script>
 <template>
     <div class="mb-3">
-        <div class="d-flex flex-row">
+        <div class="flex flex-row">
             <div>
-                <VCFormInputCheckbox
+                <VCFormCheckbox
                     v-model="form.combination"
                     :group-class="'form-switch'"
                     :label="true"
                     :label-content="'In Kombination?'"
-                    @change="handleChanged"
+                    @update:model-value="handleChanged"
                 />
             </div>
-            <div class="ms-3">
-                <VCFormInputCheckbox
-                    v-model="form.usage"
-                    :group-class="'form-switch'"
-                    :value="'recommended'"
-                    :label="true"
-                    :group="true"
-                    @change="handleChanged"
-                >
-                    <template #label="{id}">
-                        <label :for="id">Empfohlen?</label>
-                    </template>
-                </VCFormInputCheckbox>
-            </div>
-            <div class="ms-3">
-                <VCFormInputCheckbox
-                    v-model="form.usage"
-                    :group-class="'form-switch'"
-                    :value="'used'"
-                    :label="true"
-                    :group="true"
-                    @change="handleChanged"
-                >
-                    <template #label="{id}">
-                        <label :for="id">Verabreicht?</label>
-                    </template>
-                </VCFormInputCheckbox>
-            </div>
+            <VCFormCheckboxGroup
+                v-model="form.usage"
+                @update:model-value="handleChanged"
+            >
+                <div class="ms-3">
+                    <VCFormCheckbox
+                        :group-class="'form-switch'"
+                        :value="'recommended'"
+                        :label="true"
+                    >
+                        <template #label="{id}">
+                            <label :for="id">Empfohlen?</label>
+                        </template>
+                    </VCFormCheckbox>
+                </div>
+                <div class="ms-3">
+                    <VCFormCheckbox
+                        :group-class="'form-switch'"
+                        :value="'used'"
+                        :label="true"
+                    >
+                        <template #label="{id}">
+                            <label :for="id">Verabreicht?</label>
+                        </template>
+                    </VCFormCheckbox>
+                </div>
+            </VCFormCheckboxGroup>
         </div>
 
         <ul class="nav nav-pills mt-1 mb-1">
@@ -246,11 +253,14 @@ export default defineComponent({
                                 <template #default="options">
                                     <VCFormSelectSearch
                                         v-model="form.atcDrugs"
-                                        :multiple="true"
                                         :options="options"
+                                        :close-on-select="true"
                                         placeholder="ATC"
                                         @change="handleChanged"
                                     >
+                                        <!-- suppress the built-in chips: the merged
+                                             DTags below renders ATC + custom drugs
+                                             with the und/oder separator -->
                                         <template #selected>
                                             <span />
                                         </template>
@@ -292,10 +302,8 @@ export default defineComponent({
             </button>
         </div>
         <DTags
-            class="mt-2"
             :emit-only="true"
             :items="allDrugs"
-            tag-variant="light"
             @deleted="dropCustom"
         >
             <template #between>

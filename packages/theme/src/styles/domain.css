@@ -1,0 +1,156 @@
+a {
+    transition: color .1s ease-in-out, background-color .1s ease-in-out, border-color .1s ease-in-out;
+    text-decoration: none;
+}
+
+a:hover,
+a:active,
+a:focus {
+    color: var(--vc-color-fg-muted);
+}
+
+/*
+Section labels — small-caps muted headings that introduce content
+sections (saved-query strips, criteria panels, chart boxes). Pair with
+an inline <VCIcon> as the first child. Inline-level, so a parent
+`.text-center` still centers it.
+*/
+.section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    /* pin the body stack: h5/h6 hosts otherwise bring the heading font
+       and render differently from span hosts */
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--vc-color-fg-muted);
+}
+
+/*
+Nav pills — content-area tab strips (horizontal, or vertical via
+`.flex-column`) rendered as a JOINED SEGMENTED CONTROL: each segment
+carries a 1px border, neighbours are pulled onto each other so the two
+borders collapse into one shared seam, and the active segment fills
+with the brand primary, raised so its accent border isn't clipped by
+the overlapping seams.
+*/
+.nav-pills .nav-link {
+    color: var(--vc-color-fg-muted);
+    background-color: var(--vc-color-bg-muted);
+    border: 1px solid var(--vc-color-border);
+}
+
+.nav-pills .nav-link:hover {
+    color: var(--vc-color-fg);
+}
+
+/* Pull each segment onto its neighbour so the two 1px borders collapse
+   into one shared seam. */
+.nav-pills .nav-item:not(:first-child) {
+    margin-left: -1px;
+}
+
+.nav-pills .nav-item .nav-link {
+    border-radius: 0;
+}
+
+.nav-pills .nav-item:first-child:not(:last-child) .nav-link {
+    border-radius: 0.375rem 0 0 0.375rem !important;
+}
+
+.nav-pills .nav-item:last-child:not(:first-child) .nav-link {
+    border-radius: 0 0.375rem 0.375rem 0 !important;
+}
+
+.nav-pills .nav-item:first-child:last-child .nav-link {
+    border-radius: 0.375rem !important;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .nav-link.router-link-exact-active,
+.nav-pills .show > .nav-link {
+    position: relative;
+    z-index: 1;
+    color: var(--vc-color-on-primary);
+    background-color: var(--vc-color-primary-600);
+    border-color: var(--vc-color-primary-600);
+}
+
+.nav-link.nav-link-dark {
+    color: #fff;
+    background-color: var(--vc-color-fg);
+    border-color: var(--vc-color-fg);
+}
+
+.nav-link.nav-link-dark.disabled,
+.nav-link.nav-link-dark:hover {
+    color: #fff;
+    background-color: var(--vc-color-bg-muted);
+    border-color: var(--vc-color-border);
+}
+
+/*
+Input group — joined input + addon (form-select-search / button).
+*/
+.input-group > .vc-form-select-search {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) input {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group > :not(:last-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) input {
+    margin-right: -1px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group .btn {
+    height: 2rem;
+    line-height: 1rem;
+}
+
+.vc-form-select-search .vc-form-select-search-content {
+    text-align: left;
+}
+
+/*
+Skeleton placeholder — animated loading bar. Templates use bare
+`class="placeholder col-N"`; the shimmer animation is provided here.
+*/
+.placeholder {
+    position: relative;
+    background-color: var(--vc-color-bg-muted);
+    border-radius: 0.25rem;
+}
+
+.placeholder::after {
+    content: "";
+    animation: p-skeleton-animation 1.2s infinite;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translateX(-100%);
+    z-index: 1;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+}
+
+@keyframes p-skeleton-animation {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}

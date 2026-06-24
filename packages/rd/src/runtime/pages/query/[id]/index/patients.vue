@@ -6,9 +6,8 @@ import {
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { BPlaceholder } from 'bootstrap-vue-next';
 import {
-    type PropType, 
+    type PropType,
     type Ref,
 } from 'vue';
 import { onUnmounted, ref } from 'vue';
@@ -19,7 +18,6 @@ import type { QuerySession } from '../../../../domains';
 
 export default defineNuxtComponent({
     components: {
-        BPlaceholder,
         QueryPatientMatchEntity,
         QueryPatientMatchList,
         VCPagination,
@@ -71,53 +69,53 @@ export default defineNuxtComponent({
 </script>
 <template>
     <div>
-        <h6>Patienten</h6>
-
         <QueryPatientMatchList
             ref="listRef"
             :query-id="entity.id"
+            :filters="queryFilters"
         >
             <template #loading>
-                <div class="list">
-                    <ul class="list-body list-unstyled">
-                        <li
-                            v-for="i in 5"
-                            :key="i"
-                            class="list-item flex-row"
-                        >
-                            <div class="entity-card w-100 mb-2">
-                                <BPlaceholder
-                                    :width="60 + i * 5 + '%'"
-                                    animation="wave"
-                                    class="mb-1"
-                                />
-                                <BPlaceholder
-                                    :width="40 + i * 8 + '%'"
-                                    animation="wave"
-                                    size="sm"
-                                />
-                            </div>
-                        </li>
-                    </ul>
+                <div class="flex flex-col gap-3">
+                    <div
+                        v-for="i in 5"
+                        :key="i"
+                        class="entity-card w-full"
+                    >
+                        <VCPlaceholder
+                            :width="60 + i * 5 + '%'"
+                            animation="wave"
+                            class="mb-1"
+                        />
+                        <VCPlaceholder
+                            :width="40 + i * 8 + '%'"
+                            animation="wave"
+                            size="sm"
+                        />
+                    </div>
                 </div>
             </template>
             <template #default="props">
+                <div class="mb-2 flex items-center">
+                    <span class="section-label">
+                        <VCIcon name="fa6-solid:user-injured" />
+                        Patienten
+                    </span>
+                    <span class="ms-auto text-sm text-fg-muted">
+                        {{ props.total }} insgesamt
+                    </span>
+                </div>
                 <template v-if="props.data.length > 0">
-                    <div class="list">
-                        <ul class="list-body list-unstyled">
-                            <template
-                                v-for="(item, index) in props.data"
-                                :key="item.id"
-                            >
-                                <li class="list-item flex-row">
-                                    <QueryPatientMatchEntity
-                                        :entity="item"
-                                        :query-id="entity.id"
-                                        :index="(props.offset ?? 0) + index"
-                                    />
-                                </li>
-                            </template>
-                        </ul>
+                    <div class="flex flex-col gap-3">
+                        <template
+                            v-for="(item, index) in props.data"
+                            :key="item.id"
+                        >
+                            <QueryPatientMatchEntity
+                                :entity="item"
+                                :query-id="entity.id"
+                                :index="(props.offset ?? 0) + index"
+                            />
+                        </template>
                     </div>
                 </template>
                 <template v-else-if="!props.busy">
@@ -126,6 +124,7 @@ export default defineNuxtComponent({
                     </div>
                 </template>
                 <VCPagination
+                    class="mt-3"
                     :busy="props.busy"
                     :total="props.total"
                     :limit="props.limit"

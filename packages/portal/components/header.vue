@@ -1,12 +1,15 @@
-<script>
+<script lang="ts">
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { VCNavItems } from '@vuecs/navigation';
 import { injectStore } from '@authup/client-web-kit';
+import { useColorMode } from '#imports';
 import { defineNuxtComponent } from '#app';
+import { LayoutTopNavigationRegistryId, injectNavigation } from '../core';
+import LogoSvg from './svg/LogoSvg.vue';
 
 export default defineNuxtComponent({
-    components: { VCNavItems },
+    components: { LogoSvg, VCNavItems },
     setup() {
         const store = injectStore();
         const { loggedIn, user } = storeToRefs(store);
@@ -17,11 +20,28 @@ export default defineNuxtComponent({
             displayNav.value = !displayNav.value;
         };
 
+        const navigation = injectNavigation();
+        const topItems = () => navigation.getTopItems();
+        const topItemsWatch = [
+            () => store.loggedIn,
+            () => store.userId,
+        ];
+
+        const { isDark } = useColorMode();
+        const toggleColorMode = () => {
+            isDark.value = !isDark.value;
+        };
+
         return {
             loggedIn,
             user,
             toggleNav,
             displayNav,
+            topItems,
+            topItemsWatch,
+            topRegistryId: LayoutTopNavigationRegistryId,
+            isDark,
+            toggleColorMode,
         };
     },
 });
@@ -42,41 +62,55 @@ export default defineNuxtComponent({
                     </button>
                 </div>
                 <div class="logo">
-                    DIP
+                    <LogoSvg :height="30" />
+                    <span>DIP</span>
                 </div>
             </div>
 
             <nav class="page-navbar navbar-expand-md">
                 <div
                     id="page-navbar"
-                    class="navbar-content navbar-collapse collapse"
+                    class="navbar-content navbar-collapse"
                     :class="{'show': displayNav}"
                 >
                     <VCNavItems
                         class="navbar-nav"
-                        :level="0"
+                        :data="topItems"
+                        :watch="topItemsWatch"
+                        registry
+                        :registry-id="topRegistryId"
                     />
 
-                    <ul
-                        v-if="loggedIn && user"
-                        class="navbar-nav vc-nav-items navbar-gadgets"
-                    >
+                    <ul class="navbar-nav vc-nav-items navbar-gadgets">
                         <li class="vc-nav-item">
-                            <a
-                                href="javascript:void(0)"
+                            <button
+                                type="button"
                                 class="vc-nav-link"
+                                :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+                                :aria-pressed="isDark ? 'true' : 'false'"
+                                @click.prevent="toggleColorMode"
                             >
-                                <span>{{ user.display_name ? user.display_name : user.name }}</span>
-                            </a>
+                                <VCIcon :name="isDark ? 'fa6-solid:sun' : 'fa6-solid:moon'" />
+                            </button>
                         </li>
-                        <li class="vc-nav-item">
-                            <NuxtLink
-                                :to="'/logout'"
-                                class="vc-nav-link"
-                            >
-                                <i class="fa fa-power-off" />
-                            </NuxtLink>
-                        </li>
+                        <template v-if="loggedIn && user">
+                            <li class="vc-nav-item">
+                                <a
+                                    href="javascript:void(0)"
+                                    class="vc-nav-link"
+                                >
+                                    <span>{{ user.display_name ? user.display_name : user.name }}</span>
+                                </a>
+                            </li>
+                            <li class="vc-nav-item">
+                                <NuxtLink
+                                    :to="'/logout'"
+                                    class="vc-nav-link"
+                                >
+                                    <VCIcon name="fa6-solid:power-off" />
+                                </NuxtLink>
+                            </li>
+                        </template>
                     </ul>
                 </div>
             </nav>

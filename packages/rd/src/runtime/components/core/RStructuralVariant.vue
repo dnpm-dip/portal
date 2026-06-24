@@ -25,7 +25,7 @@ export default defineComponent({
     <RVariant :entity="entity">
         <div
             v-if="entity.iscnDescription"
-            class="d-flex flex-grow-1 align-items-center flex-row"
+            class="flex grow items-center flex-row"
         >
             <div>
                 <strong>ISCN</strong>

@@ -5,9 +5,9 @@
 .page-navbar {
     border-radius: 0;
     margin: 0 auto;
-    padding:0;
+    padding: 0;
     border: none;
-    width:100%;
+    width: 100%;
     text-align: right;
     display: flex;
 }
@@ -16,8 +16,8 @@
 .page-navbar .navbar-content .dropdown-menu > .dropdown-item:active,
 .page-navbar .navbar-content .dropdown-menu > .dropdown-item:focus,
 .page-navbar .navbar-content .dropdown-menu > .dropdown-item.active {
-    color: #FF5B5B;
-    background: #32333B;
+    color: var(--dnpm-brand-coral);
+    background: var(--dnpm-navbar-menu-bg-hover);
     text-decoration: none;
 }
 
@@ -26,19 +26,44 @@
     display: block;
     font-size: 11px;
     font-weight: bold;
-    color: #9d9d9d;
+    color: var(--dnpm-navbar-menu-fg);
 }
 
+/*
+ * `align-items: center` centers each gadget <li> on the row's cross
+ * axis (the default `stretch` would grow each <li> to the tallest
+ * sibling while its link stays top-anchored). Box-height EQUALITY is
+ * handled on the links themselves — see the `inline-flex` note below.
+ */
 .page-navbar .navbar-content .navbar-gadgets {
     margin-left: auto;
+    align-items: center;
 }
-
 
 .page-navbar .navbar-content li:not(:last-child) .vc-nav-item {
     padding-right: 0.25rem;
 }
 
+/*
+ * `inline-flex` normalizes the gadget control types onto ONE box
+ * model. They are different element types, so without it the same
+ * padding/line-height rules yield different heights:
+ *
+ *   - <a> (user, logout) is `display: inline` — vertical padding
+ *     paints but does NOT expand the line box, so the box collapses to
+ *     bare font-metric height and the icon sits on the text baseline.
+ *   - <button> with an svg icon (color-mode toggle) is inline-block —
+ *     padding counts, and the icon's `vertical-align: -0.125em`
+ *     baseline shift extends the line box past the text strut.
+ *
+ * As a flex container, padding counts on all of them, `vertical-align`
+ * no longer applies (flex items aren't inline-level), and
+ * `align-items: center` puts every glyph on the same axis — a uniform
+ * box for anchors and buttons, icon and text alike.
+ */
 .page-navbar .navbar-content .vc-nav-link {
+    display: inline-flex;
+    align-items: center;
     padding: 0.25rem 0.5rem;
     font-weight: 500;
     letter-spacing: 1px;
@@ -57,15 +82,16 @@
 }
 
 .page-navbar .navbar-content .navbar-gadgets > li > a.vc-nav-link.user-link span {
-    padding-left:6px;
+    padding-left: 6px;
 }
 
-.page-navbar .navbar-content > .navbar-gadgets> li > a i {
-    font-size:16px;
+.page-navbar .navbar-content > .navbar-gadgets > li > a svg.iconify {
+    width: 1rem;
+    height: 1rem;
 }
 
 .page-navbar .navbar-content .dropdown-menu {
-    background-color: #40434E;
+    background-color: var(--dnpm-navbar-menu-bg);
 }
 
 @media (max-width: 768px) {
@@ -89,21 +115,9 @@
         width: 100%;
     }
 
-    .page-navbar .navbar-content .vc-nav-link {
-        padding: 1rem 0.75rem;
-    }
-
-    .page-navbar .navbar-content .navbar-gadgets {
-        flex-direction: row;
-    }
-
     .page-navbar .navbar-content .navbar-gadgets .vc-nav-link {
         text-align: center;
         align-items: center;
         justify-content: center;
-    }
-
-    .page-header {
-        flex-wrap: wrap;
     }
 }

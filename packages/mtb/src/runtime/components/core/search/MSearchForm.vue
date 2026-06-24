@@ -18,18 +18,15 @@ import {
     DFormTabGroups,
     DLoadingModal,
     DSitePicker,
-    DTags,
     DValueSet,
     LogicalOperator,
     QueryRequestMode,
-    transformCodingsToFormSelectOptions,
-    transformFormSelectOptionsToCodings,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import {
     VCFormSelectSearch,
-} from '@vuecs/form-controls';
-import type { FormSelectOption } from '@vuecs/form-controls';
+} from '@vuecs/forms';
+import type { FormOption } from '@vuecs/forms';
 import {
     type PropType,
     reactive,
@@ -55,7 +52,6 @@ export default defineComponent({
         MSearchMedicationForm,
         MMutationTabGroup,
         DFormTabGroups,
-        DTags,
         DValueSet,
         VCFormSelectSearch,
         DLoadingModal,
@@ -81,10 +77,10 @@ export default defineComponent({
 
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
         const modeSites = ref<Coding[]>([]);
-        const modeOptions : FormSelectOption[] = [
-            { id: QueryRequestMode.LOCAL, value: 'Lokal: eigener Standort' },
-            { id: QueryRequestMode.FEDERATED, value: 'Föderiert: alle Standorte' },
-            { id: QueryRequestMode.CUSTOM, value: 'Nutzer-definiert: gezielte Standort-Auswahl' },
+        const modeOptions : FormOption[] = [
+            { value: QueryRequestMode.LOCAL, label: 'Lokal: eigener Standort' },
+            { value: QueryRequestMode.FEDERATED, label: 'Föderiert: alle Standorte' },
+            { value: QueryRequestMode.CUSTOM, label: 'Nutzer-definiert: gezielte Standort-Auswahl' },
         ];
 
         const busy = ref(false);
@@ -105,14 +101,14 @@ export default defineComponent({
         const mutations = ref<FormTabInput<QueryGeneAlterationCriteria>[]>([]);
         const mutationsInCombination = ref(false);
 
-        const diagnoses = ref<FormSelectOption[]>([]);
-        const tumorMorphologies = ref<FormSelectOption[]>([]);
+        const diagnoses = ref<string[]>([]);
+        const tumorMorphologies = ref<string[]>([]);
 
         const medicationDrugs = ref<Coding[]>([]);
         const medicationUsage = ref<string[]>([]);
         const medicationInCombination = ref(false);
 
-        const responses = ref<FormSelectOption[]>([]);
+        const responses = ref<string[]>([]);
 
         const reset = async () => {
             if (busy.value) return;
@@ -137,11 +133,11 @@ export default defineComponent({
 
             if (criteria.value) {
                 if (criteria.value.tumorEntities) {
-                    diagnoses.value = transformCodingsToFormSelectOptions(criteria.value.tumorEntities);
+                    diagnoses.value = criteria.value.tumorEntities.map((item) => `${item.code}`);
                 }
 
                 if (criteria.value.tumorMorphologies) {
-                    tumorMorphologies.value = transformCodingsToFormSelectOptions(criteria.value.tumorMorphologies);
+                    tumorMorphologies.value = criteria.value.tumorMorphologies.map((item) => `${item.code}`);
                 }
 
                 if (criteria.value.medication) {
@@ -159,7 +155,7 @@ export default defineComponent({
                 }
 
                 if (criteria.value.responses) {
-                    responses.value = transformCodingsToFormSelectOptions(criteria.value.responses);
+                    responses.value = criteria.value.responses.map((item) => `${item.code}`);
                 }
 
                 if (
@@ -197,14 +193,14 @@ export default defineComponent({
                 diagnoses.value &&
                 diagnoses.value.length > 0
             ) {
-                payload.tumorEntities = transformFormSelectOptionsToCodings(diagnoses.value);
+                payload.tumorEntities = diagnoses.value.map((code) => ({ code }));
             }
 
             if (
                 tumorMorphologies.value &&
                 tumorMorphologies.value.length > 0
             ) {
-                payload.tumorMorphologies = transformFormSelectOptionsToCodings(tumorMorphologies.value);
+                payload.tumorMorphologies = tumorMorphologies.value.map((code) => ({ code }));
             }
 
             const payloadMedication : QueryMedicationCriteria = {};
@@ -237,7 +233,7 @@ export default defineComponent({
                 responses.value &&
                 responses.value.length > 0
             ) {
-                payload.responses = transformFormSelectOptionsToCodings(responses.value);
+                payload.responses = responses.value.map((code) => ({ code }));
             }
 
             if (
@@ -310,8 +306,8 @@ export default defineComponent({
         };
 
         const transformCodings = (coding: ValueSetCoding) => ({
-            id: coding.code,
-            value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
+            value: coding.code,
+            label: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
         const handleMedicationUpdated = ({
@@ -363,10 +359,10 @@ export default defineComponent({
     <div>
         <form>
             <div class="mb-3">
-                <div class="d-flex flex-row align-items-center">
+                <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
-                            <i class="fa fa-diagnoses" /> Diagnose
+                            <VCIcon name="fa6-solid:notes-medical" /> Diagnose
                         </h6>
                     </div>
                     <div class="ms-auto">
@@ -375,7 +371,7 @@ export default defineComponent({
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleExpanded('diagnosis')"
                         >
-                            <i :class="{'fa fa-chevron-down': !expanded.diagnosis, 'fa fa-chevron-up': expanded.diagnosis}" />
+                            <VCIcon :name="expanded.diagnosis ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                         </button>
                     </div>
                 </div>
@@ -399,19 +395,10 @@ export default defineComponent({
                                             <template #default="options">
                                                 <VCFormSelectSearch
                                                     v-model="diagnoses"
-                                                    :multiple="true"
                                                     :options="options"
+                                                    :close-on-select="true"
                                                     placeholder="ICD-10"
-                                                >
-                                                    <template #selected="{ items, toggle }">
-                                                        <DTags
-                                                            :emit-only="true"
-                                                            :items="items"
-                                                            tag-variant="light"
-                                                            @deleted="toggle"
-                                                        />
-                                                    </template>
-                                                </VCFormSelectSearch>
+                                                />
                                             </template>
                                         </DCollectionTransform>
                                     </template>
@@ -442,19 +429,10 @@ export default defineComponent({
                                             <template #default="options">
                                                 <VCFormSelectSearch
                                                     v-model="tumorMorphologies"
-                                                    :multiple="true"
                                                     :options="options"
+                                                    :close-on-select="true"
                                                     placeholder="Tumormorphologie oder ICD-0-3-M"
-                                                >
-                                                    <template #selected="{ items, toggle }">
-                                                        <DTags
-                                                            :emit-only="true"
-                                                            :items="items"
-                                                            tag-variant="light"
-                                                            @deleted="toggle"
-                                                        />
-                                                    </template>
-                                                </VCFormSelectSearch>
+                                                />
                                             </template>
                                         </DCollectionTransform>
                                     </template>
@@ -476,10 +454,10 @@ export default defineComponent({
 
 
             <div>
-                <div class="d-flex flex-row align-items-center">
+                <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
-                            <i class="fa fa-dna" /> Alteration
+                            <VCIcon name="fa6-solid:dna" /> Alteration
                         </h6>
                     </div>
                     <div class="ms-auto">
@@ -488,7 +466,7 @@ export default defineComponent({
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleExpanded('alteration')"
                         >
-                            <i :class="{'fa fa-chevron-down': !expanded.alteration, 'fa fa-chevron-up': expanded.alteration}" />
+                            <VCIcon :name="expanded.alteration ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                         </button>
                     </div>
                 </div>
@@ -500,7 +478,6 @@ export default defineComponent({
                         v-model="mutations"
                         :min-items="1"
                         :max-items="6"
-                        :direction="'col'"
                     >
                         <template #default="props">
                             <MMutationTabGroup
@@ -510,7 +487,7 @@ export default defineComponent({
                         </template>
                     </DFormTabGroups>
 
-                    <VCFormInputCheckbox
+                    <VCFormCheckbox
                         v-model="mutationsInCombination"
                         :group-class="'form-switch'"
                         :label="true"
@@ -522,10 +499,10 @@ export default defineComponent({
             <hr>
 
             <div>
-                <div class="d-flex flex-row align-items-center">
+                <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
-                            <i class="fa fa-pills" /> Medikation
+                            <VCIcon name="fa6-solid:pills" /> Medikation
                         </h6>
                     </div>
                     <div class="ms-auto">
@@ -534,7 +511,7 @@ export default defineComponent({
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleExpanded('medication')"
                         >
-                            <i :class="{'fa fa-chevron-down': !expanded.medication, 'fa fa-chevron-up': expanded.medication}" />
+                            <VCIcon :name="expanded.medication ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                         </button>
                     </div>
                 </div>
@@ -554,10 +531,10 @@ export default defineComponent({
             <hr>
 
             <div class="mb-3">
-                <div class="d-flex flex-row align-items-center">
+                <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
-                            <i class="fas fa-chart-line" /> Response
+                            <VCIcon name="fa6-solid:chart-line" /> Response
                         </h6>
                     </div>
                     <div class="ms-auto">
@@ -566,7 +543,7 @@ export default defineComponent({
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleExpanded('response')"
                         >
-                            <i :class="{'fa fa-chevron-down': !expanded.response, 'fa fa-chevron-up': expanded.response}" />
+                            <VCIcon :name="expanded.response ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                         </button>
                     </div>
                 </div>
@@ -589,19 +566,10 @@ export default defineComponent({
                                             <template #default="options">
                                                 <VCFormSelectSearch
                                                     v-model="responses"
-                                                    :multiple="true"
                                                     :options="options"
+                                                    :close-on-select="true"
                                                     placeholder="RECIST"
-                                                >
-                                                    <template #selected="{ items, toggle }">
-                                                        <DTags
-                                                            :emit-only="true"
-                                                            :items="items"
-                                                            tag-variant="light"
-                                                            @deleted="toggle"
-                                                        />
-                                                    </template>
-                                                </VCFormSelectSearch>
+                                                />
                                             </template>
                                         </DCollectionTransform>
                                     </template>
@@ -622,10 +590,10 @@ export default defineComponent({
             <hr>
 
             <div>
-                <div class="d-flex flex-row align-items-center">
+                <div class="flex flex-row items-center">
                     <div>
                         <h6 class="mb-0">
-                            <i class="fas fa-filter" /> Suchmodus
+                            <VCIcon name="fa6-solid:filter" /> Suchmodus
                         </h6>
                     </div>
                     <div class="ms-auto">
@@ -634,7 +602,7 @@ export default defineComponent({
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleExpanded('mode')"
                         >
-                            <i :class="{'fa fa-chevron-down': !expanded.mode, 'fa fa-chevron-up': expanded.mode}" />
+                            <VCIcon :name="expanded.mode ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                         </button>
                     </div>
                 </div>
@@ -658,31 +626,31 @@ export default defineComponent({
                 </div>
             </div>
 
-            <hr>
+            <div
+                class="sticky bottom-0 z-10 mt-4 flex flex-wrap items-center justify-end gap-2
+                       border-t border-border bg-bg/85 py-3 backdrop-blur"
+            >
+                <button
+                    :disabled="busy"
+                    type="button"
+                    class="btn btn-secondary"
+                    title="Suchkriterien als gespeicherte Anfrage ablegen"
+                    @click.prevent="save()"
+                >
+                    <VCIcon name="fa6-solid:floppy-disk" />
+                    Speichern
+                </button>
 
-            <div>
-                <div class="row">
-                    <div class="col">
-                        <DLoadingButton
-                            class="btn btn-block btn-dark"
-                            :loading="busy"
-                            @click.prevent="submit()"
-                        >
-                            <i class="fa fa-search me-1" /> Suchen
-                        </DLoadingButton>
-                    </div>
-
-                    <div class="col">
-                        <button
-                            :disabled="busy"
-                            type="button"
-                            class="btn btn-block btn-primary"
-                            @click.prevent="save()"
-                        >
-                            <i class="fa fa-save me-1" /> Speichern
-                        </button>
-                    </div>
-                </div>
+                <DLoadingButton
+                    class="btn btn-primary min-w-36"
+                    :loading="busy"
+                    @click.prevent="submit()"
+                >
+                    <VCIcon
+                        name="fa6-solid:magnifying-glass"
+                        class="me-1"
+                    /> Suchen
+                </DLoadingButton>
             </div>
         </form>
         <DLoadingModal :display="busy" />

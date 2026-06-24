@@ -20,7 +20,6 @@ import {
     toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { BPlaceholder } from 'bootstrap-vue-next';
 import {
     computed,
     defineComponent,
@@ -34,7 +33,6 @@ import { queryGeneAlterationToString } from '../../../domains';
 
 export default defineComponent({
     components: {
-        BPlaceholder,
         DKVChart,
         DKVChartTableSwitch,
         DQuerySummaryNested,
@@ -195,9 +193,11 @@ export default defineComponent({
     <template v-if="data">
         <div>
             <h5>Therapie Empfehlungen</h5>
-            <div class="d-flex flex-column gap-2">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Empfehlungen nach stützender molekularer Alteration</h6>
+            <div class="flex flex-col gap-2">
+                <div class="entity-card text-center mb-3 w-full">
+                    <h6 class="section-label">
+                        Empfehlungen nach stützender molekularer Alteration
+                    </h6>
 
                     <template v-if="data.recommendations.distributionBySupportingVariant.length > 0">
                         <DQuerySummaryGrouped
@@ -232,8 +232,10 @@ export default defineComponent({
                         </div>
                     </template>
                 </div>
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse (N = {{ data.recommendations.overallDistribution.total }})</h6>
+                <div class="entity-card text-center mb-3 w-full">
+                    <h6 class="section-label">
+                        Gesamtverteilung der Empfehlungen nach Wirkstoffklasse (N = {{ data.recommendations.overallDistribution.total }})
+                    </h6>
 
                     <DQuerySummaryNested
                         ref="recommendedVNode"
@@ -267,9 +269,11 @@ export default defineComponent({
             <hr>
 
             <h5>Umgesetzte Therapien</h5>
-            <div class="d-flex flex-column gap-2">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse (N = {{ data.therapies.overallDistribution.total }})</h6>
+            <div class="flex flex-col gap-2">
+                <div class="entity-card text-center mb-3 w-full">
+                    <h6 class="section-label">
+                        Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse (N = {{ data.therapies.overallDistribution.total }})
+                    </h6>
 
                     <DQuerySummaryNested
                         ref="usedVNode"
@@ -299,9 +303,11 @@ export default defineComponent({
                     </DQuerySummaryNested>
                 </div>
             </div>
-            <div class="d-flex flex-column gap-2">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Mittlere Therapiedauer</h6>
+            <div class="flex flex-col gap-2">
+                <div class="entity-card text-center mb-3 w-full">
+                    <h6 class="section-label">
+                        Mittlere Therapiedauer
+                    </h6>
                     <DQuerySummaryNested
                         :label="'Kategorie'"
                         :placeholder="'Kategorie auswählen'"
@@ -340,10 +346,12 @@ export default defineComponent({
     <template v-else-if="busy">
         <div>
             <h5>Therapie Empfehlungen</h5>
-            <div class="d-flex flex-column gap-2">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Empfehlungen nach stützender molekularer Alteration</h6>
-                    <BPlaceholder
+            <div class="flex flex-col gap-2">
+                <div class="entity-card text-center mb-3 w-full">
+                    <h6 class="section-label">
+                        Empfehlungen nach stützender molekularer Alteration
+                    </h6>
+                    <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
                         :width="40 + i * 10 + '%'"
@@ -351,9 +359,11 @@ export default defineComponent({
                         class="mb-2"
                     />
                 </div>
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Gesamtverteilung der Empfehlungen nach Wirkstoffklasse</h6>
-                    <BPlaceholder
+                <div class="entity-card text-center mb-3 w-full">
+                    <h6 class="section-label">
+                        Gesamtverteilung der Empfehlungen nach Wirkstoffklasse
+                    </h6>
+                    <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
                         :width="40 + i * 10 + '%'"
@@ -366,10 +376,12 @@ export default defineComponent({
             <hr>
 
             <h5>Umgesetzte Therapien</h5>
-            <div class="d-flex flex-column gap-2">
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse</h6>
-                    <BPlaceholder
+            <div class="flex flex-col gap-2">
+                <div class="entity-card text-center mb-3 w-full">
+                    <h6 class="section-label">
+                        Gesamtverteilung der umgesetzten Therapien nach Wirkstoffklasse
+                    </h6>
+                    <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
                         :width="40 + i * 10 + '%'"
@@ -377,9 +389,11 @@ export default defineComponent({
                         class="mb-2"
                     />
                 </div>
-                <div class="entity-card text-center mb-3 w-100">
-                    <h6>Mittlere Therapiedauer</h6>
-                    <BPlaceholder
+                <div class="entity-card text-center mb-3 w-full">
+                    <h6 class="section-label">
+                        Mittlere Therapiedauer
+                    </h6>
+                    <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
                         :width="40 + i * 10 + '%'"

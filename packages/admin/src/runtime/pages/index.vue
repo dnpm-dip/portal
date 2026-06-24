@@ -22,31 +22,41 @@ export default defineNuxtComponent({
 </script>
 <template>
     <template v-if="connectionReportRead">
-        <div>
-            <h1 class="title no-border mb-3">
-                <i class="fa fa-plug" /> Verbindungen
-                <span class="sub-title">
-                    Übersicht
-                </span>
-            </h1>
-        </div>
+        <header class="mb-4 flex items-center gap-4">
+            <span
+                class="flex size-12 shrink-0 items-center justify-center rounded-xl
+                       bg-gradient-to-br from-primary-500 to-primary-700 text-xl text-on-primary shadow-md"
+            >
+                <VCIcon name="fa6-solid:plug" />
+            </span>
+            <div class="min-w-0">
+                <h1 class="mb-0 text-2xl font-bold tracking-tight">
+                    Verbindungen
+                </h1>
+                <p class="mb-0 text-sm text-fg-muted">
+                    Übersicht der Standort-Verbindungen
+                </p>
+            </div>
+        </header>
         <AConnectionReport>
             <template #default="{ data }">
-                <div class="d-flex flex-column gap-3">
+                <div class="flex flex-col gap-3">
                     <div>
-                        <h5 class="title no-border">
-                            <i class="fa fa-map-marker-alt" /> Mein Standort
+                        <h5 class="section-label mb-2">
+                            <VCIcon name="fa6-solid:location-dot" />
+                            Mein Standort
                         </h5>
-                        <div class="d-flex flex-row flex-wrap gap-2">
+                        <div class="flex flex-row flex-wrap gap-2">
                             <DConnectionPeerCard :entity="data.self" />
                         </div>
                     </div>
 
                     <div>
-                        <h5 class="title no-border">
-                            <i class="fa fa-map-marker-alt" /> Externe Standorte
+                        <h5 class="section-label mb-2">
+                            <VCIcon name="fa6-solid:location-dot" />
+                            Externe Standorte
                         </h5>
-                        <div class="d-flex flex-row flex-wrap gap-2">
+                        <div class="flex flex-row flex-wrap gap-2">
                             <template
                                 v-for="(item, key) in data.peers"
                                 :key="key"

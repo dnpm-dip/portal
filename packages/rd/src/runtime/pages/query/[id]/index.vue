@@ -1,6 +1,5 @@
 <script lang="ts">
 import {
-    DNav,
     DQueryFilterContainer,
     DQueryInfoBox,
     DQueryPatientFilters,
@@ -8,8 +7,9 @@ import {
     injectQueryEventBus,
 } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
-import { BModal } from 'bootstrap-vue-next';
 import { computed, ref } from 'vue';
+import { VCNavItems } from '@vuecs/navigation';
+import type { NavigationItem } from '@vuecs/navigation';
 import { defineNuxtComponent, useRoute } from '#imports';
 import QueryDiagnosisFilter from '../../../components/core/RQueryDiagnosisFilter.vue';
 import QueryHPOFilter from '../../../components/core/RQueryHPOFilter.vue';
@@ -18,14 +18,13 @@ import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        VCNavItems,
         DQueryFilterContainer,
-        BModal,
         DQueryInfoBox,
         QueryHPOFilter,
         QueryDiagnosisFilter,
         DQueryPatientFilters,
         SearchForm,
-        DNav,
     },
     props: {
         entity: {
@@ -38,36 +37,36 @@ export default defineNuxtComponent({
         const route = useRoute();
         const queryEventBus = injectQueryEventBus();
 
-        const navItems = [
+        const navItems = computed<NavigationItem[]>(() => [
             {
-                name: 'Überblick',
-                icon: 'fas fa-bars',
-                urlSuffix: '/summary',
+                name: 'Überblick', 
+                icon: 'fa6-solid:bars', 
+                url: `/rd/query/${props.entity.id}/summary`, 
             },
             {
-                name: 'Patienten',
-                icon: 'fas fa-user-injured',
-                urlSuffix: '/patients',
+                name: 'Patienten', 
+                icon: 'fa6-solid:user-injured', 
+                url: `/rd/query/${props.entity.id}/patients`, 
             },
             {
-                name: 'Info',
-                icon: 'fa fa-network-wired',
-                urlSuffix: '/info',
+                name: 'Info', 
+                icon: 'fa6-solid:network-wired', 
+                url: `/rd/query/${props.entity.id}/info`, 
             },
-        ];
+        ]);
 
-        const summaryNavItems = [
+        const summaryNavItems = computed<NavigationItem[]>(() => [
             {
-                name: 'Demographie',
-                icon: 'fas fa-globe',
-                urlSuffix: '',
+                name: 'Demographie', 
+                icon: 'fa6-solid:globe', 
+                url: `/rd/query/${props.entity.id}/summary`, 
             },
             {
-                name: 'Diagnostik',
-                icon: 'fas fa-stethoscope',
-                urlSuffix: '/diagnostics',
+                name: 'Diagnostik', 
+                icon: 'fa6-solid:stethoscope', 
+                url: `/rd/query/${props.entity.id}/summary/diagnostics`, 
             },
-        ];
+        ]);
 
         const isSummaryActive = computed(() => route.path.startsWith(`/rd/query/${props.entity.id}/summary`));
 
@@ -78,7 +77,7 @@ export default defineNuxtComponent({
         const handleUpdated = (entity: QuerySession) => {
             emit('updated', entity);
 
-            queryEventBus.emit(QueryEventBusEventName.SESSION_UPDATED, entity, 'mtb');
+            queryEventBus.emit(QueryEventBusEventName.SESSION_UPDATED, entity, 'rd');
         };
 
         const handleFailed = (e: Error) => {
@@ -115,43 +114,50 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <div class="d-flex flex-row mb-2">
-        <div>
-            <h4>
-                <NuxtLink
-                    class="btn btn-xs btn-dark me-1"
-                    :to="'/rd/'"
-                >
-                    <i class="fa fa-arrow-left" />
-                </NuxtLink>
+    <header class="mb-4 flex items-center gap-4">
+        <span
+            class="flex size-12 shrink-0 items-center justify-center rounded-xl
+                   bg-gradient-to-br from-primary-500 to-primary-700 text-xl text-on-primary shadow-md"
+        >
+            <VCIcon name="fa6-solid:magnifying-glass-chart" />
+        </span>
+        <div class="min-w-0">
+            <h1 class="mb-0 text-2xl font-bold tracking-tight">
                 Abfrage
-            </h4>
+            </h1>
+            <p class="mb-0 text-sm text-fg-muted">
+                Seltene Erkrankungen
+            </p>
         </div>
-    </div>
+        <NuxtLink
+            class="btn btn-sm btn-secondary ms-auto"
+            :to="'/rd/'"
+        >
+            <VCIcon name="fa6-solid:arrow-left" />
+            Zur Suche
+        </NuxtLink>
+    </header>
 
-    <div class="d-flex flex-column gap-2 mb-2">
+    <div class="flex flex-col gap-2 mb-2">
         <div>
-            <DNav
-                :items="navItems"
-                :path="'/rd/query/'+ entity.id"
-            >
-                <template #end>
-                    <li class="nav-item">
-                        <button
-                            type="button"
-                            class="nav-link"
-                            @click.prevent="toggleModal"
-                        >
-                            <i class="fa fa-cog" /> Anpassen
-                        </button>
-                    </li>
-                </template>
-            </DNav>
+            <div class="flex flex-row items-center gap-2">
+                <VCNavItems
+                    :data="navItems"
+                    variant="pills"
+                />
+                <button
+                    type="button"
+                    class="btn btn-sm btn-secondary"
+                    @click.prevent="toggleModal"
+                >
+                    <VCIcon name="fa6-solid:gear" /> Anpassen
+                </button>
+            </div>
         </div>
         <div v-if="isSummaryActive">
-            <DNav
-                :items="summaryNavItems"
-                :path="'/rd/query/'+ entity.id + '/summary'"
+            <VCNavItems
+                :data="summaryNavItems"
+                variant="pills"
             />
         </div>
     </div>
@@ -197,39 +203,38 @@ export default defineNuxtComponent({
             </div>
         </div>
 
-        <BModal
-            v-model="modal"
-            :no-footer="true"
-            :size="'lg'"
-        >
-            <template #header="props">
-                <div class="d-flex flex-row w-100">
-                    <div>
-                        <h5 class="mb-0">
-                            <i class="fa fa-search" /> Suche
-                        </h5>
-                    </div>
-                    <div class="ms-auto">
-                        <button
-                            type="button"
-                            class="btn btn-xs btn-secondary"
-                            @click.prevent="props.close()"
-                        >
-                            <i class="fa fa-times" />
-                        </button>
+        <VCModal v-model:open="modal">
+            <VCModalContent class="modal-lg">
+                <div class="modal-header">
+                    <div class="flex flex-row w-full">
+                        <div>
+                            <h5 class="mb-0">
+                                <VCIcon name="fa6-solid:magnifying-glass" /> Suche
+                            </h5>
+                        </div>
+                        <div class="ms-auto">
+                            <button
+                                type="button"
+                                class="btn btn-xs btn-secondary"
+                                @click.prevent="modal = false"
+                            >
+                                <VCIcon name="fa6-solid:xmark" />
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </template>
-
-            <SearchForm
-                :query-mode="entity.mode.code"
-                :query-peers="entity.peers"
-                :query-id="entity.id"
-                :criteria="entity.criteria"
-                :prepared-query-id="preparedQueryId"
-                @query-updated="handleModalUpdated"
-                @failed="handleFailed"
-            />
-        </BModal>
+                <div class="modal-body">
+                    <SearchForm
+                        :query-mode="entity.mode.code"
+                        :query-peers="entity.peers"
+                        :query-id="entity.id"
+                        :criteria="entity.criteria"
+                        :prepared-query-id="preparedQueryId"
+                        @query-updated="handleModalUpdated"
+                        @failed="handleFailed"
+                    />
+                </div>
+            </VCModalContent>
+        </VCModal>
     </template>
 </template>

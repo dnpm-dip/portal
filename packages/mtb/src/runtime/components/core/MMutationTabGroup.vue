@@ -5,8 +5,8 @@ import {
     DCollectionTransform, 
     type FormTabInput,
 } from '@dnpm-dip/core';
-import { VCFormSelect, VCFormSelectSearch } from '@vuecs/form-controls';
-import type { FormSelectOption } from '@vuecs/form-controls';
+import { VCFormSelect, VCFormSelectSearch } from '@vuecs/forms';
+import type { FormOption } from '@vuecs/forms';
 import {
     type Component,
     type PropType,
@@ -53,18 +53,12 @@ export default defineComponent({
         });
 
         const mutationType = ref<null | `${QueryMutationType}`>(null);
-        const mutationTypeModel = computed({
-            get: () => mutationType.value ?? undefined,
-            set: (value: `${QueryMutationType}` | undefined) => {
-                mutationType.value = value ?? null;
-            },
-        });
         const mutationData = ref<null | QueryGeneAlterationVariantCriteria>(null);
 
-        const mutationOptions : FormSelectOption[] = [
-            { id: QueryMutationType.CNV, value: 'CNV' },
-            { id: QueryMutationType.SNV, value: 'SNV' },
-            { id: QueryMutationType.FUSION, value: 'Fusion' },
+        const mutationOptions : FormOption[] = [
+            { value: QueryMutationType.CNV, label: 'CNV' },
+            { value: QueryMutationType.SNV, label: 'SNV' },
+            { value: QueryMutationType.FUSION, label: 'Fusion' },
         ];
 
         const comp = ref<Component | null>(null);
@@ -101,14 +95,15 @@ export default defineComponent({
             }
         };
 
-        const changeMutationTypeByEvent = (event: Event) => {
-            if (!event.target) {
-                return;
-            }
-
-            const { value } = (event.target as unknown as { value: string });
-            changeMutationType(value ? value as 'SNV' | 'CNV' | 'Fusion' : null);
-        };
+        // The reworked VCFormSelect emits update:modelValue only (no
+        // change event with a native target), so the type switch is
+        // driven through the model setter.
+        const mutationTypeModel = computed({
+            get: () => mutationType.value ?? undefined,
+            set: (value: `${QueryMutationType}` | undefined) => {
+                changeMutationType(value ?? null);
+            },
+        });
 
         const isEditing = computed(() => props.entity.data !== null);
         const init = () => {
@@ -192,9 +187,9 @@ export default defineComponent({
         const transformConcepts = (
             concept: CodeSystemConcept,
         ) => {
-            const option : FormSelectOption = {
-                id: `${concept.code}+++${concept.display}`,
-                value: concept.display,
+            const option : FormOption = {
+                value: `${concept.code}+++${concept.display}`,
+                label: concept.display,
             };
 
             return option;
@@ -203,7 +198,6 @@ export default defineComponent({
         return {
             form,
 
-            changeMutationTypeByEvent,
             comp,
 
             mutationType,
@@ -221,7 +215,7 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="d-flex flex-column gap-2">
+    <div class="flex flex-col gap-2">
         <VCFormGroup>
             <template #label>
                 Gen
@@ -263,7 +257,6 @@ export default defineComponent({
                 <VCFormSelect
                     v-model="mutationTypeModel"
                     :options="mutationOptions"
-                    @change="changeMutationTypeByEvent"
                 />
             </template>
         </VCFormGroup>
@@ -274,9 +267,9 @@ export default defineComponent({
                 @updated="handleVariantChanged"
             />
         </template>
-        <div class="d-flex flex-row gap-2">
+        <div class="flex flex-row gap-2">
             <div>
-                <VCFormInputCheckbox
+                <VCFormCheckbox
                     v-model="form.supporting"
                     :group-class="'form-switch'"
                     :label="true"
@@ -284,7 +277,7 @@ export default defineComponent({
                 />
             </div>
             <div>
-                <VCFormInputCheckbox
+                <VCFormCheckbox
                     v-model="form.wildtype"
                     :group-class="'form-switch'"
                     :label="true"

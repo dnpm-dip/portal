@@ -96,8 +96,8 @@ const component = defineComponent({
 export default component as Component;
 </script>
 <template>
-    <div class="d-flex flex-column gap-2">
-        <div class="d-flex flex-row">
+    <div class="flex flex-col gap-2">
+        <div class="flex flex-row">
             <div class="ms-auto">
                 <ul class="nav-pills nav">
                     <li class="nav-item">
@@ -107,7 +107,7 @@ export default component as Component;
                             :class="{'router-link-exact-active': variant === 'chart'}"
                             @click.prevent="setVariant('chart')"
                         >
-                            <i class="fas fa-chart-bar" />
+                            <VCIcon name="fa6-solid:chart-bar" />
                         </button>
                     </li>
                     <li class="nav-item">
@@ -117,7 +117,7 @@ export default component as Component;
                             :class="{'router-link-exact-active': variant === 'table'}"
                             @click.prevent="setVariant('table')"
                         >
-                            <i class="fas fa-table" />
+                            <VCIcon name="fa6-solid:table" />
                         </button>
                     </li>
                 </ul>

@@ -9,16 +9,16 @@
 import type { Role } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import {
-    DNav, 
     PageMetaKey, 
     PageNavigationTopID, 
     useToast,
 } from '@dnpm-dip/core';
+import { VCNavItems } from '@vuecs/navigation';
 import { definePageMeta } from '#imports';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
-    components: { DNav },
+    components: { VCNavItems },
     setup() {
         definePageMeta({
             [PageMetaKey.REQUIRED_LOGGED_IN]: true,
@@ -35,13 +35,13 @@ export default defineNuxtComponent({
         const items = [
             {
                 name: 'Übersicht',
-                urlSuffix: '',
-                icon: 'fa fa-bars',
+                url: '/admin/roles',
+                icon: 'fa6-solid:bars',
             },
             {
                 name: 'Hinzufügen',
-                urlSuffix: '/add',
-                icon: 'fa fa-plus',
+                url: '/admin/roles/add',
+                icon: 'fa6-solid:plus',
             },
         ];
 
@@ -68,15 +68,18 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h1 class="title no-border mb-3">
-            <i class="fa-solid fa-theater-masks me-1" /> Rollen
+            <VCIcon
+                name="fa6-solid:masks-theater"
+                class="me-1"
+            /> Rollen
             <span class="sub-title ms-1">Verwaltung</span>
         </h1>
         <div class="content-wrapper">
-            <div class="content-sidebar flex-column">
-                <DNav
-                    :items="items"
-                    path="/admin/roles"
-                    direction="vertical"
+            <div class="content-sidebar flex-col">
+                <VCNavItems
+                    :data="items"
+                    variant="pills"
+                    orientation="vertical"
                 />
             </div>
             <div class="content-main">

@@ -14,14 +14,12 @@ import {
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { BPlaceholder } from 'bootstrap-vue-next';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QuerySummaryGeneAlterationDistribution } from '../../../domains';
 
 export default defineComponent({
     components: {
-        BPlaceholder,
         DQuerySummaryGrouped,
         DKVChartTableSwitch,
     },
@@ -71,7 +69,9 @@ export default defineComponent({
 <template>
     <template v-if="data">
         <div>
-            <h5>TOP 20 der alterierten Gene (SNV/ CNV/ Fusion)</h5>
+            <h5 class="section-label">
+                TOP 20 der alterierten Gene (SNV/ CNV/ Fusion)
+            </h5>
             <DQuerySummaryGrouped
                 :items="data"
                 :label="'Alteration'"
@@ -96,9 +96,11 @@ export default defineComponent({
     </template>
     <template v-else-if="busy">
         <div>
-            <h5>TOP 20 der alterierten Gene (SNV/ CNV/ Fusion)</h5>
+            <h5 class="section-label">
+                TOP 20 der alterierten Gene (SNV/ CNV/ Fusion)
+            </h5>
             <div class="entity-card text-center mb-3">
-                <BPlaceholder
+                <VCPlaceholder
                     v-for="i in 5"
                     :key="i"
                     :width="40 + i * 10 + '%'"

@@ -1,6 +1,6 @@
 <script lang="ts">
-import { VCFormSelectSearch } from '@vuecs/form-controls';
-import type { FormSelectOption } from '@vuecs/form-controls';
+import { VCFormSelectSearch } from '@vuecs/forms';
+import type { FormOption } from '@vuecs/forms';
 import type {
     PropType,
     Ref,
@@ -50,12 +50,12 @@ export default defineComponent({
             return index;
         };
 
-        const options = computed<FormSelectOption[]>(() => props.data.map((el, index) => {
-            const value = generateChartLabelsForKeyValueRecord(el as KeyValueChildrenRecord, { codingVerbose: props.keyVerbose });
+        const options = computed<FormOption[]>(() => props.data.map((el, index) => {
+            const label = generateChartLabelsForKeyValueRecord(el as KeyValueChildrenRecord, { codingVerbose: props.keyVerbose });
 
             return {
-                id: index + 1,
-                value,
+                value: index + 1,
+                label: label || '',
             };
         }));
 
@@ -100,7 +100,7 @@ export default defineComponent({
                 class="btn btn-secondary"
                 @click.prevent="reset"
             >
-                <i class="fa fa-times" />
+                <VCIcon name="fa6-solid:xmark" />
             </button>
         </div>
     </VCFormGroup>

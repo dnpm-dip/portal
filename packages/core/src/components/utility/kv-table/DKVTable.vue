@@ -5,9 +5,8 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import type { TableFieldRaw } from 'bootstrap-vue-next';
-import { BTable } from 'bootstrap-vue-next';
-import type { Component, PropType } from 'vue';
+import type { TableColumn } from '@vuecs/table';
+import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 import type { Coding, KeyValueRecord } from '../../../domains';
 import { isCoding, isConceptCount, isMinMaxRange } from '../../../domains';
@@ -17,28 +16,28 @@ import type { DKVTableColumnKey, DKVTableColumnsFn } from './types';
 
 const COLUMN_DEFAULTS: Record<DKVTableColumnKey, {
     label: string;
-    thClass: string;
-    tdClass: string;
+    headerClass: string;
+    cellClass: string;
 }> = {
     key: {
         label: 'Element',
-        thClass: 'text-left',
-        tdClass: 'text-left',
+        headerClass: 'text-left',
+        cellClass: 'text-left',
     },
     value: {
         label: 'Häufigkeit',
-        thClass: 'text-center',
-        tdClass: 'text-center',
+        headerClass: 'text-center',
+        cellClass: 'text-center',
     },
     percent: {
         label: 'Prozent (%)',
-        thClass: 'text-center',
-        tdClass: 'text-center',
+        headerClass: 'text-center',
+        cellClass: 'text-center',
     },
 };
 
 export default defineComponent({
-    components: { DKVTableEntry, BTable: BTable as unknown as Component },
+    components: { DKVTableEntry },
     props: {
         data: {
             type: Array as PropType<KeyValueRecord<unknown, unknown>[]>,
@@ -115,42 +114,42 @@ export default defineComponent({
             };
         }));
 
-        const fields = computed<TableFieldRaw[]>(() => {
+        const fields = computed<TableColumn[]>(() => {
             if (props.columns) {
                 return props.columns(props.level).map((column) => {
                     const defaults = COLUMN_DEFAULTS[column.key];
                     return {
                         key: column.key,
                         label: column.label ?? defaults.label,
-                        thClass: defaults.thClass,
-                        tdClass: defaults.tdClass,
+                        headerClass: defaults.headerClass,
+                        cellClass: defaults.cellClass,
                     };
                 });
             }
 
-            const result: TableFieldRaw[] = [];
+            const result: TableColumn[] = [];
             if (!props.keyHidden) {
                 result.push({
                     key: 'key',
                     label: props.keyLabel,
-                    thClass: COLUMN_DEFAULTS.key.thClass,
-                    tdClass: COLUMN_DEFAULTS.key.tdClass,
+                    headerClass: COLUMN_DEFAULTS.key.headerClass,
+                    cellClass: COLUMN_DEFAULTS.key.cellClass,
                 });
             }
             if (!props.valueHidden) {
                 result.push({
                     key: 'value',
                     label: props.valueLabel,
-                    thClass: COLUMN_DEFAULTS.value.thClass,
-                    tdClass: COLUMN_DEFAULTS.value.tdClass,
+                    headerClass: COLUMN_DEFAULTS.value.headerClass,
+                    cellClass: COLUMN_DEFAULTS.value.cellClass,
                 });
             }
             if (!props.percentHidden) {
                 result.push({
                     key: 'percent',
                     label: props.percentLabel,
-                    thClass: COLUMN_DEFAULTS.percent.thClass,
-                    tdClass: COLUMN_DEFAULTS.percent.tdClass,
+                    headerClass: COLUMN_DEFAULTS.percent.headerClass,
+                    cellClass: COLUMN_DEFAULTS.percent.cellClass,
                 });
             }
             return result;
@@ -218,14 +217,13 @@ export default defineComponent({
 });
 </script>
 <template>
-    <BTable
-        :items="items"
-        :fields="fields"
-        outlined
+    <VCTable
+        :data="items"
+        :columns="fields"
     >
-        <template #cell(key)="cell">
+        <template #cell-key="{ row }: { row: any }">
             <DKVTableEntry
-                :data="(cell.item as any)"
+                :data="(row as any)"
                 :clickable="clickable"
                 :coding-verbose-label="codingVerboseLabel"
                 :key-label="keyLabel"
@@ -240,5 +238,6 @@ export default defineComponent({
                 @clicked="handleClicked"
             />
         </template>
-    </BTable>
+        <VCTableEmpty />
+    </VCTable>
 </template>

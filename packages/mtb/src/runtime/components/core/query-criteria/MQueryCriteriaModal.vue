@@ -5,13 +5,12 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import { BModal } from 'bootstrap-vue-next';
 import { type PropType, defineComponent, ref } from 'vue';
 import type { QuerySession } from '../../../domains';
 import MSearchForm from '../search/MSearchForm.vue';
 
 export default defineComponent({
-    components: { BModal, MSearchForm },
+    components: { MSearchForm },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -54,41 +53,41 @@ export default defineComponent({
             class="btn btn-xs btn-primary ms-1"
             @click.prevent="toggleModal"
         >
-            <i class="fa-solid fa-cog" />
+            <VCIcon name="fa6-solid:gear" />
         </NuxtLink>
     </slot>
 
-    <BModal
-        v-model="modal"
-        :no-footer="true"
-        :size="'lg'"
-    >
-        <template #header="props">
-            <div class="d-flex flex-row w-100">
-                <div>
-                    <h5 class="mb-0">
-                        <i class="fa fa-search" /> Suche
-                    </h5>
-                </div>
-                <div class="ms-auto">
-                    <button
-                        type="button"
-                        class="btn btn-xs btn-secondary"
-                        @click.prevent="props.close()"
-                    >
-                        <i class="fa fa-times" />
-                    </button>
+    <VCModal v-model:open="modal">
+        <VCModalContent class="modal-lg">
+            <div class="modal-header">
+                <div class="flex flex-row w-full">
+                    <div>
+                        <h5 class="mb-0">
+                            <VCIcon name="fa6-solid:magnifying-glass" /> Suche
+                        </h5>
+                    </div>
+                    <div class="ms-auto">
+                        <button
+                            type="button"
+                            class="btn btn-xs btn-secondary"
+                            @click.prevent="modal = false"
+                        >
+                            <VCIcon name="fa6-solid:xmark" />
+                        </button>
+                    </div>
                 </div>
             </div>
-        </template>
-        <MSearchForm
-            :query-mode="entity.mode.code"
-            :query-peers="entity.peers"
-            :query-id="entity.id"
-            :criteria="entity.criteria"
-            :prepared-query-id="preparedQueryId"
-            @updated="handleUpdated"
-            @failed="handleFailed"
-        />
-    </BModal>
+            <div class="modal-body">
+                <MSearchForm
+                    :query-mode="entity.mode.code"
+                    :query-peers="entity.peers"
+                    :query-id="entity.id"
+                    :criteria="entity.criteria"
+                    :prepared-query-id="preparedQueryId"
+                    @updated="handleUpdated"
+                    @failed="handleFailed"
+                />
+            </div>
+        </VCModalContent>
+    </VCModal>
 </template>

@@ -9,11 +9,10 @@ import type { ModuleMeta, NavigationItemMeta } from '@dnpm-dip/core';
 import { PageMetaKey } from '@dnpm-dip/core';
 import type { HookResult } from '@nuxt/schema';
 import type { NavigationItem } from '@vuecs/navigation';
-import { install as installNavigation } from '@vuecs/navigation';
 import type { Pinia } from 'pinia';
 import { injectStore } from '@authup/client-web-kit';
 import { defineNuxtPlugin } from '#app';
-import { Navigation } from '../core';
+import { Navigation, provideNavigation } from '../core';
 import { useModuleStore } from '../stores/modules';
 
 declare module '#app' {
@@ -72,6 +71,7 @@ export default defineNuxtPlugin<Record<string, any>>({
         const moduleStore = useModuleStore(nuxt.$pinia as Pinia);
 
         const navigation = new Navigation(authStore);
+        provideNavigation(navigation, nuxt.vueApp);
 
         nuxt.hook('register', (context: ModuleMeta) => {
             if (context.navigationItems) {
@@ -96,13 +96,6 @@ export default defineNuxtPlugin<Record<string, any>>({
             }
 
             moduleStore.register(context);
-        });
-
-        installNavigation(nuxt.vueApp, {
-            items: ({
-                level,
-                parent,
-            }) => navigation.getItems(level, parent),
         });
     },
 });

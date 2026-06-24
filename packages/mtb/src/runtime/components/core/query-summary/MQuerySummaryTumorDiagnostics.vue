@@ -15,7 +15,6 @@ import {
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { BPlaceholder } from 'bootstrap-vue-next';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
@@ -23,7 +22,6 @@ import type { QuerySummaryTumorDiagnostics } from '../../../domains';
 
 export default defineComponent({
     components: {
-        BPlaceholder,
         DQuerySummaryNested,
         DKVChartTableSwitch,
     },
@@ -104,9 +102,11 @@ export default defineComponent({
             <div>
                 <h5>Gesamtverteilung</h5>
 
-                <div class="d-flex flex-column gap-2">
+                <div class="flex flex-col gap-2">
                     <div class="entity-card text-center mb-3">
-                        <h6>Verteilung nach ICD-10 GM (N = {{ data.overallDistributions.tumorEntities.total }})</h6>
+                        <h6 class="section-label">
+                            Verteilung nach ICD-10 GM (N = {{ data.overallDistributions.tumorEntities.total }})
+                        </h6>
                         <DQuerySummaryNested
                             ref="tumorEntitiesVNode"
                             :label="'Kategorie'"
@@ -138,7 +138,9 @@ export default defineComponent({
                     </div>
 
                     <div class="entity-card text-center mb-3">
-                        <h6>Verteilung nach ICD-O-3-M (N = {{ data.overallDistributions.tumorMorphologies.total }})</h6>
+                        <h6 class="section-label">
+                            Verteilung nach ICD-O-3-M (N = {{ data.overallDistributions.tumorMorphologies.total }})
+                        </h6>
                         <DQuerySummaryNested
                             :label="'Kategorie'"
                             :placeholder="'Kategorie auswählen'"
@@ -172,10 +174,12 @@ export default defineComponent({
     <template v-else-if="busy">
         <div>
             <h5>Gesamtverteilung</h5>
-            <div class="d-flex flex-column gap-2">
+            <div class="flex flex-col gap-2">
                 <div class="entity-card text-center mb-3">
-                    <h6>Verteilung nach ICD-10 GM</h6>
-                    <BPlaceholder
+                    <h6 class="section-label">
+                        Verteilung nach ICD-10 GM
+                    </h6>
+                    <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
                         :width="40 + i * 10 + '%'"
@@ -184,8 +188,10 @@ export default defineComponent({
                     />
                 </div>
                 <div class="entity-card text-center mb-3">
-                    <h6>Verteilung nach ICD-O-3-M</h6>
-                    <BPlaceholder
+                    <h6 class="section-label">
+                        Verteilung nach ICD-O-3-M
+                    </h6>
+                    <VCPlaceholder
                         v-for="i in 5"
                         :key="i"
                         :width="40 + i * 10 + '%'"

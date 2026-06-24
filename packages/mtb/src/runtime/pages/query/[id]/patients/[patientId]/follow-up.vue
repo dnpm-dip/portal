@@ -21,7 +21,9 @@ export default defineNuxtComponent({
 <template>
     <template v-if="record.systemicTherapies">
         <div>
-            <h5>Durchgeführte Therapien</h5>
+            <h5 class="section-label mb-2">
+                Durchgeführte Therapien
+            </h5>
         </div>
         <template
             v-for="(history, key) in record.systemicTherapies"
@@ -35,11 +37,11 @@ export default defineNuxtComponent({
                     <div class="row">
                         <div class="col">
                             <div>
-                                <div><strong><i class="fa fa-clock" /> Erfassungsdatum</strong> {{ item.recordedOn }}</div>
+                                <div><strong><VCIcon name="fa6-solid:clock" /> Erfassungsdatum</strong> {{ item.recordedOn }}</div>
                             </div>
                             <div>
                                 <div v-if="item.status">
-                                    <strong><i class="fas fa-check-circle" /> Status</strong>
+                                    <strong><VCIcon name="fa6-solid:circle-check" /> Status</strong>
                                     {{ item.status.display || item.status.code }}
 
                                     <template v-if="item.statusReason">
@@ -48,26 +50,26 @@ export default defineNuxtComponent({
                                 </div>
                             </div>
                             <div v-if="item.medication">
-                                <strong><i class="fa fa-pills" /> Medikation</strong>
+                                <strong><VCIcon name="fa6-solid:pills" /> Medikation</strong>
                                 <DCodingCommaList :items="item.medication" />
                             </div>
                         </div>
                         <div class="col">
                             <div v-if="item.period">
                                 <div>
-                                    <strong><i class="fas fa-calendar-alt" /> Zeitraum</strong>
+                                    <strong><VCIcon name="fa6-solid:calendar-days" /> Zeitraum</strong>
                                     {{ item.period.start }} <template v-if="item.period.end">
                                         - {{ item.period.end }}
                                     </template>
                                 </div>
                             </div>
                             <div v-if="item.dosage">
-                                <strong><i class="fas fa-syringe" /> Dosierung</strong>
+                                <strong><VCIcon name="fa6-solid:syringe" /> Dosierung</strong>
                                 {{ item.dosage.display || item.dosage.code }}
                             </div>
                             <div v-if="item.notes">
                                 <div>
-                                    <strong><i class="far fa-sticky-note" /> Notiz</strong>
+                                    <strong><VCIcon name="fa6-solid:note-sticky" /> Notiz</strong>
                                     <DCommaList :items="item.notes" />
                                 </div>
                             </div>
@@ -82,18 +84,20 @@ export default defineNuxtComponent({
 
     <template v-if="record.responses">
         <div>
-            <h5>Responses</h5>
+            <h5 class="section-label mb-2">
+                Responses
+            </h5>
         </div>
-        <div class="entity-card-group flex-row justify-content-evenly">
+        <div class="entity-card-group flex-row justify-evenly">
             <template
                 v-for="(item) in record.responses"
                 :key="item.id"
             >
-                <div class="entity-card flex-grow-1 mb-3">
-                    <div><strong><i class="fa fa-clock" /> Datum</strong> {{ item.effectiveDate }}</div>
-                    <div><strong><i class="fas fa-calculator" /> Code</strong> {{ item.value.display || item.value.code }}</div>
+                <div class="entity-card grow mb-3">
+                    <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.effectiveDate }}</div>
+                    <div><strong><VCIcon name="fa6-solid:calculator" /> Code</strong> {{ item.value.display || item.value.code }}</div>
                     <div v-if="item.therapy">
-                        <strong><i class="fas fa-calculator" /> Indikation</strong>
+                        <strong><VCIcon name="fa6-solid:calculator" /> Indikation</strong>
                         {{ item.therapy.display || item.therapy.type }}
                     </div>
                 </div>

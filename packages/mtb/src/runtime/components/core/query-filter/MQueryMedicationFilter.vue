@@ -6,11 +6,12 @@
   -->
 
 <script lang="ts">
+import { VCFormCheckboxGroup } from '@vuecs/forms';
 import type { PropType } from 'vue';
 import {
-    computed, 
-    defineComponent, 
-    onUnmounted, 
+    computed,
+    defineComponent,
+    onUnmounted,
     ref,
 } from 'vue';
 import {
@@ -27,7 +28,7 @@ import { injectHTTPClient } from '../../../core/http-client';
 import type { QueryTherapyRecommendedFilter } from '../../../domains';
 
 export default defineComponent({
-    components: { DQueryFilterBox },
+    components: { DQueryFilterBox, VCFormCheckboxGroup },
     props: {
         busy: {
             type: Boolean,
@@ -217,30 +218,31 @@ export default defineComponent({
     >
         <template #title>
             <template v-if="type === 'recommended'">
-                <i class="fa fa-pills" /> Therapien: Empfohlen
+                <VCIcon name="fa6-solid:pills" /> Therapien: Empfohlen
             </template>
             <template v-else>
-                <i class="fa fa-pills" /> Therapien: Umgesetzt
+                <VCIcon name="fa6-solid:pills" /> Therapien: Umgesetzt
             </template>
         </template>
         <template #default>
-            <div class=" flex-column gap-1 d-flex">
-                <div class="d-flex flex-column gap-2">
-                    <div>
+            <div class=" flex-col gap-1 flex">
+                <div class="flex flex-col gap-2">
+                    <VCFormCheckboxGroup
+                        v-model="items"
+                        @update:model-value="handleChanged"
+                    >
                         <template
                             v-for="item in availableSubset"
                             :key="item.id"
                         >
                             <div class="form-check">
-                                <VCFormInputCheckbox
-                                    v-model="items"
+                                <VCFormCheckbox
                                     :label="true"
                                     :value="item.id"
-                                    @change.prevent="handleChanged"
                                 >
                                     <template #label="labelProps">
                                         <label :for="labelProps.id">
-                                            <div class="d-flex flex-column">
+                                            <div class="flex flex-col">
                                                 <template
                                                     v-for="sub in item.children"
                                                     :key="sub.code"
@@ -252,10 +254,10 @@ export default defineComponent({
                                             </div>
                                         </label>
                                     </template>
-                                </VCFormInputCheckbox>
+                                </VCFormCheckbox>
                             </div>
                         </template>
-                    </div>
+                    </VCFormCheckboxGroup>
 
                     <div class="ms-auto me-auto">
                         <VCPagination

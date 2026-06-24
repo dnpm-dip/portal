@@ -114,11 +114,13 @@ export default component as Component;
 </script>
 <template>
     <div>
-        <h5>Allgemein</h5>
+        <h5 class="section-label">
+            Allgemein
+        </h5>
 
-        <div class="d-flex flex-row gap-2">
-            <div class="entity-card text-center mb-3 w-100">
-                <h6>
+        <div class="flex flex-row gap-2">
+            <div class="entity-card text-center mb-3 w-full">
+                <h6 class="section-label">
                     {{ withTotals ? `Patienten pro Standort (N = ${entity.siteDistribution.total})` : 'Patienten pro Standort' }}
                 </h6>
                 <DKVChartTableSwitch
@@ -132,8 +134,8 @@ export default component as Component;
                 />
             </div>
 
-            <div class="entity-card text-center mb-3 w-100">
-                <h6>
+            <div class="entity-card text-center mb-3 w-full">
+                <h6 class="section-label">
                     {{ withTotals ? `Geschlechterverteilung (N = ${entity.genderDistribution.total})` : 'Geschlechterverteilung' }}
                 </h6>
                 <DKVChartTableSwitch
@@ -148,8 +150,8 @@ export default component as Component;
             </div>
         </div>
 
-        <div class="entity-card text-center mb-3 w-100">
-            <h6>
+        <div class="entity-card text-center mb-3 w-full">
+            <h6 class="section-label">
                 {{ withTotals ? `Altersverteilung (N = ${entity.ageDistribution.total})` : 'Altersverteilung' }}
             </h6>
             <DKVChartTableSwitch

@@ -30,16 +30,16 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="entity-card w-100">
-        <div class="d-flex flex-column gap-2">
-            <div class="d-flex flex-row gap-2">
+    <div class="entity-card w-full">
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-row gap-2">
                 <div>
                     <button
                         v-if="entity.criteria"
                         class="btn btn-dark btn-xs"
                         @click.prevent="toggleExtended"
                     >
-                        <i :class="{'fa fa-chevron-down': !extended, 'fa fa-chevron-up': extended}" />
+                        <VCIcon :name="extended ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                     </button>
                 </div>
                 <div>

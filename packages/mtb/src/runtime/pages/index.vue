@@ -38,10 +38,23 @@ export default defineNuxtComponent({
 </script>
 
 <template>
-    <div class="">
-        <h1 class="title no-border mb-3">
-            <i class="fa fa-search" /> Suche
-        </h1>
+    <div>
+        <header class="mb-4 flex items-center gap-4">
+            <span
+                class="flex size-12 shrink-0 items-center justify-center rounded-xl
+                       bg-gradient-to-br from-primary-500 to-primary-700 text-xl text-on-primary shadow-md"
+            >
+                <VCIcon name="fa6-solid:magnifying-glass" />
+            </span>
+            <div class="min-w-0">
+                <h1 class="mb-0 text-2xl font-bold tracking-tight">
+                    Suche
+                </h1>
+                <p class="mb-0 text-sm text-fg-muted">
+                    Molekulares Tumorboard
+                </p>
+            </div>
+        </header>
 
         <div class="alert alert-info alert-sm">
             Die Datenabfrage ist auch ohne Auswahl von Suchparametern möglich.

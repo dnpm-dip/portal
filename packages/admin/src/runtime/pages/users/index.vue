@@ -7,18 +7,18 @@
 
 <script lang="ts">
 import {
-    DNav, 
     PageMetaKey, 
     PageNavigationTopID, 
     useToast,
 } from '@dnpm-dip/core';
+import { VCNavItems } from '@vuecs/navigation';
 import type { User } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import { definePageMeta } from '#imports';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
-    components: { DNav },
+    components: { VCNavItems },
     setup() {
         definePageMeta({
             [PageMetaKey.NAVIGATION_TOP_ID]: PageNavigationTopID.ADMIN,
@@ -36,13 +36,13 @@ export default defineNuxtComponent({
         const items = [
             {
                 name: 'Übersicht',
-                urlSuffix: '',
-                icon: 'fa fa-bars',
+                url: '/admin/users',
+                icon: 'fa6-solid:bars',
             },
             {
                 name: 'Hinzufügen',
-                urlSuffix: '/add',
-                icon: 'fa fa-plus',
+                url: '/admin/users/add',
+                icon: 'fa6-solid:plus',
             },
         ];
 
@@ -69,17 +69,20 @@ export default defineNuxtComponent({
 <template>
     <div>
         <h1 class="title no-border mb-3">
-            <i class="fa fa-user me-1" /> Benutzer
+            <VCIcon
+                name="fa6-solid:user"
+                class="me-1"
+            /> Benutzer
             <span class="sub-title ms-1">
                 Verwaltung
             </span>
         </h1>
         <div class="content-wrapper">
-            <div class="content-sidebar flex-column">
-                <DNav
-                    :items="items"
-                    path="/admin/users"
-                    direction="vertical"
+            <div class="content-sidebar flex-col">
+                <VCNavItems
+                    :data="items"
+                    variant="pills"
+                    orientation="vertical"
                 />
             </div>
             <div class="content-main">

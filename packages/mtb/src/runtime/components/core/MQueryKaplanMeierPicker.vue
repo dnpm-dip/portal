@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { type Coding } from '@dnpm-dip/core';
-import { VCFormSelect } from '@vuecs/form-controls';
+import { VCFormSelect } from '@vuecs/forms';
 import { computed, defineComponent, ref } from 'vue';
 import { injectHTTPClient } from '../../core/http-client';
 import type { KaplanMeierOptions } from '../../domains';
@@ -40,8 +40,8 @@ export default defineComponent({
             .then(resolve);
 
         const transformCoding = (coding: Coding) => ({
-            id: coding.code,
-            value: coding.display ? `${coding.display}` : coding.code,
+            value: coding.code,
+            label: coding.display ? `${coding.display}` : coding.code,
         });
 
         const typeOptions = computed(() => data.value.map((v) => transformCoding(v.key)));
@@ -94,12 +94,14 @@ export default defineComponent({
                     Type
                 </template>
                 <template #default>
+                    <!-- update:model-value instead of change: the reworked
+                         VCFormSelect no longer emits a (native) change event -->
                     <VCFormSelect
                         v-model="type"
                         :disabled="busy"
                         :options="typeOptions"
                         placeholder="..."
-                        @change="handleTypeChanged"
+                        @update:model-value="handleTypeChanged"
                     />
                 </template>
             </VCFormGroup>
@@ -115,7 +117,7 @@ export default defineComponent({
                         :disabled="busy || !type"
                         :options="groupingOptions"
                         placeholder="..."
-                        @change="handleGroupingChanged"
+                        @update:model-value="handleGroupingChanged"
                     />
                 </template>
             </VCFormGroup>

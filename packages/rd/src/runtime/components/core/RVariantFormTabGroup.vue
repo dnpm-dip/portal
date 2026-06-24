@@ -5,26 +5,53 @@ import {
     HGVS_CODE_REGEX,
     transformConceptToFormSelectOption,
 } from '@dnpm-dip/core';
-import { IVuelidate } from '@ilingo/vuelidate';
-import useVuelidate from '@vuelidate/core';
-import { helpers } from '@vuelidate/validators';
+import { IFieldValidation } from '@ilingo/validup-vue';
+import { useValidup } from '@validup/vue';
+import { Container, ValidupError, defineIssueItem } from 'validup';
+import type { Validator } from 'validup';
 import {
-    type PropType, 
-    computed, 
-    defineComponent, 
-    reactive, 
-    toRef, 
+    type PropType,
+    computed,
+    defineComponent,
+    reactive,
+    toRef,
     watch,
 } from 'vue';
-import { VCFormSelectSearch } from '@vuecs/form-controls';
+import { VCFormSelectSearch } from '@vuecs/forms';
 import { DCodeSystem, DCollectionTransform } from '@dnpm-dip/core';
 import type { QueryCriteriaVariant } from '../../domains';
 
+const hgvsValidator: Validator = (ctx) => {
+    const value = ctx.value as string | undefined;
+    if (!value) {
+        return value;
+    }
+
+    HGVS_CODE_REGEX.lastIndex = 0;
+    if (!HGVS_CODE_REGEX.test(value)) {
+        throw new ValidupError([
+            defineIssueItem({
+                path: [],
+                message: 'Es müssen ein oder mehrere HGVS-Codes in 3-Buchstaben-Format in der Eingabe vorkommen',
+            }),
+        ]);
+    }
+
+    return value;
+};
+
+class VariantCriteriaValidator extends Container<{ proteinChange: string }> {
+    protected override initialize() {
+        super.initialize();
+        this.mount('proteinChange', { optional: true }, hgvsValidator);
+    }
+}
+
 export default defineComponent({
     components: {
-        IVuelidate, 
-        DCollectionTransform, 
-        DCodeSystem, 
+        IFieldValidation,
+        DCollectionTransform,
+        DCodeSystem,
         VCFormSelectSearch,
     },
     props: {
@@ -53,12 +80,7 @@ export default defineComponent({
 
         init();
 
-        const vuelidate = useVuelidate({
-            gene: {},
-            cDNAChange: {},
-            gDNAChange: {},
-            proteinChange: { hgvs: helpers.regex(HGVS_CODE_REGEX) },
-        }, form);
+        const v = useValidup(new VariantCriteriaValidator(), form);
 
         watch(entity, () => {
             init();
@@ -70,7 +92,7 @@ export default defineComponent({
 
         const isEditing = computed(() => !!entity.value?.data);
         const submit = () => {
-            if (vuelidate.value.$invalid) {
+            if (v.$invalid.value) {
                 emit('saved', {
                     ...props.entity,
                     data: null,
@@ -86,7 +108,7 @@ export default defineComponent({
         return {
             form,
             transformConcepts,
-            vuelidate,
+            v,
             isEditing,
             submit,
         };
@@ -137,38 +159,34 @@ export default defineComponent({
             placeholder="HGVS"
         />
     </VCFormGroup>
-    <IVuelidate :validation="vuelidate.proteinChange">
-        <template #default="props">
-            <VCFormGroup
-                :validation-messages="props.data"
-                :validation-severity="props.severity"
-            >
-                <template #label>
-                    Proteinänderung
-                </template>
-                <template #default>
-                    <VCFormInput
-                        v-model="vuelidate.proteinChange.$model"
-                        placeholder="HGVS 3-Buchstaben-Code"
-                    />
-                    <!--
-                            <div class="alert alert-sm alert-info mt-1">
-                                todo: as tooltip - info icon next to label
-                                <VCLink
-                                    target="_blank"
-                                    href="https://hgvs-nomenclature.org/stable/background/standards/#amino-acid-descriptions"
-                                >
-                                    code
-                                </VCLink>
-                            </div>
-                            -->
-                </template>
-            </VCFormGroup>
-        </template>
-    </Ivuelidate>
+    <IFieldValidation
+        v-slot="{ value }"
+        :field="v.fields.proteinChange"
+    >
+        <VCFormGroup :validation="value">
+            <template #label>
+                Proteinänderung
+            </template>
+            <VCFormInput
+                v-model="v.fields.proteinChange.$model.value"
+                placeholder="HGVS 3-Buchstaben-Code"
+            />
+            <!--
+                    <div class="alert alert-sm alert-info mt-1">
+                        todo: as tooltip - info icon next to label
+                        <VCLink
+                            target="_blank"
+                            href="https://hgvs-nomenclature.org/stable/background/standards/#amino-acid-descriptions"
+                        >
+                            code
+                        </VCLink>
+                    </div>
+                    -->
+        </VCFormGroup>
+    </IFieldValidation>
     <div>
         <button
-            :disabled="vuelidate.$invalid"
+            :disabled="v.$invalid.value"
             type="button"
             class="btn btn-dark btn-xs"
             @click.prevent="submit()"

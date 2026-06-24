@@ -40,7 +40,9 @@ export default defineComponent({
 </script>
 <template>
     <div>
-        <h5>Überlebensbericht</h5>
+        <h5 class="section-label">
+            Überlebensbericht
+        </h5>
 
         <MQueryKaplanMeierPicker
             class="mb-3"

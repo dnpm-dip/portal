@@ -38,10 +38,23 @@ export default defineNuxtComponent({
 </script>
 
 <template>
-    <div class="">
-        <h1 class="title no-border mb-3">
-            <i class="fa fa-search" /> Suche
-        </h1>
+    <div>
+        <header class="mb-4 flex items-center gap-4">
+            <span
+                class="flex size-12 shrink-0 items-center justify-center rounded-xl
+                       bg-gradient-to-br from-primary-500 to-primary-700 text-xl text-on-primary shadow-md"
+            >
+                <VCIcon name="fa6-solid:magnifying-glass" />
+            </span>
+            <div class="min-w-0">
+                <h1 class="mb-0 text-2xl font-bold tracking-tight">
+                    Suche
+                </h1>
+                <p class="mb-0 text-sm text-fg-muted">
+                    Seltene Erkrankungen
+                </p>
+            </div>
+        </header>
 
         <DPreparedQueryContainer
             use-case="rd"
@@ -50,8 +63,8 @@ export default defineNuxtComponent({
         >
             <template #default="props">
                 <SearchForm
-                    :criteria="props.setCriteria"
-                    @save="props.save"
+                    :criteria="props.criteria"
+                    @save="props.setCriteria"
                     @failed="props.failed"
                     @created="props.queryCreated"
                     @updated="props.queryUpdated"

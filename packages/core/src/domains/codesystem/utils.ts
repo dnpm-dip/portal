@@ -1,8 +1,8 @@
 import type { CodeSystemConcept } from './types';
 
 type FormSelectOption = {
-    id: string | number,
-    value: any
+    value: string | number,
+    label: any
 };
 
 export function transformConceptToFormSelectOption(
@@ -10,16 +10,16 @@ export function transformConceptToFormSelectOption(
 ) : FormSelectOption {
     /*
 
-    let value : any;
+    let label : any;
     if (typeof input.properties.name !== 'undefined') {
-        value = `${input.display}: ${input.properties.name}`;
+        label = `${input.display}: ${input.properties.name}`;
     } else {
-        value = `${input.code}: ${input.display}`;
+        label = `${input.code}: ${input.display}`;
     }
      */
 
     return {
-        id: input.code,
-        value: input.display,
+        value: input.code,
+        label: input.display,
     };
 }

@@ -1,0 +1,57 @@
+/*
+ * Tailwind v4 entry for @dnpm-dip/portal.
+ *
+ * Pulls in the DNPM DIP theme (tailwindcss + @vuecs/design +
+ * theme-tailwind + the kit theme + compat layer + migrated chrome
+ * stylesheets), then declares this app's local `@source` scopes so the
+ * JIT picks up class-name tokens it can't reach via the theme alone.
+ */
+
+/*
+ * Structural CSS for @vuecs/navigation (<VCNavItems>): flex layout for
+ * nav links + submenu triggers (inline icon/label), the dropdown content
+ * panel, and the base pills box. The JS plugin only registers components;
+ * this stylesheet ships separately and must be imported explicitly.
+ * Imported here (not in the theme) because @vuecs/navigation is a direct
+ * dependency of this app — keeping it out of the theme's deps avoids a
+ * dependency re-resolution. Placed BEFORE the theme so the theme's
+ * app-level overrides (styles/vue-layout-navigation.css) still win.
+ */
+@import "@vuecs/navigation/style.css";
+
+/*
+ * Structural CSS for @vuecs/forms (<VCFormSelectSearch> & friends):
+ * positions the dropdown as an absolute overlay panel and styles the
+ * selected chips as clickable remove-pills (label + ×, pointer cursor,
+ * hover state). Without it the option list renders inline below the
+ * input and the chips are bare unstyled buttons. Same direct-dependency
+ * rationale and theme-overrides ordering as @vuecs/navigation above.
+ */
+@import "@vuecs/forms/style.css";
+
+@import "@dnpm-dip/theme";
+
+/*
+ * Scan this app's templates (pages / components / layouts / plugins).
+ * Re-anchored to the app root so coverage is independent of where this
+ * file lives.
+ */
+@source "../..";
+
+/*
+ * The four sibling WORKSPACE packages render their own `.vue` SFC
+ * templates (and `.ts` hyperscript that emits class strings) inside the
+ * portal app — scanned via their local `src` trees (which also keeps
+ * Nuxt HMR rebuilding utilities while editing them). Miss one and that
+ * module renders with `vc-*` defaults / no Tailwind styling.
+ *
+ * EXTERNAL deps (@authup/client-web-kit dist, @vuecs element class
+ * maps) are NOT scanned here — those scopes belong to the theme's
+ * vendored kit-theme cascade (@dnpm-dip/theme src/index.css), which
+ * anchors them at the hoisted root node_modules. If npm ever nests
+ * those packages portal-locally instead, re-add local anchors there.
+ */
+@source "../../../core/src";
+@source "../../../admin/src";
+@source "../../../mtb/src";
+@source "../../../rd/src";

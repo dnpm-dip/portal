@@ -1,0 +1,59 @@
+/*
+ * Vendored from @authup/client-web-kit-theme `styles/list.css` (missing
+ * from the published tarball — see index.css), with one deliberate
+ * delta: upstream still targets the pre-vuecs-major class names
+ * (`.list`, `.list-item`, …), but @vuecs/list and the kit components
+ * (ARoleUserAssignments, AIdentityProviderRoleAssignments, …) now emit
+ * `vc-list`, `vc-list-item`, `vc-list-body`, `vc-list-no-more`. The JS
+ * theme (@vuecs/theme-tailwind) only supplies layout utilities for
+ * these elements — the row chrome (background, border, shadow) below is
+ * what makes list items stand out from the page background.
+ *
+ * Portal-owned list markup (`.list` / `.list-body` / `.list-item` in
+ * the query/patient templates) keeps its own chrome in styles/list.css.
+ */
+
+.vc-list .vc-list-item {
+    background-color: var(--vc-color-bg-muted);
+    border: 1px solid var(--vc-color-border);
+
+    box-shadow: 0 4px 25px 0 rgba(0, 0, 0, .1);
+    transition: color .3s ease-in-out, background-color .3s ease-in-out, border-color .3s ease-in-out, box-shadow .3s ease-in-out;
+
+    border-radius: 4px;
+
+    padding: 0.25rem 0.25rem;
+    margin-bottom: 0.5rem;
+    vertical-align: middle;
+}
+
+.vc-list .vc-list-item.active {
+    background-color: var(--vc-color-bg-elevated);
+}
+
+/* Orange scale (not the amber `warning` tokens) — amber's dark end
+   reads brown; orange keeps the warm tone in both modes. Matches the
+   `.alert-warning` recipe in index.css. */
+.vc-list-no-more {
+    margin-top: 0.5rem;
+    color: var(--color-orange-700);
+    background-color: var(--color-orange-50);
+    padding: 0.4rem 0.7rem;
+    position: relative;
+    margin-bottom: 1rem;
+    border: 1px solid var(--color-orange-200);
+    border-radius: 0.25rem;
+}
+
+/* Dark mode — the light tint above glares against the dark surface;
+   flip to the hand-tuned warm surface tokens (same recipe as
+   `.dark .alert-warning` in index.css). `.vc-list-empty` gets the same
+   treatment: the @vuecs/theme-tailwind JS theme paints it with the
+   identical light-tint utilities, which an unlayered rule here
+   outranks. */
+.dark .vc-list-no-more,
+.dark .vc-list-empty {
+    color: var(--dnpm-warning-surface-fg);
+    background-color: var(--dnpm-warning-surface);
+    border-color: var(--dnpm-warning-surface-border);
+}

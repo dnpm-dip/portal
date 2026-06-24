@@ -6,14 +6,13 @@
   -->
 
 <script lang="ts">
-import type { Component } from 'vue';
 import {
     defineComponent,
+    onMounted,
     onUnmounted,
     ref,
 } from 'vue';
-import type { BTableSortBy, TableFieldRaw } from 'bootstrap-vue-next';
-import { BPlaceholderTable, BTable } from 'bootstrap-vue-next';
+import type { SortDescriptor, TableColumn, TableSortState } from '@vuecs/table';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
 import {
     DSortIndicator,
@@ -32,8 +31,6 @@ export default defineComponent({
         MGeneAlterationText,
         DCodingText,
         DSortIndicator,
-        BPlaceholderTable,
-        BTable: BTable as unknown as Component,
     },
     props: {
         queryId: {
@@ -46,74 +43,72 @@ export default defineComponent({
         const queryEventBus = injectQueryEventBus();
         const queryFilterStore = useQueryFilterStore();
 
-        const tableRef = ref<{ refresh: () => void } | null>(null);
+        const items = ref<QueryGeneAlterationInfo[]>([]);
         const busy = ref(false);
         const total = ref(0);
         const offset = ref(0);
         const limit = ref(50);
-        const sortBy = ref<BTableSortBy[]>([]);
+        const sortBy = ref<TableSortState>([]);
 
-        const fields : TableFieldRaw[] = [
+        const fields : TableColumn[] = [
             {
                 key: 'tumorEntity',
                 label: 'Entität',
-                thClass: 'text-left',
-                tdClass: 'text-left',
+                headerClass: 'text-left',
+                cellClass: 'text-left',
                 sortable: true,
             },
             {
                 key: 'gene',
                 label: 'Gen',
-                thClass: 'text-left',
-                tdClass: 'text-left',
+                headerClass: 'text-left',
+                cellClass: 'text-left',
                 sortable: true,
             },
             {
                 key: 'alteration',
                 label: 'Variante',
-                thClass: 'text-left',
-                tdClass: 'text-left',
+                headerClass: 'text-left',
+                cellClass: 'text-left',
             },
             {
                 key: 'count',
                 label: 'Anzahl',
-                thClass: 'text-center',
-                tdClass: 'text-center align-middle',
+                headerClass: 'text-center',
+                cellClass: 'text-center align-middle',
                 sortable: true,
             },
             {
                 key: 'supporting',
                 label: 'Stützend?',
-                thClass: 'text-center',
-                tdClass: 'text-center align-middle',
+                headerClass: 'text-center',
+                cellClass: 'text-center align-middle',
                 sortable: true,
             },
         ];
 
-        const provider = async (ctx: { sortBy?: readonly BTableSortBy[] }): Promise<QueryGeneAlterationInfo[]> => {
+        const refresh = async (): Promise<void> => {
             busy.value = true;
             try {
                 const sort: Record<string, 'asc' | 'desc'> = {};
-                if (ctx.sortBy) {
-                    ctx.sortBy.forEach((s) => {
-                        if (s.order) {
-                            switch (s.key) {
-                                case 'tumorEntity': {
-                                    sort['tumorEntity.code'] = s.order;
-                                    break;
-                                }
-                                case 'gene': {
-                                    sort['alteration.gene.code'] = s.order;
-                                    break;
-                                }
-                                default: {
-                                    sort[s.key] = s.order;
-                                    break;
-                                }
+                sortBy.value.forEach((s: SortDescriptor) => {
+                    if (s.direction) {
+                        switch (s.key) {
+                            case 'tumorEntity': {
+                                sort['tumorEntity.code'] = s.direction;
+                                break;
+                            }
+                            case 'gene': {
+                                sort['alteration.gene.code'] = s.direction;
+                                break;
+                            }
+                            default: {
+                                sort[s.key] = s.direction;
+                                break;
                             }
                         }
-                    });
-                }
+                    }
+                });
 
                 const meta: ResourceCollectionLoadMeta = {
                     limit: limit.value,
@@ -126,7 +121,7 @@ export default defineComponent({
                 total.value = response.size ?? response.entries.length;
                 limit.value = response.limit ?? limit.value;
                 offset.value = response.offset ?? offset.value;
-                return response.entries;
+                items.value = response.entries;
             } finally {
                 busy.value = false;
             }
@@ -135,21 +130,30 @@ export default defineComponent({
         const load = (meta: PaginationMeta) => {
             offset.value = meta.offset;
             limit.value = meta.limit;
-            tableRef.value?.refresh();
+            void refresh();
         };
+
+        const onSortUpdate = (next: TableSortState) => {
+            sortBy.value = next;
+            void refresh();
+        };
+
+        onMounted(() => {
+            void refresh();
+        });
 
         const removeSessionHandler = queryEventBus.on(
             QueryEventBusEventName.SESSION_UPDATED,
             () => {
                 offset.value = 0;
-                tableRef.value?.refresh();
+                void refresh();
             },
         );
         const removeFiltersHandler = queryEventBus.on(
             QueryEventBusEventName.FILTERS_COMMITED,
             () => {
                 offset.value = 0;
-                tableRef.value?.refresh();
+                void refresh();
             },
         );
 
@@ -160,31 +164,59 @@ export default defineComponent({
 
         const resetSort = () => {
             sortBy.value = [];
-            tableRef.value?.refresh();
+            void refresh();
         };
 
         return {
-            tableRef,
+            items,
             busy,
             total,
             offset,
             limit,
             sortBy,
             fields,
-            provider,
             load,
+            onSortUpdate,
             resetSort,
         };
     },
 });
 </script>
 <template>
-    <BPlaceholderTable
+    <table
         v-if="busy && total === 0"
-        :rows="5"
-        :columns="5"
-        animation="wave"
-    />
+        class="table table-bordered w-full"
+    >
+        <thead>
+            <tr>
+                <th
+                    v-for="c in 5"
+                    :key="c"
+                >
+                    <VCPlaceholder
+                        width="80%"
+                        animation="wave"
+                    />
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                v-for="r in 5"
+                :key="r"
+            >
+                <td
+                    v-for="c in 5"
+                    :key="c"
+                >
+                    <VCPlaceholder
+                        width="100%"
+                        animation="wave"
+                    />
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <div v-show="!busy || total > 0">
         <VCPagination
             :busy="busy"
@@ -200,36 +232,31 @@ export default defineComponent({
             @reset="resetSort"
         />
 
-        <BTable
-            ref="tableRef"
-            v-model:sort-by="sortBy"
-            :provider="provider"
-            :fields="fields"
+        <VCTable
+            :data="items"
+            :columns="fields"
             :busy="busy"
-            :variant="'light'"
-            no-provider-paging
-            outlined
-            :multisort="true"
+            :sort="sortBy"
+            multi-sort
+            @update:sort="onSortUpdate"
         >
-            <template #cell(tumorEntity)="data">
-                <DCodingText :entity="data.item.tumorEntity" />
+            <template #cell-tumorEntity="{ row }: { row: any }">
+                <DCodingText :entity="row.tumorEntity" />
             </template>
-            <template #cell(gene)="data">
-                <DCodingText :entity="data.item.alteration.gene" />
+            <template #cell-gene="{ row }: { row: any }">
+                <DCodingText :entity="row.alteration.gene" />
             </template>
-            <template #cell(alteration)="data">
-                <MGeneAlterationText :entity="data.item.alteration" />
+            <template #cell-alteration="{ row }: { row: any }">
+                <MGeneAlterationText :entity="row.alteration" />
             </template>
-            <template #cell(supporting)="data">
-                <i
-                    class="fa"
-                    :class="{
-                        'fa-check text-success': data.item.supporting,
-                        'fa-times text-danger': !data.item.supporting
-                    }"
+            <template #cell-supporting="{ row }: { row: any }">
+                <VCIcon
+                    :name="row.supporting ? 'fa6-solid:check' : 'fa6-solid:xmark'"
+                    :class="row.supporting ? 'text-success-600' : 'text-error-600'"
                 />
             </template>
-        </BTable>
+            <VCTableEmpty />
+        </VCTable>
 
         <VCPagination
             :busy="busy"

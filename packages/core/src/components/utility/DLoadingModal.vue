@@ -6,12 +6,10 @@
   -->
 
 <script lang="ts">
-import { BModal } from 'bootstrap-vue-next';
 import type { Component } from 'vue';
 import { defineComponent, toRef } from 'vue';
 
 const component = defineComponent({
-    components: { BModal },
     props: {
         display: {
             type: Boolean,
@@ -28,25 +26,26 @@ const component = defineComponent({
 export default component as Component;
 </script>
 <template>
-    <BModal
-        v-model="modal"
-        class="modal-loading"
-        :no-header="true"
-        :no-footer="true"
-        :no-close-on-backdrop="true"
-    >
-        <template #default>
-            <div class="modal-loading-wrapper">
-                <div>
-                    <div class="modal-loading-box" />
-                    <div class="modal-loading-box" />
-                    <div class="modal-loading-box" />
-                    <div class="modal-loading-box" />
-                    <div class="modal-loading-box" />
+    <VCModal :open="modal">
+        <!-- a busy overlay must not be dismissed by a stray click
+             (the pre-migration no-close-on-backdrop guard) -->
+        <VCModalContent
+            class="modal-loading"
+            close-policy="no-outside"
+        >
+            <div class="modal-body">
+                <div class="modal-loading-wrapper">
+                    <div>
+                        <div class="modal-loading-box" />
+                        <div class="modal-loading-box" />
+                        <div class="modal-loading-box" />
+                        <div class="modal-loading-box" />
+                        <div class="modal-loading-box" />
+                    </div>
                 </div>
             </div>
-        </template>
-    </BModal>
+        </VCModalContent>
+    </VCModal>
 </template>
 <style>
 .modal-loading .modal-content,
@@ -91,7 +90,7 @@ export default component as Component;
     position: absolute;
     top: 0;
     right: 0;
-    background-color: #6d7fcc;
+    background-color: var(--dnpm-brand-slate);
     border-radius: var(--modal-loading-box-border-radius);
     /*
     box-shadow: 0px 0px 10px 0px rgba(28, 159, 255, 0.4);
@@ -128,25 +127,25 @@ export default component as Component;
     animation: squidge-4 var(--modal-loading-duration) ease-in-out infinite alternate;
 }
 .modal-loading-box:nth-child(2):after {
-    background-color: #6d7fcc;
+    background-color: var(--dnpm-brand-slate);
 }
 .modal-loading-box:nth-child(3):after {
-    background-color: #8192DD;
+    background-color: color-mix(in oklab, var(--dnpm-brand-slate) 80%, white);
 }
 .modal-loading-box:nth-child(4):after {
-    background-color: #94A6EE;
+    background-color: color-mix(in oklab, var(--dnpm-brand-slate) 60%, white);
 }
 .modal-loading-box:nth-child(5):after {
-    background-color: #A8B9FF;
+    background-color: color-mix(in oklab, var(--dnpm-brand-slate) 40%, white);
 }
 
 @keyframes slide {
     0% {
-        background-color: #6d7fcc;
+        background-color: var(--dnpm-brand-slate);
         transform: translatex(0vw);
     }
     100% {
-        background-color: #A8B9FF;
+        background-color: color-mix(in oklab, var(--dnpm-brand-slate) 40%, white);
         transform: translatex(
             calc(var(--modal-loading-container-duration) - (var(--modal-loading-box-size) * 1.25))
         );
@@ -155,10 +154,10 @@ export default component as Component;
 
 @keyframes color-change {
     0% {
-        background-color: #6d7fcc;
+        background-color: var(--dnpm-brand-slate);
     }
     100% {
-        background-color: #A8B9FF;
+        background-color: color-mix(in oklab, var(--dnpm-brand-slate) 40%, white);
     }
 }
 

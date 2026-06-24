@@ -1,4 +1,5 @@
 <script lang="ts">
+import { VCFormCheckboxGroup } from '@vuecs/forms';
 import {
     computed,
     defineComponent,
@@ -15,7 +16,7 @@ import { injectHTTPClient } from '../../core';
 import type { QueryDiagnosisFilter } from '../../domains';
 
 export default defineComponent({
-    components: { DQueryFilterBox },
+    components: { DQueryFilterBox, VCFormCheckboxGroup },
     props: {
         queryId: {
             type: String,
@@ -118,31 +119,32 @@ export default defineComponent({
         @reset="reset"
     >
         <template #title>
-            <i class="fa fa-stethoscope" /> Diagnose
+            <VCIcon name="fa6-solid:stethoscope" /> Diagnose
         </template>
         <template #default>
             <div
                 v-if="available.category"
                 class="mb-3"
             >
-                <h6><i class="fas fa-tags" /> Kategorie</h6>
+                <h6><VCIcon name="fa6-solid:tags" /> Kategorie</h6>
 
-                <div>
+                <VCFormCheckboxGroup
+                    v-model="category"
+                    @update:model-value="handleChanged"
+                >
                     <template
                         v-for="item in available.category"
                         :key="item.code"
                     >
                         <div class="form-check">
-                            <VCFormInputCheckbox
-                                v-model="category"
+                            <VCFormCheckbox
                                 :label="true"
                                 :label-content="(item.display || item.code)"
                                 :value="item.code"
-                                @change="handleChanged"
                             />
                         </div>
                     </template>
-                </div>
+                </VCFormCheckboxGroup>
             </div>
         </template>
     </DQueryFilterBox>

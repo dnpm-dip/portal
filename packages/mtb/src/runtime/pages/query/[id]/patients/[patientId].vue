@@ -1,7 +1,8 @@
 <script lang="ts">
-import { DNav } from '@dnpm-dip/core';
-import { type PropType, defineComponent } from 'vue';
+import { type PropType, computed, defineComponent } from 'vue';
 import { ref } from 'vue';
+import { VCNavItems } from '@vuecs/navigation';
+import type { NavigationItem } from '@vuecs/navigation';
 import {
     createError, 
     navigateTo, 
@@ -11,7 +12,7 @@ import { injectHTTPClient } from '../../../../core/http-client';
 import type { PatientRecord, QuerySession } from '../../../../domains';
 
 export default defineComponent({
-    components: { DNav },
+    components: { VCNavItems },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -37,28 +38,31 @@ export default defineComponent({
             throw createError({});
         }
 
-        const navItems = [
-            {
-                name: 'Anamnese', 
-                icon: 'fas fa-bars', 
-                urlSuffix: '',
-            },
-            {
-                name: 'Diagnostik', 
-                icon: 'fas fa-stethoscope', 
-                urlSuffix: '/diagnostics',
-            },
-            {
-                name: 'Beschlüsse', 
-                icon: 'fas fa-gavel', 
-                urlSuffix: '/plans',
-            },
-            {
-                name: 'Follow-UP', 
-                icon: 'fas fa-arrow-circle-up', 
-                urlSuffix: '/follow-up',
-            },
-        ];
+        const navItems = computed<NavigationItem[]>(() => {
+            const base = `/mtb/query/${props.entity.id}/patients/${entity.value?.patient.id}`;
+            return [
+                {
+                    name: 'Anamnese', 
+                    icon: 'fa6-solid:bars', 
+                    url: base, 
+                },
+                {
+                    name: 'Diagnostik', 
+                    icon: 'fa6-solid:stethoscope', 
+                    url: `${base}/diagnostics`, 
+                },
+                {
+                    name: 'Beschlüsse', 
+                    icon: 'fa6-solid:gavel', 
+                    url: `${base}/plans`, 
+                },
+                {
+                    name: 'Follow-UP', 
+                    icon: 'fa6-solid:circle-arrow-up', 
+                    url: `${base}/follow-up`, 
+                },
+            ];
+        });
 
         return {
             navItems,
@@ -69,26 +73,36 @@ export default defineComponent({
 </script>
 <template>
     <div>
-        <div class="mb-2">
-            <h4>
-                <NuxtLink
-                    class="btn btn-xs btn-dark me-1"
-                    :to="'/mtb/query/'+ entity.id +'/patients'"
-                >
-                    <i class="fa fa-arrow-left" />
-                </NuxtLink>
-                Patient <small class="text-muted"> {{ record.patient.id }}</small>
-            </h4>
-        </div>
+        <header class="mb-4 flex items-center gap-4">
+            <span
+                class="flex size-12 shrink-0 items-center justify-center rounded-xl
+                       bg-gradient-to-br from-primary-500 to-primary-700 text-xl text-on-primary shadow-md"
+            >
+                <VCIcon name="fa6-solid:hospital-user" />
+            </span>
+            <div class="min-w-0">
+                <h1 class="mb-0 text-2xl font-bold tracking-tight">
+                    Patient
+                </h1>
+                <p class="mb-0 truncate font-mono text-sm text-fg-muted">
+                    {{ record.patient.id }}
+                </p>
+            </div>
+            <NuxtLink
+                class="btn btn-sm btn-secondary ms-auto"
+                :to="'/mtb/query/'+ entity.id +'/patients'"
+            >
+                <VCIcon name="fa6-solid:arrow-left" />
+                Zu den Patienten
+            </NuxtLink>
+        </header>
 
-        <div class="mb-2">
-            <DNav
-                :items="navItems"
-                :path="'/mtb/query/'+ entity.id + '/patients/' + record.patient.id"
+        <div class="mb-3">
+            <VCNavItems
+                :data="navItems"
+                variant="pills"
             />
         </div>
-
-        <hr>
 
         <template v-if="record">
             <NuxtPage

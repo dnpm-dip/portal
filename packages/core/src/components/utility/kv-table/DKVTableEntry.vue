@@ -97,20 +97,16 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="d-flex flex-column gap-2">
-        <div class="d-flex flex-row gap-2">
+    <div class="flex flex-col gap-2">
+        <div class="flex flex-row gap-2">
             <template v-if="expandable">
                 <button
                     type="button"
                     class="btn btn-xs btn-dark"
                     @click.prevent="toggle"
                 >
-                    <i
-                        class="fa"
-                        :class="{
-                            'fa-chevron-up': expanded,
-                            'fa-chevron-down': !expanded,
-                        }"
+                    <VCIcon
+                        :name="expanded ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'"
                     />
                 </button>
             </template>

@@ -9,21 +9,48 @@
 import {
     HGVS_CODE_REGEX,
 } from '@dnpm-dip/core';
-import { IVuelidate } from '@ilingo/vuelidate';
-import useVuelidate from '@vuelidate/core';
-import { helpers } from '@vuelidate/validators';
+import { IFieldValidation } from '@ilingo/validup-vue';
+import { useValidup } from '@validup/vue';
+import { Container, ValidupError, defineIssueItem } from 'validup';
+import type { Validator } from 'validup';
 import {
-    type PropType, 
-    computed, 
-    defineComponent, 
-    reactive, 
-    toRef, 
+    type PropType,
+    computed,
+    defineComponent,
+    reactive,
+    toRef,
     watch,
 } from 'vue';
 import { type QueryGeneAlterationSNVCriteria, QueryMutationType } from '../../../domains';
 
+const hgvsValidator: Validator = (ctx) => {
+    const value = ctx.value as string | undefined;
+    if (!value) {
+        return value;
+    }
+
+    HGVS_CODE_REGEX.lastIndex = 0;
+    if (!HGVS_CODE_REGEX.test(value)) {
+        throw new ValidupError([
+            defineIssueItem({
+                path: [],
+                message: 'Es müssen ein oder mehrere HGVS-Codes in 3-Buchstaben-Format in der Eingabe vorkommen',
+            }),
+        ]);
+    }
+
+    return value;
+};
+
+class SNVCriteriaValidator extends Container<{ proteinChange: string }> {
+    protected override initialize() {
+        super.initialize();
+        this.mount('proteinChange', { optional: true }, hgvsValidator);
+    }
+}
+
 export default defineComponent({
-    components: { IVuelidate },
+    components: { IFieldValidation },
     props: { entity: Object as PropType<QueryGeneAlterationSNVCriteria> },
     emits: ['updated'],
     setup(props, { emit }) {
@@ -38,10 +65,7 @@ export default defineComponent({
             proteinChange: '',
         });
 
-        const vuelidate = useVuelidate({
-            dnaChange: {},
-            proteinChange: { hgvs: helpers.regex(HGVS_CODE_REGEX) },
-        }, form);
+        const v = useValidup(new SNVCriteriaValidator(), form);
 
         const init = () => {
             if (!props.entity) return;
@@ -75,7 +99,7 @@ export default defineComponent({
             form,
             isEditing,
             handleChanged,
-            vuelidate,
+            v,
         };
     },
 });
@@ -93,34 +117,30 @@ export default defineComponent({
             />
         </template>
     </VCFormGroup>
-    <IVuelidate :validation="vuelidate.proteinChange">
-        <template #default="props">
-            <VCFormGroup
-                :validation-messages="props.data"
-                :validation-severity="props.severity"
-            >
-                <template #label>
-                    Proteinänderung
-                </template>
-                <template #default>
-                    <VCFormInput
-                        v-model="vuelidate.proteinChange.$model"
-                        placeholder="HGVS 3-Buchstaben-Code"
-                        @change="handleChanged"
-                    />
-                    <!--
-                        <div class="alert alert-sm alert-info mt-1">
-                            todo: as tooltip - info icon next to label
-                            <VCLink
-                                target="_blank"
-                                href="https://hgvs-nomenclature.org/stable/background/standards/#amino-acid-descriptions"
-                            >
-                                code
-                            </VCLink>
-                        </div>
-                        -->
-                </template>
-            </VCFormGroup>
-        </template>
-    </ivuelidate>
+    <IFieldValidation
+        v-slot="{ value }"
+        :field="v.fields.proteinChange"
+    >
+        <VCFormGroup :validation="value">
+            <template #label>
+                Proteinänderung
+            </template>
+            <VCFormInput
+                v-model="v.fields.proteinChange.$model.value"
+                placeholder="HGVS 3-Buchstaben-Code"
+                @change="handleChanged"
+            />
+            <!--
+                <div class="alert alert-sm alert-info mt-1">
+                    todo: as tooltip - info icon next to label
+                    <VCLink
+                        target="_blank"
+                        href="https://hgvs-nomenclature.org/stable/background/standards/#amino-acid-descriptions"
+                    >
+                        code
+                    </VCLink>
+                </div>
+                -->
+        </VCFormGroup>
+    </IFieldValidation>
 </template>

@@ -78,15 +78,13 @@ export default defineComponent({
                 </slot>
             </template>
         </div>
-        <div class="ms-auto">
-            <a
-                v-if="minItems < totalItems || !isEmpty"
-                href="javascript:void(0)"
-                class="nav-link text-center"
-                @click="close"
-            >
-                <i class="fa fa-times" />
-            </a>
-        </div>
+        <a
+            v-if="minItems < totalItems || !isEmpty"
+            href="javascript:void(0)"
+            class="form-tab-action"
+            @click="close"
+        >
+            <VCIcon name="fa6-solid:xmark" />
+        </a>
     </li>
 </template>

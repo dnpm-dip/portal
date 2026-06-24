@@ -1,6 +1,6 @@
 <script lang="ts">
 
-import { BOrchestrator } from 'bootstrap-vue-next';
+import { VCToastProvider, VCToaster } from '@vuecs/overlays';
 import PageHeader from '../components/header.vue';
 import PageSidebar from '../components/sidebar.vue';
 import PageFooter from '../components/footer.vue';
@@ -8,24 +8,27 @@ import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
     components: {
-        BOrchestrator, 
-        PageHeader, 
-        PageSidebar, 
+        VCToastProvider,
+        VCToaster,
+        PageHeader,
+        PageSidebar,
         PageFooter,
     },
 });
 </script>
 
 <template>
-    <div id="app">
-        <PageHeader />
-        <div class="page-wrapper">
-            <PageSidebar />
-            <div class="page-content">
-                <NuxtPage />
+    <VCToastProvider>
+        <div id="app">
+            <PageHeader />
+            <div class="page-wrapper">
+                <PageSidebar />
+                <div class="page-content">
+                    <NuxtPage />
+                </div>
             </div>
+            <VCToaster position="top-center" />
+            <PageFooter />
         </div>
-        <BOrchestrator />
-        <PageFooter />
-    </div>
+    </VCToastProvider>
 </template>

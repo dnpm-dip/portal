@@ -7,17 +7,17 @@
 
 <script lang="ts">
 import { type PropType, computed, defineComponent } from 'vue';
-import type { BTableSortBy, TableFieldRaw } from 'bootstrap-vue-next';
+import type { SortDescriptor, TableColumn } from '@vuecs/table';
 import { isObject } from 'smob';
 
 export default defineComponent({
     props: {
         sortBy: {
-            type: Array as PropType<BTableSortBy[]>,
+            type: Array as PropType<SortDescriptor[]>,
             default: () => [],
         },
         fields: {
-            type: Array as PropType<TableFieldRaw[]>,
+            type: Array as PropType<TableColumn[]>,
             default: () => [],
         },
         labelMap: {
@@ -28,7 +28,7 @@ export default defineComponent({
     emits: ['reset'],
     setup(props, { emit }) {
         const activeSorts = computed(() => props.sortBy
-            .filter((s) => s.order)
+            .filter((s) => s.direction)
             .map((s) => {
                 let label: string | undefined = props.labelMap[s.key];
 
@@ -44,7 +44,7 @@ export default defineComponent({
                 return {
                     key: s.key,
                     label,
-                    order: s.order,
+                    order: s.direction,
                 };
             }));
 
@@ -65,22 +65,22 @@ export default defineComponent({
 <template>
     <div
         v-if="hasActiveSorts"
-        class="d-sort-indicator d-flex align-items-center gap-2 mb-2 p-2 bg-light border rounded"
+        class="d-sort-indicator flex items-center gap-2 mb-2 p-2 bg-bg-elevated border rounded"
     >
-        <small class="text-muted fw-bold">Sortierung:</small>
+        <small class="text-fg-muted font-bold">Sortierung:</small>
         <span
             v-for="(sort, index) in activeSorts"
             :key="sort.key"
-            class="badge bg-secondary d-flex align-items-center gap-1"
+            class="badge bg-bg-muted flex items-center gap-1"
         >
             {{ sort.label }}
-            <i
-                class="fa fa-sm"
-                :class="sort.order === 'asc' ? 'fa-arrow-up' : 'fa-arrow-down'"
+            <VCIcon
+                class="text-sm"
+                :name="sort.order === 'asc' ? 'fa6-solid:arrow-up' : 'fa6-solid:arrow-down'"
             />
             <span
                 v-if="index < activeSorts.length - 1"
-                class="text-muted"
+                class="text-fg-muted"
             />
         </span>
         <button
@@ -88,7 +88,10 @@ export default defineComponent({
             class="btn btn-sm btn-outline-secondary ms-auto"
             @click="reset"
         >
-            <i class="fa fa-times me-1" />
+            <VCIcon
+                name="fa6-solid:xmark"
+                class="me-1"
+            />
             Zurücksetzen
         </button>
     </div>

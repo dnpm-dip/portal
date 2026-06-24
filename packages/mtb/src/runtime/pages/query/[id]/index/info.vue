@@ -15,12 +15,13 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <div>
-        <h6>
-            <i class="fa fa-map-marker-alt" /> Standorte
+    <div class="mb-2">
+        <h6 class="section-label mb-0">
+            <VCIcon name="fa6-solid:location-dot" />
+            Standorte
         </h6>
     </div>
-    <div class="d-flex flex-row flex-wrap gap-2">
+    <div class="flex flex-row flex-wrap gap-2">
         <template
             v-for="(item, key) in entity.peers"
             :key="key"

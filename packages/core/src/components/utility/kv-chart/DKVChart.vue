@@ -120,7 +120,7 @@ const component = defineComponent({
 export default component as Component;
 </script>
 <template>
-    <div class="d-flex flex-column gap-1">
+    <div class="flex flex-col gap-1">
         <template v-if="itemsMissing">
             <div class="alert alert-sm alert-warning">
                 Es werden nur <strong>{{ itemsDisplayed }}/{{ itemsTotal }}</strong> Elemente angezeigt, da

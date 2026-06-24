@@ -1,27 +1,21 @@
 <script lang="ts">
-import { BFormTag } from 'bootstrap-vue-next';
 import type { PropType, SlotsType } from 'vue';
 import {
-    defineComponent, 
-    ref, 
-    toRef, 
+    defineComponent,
+    ref,
+    toRef,
     watch,
 } from 'vue';
 
-type ColorVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | null;
 type Tag = {
     id: string | number,
     value: string
 };
 export default defineComponent({
-    components: { BFormTag },
     props: {
         modelValue: { type: Array as PropType<Tag[]> },
         items: { type: Array as PropType<Tag[]> },
         tagClass: { type: String },
-        tagPills: { type: Boolean },
-        tagValidator: { type: Function as PropType<(t: string) => boolean> },
-        tagVariant: { type: String as PropType<ColorVariant> },
         emitOnly: {
             type: Boolean,
             default: false,
@@ -80,7 +74,11 @@ export default defineComponent({
 </script>
 <template>
     <slot>
-        <ul class="list-unstyled mb-0 d-flex flex-wrap align-items-center">
+        <!-- The @vuecs/forms chip rules are scoped under
+             .vc-form-select-search, so the list carries that scope class —
+             this renders standalone tags identical to the select-search
+             chips (clickable pill removes the item). -->
+        <ul class="vc-form-select-search vc-form-select-search-selected list-unstyled mb-0">
             <template
                 v-for="(item, index) in tags"
                 :key="item.id"
@@ -89,24 +87,26 @@ export default defineComponent({
                     name="tag"
                     :tag="item.id"
                     :tag-class="tagClass"
-                    :tag-variant="tagVariant"
-                    :tag-pills="tagPills"
                     :remove-tag="drop"
                 >
                     <template v-if="index > 0">
                         <slot name="between" />
                     </template>
-                    <BFormTag
-                        :key="item.id"
-                        class="mt-1"
-                        :class="tagClass"
-                        tag="li"
-                        :variant="tagVariant"
-                        :pill="tagPills"
-                        @remove="drop"
-                    >
-                        {{ item.value }}
-                    </BFormTag>
+                    <li :key="item.id">
+                        <button
+                            type="button"
+                            class="vc-form-select-search-selected-item"
+                            :class="tagClass"
+                            title="Entfernen"
+                            @click.prevent="drop(item.value)"
+                        >
+                            {{ item.value }}
+                            <span
+                                class="vc-form-select-search-selected-item-remove"
+                                aria-hidden="true"
+                            >&times;</span>
+                        </button>
+                    </li>
                 </slot>
             </template>
         </ul>

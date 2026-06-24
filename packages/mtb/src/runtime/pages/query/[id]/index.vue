@@ -1,7 +1,6 @@
 <script lang="ts">
 import { computed, ref } from 'vue';
 import {
-    DNav,
     DQueryFilterContainer,
     DQueryInfoBox,
     DQueryPatientFilters,
@@ -10,6 +9,8 @@ import {
 } from '@dnpm-dip/core';
 import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
 import type { PropType } from 'vue';
+import { VCNavItems } from '@vuecs/navigation';
+import type { NavigationItem } from '@vuecs/navigation';
 import { defineNuxtComponent, useRoute } from '#imports';
 import MQueryCriteriaModal from '../../../components/core/query-criteria/MQueryCriteriaModal.vue';
 import MQueryCriteriaSummary from '../../../components/core/query-criteria/MQueryCriteriaSummary.vue';
@@ -19,6 +20,7 @@ import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        VCNavItems,
         MQueryCriteriaModal,
         DQueryFilterContainer,
         MQueryMedicationFilter,
@@ -26,7 +28,6 @@ export default defineNuxtComponent({
         MQueryCriteriaSummary,
         DQueryPatientFilters,
         DQueryInfoBox,
-        DNav,
     },
     props: {
         entity: {
@@ -59,56 +60,56 @@ export default defineNuxtComponent({
 
         initCriteriaExpansion();
 
-        const navItems = [
+        const navItems = computed<NavigationItem[]>(() => [
             {
-                name: 'Überblick',
-                icon: 'fas fa-bars',
-                urlSuffix: '/summary',
+                name: 'Überblick', 
+                icon: 'fa6-solid:bars', 
+                url: `/mtb/query/${props.entity.id}/summary`, 
             },
             {
-                name: 'Patienten',
-                icon: 'fas fa-user-injured',
-                urlSuffix: '/patients',
+                name: 'Patienten', 
+                icon: 'fa6-solid:user-injured', 
+                url: `/mtb/query/${props.entity.id}/patients`, 
             },
             {
-                name: 'Info',
-                icon: 'fa fa-network-wired',
-                urlSuffix: '/info',
+                name: 'Info', 
+                icon: 'fa6-solid:network-wired', 
+                url: `/mtb/query/${props.entity.id}/info`, 
             },
-        ];
+        ]);
 
-        const summaryNavItems = [
+        const summaryNavItems = computed<NavigationItem[]>(() => [
             {
-                name: 'Demographie',
-                icon: 'fas fa-globe',
-                urlSuffix: '',
+                name: 'Demographie', 
+                icon: 'fa6-solid:globe', 
+                url: `/mtb/query/${props.entity.id}/summary`, 
             },
             {
-                name: 'Diagnose',
-                icon: 'fas fa-stethoscope',
-                urlSuffix: '/diagnostics',
+                name: 'Diagnose', 
+                icon: 'fa6-solid:stethoscope', 
+                url: `/mtb/query/${props.entity.id}/summary/diagnostics`, 
             },
             {
                 name: 'Gen Alterationen',
-                icon: 'fas fa-dna',
-                urlSuffix: '/gene-alterations',
+                icon: 'fa6-solid:dna',
+                url: `/mtb/query/${props.entity.id}/summary/gene-alterations`,
             },
             {
                 name: 'Medikation',
-                icon: 'fas fa-pills',
-                urlSuffix: '/medication',
+                icon: 'fa6-solid:pills',
+                url: `/mtb/query/${props.entity.id}/summary/medication`,
             },
             {
-                name: 'Therapie Responses',
-                icon: 'fas fa-comment-medical',
-                urlSuffix: '/therapy-responses',
+                name: 'Therapie Responses', 
+                icon: 'fa6-solid:comment-medical', 
+                url: `/mtb/query/${props.entity.id}/summary/therapy-responses`, 
             },
             {
                 name: 'Überlebensbericht',
-                icon: 'fas fa-book-open',
-                urlSuffix: '/survival-report',
+                icon: 'fa6-solid:book-open',
+                url: `/mtb/query/${props.entity.id}/summary/survival-report`,
             },
-        ];
+        ]);
 
         const isSummaryActive = computed(() => route.path.startsWith(`/mtb/query/${props.entity.id}/summary`));
 
@@ -141,59 +142,68 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <div class="d-flex flex-row">
-        <div>
-            <h4>
-                <NuxtLink
-                    class="btn btn-xs btn-dark me-1"
-                    :to="'/mtb/'"
-                >
-                    <i class="fa fa-arrow-left" />
-                </NuxtLink>
+    <header class="mb-4 flex items-center gap-4">
+        <span
+            class="flex size-12 shrink-0 items-center justify-center rounded-xl
+                   bg-gradient-to-br from-primary-500 to-primary-700 text-xl text-on-primary shadow-md"
+        >
+            <VCIcon name="fa6-solid:magnifying-glass-chart" />
+        </span>
+        <div class="min-w-0">
+            <h1 class="mb-0 text-2xl font-bold tracking-tight">
                 Abfrage
-            </h4>
+            </h1>
+            <p class="mb-0 text-sm text-fg-muted">
+                Molekulares Tumorboard
+            </p>
         </div>
-    </div>
+        <NuxtLink
+            class="btn btn-sm btn-secondary ms-auto"
+            :to="'/mtb/'"
+        >
+            <VCIcon name="fa6-solid:arrow-left" />
+            Zur Suche
+        </NuxtLink>
+    </header>
 
-    <div class="d-flex flex-column gap-3">
-        <div class="d-flex flex-column gap-2">
-            <div class="d-flex flex-row">
+    <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-row">
                 <div>
-                    <DNav
-                        :items="navItems"
-                        :path="'/mtb/query/'+ entity.id"
-                    >
-                        <template #end />
-                    </DNav>
+                    <VCNavItems
+                        :data="navItems"
+                        variant="pills"
+                    />
                 </div>
             </div>
             <div
                 v-if="isSummaryActive"
-                class="d-flex flex-row"
+                class="flex flex-row"
             >
                 <div>
-                    <DNav
-                        :items="summaryNavItems"
-                        :path="'/mtb/query/'+ entity.id + '/summary'"
+                    <VCNavItems
+                        :data="summaryNavItems"
+                        variant="pills"
                     />
                 </div>
             </div>
         </div>
 
-        <div class="entity-card w-100">
-            <div class="d-flex flex-column gap-2">
-                <div class="d-flex flex-row align-items-center">
+        <div class="entity-card w-full">
+            <div class="flex flex-col gap-2">
+                <div class="flex flex-row items-center">
                     <div>
-                        <h6 class="text-muted mb-0">
+                        <h6 class="section-label mb-0">
+                            <VCIcon name="fa6-solid:list-check" />
                             Kriterien
                         </h6>
                     </div>
-                    <div class="ms-auto d-flex gap-1">
+                    <div class="ms-auto flex gap-1">
                         <button
                             class="btn btn-dark btn-xs"
                             @click.prevent="toggleCriteriaExpansion"
                         >
-                            <i :class="{'fa fa-chevron-down': !criteriaExpansion, 'fa fa-chevron-up': criteriaExpansion}" />
+                            <VCIcon :name="criteriaExpansion ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
                         </button>
                         <MQueryCriteriaModal
                             :entity="entity"
@@ -205,7 +215,7 @@ export default defineNuxtComponent({
                                     class="btn btn-dark btn-xs"
                                     @click.prevent="props.toggle()"
                                 >
-                                    <i class="fa fa-edit" /> Anpassen
+                                    <VCIcon name="fa6-solid:pen-to-square" /> Anpassen
                                 </button>
                             </template>
                         </MQueryCriteriaModal>
@@ -216,7 +226,9 @@ export default defineNuxtComponent({
                         <MQueryCriteriaSummary :entity="entity.criteria" />
                     </template>
                     <template v-else>
-                        Es sind keine Suchkriterien definiert.
+                        <p class="mb-0 text-sm text-fg-muted">
+                            Es sind keine Suchkriterien definiert.
+                        </p>
                     </template>
                 </div>
             </div>
@@ -232,7 +244,7 @@ export default defineNuxtComponent({
         <template v-if="entity">
             <div class="row">
                 <div class="col-6 col-md-9 col-lg-10">
-                    <div class="d-flex flex-column gap-3">
+                    <div class="flex flex-col gap-3">
                         <div>
                             <NuxtPage
                                 :entity="entity"
@@ -242,7 +254,7 @@ export default defineNuxtComponent({
                     </div>
                 </div>
                 <div class="col-6 col-md-3 col-lg-2">
-                    <div class="d-flex flex-column gap-3">
+                    <div class="flex flex-col gap-3">
                         <DQueryFilterContainer>
                             <template #default>
                                 <DQueryPatientFilters

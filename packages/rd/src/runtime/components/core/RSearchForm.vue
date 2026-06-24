@@ -11,14 +11,13 @@ import {
 import {
     DCollectionTransform,
     DFormTabGroups,
-    DSitePicker, 
-    DTags, 
-    DValueSet, 
-    QueryRequestMode, 
+    DSitePicker,
+    DValueSet,
+    QueryRequestMode,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
-import { VCFormSelectSearch } from '@vuecs/form-controls';
-import type { FormSelectOption } from '@vuecs/form-controls';
+import { VCFormSelectSearch } from '@vuecs/forms';
+import type { FormOption } from '@vuecs/forms';
 import { type PropType, toRef, watch } from 'vue';
 import {
     defineComponent, 
@@ -37,7 +36,6 @@ export default defineComponent({
         DLoadingButton,
         DLoadingModal,
         DSitePicker,
-        DTags,
         RVariantFormTabGroup,
         DFormTabGroups,
         DCollectionTransform,
@@ -64,22 +62,22 @@ export default defineComponent({
 
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
         const modeSites = ref<Coding[]>([]);
-        const modeOptions : FormSelectOption[] = [
-            { id: QueryRequestMode.LOCAL, value: 'Lokal' },
-            { id: QueryRequestMode.FEDERATED, value: 'Föderiert' },
-            { id: QueryRequestMode.CUSTOM, value: 'Benutzerdefiniert' },
+        const modeOptions : FormOption[] = [
+            { value: QueryRequestMode.LOCAL, label: 'Lokal' },
+            { value: QueryRequestMode.FEDERATED, label: 'Föderiert' },
+            { value: QueryRequestMode.CUSTOM, label: 'Benutzerdefiniert' },
         ];
 
         const busy = ref(false);
         const criteria = toRef(props, 'criteria');
 
-        const categories = ref<FormSelectOption[]>([]);
-        const hpoTerms = ref<FormSelectOption[]>([]);
+        const categories = ref<string[]>([]);
+        const hpoTerms = ref<string[]>([]);
         const variants = ref<FormTabInput<QueryCriteriaVariant<string>>[]>([]);
 
         const parseCategory = (coding: Coding) => ({
-            id: `${coding.system}:::${coding.code}`,
-            value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
+            value: `${coding.system}:::${coding.code}`,
+            label: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
         const reset = async () => {
@@ -116,16 +114,13 @@ export default defineComponent({
 
                 if (criteria.value.hpoTerms) {
                     for (const term of criteria.value.hpoTerms) {
-                        hpoTerms.value.push({
-                            id: term.code,
-                            value: term.display || term.code,
-                        });
+                        hpoTerms.value.push(`${term.code}`);
                     }
                 }
 
                 if (criteria.value.diagnoses) {
                     for (const diagnosis of criteria.value.diagnoses) {
-                        categories.value.push(parseCategory(diagnosis as Coding));
+                        categories.value.push(`${parseCategory(diagnosis as Coding).value}`);
                     }
                 }
             }
@@ -145,24 +140,6 @@ export default defineComponent({
 
         Promise.resolve()
             .then(() => reset());
-
-        const selectCategory = (item: FormSelectOption) => {
-            const index = categories.value.findIndex((el) => el.id === item.id);
-            if (index === -1) {
-                categories.value.push(item);
-            } else {
-                categories.value.splice(index, 1);
-            }
-        };
-
-        const selectHPOTerm = (item: FormSelectOption) => {
-            const index = hpoTerms.value.findIndex((el) => el.id === item.id);
-            if (index === -1) {
-                hpoTerms.value.push(item);
-            } else {
-                hpoTerms.value.splice(index, 1);
-            }
-        };
 
         const buildCriteria = () : QueryCriteria => {
             const payload : QueryCriteria = {};
@@ -199,7 +176,7 @@ export default defineComponent({
                 payload.hpoTerms = [];
 
                 for (const term of hpoTerms.value) {
-                    payload.hpoTerms.push({ code: `${term.id}` });
+                    payload.hpoTerms.push({ code: term });
                 }
             }
 
@@ -207,7 +184,7 @@ export default defineComponent({
                 payload.diagnoses = [];
 
                 for (const category of categories.value) {
-                    const id = `${category.id}`;
+                    const id = `${category}`;
                     const index = id.indexOf(':::');
 
                     payload.diagnoses.push({
@@ -264,8 +241,8 @@ export default defineComponent({
         };
 
         const transformCodings = (coding: ValueSetCoding) => ({
-            id: coding.code,
-            value: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
+            value: coding.code,
+            label: coding.display ? `${coding.code}: ${coding.display}` : coding.code,
         });
 
         return {
@@ -276,9 +253,6 @@ export default defineComponent({
             busy,
             hpoTerms,
             categories,
-
-            selectCategory,
-            selectHPOTerm,
 
             variants,
             save,
@@ -295,7 +269,7 @@ export default defineComponent({
         <form>
             <div class="row mb-3">
                 <div class="col">
-                    <h6><i class="fa fa-diagnoses" /> Diagnose </h6>
+                    <h6><VCIcon name="fa6-solid:notes-medical" /> Diagnose </h6>
 
                     <div class="form-group">
                         <label>Kategorie</label>
@@ -311,19 +285,10 @@ export default defineComponent({
                                     <template #default="options">
                                         <VCFormSelectSearch
                                             v-model="categories"
-                                            :multiple="true"
                                             :options="options"
+                                            :close-on-select="true"
                                             placeholder="..."
-                                        >
-                                            <template #selected="{ items, toggle }">
-                                                <DTags
-                                                    :emit-only="true"
-                                                    :items="items"
-                                                    tag-variant="light"
-                                                    @deleted="toggle"
-                                                />
-                                            </template>
-                                        </VCFormSelectSearch>
+                                        />
                                     </template>
                                 </DCollectionTransform>
                             </template>
@@ -338,7 +303,7 @@ export default defineComponent({
                     </div>
                 </div>
                 <div class="col">
-                    <h6><i class="fas fa-microscope" /> HPO</h6>
+                    <h6><VCIcon name="fa6-solid:microscope" /> HPO</h6>
 
                     <div class="form-group">
                         <label>Term</label>
@@ -354,19 +319,10 @@ export default defineComponent({
                                     <template #default="options">
                                         <VCFormSelectSearch
                                             v-model="hpoTerms"
-                                            :multiple="true"
                                             :options="options"
+                                            :close-on-select="true"
                                             placeholder="Human Phenotype Ontology"
-                                        >
-                                            <template #selected="{ items, toggle }">
-                                                <DTags
-                                                    :emit-only="true"
-                                                    :items="items"
-                                                    tag-variant="light"
-                                                    @deleted="toggle"
-                                                />
-                                            </template>
-                                        </VCFormSelectSearch>
+                                        />
                                     </template>
                                 </DCollectionTransform>
                             </template>
@@ -384,31 +340,31 @@ export default defineComponent({
 
             <hr>
 
-            <div class="row mb-2">
-                <div class="col">
-                    <h6><i class="fa fa-dna" /> Varianten</h6>
-                </div>
+            <div class="mb-2">
+                <h6><VCIcon name="fa6-solid:dna" /> Varianten</h6>
 
-                <DFormTabGroups
-                    v-model="variants"
-                    :min-items="1"
-                    :max-items="6"
-                >
-                    <!-- todo: label; max 15 zeichen; {{Gene}} ({{dnaÄnderung}} || -->
-                    <!-- todo: {{proteinänderung}}) || proteinänderung precedence vorrang dnaÄnderung -->
-                    <template #default="props">
-                        <RVariantFormTabGroup
-                            :entity="props.data"
-                            @saved="props.saved"
-                        />
-                    </template>
-                </DFormTabGroups>
+                <div class="mt-2">
+                    <DFormTabGroups
+                        v-model="variants"
+                        :min-items="1"
+                        :max-items="6"
+                    >
+                        <!-- todo: label; max 15 zeichen; {{Gene}} ({{dnaÄnderung}} || -->
+                        <!-- todo: {{proteinänderung}}) || proteinänderung precedence vorrang dnaÄnderung -->
+                        <template #default="props">
+                            <RVariantFormTabGroup
+                                :entity="props.data"
+                                @saved="props.saved"
+                            />
+                        </template>
+                    </DFormTabGroups>
+                </div>
             </div>
 
             <hr>
 
             <div>
-                <h6><i class="fas fa-filter" /> Suchmodus</h6>
+                <h6><VCIcon name="fa6-solid:filter" /> Suchmodus</h6>
 
                 <VCFormSelect
                     v-model="mode"
@@ -425,31 +381,31 @@ export default defineComponent({
                 </template>
             </div>
 
-            <hr>
+            <div
+                class="sticky bottom-0 z-10 mt-4 flex flex-wrap items-center justify-end gap-2
+                       border-t border-border bg-bg/85 py-3 backdrop-blur"
+            >
+                <button
+                    :disabled="busy"
+                    type="button"
+                    class="btn btn-secondary"
+                    title="Suchkriterien als gespeicherte Anfrage ablegen"
+                    @click.prevent="save()"
+                >
+                    <VCIcon name="fa6-solid:floppy-disk" />
+                    Speichern
+                </button>
 
-            <div>
-                <div class="row">
-                    <div class="col">
-                        <DLoadingButton
-                            class="btn btn-block btn-dark"
-                            :loading="busy"
-                            @click.prevent="submit()"
-                        >
-                            <i class="fa fa-search me-1" /> Suchen
-                        </DLoadingButton>
-                    </div>
-
-                    <div class="col">
-                        <button
-                            :disabled="busy"
-                            type="button"
-                            class="btn btn-block btn-primary"
-                            @click.prevent="save()"
-                        >
-                            <i class="fa fa-save me-1" /> Speichern
-                        </button>
-                    </div>
-                </div>
+                <DLoadingButton
+                    class="btn btn-primary min-w-36"
+                    :loading="busy"
+                    @click.prevent="submit()"
+                >
+                    <VCIcon
+                        name="fa6-solid:magnifying-glass"
+                        class="me-1"
+                    /> Suchen
+                </DLoadingButton>
             </div>
         </form>
 

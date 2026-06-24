@@ -1,3 +1,4 @@
+import type { FormOption } from '@vuecs/forms';
 import { isObject } from '../../utils';
 import type { Coding } from './types';
 
@@ -14,10 +15,7 @@ export function toCoding(input: number | string | Coding) : Coding {
     return input;
 }
 
-type FormSelectOption = {
-    id: string | number,
-    value: any
-};
+type FormSelectOption = FormOption;
 
 export function transformCodingsToFormSelectOptions(
     input: Coding[],
@@ -26,8 +24,8 @@ export function transformCodingsToFormSelectOptions(
 
     for (const item of input) {
         output.push({
-            id: item.code,
-            value: item.display || item.code,
+            value: item.code,
+            label: item.display || item.code,
         });
     }
 
@@ -40,7 +38,7 @@ export function transformFormSelectOptionsToCodings(
     const output : Coding[] = [];
 
     for (const item of input) {
-        output.push({ code: `${item.id}` });
+        output.push({ code: `${item.value}` });
     }
 
     return output;
@@ -74,8 +72,8 @@ export function extractCodeFromCodingsRecord(
 // todo: implement this in form-controls package
 function isFormSelectOption(input: unknown) : input is FormSelectOption {
     return isObject(input) &&
-        typeof input.id !== 'undefined' &&
-        typeof input.value !== 'undefined';
+        typeof input.value !== 'undefined' &&
+        typeof input.label !== 'undefined';
 }
 
 export function buildCodingsRecord(input: Record<string, any>) : Record<string, any> {
@@ -84,7 +82,7 @@ export function buildCodingsRecord(input: Record<string, any>) : Record<string, 
         const value = input[key];
 
         if (Array.isArray(value)) {
-            output[key] = value.map((v) => ({ code: isFormSelectOption(v) ? v.id : v } satisfies Coding));
+            output[key] = value.map((v) => ({ code: isFormSelectOption(v) ? v.value : v } satisfies Coding));
             continue;
         }
 
@@ -94,7 +92,7 @@ export function buildCodingsRecord(input: Record<string, any>) : Record<string, 
         }
 
         if (isFormSelectOption(value)) {
-            output[key] = { code: `${value.id}` } satisfies Coding;
+            output[key] = { code: `${value.value}` } satisfies Coding;
             continue;
         }
 

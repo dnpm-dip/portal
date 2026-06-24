@@ -1,8 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import type { ModuleOptions } from '@authup/client-web-nuxt';
 import path from 'node:path';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineNuxtConfig({
+    vite: {
+        plugins: [
+            tailwindcss(),
+        ],
+    },
+
     modules: [
         [
             '@authup/client-web-nuxt', 
@@ -14,33 +21,40 @@ export default defineNuxtConfig({
         '../admin/src/module',
         '../mtb/src/module',
         '../rd/src/module',
+        '@vuecs/nuxt',
     ],
+
+    vuecs: {
+        injectTokens: false,
+        themes: [],
+        colorMode: { value: 'system' },
+        colorPalette: false,
+    },
 
     experimental: { scanPageMeta: false },
 
     devtools: { componentInspector: false },
 
     css: [
-        '@fortawesome/fontawesome-free/css/all.css',
+        // App-local Tailwind v4 entry — `@import`s @dnpm-dip/theme
+        // (which transitively pulls in @authup/client-web-kit-theme +
+        // tailwindcss + @vuecs/design + @vuecs/theme-tailwind + every
+        // migrated chrome stylesheet) and adds `@source` scopes for this
+        // app's template tree + the four sibling module packages +
+        // nested vuecs deps. The theme package absorbed all the former
+        // local assets/css/* project stylesheets.
+        '@/assets/css/tailwind.css',
         '@authup/client-web-kit/dist/style.css',
-        '@vuecs/navigation/dist/index.css',
-        '@vuecs/pagination/dist/index.css',
-        'bootstrap/dist/css/bootstrap.css',
-        'bootstrap-vue-next/dist/bootstrap-vue-next.css',
-        '@/assets/css/bootstrap-override.css',
-        '@/assets/css/layout/body.css',
-        '@/assets/css/layout/footer.css',
-        '@/assets/css/layout/header.css',
-        '@/assets/css/layout/navbar.css',
-        '@/assets/css/layout/shared.css',
-        '@/assets/css/layout/sidebar.css',
-        '@/assets/css/vue-layout-navigation.css',
-        '@/assets/css/card.css',
-        '@/assets/css/form.css',
-        '@/assets/css/list.css',
-        '@/assets/css/pagination.css',
         '@dnpm-dip/core/../dist/index.css',
-        '@vuecs/form-controls/dist/index.css',
+        // Self-hosted webfonts — the theme's font stacks (Nunito body,
+        // Asap headings) were declared but no @font-face ever shipped;
+        // without these the UI silently falls back to the browser
+        // default sans.
+        '@fontsource/nunito/300.css',
+        '@fontsource/nunito/400.css',
+        '@fontsource/nunito/600.css',
+        '@fontsource/nunito/700.css',
+        '@fontsource/asap/700.css',
     ],
 
     alias: {
@@ -52,6 +66,7 @@ export default defineNuxtConfig({
         apiUrl: process.env.API_URL,
         authupUrl: process.env.AUTHUP_URL,
         public: {
+            version: process.env.npm_package_version,
             apiUrl: process.env.API_URL || 'https://dnpm-dip.net/api/',
             authupUrl: process.env.AUTHUP_URL || 'https://dnpm-dip.net/auth/',
             cookieDomain: process.env.COOKIE_DOMAIN,
