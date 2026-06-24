@@ -44,7 +44,6 @@ export default defineNuxtConfig({
         // nested vuecs deps. The theme package absorbed all the former
         // local assets/css/* project stylesheets.
         '@/assets/css/tailwind.css',
-        '@authup/client-web-kit/dist/style.css',
         '@dnpm-dip/core/../dist/index.css',
         // Self-hosted webfonts — the theme's font stacks (Nunito body,
         // Asap headings) were declared but no @font-face ever shipped;
