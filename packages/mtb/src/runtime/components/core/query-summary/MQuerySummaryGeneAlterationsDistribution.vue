@@ -111,8 +111,12 @@ export default defineComponent({
         </div>
     </template>
     <template v-else-if="error">
-        <div class="alert alert-sm alert-danger">
+        <VCAlert
+            color="error"
+            variant="soft"
+            size="sm"
+        >
             Daten konnten nicht geladen werden.
-        </div>
+        </VCAlert>
     </template>
 </template>

@@ -122,11 +122,15 @@ export default component as Component;
 <template>
     <div class="flex flex-col gap-1">
         <template v-if="itemsMissing">
-            <div class="alert alert-sm alert-warning">
+            <VCAlert
+                color="warning"
+                variant="soft"
+                size="sm"
+            >
                 Es werden nur <strong>{{ itemsDisplayed }}/{{ itemsTotal }}</strong> Elemente angezeigt, da
                 es bei mehr Elementen zu Anzeigefehlern kommt.
                 Bitte wechseln Sie zur Tabellenansicht um alle Elemente zu sehen.
-            </div>
+            </VCAlert>
         </template>
         <div>
             <DChart

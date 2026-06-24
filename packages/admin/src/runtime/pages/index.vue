@@ -66,9 +66,13 @@ export default defineNuxtComponent({
                         </div>
 
                         <template v-if="data.peers.length === 0">
-                            <div class="alert alert-sm alert-info">
+                            <VCAlert
+                                color="info"
+                                variant="soft"
+                                size="sm"
+                            >
                                 Es sind keine externen Standorte erreichbar.
-                            </div>
+                            </VCAlert>
                         </template>
                     </div>
                 </div>

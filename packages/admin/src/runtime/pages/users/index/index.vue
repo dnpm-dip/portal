@@ -109,15 +109,19 @@ export default defineNuxtComponent({
                     <VCTimeago :datetime="row.updated_at" />
                 </template>
                 <template #cell-options="{ row }: { row: any }">
-                    <NuxtLink
+                    <VCButton
+                        tag="nuxt-link"
                         :to="'/admin/users/'+ row.id"
-                        class="btn btn-xs btn-outline-primary me-1"
+                        size="xs"
+                        color="primary"
+                        variant="outline"
+                        class="me-1"
                         :disabled="!hasEditPermission"
                     >
                         <VCIcon name="fa6-solid:bars" />
-                    </NuxtLink>
+                    </VCButton>
                     <AEntityDelete
-                        class="btn btn-xs btn-outline-danger"
+                        size="xs"
                         :entity-id="row.id"
                         entity-type="user"
                         :with-text="false"

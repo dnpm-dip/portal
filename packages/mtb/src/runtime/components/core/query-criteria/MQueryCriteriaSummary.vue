@@ -128,12 +128,12 @@ export default defineComponent({
                         :key="item.code"
                     >
                         <div>
-                            <span class="badge bg-fg">
+                            <VCBadge class="bg-fg">
                                 <DCodingText
                                     :composite="true"
                                     :entity="item"
                                 />
-                            </span>
+                            </VCBadge>
                         </div>
                     </template>
                 </div>
@@ -148,12 +148,12 @@ export default defineComponent({
                         :key="item.code"
                     >
                         <div>
-                            <span class="badge bg-fg">
+                            <VCBadge class="bg-fg">
                                 <DCodingText
                                     :composite="true"
                                     :entity="item"
                                 />
-                            </span>
+                            </VCBadge>
                         </div>
                     </template>
                 </div>
@@ -175,7 +175,9 @@ export default defineComponent({
                             <span>{{ entity.medication.operator }}</span>
                         </div>
                         <div>
-                            <span class="badge bg-fg">{{ item.display || item.code }}</span>
+                            <VCBadge class="bg-fg">
+                                {{ item.display || item.code }}
+                            </VCBadge>
                         </div>
                     </template>
                 </div>
@@ -189,7 +191,9 @@ export default defineComponent({
                         :key="item.code"
                     >
                         <div>
-                            <span class="badge bg-fg">{{ item.display || item.code }}</span>
+                            <VCBadge class="bg-fg">
+                                {{ item.display || item.code }}
+                            </VCBadge>
                         </div>
                     </template>
                 </div>
@@ -206,7 +210,9 @@ export default defineComponent({
                     :key="item.code"
                 >
                     <div>
-                        <span class="badge bg-fg">{{ item.display || item.code }}</span>
+                        <VCBadge class="bg-fg">
+                            {{ item.display || item.code }}
+                        </VCBadge>
                     </div>
                 </template>
             </div>

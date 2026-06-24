@@ -104,23 +104,27 @@ export default defineComponent({
             </div>
 
             <div class="flex shrink-0 gap-1">
-                <button
+                <VCButton
                     type="button"
-                    class="btn btn-xs btn-secondary"
+                    size="xs"
+                    color="neutral"
+                    variant="soft"
                     :aria-expanded="extended ? 'true' : 'false'"
                     aria-label="Kriterien ein-/ausklappen"
                     @click.prevent="toggleExtended"
                 >
                     <VCIcon :name="extended ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                </button>
+                </VCButton>
 
-                <NuxtLink
+                <VCButton
+                    tag="nuxt-link"
                     :to="'/mtb/query/'+ queryId + '/patients/' +entity.id"
-                    class="btn btn-xs btn-primary"
+                    size="xs"
+                    color="primary"
                     title="Patient öffnen"
                 >
                     <VCIcon name="fa6-solid:arrow-right" />
-                </NuxtLink>
+                </VCButton>
             </div>
         </div>
 

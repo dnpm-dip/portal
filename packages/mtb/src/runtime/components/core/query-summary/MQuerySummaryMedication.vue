@@ -227,9 +227,14 @@ export default defineComponent({
                         </DQuerySummaryGrouped>
                     </template>
                     <template v-else>
-                        <div class="alert alert-sm alert-info mb-0">
+                        <VCAlert
+                            color="info"
+                            variant="soft"
+                            size="sm"
+                            class="mb-0"
+                        >
                             Es sind keine stützenden molekularen Alterationen hinterlegt.
-                        </div>
+                        </VCAlert>
                     </template>
                 </div>
                 <div class="entity-card text-center mb-3 w-full">
@@ -405,8 +410,12 @@ export default defineComponent({
         </div>
     </template>
     <template v-else-if="error">
-        <div class="alert alert-sm alert-danger">
+        <VCAlert
+            color="error"
+            variant="soft"
+            size="sm"
+        >
             Daten konnten nicht geladen werden.
-        </div>
+        </VCAlert>
     </template>
 </template>

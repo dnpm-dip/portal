@@ -115,9 +115,13 @@ export default defineNuxtComponent({
                     </div>
                 </template>
                 <template v-else-if="!props.busy">
-                    <div class="alert alert-sm alert-info">
+                    <VCAlert
+                        color="info"
+                        variant="soft"
+                        size="sm"
+                    >
                         Es wurden keine Patienten gefunden, die die Suchkriterien erfüllen.
-                    </div>
+                    </VCAlert>
                 </template>
                 <VCPagination
                     class="mt-3"

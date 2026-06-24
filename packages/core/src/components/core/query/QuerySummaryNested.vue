@@ -95,13 +95,14 @@ export default defineComponent({
                 :options="options"
                 :placeholder="placeholder"
             />
-            <button
+            <VCButton
                 v-show="id"
-                class="btn btn-secondary"
+                color="neutral"
+                variant="soft"
                 @click.prevent="reset"
             >
                 <VCIcon name="fa6-solid:xmark" />
-            </button>
+            </VCButton>
         </div>
     </VCFormGroup>
     <slot

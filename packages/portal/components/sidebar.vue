@@ -50,7 +50,7 @@ export default defineNuxtComponent({
     <div>
         <div class="page-sidebar">
             <VCNavItems
-                class="sidebar-menu navbar-nav"
+                class="sidebar-menu flex flex-col list-none"
                 :data="sideItems"
                 :watch="sideItemsWatch"
                 variant="pills"

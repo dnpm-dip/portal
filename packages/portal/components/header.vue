@@ -67,21 +67,21 @@ export default defineNuxtComponent({
                 </div>
             </div>
 
-            <nav class="page-navbar navbar-expand-md">
+            <nav class="page-navbar md:flex-nowrap md:justify-start">
                 <div
                     id="page-navbar"
-                    class="navbar-content navbar-collapse"
-                    :class="{'show': displayNav}"
+                    class="navbar-content grow basis-full items-center md:flex"
+                    :class="displayNav ? 'flex' : 'hidden'"
                 >
                     <VCNavItems
-                        class="navbar-nav"
+                        class="flex flex-col list-none md:flex-row"
                         :data="topItems"
                         :watch="topItemsWatch"
                         registry
                         :registry-id="topRegistryId"
                     />
 
-                    <ul class="navbar-nav vc-nav-items navbar-gadgets">
+                    <ul class="flex flex-col list-none md:flex-row vc-nav-items navbar-gadgets">
                         <li class="vc-nav-item">
                             <button
                                 type="button"

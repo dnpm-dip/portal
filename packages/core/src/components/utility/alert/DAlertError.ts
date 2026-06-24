@@ -1,5 +1,6 @@
 import type { PropType } from 'vue';
 import { defineComponent, h } from 'vue';
+import { VCAlert } from '@vuecs/elements';
 
 export default defineComponent({
     props: {
@@ -9,8 +10,10 @@ export default defineComponent({
         },
     },
     setup(props) {
-        return () => h('div', { class: 'alert alert-sm alert-danger' }, [
-            props.error.message,
-        ]);
+        return () => h(VCAlert, {
+            color: 'error',
+            variant: 'soft',
+            size: 'sm',
+        }, () => props.error.message);
     },
 });

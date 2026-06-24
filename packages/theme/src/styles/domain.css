@@ -30,6 +30,32 @@ an inline <VCIcon> as the first child. Inline-level, so a parent
 }
 
 /*
+Base nav classes — the segmented tab-pill widget (`.nav-pills`, below)
+builds on these. Migrated out of the retired Bootstrap-compat layer
+(theme/index.css); the tab switchers (DKVChartTableSwitch,
+MSearchMedicationForm) are the only consumers.
+*/
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+}
+.nav-item {
+    list-style: none;
+}
+.nav-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    color: var(--vc-color-fg);
+    text-decoration: none;
+}
+.nav-link:hover {
+    color: var(--vc-color-primary-600);
+}
+.nav-link.active {
+    color: var(--vc-color-primary-600);
+}
+
+/*
 Nav pills — content-area tab strips (horizontal, or vertical via
 `.flex-column`) rendered as a JOINED SEGMENTED CONTROL: each segment
 carries a 1px border, neighbours are pulled onto each other so the two

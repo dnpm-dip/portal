@@ -46,9 +46,10 @@ export default defineComponent({
 });
 </script>
 <template>
-    <button
+    <VCButton
         type="button"
-        class="btn btn-secondary"
+        color="neutral"
+        variant="soft"
         @click.prevent="toggle"
     >
         <template v-if="operator === 'and'">
@@ -57,5 +58,5 @@ export default defineComponent({
         <template v-else>
             ∪
         </template>
-    </button>
+    </VCButton>
 </template>

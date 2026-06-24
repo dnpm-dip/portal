@@ -30,15 +30,17 @@ export default defineComponent({
         <slot name="default" />
 
         <div class="entity-card">
-            <button
+            <VCButton
                 type="button"
-                class="btn btn-sm btn-block"
-                :class="dirty ? 'btn-primary' : 'btn-secondary'"
+                size="sm"
+                block
+                :color="dirty ? 'primary' : 'neutral'"
+                :variant="dirty ? undefined : 'soft'"
                 :disabled="!dirty"
                 @click.prevent="submit"
             >
                 Anwenden
-            </button>
+            </VCButton>
         </div>
     </div>
 </template>

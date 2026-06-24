@@ -41,11 +41,15 @@ export default defineComponent({
 </script>
 <template>
     <template v-if="hasFailed">
-        <div class="alert alert-sm alert-warning">
+        <VCAlert
+            color="warning"
+            variant="soft"
+            size="sm"
+        >
             Einer oder mehrere Knoten konnten die Anfrage nicht ordnungsgemäß bearbeiten.
             Klicke <VCLink :href="link">
                 hier
             </VCLink> für nähere Informationen.
-        </div>
+        </VCAlert>
     </template>
 </template>

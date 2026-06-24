@@ -88,13 +88,17 @@ export default defineComponent({
                     {{ record.patient.id }}
                 </p>
             </div>
-            <NuxtLink
-                class="btn btn-sm btn-secondary ms-auto"
+            <VCButton
+                tag="nuxt-link"
                 :to="'/mtb/query/'+ entity.id +'/patients'"
+                size="sm"
+                color="neutral"
+                variant="soft"
+                class="ms-auto"
             >
                 <VCIcon name="fa6-solid:arrow-left" />
                 Zu den Patienten
-            </NuxtLink>
+            </VCButton>
         </header>
 
         <div class="mb-3">

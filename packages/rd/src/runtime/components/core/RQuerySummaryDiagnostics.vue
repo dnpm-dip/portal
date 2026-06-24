@@ -63,8 +63,8 @@ export default defineComponent({
         <div>
             <h5>Gesamtverteilung</h5>
 
-            <div class="row">
-                <div class="col-12 col-xl-6">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-full px-2 xl:w-6/12">
                     <div class="entity-card text-center mb-3 w-full">
                         <h6 class="section-label text-center">
                             Diagnose Kategorien
@@ -72,7 +72,7 @@ export default defineComponent({
                         <DKVChart :items="data.overallDistributions.diagnoses.elements" />
                     </div>
                 </div>
-                <div class="col-12 col-xl-6">
+                <div class="w-full px-2 xl:w-6/12">
                     <div class="entity-card text-center mb-3 w-full">
                         <h6 class="section-label text-center">
                             HPOTermen
@@ -93,8 +93,8 @@ export default defineComponent({
                 :items="data.distributionsByVariant"
             >
                 <template #default="{ item }">
-                    <div class="row">
-                        <div class="col-12 col-xl-6">
+                    <div class="flex flex-wrap -mx-2">
+                        <div class="w-full px-2 xl:w-6/12">
                             <div class="entity-card text-center mb-3 w-full">
                                 <h6 class="section-label text-center">
                                     Diagnose Kategorien
@@ -102,7 +102,7 @@ export default defineComponent({
                                 <DKVChart :items="item.value.diagnoses.elements" />
                             </div>
                         </div>
-                        <div class="col-12 col-xl-6">
+                        <div class="w-full px-2 xl:w-6/12">
                             <div class="entity-card text-center mb-3 w-full">
                                 <h6 class="section-label text-center">
                                     HPO Termen
@@ -118,8 +118,8 @@ export default defineComponent({
     <template v-else-if="busy">
         <div>
             <h5>Gesamtverteilung</h5>
-            <div class="row">
-                <div class="col-12 col-xl-6">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-full px-2 xl:w-6/12">
                     <div class="entity-card text-center mb-3 w-full">
                         <h6 class="section-label text-center">
                             Diagnose Kategorien
@@ -133,7 +133,7 @@ export default defineComponent({
                         />
                     </div>
                 </div>
-                <div class="col-12 col-xl-6">
+                <div class="w-full px-2 xl:w-6/12">
                     <div class="entity-card text-center mb-3 w-full">
                         <h6 class="section-label text-center">
                             HPOTermen
@@ -164,8 +164,12 @@ export default defineComponent({
         </div>
     </template>
     <template v-else-if="error">
-        <div class="alert alert-sm alert-danger">
+        <VCAlert
+            color="error"
+            variant="soft"
+            size="sm"
+        >
             Daten konnten nicht geladen werden.
-        </div>
+        </VCAlert>
     </template>
 </template>

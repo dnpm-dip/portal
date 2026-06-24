@@ -233,9 +233,13 @@ export default defineComponent({
         </tbody>
     </table>
     <div v-show="!busy || total > 0">
-        <div class="alert alert-sm alert-warning alert-sm">
+        <VCAlert
+            color="warning"
+            variant="soft"
+            size="sm"
+        >
             Bitte beachten: Ein Patient kann mehrere unterschiedliche Therapieumsetzungen erhalten haben.
-        </div>
+        </VCAlert>
 
         <VCPagination
             :busy="busy"

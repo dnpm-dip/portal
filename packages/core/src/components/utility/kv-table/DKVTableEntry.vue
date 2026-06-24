@@ -100,15 +100,16 @@ export default defineComponent({
     <div class="flex flex-col gap-2">
         <div class="flex flex-row gap-2">
             <template v-if="expandable">
-                <button
+                <VCButton
                     type="button"
-                    class="btn btn-xs btn-dark"
+                    color="neutral"
+                    size="xs"
                     @click.prevent="toggle"
                 >
                     <VCIcon
                         :name="expanded ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'"
                     />
-                </button>
+                </VCButton>
             </template>
             <template v-if="clickable">
                 <a

@@ -1,22 +1,23 @@
 import { isClientError } from 'hapic';
 import { h } from 'vue';
 import type { VNodeArrayChildren, VNodeChild } from 'vue';
+import { VCAlert } from '@vuecs/elements';
 import { APIClientErrorIssueSeverity, extractAPIClientErrorIssues } from '../http-client';
 import { hasNormalizedSlot, normalizeSlot } from '../utils';
 import type {
-    ErrorCollectionSlotProps, 
-    ErrorRenderContext, 
-    ErrorRenderElement, 
+    ErrorCollectionSlotProps,
+    ErrorRenderContext,
+    ErrorRenderElement,
     ErrorSlotProps,
 } from './types';
 
-const toAlertClass = (severity: APIClientErrorIssueSeverity) => {
+const toAlertColor = (severity: APIClientErrorIssueSeverity) => {
     switch (severity) {
         case 'warning': {
-            return 'alert-warning';
+            return 'warning';
         }
         default: {
-            return 'alert-danger';
+            return 'error';
         }
     }
 };
@@ -64,15 +65,12 @@ export function renderError(context: ErrorRenderContext) : VNodeChild {
         }
     } else {
         for (const item of data) {
-            // todo: tag and class should be configurable
-            output.push(h('div', {
-                class: [
-                    'alert alert-sm alert-warning mb-2',
-                    toAlertClass(item.severity),
-                ],
-            }, [
-                item.message,
-            ]));
+            output.push(h(VCAlert, {
+                color: toAlertColor(item.severity),
+                variant: 'soft',
+                size: 'sm',
+                class: 'mb-2',
+            }, () => item.message));
         }
     }
 

@@ -45,12 +45,13 @@ export default defineComponent({
                 <small>#{{ info.id }}</small>
             </div>
             <div class="ms-auto">
-                <button
-                    class="btn btn-dark btn-xs"
+                <VCButton
+                    color="neutral"
+                    size="xs"
                     @click.prevent="toggleExtended"
                 >
                     <VCIcon :name="extended ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                </button>
+                </VCButton>
             </div>
         </div>
         <hr>
@@ -67,8 +68,13 @@ export default defineComponent({
                                 v-for="(item, key) in props.data.issues"
                                 :key="key"
                             >
-                                <div class="alert alert-sm alert-secondary row">
-                                    <div class="col-2 flex grow flex-col items-center">
+                                <VCAlert
+                                    color="neutral"
+                                    variant="soft"
+                                    size="sm"
+                                    class="flex flex-wrap -mx-2"
+                                >
+                                    <div class="w-2/12 px-2 flex grow flex-col items-center">
                                         <div>
                                             <strong>Level</strong>
                                         </div>
@@ -84,7 +90,7 @@ export default defineComponent({
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-6 flex grow flex-col">
+                                    <div class="w-6/12 px-2 flex grow flex-col">
                                         <div>
                                             <strong>Nachricht</strong>
                                         </div>
@@ -92,7 +98,7 @@ export default defineComponent({
                                             {{ item.message }}
                                         </div>
                                     </div>
-                                    <div class="col-4 flex grow flex-col">
+                                    <div class="w-4/12 px-2 flex grow flex-col">
                                         <div>
                                             <strong>Pfad</strong>
                                         </div>
@@ -100,7 +106,7 @@ export default defineComponent({
                                             {{ item.path }}
                                         </div>
                                     </div>
-                                </div>
+                                </VCAlert>
                             </template>
                         </div>
                     </template>

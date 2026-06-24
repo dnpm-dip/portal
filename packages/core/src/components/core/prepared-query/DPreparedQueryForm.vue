@@ -138,14 +138,15 @@ export default defineComponent({
             :is-invalid="v.$invalid.value"
             :submit="submit"
         >
-            <button
+            <VCButton
                 type="button"
-                class="btn btn-xs btn-dark"
+                size="xs"
+                color="neutral"
                 :disabled="isBusy || v.$invalid.value"
                 @click.prevent="submit"
             >
                 Speichern
-            </button>
+            </VCButton>
         </slot>
     </div>
 </template>

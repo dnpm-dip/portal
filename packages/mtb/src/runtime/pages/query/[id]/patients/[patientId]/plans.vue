@@ -26,8 +26,8 @@ export default defineNuxtComponent({
                 :key="item.id"
             >
                 <div class="entity-card grow mb-3">
-                    <div class="row mb-3">
-                        <div class="col">
+                    <div class="flex flex-wrap -mx-2 mb-3">
+                        <div class="flex-1 basis-0 px-2">
                             <div>
                                 <strong><VCIcon name="fa6-solid:calculator" /> Grund</strong>
                                 {{ item.reason.display || item.reason.type }}
@@ -41,7 +41,7 @@ export default defineNuxtComponent({
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="flex-1 basis-0 px-2">
                             <div><strong><VCIcon name="fa6-solid:clock" /> Erfassungsdatum</strong> {{ item.issuedOn }}</div>
                             <div v-if="item.noSequencingPerformedReason">
                                 <div>
@@ -57,10 +57,10 @@ export default defineNuxtComponent({
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-2">
+                    <div class="flex flex-wrap -mx-2 mt-2">
                         <div
                             v-if="item.medicationRecommendations"
-                            class="col"
+                            class="flex-1 basis-0 px-2"
                         >
                             <div class="entity-card">
                                 <div class="text-center mb-3">
@@ -116,7 +116,7 @@ export default defineNuxtComponent({
                         </div>
                         <div
                             v-if="item.geneticCounselingRecommendation"
-                            class="col"
+                            class="flex-1 basis-0 px-2"
                         >
                             <div class="entity-card">
                                 <div class="text-center mb-3">
@@ -133,7 +133,7 @@ export default defineNuxtComponent({
                         </div>
                         <div
                             v-if="item.studyEnrollmentRecommendations"
-                            class="col"
+                            class="flex-1 basis-0 px-2"
                         >
                             <div class="entity-card">
                                 <div class="text-center mb-3">

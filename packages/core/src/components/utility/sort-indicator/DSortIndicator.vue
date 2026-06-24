@@ -68,10 +68,10 @@ export default defineComponent({
         class="d-sort-indicator flex items-center gap-2 mb-2 p-2 bg-bg-elevated border rounded"
     >
         <small class="text-fg-muted font-bold">Sortierung:</small>
-        <span
+        <VCBadge
             v-for="(sort, index) in activeSorts"
             :key="sort.key"
-            class="badge bg-bg-muted flex items-center gap-1"
+            class="bg-bg-muted flex items-center gap-1"
         >
             {{ sort.label }}
             <VCIcon
@@ -82,10 +82,13 @@ export default defineComponent({
                 v-if="index < activeSorts.length - 1"
                 class="text-fg-muted"
             />
-        </span>
-        <button
+        </VCBadge>
+        <VCButton
             type="button"
-            class="btn btn-sm btn-outline-secondary ms-auto"
+            size="sm"
+            color="neutral"
+            variant="outline"
+            class="ms-auto"
             @click="reset"
         >
             <VCIcon
@@ -93,6 +96,6 @@ export default defineComponent({
                 class="me-1"
             />
             Zurücksetzen
-        </button>
+        </VCButton>
     </div>
 </template>

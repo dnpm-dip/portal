@@ -3,7 +3,6 @@ import {
     type CodeRecord,
     type Coding,
     type ConnectionPeer,
-    DLoadingButton,
     DLoadingModal,
     type FormTabInput,
     type ValueSetCoding,
@@ -33,7 +32,6 @@ import RVariantFormTabGroup from './RVariantFormTabGroup.vue';
 
 export default defineComponent({
     components: {
-        DLoadingButton,
         DLoadingModal,
         DSitePicker,
         RVariantFormTabGroup,
@@ -267,11 +265,11 @@ export default defineComponent({
 <template>
     <div>
         <form>
-            <div class="row mb-3">
-                <div class="col">
+            <div class="flex flex-wrap -mx-2 mb-3">
+                <div class="flex-1 basis-0 px-2">
                     <h6><VCIcon name="fa6-solid:notes-medical" /> Diagnose </h6>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Kategorie</label>
                         <DValueSet
                             :code="'dnpm-dip/rd/diagnosis/code-systems'"
@@ -302,10 +300,10 @@ export default defineComponent({
                         </DValueSet>
                     </div>
                 </div>
-                <div class="col">
+                <div class="flex-1 basis-0 px-2">
                     <h6><VCIcon name="fa6-solid:microscope" /> HPO</h6>
 
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label>Term</label>
                         <DValueSet
                             :code="'https://hpo.jax.org'"
@@ -385,19 +383,21 @@ export default defineComponent({
                 class="sticky bottom-0 z-10 mt-4 flex flex-wrap items-center justify-end gap-2
                        border-t border-border bg-bg/85 py-3 backdrop-blur"
             >
-                <button
+                <VCButton
                     :disabled="busy"
                     type="button"
-                    class="btn btn-secondary"
+                    color="neutral"
+                    variant="soft"
                     title="Suchkriterien als gespeicherte Anfrage ablegen"
                     @click.prevent="save()"
                 >
                     <VCIcon name="fa6-solid:floppy-disk" />
                     Speichern
-                </button>
+                </VCButton>
 
-                <DLoadingButton
-                    class="btn btn-primary min-w-36"
+                <VCButton
+                    color="primary"
+                    class="min-w-36"
                     :loading="busy"
                     @click.prevent="submit()"
                 >
@@ -405,7 +405,7 @@ export default defineComponent({
                         name="fa6-solid:magnifying-glass"
                         class="me-1"
                     /> Suchen
-                </DLoadingButton>
+                </VCButton>
             </div>
         </form>
 

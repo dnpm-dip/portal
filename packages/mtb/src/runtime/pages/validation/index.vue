@@ -58,9 +58,13 @@ export default defineComponent({
                     </div>
                 </template>
                 <template v-else>
-                    <div class="alert alert-sm alert-info">
+                    <VCAlert
+                        color="info"
+                        variant="soft"
+                        size="sm"
+                    >
                         Es liegen keine Meldungen vor.
-                    </div>
+                    </VCAlert>
                 </template>
             </template>
         </DValidations>

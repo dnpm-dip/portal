@@ -9,7 +9,6 @@
 import {
     type Coding,
     type ConnectionPeer,
-    DLoadingButton,
     type FormTabInput,
     type ValueSetCoding,
 } from '@dnpm-dip/core';
@@ -47,7 +46,6 @@ import MSearchMedicationForm from './MSearchMedicationForm.vue';
 
 export default defineComponent({
     components: {
-        DLoadingButton,
         DSitePicker,
         MSearchMedicationForm,
         MMutationTabGroup,
@@ -366,20 +364,21 @@ export default defineComponent({
                         </h6>
                     </div>
                     <div class="ms-auto">
-                        <button
+                        <VCButton
                             type="button"
-                            class="btn btn-dark btn-xs"
+                            color="neutral"
+                            size="xs"
                             @click.prevent="toggleExpanded('diagnosis')"
                         >
                             <VCIcon :name="expanded.diagnosis ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                        </button>
+                        </VCButton>
                     </div>
                 </div>
                 <div
                     v-show="expanded.diagnosis"
-                    class="row mt-2"
+                    class="flex flex-wrap -mx-2 mt-2"
                 >
-                    <div class="col">
+                    <div class="flex-1 basis-0 px-2">
                         <VCFormGroup>
                             <template #default>
                                 <DValueSet
@@ -413,7 +412,7 @@ export default defineComponent({
                             </template>
                         </VCFormGroup>
                     </div>
-                    <div class="col">
+                    <div class="flex-1 basis-0 px-2">
                         <VCFormGroup>
                             <template #default>
                                 <DValueSet
@@ -461,13 +460,14 @@ export default defineComponent({
                         </h6>
                     </div>
                     <div class="ms-auto">
-                        <button
+                        <VCButton
                             type="button"
-                            class="btn btn-dark btn-xs"
+                            color="neutral"
+                            size="xs"
                             @click.prevent="toggleExpanded('alteration')"
                         >
                             <VCIcon :name="expanded.alteration ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                        </button>
+                        </VCButton>
                     </div>
                 </div>
                 <div
@@ -489,7 +489,7 @@ export default defineComponent({
 
                     <VCFormCheckbox
                         v-model="mutationsInCombination"
-                        :group-class="'form-switch'"
+                        :group-class="'inline-flex items-center gap-2'"
                         :label="true"
                         :label-content="'In Kombination?'"
                     />
@@ -506,13 +506,14 @@ export default defineComponent({
                         </h6>
                     </div>
                     <div class="ms-auto">
-                        <button
+                        <VCButton
                             type="button"
-                            class="btn btn-dark btn-xs"
+                            color="neutral"
+                            size="xs"
                             @click.prevent="toggleExpanded('medication')"
                         >
                             <VCIcon :name="expanded.medication ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                        </button>
+                        </VCButton>
                     </div>
                 </div>
                 <div
@@ -538,20 +539,21 @@ export default defineComponent({
                         </h6>
                     </div>
                     <div class="ms-auto">
-                        <button
+                        <VCButton
                             type="button"
-                            class="btn btn-dark btn-xs"
+                            color="neutral"
+                            size="xs"
                             @click.prevent="toggleExpanded('response')"
                         >
                             <VCIcon :name="expanded.response ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                        </button>
+                        </VCButton>
                     </div>
                 </div>
                 <div
                     v-show="expanded.response"
-                    class="row mt-2"
+                    class="flex flex-wrap -mx-2 mt-2"
                 >
-                    <div class="col">
+                    <div class="flex-1 basis-0 px-2">
                         <VCFormGroup>
                             <template #default>
                                 <DValueSet
@@ -597,13 +599,14 @@ export default defineComponent({
                         </h6>
                     </div>
                     <div class="ms-auto">
-                        <button
+                        <VCButton
                             type="button"
-                            class="btn btn-dark btn-xs"
+                            color="neutral"
+                            size="xs"
                             @click.prevent="toggleExpanded('mode')"
                         >
                             <VCIcon :name="expanded.mode ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                        </button>
+                        </VCButton>
                     </div>
                 </div>
                 <div
@@ -630,19 +633,21 @@ export default defineComponent({
                 class="sticky bottom-0 z-10 mt-4 flex flex-wrap items-center justify-end gap-2
                        border-t border-border bg-bg/85 py-3 backdrop-blur"
             >
-                <button
+                <VCButton
                     :disabled="busy"
                     type="button"
-                    class="btn btn-secondary"
+                    color="neutral"
+                    variant="soft"
                     title="Suchkriterien als gespeicherte Anfrage ablegen"
                     @click.prevent="save()"
                 >
                     <VCIcon name="fa6-solid:floppy-disk" />
                     Speichern
-                </button>
+                </VCButton>
 
-                <DLoadingButton
-                    class="btn btn-primary min-w-36"
+                <VCButton
+                    color="primary"
+                    class="min-w-36"
                     :loading="busy"
                     @click.prevent="submit()"
                 >
@@ -650,7 +655,7 @@ export default defineComponent({
                         name="fa6-solid:magnifying-glass"
                         class="me-1"
                     /> Suchen
-                </DLoadingButton>
+                </VCButton>
             </div>
         </form>
         <DLoadingModal :display="busy" />

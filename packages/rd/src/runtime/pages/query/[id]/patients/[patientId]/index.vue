@@ -35,8 +35,8 @@ export default defineNuxtComponent({
             :entity="record.patient"
         />
 
-        <div class="row mb-3">
-            <div class="col">
+        <div class="flex flex-wrap -mx-2 mb-3">
+            <div class="flex-1 basis-0 px-2">
                 <h5 class="section-label mb-2">
                     Fall
                 </h5>
@@ -61,7 +61,7 @@ export default defineNuxtComponent({
                     </template>
                 </div>
             </div>
-            <div class="col">
+            <div class="flex-1 basis-0 px-2">
                 <h5 class="section-label mb-2">
                     Diagnose
                 </h5>

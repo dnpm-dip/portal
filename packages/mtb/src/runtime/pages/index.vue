@@ -56,11 +56,15 @@ export default defineNuxtComponent({
             </div>
         </header>
 
-        <div class="alert alert-info alert-sm">
+        <VCAlert
+            color="info"
+            variant="soft"
+            size="sm"
+        >
             Die Datenabfrage ist auch ohne Auswahl von Suchparametern möglich.
             In diesem Fall werden alle auf DNPM:DIP verfügbaren Daten angezeigt.
             Die Abfrage kann nachfolgend angepasst werden.
-        </div>
+        </VCAlert>
 
         <DPreparedQueryContainer
             use-case="mtb"

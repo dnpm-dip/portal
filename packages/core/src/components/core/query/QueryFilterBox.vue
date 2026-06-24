@@ -63,26 +63,28 @@ export default defineComponent({
                     </h6>
                 </div>
                 <div class="ms-auto flex gap-1">
-                    <button
+                    <VCButton
                         type="button"
-                        class="btn btn-xs"
-                        :class="active ? 'btn-danger' : 'btn-secondary'"
+                        size="xs"
+                        :color="active ? 'error' : 'neutral'"
+                        :variant="active ? undefined : 'soft'"
                         :disabled="!active"
                         title="Filter zurücksetzen"
                         aria-label="Filter zurücksetzen"
                         @click.prevent="reset"
                     >
                         <VCIcon name="fa6-solid:rotate-left" />
-                    </button>
-                    <button
+                    </VCButton>
+                    <VCButton
                         type="button"
-                        class="btn btn-dark btn-xs"
+                        color="neutral"
+                        size="xs"
                         :title="extended ? 'Filter ausgeklappt' : 'Filter ausklappen'"
                         :aria-label="extended ? 'Filter ausgeklappt' : 'Filter ausklappen'"
                         @click.prevent="toggleExtended"
                     >
                         <VCIcon :name="extended ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                    </button>
+                    </VCButton>
                 </div>
             </div>
             <div v-show="extended">

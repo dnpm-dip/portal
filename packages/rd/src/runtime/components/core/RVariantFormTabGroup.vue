@@ -116,7 +116,7 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="form-group">
+    <div class="mb-3">
         <label>Gene</label>
         <DCodeSystem
             :code="'https://www.genenames.org/'"
@@ -185,13 +185,14 @@ export default defineComponent({
         </VCFormGroup>
     </IFieldValidation>
     <div>
-        <button
+        <VCButton
             :disabled="v.$invalid.value"
             type="button"
-            class="btn btn-dark btn-xs"
+            color="neutral"
+            size="xs"
             @click.prevent="submit()"
         >
             {{ isEditing ? 'Aktualisieren' : 'Hinzufügen' }}
-        </button>
+        </VCButton>
     </div>
 </template>

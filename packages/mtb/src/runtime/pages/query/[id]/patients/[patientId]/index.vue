@@ -34,8 +34,8 @@ export default defineNuxtComponent({
                 :key="item.id"
             >
                 <div class="entity-card">
-                    <div class="row">
-                        <div class="col">
+                    <div class="flex flex-wrap -mx-2">
+                        <div class="flex-1 basis-0 px-2">
                             <div>
                                 <!-- <div><strong><VCIcon name="fa6-solid:calculator" /> TAN</strong> {{ item.ttan }}</div> -->
                                 <div>
@@ -61,8 +61,8 @@ export default defineNuxtComponent({
                 :key="item.id"
             >
                 <div class="entity-card">
-                    <div class="row">
-                        <div class="col">
+                    <div class="flex flex-wrap -mx-2">
+                        <div class="flex-1 basis-0 px-2">
                             <div>
                                 <strong><VCIcon name="fa6-solid:pills" /> Medikation</strong>
                                 <template

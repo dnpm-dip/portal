@@ -103,7 +103,7 @@ export default component as Component;
                     <li class="nav-item">
                         <button
                             type="button"
-                            class="nav-link btn-xs"
+                            class="nav-link px-1.5! py-1.25! text-xs!"
                             :class="{'router-link-exact-active': variant === 'chart'}"
                             @click.prevent="setVariant('chart')"
                         >
@@ -113,7 +113,7 @@ export default component as Component;
                     <li class="nav-item">
                         <button
                             type="button"
-                            class="nav-link btn-xs"
+                            class="nav-link px-1.5! py-1.25! text-xs!"
                             :class="{'router-link-exact-active': variant === 'table'}"
                             @click.prevent="setVariant('table')"
                         >

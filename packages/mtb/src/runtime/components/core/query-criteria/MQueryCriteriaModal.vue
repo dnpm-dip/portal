@@ -49,17 +49,19 @@ export default defineComponent({
         name="default"
         :toggle="toggleModal"
     >
-        <NuxtLink
-            class="btn btn-xs btn-primary ms-1"
+        <VCButton
+            color="primary"
+            size="xs"
+            class="ms-1"
             @click.prevent="toggleModal"
         >
             <VCIcon name="fa6-solid:gear" />
-        </NuxtLink>
+        </VCButton>
     </slot>
 
     <VCModal v-model:open="modal">
         <VCModalContent class="modal-lg">
-            <div class="modal-header">
+            <div class="flex items-center justify-between border-b border-border px-4 py-3">
                 <div class="flex flex-row w-full">
                     <div>
                         <h5 class="mb-0">
@@ -67,17 +69,19 @@ export default defineComponent({
                         </h5>
                     </div>
                     <div class="ms-auto">
-                        <button
+                        <VCButton
                             type="button"
-                            class="btn btn-xs btn-secondary"
+                            color="neutral"
+                            variant="soft"
+                            size="xs"
                             @click.prevent="modal = false"
                         >
                             <VCIcon name="fa6-solid:xmark" />
-                        </button>
+                        </VCButton>
                     </div>
                 </div>
             </div>
-            <div class="modal-body">
+            <div class="px-4 py-3">
                 <MSearchForm
                     :query-mode="entity.mode.code"
                     :query-peers="entity.peers"

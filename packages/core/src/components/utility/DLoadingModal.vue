@@ -33,7 +33,7 @@ export default component as Component;
             class="modal-loading"
             close-policy="no-outside"
         >
-            <div class="modal-body">
+            <div class="modal-loading-body">
                 <div class="modal-loading-wrapper">
                     <div>
                         <div class="modal-loading-box" />
@@ -49,7 +49,7 @@ export default component as Component;
 </template>
 <style>
 .modal-loading .modal-content,
-.modal-loading .modal-body {
+.modal-loading .modal-loading-body {
     background-color: transparent !important;
     border: none;
 }
