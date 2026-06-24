@@ -17,10 +17,6 @@ export type QuerySummaryTumorDiagnostics = {
         tumorEntities: DistributionNested<Coding>,
         tumorMorphologies: DistributionNested<Coding>
     },
-    distributionsByVariant: KeyValueRecords<QueryGeneAlteration, {
-        tumorEntities: Distribution<Coding>,
-        tumorMorphologies: Distribution<Coding>
-    }>,
 };
 
 export type QuerySummaryGeneAlterationDistribution = KeyValueRecord<string, DistributionNested<string>>;
@@ -31,7 +27,7 @@ type MedicationRecommendations = {
 };
 
 type MedicationTherapies = {
-    meanDurations: Distribution<string[]>,
+    meanDurations: KeyValueRecords<Coding[], KeyValueRecords<Coding[], number>>,
     overallDistribution: DistributionNested<string[]>
 };
 
@@ -129,7 +125,7 @@ export type QueryGeneAlteration = QueryGeneAlterationSNV | QueryGeneAlterationCN
 
 export type QueryTherapyResponse = {
     tumorEntity: Coding,
-    medications: string[],
+    medications: Coding[],
     supportingAlteration: QueryGeneAlteration,
     count: number,
     orr: number,

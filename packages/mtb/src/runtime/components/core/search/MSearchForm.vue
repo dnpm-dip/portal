@@ -8,7 +8,7 @@
 <script lang="ts">
 import {
     type Coding,
-    type ConnectionPeer, 
+    type ConnectionPeer,
     DLoadingButton,
     type FormTabInput,
     type ValueSetCoding,
@@ -28,9 +28,9 @@ import {
 } from '@vuecs/forms';
 import type { FormOption } from '@vuecs/forms';
 import {
-    type PropType, 
-    reactive, 
-    toRef, 
+    type PropType,
+    reactive,
+    toRef,
     watch,
 } from 'vue';
 import { defineComponent, ref } from 'vue';
@@ -78,9 +78,9 @@ export default defineComponent({
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
         const modeSites = ref<Coding[]>([]);
         const modeOptions : FormOption[] = [
-            { value: QueryRequestMode.LOCAL, label: 'Lokal' },
-            { value: QueryRequestMode.FEDERATED, label: 'Föderiert' },
-            { value: QueryRequestMode.CUSTOM, label: 'Benutzerdefiniert' },
+            { value: QueryRequestMode.LOCAL, label: 'Lokal: eigener Standort' },
+            { value: QueryRequestMode.FEDERATED, label: 'Föderiert: alle Standorte' },
+            { value: QueryRequestMode.CUSTOM, label: 'Nutzer-definiert: gezielte Standort-Auswahl' },
         ];
 
         const busy = ref(false);
@@ -311,13 +311,13 @@ export default defineComponent({
         });
 
         const handleMedicationUpdated = ({
-            drugs, 
-            usage, 
-            combination, 
+            drugs,
+            usage,
+            combination,
         }: {
-            drugs: Coding[]; 
-            usage: string[]; 
-            combination: boolean 
+            drugs: Coding[];
+            usage: string[];
+            combination: boolean
         }) => {
             medicationDrugs.value = drugs;
             medicationUsage.value = usage;
@@ -358,51 +358,6 @@ export default defineComponent({
 <template>
     <div>
         <form>
-            <div>
-                <div class="flex flex-row items-center">
-                    <div>
-                        <h6 class="mb-0">
-                            <VCIcon name="fa6-solid:dna" /> Alteration
-                        </h6>
-                    </div>
-                    <div class="ms-auto">
-                        <button
-                            type="button"
-                            class="btn btn-dark btn-xs"
-                            @click.prevent="toggleExpanded('alteration')"
-                        >
-                            <VCIcon :name="expanded.alteration ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                        </button>
-                    </div>
-                </div>
-                <div
-                    v-show="expanded.alteration"
-                    class="mt-2"
-                >
-                    <DFormTabGroups
-                        v-model="mutations"
-                        :min-items="1"
-                        :max-items="6"
-                    >
-                        <template #default="props">
-                            <MMutationTabGroup
-                                :entity="props.data"
-                                @saved="props.saved"
-                            />
-                        </template>
-                    </DFormTabGroups>
-
-                    <VCFormCheckbox
-                        v-model="mutationsInCombination"
-                        :group-class="'form-switch'"
-                        :label="true"
-                        :label-content="'In Kombination?'"
-                    />
-                </div>
-            </div>
-
-            <hr>
-
             <div class="mb-3">
                 <div class="flex flex-row items-center">
                     <div>
@@ -492,6 +447,52 @@ export default defineComponent({
                             </template>
                         </VCFormGroup>
                     </div>
+                </div>
+            </div>
+
+            <hr>
+
+
+            <div>
+                <div class="flex flex-row items-center">
+                    <div>
+                        <h6 class="mb-0">
+                            <VCIcon name="fa6-solid:dna" /> Alteration
+                        </h6>
+                    </div>
+                    <div class="ms-auto">
+                        <button
+                            type="button"
+                            class="btn btn-dark btn-xs"
+                            @click.prevent="toggleExpanded('alteration')"
+                        >
+                            <VCIcon :name="expanded.alteration ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
+                        </button>
+                    </div>
+                </div>
+                <div
+                    v-show="expanded.alteration"
+                    class="mt-2"
+                >
+                    <DFormTabGroups
+                        v-model="mutations"
+                        :min-items="1"
+                        :max-items="6"
+                    >
+                        <template #default="props">
+                            <MMutationTabGroup
+                                :entity="props.data"
+                                @saved="props.saved"
+                            />
+                        </template>
+                    </DFormTabGroups>
+
+                    <VCFormCheckbox
+                        v-model="mutationsInCombination"
+                        :group-class="'form-switch'"
+                        :label="true"
+                        :label-content="'In Kombination?'"
+                    />
                 </div>
             </div>
 

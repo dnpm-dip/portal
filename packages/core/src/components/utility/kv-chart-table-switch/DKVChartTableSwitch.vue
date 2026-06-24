@@ -31,6 +31,14 @@ const component = defineComponent({
             type: Array as PropType<KeyValueRecord<unknown, unknown>[]>,
         },
         codingVerboseLabel: { type: Boolean },
+        xAxisLabel: {
+            type: String,
+            default: undefined,
+        },
+        yAxisLabel: {
+            type: String,
+            default: undefined,
+        },
         clickable: {
             type: Boolean,
             default: false,
@@ -126,6 +134,8 @@ export default component as Component;
                         :items="data"
                         :type="type"
                         :coding-verbose-label="codingVerboseLabel"
+                        :x-axis-label="xAxisLabel"
+                        :y-axis-label="yAxisLabel"
                     />
                 </slot>
             </template>

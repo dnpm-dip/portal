@@ -10,7 +10,6 @@ import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
     type Coding,
     DKVChartTableSwitch,
-    DQuerySummaryGrouped,
     DQuerySummaryNested,
     QueryEventBusEventName,
     injectQueryEventBus,
@@ -19,14 +18,12 @@ import {
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
-import type { QueryGeneAlteration, QuerySummaryTumorDiagnostics } from '../../../domains';
-import { queryGeneAlterationToString } from '../../../domains';
+import type { QuerySummaryTumorDiagnostics } from '../../../domains';
 
 export default defineComponent({
     components: {
         DQuerySummaryNested,
         DKVChartTableSwitch,
-        DQuerySummaryGrouped,
     },
     props: {
         queryId: {
@@ -95,9 +92,6 @@ export default defineComponent({
             data,
             error,
             handleClick,
-            variantLabelFn: (item: { key: unknown }) => (typeof item.key === 'string' ?
-                item.key :
-                queryGeneAlterationToString(item.key as QueryGeneAlteration)),
         };
     },
 });
@@ -111,11 +105,12 @@ export default defineComponent({
                 <div class="flex flex-col gap-2">
                     <div class="entity-card text-center mb-3">
                         <h6 class="section-label">
-                            Tumor-Entitäten (ICD-10-GM)
+                            Verteilung nach ICD-10 GM (N = {{ data.overallDistributions.tumorEntities.total }})
                         </h6>
                         <DQuerySummaryNested
                             ref="tumorEntitiesVNode"
                             :label="'Kategorie'"
+                            :placeholder="'Kategorie auswählen'"
                             :data="data.overallDistributions.tumorEntities.elements"
                             :total="data.overallDistributions.tumorEntities.total"
                             :key-verbose="true"
@@ -125,6 +120,8 @@ export default defineComponent({
                                     :coding-verbose-label="true"
                                     :data="items"
                                     :clickable="true"
+                                    :x-axis-label="'Anzahl [n]'"
+                                    :y-axis-label="'Tumorentität [ICD-10 GM] (Anteil [%])'"
                                     :columns="(level: number) => level === 0 && !id ? [
                                         {key: 'key', label: 'Tumorentität [ICD-10 GM]'},
                                         {key: 'value', label: 'Anzahl [n]'},
@@ -142,10 +139,11 @@ export default defineComponent({
 
                     <div class="entity-card text-center mb-3">
                         <h6 class="section-label">
-                            Tumor-Morphologie (ICD-O-3-M)
+                            Verteilung nach ICD-O-3-M (N = {{ data.overallDistributions.tumorMorphologies.total }})
                         </h6>
                         <DQuerySummaryNested
                             :label="'Kategorie'"
+                            :placeholder="'Kategorie auswählen'"
                             :data="data.overallDistributions.tumorMorphologies.elements"
                             :total="data.overallDistributions.tumorMorphologies.total"
                             :key-verbose="true"
@@ -154,12 +152,14 @@ export default defineComponent({
                                 <DKVChartTableSwitch
                                     :coding-verbose-label="true"
                                     :data="items"
+                                    :x-axis-label="'Anzahl [n]'"
+                                    :y-axis-label="'Tumormorphologie [ICD-O-3-M] (Anteil [%])'"
                                     :columns="(level: number) => level === 0 && !id ? [
-                                        {key: 'key', label: 'Tumor-Morphologie (ICD-O-3-M)'},
+                                        {key: 'key', label: 'Tumormorphologie [ICD-O-3-M]'},
                                         {key: 'value', label: 'Anzahl [n]'},
                                         {key: 'percent', label: 'Anteil [%]'},
                                     ] : [
-                                        {key: 'key', label: 'Tumor-Morphologie (ICD-O-3-M)'},
+                                        {key: 'key', label: 'Tumormorphologie [ICD-O-3-M]'},
                                         {key: 'value', label: 'Anzahl [n]'},
                                         {key: 'percent', label: 'Anteil [%]'},
                                     ]"
@@ -169,47 +169,6 @@ export default defineComponent({
                     </div>
                 </div>
             </div>
-
-            <hr>
-
-            <div>
-                <h5>Verteilung nach Variante</h5>
-                <DQuerySummaryGrouped
-                    :label="'Variante'"
-                    :items="data.distributionsByVariant"
-                    :label-fn="variantLabelFn"
-                >
-                    <template #default="{ item }">
-                        <div class="flex flex-col gap-2">
-                            <div class="entity-card text-center mb-3 w-full">
-                                <h6 class="section-label text-center">
-                                    Tumor-Entitäten (ICD-10-GM)
-                                </h6>
-                                <DKVChartTableSwitch
-                                    :coding-verbose-label="true"
-                                    :data="item.value.tumorEntities.elements"
-                                    :key-label="'Tumorentität [ICD-10 GM]'"
-                                    :value-label="'Anzahl [n]'"
-                                    :percent-label="'Anteil [%]'"
-                                />
-                            </div>
-
-                            <div class="entity-card text-center mb-3 w-full">
-                                <h6 class="section-label text-center">
-                                    Tumor-Morphologie (ICD-O-3-M)
-                                </h6>
-                                <DKVChartTableSwitch
-                                    :coding-verbose-label="true"
-                                    :data="item.value.tumorMorphologies.elements"
-                                    :key-label="'Tumor-Morphologie (ICD-O-3-M)'"
-                                    :value-label="'Anzahl [n]'"
-                                    :percent-label="'Anteil [%]'"
-                                />
-                            </div>
-                        </div>
-                    </template>
-                </DQuerySummaryGrouped>
-            </div>
         </div>
     </template>
     <template v-else-if="busy">
@@ -218,7 +177,7 @@ export default defineComponent({
             <div class="flex flex-col gap-2">
                 <div class="entity-card text-center mb-3">
                     <h6 class="section-label">
-                        Tumor-Entitäten (ICD-10-GM)
+                        Verteilung nach ICD-10 GM
                     </h6>
                     <VCPlaceholder
                         v-for="i in 5"
@@ -230,7 +189,7 @@ export default defineComponent({
                 </div>
                 <div class="entity-card text-center mb-3">
                     <h6 class="section-label">
-                        Tumor-Morphologie (ICD-O-3-M)
+                        Verteilung nach ICD-O-3-M
                     </h6>
                     <VCPlaceholder
                         v-for="i in 5"
@@ -240,19 +199,6 @@ export default defineComponent({
                         class="mb-2"
                     />
                 </div>
-            </div>
-
-            <hr>
-
-            <h5>Verteilung nach Variante</h5>
-            <div class="entity-card text-center mb-3">
-                <VCPlaceholder
-                    v-for="i in 5"
-                    :key="i"
-                    :width="40 + i * 10 + '%'"
-                    animation="wave"
-                    class="mb-2"
-                />
             </div>
         </div>
     </template>

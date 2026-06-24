@@ -12,6 +12,14 @@ const component = defineComponent({
             type: Object as PropType<QuerySummaryDemographics>,
             required: true,
         },
+        withTotals: {
+            type: Boolean,
+            default: false,
+        },
+        withAxisLabels: {
+            type: Boolean,
+            default: false,
+        },
     },
     emits: ['navigate'],
     setup(_props, { emit }) {
@@ -113,7 +121,7 @@ export default component as Component;
         <div class="flex flex-row gap-2">
             <div class="entity-card text-center mb-3 w-full">
                 <h6 class="section-label">
-                    Patienten pro Standort
+                    {{ withTotals ? `Patienten pro Standort (N = ${entity.siteDistribution.total})` : 'Patienten pro Standort' }}
                 </h6>
                 <DKVChartTableSwitch
                     :type="'doughnut'"
@@ -128,7 +136,7 @@ export default component as Component;
 
             <div class="entity-card text-center mb-3 w-full">
                 <h6 class="section-label">
-                    Geschlechterverteilung
+                    {{ withTotals ? `Geschlechterverteilung (N = ${entity.genderDistribution.total})` : 'Geschlechterverteilung' }}
                 </h6>
                 <DKVChartTableSwitch
                     :type="'doughnut'"
@@ -144,7 +152,7 @@ export default component as Component;
 
         <div class="entity-card text-center mb-3 w-full">
             <h6 class="section-label">
-                Altersverteilung
+                {{ withTotals ? `Altersverteilung (N = ${entity.ageDistribution.total})` : 'Altersverteilung' }}
             </h6>
             <DKVChartTableSwitch
                 :data="entity.ageDistribution.elements"
@@ -152,6 +160,8 @@ export default component as Component;
                 :key-label="'Alter [Jahre]'"
                 :value-label="'Anzahl [n]'"
                 :percent-label="'Anteil [%]'"
+                :x-axis-label="withAxisLabels ? 'Anzahl [n]' : undefined"
+                :y-axis-label="withAxisLabels ? 'Alter [Jahre] (Anteil [%])' : undefined"
                 @clicked="handleAgeClick"
             />
         </div>

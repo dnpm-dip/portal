@@ -271,7 +271,7 @@ export default defineComponent({
                         v-for="(item,key) in (row as QueryTherapyResponse).medications"
                         :key="key"
                     >
-                        <DCodingText :entity="{ code: item }" />
+                        <DCodingText :entity="item" />
                     </li>
                 </ul>
             </template>

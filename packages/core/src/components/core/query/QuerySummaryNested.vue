@@ -20,6 +20,10 @@ export default defineComponent({
             type: String,
             default: 'Gruppe',
         },
+        placeholder: {
+            type: String,
+            default: '...',
+        },
         data: {
             type: Array as PropType<DistributionNestedElements<Coding>>,
             required: true,
@@ -89,6 +93,7 @@ export default defineComponent({
             <VCFormSelectSearch
                 v-model="id"
                 :options="options"
+                :placeholder="placeholder"
             />
             <button
                 v-show="id"

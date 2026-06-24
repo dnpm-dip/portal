@@ -25,6 +25,10 @@ export default defineComponent({
             type: String,
             default: 'Gruppe',
         },
+        placeholder: {
+            type: String,
+            default: '...',
+        },
         items: { type: Array as PropType<KeyValueRecord<unknown, unknown>[]> },
         selectFirst: {
             type: Boolean,
@@ -119,6 +123,7 @@ export default defineComponent({
         <VCFormSelectSearch
             v-model="id"
             :options="options"
+            :placeholder="placeholder"
         />
     </VCFormGroup>
     <template v-if="item">

@@ -63,6 +63,7 @@ export default defineComponent({
                 label: 'Gen',
                 headerClass: 'text-left',
                 cellClass: 'text-left',
+                sortable: true,
             },
             {
                 key: 'alteration',

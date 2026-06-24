@@ -90,9 +90,14 @@ export default defineNuxtComponent({
                 url: `/mtb/query/${props.entity.id}/summary/diagnostics`, 
             },
             {
-                name: 'Medikation', 
-                icon: 'fa6-solid:pills', 
-                url: `/mtb/query/${props.entity.id}/summary/medication`, 
+                name: 'Gen Alterationen',
+                icon: 'fa6-solid:dna',
+                url: `/mtb/query/${props.entity.id}/summary/gene-alterations`,
+            },
+            {
+                name: 'Medikation',
+                icon: 'fa6-solid:pills',
+                url: `/mtb/query/${props.entity.id}/summary/medication`,
             },
             {
                 name: 'Therapie Responses', 
@@ -100,14 +105,9 @@ export default defineNuxtComponent({
                 url: `/mtb/query/${props.entity.id}/summary/therapy-responses`, 
             },
             {
-                name: 'Gen Alterationen', 
-                icon: 'fa6-solid:dna', 
-                url: `/mtb/query/${props.entity.id}/summary/gene-alterations`, 
-            },
-            {
-                name: 'Überlebensbericht', 
-                icon: 'fa6-solid:book-open', 
-                url: `/mtb/query/${props.entity.id}/summary/survival-report`, 
+                name: 'Überlebensbericht',
+                icon: 'fa6-solid:book-open',
+                url: `/mtb/query/${props.entity.id}/summary/survival-report`,
             },
         ]);
 
