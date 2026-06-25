@@ -1,7 +1,7 @@
-import type { Client, RequestBaseOptions } from 'hapic';
+import type { IClient, RequestBaseOptions } from 'hapic';
 
 export type BaseAPIContext = {
-    client?: Client | RequestBaseOptions
+    client?: IClient | RequestBaseOptions
 };
 
 export type ResourceCollectionResponse<T> = {
