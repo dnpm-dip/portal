@@ -98,7 +98,7 @@ patterns instead of inventing new ones — and when refactoring an old view, mig
   ```
 - **Section headings**: `.section-label` (theme class — small-caps muted, optional leading `<VCIcon>`),
   on `h5`/`h6`/`span` hosts. No `<hr>` separators between sections; use margins.
-- **Cards/panels**: `.entity-card` (theme-owned chrome: 12px radius, soft shadow). Never add inline
+- **Cards/panels**: `.entity-card` (theme-owned chrome: `--vc-radius-md` ≈ 6px radius, soft shadow). Never add inline
   `style="max-width: ..."`; lay out card groups with `grid gap-3 md:grid-cols-2 xl:grid-cols-3`.
 - **Facts (label-over-value)**: `DFact` from `@dnpm-dip/core` (`label`, optional `icon`, value via slot).
   Use for entity metadata rows and fact grids instead of `<strong>Label</strong> value` lines.
