@@ -143,9 +143,13 @@
          * bridges `--color-primary-*` from these, so every `primary`
          * utility/component (buttons, active states, rings, pagination)
          * adopts the brand color. Tints/shades are color-mixed from the
-         * brand var so the whole scale stays in sync with it. The pure
-         * brand sits at 500; 600 — the shade buttons and active states
-         * use — mixes toward black so white text clears WCAG contrast.
+         * brand var so the whole scale stays in sync with it. The graphite
+         * anchor (#2B2F36) is already near-black, so 500 AND 600 — the fill /
+         * active-state shade — both sit at the brand color; mixing 600 toward
+         * black (as a mid-tone anchor would want) collapses it to pitch black.
+         * White text on the anchor clears WCAG; 700-950 darken only mildly for
+         * hover/pressed. In dark the anchor is the light graphite, so 600 is
+         * that light tone (paired with the dark on-primary text).
          */
         --vc-color-primary-50:  color-mix(in oklab, var(--dnpm-brand-slate) 8%,  white);
         --vc-color-primary-100: color-mix(in oklab, var(--dnpm-brand-slate) 16%, white);
@@ -153,11 +157,11 @@
         --vc-color-primary-300: color-mix(in oklab, var(--dnpm-brand-slate) 52%, white);
         --vc-color-primary-400: color-mix(in oklab, var(--dnpm-brand-slate) 76%, white);
         --vc-color-primary-500: var(--dnpm-brand-slate);
-        --vc-color-primary-600: color-mix(in oklab, var(--dnpm-brand-slate) 78%, black);
-        --vc-color-primary-700: color-mix(in oklab, var(--dnpm-brand-slate) 64%, black);
-        --vc-color-primary-800: color-mix(in oklab, var(--dnpm-brand-slate) 52%, black);
-        --vc-color-primary-900: color-mix(in oklab, var(--dnpm-brand-slate) 42%, black);
-        --vc-color-primary-950: color-mix(in oklab, var(--dnpm-brand-slate) 28%, black);
+        --vc-color-primary-600: var(--dnpm-brand-slate);
+        --vc-color-primary-700: color-mix(in oklab, var(--dnpm-brand-slate) 82%, black);
+        --vc-color-primary-800: color-mix(in oklab, var(--dnpm-brand-slate) 66%, black);
+        --vc-color-primary-900: color-mix(in oklab, var(--dnpm-brand-slate) 52%, black);
+        --vc-color-primary-950: color-mix(in oklab, var(--dnpm-brand-slate) 40%, black);
 
         /* Content surfaces — Graphite & Coral light: a faintly cool
            near-white over a soft zinc card, crisp graphite ink. */
