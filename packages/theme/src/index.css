@@ -97,7 +97,7 @@
            bands (elevated/nested, shared by both modes) are slates mixed
            from the brand anchor, so the chrome family derives from the
            same color the primary scale does. */
-        --dnpm-chrome-bg:            #E8E8EB;
+        --dnpm-chrome-bg:            var(--vc-color-bg-muted);
         --dnpm-chrome-bg-elevated:   color-mix(in oklab, var(--dnpm-brand-slate) 20%, #1E232A);
         --dnpm-chrome-bg-nested:     color-mix(in oklab, var(--dnpm-brand-slate) 28%, #1E232A);
         --dnpm-chrome-fg:            var(--vc-color-fg);
@@ -218,7 +218,7 @@
            reads vividly on the near-black surface (matches the demo). */
         --dnpm-brand-coral:          #FF6F6C;
 
-        --dnpm-chrome-bg:            #0E1115;
+        --dnpm-chrome-bg:            var(--vc-color-bg-muted);
         --dnpm-chrome-fg:            #F4F5F6;
         --dnpm-chrome-fg-muted:      #9AA2AD;
         --dnpm-chrome-border:        #2B313A;
