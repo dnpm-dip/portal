@@ -218,10 +218,12 @@
            reads vividly on the near-black surface (matches the demo). */
         --dnpm-brand-coral:          #FF6F6C;
 
-        --dnpm-chrome-bg:            var(--vc-color-bg-muted);
-        --dnpm-chrome-fg:            #F4F5F6;
-        --dnpm-chrome-fg-muted:      #9AA2AD;
-        --dnpm-chrome-border:        #2B313A;
+        /* Nord chrome band (header/sidebar/footer) — a step above content,
+           below the lifted cards. */
+        --dnpm-chrome-bg:            #3B4252;
+        --dnpm-chrome-fg:            #ECEFF4;
+        --dnpm-chrome-fg-muted:      #A6ADBB;
+        --dnpm-chrome-border:        #4C566A;
 
         /* Headings/wordmark ink — the light-mode slate drops too
            close to the dark surfaces; flip to the palette's silver. */
@@ -241,41 +243,42 @@
          * left the light `fg` tokens from @vuecs/design at ~1.7:1 —
          * unreadable.
          */
-        --vc-color-bg: #16191E;
-        --vc-color-bg-muted: #1F232A;
-        --vc-color-fg: #E9EBEE;
-        --vc-color-fg-muted: #9AA2AD;
-        --vc-color-border: #2B313A;
+        /* Nord surfaces: content (#2E3440), lifted cards (#434C5E), Nord ink. */
+        --vc-color-bg: #2E3440;
+        --vc-color-bg-muted: #434C5E;
+        --vc-color-fg: #ECEFF4;
+        --vc-color-fg-muted: #A6ADBB;
+        --vc-color-border: #4C566A;
 
         /* The dark primary ladder is light (anchor lightened above), so the
            primary button fill needs dark text. */
-        --vc-color-on-primary: #16191E;
+        --vc-color-on-primary: #2E3440;
 
-        /* Dark alert tones — the demo's .alert formula on the dark surface:
-           dark:bg-950 = lifted anchor @15% on #16191E, dark:text-200 = the
-           lifted anchor, dark:border-800 = lifted anchor @30% transparent.
+        /* Dark alert tones — the demo's .alert formula on the Nord surface:
+           dark:bg-950 = lifted anchor @15% on the Nord content (#2E3440),
+           dark:text-200 = the lifted anchor, dark:border-800 = anchor @30%.
            500/600 keep the SOLID light-mode anchor (deep) so destructive/solid
            buttons keep white-on-color contrast in dark. */
         --vc-color-success-200: #5BD98C;
         --vc-color-success-500: #0E7038;
         --vc-color-success-600: #0E7038;
         --vc-color-success-800: color-mix(in oklab, #5BD98C 30%, transparent);
-        --vc-color-success-950: color-mix(in oklab, #5BD98C 15%, #16191E);
+        --vc-color-success-950: color-mix(in oklab, #5BD98C 15%, #2E3440);
         --vc-color-warning-200: #F2C14E;
         --vc-color-warning-500: #9A4D07;
         --vc-color-warning-600: #9A4D07;
         --vc-color-warning-800: color-mix(in oklab, #F2C14E 30%, transparent);
-        --vc-color-warning-950: color-mix(in oklab, #F2C14E 15%, #16191E);
+        --vc-color-warning-950: color-mix(in oklab, #F2C14E 15%, #2E3440);
         --vc-color-error-200:   #FF8A8A;
         --vc-color-error-500:   #BE2A2A;
         --vc-color-error-600:   #BE2A2A;
         --vc-color-error-800:   color-mix(in oklab, #FF8A8A 30%, transparent);
-        --vc-color-error-950:   color-mix(in oklab, #FF8A8A 15%, #16191E);
+        --vc-color-error-950:   color-mix(in oklab, #FF8A8A 15%, #2E3440);
         --vc-color-info-200:    #7CB6FF;
         --vc-color-info-500:    #2159C5;
         --vc-color-info-600:    #2159C5;
         --vc-color-info-800:    color-mix(in oklab, #7CB6FF 30%, transparent);
-        --vc-color-info-950:    color-mix(in oklab, #7CB6FF 15%, #16191E);
+        --vc-color-info-950:    color-mix(in oklab, #7CB6FF 15%, #2E3440);
 
         /*
          * Warning / danger / info surfaces — tinted panels (alerts,
