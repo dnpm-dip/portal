@@ -218,6 +218,17 @@
            reads vividly on the near-black surface (matches the demo). */
         --dnpm-brand-coral:          #FF6F6C;
 
+        /* The primary scale's light tints (50-400) are color-mixed toward WHITE
+           in :root. In dark the anchor is already light (#C7CCD4), so those come
+           out near-white — e.g. the sort-indicator chip's hover:bg-primary-50
+           rendered white. Re-mix the light tints toward the dark content surface
+           so subtle primary tints/hovers read as a faint lift, not white. */
+        --vc-color-primary-50:  color-mix(in oklab, var(--dnpm-brand-slate) 8%,  var(--vc-color-bg));
+        --vc-color-primary-100: color-mix(in oklab, var(--dnpm-brand-slate) 14%, var(--vc-color-bg));
+        --vc-color-primary-200: color-mix(in oklab, var(--dnpm-brand-slate) 22%, var(--vc-color-bg));
+        --vc-color-primary-300: color-mix(in oklab, var(--dnpm-brand-slate) 34%, var(--vc-color-bg));
+        --vc-color-primary-400: color-mix(in oklab, var(--dnpm-brand-slate) 50%, var(--vc-color-bg));
+
         /* Nord chrome band (header/sidebar/footer) — a step above content,
            below the lifted cards. */
         --dnpm-chrome-bg:            #3B4252;
