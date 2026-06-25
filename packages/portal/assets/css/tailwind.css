@@ -8,26 +8,28 @@
  */
 
 /*
- * Structural CSS for @vuecs/navigation (<VCNavItems>): flex layout for
- * nav links + submenu triggers (inline icon/label), the dropdown content
- * panel, and the base pills box. The JS plugin only registers components;
- * this stylesheet ships separately and must be imported explicitly.
- * Imported here (not in the theme) because @vuecs/navigation is a direct
- * dependency of this app — keeping it out of the theme's deps avoids a
- * dependency re-resolution. Placed BEFORE the theme so the theme's
- * app-level overrides (styles/vue-layout-navigation.css) still win.
+ * Structural CSS for the @vuecs/* component packages this app renders.
+ * theme-tailwind only COLORS the components (via its class-map `@source`
+ * scan); each package additionally ships a `style.css` with the chrome that
+ * utility classes can't express and which must be imported explicitly:
+ *   - button      — loading-spinner keyframes
+ *   - elements    — alert / badge / card flex structure
+ *   - forms       — select-search dropdown overlay + removable chip pills
+ *   - navigation  — nav-link / submenu / pills layout
+ *   - pagination  — joined page-item flex row
+ *   - placeholder — skeleton shimmer (glow/wave) keyframes
+ *   - table       — sortable head-cell cursor + sort-icon + sticky columns
+ * Each resolves via its `style` package export (so the bare package name is
+ * enough — no `/style.css`), and is placed BEFORE `@dnpm-dip/theme` so the
+ * theme's app-level overrides still win.
  */
-@import "@vuecs/navigation/style.css";
-
-/*
- * Structural CSS for @vuecs/forms (<VCFormSelectSearch> & friends):
- * positions the dropdown as an absolute overlay panel and styles the
- * selected chips as clickable remove-pills (label + ×, pointer cursor,
- * hover state). Without it the option list renders inline below the
- * input and the chips are bare unstyled buttons. Same direct-dependency
- * rationale and theme-overrides ordering as @vuecs/navigation above.
- */
-@import "@vuecs/forms/style.css";
+@import "@vuecs/button";
+@import "@vuecs/elements";
+@import "@vuecs/forms";
+@import "@vuecs/navigation";
+@import "@vuecs/pagination";
+@import "@vuecs/placeholder";
+@import "@vuecs/table";
 
 @import "@dnpm-dip/theme";
 
