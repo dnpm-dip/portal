@@ -97,7 +97,7 @@
            bands (elevated/nested, shared by both modes) are slates mixed
            from the brand anchor, so the chrome family derives from the
            same color the primary scale does. */
-        --dnpm-chrome-bg:            #D9D9D9;
+        --dnpm-chrome-bg:            #E8E8EB;
         --dnpm-chrome-bg-elevated:   color-mix(in oklab, var(--dnpm-brand-slate) 20%, #1E232A);
         --dnpm-chrome-bg-nested:     color-mix(in oklab, var(--dnpm-brand-slate) 28%, #1E232A);
         --dnpm-chrome-fg:            var(--vc-color-fg);
@@ -121,18 +121,18 @@
         --dnpm-navbar-menu-fg:       #9d9d9d;
 
         /*
-         * Brand accents — "Slate & Coral" (design-review pick from the
-         * project's healthcare palette, colors.webp): a sober neutral
-         * slate anchors the primary scale below — calm chrome that lets
-         * the clinical content speak — while the coral carries the
-         * energy as the accent (logo strand, sidebar accent, footer
-         * links) and the mauve softens the mark's rungs. Mode-stable
-         * except `-ink` (headings/wordmark), which sits on the
-         * content/chrome surfaces and flips to the silver tone in dark
-         * mode.
+         * Brand accents — "Graphite & Coral" (design-review pick): a sharp
+         * near-monochrome graphite anchors the primary scale below — a
+         * quiet, high-contrast chrome that lets the clinical content speak —
+         * while the DNPM coral carries the energy as the single accent (logo
+         * strand, sidebar accent, footer links) and the mauve softens the
+         * mark's rungs. `--dnpm-brand-slate` keeps its historical name but
+         * now holds the graphite anchor; it lightens to a graphite-silver
+         * under `.dark` so the primary scale reads on the dark surface.
+         * Mode-stable except `-ink`/`-slate`, which flip in dark mode.
          */
         --dnpm-brand-coral:          #F65552;
-        --dnpm-brand-slate:          #5C6670;
+        --dnpm-brand-slate:          #2B2F36;
         --dnpm-brand-mauve:          #C7B1BD;
         --dnpm-brand-silver:         #AEB2B5;
         --dnpm-brand-ink:            var(--dnpm-brand-slate);
@@ -158,6 +158,21 @@
         --vc-color-primary-800: color-mix(in oklab, var(--dnpm-brand-slate) 52%, black);
         --vc-color-primary-900: color-mix(in oklab, var(--dnpm-brand-slate) 42%, black);
         --vc-color-primary-950: color-mix(in oklab, var(--dnpm-brand-slate) 28%, black);
+
+        /* Content surfaces — Graphite & Coral light: a faintly cool
+           near-white over a soft zinc card, crisp graphite ink. */
+        --vc-color-bg:        #FAFAFA;
+        --vc-color-bg-muted:  #F1F1F3;
+        --vc-color-fg:        #1A1D21;
+        --vc-color-fg-muted:  #565E6B;
+        --vc-color-border:    #E2E2E6;
+
+        /* Semantic / alert tones — Graphite & Coral light. 500 feeds the soft
+           tint (bg-*-500/10) + border, 600 the colored text (text-*-600). */
+        --vc-color-success-500: #0E7038; --vc-color-success-600: #0E7038;
+        --vc-color-warning-500: #9A4D07; --vc-color-warning-600: #9A4D07;
+        --vc-color-error-500:   #BE2A2A; --vc-color-error-600:   #BE2A2A;
+        --vc-color-info-500:    #2159C5; --vc-color-info-600:    #2159C5;
     }
 
     /*
@@ -175,10 +190,14 @@
      *      content surface pairs with the chrome as a gentle tonal step.
      */
     .dark {
-        --dnpm-chrome-bg:            color-mix(in oklab, var(--dnpm-brand-slate) 14%, #14181D);
-        --dnpm-chrome-fg:            #ffffff;
-        --dnpm-chrome-fg-muted:      #aeb2b7;
-        --dnpm-chrome-border:        #333333;
+        /* Lighten the primary anchor for dark so the graphite ladder reads on
+           the dark surface (chrome bands stay dark — #1E232A-dominated). */
+        --dnpm-brand-slate:          #C7CCD4;
+
+        --dnpm-chrome-bg:            #0E1115;
+        --dnpm-chrome-fg:            #F4F5F6;
+        --dnpm-chrome-fg-muted:      #9AA2AD;
+        --dnpm-chrome-border:        #2B313A;
 
         /* Headings/wordmark ink — the light-mode slate drops too
            close to the dark surfaces; flip to the palette's silver. */
@@ -198,9 +217,22 @@
          * left the light `fg` tokens from @vuecs/design at ~1.7:1 —
          * unreadable.
          */
-        --vc-color-bg: #262B32;
-        --vc-color-bg-muted: #313740;
-        --vc-color-border: #3B424D;
+        --vc-color-bg: #16191E;
+        --vc-color-bg-muted: #1F232A;
+        --vc-color-fg: #E9EBEE;
+        --vc-color-fg-muted: #9AA2AD;
+        --vc-color-border: #2B313A;
+
+        /* The dark primary ladder is light (anchor lightened above), so the
+           primary button fill needs dark text. */
+        --vc-color-on-primary: #16191E;
+
+        /* Semantic / alert tones — lifted into the 300-400 band so colored
+           alert text (text-*-600) reads on its soft tint over the dark surface. */
+        --vc-color-success-500: #5BD98C; --vc-color-success-600: #5BD98C;
+        --vc-color-warning-500: #F2C14E; --vc-color-warning-600: #F2C14E;
+        --vc-color-error-500:   #FF8A8A; --vc-color-error-600:   #FF8A8A;
+        --vc-color-info-500:    #7CB6FF; --vc-color-info-600:    #7CB6FF;
 
         /*
          * Warning / danger / info surfaces — tinted panels (alerts,
