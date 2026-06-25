@@ -17,6 +17,7 @@ import {
     type KeyValueRecord,
     QueryEventBusEventName,
     injectQueryEventBus,
+    isCoding,
     toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
@@ -168,6 +169,15 @@ export default defineComponent({
             }
 
             if (item.key && typeof item.key === 'object') {
+                // The supporting-variant key is a bare `{ gene: Coding }` (no
+                // type-discriminated SNV/CNV/Fusion shape), so resolve the gene
+                // directly; queryGeneAlterationToString would otherwise hit its
+                // `default` branch and render '???'.
+                const key = item.key as { gene?: Coding };
+                if (isCoding(key.gene)) {
+                    return key.gene.display || key.gene.code;
+                }
+
                 return queryGeneAlterationToString(item.key as QueryGeneAlteration);
             }
 
