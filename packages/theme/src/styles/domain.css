@@ -120,7 +120,16 @@ the overlapping seams.
 
 /*
 Input group — joined input + addon (form-select-search / button).
+The flex container was provided by the retired Bootstrap-compat `.input-group`
+shim; without it the `width: 1%` / `flex: 1 1 auto` child below collapses the
+control to 1% wide. Restore the flex row here.
 */
+.input-group {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
 .input-group > .vc-form-select-search {
     position: relative;
     flex: 1 1 auto;
