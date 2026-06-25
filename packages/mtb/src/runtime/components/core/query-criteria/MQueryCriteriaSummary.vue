@@ -227,7 +227,7 @@ export default defineComponent({
 </template>
 <style scoped>
 .variant-box {
-    background-color: #e0e0e0 !important;
-    border: 1px solid #c4c4c4;
+    background-color: var(--vc-color-bg-muted) !important;
+    border: 1px solid var(--vc-color-border);
 }
 </style>

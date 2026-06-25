@@ -165,14 +165,14 @@ export default defineComponent({
 }
 
 .validation-report-card .severity-info {
-    color: rgb(106 171 184) !important;
+    color: var(--vc-color-info-600) !important;
 }
 
 .validation-report-card .severity-warning {
-    color: rgb(255 137 0) !important;
+    color: var(--vc-color-warning-600) !important;
 }
 
 .validation-report-card .severity-danger {
-    color: rgb(209 47 62) !important;
+    color: var(--vc-color-error-600) !important;
 }
 </style>
