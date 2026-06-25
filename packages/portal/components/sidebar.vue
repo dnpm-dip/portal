@@ -61,10 +61,10 @@ export default defineNuxtComponent({
             <div class="mt-auto">
                 <div
                     v-if="loggedIn"
-                    class="flex flex-col ms-3 me-3 mb-3 mt-auto"
-                    style="color: #848484"
+                    class="font-light flex flex-col ms-3 me-3 mb-3 mt-auto text-sm"
+                    style="color: var(--dnpm-chrome-fg-muted)"
                 >
-                    <small>
+                    <span>
                         <VCCountdown :time="tokenExpiresIn">
                             <template #default="props">
                                 <VCIcon
@@ -74,7 +74,7 @@ export default defineNuxtComponent({
                                 <span class="text-success-600">{{ props.minutes }} Minute(n), {{ props.seconds }} Sekunde(n)</span>.
                             </template>
                         </VCCountdown>
-                    </small>
+                    </span>
                 </div>
             </div>
         </div>
