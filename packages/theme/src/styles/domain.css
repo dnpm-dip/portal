@@ -137,21 +137,20 @@ control to 1% wide. Restore the flex row here.
     min-width: 0;
 }
 
-.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) input {
-    margin-left: -1px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.input-group > :not(:last-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) input {
-    margin-right: -1px;
+/* Joined look: where the select-search box (`.vc-form-select-search-input` —
+   the bordered box, NOT a raw <input>) meets the trailing button, square the
+   adjacent inner corners and overlap their 1px borders into a single seam.
+   Heights match via the container's `align-items: stretch` — no fixed button
+   height, so the button grows to the box's natural height. */
+.input-group > .vc-form-select-search:not(:last-child) .vc-form-select-search-input {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.input-group .vc-button {
-    height: 2rem;
-    line-height: 1rem;
+.input-group > .vc-button:not(:first-child) {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .vc-form-select-search .vc-form-select-search-content {
