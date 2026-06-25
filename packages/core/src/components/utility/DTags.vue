@@ -78,7 +78,7 @@ export default defineComponent({
              .vc-form-select-search, so the list carries that scope class —
              this renders standalone tags identical to the select-search
              chips (clickable pill removes the item). -->
-        <ul class="vc-form-select-search vc-form-select-search-selected list-unstyled mb-0">
+        <ul class="vc-form-select-search vc-form-select-search-selected list-unstyled mb-0 flex flex-row flex-wrap items-center gap-x-1.5 gap-y-1">
             <template
                 v-for="(item, index) in tags"
                 :key="item.id"

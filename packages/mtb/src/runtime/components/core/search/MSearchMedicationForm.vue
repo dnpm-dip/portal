@@ -309,6 +309,7 @@ export default defineComponent({
                 type="button"
                 color="neutral"
                 size="xs"
+                class="mb-3"
                 @click.prevent="addCustom"
             >
                 Hinzufügen
@@ -320,7 +321,7 @@ export default defineComponent({
             @deleted="dropCustom"
         >
             <template #between>
-                <span class="me-1">
+                <span>
                     <template v-if="combination">
                         und
                     </template>
