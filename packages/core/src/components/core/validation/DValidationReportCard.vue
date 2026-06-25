@@ -1,4 +1,6 @@
 <script lang="ts">
+import { VCButton } from '@vuecs/button';
+import { VCAlert } from '@vuecs/elements';
 import { VCTimeago } from '@vuecs/timeago';
 import {
     type PropType, 
@@ -11,6 +13,8 @@ import type { ValidationReportInfo } from '../../../domains';
 export default defineComponent({
     components: {
         DValidationReport,
+        VCAlert,
+        VCButton,
         VCTimeago,
     },
     props: {

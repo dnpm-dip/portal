@@ -7,14 +7,16 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import {
-    defineComponent, 
-    ref, 
-    toRef, 
+    defineComponent,
+    ref,
+    toRef,
     watch,
 } from 'vue';
+import { VCButton } from '@vuecs/button';
 import { LogicalOperator } from '../../../constants';
 
 export default defineComponent({
+    components: { VCButton },
     props: { modelValue: { type: String as PropType<`${LogicalOperator}`> } },
     emits: ['update:modelValue'],
     setup(props, { emit }) {

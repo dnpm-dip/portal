@@ -1,12 +1,14 @@
 <script lang="ts">
+import { VCButton } from '@vuecs/button';
 import {
-    defineComponent, 
-    ref, 
-    toRef, 
+    defineComponent,
+    ref,
+    toRef,
     watch,
 } from 'vue';
 
 export default defineComponent({
+    components: { VCButton },
     props: {
         modelValue: {
             type: Boolean,

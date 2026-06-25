@@ -26,10 +26,11 @@ import {
     ref,
 } from '#imports';
 import {
-    defineNuxtComponent, 
-    navigateTo, 
+    defineNuxtComponent,
+    navigateTo,
     useRoute,
 } from '#app';
+import { VCButton } from '@vuecs/button';
 
 class LoginCredentialsValidator extends Container<{
     name: string;
@@ -50,6 +51,7 @@ export default defineNuxtComponent({
         AIdentityProviders,
         AIdentityProviderIcon,
         IFieldValidation,
+        VCButton,
     },
     setup() {
         definePageMeta({

@@ -1,11 +1,12 @@
 <script lang="ts">
 import { DFact } from '@dnpm-dip/core';
+import { VCButton } from '@vuecs/button';
 import type { PropType } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
 import type { PatientMatch } from '../../domains';
 
 export default defineComponent({
-    components: { DFact },
+    components: { DFact, VCButton },
     props: {
         entity: {
             type: Object as PropType<PatientMatch>,

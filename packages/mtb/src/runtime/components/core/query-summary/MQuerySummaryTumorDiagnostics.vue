@@ -15,6 +15,7 @@ import {
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { VCAlert } from '@vuecs/elements';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
@@ -24,6 +25,7 @@ export default defineComponent({
     components: {
         DQuerySummaryNested,
         DKVChartTableSwitch,
+        VCAlert,
     },
     props: {
         queryId: {

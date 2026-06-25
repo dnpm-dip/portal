@@ -57,6 +57,11 @@ Scopes typically match package names: `core`, `portal`, `mtb`, `rd`, `admin`, `k
 - Feature modules register themselves via `kit` helpers
 - Pages are auto-routed by Nuxt file-based routing
 - Plugins in `packages/portal/plugins/` handle global setup
+- **Always use explicit component imports.** Import `@vuecs/*` components where you use them
+  (`import { VCButton } from '@vuecs/button'`, `VCAlert`/`VCBadge`/`VCCard*` from `@vuecs/elements`)
+  and register them in the component's `components: { ... }` — do **not** rely on the global vuecs
+  plugin registration, even though it exists.
+- Prefer a `<VCIcon>` in the default slot over an `icon-left` / `iconLeft` prop on `VCButton` / `VCAlert`.
 
 ## Best Practices
 

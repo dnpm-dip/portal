@@ -20,6 +20,7 @@ import {
     toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { VCAlert } from '@vuecs/elements';
 import {
     computed,
     defineComponent,
@@ -37,6 +38,7 @@ export default defineComponent({
         DKVChartTableSwitch,
         DQuerySummaryNested,
         DQuerySummaryGrouped,
+        VCAlert,
     },
     props: {
         queryId: {

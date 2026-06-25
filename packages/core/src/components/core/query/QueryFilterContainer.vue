@@ -6,10 +6,12 @@
   -->
 <script lang="ts">
 import { storeToRefs } from '@authup/client-web-kit';
+import { VCButton } from '@vuecs/button';
 import { defineComponent } from 'vue';
 import { useQueryFilterStore } from '../../../stores';
 
 export default defineComponent({
+    components: { VCButton },
     emits: ['submitted'],
     setup(_props, { emit }) {
         const store = useQueryFilterStore();

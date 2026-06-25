@@ -5,12 +5,13 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
+import { VCButton } from '@vuecs/button';
 import { type PropType, defineComponent, ref } from 'vue';
 import type { QuerySession } from '../../../domains';
 import MSearchForm from '../search/MSearchForm.vue';
 
 export default defineComponent({
-    components: { MSearchForm },
+    components: { MSearchForm, VCButton },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,

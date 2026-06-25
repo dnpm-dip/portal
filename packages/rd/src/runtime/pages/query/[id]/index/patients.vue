@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCPagination } from '@vuecs/pagination';
+import { VCAlert } from '@vuecs/elements';
 import {
     QueryEventBusEventName,
     injectQueryEventBus,
@@ -20,6 +21,7 @@ export default defineNuxtComponent({
     components: {
         QueryPatientMatchEntity,
         QueryPatientMatchList,
+        VCAlert,
         VCPagination,
     },
     props: {

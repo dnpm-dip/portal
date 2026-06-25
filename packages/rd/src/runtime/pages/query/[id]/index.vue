@@ -8,6 +8,7 @@ import {
 } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
 import { computed, ref } from 'vue';
+import { VCButton } from '@vuecs/button';
 import { VCNavItems } from '@vuecs/navigation';
 import type { NavigationItem } from '@vuecs/navigation';
 import { defineNuxtComponent, useRoute } from '#imports';
@@ -18,6 +19,7 @@ import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        VCButton,
         VCNavItems,
         DQueryFilterContainer,
         DQueryInfoBox,

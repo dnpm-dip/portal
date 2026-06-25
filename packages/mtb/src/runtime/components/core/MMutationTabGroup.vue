@@ -5,6 +5,7 @@ import {
     DCollectionTransform, 
     type FormTabInput,
 } from '@dnpm-dip/core';
+import { VCButton } from '@vuecs/button';
 import { VCFormSelect, VCFormSelectSearch } from '@vuecs/forms';
 import type { FormOption } from '@vuecs/forms';
 import {
@@ -32,10 +33,11 @@ import MSearchSNVForm from './search/MSearchSNVForm.vue';
 
 export default defineComponent({
     components: {
-        DCollectionTransform, 
-        VCFormSelectSearch, 
-        DCodeSystem, 
+        DCollectionTransform,
+        VCFormSelectSearch,
+        DCodeSystem,
         VCFormSelect,
+        VCButton,
     },
     props: {
         entity: {

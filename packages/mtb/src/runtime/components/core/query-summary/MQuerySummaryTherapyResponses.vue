@@ -22,6 +22,7 @@ import {
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import type { PaginationMeta } from '@vuecs/pagination';
+import { VCAlert } from '@vuecs/elements';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QueryTherapyResponse } from '../../../domains';
 import MGeneAlterationText from '../MGeneAlterationText.vue';
@@ -33,6 +34,7 @@ export default defineComponent({
         DCodingText,
         DSortIndicator,
         MTherapyResponseDistributionBar,
+        VCAlert,
     },
     props: {
         queryId: {

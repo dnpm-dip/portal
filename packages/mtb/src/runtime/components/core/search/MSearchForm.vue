@@ -22,6 +22,7 @@ import {
     QueryRequestMode,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { VCButton } from '@vuecs/button';
 import {
     VCFormSelectSearch,
 } from '@vuecs/forms';
@@ -51,6 +52,7 @@ export default defineComponent({
         MMutationTabGroup,
         DFormTabGroups,
         DValueSet,
+        VCButton,
         VCFormSelectSearch,
         DLoadingModal,
         DCollectionTransform,

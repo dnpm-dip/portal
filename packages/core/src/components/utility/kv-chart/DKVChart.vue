@@ -13,13 +13,14 @@ import {
     getColorInRange, 
     rgbToHex,
 } from '../../../utils';
+import { VCAlert } from '@vuecs/elements';
 import { DChart } from '../chart';
 import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
 
 type Key = MinMaxRange | Coding | Coding[] | string[] | string;
 
 const component = defineComponent({
-    components: { DChart },
+    components: { DChart, VCAlert },
     props: {
         type: {
             type: String as PropType<'bar' | 'doughnut'>,

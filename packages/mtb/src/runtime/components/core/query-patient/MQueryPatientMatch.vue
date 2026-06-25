@@ -7,13 +7,18 @@
 
 <script lang="ts">
 import { DFact } from '@dnpm-dip/core';
+import { VCButton } from '@vuecs/button';
 import type { PropType } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
 import type { PatientMatch } from '../../../domains';
 import MQueryCriteriaSummary from '../query-criteria/MQueryCriteriaSummary.vue';
 
 export default defineComponent({
-    components: { DFact, MQueryCriteriaSummary },
+    components: {
+        DFact, 
+        MQueryCriteriaSummary, 
+        VCButton, 
+    },
     props: {
         entity: {
             type: Object as PropType<PatientMatch>,

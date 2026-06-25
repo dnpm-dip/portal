@@ -5,9 +5,11 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
+import { VCButton } from '@vuecs/button';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
+    components: { VCButton },
     props: {
         name: {
             type: String,

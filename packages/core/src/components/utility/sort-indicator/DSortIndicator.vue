@@ -8,9 +8,12 @@
 <script lang="ts">
 import { type PropType, computed, defineComponent } from 'vue';
 import type { SortDescriptor, TableColumn } from '@vuecs/table';
+import { VCButton } from '@vuecs/button';
+import { VCBadge } from '@vuecs/elements';
 import { isObject } from 'smob';
 
 export default defineComponent({
+    components: { VCButton, VCBadge },
     props: {
         sortBy: {
             type: Array as PropType<SortDescriptor[]>,

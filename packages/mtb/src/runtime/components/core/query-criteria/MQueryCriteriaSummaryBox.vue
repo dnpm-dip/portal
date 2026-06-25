@@ -6,9 +6,11 @@
   -->
 <script lang="ts">
 import { type PropType, defineComponent, ref } from 'vue';
+import { VCButton } from '@vuecs/button';
 import type { QuerySession } from '../../../domains';
 
 export default defineComponent({
+    components: { VCButton },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,

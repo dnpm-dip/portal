@@ -1,5 +1,6 @@
 <script lang="ts">
 import { DPreparedQueryContainer, PageMetaKey, useToast } from '@dnpm-dip/core';
+import { VCAlert } from '@vuecs/elements';
 import type { ClientError } from 'hapic';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/search/MSearchForm.vue';
@@ -9,6 +10,7 @@ export default defineNuxtComponent({
     components: {
         DPreparedQueryContainer,
         SearchForm,
+        VCAlert,
     },
     setup() {
         definePageMeta({

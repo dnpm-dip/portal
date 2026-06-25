@@ -6,11 +6,12 @@
   -->
 <script lang="ts">
 import { DCodingText } from '@dnpm-dip/core';
+import { VCBadge } from '@vuecs/elements';
 import { type PropType, defineComponent } from 'vue';
 import type { QueryCriteria } from '../../../domains';
 
 export default defineComponent({
-    components: { DCodingText },
+    components: { DCodingText, VCBadge },
     props: {
         entity: {
             type: Object as PropType<QueryCriteria>,

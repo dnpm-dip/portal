@@ -15,6 +15,7 @@ import {
     QueryRequestMode,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { VCButton } from '@vuecs/button';
 import { VCFormSelectSearch } from '@vuecs/forms';
 import type { FormOption } from '@vuecs/forms';
 import { type PropType, toRef, watch } from 'vue';
@@ -39,6 +40,7 @@ export default defineComponent({
         DCollectionTransform,
         VCFormSelectSearch,
         DValueSet,
+        VCButton,
     },
     props: {
         criteria: { type: Object as PropType<QueryCriteria | null> },

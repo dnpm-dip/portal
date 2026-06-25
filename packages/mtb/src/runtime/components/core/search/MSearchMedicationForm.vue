@@ -13,6 +13,7 @@ import {
     DValueSet, 
     type ValueSetCoding,
 } from '@dnpm-dip/core';
+import { VCButton } from '@vuecs/button';
 import { type FormOption, VCFormCheckboxGroup, VCFormSelectSearch } from '@vuecs/forms';
 import {
     type PropType,
@@ -27,6 +28,7 @@ export default defineComponent({
         DValueSet,
         DTags,
         DCollectionTransform,
+        VCButton,
         VCFormCheckboxGroup,
         VCFormSelectSearch,
     },

@@ -6,6 +6,7 @@
   -->
 
 <script lang="ts">
+import { VCAlert } from '@vuecs/elements';
 import { VCLink } from '@vuecs/link';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
@@ -13,7 +14,7 @@ import type { QueryBase } from '../../../domains';
 import { ConnectionPeerStatus } from '../../../domains';
 
 export default defineComponent({
-    components: { VCLink },
+    components: { VCAlert, VCLink },
     props: {
         entity: {
             type: Object as PropType<QueryBase>,

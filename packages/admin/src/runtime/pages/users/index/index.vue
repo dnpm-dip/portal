@@ -15,6 +15,7 @@ import {
     usePermissionCheck,
 } from '@authup/client-web-kit';
 import type { BuildInput } from 'rapiq';
+import { VCButton } from '@vuecs/button';
 import { defineNuxtComponent } from '#imports';
 
 export default defineNuxtComponent({
@@ -24,6 +25,7 @@ export default defineNuxtComponent({
         ASearch,
         AUsers,
         AEntityDelete,
+        VCButton,
     },
     emits: ['deleted'],
     setup(props, { emit }) {

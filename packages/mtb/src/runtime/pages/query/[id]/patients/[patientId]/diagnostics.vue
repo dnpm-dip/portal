@@ -1,5 +1,6 @@
 <script lang="ts">
 import { DExpandableContent } from '@dnpm-dip/core';
+import { VCAlert } from '@vuecs/elements';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import MNGSReportCNV from '../../../../../components/core/MNGSReportCNV.vue';
@@ -15,6 +16,7 @@ export default defineNuxtComponent({
         DExpandableContent,
         MNGSReportCNV,
         MNgsReportSNV,
+        VCAlert,
     },
     props: {
         entity: {

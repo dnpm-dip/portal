@@ -14,6 +14,7 @@ import {
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { VCAlert } from '@vuecs/elements';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QuerySummaryGeneAlterationDistribution } from '../../../domains';
@@ -22,6 +23,7 @@ export default defineComponent({
     components: {
         DQuerySummaryGrouped,
         DKVChartTableSwitch,
+        VCAlert,
     },
     props: {
         queryId: {

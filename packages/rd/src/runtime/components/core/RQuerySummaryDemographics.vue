@@ -14,11 +14,12 @@ import {
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { VCAlert } from '@vuecs/elements';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { injectHTTPClient } from '../../core';
 
 export default defineComponent({
-    components: { DQuerySummaryDemographics },
+    components: { DQuerySummaryDemographics, VCAlert },
     props: {
         queryId: {
             type: String,

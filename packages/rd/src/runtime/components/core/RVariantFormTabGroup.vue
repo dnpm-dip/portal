@@ -17,6 +17,7 @@ import {
     toRef,
     watch,
 } from 'vue';
+import { VCButton } from '@vuecs/button';
 import { VCFormSelectSearch } from '@vuecs/forms';
 import { DCodeSystem, DCollectionTransform } from '@dnpm-dip/core';
 import type { QueryCriteriaVariant } from '../../domains';
@@ -52,6 +53,7 @@ export default defineComponent({
         IFieldValidation,
         DCollectionTransform,
         DCodeSystem,
+        VCButton,
         VCFormSelectSearch,
     },
     props: {

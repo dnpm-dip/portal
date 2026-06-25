@@ -1,5 +1,6 @@
 <script lang="ts">
 
+import { VCButton } from '@vuecs/button';
 import { VCTimeago } from '@vuecs/timeago';
 import type { TableColumn } from '@vuecs/table';
 import type { IdentityProvider } from '@authup/core-kit';
@@ -24,6 +25,7 @@ export default defineNuxtComponent({
         ASearch,
         AIdentityProviders,
         AEntityDelete,
+        VCButton,
         VCTimeago,
     },
     emits: ['deleted'],
