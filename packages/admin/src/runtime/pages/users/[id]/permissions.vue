@@ -1,8 +1,7 @@
 <script lang="ts">
 import {
-    APagination, 
-    ASearch, 
-    AUserPermissionAssignment, 
+    APagination,
+    ASearch,
     AUserPermissionAssignments,
 } from '@authup/client-web-kit';
 import type { User } from '@authup/core-kit';
@@ -13,7 +12,6 @@ export default defineNuxtComponent({
     components: {
         ASearch,
         APagination,
-        AUserPermissionAssignment,
         AUserPermissionAssignments,
     },
     props: {
@@ -34,22 +32,13 @@ export default defineNuxtComponent({
         </template>
         <template #item="{ data }">
             <div class="flex flex-col w-full">
-                <div class="flex flex-row gap-1 ">
-                    <div>
-                        <template v-if="data.display_name">
-                            <strong>{{ data.display_name }}</strong> ({{ data.name }})
-                        </template>
-                        <template v-else>
-                            <strong>{{ data.name }}</strong>
-                        </template>
-                    </div>
-                    <div class="ms-auto">
-                        <AUserPermissionAssignment
-                            :key="data.id"
-                            :user-id="entity.id"
-                            :permission-id="data.id"
-                        />
-                    </div>
+                <div>
+                    <template v-if="data.display_name">
+                        <strong>{{ data.display_name }}</strong> ({{ data.name }})
+                    </template>
+                    <template v-else>
+                        <strong>{{ data.name }}</strong>
+                    </template>
                 </div>
                 <div v-if="data.description">
                     {{ data.description }}
