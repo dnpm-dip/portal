@@ -4,7 +4,7 @@ The DNPM:DIP Portal is a modular web application for the German Network for Pers
 
 ## Setup
 
-- **Node.js**: `>=16.0.0` (tested on Node 22)
+- **Node.js**: `>=24.0.0` (tested on Node 24)
 - **Package Manager**: npm with workspaces (monorepo)
 
 ### Commands

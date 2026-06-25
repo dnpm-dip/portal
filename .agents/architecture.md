@@ -96,5 +96,5 @@ Provides helper functions and types for feature modules to register themselves i
 - **Nx** orchestrates monorepo builds with dependency-ordered execution and caching
 - **tsdown** builds library packages (`core`, `kit`, `theme`)
 - **Nuxt** builds the portal application
-- **Docker** (Node 22 Alpine) for production deployment
+- **Docker** (Node 24 Alpine) for production deployment
 - Container runs on port 3000
