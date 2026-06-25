@@ -5,7 +5,13 @@ import {
     DCollectionTransform, 
     type FormTabInput,
 } from '@dnpm-dip/core';
-import { VCFormSelect, VCFormSelectSearch } from '@vuecs/forms';
+import { VCButton } from '@vuecs/button';
+import { 
+    VCFormCheckbox, 
+    VCFormGroup, 
+    VCFormSelect, 
+    VCFormSelectSearch, 
+} from '@vuecs/forms';
 import type { FormOption } from '@vuecs/forms';
 import {
     type Component,
@@ -32,10 +38,13 @@ import MSearchSNVForm from './search/MSearchSNVForm.vue';
 
 export default defineComponent({
     components: {
-        DCollectionTransform, 
-        VCFormSelectSearch, 
-        DCodeSystem, 
+        DCollectionTransform,
+        VCFormSelectSearch,
+        DCodeSystem,
         VCFormSelect,
+        VCButton,
+        VCFormCheckbox,
+        VCFormGroup,
     },
     props: {
         entity: {
@@ -271,7 +280,7 @@ export default defineComponent({
             <div>
                 <VCFormCheckbox
                     v-model="form.supporting"
-                    :group-class="'form-switch'"
+                    :group-class="'inline-flex items-center gap-2'"
                     :label="true"
                     :label-content="'Stützend?'"
                 />
@@ -279,20 +288,22 @@ export default defineComponent({
             <div>
                 <VCFormCheckbox
                     v-model="form.wildtype"
-                    :group-class="'form-switch'"
+                    :group-class="'inline-flex items-center gap-2'"
                     :label="true"
                     :label-content="'Wildtyp?'"
                 />
             </div>
         </div>
         <div>
-            <button
+            <VCButton
                 type="button"
-                class="btn btn-secondary btn-xs"
+                color="neutral"
+                variant="soft"
+                size="xs"
                 @click.prevent="submit"
             >
                 Speichern
-            </button>
+            </VCButton>
         </div>
     </div>
 </template>

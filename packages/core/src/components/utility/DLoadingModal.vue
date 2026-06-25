@@ -8,8 +8,13 @@
 <script lang="ts">
 import type { Component } from 'vue';
 import { defineComponent, toRef } from 'vue';
+import { VCModal, VCModalContent } from '@vuecs/overlays';
 
 const component = defineComponent({
+    components: {
+        VCModal,
+        VCModalContent,
+    },
     props: {
         display: {
             type: Boolean,
@@ -33,7 +38,7 @@ export default component as Component;
             class="modal-loading"
             close-policy="no-outside"
         >
-            <div class="modal-body">
+            <div class="modal-loading-body">
                 <div class="modal-loading-wrapper">
                     <div>
                         <div class="modal-loading-box" />
@@ -49,7 +54,7 @@ export default component as Component;
 </template>
 <style>
 .modal-loading .modal-content,
-.modal-loading .modal-body {
+.modal-loading .modal-loading-body {
     background-color: transparent !important;
     border: none;
 }

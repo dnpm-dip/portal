@@ -1,11 +1,16 @@
 <script lang="ts">
 import { DCodingCommaList, DCommaList } from '@dnpm-dip/core';
+import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
-    components: { DCodingCommaList, DCommaList },
+    components: {
+        DCodingCommaList, 
+        DCommaList, 
+        VCIcon, 
+    },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -34,8 +39,8 @@ export default defineNuxtComponent({
                 :key="item.id"
             >
                 <div class="entity-card mb-3">
-                    <div class="row">
-                        <div class="col">
+                    <div class="flex flex-wrap -mx-2">
+                        <div class="flex-1 basis-0 px-2">
                             <div>
                                 <div><strong><VCIcon name="fa6-solid:clock" /> Erfassungsdatum</strong> {{ item.recordedOn }}</div>
                             </div>
@@ -54,7 +59,7 @@ export default defineNuxtComponent({
                                 <DCodingCommaList :items="item.medication" />
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="flex-1 basis-0 px-2">
                             <div v-if="item.period">
                                 <div>
                                     <strong><VCIcon name="fa6-solid:calendar-days" /> Zeitraum</strong>

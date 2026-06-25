@@ -13,7 +13,15 @@ import {
     DValueSet, 
     type ValueSetCoding,
 } from '@dnpm-dip/core';
-import { type FormOption, VCFormCheckboxGroup, VCFormSelectSearch } from '@vuecs/forms';
+import { VCButton } from '@vuecs/button';
+import { 
+    type FormOption, 
+    VCFormCheckbox, 
+    VCFormCheckboxGroup, 
+    VCFormGroup, 
+    VCFormInput, 
+    VCFormSelectSearch, 
+} from '@vuecs/forms';
 import {
     type PropType,
     computed,
@@ -27,7 +35,11 @@ export default defineComponent({
         DValueSet,
         DTags,
         DCollectionTransform,
+        VCButton,
+        VCFormCheckbox,
         VCFormCheckboxGroup,
+        VCFormGroup,
+        VCFormInput,
         VCFormSelectSearch,
     },
     props: {
@@ -180,7 +192,7 @@ export default defineComponent({
             <div>
                 <VCFormCheckbox
                     v-model="form.combination"
-                    :group-class="'form-switch'"
+                    :group-class="'inline-flex items-center gap-2'"
                     :label="true"
                     :label-content="'In Kombination?'"
                     @update:model-value="handleChanged"
@@ -192,7 +204,7 @@ export default defineComponent({
             >
                 <div class="ms-3">
                     <VCFormCheckbox
-                        :group-class="'form-switch'"
+                        :group-class="'inline-flex items-center gap-2'"
                         :value="'recommended'"
                         :label="true"
                     >
@@ -203,7 +215,7 @@ export default defineComponent({
                 </div>
                 <div class="ms-3">
                     <VCFormCheckbox
-                        :group-class="'form-switch'"
+                        :group-class="'inline-flex items-center gap-2'"
                         :value="'used'"
                         :label="true"
                     >
@@ -292,14 +304,16 @@ export default defineComponent({
                     />
                 </template>
             </VCFormGroup>
-            <button
+            <VCButton
                 :disabled="form.customDrug.length === 0"
                 type="button"
-                class="btn btn-dark btn-xs"
+                color="neutral"
+                size="xs"
+                class="mb-3"
                 @click.prevent="addCustom"
             >
                 Hinzufügen
-            </button>
+            </VCButton>
         </div>
         <DTags
             :emit-only="true"
@@ -307,7 +321,7 @@ export default defineComponent({
             @deleted="dropCustom"
         >
             <template #between>
-                <span class="me-1">
+                <span>
                     <template v-if="combination">
                         und
                     </template>

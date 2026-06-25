@@ -12,16 +12,18 @@ import {
     onUnmounted,
     ref,
 } from 'vue';
+import { VCTableSortIndicators } from '@vuecs/table';
 import type { SortDescriptor, TableColumn, TableSortState } from '@vuecs/table';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
 import {
-    DSortIndicator,
     QueryEventBusEventName,
     type ResourceCollectionLoadMeta,
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import type { PaginationMeta } from '@vuecs/pagination';
+import { VCAlert } from '@vuecs/elements';
+import { VCPlaceholder } from '@vuecs/placeholder';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QueryTherapyResponse } from '../../../domains';
 import MGeneAlterationText from '../MGeneAlterationText.vue';
@@ -31,8 +33,10 @@ export default defineComponent({
     components: {
         MGeneAlterationText,
         DCodingText,
-        DSortIndicator,
+        VCTableSortIndicators,
         MTherapyResponseDistributionBar,
+        VCAlert,
+        VCPlaceholder,
     },
     props: {
         queryId: {
@@ -200,7 +204,7 @@ export default defineComponent({
 <template>
     <table
         v-if="busy && total === 0"
-        class="table table-bordered w-full"
+        class="w-full"
     >
         <thead>
             <tr>
@@ -233,9 +237,14 @@ export default defineComponent({
         </tbody>
     </table>
     <div v-show="!busy || total > 0">
-        <div class="alert alert-sm alert-warning alert-sm">
+        <VCAlert
+            color="warning"
+            variant="soft"
+            size="sm"
+            class="mb-3"
+        >
             Bitte beachten: Ein Patient kann mehrere unterschiedliche Therapieumsetzungen erhalten haben.
-        </div>
+        </VCAlert>
 
         <VCPagination
             :busy="busy"
@@ -245,10 +254,16 @@ export default defineComponent({
             @load="load"
         />
 
-        <DSortIndicator
-            :sort-by="sortBy"
-            :fields="fields"
-            @reset="resetSort"
+        <VCTableSortIndicators
+            :sort="sortBy"
+            :columns="fields"
+            class="my-2"
+            label="Sortierung:"
+            empty-content="Noch keine Spalten sortiert"
+            add-label="+ Spalte hinzufügen"
+            clear-label="Alle entfernen"
+            remove-aria-label="Sortierung entfernen"
+            @update:sort="onSortUpdate"
         />
 
         <VCTable

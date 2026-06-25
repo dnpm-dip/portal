@@ -1,4 +1,6 @@
 <script lang="ts">
+import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import { VCTimeago } from '@vuecs/timeago';
 import {
     type PropType, 
@@ -11,6 +13,8 @@ import type { ValidationReportInfo } from '../../../domains';
 export default defineComponent({
     components: {
         DValidationReport,
+        VCButton,
+        VCIcon,
         VCTimeago,
     },
     props: {
@@ -45,12 +49,13 @@ export default defineComponent({
                 <small>#{{ info.id }}</small>
             </div>
             <div class="ms-auto">
-                <button
-                    class="btn btn-dark btn-xs"
+                <VCButton
+                    color="neutral"
+                    size="xs"
                     @click.prevent="toggleExtended"
                 >
                     <VCIcon :name="extended ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                </button>
+                </VCButton>
             </div>
         </div>
         <hr>
@@ -67,8 +72,8 @@ export default defineComponent({
                                 v-for="(item, key) in props.data.issues"
                                 :key="key"
                             >
-                                <div class="alert alert-sm alert-secondary row">
-                                    <div class="col-2 flex grow flex-col items-center">
+                                <div class="relative mb-3 rounded-md border border-border bg-bg-muted px-3 py-2 text-sm text-fg flex flex-wrap -mx-2">
+                                    <div class="w-2/12 px-2 flex grow flex-col items-center">
                                         <div>
                                             <strong>Level</strong>
                                         </div>
@@ -84,7 +89,7 @@ export default defineComponent({
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="col-6 flex grow flex-col">
+                                    <div class="w-6/12 px-2 flex grow flex-col">
                                         <div>
                                             <strong>Nachricht</strong>
                                         </div>
@@ -92,7 +97,7 @@ export default defineComponent({
                                             {{ item.message }}
                                         </div>
                                     </div>
-                                    <div class="col-4 flex grow flex-col">
+                                    <div class="w-4/12 px-2 flex grow flex-col">
                                         <div>
                                             <strong>Pfad</strong>
                                         </div>
@@ -160,14 +165,14 @@ export default defineComponent({
 }
 
 .validation-report-card .severity-info {
-    color: rgb(106 171 184) !important;
+    color: var(--vc-color-info-600) !important;
 }
 
 .validation-report-card .severity-warning {
-    color: rgb(255 137 0) !important;
+    color: var(--vc-color-warning-600) !important;
 }
 
 .validation-report-card .severity-danger {
-    color: rgb(209 47 62) !important;
+    color: var(--vc-color-error-600) !important;
 }
 </style>

@@ -6,10 +6,12 @@
   -->
 <script lang="ts">
 import { storeToRefs } from '@authup/client-web-kit';
+import { VCButton } from '@vuecs/button';
 import { defineComponent } from 'vue';
 import { useQueryFilterStore } from '../../../stores';
 
 export default defineComponent({
+    components: { VCButton },
     emits: ['submitted'],
     setup(_props, { emit }) {
         const store = useQueryFilterStore();
@@ -30,15 +32,17 @@ export default defineComponent({
         <slot name="default" />
 
         <div class="entity-card">
-            <button
+            <VCButton
                 type="button"
-                class="btn btn-sm btn-block"
-                :class="dirty ? 'btn-primary' : 'btn-secondary'"
+                size="sm"
+                class="w-full"
+                :color="dirty ? 'primary' : 'neutral'"
+                :variant="dirty ? undefined : 'soft'"
                 :disabled="!dirty"
                 @click.prevent="submit"
             >
                 Anwenden
-            </button>
+            </VCButton>
         </div>
     </div>
 </template>

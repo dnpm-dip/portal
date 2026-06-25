@@ -1,5 +1,5 @@
 <template>
-    <div class="container relative">
+    <div class="mx-auto w-full max-w-screen-lg px-4 relative">
         <div
             class="pointer-events-none absolute inset-x-0 -top-8 -z-10 h-96 overflow-hidden"
             aria-hidden="true"

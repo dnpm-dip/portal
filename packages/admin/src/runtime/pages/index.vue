@@ -7,12 +7,19 @@
 <script lang="ts">
 import { usePermissionCheck } from '@authup/client-web-kit';
 import { DConnectionPeerCard } from '@dnpm-dip/core';
+import { VCAlert } from '@vuecs/elements';
+import { VCIcon } from '@vuecs/icon';
 import { defineNuxtComponent } from '#imports';
 import AConnectionReport from '../components/AConnectionReport';
 import { PermissionName } from '../domains';
 
 export default defineNuxtComponent({
-    components: { AConnectionReport, DConnectionPeerCard },
+    components: {
+        AConnectionReport,
+        DConnectionPeerCard,
+        VCAlert,
+        VCIcon,
+    },
     setup() {
         const connectionReportRead = usePermissionCheck({ name: PermissionName.CONNECTION_REPORT_READ });
 
@@ -66,9 +73,13 @@ export default defineNuxtComponent({
                         </div>
 
                         <template v-if="data.peers.length === 0">
-                            <div class="alert alert-sm alert-info">
+                            <VCAlert
+                                color="info"
+                                variant="soft"
+                                size="sm"
+                            >
                                 Es sind keine externen Standorte erreichbar.
-                            </div>
+                            </VCAlert>
                         </template>
                     </div>
                 </div>

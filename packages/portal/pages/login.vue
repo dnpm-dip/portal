@@ -26,10 +26,13 @@ import {
     ref,
 } from '#imports';
 import {
-    defineNuxtComponent, 
-    navigateTo, 
+    defineNuxtComponent,
+    navigateTo,
     useRoute,
 } from '#app';
+import { VCButton } from '@vuecs/button';
+import { VCFormGroup, VCFormInput } from '@vuecs/forms';
+import { VCIcon } from '@vuecs/icon';
 
 class LoginCredentialsValidator extends Container<{
     name: string;
@@ -50,6 +53,10 @@ export default defineNuxtComponent({
         AIdentityProviders,
         AIdentityProviderIcon,
         IFieldValidation,
+        VCButton,
+        VCFormGroup,
+        VCFormInput,
+        VCIcon,
     },
     setup() {
         definePageMeta({
@@ -132,7 +139,7 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
-    <div class="container">
+    <div class="mx-auto w-full max-w-screen-lg px-4">
         <h4>
             <VCIcon
                 name="fa6-solid:arrow-right-to-bracket"
@@ -141,8 +148,8 @@ export default defineNuxtComponent({
             Login
         </h4>
         <form @submit.prevent="submit">
-            <div class="row">
-                <div class="col-8">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-8/12 px-2">
                     <IFieldValidation
                         v-slot="{ value }"
                         :field="v.fields.name"
@@ -199,9 +206,12 @@ export default defineNuxtComponent({
                                     v-for="(item, key) in props.data"
                                     :key="key"
                                 >
-                                    <a
+                                    <VCButton
+                                        tag="a"
                                         :href="buildIdentityProviderURL(item.id)"
-                                        class="btn btn-dark btn-xs p-2 me-1 identity-provider-box bg-fg"
+                                        color="neutral"
+                                        size="xs"
+                                        class="p-2 me-1 identity-provider-box bg-fg"
                                     >
                                         <div class="flex flex-col">
                                             <div class="text-center mb-1">
@@ -214,7 +224,7 @@ export default defineNuxtComponent({
                                                 {{ item.name }}
                                             </div>
                                         </div>
-                                    </a>
+                                    </VCButton>
                                 </div>
                             </div>
                         </template>

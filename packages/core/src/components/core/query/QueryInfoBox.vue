@@ -6,6 +6,7 @@
   -->
 
 <script lang="ts">
+import { VCAlert } from '@vuecs/elements';
 import { VCLink } from '@vuecs/link';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
@@ -13,7 +14,7 @@ import type { QueryBase } from '../../../domains';
 import { ConnectionPeerStatus } from '../../../domains';
 
 export default defineComponent({
-    components: { VCLink },
+    components: { VCAlert, VCLink },
     props: {
         entity: {
             type: Object as PropType<QueryBase>,
@@ -41,11 +42,15 @@ export default defineComponent({
 </script>
 <template>
     <template v-if="hasFailed">
-        <div class="alert alert-sm alert-warning">
+        <VCAlert
+            color="warning"
+            variant="soft"
+            size="sm"
+        >
             Einer oder mehrere Knoten konnten die Anfrage nicht ordnungsgemäß bearbeiten.
             Klicke <VCLink :href="link">
                 hier
             </VCLink> für nähere Informationen.
-        </div>
+        </VCAlert>
     </template>
 </template>

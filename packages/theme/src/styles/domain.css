@@ -30,6 +30,32 @@ an inline <VCIcon> as the first child. Inline-level, so a parent
 }
 
 /*
+Base nav classes — the segmented tab-pill widget (`.nav-pills`, below)
+builds on these. Migrated out of the retired Bootstrap-compat layer
+(theme/index.css); the tab switchers (DKVChartTableSwitch,
+MSearchMedicationForm) are the only consumers.
+*/
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+}
+.nav-item {
+    list-style: none;
+}
+.nav-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    color: var(--vc-color-fg);
+    text-decoration: none;
+}
+.nav-link:hover {
+    color: var(--vc-color-primary-600);
+}
+.nav-link.active {
+    color: var(--vc-color-primary-600);
+}
+
+/*
 Nav pills — content-area tab strips (horizontal, or vertical via
 `.flex-column`) rendered as a JOINED SEGMENTED CONTROL: each segment
 carries a 1px border, neighbours are pulled onto each other so the two
@@ -94,7 +120,16 @@ the overlapping seams.
 
 /*
 Input group — joined input + addon (form-select-search / button).
+The flex container was provided by the retired Bootstrap-compat `.input-group`
+shim; without it the `width: 1%` / `flex: 1 1 auto` child below collapses the
+control to 1% wide. Restore the flex row here.
 */
+.input-group {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
 .input-group > .vc-form-select-search {
     position: relative;
     flex: 1 1 auto;
@@ -102,21 +137,20 @@ Input group — joined input + addon (form-select-search / button).
     min-width: 0;
 }
 
-.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) input {
-    margin-left: -1px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.input-group > :not(:last-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) input {
-    margin-right: -1px;
+/* Joined look: where the select-search box (`.vc-form-select-search-input` —
+   the bordered box, NOT a raw <input>) meets the trailing button, square the
+   adjacent inner corners and overlap their 1px borders into a single seam.
+   Heights match via the container's `align-items: stretch` — no fixed button
+   height, so the button grows to the box's natural height. */
+.input-group > .vc-form-select-search:not(:last-child) .vc-form-select-search-input {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.input-group .btn {
-    height: 2rem;
-    line-height: 1rem;
+.input-group > .vc-button:not(:first-child) {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .vc-form-select-search .vc-form-select-search-content {

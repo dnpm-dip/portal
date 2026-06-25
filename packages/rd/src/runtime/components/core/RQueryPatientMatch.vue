@@ -1,11 +1,22 @@
 <script lang="ts">
 import { DFact } from '@dnpm-dip/core';
+import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';
-import { computed, defineComponent, ref } from 'vue';
+import { 
+    computed, 
+    defineComponent, 
+    ref, 
+    resolveComponent, 
+} from 'vue';
 import type { PatientMatch } from '../../domains';
 
 export default defineComponent({
-    components: { DFact },
+    components: {
+        DFact, 
+        VCButton, 
+        VCIcon, 
+    },
     props: {
         entity: {
             type: Object as PropType<PatientMatch>,
@@ -21,6 +32,7 @@ export default defineComponent({
         },
     },
     setup(props) {
+        const NuxtLink = resolveComponent('NuxtLink');
         const extended = ref(true);
 
         const toggleExtended = () => {
@@ -47,6 +59,7 @@ export default defineComponent({
         });
 
         return {
+            NuxtLink,
             id,
             toggleExtended,
             extended,
@@ -99,23 +112,27 @@ export default defineComponent({
             </div>
 
             <div class="flex shrink-0 gap-1">
-                <button
+                <VCButton
                     type="button"
-                    class="btn btn-xs btn-secondary"
+                    size="xs"
+                    color="neutral"
+                    variant="soft"
                     :aria-expanded="extended ? 'true' : 'false'"
                     aria-label="Kriterien ein-/ausklappen"
                     @click.prevent="toggleExtended"
                 >
                     <VCIcon :name="extended ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                </button>
+                </VCButton>
 
-                <NuxtLink
+                <VCButton
+                    :as="NuxtLink"
                     :to="'/rd/query/'+ queryId + '/patients/' +entity.id"
-                    class="btn btn-xs btn-primary"
+                    size="xs"
+                    color="primary"
                     title="Patient öffnen"
                 >
                     <VCIcon name="fa6-solid:arrow-right" />
-                </NuxtLink>
+                </VCButton>
             </div>
         </div>
 

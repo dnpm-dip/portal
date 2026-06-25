@@ -17,7 +17,8 @@ import {
     toRef,
     watch,
 } from 'vue';
-import { VCFormSelectSearch } from '@vuecs/forms';
+import { VCButton } from '@vuecs/button';
+import { VCFormGroup, VCFormInput, VCFormSelectSearch } from '@vuecs/forms';
 import { DCodeSystem, DCollectionTransform } from '@dnpm-dip/core';
 import type { QueryCriteriaVariant } from '../../domains';
 
@@ -52,6 +53,9 @@ export default defineComponent({
         IFieldValidation,
         DCollectionTransform,
         DCodeSystem,
+        VCButton,
+        VCFormGroup,
+        VCFormInput,
         VCFormSelectSearch,
     },
     props: {
@@ -116,7 +120,7 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="form-group">
+    <div class="mb-3">
         <label>Gene</label>
         <DCodeSystem
             :code="'https://www.genenames.org/'"
@@ -185,13 +189,14 @@ export default defineComponent({
         </VCFormGroup>
     </IFieldValidation>
     <div>
-        <button
+        <VCButton
             :disabled="v.$invalid.value"
             type="button"
-            class="btn btn-dark btn-xs"
+            color="neutral"
+            size="xs"
             @click.prevent="submit()"
         >
             {{ isEditing ? 'Aktualisieren' : 'Hinzufügen' }}
-        </button>
+        </VCButton>
     </div>
 </template>

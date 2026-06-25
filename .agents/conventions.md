@@ -57,6 +57,16 @@ Scopes typically match package names: `core`, `portal`, `mtb`, `rd`, `admin`, `k
 - Feature modules register themselves via `kit` helpers
 - Pages are auto-routed by Nuxt file-based routing
 - Plugins in `packages/portal/plugins/` handle global setup
+- **Always use explicit component imports.** Import `@vuecs/*` components where you use them
+  (`import { VCButton } from '@vuecs/button'`, `VCAlert`/`VCBadge`/`VCCard*` from `@vuecs/elements`).
+  In an Options-API SFC (`defineComponent` / `defineNuxtComponent`, which is what this codebase
+  currently uses) also register them in `components: { ... }`; in a `<script setup>` SFC the import
+  alone registers the component, so no `components` entry is needed. Either way, do **not** rely on
+  the global vuecs plugin registration, even though it exists. One deliberate exception: the **`VCTable` family**
+  (`VCTable`/`VCTableEmpty`/`VCTableLoading`) is left global — importing the now-generic `VCTable`
+  (@vuecs/table 1.3.0) trips a `defineNuxtComponent` overload under `nuxt typecheck` unless every
+  table's `:data`/`:columns` are typed end-to-end; adopting typed table slots is a separate follow-up.
+- Prefer a `<VCIcon>` in the default slot over an `icon-left` / `iconLeft` prop on `VCButton` / `VCAlert`.
 
 ## Best Practices
 
@@ -83,20 +93,31 @@ patterns instead of inventing new ones — and when refactoring an old view, mig
           <h1 class="mb-0 text-2xl font-bold tracking-tight">Titel</h1>
           <p class="mb-0 text-sm text-fg-muted">Untertitel / Kontext</p>
       </div>
-      <NuxtLink class="btn btn-sm btn-secondary ms-auto" :to="...">…</NuxtLink>
+      <VCButton :as="NuxtLink" :to="..." size="sm" color="neutral" variant="soft" class="ms-auto">…</VCButton>
   </header>
   ```
 - **Section headings**: `.section-label` (theme class — small-caps muted, optional leading `<VCIcon>`),
   on `h5`/`h6`/`span` hosts. No `<hr>` separators between sections; use margins.
-- **Cards/panels**: `.entity-card` (theme-owned chrome: 12px radius, soft shadow). Never add inline
+- **Cards/panels**: `.entity-card` (theme-owned chrome: `--vc-radius-md` ≈ 6px radius, soft shadow). Never add inline
   `style="max-width: ..."`; lay out card groups with `grid gap-3 md:grid-cols-2 xl:grid-cols-3`.
 - **Facts (label-over-value)**: `DFact` from `@dnpm-dip/core` (`label`, optional `icon`, value via slot).
   Use for entity metadata rows and fact grids instead of `<strong>Label</strong> value` lines.
 - **Chips/pills**: `rounded-full border border-border bg-bg px-2 py-0.5 text-xs` for code/term chips;
   status pills use tinted surfaces (`bg-success-500/10 text-success-600`, `bg-error-500/10 text-error-600`).
-- **Buttons**: theme `btn` shims only (`btn-primary` for THE primary action, `btn-secondary` for the rest,
-  `btn-danger` destructive). One primary per view. Long forms end in a sticky right-aligned action bar
-  (`sticky bottom-0 ... border-t bg-bg/85 backdrop-blur`).
+- **Buttons**: `<VCButton>` (@vuecs/button) — `color="primary"` for THE primary action, `color="neutral"`
+  `variant="soft"` for secondary, `color="error"` destructive; `size="xs|sm|md|lg"`; `variant="outline"`
+  for outline. One primary per view. For a button-styled router link, render VCButton **as** the
+  NuxtLink **component**, not the string tag: resolve it in setup (`const NuxtLink =
+  resolveComponent('NuxtLink')`, return it) and use `<VCButton :as="NuxtLink" :to="...">`. Do **not**
+  use `tag="nuxt-link"` (a string) — VCButton does `h(tag)`, so the string renders a dead `<nuxt-link>`
+  custom element that never navigates; `tag` is a deprecated alias for `as` anyway.
+  Long forms end in a sticky right-aligned action bar (`sticky bottom-0 ... border-t bg-bg/85 backdrop-blur`).
+- **Alerts / badges / cards**: `<VCAlert :color :variant="soft" [size]>`, `<VCBadge>`, and the
+  `<VCCard>`/`<VCCardHeader>`/`<VCCardBody>` family (@vuecs/elements) — not Bootstrap-shaped `.alert` /
+  `.badge` / `.card` classes. The Bootstrap-compat shim layer (`.btn` / `.row` / `.col*` / `.card*` /
+  `.alert*` / `.nav*` / `.modal-*` …) was **retired**; use `<VC*>` components and Tailwind utilities
+  (12-col grids → `flex`/`grid` utilities). Only the `.bg-*` DTags aliases and `.nav*` tab-pill chrome
+  (styles/domain.css) survive.
 - **Colors**: semantic tokens only (`text-fg-muted`, `bg-bg-muted`, `border-border`, `primary-*`,
   `--dnpm-brand-*`) — never hard-coded hex; everything must work in light and dark mode.
 - Content (titles, descriptions, copy) is crafted in Vue templates (slots), not stored in

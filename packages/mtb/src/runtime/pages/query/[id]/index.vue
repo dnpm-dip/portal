@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, resolveComponent } from 'vue';
 import {
     DQueryFilterContainer,
     DQueryInfoBox,
@@ -9,6 +9,8 @@ import {
 } from '@dnpm-dip/core';
 import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
 import type { PropType } from 'vue';
+import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import { VCNavItems } from '@vuecs/navigation';
 import type { NavigationItem } from '@vuecs/navigation';
 import { defineNuxtComponent, useRoute } from '#imports';
@@ -20,6 +22,8 @@ import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        VCButton,
+        VCIcon,
         VCNavItems,
         MQueryCriteriaModal,
         DQueryFilterContainer,
@@ -37,6 +41,7 @@ export default defineNuxtComponent({
     },
     emits: ['updated', 'failed'],
     setup(props, { emit }) {
+        const NuxtLink = resolveComponent('NuxtLink');
         const route = useRoute();
         const queryEventBus = injectQueryEventBus();
 
@@ -126,6 +131,7 @@ export default defineNuxtComponent({
         };
 
         return {
+            NuxtLink,
             criteriaDefined,
             criteriaExpansion,
             toggleCriteriaExpansion,
@@ -157,13 +163,17 @@ export default defineNuxtComponent({
                 Molekulares Tumorboard
             </p>
         </div>
-        <NuxtLink
-            class="btn btn-sm btn-secondary ms-auto"
+        <VCButton
+            :as="NuxtLink"
             :to="'/mtb/'"
+            size="sm"
+            color="neutral"
+            variant="soft"
+            class="ms-auto"
         >
             <VCIcon name="fa6-solid:arrow-left" />
             Zur Suche
-        </NuxtLink>
+        </VCButton>
     </header>
 
     <div class="flex flex-col gap-3">
@@ -199,24 +209,26 @@ export default defineNuxtComponent({
                         </h6>
                     </div>
                     <div class="ms-auto flex gap-1">
-                        <button
-                            class="btn btn-dark btn-xs"
+                        <VCButton
+                            color="neutral"
+                            size="xs"
                             @click.prevent="toggleCriteriaExpansion"
                         >
                             <VCIcon :name="criteriaExpansion ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                        </button>
+                        </VCButton>
                         <MQueryCriteriaModal
                             :entity="entity"
                             @updated="handleUpdated"
                             @failed="handleFailed"
                         >
                             <template #default="props">
-                                <button
-                                    class="btn btn-dark btn-xs"
+                                <VCButton
+                                    color="neutral"
+                                    size="xs"
                                     @click.prevent="props.toggle()"
                                 >
                                     <VCIcon name="fa6-solid:pen-to-square" /> Anpassen
-                                </button>
+                                </VCButton>
                             </template>
                         </MQueryCriteriaModal>
                     </div>
@@ -242,8 +254,8 @@ export default defineNuxtComponent({
         <hr class="mt-0 mb-0">
 
         <template v-if="entity">
-            <div class="row">
-                <div class="col-6 col-md-9 col-lg-10">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-full px-2 md:w-9/12 lg:w-10/12">
                     <div class="flex flex-col gap-3">
                         <div>
                             <NuxtPage
@@ -253,7 +265,7 @@ export default defineNuxtComponent({
                         </div>
                     </div>
                 </div>
-                <div class="col-6 col-md-3 col-lg-2">
+                <div class="w-full px-2 md:w-3/12 lg:w-2/12">
                     <div class="flex flex-col gap-3">
                         <DQueryFilterContainer>
                             <template #default>

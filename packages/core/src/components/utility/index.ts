@@ -4,7 +4,6 @@ export * from './error';
 export * from './expandable-content';
 export * from './form-tab';
 export * from './logical-operator-switch';
-export * from './sort-indicator';
 
 export * from './kv-chart';
 export * from './kv-chart-table-switch';
@@ -13,6 +12,5 @@ export * from './kv-table';
 export { default as DCollectionTransform } from './DCollectionTransform.vue';
 export { default as DCommaList } from './DCommaList.vue';
 export { default as DFact } from './DFact.vue';
-export { default as DLoadingButton } from './DLoadingButton.vue';
 export { default as DLoadingModal } from './DLoadingModal.vue';
 export { default as DTags } from './DTags.vue';

@@ -7,8 +7,11 @@ import {
     injectQueryEventBus,
 } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
-import { computed, ref } from 'vue';
+import { computed, ref, resolveComponent } from 'vue';
+import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import { VCNavItems } from '@vuecs/navigation';
+import { VCModal, VCModalContent } from '@vuecs/overlays';
 import type { NavigationItem } from '@vuecs/navigation';
 import { defineNuxtComponent, useRoute } from '#imports';
 import QueryDiagnosisFilter from '../../../components/core/RQueryDiagnosisFilter.vue';
@@ -18,6 +21,10 @@ import type { QuerySession } from '../../../domains';
 
 export default defineNuxtComponent({
     components: {
+        VCButton,
+        VCIcon,
+        VCModal,
+        VCModalContent,
         VCNavItems,
         DQueryFilterContainer,
         DQueryInfoBox,
@@ -34,6 +41,7 @@ export default defineNuxtComponent({
     },
     emits: ['failed', 'updated'],
     setup(props, { emit }) {
+        const NuxtLink = resolveComponent('NuxtLink');
         const route = useRoute();
         const queryEventBus = injectQueryEventBus();
 
@@ -96,6 +104,8 @@ export default defineNuxtComponent({
         };
 
         return {
+            NuxtLink,
+
             handleSubmit,
 
             handleUpdated,
@@ -129,13 +139,17 @@ export default defineNuxtComponent({
                 Seltene Erkrankungen
             </p>
         </div>
-        <NuxtLink
-            class="btn btn-sm btn-secondary ms-auto"
+        <VCButton
+            :as="NuxtLink"
             :to="'/rd/'"
+            size="sm"
+            color="neutral"
+            variant="soft"
+            class="ms-auto"
         >
             <VCIcon name="fa6-solid:arrow-left" />
             Zur Suche
-        </NuxtLink>
+        </VCButton>
     </header>
 
     <div class="flex flex-col gap-2 mb-2">
@@ -145,13 +159,15 @@ export default defineNuxtComponent({
                     :data="navItems"
                     variant="pills"
                 />
-                <button
+                <VCButton
                     type="button"
-                    class="btn btn-sm btn-secondary"
+                    size="sm"
+                    color="neutral"
+                    variant="soft"
                     @click.prevent="toggleModal"
                 >
                     <VCIcon name="fa6-solid:gear" /> Anpassen
-                </button>
+                </VCButton>
             </div>
         </div>
         <div v-if="isSummaryActive">
@@ -170,14 +186,14 @@ export default defineNuxtComponent({
     />
 
     <template v-if="entity">
-        <div class="row">
-            <div class="col-6 col-md-9 col-lg-10">
+        <div class="flex flex-wrap -mx-2">
+            <div class="w-full px-2 md:w-9/12 lg:w-10/12">
                 <NuxtPage
                     :entity="entity"
                     @updated="handleUpdated"
                 />
             </div>
-            <div class="col-6 col-md-3 col-lg-2">
+            <div class="w-full px-2 md:w-3/12 lg:w-2/12">
                 <DQueryFilterContainer>
                     <template #default>
                         <DQueryPatientFilters
@@ -204,8 +220,8 @@ export default defineNuxtComponent({
         </div>
 
         <VCModal v-model:open="modal">
-            <VCModalContent class="modal-lg">
-                <div class="modal-header">
+            <VCModalContent>
+                <div class="flex items-center justify-between border-b border-border px-4 py-3">
                     <div class="flex flex-row w-full">
                         <div>
                             <h5 class="mb-0">
@@ -213,17 +229,19 @@ export default defineNuxtComponent({
                             </h5>
                         </div>
                         <div class="ms-auto">
-                            <button
+                            <VCButton
                                 type="button"
-                                class="btn btn-xs btn-secondary"
+                                size="xs"
+                                color="neutral"
+                                variant="soft"
                                 @click.prevent="modal = false"
                             >
                                 <VCIcon name="fa6-solid:xmark" />
-                            </button>
+                            </VCButton>
                         </div>
                     </div>
                 </div>
-                <div class="modal-body">
+                <div class="px-4 py-3">
                     <SearchForm
                         :query-mode="entity.mode.code"
                         :query-peers="entity.peers"
