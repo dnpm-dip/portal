@@ -12,10 +12,10 @@ import {
     onUnmounted,
     ref,
 } from 'vue';
+import { VCTableSortIndicators } from '@vuecs/table';
 import type { SortDescriptor, TableColumn, TableSortState } from '@vuecs/table';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
 import {
-    DSortIndicator,
     QueryEventBusEventName,
     type ResourceCollectionLoadMeta,
     injectQueryEventBus,
@@ -33,7 +33,7 @@ export default defineComponent({
     components: {
         MGeneAlterationText,
         DCodingText,
-        DSortIndicator,
+        VCTableSortIndicators,
         MTherapyResponseDistributionBar,
         VCAlert,
         VCPlaceholder,
@@ -254,10 +254,16 @@ export default defineComponent({
             @load="load"
         />
 
-        <DSortIndicator
-            :sort-by="sortBy"
-            :fields="fields"
-            @reset="resetSort"
+        <VCTableSortIndicators
+            :sort="sortBy"
+            :columns="fields"
+            class="my-2"
+            label="Sortierung:"
+            empty-content="Noch keine Spalten sortiert"
+            add-label="+ Spalte hinzufügen"
+            clear-label="Alle entfernen"
+            remove-aria-label="Sortierung entfernen"
+            @update:sort="onSortUpdate"
         />
 
         <VCTable
