@@ -1,5 +1,10 @@
 <script lang="ts">
-import { type PropType, computed, defineComponent } from 'vue';
+import { 
+    type PropType, 
+    computed, 
+    defineComponent, 
+    resolveComponent, 
+} from 'vue';
 import { ref } from 'vue';
 import { VCButton } from '@vuecs/button';
 import { VCIcon } from '@vuecs/icon';
@@ -27,6 +32,7 @@ export default defineComponent({
     },
 
     async setup(props) {
+        const NuxtLink = resolveComponent('NuxtLink');
         const api = injectHTTPClient();
         const route = useRoute();
 
@@ -71,6 +77,7 @@ export default defineComponent({
         });
 
         return {
+            NuxtLink,
             navItems,
             record: entity.value,
         };
@@ -95,7 +102,7 @@ export default defineComponent({
                 </p>
             </div>
             <VCButton
-                tag="nuxt-link"
+                :as="NuxtLink"
                 :to="'/mtb/query/'+ entity.id +'/patients'"
                 size="sm"
                 color="neutral"

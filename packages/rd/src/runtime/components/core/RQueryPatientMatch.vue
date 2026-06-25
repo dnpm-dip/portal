@@ -3,7 +3,12 @@ import { DFact } from '@dnpm-dip/core';
 import { VCButton } from '@vuecs/button';
 import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';
-import { computed, defineComponent, ref } from 'vue';
+import { 
+    computed, 
+    defineComponent, 
+    ref, 
+    resolveComponent, 
+} from 'vue';
 import type { PatientMatch } from '../../domains';
 
 export default defineComponent({
@@ -27,6 +32,7 @@ export default defineComponent({
         },
     },
     setup(props) {
+        const NuxtLink = resolveComponent('NuxtLink');
         const extended = ref(true);
 
         const toggleExtended = () => {
@@ -53,6 +59,7 @@ export default defineComponent({
         });
 
         return {
+            NuxtLink,
             id,
             toggleExtended,
             extended,
@@ -118,7 +125,7 @@ export default defineComponent({
                 </VCButton>
 
                 <VCButton
-                    tag="nuxt-link"
+                    :as="NuxtLink"
                     :to="'/rd/query/'+ queryId + '/patients/' +entity.id"
                     size="xs"
                     color="primary"

@@ -93,7 +93,7 @@ patterns instead of inventing new ones — and when refactoring an old view, mig
           <h1 class="mb-0 text-2xl font-bold tracking-tight">Titel</h1>
           <p class="mb-0 text-sm text-fg-muted">Untertitel / Kontext</p>
       </div>
-      <VCButton tag="nuxt-link" :to="..." size="sm" color="neutral" variant="soft" class="ms-auto">…</VCButton>
+      <VCButton :as="NuxtLink" :to="..." size="sm" color="neutral" variant="soft" class="ms-auto">…</VCButton>
   </header>
   ```
 - **Section headings**: `.section-label` (theme class — small-caps muted, optional leading `<VCIcon>`),
@@ -106,7 +106,11 @@ patterns instead of inventing new ones — and when refactoring an old view, mig
   status pills use tinted surfaces (`bg-success-500/10 text-success-600`, `bg-error-500/10 text-error-600`).
 - **Buttons**: `<VCButton>` (@vuecs/button) — `color="primary"` for THE primary action, `color="neutral"`
   `variant="soft"` for secondary, `color="error"` destructive; `size="xs|sm|md|lg"`; `variant="outline"`
-  for outline. One primary per view. For a button-styled router link use `<VCButton tag="nuxt-link" :to>`.
+  for outline. One primary per view. For a button-styled router link, render VCButton **as** the
+  NuxtLink **component**, not the string tag: resolve it in setup (`const NuxtLink =
+  resolveComponent('NuxtLink')`, return it) and use `<VCButton :as="NuxtLink" :to="...">`. Do **not**
+  use `tag="nuxt-link"` (a string) — VCButton does `h(tag)`, so the string renders a dead `<nuxt-link>`
+  custom element that never navigates; `tag` is a deprecated alias for `as` anyway.
   Long forms end in a sticky right-aligned action bar (`sticky bottom-0 ... border-t bg-bg/85 backdrop-blur`).
 - **Alerts / badges / cards**: `<VCAlert :color :variant="soft" [size]>`, `<VCBadge>`, and the
   `<VCCard>`/`<VCCardHeader>`/`<VCCardBody>` family (@vuecs/elements) — not Bootstrap-shaped `.alert` /

@@ -18,6 +18,7 @@ import type { BuildInput } from 'rapiq';
 import { VCButton } from '@vuecs/button';
 import { VCIcon } from '@vuecs/icon';
 import { VCTimeago } from '@vuecs/timeago';
+import { resolveComponent } from 'vue';
 import { defineNuxtComponent } from '#imports';
 
 export default defineNuxtComponent({
@@ -33,6 +34,8 @@ export default defineNuxtComponent({
     },
     emits: ['deleted'],
     setup(props, { emit }) {
+        const NuxtLink = resolveComponent('NuxtLink');
+
         const handleDeleted = (e: User) => {
             emit('deleted', e);
         };
@@ -72,6 +75,7 @@ export default defineNuxtComponent({
         ];
 
         return {
+            NuxtLink,
             columns,
             hasEditPermission,
             hasDropPermission,
@@ -117,7 +121,7 @@ export default defineNuxtComponent({
                 <template #cell-options="{ row }: { row: any }">
                     <VCButton
                         v-if="hasEditPermission"
-                        tag="nuxt-link"
+                        :as="NuxtLink"
                         :to="'/admin/users/'+ row.id"
                         size="xs"
                         color="primary"

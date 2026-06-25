@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, resolveComponent } from 'vue';
 import {
     DQueryFilterContainer,
     DQueryInfoBox,
@@ -41,6 +41,7 @@ export default defineNuxtComponent({
     },
     emits: ['updated', 'failed'],
     setup(props, { emit }) {
+        const NuxtLink = resolveComponent('NuxtLink');
         const route = useRoute();
         const queryEventBus = injectQueryEventBus();
 
@@ -130,6 +131,7 @@ export default defineNuxtComponent({
         };
 
         return {
+            NuxtLink,
             criteriaDefined,
             criteriaExpansion,
             toggleCriteriaExpansion,
@@ -162,7 +164,7 @@ export default defineNuxtComponent({
             </p>
         </div>
         <VCButton
-            tag="nuxt-link"
+            :as="NuxtLink"
             :to="'/mtb/'"
             size="sm"
             color="neutral"

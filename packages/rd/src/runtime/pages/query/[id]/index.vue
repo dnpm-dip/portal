@@ -7,7 +7,7 @@ import {
     injectQueryEventBus,
 } from '@dnpm-dip/core';
 import type { PropType } from 'vue';
-import { computed, ref } from 'vue';
+import { computed, ref, resolveComponent } from 'vue';
 import { VCButton } from '@vuecs/button';
 import { VCIcon } from '@vuecs/icon';
 import { VCNavItems } from '@vuecs/navigation';
@@ -41,6 +41,7 @@ export default defineNuxtComponent({
     },
     emits: ['failed', 'updated'],
     setup(props, { emit }) {
+        const NuxtLink = resolveComponent('NuxtLink');
         const route = useRoute();
         const queryEventBus = injectQueryEventBus();
 
@@ -103,6 +104,8 @@ export default defineNuxtComponent({
         };
 
         return {
+            NuxtLink,
+
             handleSubmit,
 
             handleUpdated,
@@ -137,7 +140,7 @@ export default defineNuxtComponent({
             </p>
         </div>
         <VCButton
-            tag="nuxt-link"
+            :as="NuxtLink"
             :to="'/rd/'"
             size="sm"
             color="neutral"

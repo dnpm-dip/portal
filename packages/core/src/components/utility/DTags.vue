@@ -74,41 +74,44 @@ export default defineComponent({
 </script>
 <template>
     <slot>
-        <!-- The @vuecs/forms chip rules are scoped under
-             .vc-form-select-search, so the list carries that scope class —
-             this renders standalone tags identical to the select-search
-             chips (clickable pill removes the item). -->
-        <ul class="vc-form-select-search vc-form-select-search-selected list-unstyled mb-0 flex flex-row flex-wrap items-center gap-x-1.5 gap-y-1">
-            <template
-                v-for="(item, index) in tags"
-                :key="item.id"
-            >
-                <slot
-                    name="tag"
-                    :tag="item.id"
-                    :tag-class="tagClass"
-                    :remove-tag="drop"
+        <!-- @vuecs/forms styles the chip row via a DESCENDANT selector
+             (`.vc-form-select-search .vc-form-select-search-selected`), so the
+             list must sit INSIDE a `.vc-form-select-search` wrapper to inherit
+             the flex-wrap row layout + clickable pill styling. Both classes on
+             one element (the old markup) silently dropped the row layout. -->
+        <div class="vc-form-select-search">
+            <ul class="vc-form-select-search-selected list-unstyled mb-0">
+                <template
+                    v-for="(item, index) in tags"
+                    :key="item.id"
                 >
-                    <template v-if="index > 0">
-                        <slot name="between" />
-                    </template>
-                    <li :key="item.id">
-                        <button
-                            type="button"
-                            class="vc-form-select-search-selected-item"
-                            :class="tagClass"
-                            title="Entfernen"
-                            @click.prevent="drop(item.value)"
-                        >
-                            {{ item.value }}
-                            <span
-                                class="vc-form-select-search-selected-item-remove"
-                                aria-hidden="true"
-                            >&times;</span>
-                        </button>
-                    </li>
-                </slot>
-            </template>
-        </ul>
+                    <slot
+                        name="tag"
+                        :tag="item.id"
+                        :tag-class="tagClass"
+                        :remove-tag="drop"
+                    >
+                        <template v-if="index > 0">
+                            <slot name="between" />
+                        </template>
+                        <li :key="item.id">
+                            <button
+                                type="button"
+                                class="vc-form-select-search-selected-item"
+                                :class="tagClass"
+                                title="Entfernen"
+                                @click.prevent="drop(item.value)"
+                            >
+                                {{ item.value }}
+                                <span
+                                    class="vc-form-select-search-selected-item-remove"
+                                    aria-hidden="true"
+                                >&times;</span>
+                            </button>
+                        </li>
+                    </slot>
+                </template>
+            </ul>
+        </div>
     </slot>
 </template>

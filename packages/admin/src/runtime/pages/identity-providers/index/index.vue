@@ -17,6 +17,7 @@ import {
     usePermissionCheck,
 } from '@authup/client-web-kit';
 import type { BuildInput } from 'rapiq';
+import { resolveComponent } from 'vue';
 import { defineNuxtComponent } from '#app';
 
 export default defineNuxtComponent({
@@ -32,6 +33,8 @@ export default defineNuxtComponent({
     },
     emits: ['deleted'],
     setup(props, { emit }) {
+        const NuxtLink = resolveComponent('NuxtLink');
+
         const handleDeleted = (e: IdentityProvider) => {
             emit('deleted', e);
         };
@@ -71,6 +74,7 @@ export default defineNuxtComponent({
         ];
 
         return {
+            NuxtLink,
             columns,
             hasEditPermission,
             hasDropPermission,
@@ -114,7 +118,7 @@ export default defineNuxtComponent({
                 <template #cell-options="{ row }: { row: any }">
                     <VCButton
                         v-if="hasEditPermission"
-                        tag="nuxt-link"
+                        :as="NuxtLink"
                         :to="'/admin/identity-providers/'+ row.id"
                         size="xs"
                         color="primary"
