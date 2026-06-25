@@ -656,6 +656,7 @@ export default defineComponent({
                 </VCButton>
 
                 <VCButton
+                    type="button"
                     color="primary"
                     class="min-w-36"
                     :loading="busy"

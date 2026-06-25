@@ -62,6 +62,7 @@ export default defineComponent({
             color="primary"
             size="xs"
             class="ms-1"
+            aria-label="Suche öffnen"
             @click.prevent="toggleModal"
         >
             <VCIcon name="fa6-solid:gear" />
@@ -83,6 +84,7 @@ export default defineComponent({
                             color="neutral"
                             variant="soft"
                             size="xs"
+                            aria-label="Modal schließen"
                             @click.prevent="modal = false"
                         >
                             <VCIcon name="fa6-solid:xmark" />

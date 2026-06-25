@@ -253,7 +253,7 @@ export default defineNuxtComponent({
 
         <template v-if="entity">
             <div class="flex flex-wrap -mx-2">
-                <div class="w-6/12 px-2 md:w-9/12 lg:w-10/12">
+                <div class="w-full px-2 md:w-9/12 lg:w-10/12">
                     <div class="flex flex-col gap-3">
                         <div>
                             <NuxtPage
@@ -263,7 +263,7 @@ export default defineNuxtComponent({
                         </div>
                     </div>
                 </div>
-                <div class="w-6/12 px-2 md:w-3/12 lg:w-2/12">
+                <div class="w-full px-2 md:w-3/12 lg:w-2/12">
                     <div class="flex flex-col gap-3">
                         <DQueryFilterContainer>
                             <template #default>
