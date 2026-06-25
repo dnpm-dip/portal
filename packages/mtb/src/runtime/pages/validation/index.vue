@@ -6,11 +6,13 @@
   -->
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { VCIcon } from '@vuecs/icon';
 import { VCAlert } from '@vuecs/elements';
 import { DValidationReportCard, DValidations } from '@dnpm-dip/core';
 
 export default defineComponent({
     components: {
+        VCIcon,
         VCAlert,
         DValidationReportCard,
         DValidations,

@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
+import { VCIcon } from '@vuecs/icon';
 import RCopyNumberVariant from '../../../../../components/core/RCopyNumberVariant.vue';
 import RSmallVariant from '../../../../../components/core/RSmallVariant.vue';
 import RStructuralVariant from '../../../../../components/core/RStructuralVariant.vue';
@@ -8,8 +9,9 @@ import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
     components: {
-        RStructuralVariant, 
-        RCopyNumberVariant, 
+        VCIcon,
+        RStructuralVariant,
+        RCopyNumberVariant,
         RSmallVariant,
     },
     props: {

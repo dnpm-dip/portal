@@ -1,6 +1,7 @@
 <script lang="ts">
 import { VCButton } from '@vuecs/button';
-import { VCFormSelectSearch } from '@vuecs/forms';
+import { VCFormGroup, VCFormSelectSearch } from '@vuecs/forms';
+import { VCIcon } from '@vuecs/icon';
 import type { FormOption } from '@vuecs/forms';
 import type {
     PropType,
@@ -15,7 +16,12 @@ import type { Coding, DistributionNestedElements, KeyValueChildrenRecord } from 
 import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils';
 
 export default defineComponent({
-    components: { VCButton, VCFormSelectSearch },
+    components: {
+        VCButton, 
+        VCFormGroup, 
+        VCFormSelectSearch, 
+        VCIcon, 
+    },
     props: {
         label: {
             type: String,

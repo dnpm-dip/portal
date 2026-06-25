@@ -24,9 +24,13 @@ import {
 } from '@dnpm-dip/core';
 import { VCButton } from '@vuecs/button';
 import {
+    VCFormCheckbox,
+    VCFormGroup,
+    VCFormSelect,
     VCFormSelectSearch,
 } from '@vuecs/forms';
 import type { FormOption } from '@vuecs/forms';
+import { VCIcon } from '@vuecs/icon';
 import {
     type PropType,
     reactive,
@@ -53,7 +57,11 @@ export default defineComponent({
         DFormTabGroups,
         DValueSet,
         VCButton,
+        VCFormCheckbox,
+        VCFormGroup,
+        VCFormSelect,
         VCFormSelectSearch,
+        VCIcon,
         DLoadingModal,
         DCollectionTransform,
     },

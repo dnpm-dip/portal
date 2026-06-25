@@ -2,6 +2,8 @@
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCPagination } from '@vuecs/pagination';
 import { VCAlert } from '@vuecs/elements';
+import { VCIcon } from '@vuecs/icon';
+import { VCPlaceholder } from '@vuecs/placeholder';
 import {
     QueryEventBusEventName,
     injectQueryEventBus,
@@ -22,7 +24,9 @@ export default defineNuxtComponent({
         QueryPatientMatchEntity,
         QueryPatientMatchList,
         VCAlert,
+        VCIcon,
         VCPagination,
+        VCPlaceholder,
     },
     props: {
         entity: {

@@ -14,7 +14,14 @@ import {
     type ValueSetCoding,
 } from '@dnpm-dip/core';
 import { VCButton } from '@vuecs/button';
-import { type FormOption, VCFormCheckboxGroup, VCFormSelectSearch } from '@vuecs/forms';
+import { 
+    type FormOption, 
+    VCFormCheckbox, 
+    VCFormCheckboxGroup, 
+    VCFormGroup, 
+    VCFormInput, 
+    VCFormSelectSearch, 
+} from '@vuecs/forms';
 import {
     type PropType,
     computed,
@@ -29,7 +36,10 @@ export default defineComponent({
         DTags,
         DCollectionTransform,
         VCButton,
+        VCFormCheckbox,
         VCFormCheckboxGroup,
+        VCFormGroup,
+        VCFormInput,
         VCFormSelectSearch,
     },
     props: {

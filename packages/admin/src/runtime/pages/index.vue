@@ -8,15 +8,17 @@
 import { usePermissionCheck } from '@authup/client-web-kit';
 import { DConnectionPeerCard } from '@dnpm-dip/core';
 import { VCAlert } from '@vuecs/elements';
+import { VCIcon } from '@vuecs/icon';
 import { defineNuxtComponent } from '#imports';
 import AConnectionReport from '../components/AConnectionReport';
 import { PermissionName } from '../domains';
 
 export default defineNuxtComponent({
     components: {
-        AConnectionReport, 
-        DConnectionPeerCard, 
-        VCAlert, 
+        AConnectionReport,
+        DConnectionPeerCard,
+        VCAlert,
+        VCIcon,
     },
     setup() {
         const connectionReportRead = usePermissionCheck({ name: PermissionName.CONNECTION_REPORT_READ });

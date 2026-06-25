@@ -23,6 +23,7 @@ import {
 } from '@dnpm-dip/core';
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCAlert } from '@vuecs/elements';
+import { VCPlaceholder } from '@vuecs/placeholder';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QueryTherapyResponse } from '../../../domains';
 import MGeneAlterationText from '../MGeneAlterationText.vue';
@@ -35,6 +36,7 @@ export default defineComponent({
         DSortIndicator,
         MTherapyResponseDistributionBar,
         VCAlert,
+        VCPlaceholder,
     },
     props: {
         queryId: {
@@ -202,7 +204,7 @@ export default defineComponent({
 <template>
     <table
         v-if="busy && total === 0"
-        class="table table-bordered w-full"
+        class="w-full"
     >
         <thead>
             <tr>

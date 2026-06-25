@@ -7,13 +7,13 @@
 
 <script lang="ts">
 import { type Coding } from '@dnpm-dip/core';
-import { VCFormSelect } from '@vuecs/forms';
+import { VCFormGroup, VCFormSelect } from '@vuecs/forms';
 import { computed, defineComponent, ref } from 'vue';
 import { injectHTTPClient } from '../../core/http-client';
 import type { KaplanMeierOptions } from '../../domains';
 
 export default defineComponent({
-    components: { VCFormSelect },
+    components: { VCFormGroup, VCFormSelect },
     emits: ['failed', 'picked'],
     setup(props, { emit }) {
         const httpClient = injectHTTPClient();

@@ -7,11 +7,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { VCAlert } from '@vuecs/elements';
+import { VCIcon } from '@vuecs/icon';
 import { DValidationReportCard, DValidations } from '@dnpm-dip/core';
 
 export default defineComponent({
     components: {
         VCAlert,
+        VCIcon,
         DValidationReportCard,
         DValidations,
     },

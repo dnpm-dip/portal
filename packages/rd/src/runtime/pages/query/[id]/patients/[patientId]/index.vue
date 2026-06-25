@@ -5,6 +5,7 @@ import {
     DCommaList, 
     DPatient,
 } from '@dnpm-dip/core';
+import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
@@ -15,6 +16,7 @@ export default defineNuxtComponent({
         DCodingCommaList,
         DCommaList,
         DPatient,
+        VCIcon,
     },
     props: {
         entity: {

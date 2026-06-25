@@ -13,11 +13,12 @@ import {
     resolveComponent,
 } from 'vue';
 import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import type { Coding, KeyValueRecord } from '../../../domains';
 import type { DKVTableColumnsFn } from './types';
 
 export default defineComponent({
-    components: { VCButton },
+    components: { VCButton, VCIcon },
     props: {
         data: {
             type: Object as PropType<KeyValueRecord<unknown, unknown>>,

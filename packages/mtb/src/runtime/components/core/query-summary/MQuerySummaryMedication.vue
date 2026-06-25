@@ -21,6 +21,7 @@ import {
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { VCAlert } from '@vuecs/elements';
+import { VCPlaceholder } from '@vuecs/placeholder';
 import {
     computed,
     defineComponent,
@@ -39,6 +40,7 @@ export default defineComponent({
         DQuerySummaryNested,
         DQuerySummaryGrouped,
         VCAlert,
+        VCPlaceholder,
     },
     props: {
         queryId: {

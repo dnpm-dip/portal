@@ -15,6 +15,8 @@ import {
 } from '@authup/client-web-kit';
 import type { BuildInput } from 'rapiq';
 import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
+import { VCTimeago } from '@vuecs/timeago';
 import { defineNuxtComponent } from '#imports';
 
 export default defineNuxtComponent({
@@ -25,6 +27,8 @@ export default defineNuxtComponent({
         ARoles,
         AEntityDelete,
         VCButton,
+        VCIcon,
+        VCTimeago,
     },
     emits: ['deleted'],
     setup(props, { emit }) {
@@ -117,13 +121,13 @@ export default defineNuxtComponent({
                 </template>
                 <template #cell-options="{ row }: { row: any }">
                     <VCButton
+                        v-if="hasEditPermission"
                         tag="nuxt-link"
                         :to="'/admin/roles/'+ row.id"
                         size="xs"
                         color="primary"
                         variant="outline"
                         class="me-1"
-                        :disabled="!hasEditPermission"
                     >
                         <VCIcon name="fa6-solid:bars" />
                     </VCButton>

@@ -9,7 +9,9 @@ import {
 import type { PropType } from 'vue';
 import { computed, ref } from 'vue';
 import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import { VCNavItems } from '@vuecs/navigation';
+import { VCModal, VCModalContent } from '@vuecs/overlays';
 import type { NavigationItem } from '@vuecs/navigation';
 import { defineNuxtComponent, useRoute } from '#imports';
 import QueryDiagnosisFilter from '../../../components/core/RQueryDiagnosisFilter.vue';
@@ -20,6 +22,9 @@ import type { QuerySession } from '../../../domains';
 export default defineNuxtComponent({
     components: {
         VCButton,
+        VCIcon,
+        VCModal,
+        VCModalContent,
         VCNavItems,
         DQueryFilterContainer,
         DQueryInfoBox,
@@ -212,7 +217,7 @@ export default defineNuxtComponent({
         </div>
 
         <VCModal v-model:open="modal">
-            <VCModalContent class="modal-lg">
+            <VCModalContent>
                 <div class="flex items-center justify-between border-b border-border px-4 py-3">
                     <div class="flex flex-row w-full">
                         <div>

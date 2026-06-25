@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { TOOLS } from '../config/tools';
 import LogoSvg from './svg/LogoSvg.vue';
+import { VCIcon } from '@vuecs/icon';
+import { VCModal, VCModalContent } from '@vuecs/overlays';
 
 defineProps<{
     modelValue: boolean,
@@ -19,7 +21,7 @@ const tools = TOOLS;
         :open="modelValue"
         @update:open="$emit('update:modelValue', $event)"
     >
-        <VCModalContent class="modal-md">
+        <VCModalContent>
             <div class="flex items-center justify-between border-b border-border px-4 py-3">
                 <h6 class="mb-0">
                     Über

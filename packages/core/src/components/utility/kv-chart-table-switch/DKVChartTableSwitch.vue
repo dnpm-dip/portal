@@ -5,12 +5,13 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import { 
-    type Component, 
-    type PropType, 
-    defineComponent, 
-    ref, 
+import {
+    type Component,
+    type PropType,
+    defineComponent,
+    ref,
 } from 'vue';
+import { VCIcon } from '@vuecs/icon';
 import type { KeyValueRecord } from '../../../domains';
 import { DKVChart } from '../kv-chart';
 import { DKVTable } from '../kv-table';
@@ -20,6 +21,7 @@ const component = defineComponent({
     components: {
         DKVTable,
         DKVChart,
+        VCIcon,
     },
     props: {
         type: {

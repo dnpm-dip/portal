@@ -6,12 +6,20 @@
   -->
 <script lang="ts">
 import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
+import { VCModal, VCModalContent } from '@vuecs/overlays';
 import { type PropType, defineComponent, ref } from 'vue';
 import type { QuerySession } from '../../../domains';
 import MSearchForm from '../search/MSearchForm.vue';
 
 export default defineComponent({
-    components: { MSearchForm, VCButton },
+    components: {
+        MSearchForm, 
+        VCButton, 
+        VCIcon, 
+        VCModal, 
+        VCModalContent, 
+    },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -61,7 +69,7 @@ export default defineComponent({
     </slot>
 
     <VCModal v-model:open="modal">
-        <VCModalContent class="modal-lg">
+        <VCModalContent>
             <div class="flex items-center justify-between border-b border-border px-4 py-3">
                 <div class="flex flex-row w-full">
                     <div>

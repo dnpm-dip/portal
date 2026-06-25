@@ -2,7 +2,9 @@
 import { QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore } from '@dnpm-dip/core';
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCAlert } from '@vuecs/elements';
+import { VCIcon } from '@vuecs/icon';
 import { VCPagination } from '@vuecs/pagination';
+import { VCPlaceholder } from '@vuecs/placeholder';
 import {
     type PropType,
     type Ref,
@@ -18,7 +20,9 @@ export default defineNuxtComponent({
         QueryPatientMatchEntity,
         QueryPatientMatchList,
         VCAlert,
+        VCIcon,
         VCPagination,
+        VCPlaceholder,
     },
     props: {
         entity: {

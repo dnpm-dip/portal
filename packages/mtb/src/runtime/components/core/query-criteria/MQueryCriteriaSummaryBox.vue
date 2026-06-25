@@ -7,10 +7,11 @@
 <script lang="ts">
 import { type PropType, defineComponent, ref } from 'vue';
 import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import type { QuerySession } from '../../../domains';
 
 export default defineComponent({
-    components: { VCButton },
+    components: { VCButton, VCIcon },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,

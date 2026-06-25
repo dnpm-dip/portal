@@ -1,6 +1,7 @@
 <script lang="ts">
 
 import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import { VCTimeago } from '@vuecs/timeago';
 import type { TableColumn } from '@vuecs/table';
 import type { IdentityProvider } from '@authup/core-kit';
@@ -26,6 +27,7 @@ export default defineNuxtComponent({
         AIdentityProviders,
         AEntityDelete,
         VCButton,
+        VCIcon,
         VCTimeago,
     },
     emits: ['deleted'],
@@ -111,13 +113,13 @@ export default defineNuxtComponent({
                 </template>
                 <template #cell-options="{ row }: { row: any }">
                     <VCButton
+                        v-if="hasEditPermission"
                         tag="nuxt-link"
                         :to="'/admin/identity-providers/'+ row.id"
                         size="xs"
                         color="primary"
                         variant="outline"
                         class="me-1"
-                        :disabled="!hasEditPermission"
                     >
                         <VCIcon name="fa6-solid:bars" />
                     </VCButton>

@@ -7,11 +7,16 @@
 <script lang="ts">
 import { DCodingText } from '@dnpm-dip/core';
 import { VCBadge } from '@vuecs/elements';
+import { VCIcon } from '@vuecs/icon';
 import { type PropType, defineComponent } from 'vue';
 import type { QueryCriteria } from '../../../domains';
 
 export default defineComponent({
-    components: { DCodingText, VCBadge },
+    components: {
+        DCodingText, 
+        VCBadge, 
+        VCIcon, 
+    },
     props: {
         entity: {
             type: Object as PropType<QueryCriteria>,

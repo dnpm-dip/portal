@@ -1,5 +1,6 @@
 <script lang="ts">
 import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import {
     defineComponent,
     ref,
@@ -8,7 +9,7 @@ import {
 } from 'vue';
 
 export default defineComponent({
-    components: { VCButton },
+    components: { VCButton, VCIcon },
     props: {
         modelValue: {
             type: Boolean,

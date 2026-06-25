@@ -8,6 +8,7 @@
 <script lang="ts">
 import { DFact } from '@dnpm-dip/core';
 import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
 import type { PatientMatch } from '../../../domains';
@@ -15,9 +16,10 @@ import MQueryCriteriaSummary from '../query-criteria/MQueryCriteriaSummary.vue';
 
 export default defineComponent({
     components: {
-        DFact, 
-        MQueryCriteriaSummary, 
-        VCButton, 
+        DFact,
+        MQueryCriteriaSummary,
+        VCButton,
+        VCIcon,
     },
     props: {
         entity: {

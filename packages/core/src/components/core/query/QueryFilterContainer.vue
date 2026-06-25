@@ -35,7 +35,7 @@ export default defineComponent({
             <VCButton
                 type="button"
                 size="sm"
-                block
+                class="w-full"
                 :color="dirty ? 'primary' : 'neutral'"
                 :variant="dirty ? undefined : 'soft'"
                 :disabled="!dirty"

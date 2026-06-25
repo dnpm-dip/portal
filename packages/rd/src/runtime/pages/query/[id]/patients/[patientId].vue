@@ -2,6 +2,7 @@
 import { type PropType, computed, defineComponent } from 'vue';
 import { ref } from 'vue';
 import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import { VCNavItems } from '@vuecs/navigation';
 import type { NavigationItem } from '@vuecs/navigation';
 import {
@@ -13,7 +14,11 @@ import { injectHTTPClient } from '../../../../core';
 import type { PatientRecord, QuerySession } from '../../../../domains';
 
 export default defineComponent({
-    components: { VCButton, VCNavItems },
+    components: {
+        VCButton, 
+        VCIcon, 
+        VCNavItems, 
+    },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,

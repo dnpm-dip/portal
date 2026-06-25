@@ -6,7 +6,12 @@ import {
     type FormTabInput,
 } from '@dnpm-dip/core';
 import { VCButton } from '@vuecs/button';
-import { VCFormSelect, VCFormSelectSearch } from '@vuecs/forms';
+import { 
+    VCFormCheckbox, 
+    VCFormGroup, 
+    VCFormSelect, 
+    VCFormSelectSearch, 
+} from '@vuecs/forms';
 import type { FormOption } from '@vuecs/forms';
 import {
     type Component,
@@ -38,6 +43,8 @@ export default defineComponent({
         DCodeSystem,
         VCFormSelect,
         VCButton,
+        VCFormCheckbox,
+        VCFormGroup,
     },
     props: {
         entity: {

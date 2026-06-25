@@ -1,6 +1,6 @@
 <script lang="ts">
 import { VCButton } from '@vuecs/button';
-import { VCAlert } from '@vuecs/elements';
+import { VCIcon } from '@vuecs/icon';
 import { VCTimeago } from '@vuecs/timeago';
 import {
     type PropType, 
@@ -13,8 +13,8 @@ import type { ValidationReportInfo } from '../../../domains';
 export default defineComponent({
     components: {
         DValidationReport,
-        VCAlert,
         VCButton,
+        VCIcon,
         VCTimeago,
     },
     props: {
@@ -72,12 +72,7 @@ export default defineComponent({
                                 v-for="(item, key) in props.data.issues"
                                 :key="key"
                             >
-                                <VCAlert
-                                    color="neutral"
-                                    variant="soft"
-                                    size="sm"
-                                    class="flex flex-wrap -mx-2"
-                                >
+                                <div class="relative mb-3 rounded-md border border-border bg-bg-muted px-3 py-2 text-sm text-fg flex flex-wrap -mx-2">
                                     <div class="w-2/12 px-2 flex grow flex-col items-center">
                                         <div>
                                             <strong>Level</strong>
@@ -110,7 +105,7 @@ export default defineComponent({
                                             {{ item.path }}
                                         </div>
                                     </div>
-                                </VCAlert>
+                                </div>
                             </template>
                         </div>
                     </template>

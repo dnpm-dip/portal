@@ -8,6 +8,7 @@ import {
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { VCAlert } from '@vuecs/elements';
+import { VCPlaceholder } from '@vuecs/placeholder';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { injectHTTPClient } from '../../core';
 import type { QuerySummaryDiagnostics } from '../../domains';
@@ -17,6 +18,7 @@ export default defineComponent({
         DKVChart,
         DQuerySummaryGrouped,
         VCAlert,
+        VCPlaceholder,
     },
     props: {
         queryId: {

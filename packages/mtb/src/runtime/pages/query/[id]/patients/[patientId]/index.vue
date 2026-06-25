@@ -1,11 +1,16 @@
 <script lang="ts">
 import { DCommaList, DPatient } from '@dnpm-dip/core';
+import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
-    components: { DCommaList, DPatient },
+    components: {
+        DCommaList, 
+        DPatient, 
+        VCIcon, 
+    },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,

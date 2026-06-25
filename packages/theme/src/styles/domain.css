@@ -140,7 +140,7 @@ Input group — joined input + addon (form-select-search / button).
     border-bottom-right-radius: 0;
 }
 
-.input-group .btn {
+.input-group .vc-button {
     height: 2rem;
     line-height: 1rem;
 }

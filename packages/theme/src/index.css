@@ -277,23 +277,11 @@
    / `.dropdown*`) was retired — those usages migrated to `<VC*>`
    components (VCButton / VCAlert / VCBadge / VCCard) + Tailwind
    utilities; the `.nav*` base rules moved to styles/domain.css next to
-   the `.nav-pills` tab chrome. Only two non-shim concerns remain here.
+   the `.nav-pills` tab chrome, and the `.bg-*` semantic aliases were
+   dropped as dead code (nothing builds `bg-${variant}` dynamically).
+   Only the `.vc-pagination` joined-tab tweak remains here.
    ------------------------------------------------------------------ */
 @layer components {
-    /* Semantic color aliases — <DTags> builds `bg-${tagVariant}`
-       dynamically, which the Tailwind scanner cannot see; these map the
-       Bootstrap-era bare names onto the token scale. `bg-secondary` /
-       `bg-light` / `bg-dark` pin the RAW neutral scale (mode-stable), so
-       chips keep their contrast pairing in both color modes. */
-    .bg-primary   { @apply bg-primary-600; }
-    .bg-secondary { background-color: var(--vc-color-neutral-500); }
-    .bg-success   { @apply bg-success-600; }
-    .bg-danger    { @apply bg-error-500; }
-    .bg-warning   { @apply bg-warning-500; }
-    .bg-info      { @apply bg-info-500; }
-    .bg-light     { background-color: var(--vc-color-neutral-100); }
-    .bg-dark      { background-color: var(--vc-color-neutral-800); }
-
     /* Pagination — joined-tab look over theme-tailwind's per-button
        rounded-md. */
     .vc-pagination .vc-pagination-link {

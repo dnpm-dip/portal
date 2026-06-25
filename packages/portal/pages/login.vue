@@ -31,6 +31,8 @@ import {
     useRoute,
 } from '#app';
 import { VCButton } from '@vuecs/button';
+import { VCFormGroup, VCFormInput } from '@vuecs/forms';
+import { VCIcon } from '@vuecs/icon';
 
 class LoginCredentialsValidator extends Container<{
     name: string;
@@ -52,6 +54,9 @@ export default defineNuxtComponent({
         AIdentityProviderIcon,
         IFieldValidation,
         VCButton,
+        VCFormGroup,
+        VCFormInput,
+        VCIcon,
     },
     setup() {
         definePageMeta({

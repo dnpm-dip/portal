@@ -60,7 +60,10 @@ Scopes typically match package names: `core`, `portal`, `mtb`, `rd`, `admin`, `k
 - **Always use explicit component imports.** Import `@vuecs/*` components where you use them
   (`import { VCButton } from '@vuecs/button'`, `VCAlert`/`VCBadge`/`VCCard*` from `@vuecs/elements`)
   and register them in the component's `components: { ... }` — do **not** rely on the global vuecs
-  plugin registration, even though it exists.
+  plugin registration, even though it exists. One deliberate exception: the **`VCTable` family**
+  (`VCTable`/`VCTableEmpty`/`VCTableLoading`) is left global — importing the now-generic `VCTable`
+  (@vuecs/table 1.3.0) trips a `defineNuxtComponent` overload under `nuxt typecheck` unless every
+  table's `:data`/`:columns` are typed end-to-end; adopting typed table slots is a separate follow-up.
 - Prefer a `<VCIcon>` in the default slot over an `icon-left` / `iconLeft` prop on `VCButton` / `VCAlert`.
 
 ## Best Practices

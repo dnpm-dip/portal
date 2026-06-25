@@ -185,7 +185,7 @@ export default defineComponent({
 <template>
     <table
         v-if="busy && total === 0"
-        class="table table-bordered w-full"
+        class="w-full"
     >
         <thead>
             <tr>

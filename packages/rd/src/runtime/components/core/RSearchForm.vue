@@ -16,8 +16,9 @@ import {
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import { VCButton } from '@vuecs/button';
-import { VCFormSelectSearch } from '@vuecs/forms';
+import { VCFormSelect, VCFormSelectSearch } from '@vuecs/forms';
 import type { FormOption } from '@vuecs/forms';
+import { VCIcon } from '@vuecs/icon';
 import { type PropType, toRef, watch } from 'vue';
 import {
     defineComponent, 
@@ -41,6 +42,8 @@ export default defineComponent({
         VCFormSelectSearch,
         DValueSet,
         VCButton,
+        VCFormSelect,
+        VCIcon,
     },
     props: {
         criteria: { type: Object as PropType<QueryCriteria | null> },

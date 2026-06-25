@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia';
 import type { NavigationResolverContext } from '@vuecs/navigation';
 import { VCNavItems } from '@vuecs/navigation';
 import { VCCountdown } from '@vuecs/countdown';
+import { VCIcon } from '@vuecs/icon';
 import { injectStore } from '@authup/client-web-kit';
 import { defineNuxtComponent } from '#app';
 import { LayoutTopNavigationRegistryId, injectNavigation } from '../core';
@@ -11,6 +12,7 @@ import { LayoutTopNavigationRegistryId, injectNavigation } from '../core';
 export default defineNuxtComponent({
     components: {
         VCCountdown,
+        VCIcon,
         VCNavItems,
     },
     setup() {

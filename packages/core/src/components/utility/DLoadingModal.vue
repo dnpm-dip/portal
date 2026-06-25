@@ -8,8 +8,13 @@
 <script lang="ts">
 import type { Component } from 'vue';
 import { defineComponent, toRef } from 'vue';
+import { VCModal, VCModalContent } from '@vuecs/overlays';
 
 const component = defineComponent({
+    components: {
+        VCModal,
+        VCModalContent,
+    },
     props: {
         display: {
             type: Boolean,

@@ -8,10 +8,12 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
+import { VCIcon } from '@vuecs/icon';
 import type { ConnectionPeer } from '../../../domains';
 import { ConnectionPeerStatus } from '../../../domains';
 
 export default defineComponent({
+    components: { VCIcon },
     props: { entity: { type: Object as PropType<ConnectionPeer> } },
     setup(props) {
         const online = computed(

@@ -6,6 +6,8 @@ import {
     ref,
 } from 'vue';
 import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
+import { VCModal, VCModalContent } from '@vuecs/overlays';
 import type { PreparedQuery } from '../../../domains';
 import DPreparedQueries from './DPreparedQueries';
 import DPreparedQuery from './DPreparedQuery';
@@ -19,6 +21,9 @@ type PreparedQueriesInstance = {
 const component = defineComponent({
     components: {
         VCButton,
+        VCIcon,
+        VCModal,
+        VCModalContent,
         DPreparedQueryForm,
         DPreparedQuery,
         DPreparedQueries,

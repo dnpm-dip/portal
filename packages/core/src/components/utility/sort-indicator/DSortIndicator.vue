@@ -10,10 +10,15 @@ import { type PropType, computed, defineComponent } from 'vue';
 import type { SortDescriptor, TableColumn } from '@vuecs/table';
 import { VCButton } from '@vuecs/button';
 import { VCBadge } from '@vuecs/elements';
+import { VCIcon } from '@vuecs/icon';
 import { isObject } from 'smob';
 
 export default defineComponent({
-    components: { VCButton, VCBadge },
+    components: {
+        VCButton, 
+        VCBadge, 
+        VCIcon, 
+    },
     props: {
         sortBy: {
             type: Array as PropType<SortDescriptor[]>,

@@ -10,6 +10,7 @@ import {
 import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
 import type { PropType } from 'vue';
 import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import { VCNavItems } from '@vuecs/navigation';
 import type { NavigationItem } from '@vuecs/navigation';
 import { defineNuxtComponent, useRoute } from '#imports';
@@ -22,6 +23,7 @@ import type { QuerySession } from '../../../domains';
 export default defineNuxtComponent({
     components: {
         VCButton,
+        VCIcon,
         VCNavItems,
         MQueryCriteriaModal,
         DQueryFilterContainer,
