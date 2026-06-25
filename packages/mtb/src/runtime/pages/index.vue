@@ -64,6 +64,7 @@ export default defineNuxtComponent({
             color="info"
             variant="soft"
             size="sm"
+            class="mb-3"
         >
             Die Datenabfrage ist auch ohne Auswahl von Suchparametern möglich.
             In diesem Fall werden alle auf DNPM:DIP verfügbaren Daten angezeigt.

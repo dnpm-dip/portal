@@ -241,6 +241,7 @@ export default defineComponent({
             color="warning"
             variant="soft"
             size="sm"
+            class="mb-3"
         >
             Bitte beachten: Ein Patient kann mehrere unterschiedliche Therapieumsetzungen erhalten haben.
         </VCAlert>
