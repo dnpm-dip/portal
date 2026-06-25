@@ -170,34 +170,6 @@
         --vc-color-fg:        #1A1D21;
         --vc-color-fg-muted:  #565E6B;
         --vc-color-border:    #E2E2E6;
-
-        /* Semantic / alert tones — the demo's .alert formula, mapped onto the
-           shades VCAlert (soft) renders: light = bg-50 / text-800 / border-200.
-           bg-50  = anchor @15% on the page bg (soft tint),
-           text-800 = the anchor (colored text),
-           border-200 = anchor @30% transparent (soft edge);
-           500/600 stay the solid anchor for buttons/badges. Mirrored under .dark
-           with the lifted anchor + #16191E base. */
-        --vc-color-success-50:  color-mix(in oklab, #0E7038 15%, #FAFAFA);
-        --vc-color-success-200: color-mix(in oklab, #0E7038 30%, transparent);
-        --vc-color-success-500: #0E7038;
-        --vc-color-success-600: #0E7038;
-        --vc-color-success-800: #0E7038;
-        --vc-color-warning-50:  color-mix(in oklab, #9A4D07 15%, #FAFAFA);
-        --vc-color-warning-200: color-mix(in oklab, #9A4D07 30%, transparent);
-        --vc-color-warning-500: #9A4D07;
-        --vc-color-warning-600: #9A4D07;
-        --vc-color-warning-800: #9A4D07;
-        --vc-color-error-50:    color-mix(in oklab, #BE2A2A 15%, #FAFAFA);
-        --vc-color-error-200:   color-mix(in oklab, #BE2A2A 30%, transparent);
-        --vc-color-error-500:   #BE2A2A;
-        --vc-color-error-600:   #BE2A2A;
-        --vc-color-error-800:   #BE2A2A;
-        --vc-color-info-50:     color-mix(in oklab, #2159C5 15%, #FAFAFA);
-        --vc-color-info-200:    color-mix(in oklab, #2159C5 30%, transparent);
-        --vc-color-info-500:    #2159C5;
-        --vc-color-info-600:    #2159C5;
-        --vc-color-info-800:    #2159C5;
     }
 
     /*
@@ -268,32 +240,6 @@
         /* The dark primary ladder is light (anchor lightened above), so the
            primary button fill needs dark text. */
         --vc-color-on-primary: #2E3440;
-
-        /* Dark alert tones — the demo's .alert formula on the Nord surface:
-           dark:bg-950 = lifted anchor @15% on the Nord content (#2E3440),
-           dark:text-200 = the lifted anchor, dark:border-800 = anchor @30%.
-           500/600 keep the SOLID light-mode anchor (deep) so destructive/solid
-           buttons keep white-on-color contrast in dark. */
-        --vc-color-success-200: #5BD98C;
-        --vc-color-success-500: #0E7038;
-        --vc-color-success-600: #0E7038;
-        --vc-color-success-800: color-mix(in oklab, #5BD98C 30%, transparent);
-        --vc-color-success-950: color-mix(in oklab, #5BD98C 15%, #2E3440);
-        --vc-color-warning-200: #F2C14E;
-        --vc-color-warning-500: #9A4D07;
-        --vc-color-warning-600: #9A4D07;
-        --vc-color-warning-800: color-mix(in oklab, #F2C14E 30%, transparent);
-        --vc-color-warning-950: color-mix(in oklab, #F2C14E 15%, #2E3440);
-        --vc-color-error-200:   #FF8A8A;
-        --vc-color-error-500:   #BE2A2A;
-        --vc-color-error-600:   #BE2A2A;
-        --vc-color-error-800:   color-mix(in oklab, #FF8A8A 30%, transparent);
-        --vc-color-error-950:   color-mix(in oklab, #FF8A8A 15%, #2E3440);
-        --vc-color-info-200:    #7CB6FF;
-        --vc-color-info-500:    #2159C5;
-        --vc-color-info-600:    #2159C5;
-        --vc-color-info-800:    color-mix(in oklab, #7CB6FF 30%, transparent);
-        --vc-color-info-950:    color-mix(in oklab, #7CB6FF 15%, #2E3440);
 
         /*
          * Warning / danger / info surfaces — tinted panels (alerts,
