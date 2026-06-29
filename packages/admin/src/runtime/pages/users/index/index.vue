@@ -119,25 +119,26 @@ export default defineNuxtComponent({
                     <VCTimeago :datetime="row.updated_at" />
                 </template>
                 <template #cell-options="{ row }: { row: any }">
-                    <VCButton
-                        v-if="hasEditPermission"
-                        :as="NuxtLink"
-                        :to="'/admin/users/'+ row.id"
-                        size="xs"
-                        color="primary"
-                        variant="outline"
-                        class="me-1"
-                    >
-                        <VCIcon name="fa6-solid:bars" />
-                    </VCButton>
-                    <AEntityDelete
-                        size="xs"
-                        :entity-id="row.id"
-                        entity-type="user"
-                        :with-text="false"
-                        :disabled="!hasDropPermission"
-                        @deleted="props.deleted"
-                    />
+                    <div class="flex items-center gap-1">
+                        <VCButton
+                            v-if="hasEditPermission"
+                            :as="NuxtLink"
+                            :to="'/admin/users/'+ row.id"
+                            size="xs"
+                            color="primary"
+                            variant="outline"
+                        >
+                            <VCIcon name="fa6-solid:bars" />
+                        </VCButton>
+                        <AEntityDelete
+                            size="xs"
+                            :entity-id="row.id"
+                            entity-type="user"
+                            :with-text="false"
+                            :disabled="!hasDropPermission"
+                            @deleted="props.deleted"
+                        />
+                    </div>
                 </template>
                 <VCTableLoading />
                 <VCTableEmpty />
