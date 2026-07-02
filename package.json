@@ -32,8 +32,8 @@
         "@tada5hi/eslint-config": "^2.3.1",
         "@tada5hi/tsconfig": "^0.7.2",
         "@tsdown/css": "^0.22.3",
-        "@types/node": "^26.0.1",
-        "eslint": "^10.5.0",
+        "@types/node": "^26.1.0",
+        "eslint": "^10.6.0",
         "eslint-plugin-vue": "^10.9.2",
         "husky": "^9.1.7",
         "lint-staged": "^17.0.8",
@@ -41,10 +41,10 @@
         "nx": "^23.0.1",
         "tsdown": "^0.22.0",
         "typescript": "^6.0.3",
-        "typescript-eslint": "^8.62.0",
+        "typescript-eslint": "^8.62.1",
         "unplugin-vue": "^7.2.0",
         "vitest": "^4.1.9",
-        "vue-tsc": "^3.3.5"
+        "vue-tsc": "^3.3.6"
     },
     "scripts": {
         "dev": "npm run dev --workspace=packages/portal",
