@@ -42,6 +42,31 @@ $ docker run -d -p 3000:3000 \
     ghcr.io/dnpm-dip/portal:latest
 ```
 
+### Configuration
+
+The portal is configured at runtime via environment variables (pass them with `docker run -e ...`):
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `NUXT_PUBLIC_API_URL` | `https://dnpm-dip.net/api/` | REST API base URL |
+| `NUXT_PUBLIC_AUTHUP_URL` | `https://dnpm-dip.net/auth/` | Authup base URL |
+| `NUXT_PUBLIC_AUTHUP_CLIENT_ID` | `web` | OAuth2 client used for the login (authorization-code) flow |
+| `NUXT_PUBLIC_COOKIE_DOMAIN` | — | Cookie domain for the auth session |
+
+#### Authentication
+
+The portal signs in with the **OAuth2 Authorization Code flow (PKCE)** — credentials are
+never entered in the portal UI. On the login page the user picks a **realm** (`ARealmGrid`,
+which reveals a search field once more than 8 realms exist); the portal then builds an
+authorize URL and redirects to Authup's `/authorize` endpoint, where the login form and the
+configured identity providers live. Authup redirects back to `<portal-origin>/login/callback`,
+and the `@authup/client-web-nuxt` routing interceptor exchanges the authorization code for a
+session.
+
+The OAuth client is configurable via `NUXT_PUBLIC_AUTHUP_CLIENT_ID` (default: `web`, the
+Authup built-in web client). The configured client **must** register
+`<portal-origin>/login/callback` as an allowed redirect URI, or Authup rejects the redirect.
+
 ### Development 
 To start the portal with the associated modules such as rd, mtb, etc, the following steps must be performed in sequence.
 
