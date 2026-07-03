@@ -7,13 +7,13 @@
 
 <script lang="ts">
 import { type Coding } from '@dnpm-dip/core';
-import { VCFormSelect } from '@vuecs/forms';
+import { VCFormGroup, VCFormSelect } from '@vuecs/forms';
 import { computed, defineComponent, ref } from 'vue';
 import { injectHTTPClient } from '../../core/http-client';
 import type { KaplanMeierOptions } from '../../domains';
 
 export default defineComponent({
-    components: { VCFormSelect },
+    components: { VCFormGroup, VCFormSelect },
     emits: ['failed', 'picked'],
     setup(props, { emit }) {
         const httpClient = injectHTTPClient();
@@ -87,8 +87,8 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="row">
-        <div class="col">
+    <div class="flex flex-wrap -mx-2">
+        <div class="flex-1 basis-0 px-2">
             <VCFormGroup>
                 <template #label>
                     Type
@@ -106,7 +106,7 @@ export default defineComponent({
                 </template>
             </VCFormGroup>
         </div>
-        <div class="col">
+        <div class="flex-1 basis-0 px-2">
             <VCFormGroup>
                 <template #label>
                     Gruppierung

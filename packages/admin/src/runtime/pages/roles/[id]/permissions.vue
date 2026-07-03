@@ -1,9 +1,8 @@
 <script lang="ts">
 
 import {
-    APagination, 
-    ARolePermissionAssignment, 
-    ARolePermissionAssignments, 
+    APagination,
+    ARolePermissionAssignments,
     ASearch,
 } from '@authup/client-web-kit';
 import type { Role } from '@authup/core-kit';
@@ -14,7 +13,6 @@ export default defineNuxtComponent({
     components: {
         APagination,
         ASearch,
-        ARolePermissionAssignment,
         ARolePermissionAssignments,
     },
     props: {
@@ -36,22 +34,13 @@ export default defineNuxtComponent({
 
         <template #item="{ data }">
             <div class="flex flex-col w-full">
-                <div class="flex flex-row gap-1">
-                    <div>
-                        <template v-if="data.display_name">
-                            <strong>{{ data.display_name }}</strong> ({{ data.name }})
-                        </template>
-                        <template v-else>
-                            <strong>{{ data.name }}</strong>
-                        </template>
-                    </div>
-                    <div class="ms-auto">
-                        <ARolePermissionAssignment
-                            :key="data.id"
-                            :role-id="entity.id"
-                            :permission-id="data.id"
-                        />
-                    </div>
+                <div>
+                    <template v-if="data.display_name">
+                        <strong>{{ data.display_name }}</strong> ({{ data.name }})
+                    </template>
+                    <template v-else>
+                        <strong>{{ data.name }}</strong>
+                    </template>
                 </div>
 
                 <div v-if="data.description">

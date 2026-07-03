@@ -14,6 +14,8 @@ import {
     injectQueryEventBus,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { VCAlert } from '@vuecs/elements';
+import { VCPlaceholder } from '@vuecs/placeholder';
 import { defineComponent, onUnmounted, ref } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QuerySummaryGeneAlterationDistribution } from '../../../domains';
@@ -22,6 +24,8 @@ export default defineComponent({
     components: {
         DQuerySummaryGrouped,
         DKVChartTableSwitch,
+        VCAlert,
+        VCPlaceholder,
     },
     props: {
         queryId: {
@@ -111,8 +115,12 @@ export default defineComponent({
         </div>
     </template>
     <template v-else-if="error">
-        <div class="alert alert-sm alert-danger">
+        <VCAlert
+            color="error"
+            variant="soft"
+            size="sm"
+        >
             Daten konnten nicht geladen werden.
-        </div>
+        </VCAlert>
     </template>
 </template>

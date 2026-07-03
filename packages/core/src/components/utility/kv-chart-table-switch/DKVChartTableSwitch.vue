@@ -5,12 +5,13 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import { 
-    type Component, 
-    type PropType, 
-    defineComponent, 
-    ref, 
+import {
+    type Component,
+    type PropType,
+    defineComponent,
+    ref,
 } from 'vue';
+import { VCIcon } from '@vuecs/icon';
 import type { KeyValueRecord } from '../../../domains';
 import { DKVChart } from '../kv-chart';
 import { DKVTable } from '../kv-table';
@@ -20,6 +21,7 @@ const component = defineComponent({
     components: {
         DKVTable,
         DKVChart,
+        VCIcon,
     },
     props: {
         type: {
@@ -103,7 +105,7 @@ export default component as Component;
                     <li class="nav-item">
                         <button
                             type="button"
-                            class="nav-link btn-xs"
+                            class="nav-link px-1.5! py-1.25! text-xs!"
                             :class="{'router-link-exact-active': variant === 'chart'}"
                             @click.prevent="setVariant('chart')"
                         >
@@ -113,7 +115,7 @@ export default component as Component;
                     <li class="nav-item">
                         <button
                             type="button"
-                            class="nav-link btn-xs"
+                            class="nav-link px-1.5! py-1.25! text-xs!"
                             :class="{'router-link-exact-active': variant === 'table'}"
                             @click.prevent="setVariant('table')"
                         >

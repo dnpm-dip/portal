@@ -1,11 +1,16 @@
 <script lang="ts">
 import { DCommaList, DPatient } from '@dnpm-dip/core';
+import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
-    components: { DCommaList, DPatient },
+    components: {
+        DCommaList, 
+        DPatient, 
+        VCIcon, 
+    },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -34,8 +39,8 @@ export default defineNuxtComponent({
                 :key="item.id"
             >
                 <div class="entity-card">
-                    <div class="row">
-                        <div class="col">
+                    <div class="flex flex-wrap -mx-2">
+                        <div class="flex-1 basis-0 px-2">
                             <div>
                                 <!-- <div><strong><VCIcon name="fa6-solid:calculator" /> TAN</strong> {{ item.ttan }}</div> -->
                                 <div>
@@ -61,8 +66,8 @@ export default defineNuxtComponent({
                 :key="item.id"
             >
                 <div class="entity-card">
-                    <div class="row">
-                        <div class="col">
+                    <div class="flex flex-wrap -mx-2">
+                        <div class="flex-1 basis-0 px-2">
                             <div>
                                 <strong><VCIcon name="fa6-solid:pills" /> Medikation</strong>
                                 <template

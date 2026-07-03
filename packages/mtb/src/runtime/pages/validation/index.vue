@@ -6,10 +6,14 @@
   -->
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { VCIcon } from '@vuecs/icon';
+import { VCAlert } from '@vuecs/elements';
 import { DValidationReportCard, DValidations } from '@dnpm-dip/core';
 
 export default defineComponent({
     components: {
+        VCIcon,
+        VCAlert,
         DValidationReportCard,
         DValidations,
     },
@@ -58,9 +62,13 @@ export default defineComponent({
                     </div>
                 </template>
                 <template v-else>
-                    <div class="alert alert-sm alert-info">
+                    <VCAlert
+                        color="info"
+                        variant="soft"
+                        size="sm"
+                    >
                         Es liegen keine Meldungen vor.
-                    </div>
+                    </VCAlert>
                 </template>
             </template>
         </DValidations>

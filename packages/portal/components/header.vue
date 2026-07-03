@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { VCNavItems } from '@vuecs/navigation';
+import { VCIcon } from '@vuecs/icon';
 import { injectStore } from '@authup/client-web-kit';
 import { useColorMode } from '#imports';
 import { defineNuxtComponent } from '#app';
@@ -9,7 +10,11 @@ import { LayoutTopNavigationRegistryId, injectNavigation } from '../core';
 import LogoSvg from './svg/LogoSvg.vue';
 
 export default defineNuxtComponent({
-    components: { LogoSvg, VCNavItems },
+    components: {
+        LogoSvg, 
+        VCNavItems, 
+        VCIcon, 
+    },
     setup() {
         const store = injectStore();
         const { loggedIn, user } = storeToRefs(store);
@@ -67,21 +72,24 @@ export default defineNuxtComponent({
                 </div>
             </div>
 
-            <nav class="page-navbar navbar-expand-md">
+            <nav class="page-navbar md:flex-nowrap md:justify-start">
+                <!-- Responsive collapse (inlined from the retired .navbar-collapse shim):
+                     mobile shows only when the hamburger sets displayNav; the static
+                     md:flex media-query override keeps it visible on md+ regardless. -->
                 <div
                     id="page-navbar"
-                    class="navbar-content navbar-collapse"
-                    :class="{'show': displayNav}"
+                    class="navbar-content grow basis-full items-center md:flex"
+                    :class="displayNav ? 'flex' : 'hidden'"
                 >
                     <VCNavItems
-                        class="navbar-nav"
+                        class="flex flex-col list-none md:flex-row"
                         :data="topItems"
                         :watch="topItemsWatch"
                         registry
                         :registry-id="topRegistryId"
                     />
 
-                    <ul class="navbar-nav vc-nav-items navbar-gadgets">
+                    <ul class="flex flex-col list-none md:flex-row vc-nav-items navbar-gadgets">
                         <li class="vc-nav-item">
                             <button
                                 type="button"

@@ -1,5 +1,7 @@
 <script lang="ts">
 import { DPreparedQueryContainer, PageMetaKey, useToast } from '@dnpm-dip/core';
+import { VCAlert } from '@vuecs/elements';
+import { VCIcon } from '@vuecs/icon';
 import type { ClientError } from 'hapic';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/search/MSearchForm.vue';
@@ -9,6 +11,8 @@ export default defineNuxtComponent({
     components: {
         DPreparedQueryContainer,
         SearchForm,
+        VCAlert,
+        VCIcon,
     },
     setup() {
         definePageMeta({
@@ -56,11 +60,16 @@ export default defineNuxtComponent({
             </div>
         </header>
 
-        <div class="alert alert-info alert-sm">
+        <VCAlert
+            color="info"
+            variant="soft"
+            size="sm"
+            class="mb-3"
+        >
             Die Datenabfrage ist auch ohne Auswahl von Suchparametern möglich.
             In diesem Fall werden alle auf DNPM:DIP verfügbaren Daten angezeigt.
             Die Abfrage kann nachfolgend angepasst werden.
-        </div>
+        </VCAlert>
 
         <DPreparedQueryContainer
             use-case="mtb"

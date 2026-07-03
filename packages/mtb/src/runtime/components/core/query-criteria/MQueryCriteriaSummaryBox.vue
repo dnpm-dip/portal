@@ -6,9 +6,12 @@
   -->
 <script lang="ts">
 import { type PropType, defineComponent, ref } from 'vue';
+import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import type { QuerySession } from '../../../domains';
 
 export default defineComponent({
+    components: { VCButton, VCIcon },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -34,13 +37,14 @@ export default defineComponent({
         <div class="flex flex-col gap-2">
             <div class="flex flex-row gap-2">
                 <div>
-                    <button
+                    <VCButton
                         v-if="entity.criteria"
-                        class="btn btn-dark btn-xs"
+                        color="neutral"
+                        size="xs"
                         @click.prevent="toggleExtended"
                     >
                         <VCIcon :name="extended ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                    </button>
+                    </VCButton>
                 </div>
                 <div>
                     <strong>Kriterien</strong>

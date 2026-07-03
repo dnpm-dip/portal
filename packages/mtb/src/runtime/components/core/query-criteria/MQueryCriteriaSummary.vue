@@ -6,11 +6,17 @@
   -->
 <script lang="ts">
 import { DCodingText } from '@dnpm-dip/core';
+import { VCBadge } from '@vuecs/elements';
+import { VCIcon } from '@vuecs/icon';
 import { type PropType, defineComponent } from 'vue';
 import type { QueryCriteria } from '../../../domains';
 
 export default defineComponent({
-    components: { DCodingText },
+    components: {
+        DCodingText, 
+        VCBadge, 
+        VCIcon, 
+    },
     props: {
         entity: {
             type: Object as PropType<QueryCriteria>,
@@ -128,12 +134,12 @@ export default defineComponent({
                         :key="item.code"
                     >
                         <div>
-                            <span class="badge bg-fg">
+                            <VCBadge class="bg-fg">
                                 <DCodingText
                                     :composite="true"
                                     :entity="item"
                                 />
-                            </span>
+                            </VCBadge>
                         </div>
                     </template>
                 </div>
@@ -148,12 +154,12 @@ export default defineComponent({
                         :key="item.code"
                     >
                         <div>
-                            <span class="badge bg-fg">
+                            <VCBadge class="bg-fg">
                                 <DCodingText
                                     :composite="true"
                                     :entity="item"
                                 />
-                            </span>
+                            </VCBadge>
                         </div>
                     </template>
                 </div>
@@ -175,7 +181,9 @@ export default defineComponent({
                             <span>{{ entity.medication.operator }}</span>
                         </div>
                         <div>
-                            <span class="badge bg-fg">{{ item.display || item.code }}</span>
+                            <VCBadge class="bg-fg">
+                                {{ item.display || item.code }}
+                            </VCBadge>
                         </div>
                     </template>
                 </div>
@@ -189,7 +197,9 @@ export default defineComponent({
                         :key="item.code"
                     >
                         <div>
-                            <span class="badge bg-fg">{{ item.display || item.code }}</span>
+                            <VCBadge class="bg-fg">
+                                {{ item.display || item.code }}
+                            </VCBadge>
                         </div>
                     </template>
                 </div>
@@ -206,7 +216,9 @@ export default defineComponent({
                     :key="item.code"
                 >
                     <div>
-                        <span class="badge bg-fg">{{ item.display || item.code }}</span>
+                        <VCBadge class="bg-fg">
+                            {{ item.display || item.code }}
+                        </VCBadge>
                     </div>
                 </template>
             </div>
@@ -215,7 +227,7 @@ export default defineComponent({
 </template>
 <style scoped>
 .variant-box {
-    background-color: #e0e0e0 !important;
-    border: 1px solid #c4c4c4;
+    background-color: var(--vc-color-bg-muted) !important;
+    border: 1px solid var(--vc-color-border);
 }
 </style>

@@ -5,6 +5,9 @@ import {
     defineComponent,
     ref,
 } from 'vue';
+import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
+import { VCModal, VCModalContent } from '@vuecs/overlays';
 import type { PreparedQuery } from '../../../domains';
 import DPreparedQueries from './DPreparedQueries';
 import DPreparedQuery from './DPreparedQuery';
@@ -17,6 +20,10 @@ type PreparedQueriesInstance = {
 
 const component = defineComponent({
     components: {
+        VCButton,
+        VCIcon,
+        VCModal,
+        VCModalContent,
         DPreparedQueryForm,
         DPreparedQuery,
         DPreparedQueries,
@@ -206,13 +213,13 @@ export default component as Component;
 
                 <VCModal v-model:open="manageModal">
                     <VCModalContent>
-                        <div class="modal-header">
+                        <div class="flex items-center justify-between border-b border-border px-4 py-3">
                             <h6 class="mb-0">
                                 <VCIcon name="fa6-solid:clock-rotate-left" />
                                 Gespeicherte Anfragen
                             </h6>
                         </div>
-                        <div class="modal-body">
+                        <div class="px-4 py-3">
                             <ul class="flex list-none flex-col divide-y divide-border ps-0">
                                 <template
                                     v-for="(item) in props.data"
@@ -229,26 +236,23 @@ export default component as Component;
                                                     {{ entityProps.data.name || entityProps.data.id }}
                                                 </span>
                                                 <span class="ms-auto flex shrink-0 gap-1">
-                                                    <button
-                                                        type="button"
-                                                        class="btn btn-xs"
-                                                        :class="{
-                                                            'btn-primary': preparedQueryId !== entityProps.data.id,
-                                                            'btn-secondary': preparedQueryId === entityProps.data.id
-                                                        }"
+                                                    <VCButton
+                                                        size="xs"
+                                                        :color="preparedQueryId !== entityProps.data.id ? 'primary' : 'neutral'"
+                                                        :variant="preparedQueryId !== entityProps.data.id ? undefined : 'soft'"
                                                         @click.prevent="togglePreparedQuery(entityProps.data)"
                                                     >
                                                         <VCIcon
                                                             :name="preparedQueryId !== entityProps.data.id ? 'fa6-solid:plus' : 'fa6-solid:minus'"
                                                         />
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        class="btn btn-xs btn-danger"
+                                                    </VCButton>
+                                                    <VCButton
+                                                        size="xs"
+                                                        color="error"
                                                         @click.prevent="() => entityProps.delete()"
                                                     >
                                                         <VCIcon name="fa6-solid:trash" />
-                                                    </button>
+                                                    </VCButton>
                                                 </span>
                                             </template>
                                         </DPreparedQuery>
@@ -261,14 +265,15 @@ export default component as Component;
                                 </p>
                             </template>
                         </div>
-                        <div class="modal-footer">
-                            <button
-                                type="button"
-                                class="btn btn-secondary btn-xs"
+                        <div class="flex items-center justify-end gap-2 border-t border-border px-4 py-3">
+                            <VCButton
+                                size="xs"
+                                color="neutral"
+                                variant="soft"
                                 @click.prevent="manageModal = false"
                             >
                                 Schließen
-                            </button>
+                            </VCButton>
                         </div>
                     </VCModalContent>
                 </VCModal>
@@ -290,12 +295,12 @@ export default component as Component;
             <!-- the form inside holds in-progress input (the
                  pre-migration no-close-on-esc/backdrop guards) -->
             <VCModalContent close-policy="never">
-                <div class="modal-header">
+                <div class="flex items-center justify-between border-b border-border px-4 py-3">
                     <h6 class="mb-0">
                         Vordefinierte Anfrage
                     </h6>
                 </div>
-                <div class="modal-body">
+                <div class="px-4 py-3">
                     <DPreparedQueryForm
                         :criteria="criteria"
                         :use-case="useCase"
@@ -306,24 +311,25 @@ export default component as Component;
                         <template #default="fProps">
                             <div class="flex flex-row">
                                 <div>
-                                    <button
+                                    <VCButton
                                         :disabled="fProps.isBusy"
-                                        type="button"
-                                        class="btn btn-secondary btn-xs"
+                                        size="xs"
+                                        color="neutral"
+                                        variant="soft"
                                         @click.prevent="modal = false"
                                     >
                                         Cancel
-                                    </button>
+                                    </VCButton>
                                 </div>
                                 <div class="ms-auto">
-                                    <button
-                                        type="button"
-                                        class="btn btn-xs btn-dark"
+                                    <VCButton
+                                        size="xs"
+                                        color="neutral"
                                         :disabled="fProps.isBusy || fProps.isInvalid"
                                         @click.prevent="fProps.submit"
                                     >
                                         Speichern
-                                    </button>
+                                    </VCButton>
                                 </div>
                             </div>
                         </template>

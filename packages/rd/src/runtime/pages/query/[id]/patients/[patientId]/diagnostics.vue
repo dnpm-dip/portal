@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
+import { VCIcon } from '@vuecs/icon';
 import RCopyNumberVariant from '../../../../../components/core/RCopyNumberVariant.vue';
 import RSmallVariant from '../../../../../components/core/RSmallVariant.vue';
 import RStructuralVariant from '../../../../../components/core/RStructuralVariant.vue';
@@ -8,8 +9,9 @@ import type { PatientRecord, QuerySession } from '../../../../../domains';
 
 export default defineNuxtComponent({
     components: {
-        RStructuralVariant, 
-        RCopyNumberVariant, 
+        VCIcon,
+        RStructuralVariant,
+        RCopyNumberVariant,
         RSmallVariant,
     },
     props: {
@@ -35,8 +37,8 @@ export default defineNuxtComponent({
         >
             <div class="entity-card">
                 <div class="mb-3">
-                    <div class="row">
-                        <div class="col">
+                    <div class="flex flex-wrap -mx-2">
+                        <div class="flex-1 basis-0 px-2">
                             <div>
                                 <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.issuedOn }}</div>
                                 <div>
@@ -48,7 +50,7 @@ export default defineNuxtComponent({
                                 -->
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="flex-1 basis-0 px-2">
                             <div>
                                 <strong><VCIcon name="fa6-solid:dna" /> Sequenzierungs-Typ</strong>
                                 {{ item.sequencingInfo.platform.display || item.sequencingInfo.platform.code }}
@@ -58,7 +60,7 @@ export default defineNuxtComponent({
                                 {{ item.conclusion.display || item.conclusion.code }}
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="flex-1 basis-0 px-2">
                             <div><strong><VCIcon name="fa6-solid:toolbox" /> Kit</strong> {{ item.sequencingInfo.kit }}</div>
                             <template v-if="item.results && item.results.autozygosity">
                                 <div>
@@ -70,10 +72,10 @@ export default defineNuxtComponent({
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="flex flex-wrap -mx-2">
                     <div
                         v-if="item.results && item.results.smallVariants"
-                        class="col"
+                        class="flex-1 basis-0 px-2"
                     >
                         <h6 class="section-label mb-2">
                             Small Variants
@@ -92,7 +94,7 @@ export default defineNuxtComponent({
                     </div>
                     <div
                         v-if="item.results && item.results.copyNumberVariants"
-                        class="col"
+                        class="flex-1 basis-0 px-2"
                     >
                         <h6 class="section-label mb-2">
                             Copy Number Variants
@@ -111,7 +113,7 @@ export default defineNuxtComponent({
                     </div>
                     <div
                         v-if="item.results && item.results.structuralVariants"
-                        class="col"
+                        class="flex-1 basis-0 px-2"
                     >
                         <h6 class="section-label mb-2">
                             Structural Variants

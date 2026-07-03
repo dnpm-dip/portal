@@ -97,7 +97,7 @@
            bands (elevated/nested, shared by both modes) are slates mixed
            from the brand anchor, so the chrome family derives from the
            same color the primary scale does. */
-        --dnpm-chrome-bg:            #D9D9D9;
+        --dnpm-chrome-bg:            var(--vc-color-bg-muted);
         --dnpm-chrome-bg-elevated:   color-mix(in oklab, var(--dnpm-brand-slate) 20%, #1E232A);
         --dnpm-chrome-bg-nested:     color-mix(in oklab, var(--dnpm-brand-slate) 28%, #1E232A);
         --dnpm-chrome-fg:            var(--vc-color-fg);
@@ -121,18 +121,18 @@
         --dnpm-navbar-menu-fg:       #9d9d9d;
 
         /*
-         * Brand accents — "Slate & Coral" (design-review pick from the
-         * project's healthcare palette, colors.webp): a sober neutral
-         * slate anchors the primary scale below — calm chrome that lets
-         * the clinical content speak — while the coral carries the
-         * energy as the accent (logo strand, sidebar accent, footer
-         * links) and the mauve softens the mark's rungs. Mode-stable
-         * except `-ink` (headings/wordmark), which sits on the
-         * content/chrome surfaces and flips to the silver tone in dark
-         * mode.
+         * Brand accents — "Graphite & Coral" (design-review pick): a sharp
+         * near-monochrome graphite anchors the primary scale below — a
+         * quiet, high-contrast chrome that lets the clinical content speak —
+         * while the DNPM coral carries the energy as the single accent (logo
+         * strand, sidebar accent, footer links) and the mauve softens the
+         * mark's rungs. `--dnpm-brand-slate` keeps its historical name but
+         * now holds the graphite anchor; it lightens to a graphite-silver
+         * under `.dark` so the primary scale reads on the dark surface.
+         * Mode-stable except `-ink`/`-slate`, which flip in dark mode.
          */
         --dnpm-brand-coral:          #F65552;
-        --dnpm-brand-slate:          #5C6670;
+        --dnpm-brand-slate:          #2B2F36;
         --dnpm-brand-mauve:          #C7B1BD;
         --dnpm-brand-silver:         #AEB2B5;
         --dnpm-brand-ink:            var(--dnpm-brand-slate);
@@ -143,9 +143,13 @@
          * bridges `--color-primary-*` from these, so every `primary`
          * utility/component (buttons, active states, rings, pagination)
          * adopts the brand color. Tints/shades are color-mixed from the
-         * brand var so the whole scale stays in sync with it. The pure
-         * brand sits at 500; 600 — the shade buttons and active states
-         * use — mixes toward black so white text clears WCAG contrast.
+         * brand var so the whole scale stays in sync with it. The graphite
+         * anchor (#2B2F36) is already near-black, so 500 AND 600 — the fill /
+         * active-state shade — both sit at the brand color; mixing 600 toward
+         * black (as a mid-tone anchor would want) collapses it to pitch black.
+         * White text on the anchor clears WCAG; 700-950 darken only mildly for
+         * hover/pressed. In dark the anchor is the light graphite, so 600 is
+         * that light tone (paired with the dark on-primary text).
          */
         --vc-color-primary-50:  color-mix(in oklab, var(--dnpm-brand-slate) 8%,  white);
         --vc-color-primary-100: color-mix(in oklab, var(--dnpm-brand-slate) 16%, white);
@@ -153,11 +157,19 @@
         --vc-color-primary-300: color-mix(in oklab, var(--dnpm-brand-slate) 52%, white);
         --vc-color-primary-400: color-mix(in oklab, var(--dnpm-brand-slate) 76%, white);
         --vc-color-primary-500: var(--dnpm-brand-slate);
-        --vc-color-primary-600: color-mix(in oklab, var(--dnpm-brand-slate) 78%, black);
-        --vc-color-primary-700: color-mix(in oklab, var(--dnpm-brand-slate) 64%, black);
-        --vc-color-primary-800: color-mix(in oklab, var(--dnpm-brand-slate) 52%, black);
-        --vc-color-primary-900: color-mix(in oklab, var(--dnpm-brand-slate) 42%, black);
-        --vc-color-primary-950: color-mix(in oklab, var(--dnpm-brand-slate) 28%, black);
+        --vc-color-primary-600: var(--dnpm-brand-slate);
+        --vc-color-primary-700: color-mix(in oklab, var(--dnpm-brand-slate) 82%, black);
+        --vc-color-primary-800: color-mix(in oklab, var(--dnpm-brand-slate) 66%, black);
+        --vc-color-primary-900: color-mix(in oklab, var(--dnpm-brand-slate) 52%, black);
+        --vc-color-primary-950: color-mix(in oklab, var(--dnpm-brand-slate) 40%, black);
+
+        /* Content surfaces — Graphite & Coral light: a faintly cool
+           near-white over a soft zinc card, crisp graphite ink. */
+        --vc-color-bg:        #FAFAFA;
+        --vc-color-bg-muted:  #F1F1F3;
+        --vc-color-fg:        #1A1D21;
+        --vc-color-fg-muted:  #565E6B;
+        --vc-color-border:    #E2E2E6;
     }
 
     /*
@@ -175,10 +187,30 @@
      *      content surface pairs with the chrome as a gentle tonal step.
      */
     .dark {
-        --dnpm-chrome-bg:            color-mix(in oklab, var(--dnpm-brand-slate) 14%, #14181D);
-        --dnpm-chrome-fg:            #ffffff;
-        --dnpm-chrome-fg-muted:      #aeb2b7;
-        --dnpm-chrome-border:        #333333;
+        /* Lighten the primary anchor for dark so the graphite ladder reads on
+           the dark surface (chrome bands stay dark — #1E232A-dominated). */
+        --dnpm-brand-slate:          #C7CCD4;
+        /* Brighten the coral accent for dark so the logo strand / accent
+           reads vividly on the near-black surface (matches the demo). */
+        --dnpm-brand-coral:          #FF6F6C;
+
+        /* The primary scale's light tints (50-400) are color-mixed toward WHITE
+           in :root. In dark the anchor is already light (#C7CCD4), so those come
+           out near-white — e.g. the sort-indicator chip's hover:bg-primary-50
+           rendered white. Re-mix the light tints toward the dark content surface
+           so subtle primary tints/hovers read as a faint lift, not white. */
+        --vc-color-primary-50:  color-mix(in oklab, var(--dnpm-brand-slate) 8%,  var(--vc-color-bg));
+        --vc-color-primary-100: color-mix(in oklab, var(--dnpm-brand-slate) 14%, var(--vc-color-bg));
+        --vc-color-primary-200: color-mix(in oklab, var(--dnpm-brand-slate) 22%, var(--vc-color-bg));
+        --vc-color-primary-300: color-mix(in oklab, var(--dnpm-brand-slate) 34%, var(--vc-color-bg));
+        --vc-color-primary-400: color-mix(in oklab, var(--dnpm-brand-slate) 50%, var(--vc-color-bg));
+
+        /* Nord chrome band (header/sidebar/footer) — a step above content,
+           below the lifted cards. */
+        --dnpm-chrome-bg:            #3B4252;
+        --dnpm-chrome-fg:            #ECEFF4;
+        --dnpm-chrome-fg-muted:      #A6ADBB;
+        --dnpm-chrome-border:        #4C566A;
 
         /* Headings/wordmark ink — the light-mode slate drops too
            close to the dark surfaces; flip to the palette's silver. */
@@ -198,9 +230,16 @@
          * left the light `fg` tokens from @vuecs/design at ~1.7:1 —
          * unreadable.
          */
-        --vc-color-bg: #262B32;
-        --vc-color-bg-muted: #313740;
-        --vc-color-border: #3B424D;
+        /* Nord surfaces: content (#2E3440), lifted cards (#434C5E), Nord ink. */
+        --vc-color-bg: #2E3440;
+        --vc-color-bg-muted: #434C5E;
+        --vc-color-fg: #ECEFF4;
+        --vc-color-fg-muted: #A6ADBB;
+        --vc-color-border: #4C566A;
+
+        /* The dark primary ladder is light (anchor lightened above), so the
+           primary button fill needs dark text. */
+        --vc-color-on-primary: #2E3440;
 
         /*
          * Warning / danger / info surfaces — tinted panels (alerts,
@@ -271,158 +310,17 @@
 }
 
 /* ------------------------------------------------------------------
-   Bootstrap-compat layer
-   Provides the Bootstrap-shaped utility / component class names that
-   the pre-Tailwind templates still reference. Each rule `@apply`s
-   Tailwind utilities — same visual contract, no `bootstrap` dep, and
-   the rules disappear automatically when the last caller is rewritten
-   to a `<VC*>` component.
+   Residual component-layer rules.
+   The Bootstrap-compat shim block (`.btn` / `.row` / `.col*` / `.card*`
+   / `.alert*` / `.badge` / `.nav*` / `.navbar*` / `.form-*` / `.modal-*`
+   / `.dropdown*`) was retired — those usages migrated to `<VC*>`
+   components (VCButton / VCAlert / VCBadge / VCCard) + Tailwind
+   utilities; the `.nav*` base rules moved to styles/domain.css next to
+   the `.nav-pills` tab chrome, and the `.bg-*` semantic aliases were
+   dropped as dead code (nothing builds `bg-${variant}` dynamically).
+   Only the `.vc-pagination` joined-tab tweak remains here.
    ------------------------------------------------------------------ */
 @layer components {
-    /* Buttons --------------------------------------------------------- */
-    .btn {
-        @apply inline-flex items-center justify-center gap-1 rounded-md
-               border border-transparent px-3 py-1.5 text-sm font-medium
-               transition-colors cursor-pointer
-               focus-visible:outline-2 focus-visible:outline-offset-2
-               focus-visible:outline-primary-500
-               disabled:opacity-50 disabled:cursor-not-allowed;
-    }
-    .btn-xs    { @apply px-1.5! py-1.25! text-xs!; }
-    .btn-sm    { @apply px-2! py-1! text-xs!; }
-    .btn-md    { @apply px-2! py-1! text-base!; }
-    .btn-lg    { @apply px-4! py-2! text-base!; }
-    .btn-block { @apply block w-full; }
-
-    .btn-primary   { @apply bg-primary-600 text-on-primary hover:bg-primary-700; }
-    .btn-secondary { @apply bg-bg-elevated text-fg         hover:bg-bg-muted; }
-    .btn-success   { @apply bg-success-600 text-on-success hover:bg-success-700; }
-    .btn-danger    { @apply bg-error-600   text-on-error   hover:bg-error-700; }
-    .btn-warning   { @apply bg-warning-500 text-on-warning hover:bg-warning-600; }
-    .btn-info      { @apply bg-info-500    text-on-info    hover:bg-info-600; }
-    .btn-light     { @apply bg-bg-muted    text-fg         hover:bg-bg-elevated; }
-    .btn-dark      { @apply bg-fg          text-bg         hover:opacity-80; }
-
-    .btn-outline-primary   { @apply border-primary-600  text-primary-600 hover:bg-primary-600 hover:text-on-primary; }
-    .btn-outline-secondary { @apply border-border       text-fg          hover:bg-bg-muted; }
-    .btn-outline-success   { @apply border-success-600  text-success-600 hover:bg-success-600 hover:text-on-success; }
-    .btn-outline-danger    { @apply border-error-600    text-error-600   hover:bg-error-600   hover:text-on-error; }
-    .btn-outline-warning   { @apply border-warning-500  text-warning-600 hover:bg-warning-500 hover:text-on-warning; }
-    .btn-outline-info      { @apply border-info-500     text-info-600    hover:bg-info-500    hover:text-on-info; }
-    .btn-outline-dark      { @apply border-fg           text-fg          hover:bg-fg          hover:text-bg; }
-
-    /* Semantic color aliases — <DTags> builds `bg-${tagVariant}`
-       dynamically, which the Tailwind scanner cannot see; these map the
-       Bootstrap-era bare names onto the token scale. `bg-secondary` /
-       `bg-light` / `bg-dark` pin the RAW neutral scale (mode-stable), so
-       chips keep their contrast pairing in both color modes. */
-    .bg-primary   { @apply bg-primary-600; }
-    .bg-secondary { background-color: var(--vc-color-neutral-500); }
-    .bg-success   { @apply bg-success-600; }
-    .bg-danger    { @apply bg-error-500; }
-    .bg-warning   { @apply bg-warning-500; }
-    .bg-info      { @apply bg-info-500; }
-    .bg-light     { background-color: var(--vc-color-neutral-100); }
-    .bg-dark      { background-color: var(--vc-color-neutral-800); }
-
-    /* Grid — Bootstrap-style 12-col layout via flex (not CSS grid). */
-    .row     { @apply flex flex-wrap; margin-left: -0.5rem; margin-right: -0.5rem; }
-    .col     { @apply flex-1 basis-0 px-2; }
-    .col-1   { @apply w-1/12 px-2; }
-    .col-2   { @apply w-2/12 px-2; }
-    .col-3   { @apply w-3/12 px-2; }
-    .col-4   { @apply w-4/12 px-2; }
-    .col-5   { @apply w-5/12 px-2; }
-    .col-6   { @apply w-6/12 px-2; }
-    .col-7   { @apply w-7/12 px-2; }
-    .col-8   { @apply w-8/12 px-2; }
-    .col-9   { @apply w-9/12 px-2; }
-    .col-10  { @apply w-10/12 px-2; }
-    .col-11  { @apply w-11/12 px-2; }
-    .col-12  { @apply w-full px-2; }
-
-    /* Responsive columns — md+ / lg+ / xl+ breakpoints. */
-    .col-md     { @apply px-2 md:flex-1 md:basis-0; }
-    .col-md-3   { @apply w-full px-2 md:w-3/12; }
-    .col-md-9   { @apply w-full px-2 md:w-9/12; }
-    .col-lg-2   { @apply w-full px-2 lg:w-2/12; }
-    .col-lg-10  { @apply w-full px-2 lg:w-10/12; }
-    .col-xl-6   { @apply w-full px-2 xl:w-6/12; }
-
-    .container       { @apply mx-auto w-full max-w-screen-lg px-4; }
-    .container-fluid { @apply w-full px-4; }
-
-    /* Cards — Bootstrap-shaped card chrome. Surface decorations
-       (entity-card) live in styles/card.css; these shims provide the
-       structural defaults. */
-    .card        { @apply relative flex flex-col rounded-md border border-border bg-bg-elevated; }
-    .card-header { @apply flex items-center border-b border-border px-3 py-2; }
-    .card-body   { @apply flex-1 px-3 py-2; }
-    .card-footer { @apply border-t border-border px-3 py-2; }
-    .card-title  { @apply font-semibold; }
-
-    /* Alerts ---------------------------------------------------------
-       The tinted variants use raw palette steps that do NOT flip with
-       the mode — in dark mode the light `*-50` fills glare against the
-       dark surface, so each variant carries a deep-end dark recipe
-       (950 fill / 900 border / 300 text). `.alert-secondary` /
-       `.alert-dark` build on semantic tokens and adapt on their own. */
-    .alert           { @apply relative mb-3 rounded-md border px-4 py-3; }
-    .alert-sm        { @apply px-3 py-2 text-sm; }
-    .alert-primary   { @apply border-primary-200 bg-primary-50 text-primary-700 dark:border-primary-900 dark:bg-primary-950 dark:text-primary-300; }
-    .alert-secondary { @apply border-border bg-bg-muted text-fg; }
-    .alert-success   { @apply border-success-200 bg-success-50 text-success-700 dark:border-success-900 dark:bg-success-950 dark:text-success-300; }
-    /* Orange scale (not the amber `warning` tokens) — amber's dark end
-       reads brown; orange keeps the warm tone in both modes. */
-    .alert-warning   { @apply border-orange-200 bg-orange-50 text-orange-700; }
-    .alert-danger    { @apply border-error-200   bg-error-50   text-error-700; }
-    .alert-info      { @apply border-info-200    bg-info-50    text-info-700; }
-    .alert-dark      { @apply border-border bg-bg-elevated text-fg; }
-
-    /* Warning / danger / info dark recipes use the hand-tuned surface
-       tokens (see the `.dark` token block above) — the palette deep
-       ends the other variants use read brown/black/near-navy. */
-    .dark .alert-warning {
-        background-color: var(--dnpm-warning-surface);
-        border-color: var(--dnpm-warning-surface-border);
-        color: var(--dnpm-warning-surface-fg);
-    }
-    .dark .alert-danger {
-        background-color: var(--dnpm-danger-surface);
-        border-color: var(--dnpm-danger-surface-border);
-        color: var(--dnpm-danger-surface-fg);
-    }
-    .dark .alert-info {
-        background-color: var(--dnpm-info-surface);
-        border-color: var(--dnpm-info-surface-border);
-        color: var(--dnpm-info-surface-fg);
-    }
-
-    /* Badges --------------------------------------------------------- */
-    .badge {
-        @apply inline-flex items-center rounded-full px-2 py-0.5
-               text-xs font-medium;
-    }
-
-    /* Nav / navbar --------------------------------------------------- */
-    .nav             { @apply flex flex-wrap; }
-    .nav-item        { @apply list-none; }
-    .nav-link        { @apply block px-3 py-2 text-fg hover:text-primary-600 no-underline; }
-    .nav-link.active { @apply text-primary-600; }
-    .navbar          { @apply flex flex-wrap items-center justify-between; }
-    .navbar-nav      { @apply flex flex-col list-none; }
-    .navbar-toggler  { @apply rounded border border-border px-2 py-1; }
-    .navbar-collapse { @apply grow basis-full items-center; }
-
-    .navbar-collapse:not(.show)        { @apply hidden; }
-    .navbar-expand-md .navbar-collapse { @apply md:flex!; }
-    .navbar-expand-md .navbar-nav      { @apply md:flex-row!; }
-    .navbar-expand-md                  { @apply md:flex-nowrap md:justify-start; }
-
-    /* Forms — minimal shims (vuecs SFCs own the real form styles) ---- */
-    .form-group   { @apply mb-3; }
-    .form-switch  { @apply inline-flex items-center gap-2; }
-
     /* Pagination — joined-tab look over theme-tailwind's per-button
        rounded-md. */
     .vc-pagination .vc-pagination-link {
@@ -437,46 +335,6 @@
         @apply !rounded-r-md;
     }
 
-    /* Form validation visual state. */
-    .is-valid {
-        @apply border-success-600 ring-1 ring-success-500;
-    }
-
-    /* Dropdowns — Bootstrap-style toggle/menu (also used by the
-       navbar/sidebar chrome). The `hidden` on `.dropdown-menu` is
-       load-bearing; the toggle's click handler flips `.show`. */
-    .dropdown { @apply relative; }
-    .dropdown-toggle { @apply cursor-pointer; }
-    .dropdown-menu {
-        @apply absolute top-full left-0 z-50 hidden min-w-40 rounded-md
-               border border-border bg-bg py-1 shadow-md;
-    }
-    .dropdown-menu-end { @apply left-auto right-0; }
-    .dropdown-menu.show { @apply block; }
-    .dropdown-item {
-        @apply block w-full cursor-pointer border-0 bg-transparent
-               px-3 py-1 text-left text-sm text-fg hover:bg-bg-muted;
-    }
-    .dropdown-item.active {
-        @apply bg-primary-600 text-on-primary hover:bg-primary-700;
-    }
-    .dropdown-divider { @apply my-1 h-px bg-border; }
-
-    /* Modal — INNER chrome only. The backdrop / positioning shell is
-       owned by Reka / <VCModalContent> (@vuecs/overlays); portal mounts
-       VCModal compound directly. These rules style the structural
-       classes still carried on the markup inside <VCModalContent>
-       (.modal-header / .modal-body / .modal-footer / .modal-title /
-       .btn-close). */
-    .modal-header   { @apply flex items-center justify-between border-b border-border px-4 py-3; }
-    .modal-title    { @apply font-semibold; }
-    .modal-body     { @apply px-4 py-3; }
-    .modal-footer   { @apply flex items-center justify-end gap-2 border-t border-border px-4 py-3; }
-    .btn-close {
-        @apply cursor-pointer border-0 bg-transparent text-fg-muted
-               hover:text-fg;
-    }
-    .btn-close-white { @apply text-bg hover:text-bg/80; }
 }
 
 /* ------------------------------------------------------------------

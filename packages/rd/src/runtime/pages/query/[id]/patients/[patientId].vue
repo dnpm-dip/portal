@@ -1,6 +1,13 @@
 <script lang="ts">
-import { type PropType, computed, defineComponent } from 'vue';
+import { 
+    type PropType, 
+    computed, 
+    defineComponent, 
+    resolveComponent, 
+} from 'vue';
 import { ref } from 'vue';
+import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import { VCNavItems } from '@vuecs/navigation';
 import type { NavigationItem } from '@vuecs/navigation';
 import {
@@ -12,7 +19,11 @@ import { injectHTTPClient } from '../../../../core';
 import type { PatientRecord, QuerySession } from '../../../../domains';
 
 export default defineComponent({
-    components: { VCNavItems },
+    components: {
+        VCButton, 
+        VCIcon, 
+        VCNavItems, 
+    },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -21,6 +32,7 @@ export default defineComponent({
     },
 
     async setup(props) {
+        const NuxtLink = resolveComponent('NuxtLink');
         const api = injectHTTPClient();
         const route = useRoute();
 
@@ -55,6 +67,7 @@ export default defineComponent({
         });
 
         return {
+            NuxtLink,
             navItems,
             record: entity.value as PatientRecord,
         };
@@ -78,13 +91,17 @@ export default defineComponent({
                     {{ record.patient.id }}
                 </p>
             </div>
-            <NuxtLink
-                class="btn btn-sm btn-secondary ms-auto"
+            <VCButton
+                :as="NuxtLink"
                 :to="'/rd/query/'+ entity.id + '/patients'"
+                size="sm"
+                color="neutral"
+                variant="soft"
+                class="ms-auto"
             >
                 <VCIcon name="fa6-solid:arrow-left" />
                 Zu den Patienten
-            </NuxtLink>
+            </VCButton>
         </header>
 
         <div class="mb-3">

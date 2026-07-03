@@ -42,7 +42,7 @@
         "@vuecs/forms": "^5.3.2",
         "@vuecs/overlays": "^1.2.0",
         "@vuecs/pagination": "^2.1.7",
-        "@vuecs/placeholder": "^1.0.4",
+        "@vuecs/placeholder": "^1.0.7",
         "@validup/vue": "^0.3.3",
         "@validup/zod": "^0.3.3",
         "ilingo": "^6.0.0",

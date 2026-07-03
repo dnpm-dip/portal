@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia';
 import type { NavigationResolverContext } from '@vuecs/navigation';
 import { VCNavItems } from '@vuecs/navigation';
 import { VCCountdown } from '@vuecs/countdown';
+import { VCIcon } from '@vuecs/icon';
 import { injectStore } from '@authup/client-web-kit';
 import { defineNuxtComponent } from '#app';
 import { LayoutTopNavigationRegistryId, injectNavigation } from '../core';
@@ -11,6 +12,7 @@ import { LayoutTopNavigationRegistryId, injectNavigation } from '../core';
 export default defineNuxtComponent({
     components: {
         VCCountdown,
+        VCIcon,
         VCNavItems,
     },
     setup() {
@@ -50,7 +52,7 @@ export default defineNuxtComponent({
     <div>
         <div class="page-sidebar">
             <VCNavItems
-                class="sidebar-menu navbar-nav"
+                class="sidebar-menu flex flex-col list-none"
                 :data="sideItems"
                 :watch="sideItemsWatch"
                 variant="pills"
@@ -59,10 +61,10 @@ export default defineNuxtComponent({
             <div class="mt-auto">
                 <div
                     v-if="loggedIn"
-                    class="flex flex-col ms-3 me-3 mb-3 mt-auto"
-                    style="color: #848484"
+                    class="font-light flex flex-col ms-3 me-3 mb-3 mt-auto text-sm"
+                    style="color: var(--dnpm-chrome-fg-muted)"
                 >
-                    <small>
+                    <span>
                         <VCCountdown :time="tokenExpiresIn">
                             <template #default="props">
                                 <VCIcon
@@ -72,7 +74,7 @@ export default defineNuxtComponent({
                                 <span class="text-success-600">{{ props.minutes }} Minute(n), {{ props.seconds }} Sekunde(n)</span>.
                             </template>
                         </VCCountdown>
-                    </small>
+                    </span>
                 </div>
             </div>
         </div>

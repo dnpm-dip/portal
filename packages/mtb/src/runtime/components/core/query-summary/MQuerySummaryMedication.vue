@@ -17,9 +17,12 @@ import {
     type KeyValueRecord,
     QueryEventBusEventName,
     injectQueryEventBus,
+    isCoding,
     toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
+import { VCAlert } from '@vuecs/elements';
+import { VCPlaceholder } from '@vuecs/placeholder';
 import {
     computed,
     defineComponent,
@@ -37,6 +40,8 @@ export default defineComponent({
         DKVChartTableSwitch,
         DQuerySummaryNested,
         DQuerySummaryGrouped,
+        VCAlert,
+        VCPlaceholder,
     },
     props: {
         queryId: {
@@ -164,6 +169,15 @@ export default defineComponent({
             }
 
             if (item.key && typeof item.key === 'object') {
+                // The supporting-variant key is a bare `{ gene: Coding }` (no
+                // type-discriminated SNV/CNV/Fusion shape), so resolve the gene
+                // directly; queryGeneAlterationToString would otherwise hit its
+                // `default` branch and render '???'.
+                const key = item.key as { gene?: Coding };
+                if (isCoding(key.gene)) {
+                    return key.gene.display || key.gene.code;
+                }
+
                 return queryGeneAlterationToString(item.key as QueryGeneAlteration);
             }
 
@@ -227,9 +241,14 @@ export default defineComponent({
                         </DQuerySummaryGrouped>
                     </template>
                     <template v-else>
-                        <div class="alert alert-sm alert-info mb-0">
+                        <VCAlert
+                            color="info"
+                            variant="soft"
+                            size="sm"
+                            class="mb-0"
+                        >
                             Es sind keine stützenden molekularen Alterationen hinterlegt.
-                        </div>
+                        </VCAlert>
                     </template>
                 </div>
                 <div class="entity-card text-center mb-3 w-full">
@@ -405,8 +424,12 @@ export default defineComponent({
         </div>
     </template>
     <template v-else-if="error">
-        <div class="alert alert-sm alert-danger">
+        <VCAlert
+            color="error"
+            variant="soft"
+            size="sm"
+        >
             Daten konnten nicht geladen werden.
-        </div>
+        </VCAlert>
     </template>
 </template>

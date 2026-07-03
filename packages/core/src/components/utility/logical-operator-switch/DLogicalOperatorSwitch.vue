@@ -7,14 +7,16 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import {
-    defineComponent, 
-    ref, 
-    toRef, 
+    defineComponent,
+    ref,
+    toRef,
     watch,
 } from 'vue';
+import { VCButton } from '@vuecs/button';
 import { LogicalOperator } from '../../../constants';
 
 export default defineComponent({
+    components: { VCButton },
     props: { modelValue: { type: String as PropType<`${LogicalOperator}`> } },
     emits: ['update:modelValue'],
     setup(props, { emit }) {
@@ -46,9 +48,10 @@ export default defineComponent({
 });
 </script>
 <template>
-    <button
+    <VCButton
         type="button"
-        class="btn btn-secondary"
+        color="neutral"
+        variant="soft"
         @click.prevent="toggle"
     >
         <template v-if="operator === 'and'">
@@ -57,5 +60,5 @@ export default defineComponent({
         <template v-else>
             ∪
         </template>
-    </button>
+    </VCButton>
 </template>

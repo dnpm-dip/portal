@@ -4,6 +4,7 @@ import { createValidator } from '@validup/zod';
 import { Container } from 'validup';
 import { z } from 'zod';
 import { VCFormGroup, VCFormInput } from '@vuecs/forms';
+import { VCButton } from '@vuecs/button';
 
 import { IFieldValidation } from '@ilingo/validup-vue';
 import type { PropType } from 'vue';
@@ -29,6 +30,7 @@ class PreparedQueryValidator extends Container<{ name: string }> {
 export default defineComponent({
     components: {
         IFieldValidation,
+        VCButton,
         VCFormGroup,
         VCFormInput,
     },
@@ -138,14 +140,15 @@ export default defineComponent({
             :is-invalid="v.$invalid.value"
             :submit="submit"
         >
-            <button
+            <VCButton
                 type="button"
-                class="btn btn-xs btn-dark"
+                size="xs"
+                color="neutral"
                 :disabled="isBusy || v.$invalid.value"
                 @click.prevent="submit"
             >
                 Speichern
-            </button>
+            </VCButton>
         </slot>
     </div>
 </template>

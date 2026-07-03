@@ -8,10 +8,12 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
+import { VCIcon } from '@vuecs/icon';
 import type { ConnectionPeer } from '../../../domains';
 import { ConnectionPeerStatus } from '../../../domains';
 
 export default defineComponent({
+    components: { VCIcon },
     props: { entity: { type: Object as PropType<ConnectionPeer> } },
     setup(props) {
         const online = computed(
@@ -36,7 +38,7 @@ export default defineComponent({
                     {{ entity.site.display || entity.site.code }}
                 </template>
                 <template v-else>
-                    <span class="placeholder col-8" />
+                    <span class="placeholder w-8/12 px-2" />
                 </template>
             </h6>
             <span
@@ -60,7 +62,7 @@ export default defineComponent({
                 {{ entity.details }}
             </template>
             <template v-else>
-                <span class="placeholder col-12" />
+                <span class="placeholder w-full px-2" />
             </template>
         </p>
     </div>

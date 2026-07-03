@@ -5,12 +5,21 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
+import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
+import { VCModal, VCModalContent } from '@vuecs/overlays';
 import { type PropType, defineComponent, ref } from 'vue';
 import type { QuerySession } from '../../../domains';
 import MSearchForm from '../search/MSearchForm.vue';
 
 export default defineComponent({
-    components: { MSearchForm },
+    components: {
+        MSearchForm, 
+        VCButton, 
+        VCIcon, 
+        VCModal, 
+        VCModalContent, 
+    },
     props: {
         entity: {
             type: Object as PropType<QuerySession>,
@@ -49,17 +58,20 @@ export default defineComponent({
         name="default"
         :toggle="toggleModal"
     >
-        <NuxtLink
-            class="btn btn-xs btn-primary ms-1"
+        <VCButton
+            color="primary"
+            size="xs"
+            class="ms-1"
+            aria-label="Suche öffnen"
             @click.prevent="toggleModal"
         >
             <VCIcon name="fa6-solid:gear" />
-        </NuxtLink>
+        </VCButton>
     </slot>
 
     <VCModal v-model:open="modal">
-        <VCModalContent class="modal-lg">
-            <div class="modal-header">
+        <VCModalContent>
+            <div class="flex items-center justify-between border-b border-border px-4 py-3">
                 <div class="flex flex-row w-full">
                     <div>
                         <h5 class="mb-0">
@@ -67,17 +79,20 @@ export default defineComponent({
                         </h5>
                     </div>
                     <div class="ms-auto">
-                        <button
+                        <VCButton
                             type="button"
-                            class="btn btn-xs btn-secondary"
+                            color="neutral"
+                            variant="soft"
+                            size="xs"
+                            aria-label="Modal schließen"
                             @click.prevent="modal = false"
                         >
                             <VCIcon name="fa6-solid:xmark" />
-                        </button>
+                        </VCButton>
                     </div>
                 </div>
             </div>
-            <div class="modal-body">
+            <div class="px-4 py-3">
                 <MSearchForm
                     :query-mode="entity.mode.code"
                     :query-peers="entity.peers"

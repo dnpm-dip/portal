@@ -1,5 +1,7 @@
 <script lang="ts">
 import { DExpandableContent } from '@dnpm-dip/core';
+import { VCAlert } from '@vuecs/elements';
+import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';
 import MNGSReportCNV from '../../../../../components/core/MNGSReportCNV.vue';
@@ -15,6 +17,8 @@ export default defineNuxtComponent({
         DExpandableContent,
         MNGSReportCNV,
         MNgsReportSNV,
+        VCAlert,
+        VCIcon,
     },
     props: {
         entity: {
@@ -84,8 +88,8 @@ export default defineNuxtComponent({
                         <div>
                             <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.issuedOn }}</div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col">
+                        <div class="flex flex-wrap -mx-2 mt-2">
+                            <div class="flex-1 basis-0 px-2">
                                 <div class="text-center mb-1">
                                     <strong>Tumor-Morphologie</strong>
                                 </div>
@@ -95,7 +99,7 @@ export default defineNuxtComponent({
                             </div>
                             <div
                                 v-if="item.results.tumorCellContent"
-                                class="col"
+                                class="flex-1 basis-0 px-2"
                             >
                                 <div class="text-center">
                                     <strong>Tumor-Zellgehalt</strong>
@@ -206,8 +210,8 @@ export default defineNuxtComponent({
         >
             <div class="entity-card gap-1 flex flex-col">
                 <div class="mb-3">
-                    <div class="row">
-                        <div class="col">
+                    <div class="flex flex-wrap -mx-2">
+                        <div class="flex-1 basis-0 px-2">
                             <div>
                                 <div>
                                     <strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.issuedOn }}
@@ -219,7 +223,7 @@ export default defineNuxtComponent({
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="flex-1 basis-0 px-2">
                             <template v-if="item.results.tumorCellContent">
                                 <div><strong>Tumorzellgehalt</strong> {{ (item.results.tumorCellContent.value * 100).toFixed(2) }}%</div>
                             </template>
@@ -274,8 +278,8 @@ export default defineNuxtComponent({
                     </template>
                 </DExpandableContent>
 
-                <div class="row">
-                    <div class="col-6">
+                <div class="flex flex-wrap -mx-2">
+                    <div class="w-6/12 px-2">
                         <DExpandableContent>
                             <template #header>
                                 <h6 class="section-label mb-2">
@@ -295,7 +299,7 @@ export default defineNuxtComponent({
                             </template>
                         </DExpandableContent>
                     </div>
-                    <div class="col-6">
+                    <div class="w-6/12 px-2">
                         <DExpandableContent>
                             <template #header>
                                 <h6 class="section-label mb-2">
@@ -320,8 +324,12 @@ export default defineNuxtComponent({
         </template>
     </template>
     <template v-else>
-        <div class="alert alert-sm alert-info">
+        <VCAlert
+            color="info"
+            variant="soft"
+            size="sm"
+        >
             Es sind keine NGS-Reports vorhanden.
-        </div>
+        </VCAlert>
     </template>
 </template>

@@ -1,12 +1,15 @@
 <script lang="ts">
+import { VCButton } from '@vuecs/button';
+import { VCIcon } from '@vuecs/icon';
 import {
-    defineComponent, 
-    ref, 
-    toRef, 
+    defineComponent,
+    ref,
+    toRef,
     watch,
 } from 'vue';
 
 export default defineComponent({
+    components: { VCButton, VCIcon },
     props: {
         modelValue: {
             type: Boolean,
@@ -46,12 +49,13 @@ export default defineComponent({
                 </slot>
             </div>
             <div class="ms-auto">
-                <button
-                    class="btn btn-dark btn-xs"
+                <VCButton
+                    color="neutral"
+                    size="xs"
                     @click.prevent="toggleExtended"
                 >
                     <VCIcon :name="extended ? 'fa6-solid:chevron-up' : 'fa6-solid:chevron-down'" />
-                </button>
+                </VCButton>
             </div>
         </div>
     </div>

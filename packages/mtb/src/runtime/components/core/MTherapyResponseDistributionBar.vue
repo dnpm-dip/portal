@@ -85,8 +85,8 @@ export default defineComponent({
     height: 120px;
     line-height: 1rem;
     font-size: 0.65rem;
-    background-color: #ececec;
-    border: 1px solid #dedede;
+    background-color: var(--vc-color-bg-muted);
+    border: 1px solid var(--vc-color-border);
     box-shadow: 0 4px 25px 0 rgba(0, 0, 0, .1);
     border-radius: 4px;
     vertical-align: center;

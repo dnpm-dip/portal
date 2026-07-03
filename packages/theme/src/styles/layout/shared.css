@@ -1,3 +1,6 @@
+/* Header, sidebar, and footer all share one chrome band — the lifted
+   content-muted surface (--dnpm-chrome-bg → --vc-color-bg-muted = #F1F1F3
+   light / #1F232A dark), a step above the page content. */
 .page-header,
 .page-sidebar,
 .page-footer {
