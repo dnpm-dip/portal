@@ -24,7 +24,7 @@ export default defineNuxtComponent({
             <div class="page-wrapper">
                 <PageSidebar />
                 <div class="page-content">
-                    <NuxtPage />
+                    <slot />
                 </div>
             </div>
             <VCToaster position="top-center" />

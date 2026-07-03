@@ -33,6 +33,12 @@ export default defineNuxtConfig({
 
     experimental: { scanPageMeta: false },
 
+    // The OAuth2 callback must render client-side only: the authorization-code
+    // exchange needs the PKCE `code_verifier` held in sessionStorage, so running
+    // it during SSR would exchange without a verifier and burn the single-use
+    // code before the client can retry. Mirrors PrivateAIM/hub + authup/authup.
+    routeRules: { '/login/callback': { ssr: false } },
+
     devtools: { componentInspector: false },
 
     css: [
@@ -68,6 +74,11 @@ export default defineNuxtConfig({
             version: process.env.npm_package_version,
             apiUrl: process.env.API_URL || 'https://dnpm-dip.net/api/',
             authupUrl: process.env.AUTHUP_URL || 'https://dnpm-dip.net/auth/',
+            // OAuth2 client used for the authorization-code (PKCE) login flow.
+            // Defaults to Authup's built-in "web" client (CLIENT_WEB_NAME) at the
+            // call site; override per deployment. The client must register
+            // `<portal-origin>/login/callback` as an allowed redirect URI.
+            authupClientId: process.env.AUTHUP_CLIENT_ID,
             cookieDomain: process.env.COOKIE_DOMAIN,
         },
     },
