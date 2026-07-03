@@ -51,7 +51,7 @@ export default defineNuxtComponent({
                 </button>
 
                 <main class="auth-layout-content">
-                    <NuxtPage />
+                    <slot />
                 </main>
             </section>
 

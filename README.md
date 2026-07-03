@@ -11,6 +11,8 @@ This repository contains the Portal of DNPM:DIP.
 
 - [Packages](#packages)
 - [Usage](#usage)
+- [Configuration](#configuration)
+- [Authentication](#authentication)
 - [Credits](#credits)
 - [License](#license)
 
@@ -56,12 +58,11 @@ The portal is configured at runtime via environment variables (pass them with `d
 #### Authentication
 
 The portal signs in with the **OAuth2 Authorization Code flow (PKCE)** — credentials are
-never entered in the portal UI. On the login page the user picks a **realm** (`ARealmGrid`,
-which reveals a search field once more than 8 realms exist); the portal then builds an
-authorize URL and redirects to Authup's `/authorize` endpoint, where the login form and the
-configured identity providers live. Authup redirects back to `<portal-origin>/login/callback`,
-and the `@authup/client-web-nuxt` routing interceptor exchanges the authorization code for a
-session.
+never entered in the portal UI. DNPM:DIP runs a single (master) realm, so the login page
+shows a single sign-in action rather than a realm picker; the portal builds an authorize URL
+and redirects to Authup's `/authorize` endpoint, where the login form and the configured
+identity providers live. Authup redirects back to `<portal-origin>/login/callback`, and the
+`@authup/client-web-nuxt` routing interceptor exchanges the authorization code for a session.
 
 The OAuth client is configurable via `NUXT_PUBLIC_AUTHUP_CLIENT_ID` (default: `web`, the
 Authup built-in web client). The configured client **must** register
