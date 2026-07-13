@@ -5,7 +5,7 @@ import type { NavigationResolverContext } from '@vuecs/navigation';
 import { VCNavItems } from '@vuecs/navigation';
 import { VCCountdown } from '@vuecs/countdown';
 import { VCIcon } from '@vuecs/icon';
-import { injectStore } from '@authup/client-web-kit';
+import { StoreAuthStatus, injectStore } from '@authup/client-web-kit';
 import { defineNuxtComponent } from '#app';
 import { LayoutTopNavigationRegistryId, injectNavigation } from '../core';
 
@@ -17,7 +17,9 @@ export default defineNuxtComponent({
     },
     setup() {
         const store = injectStore();
-        const { loggedIn, accessTokenExpireDate: tokenExpireDate } = storeToRefs(store);
+        const { status, accessTokenExpireDate: tokenExpireDate } = storeToRefs(store);
+
+        const authenticated = computed(() => status.value === StoreAuthStatus.AUTHENTICATED);
 
         const tokenExpiresIn = computed(() => {
             if (!tokenExpireDate.value) {
@@ -35,12 +37,12 @@ export default defineNuxtComponent({
             return navigation.getSideItems(activeTopName);
         };
         const sideItemsWatch = [
-            () => store.loggedIn,
+            () => store.status,
             () => store.userId,
         ];
 
         return {
-            loggedIn,
+            authenticated,
             tokenExpiresIn,
             sideItems,
             sideItemsWatch,
@@ -60,7 +62,7 @@ export default defineNuxtComponent({
             />
             <div class="mt-auto">
                 <div
-                    v-if="loggedIn"
+                    v-if="authenticated"
                     class="font-light flex flex-col ms-3 me-3 mb-3 mt-auto text-sm"
                     style="color: var(--dnpm-chrome-fg-muted)"
                 >
