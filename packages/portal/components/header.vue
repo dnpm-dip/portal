@@ -1,9 +1,9 @@
 <script lang="ts">
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { VCNavItems } from '@vuecs/navigation';
 import { VCIcon } from '@vuecs/icon';
-import { injectStore } from '@authup/client-web-kit';
+import { StoreAuthStatus, injectStore } from '@authup/client-web-kit';
 import { useColorMode } from '#imports';
 import { defineNuxtComponent } from '#app';
 import { LayoutTopNavigationRegistryId, injectNavigation } from '../core';
@@ -17,7 +17,9 @@ export default defineNuxtComponent({
     },
     setup() {
         const store = injectStore();
-        const { loggedIn, user } = storeToRefs(store);
+        const { status, user } = storeToRefs(store);
+
+        const authenticated = computed(() => status.value === StoreAuthStatus.AUTHENTICATED);
 
         const displayNav = ref(false);
 
@@ -28,7 +30,7 @@ export default defineNuxtComponent({
         const navigation = injectNavigation();
         const topItems = () => navigation.getTopItems();
         const topItemsWatch = [
-            () => store.loggedIn,
+            () => store.status,
             () => store.userId,
         ];
 
@@ -38,7 +40,7 @@ export default defineNuxtComponent({
         };
 
         return {
-            loggedIn,
+            authenticated,
             user,
             toggleNav,
             displayNav,
@@ -101,7 +103,7 @@ export default defineNuxtComponent({
                                 <VCIcon :name="isDark ? 'fa6-solid:sun' : 'fa6-solid:moon'" />
                             </button>
                         </li>
-                        <template v-if="loggedIn && user">
+                        <template v-if="authenticated && user">
                             <li class="vc-nav-item">
                                 <a
                                     href="javascript:void(0)"
