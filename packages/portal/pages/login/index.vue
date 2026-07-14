@@ -1,5 +1,5 @@
 <script lang="ts">
-import { CLIENT_WEB_NAME } from '@authup/core-kit';
+import { CLIENT_WEB_NAME, REALM_MASTER_NAME } from '@authup/core-kit';
 import {
     buildAuthorizeURL,
     createPKCE,
@@ -41,12 +41,18 @@ export default defineNuxtComponent({
         // `<portal-origin>/login/callback` as a redirect URI.
         const clientId = (runtimeConfig.public.authupClientId as string) || CLIENT_WEB_NAME;
 
+        // A name-identified client (e.g. the built-in "web") is only resolvable
+        // with a realm hint — every realm ships its own "web" client, so Authup
+        // rejects the authorize request ("A realm is required to resolve a client
+        // by name.") without one. `realm_id` accepts a realm UUID or name; dnpm-dip
+        // runs a single (master) realm, so we default to REALM_MASTER_NAME and
+        // allow an override per deployment (AUTHUP_REALM_ID).
+        const realmId = (runtimeConfig.public.authupRealmId as string) || REALM_MASTER_NAME;
+
         const busy = ref(false);
 
-        // dnpm-dip runs a single (master) realm, so there is no realm picker —
-        // the authorization request omits `realm_id` and Authup resolves it to
-        // master. Authup's `/authorize` page hosts the credential form and the
-        // configured identity providers; the portal only starts the flow.
+        // There is no realm picker: Authup's `/authorize` page hosts the credential
+        // form and the configured identity providers; the portal only starts the flow.
         const startLogin = async () => {
             busy.value = true;
             try {
@@ -79,12 +85,14 @@ export default defineNuxtComponent({
                     code_verifier: pkce.code_verifier,
                     redirect_uri: redirectUri,
                     client_id: clientId,
+                    realm_id: realmId,
                     target,
                 });
 
                 window.location.href = buildAuthorizeURL({
                     baseURL: apiClient.getBaseURL() as string,
                     clientId,
+                    realmId,
                     redirectUri,
                     scope: 'global openid',
                     state,

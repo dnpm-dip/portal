@@ -79,6 +79,10 @@ export default defineNuxtConfig({
             // call site; override per deployment. The client must register
             // `<portal-origin>/login/callback` as an allowed redirect URI.
             authupClientId: process.env.AUTHUP_CLIENT_ID,
+            // Realm hint for resolving a name-identified client on `/authorize`
+            // (Authup requires it). Accepts a realm UUID or name; defaults to
+            // REALM_MASTER_NAME at the call site.
+            authupRealmId: process.env.AUTHUP_REALM_ID,
             cookieDomain: process.env.COOKIE_DOMAIN,
         },
     },

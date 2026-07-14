@@ -53,6 +53,7 @@ The portal is configured at runtime via environment variables (pass them with `d
 | `NUXT_PUBLIC_API_URL` | `https://dnpm-dip.net/api/` | REST API base URL |
 | `NUXT_PUBLIC_AUTHUP_URL` | `https://dnpm-dip.net/auth/` | Authup base URL |
 | `NUXT_PUBLIC_AUTHUP_CLIENT_ID` | `web` | OAuth2 client used for the login (authorization-code) flow |
+| `NUXT_PUBLIC_AUTHUP_REALM_ID` | `master` | Realm (UUID or name) that owns the OAuth2 client |
 | `NUXT_PUBLIC_COOKIE_DOMAIN` | — | Cookie domain for the auth session |
 
 #### Authentication
@@ -67,6 +68,11 @@ identity providers live. Authup redirects back to `<portal-origin>/login/callbac
 The OAuth client is configurable via `NUXT_PUBLIC_AUTHUP_CLIENT_ID` (default: `web`, the
 Authup built-in web client). The configured client **must** register
 `<portal-origin>/login/callback` as an allowed redirect URI, or Authup rejects the redirect.
+
+A name-identified client (such as the built-in `web`) exists in every realm, so the authorize
+request carries a realm hint — `NUXT_PUBLIC_AUTHUP_REALM_ID` (default: `master`, the single
+DNPM:DIP realm), a realm UUID or name — otherwise Authup responds with _"A realm is required to
+resolve a client by name."_
 
 ### Development 
 To start the portal with the associated modules such as rd, mtb, etc, the following steps must be performed in sequence.
