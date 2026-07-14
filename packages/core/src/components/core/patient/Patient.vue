@@ -35,6 +35,13 @@ export default defineComponent({
                     {{ entity.birthDate }}
                 </DFact>
                 <DFact
+                    v-if="entity.age"
+                    label="Alter"
+                    icon="fa6-solid:hourglass-half"
+                >
+                    {{ entity.age.value }} {{ entity.age.unit }}
+                </DFact>
+                <DFact
                     v-if="entity.dateOfDeath"
                     label="Todestag"
                     icon="fa6-solid:skull"
@@ -54,6 +61,13 @@ export default defineComponent({
                     icon="fa6-solid:heart-pulse"
                 >
                     <DCodingText :entity="entity.vitalStatus" />
+                </DFact>
+                <DFact
+                    v-if="entity.healthInsurance"
+                    label="Krankenversicherung"
+                    icon="fa6-solid:id-card"
+                >
+                    <DCodingText :entity="entity.healthInsurance.type" />
                 </DFact>
                 <DFact
                     v-if="entity.address"

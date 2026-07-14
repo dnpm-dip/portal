@@ -19,6 +19,13 @@ export type Patient = {
     gender: Coding<'male' | 'female' | 'other' | 'unknown'>
     birthDate: string,
     dateOfDeath?: string,
+    /**
+     * @see https://github.com/KohlbacherLab/dnpm-dip-core/blob/main/src/main/scala/de/dnpm/dip/model/Quantity.scala
+     */
+    age?: {
+        value: number,
+        unit: string
+    },
     managingSite?: Coding,
     vitalStatus?: Coding,
     healthInsurance?: PatientInsurance,
