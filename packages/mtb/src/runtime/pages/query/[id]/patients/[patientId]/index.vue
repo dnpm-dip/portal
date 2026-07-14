@@ -76,11 +76,14 @@ export default defineNuxtComponent({
                             <strong><VCIcon name="fa6-solid:compass" /> Topographie</strong>
                             {{ item.topography.display || item.topography.code }}
                         </div>
-                        <template v-if="item.type && item.type.history.length > 0">
+                        <template
+                            v-for="type in (item.type ? item.type.history.slice(0, 1) : [])"
+                            :key="type.date"
+                        >
                             <div>
                                 <strong><VCIcon name="fa6-solid:tag" /> Typ</strong>
-                                {{ item.type.history[0].value.display || item.type.history[0].value.code }}
-                                <span class="text-fg-muted">({{ item.type.history[0].date }})</span>
+                                {{ type.value.display || type.value.code }}
+                                <span class="text-fg-muted">({{ type.date }})</span>
                             </div>
                         </template>
                         <div><strong><VCIcon name="fa6-solid:clock" /> Erfassungsdatum</strong> {{ item.recordedOn }}</div>
@@ -88,31 +91,39 @@ export default defineNuxtComponent({
                             <strong><VCIcon name="fa6-solid:circle-info" /> Leitlinien-Behandlungsstatus</strong>
                             {{ item.guidelineTreatmentStatus.display || item.guidelineTreatmentStatus.code }}
                         </div>
-                        <template v-if="item.staging && item.staging.history.length > 0">
+                        <template
+                            v-for="staging in (item.staging ? item.staging.history.slice(0, 1) : [])"
+                            :key="staging.date"
+                        >
                             <div>
                                 <strong><VCIcon name="fa6-solid:layer-group" /> Staging</strong>
-                                {{ item.staging.history[0].method.display || item.staging.history[0].method.code }}
-                                <span class="text-fg-muted">({{ item.staging.history[0].date }})</span>
+                                {{ staging.method.display || staging.method.code }}
+                                <span class="text-fg-muted">({{ staging.date }})</span>
                             </div>
-                            <div v-if="item.staging.history[0].tnmClassification">
+                            <div v-if="staging.tnmClassification">
                                 <strong><VCIcon name="fa6-solid:ruler" /> TNM</strong>
                                 <DCodingCommaList
                                     :items="[
-                                        item.staging.history[0].tnmClassification.tumor,
-                                        item.staging.history[0].tnmClassification.nodes,
-                                        item.staging.history[0].tnmClassification.metastasis,
+                                        staging.tnmClassification.tumor,
+                                        staging.tnmClassification.nodes,
+                                        staging.tnmClassification.metastasis,
                                     ]"
                                 />
                             </div>
-                            <div v-if="item.staging.history[0].otherClassifications">
+                            <div v-if="staging.otherClassifications">
                                 <strong><VCIcon name="fa6-solid:list" /> Weitere Klassifikationen</strong>
-                                <DCodingCommaList :items="item.staging.history[0].otherClassifications" />
+                                <DCodingCommaList :items="staging.otherClassifications" />
                             </div>
                         </template>
-                        <div v-if="item.grading && item.grading.history.length > 0">
-                            <strong><VCIcon name="fa6-solid:signal" /> Grading</strong>
-                            <DCodingCommaList :items="item.grading.history[0].codes" />
-                        </div>
+                        <template
+                            v-for="grading in (item.grading ? item.grading.history.slice(0, 1) : [])"
+                            :key="grading.date"
+                        >
+                            <div>
+                                <strong><VCIcon name="fa6-solid:signal" /> Grading</strong>
+                                <DCodingCommaList :items="grading.codes" />
+                            </div>
+                        </template>
                         <div v-if="item.germlineCodes && item.germlineCodes.length > 0">
                             <strong><VCIcon name="fa6-solid:dna" /> Keimbahn-Codes</strong>
                             <DCodingCommaList :items="item.germlineCodes" />

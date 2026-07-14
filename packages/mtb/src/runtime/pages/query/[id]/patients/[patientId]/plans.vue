@@ -29,7 +29,7 @@ export default defineNuxtComponent({
                 <div class="entity-card grow mb-3">
                     <div class="flex flex-wrap -mx-2 mb-3">
                         <div class="flex-1 basis-0 px-2">
-                            <div>
+                            <div v-if="item.reason">
                                 <strong><VCIcon name="fa6-solid:calculator" /> Grund</strong>
                                 {{ item.reason.display || item.reason.type }}
                             </div>
@@ -198,6 +198,10 @@ export default defineNuxtComponent({
                                             <hr>
                                         </template>
                                         <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ recommendation.issuedOn }}</div>
+                                        <div v-if="recommendation.reason">
+                                            <strong><VCIcon name="fa6-solid:calculator" /> Grund</strong>
+                                            {{ recommendation.reason.display || recommendation.reason.id }}
+                                        </div>
                                         <div v-if="recommendation.code">
                                             <strong><VCIcon name="fa6-solid:code" /> Code</strong>
                                             {{ recommendation.code.display || recommendation.code.code }}

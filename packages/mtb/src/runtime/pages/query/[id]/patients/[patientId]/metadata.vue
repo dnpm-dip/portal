@@ -135,11 +135,19 @@ export default defineNuxtComponent({
                             </div>
                             <span
                                 class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium"
-                                :class="provision.type === 'permit'
-                                    ? 'bg-success-500/10 text-success-600'
-                                    : 'bg-error-500/10 text-error-600'"
+                                :class="{
+                                    'bg-success-500/10 text-success-600': provision.type === 'permit',
+                                    'bg-error-500/10 text-error-600': provision.type === 'deny',
+                                    'bg-neutral-500/10 text-fg-muted': provision.type !== 'permit' && provision.type !== 'deny',
+                                }"
                             >
-                                <VCIcon :name="provision.type === 'permit' ? 'fa6-solid:check' : 'fa6-solid:xmark'" />
+                                <VCIcon
+                                    :name="provision.type === 'permit'
+                                        ? 'fa6-solid:check'
+                                        : provision.type === 'deny'
+                                            ? 'fa6-solid:xmark'
+                                            : 'fa6-solid:question'"
+                                />
                                 {{ provisionTypeLabel(provision.type) }}
                             </span>
                         </div>

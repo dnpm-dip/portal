@@ -53,7 +53,7 @@ export default defineComponent({
                     <strong>Lokalisierung</strong>
                     <DCodingCommaList :items="entity.localization" />
                 </div>
-                <div>
+                <div v-if="entity.interpretation">
                     <strong>Interpretation</strong> <small>{{ entity.interpretation.display }}</small>
                 </div>
                 <div>
