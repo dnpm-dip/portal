@@ -1,5 +1,5 @@
 <script lang="ts">
-import { DExpandableContent } from '@dnpm-dip/core';
+import { DCommaList, DExpandableContent } from '@dnpm-dip/core';
 import { VCAlert } from '@vuecs/elements';
 import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';
@@ -14,6 +14,7 @@ export default defineNuxtComponent({
     components: {
         MNGSReportRNAFusion,
         MngsReportDnaFusion,
+        DCommaList,
         DExpandableContent,
         MNGSReportCNV,
         MNgsReportSNV,
@@ -95,7 +96,7 @@ export default defineNuxtComponent({
                                 </div>
 
                                 <div><strong><VCIcon name="fa6-solid:code" /> Code</strong> {{ item.results.tumorMorphology.value.display }}</div>
-                                <div><strong><VCIcon name="fa6-solid:note-sticky" /> Notiz</strong> {{ item.results.tumorMorphology.notes }}</div>
+                                <div><strong><VCIcon name="fa6-solid:note-sticky" /> Notiz</strong> {{ item.results.tumorMorphology.note }}</div>
                             </div>
                             <div
                                 v-if="item.results.tumorCellContent"
@@ -153,12 +154,17 @@ export default defineNuxtComponent({
                                             <strong><VCIcon name="fa6-solid:code" /> Code</strong> {{ per.protein.display || per.protein.code }}
                                         </div>
                                         <div><strong><VCIcon name="fa6-solid:code" /> Wert</strong> {{ per.value.display || per.value.code }}</div>
-                                        <div><strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.tpsScore }}</div>
+                                        <div v-if="typeof per.tpsScore === 'number'">
+                                            <strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.tpsScore }}
+                                        </div>
+                                        <div v-if="typeof per.cpsScore === 'number'">
+                                            <strong><VCIcon name="fa6-solid:code" /> CPS-Score</strong> {{ per.cpsScore }}
+                                        </div>
                                         <div v-if="per.icScore">
-                                            <strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.icScore.display || per.icScore.code }}
+                                            <strong><VCIcon name="fa6-solid:code" /> IC-Score</strong> {{ per.icScore.display || per.icScore.code }}
                                         </div>
                                         <div v-if="per.tcScore">
-                                            <strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.tcScore.display || per.tcScore.code }}
+                                            <strong><VCIcon name="fa6-solid:code" /> TC-Score</strong> {{ per.tcScore.display || per.tcScore.code }}
                                         </div>
                                     </div>
                                 </template>
@@ -182,12 +188,17 @@ export default defineNuxtComponent({
                                             <strong><VCIcon name="fa6-solid:code" /> Code</strong> {{ per.protein.display || per.protein.code }}
                                         </div>
                                         <div><strong><VCIcon name="fa6-solid:code" /> Wert</strong> {{ per.value.display || per.value.code }}</div>
-                                        <div><strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.tpsScore }}</div>
+                                        <div v-if="typeof per.tpsScore === 'number'">
+                                            <strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.tpsScore }}
+                                        </div>
+                                        <div v-if="typeof per.cpsScore === 'number'">
+                                            <strong><VCIcon name="fa6-solid:code" /> CPS-Score</strong> {{ per.cpsScore }}
+                                        </div>
                                         <div v-if="per.icScore">
-                                            <strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.icScore.display || per.icScore.code }}
+                                            <strong><VCIcon name="fa6-solid:code" /> IC-Score</strong> {{ per.icScore.display || per.icScore.code }}
                                         </div>
                                         <div v-if="per.tcScore">
-                                            <strong><VCIcon name="fa6-solid:code" /> TPS-Score</strong> {{ per.tcScore.display || per.tcScore.code }}
+                                            <strong><VCIcon name="fa6-solid:code" /> TC-Score</strong> {{ per.tcScore.display || per.tcScore.code }}
                                         </div>
                                     </div>
                                 </template>
@@ -200,6 +211,63 @@ export default defineNuxtComponent({
 
         <hr>
     </template>
+
+    <template v-if="record.msiFindings && record.msiFindings.length > 0">
+        <h5 class="section-label mb-2">
+            MSI-Befunde
+        </h5>
+        <div class="entity-card-group mb-3">
+            <template
+                v-for="item in record.msiFindings"
+                :key="item.id"
+            >
+                <div class="entity-card">
+                    <div>
+                        <strong><VCIcon name="fa6-solid:flask" /> Methode</strong>
+                        {{ item.method.display || item.method.code }}
+                    </div>
+                    <div>
+                        <strong><VCIcon name="fa6-solid:magnifying-glass-chart" /> Interpretation</strong>
+                        {{ item.interpretation.display || item.interpretation.code }}
+                    </div>
+                    <div><strong><VCIcon name="fa6-solid:hashtag" /> Wert</strong> {{ item.value }}</div>
+                </div>
+            </template>
+        </div>
+
+        <hr>
+    </template>
+
+    <template v-if="record.priorDiagnosticReports && record.priorDiagnosticReports.length > 0">
+        <h5 class="section-label mb-2">
+            Molekulare Vorbefunde
+        </h5>
+        <div class="entity-card-group mb-3">
+            <template
+                v-for="item in record.priorDiagnosticReports"
+                :key="item.id"
+            >
+                <div class="entity-card">
+                    <div>
+                        <strong><VCIcon name="fa6-solid:dna" /> Typ</strong>
+                        {{ item.type.display || item.type.code }}
+                    </div>
+                    <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.issuedOn }}</div>
+                    <div v-if="item.performer">
+                        <strong><VCIcon name="fa6-solid:user-doctor" /> Durchführender</strong>
+                        {{ item.performer.display || item.performer.id }}
+                    </div>
+                    <div v-if="item.results && item.results.length > 0">
+                        <strong><VCIcon name="fa6-solid:list" /> Ergebnisse</strong>
+                        <DCommaList :items="item.results" />
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <hr>
+    </template>
+
     <template v-if="record.ngsReports">
         <h5 class="section-label mb-2">
             NGS Berichte
@@ -221,6 +289,10 @@ export default defineNuxtComponent({
                                         <VCIcon name="fa6-solid:dna" /> Typ</strong>
                                     {{ item.type.display || item.type.code }}
                                 </div>
+                                <div v-if="item.specimen">
+                                    <strong><VCIcon name="fa6-solid:vial" /> Probe</strong>
+                                    {{ item.specimen.display || item.specimen.id }}
+                                </div>
                             </div>
                         </div>
                         <div class="flex-1 basis-0 px-2">
@@ -239,6 +311,28 @@ export default defineNuxtComponent({
                         </div>
                     </div>
                 </div>
+
+                <DExpandableContent v-if="item.metadata && item.metadata.length > 0">
+                    <template #header>
+                        <h6 class="section-label mb-2">
+                            Metadaten
+                        </h6>
+                    </template>
+                    <template #default>
+                        <template
+                            v-for="(meta, metaKey) in item.metadata"
+                            :key="metaKey"
+                        >
+                            <div class="entity-card mb-1">
+                                <div><strong><VCIcon name="fa6-solid:industry" /> Kit-Hersteller</strong> {{ meta.kitManufacturer }}</div>
+                                <div><strong><VCIcon name="fa6-solid:box" /> Kit-Typ</strong> {{ meta.kitType }}</div>
+                                <div><strong><VCIcon name="fa6-solid:microchip" /> Sequenzer</strong> {{ meta.sequencer }}</div>
+                                <div><strong><VCIcon name="fa6-solid:diagram-project" /> Pipeline</strong> {{ meta.pipeline }}</div>
+                                <div><strong><VCIcon name="fa6-solid:dna" /> Referenzgenom</strong> {{ meta.referenceGenome }}</div>
+                            </div>
+                        </template>
+                    </template>
+                </DExpandableContent>
 
                 <DExpandableContent>
                     <template #header>
@@ -320,6 +414,35 @@ export default defineNuxtComponent({
                         </DExpandableContent>
                     </div>
                 </div>
+
+                <DExpandableContent v-if="item.results.rnaSeqs && item.results.rnaSeqs.length > 0">
+                    <template #header>
+                        <h6 class="section-label mb-2">
+                            RNA-Seq
+                        </h6>
+                    </template>
+                    <template #default>
+                        <div class="entity-card-group">
+                            <template
+                                v-for="seq in item.results.rnaSeqs"
+                                :key="seq.id"
+                            >
+                                <div class="entity-card mb-1">
+                                    <div v-if="seq.gene">
+                                        <strong><VCIcon name="fa6-solid:dna" /> Gen</strong>
+                                        {{ seq.gene.display || seq.gene.code }}
+                                    </div>
+                                    <div><strong><VCIcon name="fa6-solid:chart-simple" /> TPM</strong> {{ seq.transcriptsPerMillion }}</div>
+                                    <div><strong><VCIcon name="fa6-solid:hashtag" /> Raw Counts</strong> {{ seq.rawCounts }}</div>
+                                    <div v-if="typeof seq.cohortRanking === 'number'">
+                                        <strong><VCIcon name="fa6-solid:ranking-star" /> Kohorten-Rang</strong>
+                                        {{ seq.cohortRanking }}
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </DExpandableContent>
             </div>
         </template>
     </template>

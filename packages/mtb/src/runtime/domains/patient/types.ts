@@ -1,6 +1,7 @@
 import type {
     Coding,
     ExternalId,
+    GeneAlterationReference,
     History,
     Patient,
     PatientMatchBase,
@@ -9,26 +10,40 @@ import type {
 } from '@dnpm-dip/core';
 import type { QueryCriteria } from '../query';
 
+/**
+ * Reference to an external system-qualified resource (e.g. study or publication).
+ *
+ * @see https://github.com/dnpm-dip/mtb-model — Study_Reference / Publication_Reference
+ */
+export type SystemReference = {
+    id: string,
+    system: string,
+    display?: string,
+    type?: string
+};
+
 export type PatientMatch = PatientMatchBase<QueryCriteria>;
 
 export type NGSReportSNV = {
     id: string,
-    patient: Record<string, any>,
+    patient: Reference,
     externalIds?: ExternalId[],
     chromosome: Coding,
     localization?: Coding[],
     gene: Coding,
     transcriptId: Coding,
+    exonId?: string,
     position: {
-        start: number
+        start: number,
+        end?: number
     },
     altAllele: string,
     refAllele: string,
     dnaChange: string,
-    proteinChange: string,
+    proteinChange?: string,
     readDepth: number,
     allelicFrequency: number,
-    interpretation: Coding
+    interpretation?: Coding
 };
 
 export type NGSReportCNV = {
@@ -113,6 +128,35 @@ export type NGSRNAFusion = {
     reportedNumReads: number
 };
 
+export type TumorCellContent = {
+    id: string,
+    patient: Reference,
+    specimen: Reference,
+    method: Coding,
+    value: number
+};
+
+/**
+ * @see https://github.com/dnpm-dip/mtb-model — RNASeq
+ */
+export type NGSRNASeq = {
+    id: string,
+    patient: Reference,
+    variant: Reference,
+    rawCounts: number,
+    transcriptsPerMillion: number,
+    librarySize?: number,
+    cohortRanking?: number,
+    tissueCorrectedExpression?: boolean,
+    gene?: Coding,
+    transcriptId?: {
+        value: string,
+        system?: string
+    },
+    localization?: Coding[],
+    externalIds?: ExternalId[]
+};
+
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-mtb-model/blob/main/dto_model/src/main/scala/de/dnpm/dip/mtb/model/NGSReport.scala
  */
@@ -122,26 +166,33 @@ export type NgsReportResults = {
     dnaFusions: NGSDNAFusion[],
     hrdScore?: NGSHRDScore,
     rnaFusions: NGSRNAFusion[],
-    rnaSeqs: Record<string, any>[],
+    rnaSeqs: NGSRNASeq[],
     simpleVariants: NGSReportSNV[],
     tmb?: {
         [key: string]: any,
+        interpretation?: Coding,
         value: {
             value: number,
-            unit: string,
+            unit?: string,
         }
     },
-    tumorCellContent?: {
-        [key: string]: any,
-        value: number
-    }
+    tumorCellContent?: TumorCellContent
+};
+
+export type NgsReportMetadata = {
+    kitManufacturer: string,
+    kitType: string,
+    pipeline: string,
+    referenceGenome: string,
+    sequencer: string
 };
 
 export type SomaticNGSReport = {
     id: string,
     issuedOn: string,
-    metadata: Record<string, any>[],
+    metadata: NgsReportMetadata[],
     patient: Reference,
+    specimen: Reference,
     results: NgsReportResults,
     type: Coding<string>
 };
@@ -156,14 +207,14 @@ type Episode = {
 };
 
 type DiagnosisType = {
-    value: Coding[],
+    value: Coding,
     date: string
 };
 
 type TumorStaging = {
     date: string,
     method: Coding,
-    tmnClassification?: {
+    tnmClassification?: {
         tumor: Coding,
         nodes: Coding,
         metastasis: Coding,
@@ -180,27 +231,35 @@ type Diagnosis = {
     id: string,
     patient: Reference,
     recordedOn: string,
-    /**
-     * todo: new type
-     */
     type: History<DiagnosisType>,
-    /**
-     * todo: new type
-     */
     germlineCodes?: Coding[],
     code: Coding,
     topography: Coding,
     staging?: History<TumorStaging>,
     grading?: History<TumorGrading>,
     guidelineTreatmentStatus?: Coding,
-    /**
-     * todo: new prop
-     */
     histology?: Reference[],
-    /**
-     * todo: new prop
-     */
     notes?: string[]
+};
+
+type FamilyMemberHistory = {
+    id: string,
+    patient: Reference,
+    relationship: Coding
+};
+
+/**
+ * Microsatellite-instability finding.
+ *
+ * @see https://github.com/dnpm-dip/mtb-model — MSI
+ */
+type MSI = {
+    id: string,
+    patient: Reference,
+    specimen: Reference,
+    method: Coding,
+    interpretation: Coding,
+    value: number
 };
 
 /**
@@ -211,13 +270,7 @@ type SystemicTherapy = {
     patient: Reference,
     reason?: Reference,
     therapyLine?: number,
-    /**
-     * todo new prop
-     */
     intent?: Coding,
-    /**
-     * todo new prop
-     */
     category?: Coding,
     basedOn?: Reference,
     recordedOn: string,
@@ -272,9 +325,9 @@ type HistologyReportResults = {
         patient: Reference,
         specimen: Reference,
         value: Coding,
-        notes?: string
+        note?: string
     }
-    tumorCellContent?: Record<string, any>
+    tumorCellContent?: TumorCellContent
 };
 
 type HistologyReport = {
@@ -291,6 +344,7 @@ type ProteinExpression = {
     protein: Coding,
     value: Coding,
     tpsScore?: number,
+    cpsScore?: number,
     icScore?: Coding,
     tcScore?: Coding,
 };
@@ -307,29 +361,26 @@ type IHCReport = {
 };
 
 type LevelOfEvidence = {
-    grading?: Coding,
+    grading: Coding,
     addendums?: Coding[],
-    publications?: { pmid: string, doi: string }[]
+    publications?: SystemReference[]
 };
 
 type Recommendation = {
     levelOfEvidence?: LevelOfEvidence,
+    supportingVariants?: GeneAlterationReference[],
+    supportingFindings?: Reference[],
 };
 
 type MedicationRecommendation = Recommendation & {
     id: string,
     patient: Reference,
-    reason: Reference,
+    reason?: Reference,
     priority: Coding,
     issuedOn: string,
     medication: Coding[],
     category?: Coding[],
-    useType?: Coding,
-    supportingVariants: {
-        id: string, 
-        display: string, 
-        type: string 
-    }[]
+    useType?: Coding
 };
 
 type GeneticCounselingRecommendation = {
@@ -339,18 +390,14 @@ type GeneticCounselingRecommendation = {
     reason: Coding
 };
 
-type StudyEnrollmentRecommendation = {
+type StudyEnrollmentRecommendation = Recommendation & {
     id: string,
-    patient: Patient,
-    reason: Reference,
+    patient: Reference,
+    reason?: Reference,
     issuedOn: string,
-    levelOfEvidence?: Coding,
-    supportingVariants: {
-        id: string, 
-        display: string, 
-        type: string 
-    }[],
-    studyIds: string[]
+    priority: Coding,
+    medication?: Coding[],
+    study: SystemReference[]
 };
 
 type ProcedureRecommendation = Recommendation & {
@@ -359,8 +406,7 @@ type ProcedureRecommendation = Recommendation & {
     reason?: Reference,
     issuedOn: string,
     priority: Coding,
-    code: Coding,
-    supportingVariants?: Reference[]
+    code: Coding
 };
 
 type HistologyReevaluationRequest = {
@@ -380,22 +426,16 @@ type RebiopsyRequest = {
 type CarePlan = {
     id: string,
     patient: Reference,
-    reason: Reference,
+    reason?: Reference,
     issuedOn: string,
+    boardType?: Coding,
     noSequencingPerformedReason?: Coding,
     recommendationsMissingReason?: Coding,
     notes?: string[],
     medicationRecommendations?: MedicationRecommendation[],
     geneticCounselingRecommendation?: GeneticCounselingRecommendation,
-    /**
-     * todo: new prop
-     */
     procedureRecommendations?: ProcedureRecommendation[],
     studyEnrollmentRecommendations?: StudyEnrollmentRecommendation[],
-
-    /**
-     * todo: new prop
-     */
     histologyReevaluationRequests?: HistologyReevaluationRequest[],
     rebiopsyRequests?: RebiopsyRequest[]
 };
@@ -404,19 +444,13 @@ type Claim = {
     id: string,
     patient: Reference,
     recommendation: Reference,
-    /**
-     * todo: new prop
-     */
     requestedMedication?: Coding[],
     issuedOn: string,
-    /**
-     * todo: new prop
-     */
     stage?: Coding,
     /**
-     * @deprecated
+     * @deprecated no longer part of the ETL schema; kept for backwards compatibility.
      */
-    status: Coding
+    status?: Coding
 };
 
 type ClaimResponse = {
@@ -433,6 +467,7 @@ type Response = {
     patient: Reference,
     therapy: Reference,
     effectiveDate: string,
+    method?: Coding,
     value: Coding
 };
 
@@ -453,28 +488,64 @@ type MolecularDiagnosticReport = {
     results?: string[]
 };
 
+export type MVHSubmissionType = 'initial' | 'correction' | 'test' | 'addition' | 'followup';
+
+export type ModelProjectConsentPurpose = 'case-identification' | 'reidentification' | 'sequencing';
+
+export type ConsentProvisionType = 'permit' | 'deny';
+
+export type ResearchConsentMissingReason =    | 'organizational-issues' |
+    'technical-issues' |
+    'patient-inability' |
+    'other-patient-reason' |
+    'consent-not-returned' |
+    'patient-refusal';
+
+type ConsentProvision = {
+    date: string,
+    purpose: ModelProjectConsentPurpose | string,
+    type: ConsentProvisionType | string
+};
+
+type ModelProjectConsent = {
+    version: string,
+    date?: string,
+    provisions: ConsentProvision[]
+};
+
+/**
+ * MVH submission / consent metadata (Modellvorhaben Genomsequenzierung).
+ *
+ * @see https://github.com/dnpm-dip/mtb-model — MVH_Metadata
+ */
+type MVHMetadata = {
+    type: MVHSubmissionType | string,
+    transferTAN: string,
+    modelProjectConsent: ModelProjectConsent,
+    researchConsents?: Record<string, any>[],
+    episodeOfCare?: Reference,
+    reasonResearchConsentMissing?: ResearchConsentMissingReason | string
+};
+
 export type PatientRecord = {
     patient: Patient,
+    metadata?: MVHMetadata,
     episodesOfCare: Episode[],
     diagnoses?: Diagnosis[],
+    familyMemberHistories?: FamilyMemberHistory[],
     guidelineTherapies: SystemicTherapy[],
     guidelineProcedures: OncoProcedure[],
     performanceStatus: PerformanceStatus[],
     specimens?: TumorSpecimen[],
     histologyReports?: HistologyReport[],
     ihcReports?: IHCReport[],
+    msiFindings?: MSI[],
     ngsReports?: SomaticNGSReport[],
+    priorDiagnosticReports?: MolecularDiagnosticReport[],
     carePlans?: CarePlan[],
     claims?: Claim[],
     claimResponses?: ClaimResponse[],
-    /**
-     * todo: new prop
-     */
     followUps?: FollowUp[],
     systemicTherapies?: History<SystemicTherapy>[],
-    responses?: Response[],
-    /**
-     * todo: new prop
-     */
-    priorDiagnosticReports?: MolecularDiagnosticReport[]
+    responses?: Response[]
 };

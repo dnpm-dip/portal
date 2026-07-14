@@ -24,6 +24,34 @@ export default defineNuxtComponent({
 });
 </script>
 <template>
+    <template v-if="record.followUps && record.followUps.length > 0">
+        <div>
+            <h5 class="section-label mb-2">
+                Follow-Ups
+            </h5>
+        </div>
+        <div class="entity-card-group flex-row justify-evenly mb-3">
+            <template
+                v-for="(item, key) in record.followUps"
+                :key="key"
+            >
+                <div class="entity-card grow">
+                    <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.date }}</div>
+                    <div v-if="item.lastContactDate">
+                        <strong><VCIcon name="fa6-solid:calendar-check" /> Letzter Kontakt</strong>
+                        {{ item.lastContactDate }}
+                    </div>
+                    <div v-if="item.patientStatus">
+                        <strong><VCIcon name="fa6-solid:heart-pulse" /> Patientenstatus</strong>
+                        {{ item.patientStatus.display || item.patientStatus.code }}
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <hr>
+    </template>
+
     <template v-if="record.systemicTherapies">
         <div>
             <h5 class="section-label mb-2">
@@ -72,6 +100,22 @@ export default defineNuxtComponent({
                                 <strong><VCIcon name="fa6-solid:syringe" /> Dosierung</strong>
                                 {{ item.dosage.display || item.dosage.code }}
                             </div>
+                            <div v-if="item.therapyLine">
+                                <strong><VCIcon name="fa6-solid:stethoscope" /> Therapie Linie</strong>
+                                {{ item.therapyLine }}
+                            </div>
+                            <div v-if="item.intent">
+                                <strong><VCIcon name="fa6-solid:bullseye" /> Absicht</strong>
+                                {{ item.intent.display || item.intent.code }}
+                            </div>
+                            <div v-if="item.category">
+                                <strong><VCIcon name="fa6-solid:tags" /> Kategorie</strong>
+                                {{ item.category.display || item.category.code }}
+                            </div>
+                            <div v-if="item.recommendationFulfillmentStatus">
+                                <strong><VCIcon name="fa6-solid:list-check" /> Empfehlungs-Erfüllung</strong>
+                                {{ item.recommendationFulfillmentStatus.display || item.recommendationFulfillmentStatus.code }}
+                            </div>
                             <div v-if="item.notes">
                                 <div>
                                     <strong><VCIcon name="fa6-solid:note-sticky" /> Notiz</strong>
@@ -101,6 +145,10 @@ export default defineNuxtComponent({
                 <div class="entity-card grow mb-3">
                     <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.effectiveDate }}</div>
                     <div><strong><VCIcon name="fa6-solid:calculator" /> Code</strong> {{ item.value.display || item.value.code }}</div>
+                    <div v-if="item.method">
+                        <strong><VCIcon name="fa6-solid:flask" /> Methode</strong>
+                        {{ item.method.display || item.method.code }}
+                    </div>
                     <div v-if="item.therapy">
                         <strong><VCIcon name="fa6-solid:calculator" /> Indikation</strong>
                         {{ item.therapy.display || item.therapy.type }}
