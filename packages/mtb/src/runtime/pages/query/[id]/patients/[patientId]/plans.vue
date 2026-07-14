@@ -76,6 +76,10 @@ export default defineNuxtComponent({
                                             <hr>
                                         </template>
                                         <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ recommendation.issuedOn }}</div>
+                                        <div v-if="recommendation.reason">
+                                            <strong><VCIcon name="fa6-solid:calculator" /> Grund</strong>
+                                            {{ recommendation.reason.display || recommendation.reason.id }}
+                                        </div>
                                         <div v-if="recommendation.medication">
                                             <strong><VCIcon name="fa6-solid:pills" /> Medikation</strong>
                                             <DCodingCommaList :items="recommendation.medication" />
@@ -91,10 +95,10 @@ export default defineNuxtComponent({
                                         <div v-if="recommendation.supportingVariants">
                                             <strong><VCIcon name="fa6-solid:circle-check" /> Stützende molekulare Alterationen</strong><br>
                                             <template
-                                                v-for="el in recommendation.supportingVariants"
-                                                :key="el.id"
+                                                v-for="(el, elKey) in recommendation.supportingVariants"
+                                                :key="elKey"
                                             >
-                                                <p>&bull; {{ el.display }}</p>
+                                                <p>&bull; {{ el.display || el.gene?.display || el.variant?.id }}</p>
                                             </template>
                                         </div>
                                         <div v-if="recommendation.priority">
@@ -147,25 +151,163 @@ export default defineNuxtComponent({
                                 >
                                     <div class="mb-2">
                                         <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ recommendation.issuedOn }}</div>
+                                        <div v-if="recommendation.priority">
+                                            <strong><VCIcon name="fa6-solid:clock" /> Priorität</strong>
+                                            {{ recommendation.priority.display || recommendation.priority.code }}
+                                        </div>
+                                        <div v-if="recommendation.study && recommendation.study.length > 0">
+                                            <strong><VCIcon name="fa6-solid:flask-vial" /> Studien</strong><br>
+                                            <template
+                                                v-for="study in recommendation.study"
+                                                :key="study.id"
+                                            >
+                                                <p>&bull; {{ study.display || study.id }} <span class="text-fg-muted">({{ study.system }})</span></p>
+                                            </template>
+                                        </div>
                                         <div v-if="recommendation.supportingVariants">
                                             <strong><VCIcon name="fa6-solid:circle-check" /> Stützende Evidenz</strong><br>
                                             <template
-                                                v-for="el in recommendation.supportingVariants"
-                                                :key="el.id"
+                                                v-for="(el, elKey) in recommendation.supportingVariants"
+                                                :key="elKey"
                                             >
-                                                <p>&bull; {{ el.display }}</p>
+                                                <p>&bull; {{ el.display || el.gene?.display || el.variant?.id }}</p>
                                             </template>
                                         </div>
-                                        <div v-if="recommendation.levelOfEvidence">
+                                        <div v-if="recommendation.levelOfEvidence && recommendation.levelOfEvidence.grading">
                                             <strong><VCIcon name="fa6-solid:chart-line" /> Evidenz-Grad</strong>
-                                            {{ recommendation.levelOfEvidence.display || recommendation.levelOfEvidence.code }}
+                                            {{ recommendation.levelOfEvidence.grading.display || recommendation.levelOfEvidence.grading.code }}
                                         </div>
-
-                                    <!-- todo: studien anzeigen -->
                                     </div>
                                 </template>
                             </div>
                         </div>
+                        <div
+                            v-if="item.procedureRecommendations"
+                            class="flex-1 basis-0 px-2"
+                        >
+                            <div class="entity-card">
+                                <div class="text-center mb-3">
+                                    <strong>Prozedur-Empfehlungen</strong>
+                                </div>
+                                <template
+                                    v-for="(recommendation, recommendationKey) in item.procedureRecommendations"
+                                    :key="recommendation.id"
+                                >
+                                    <div class="mb-2">
+                                        <template v-if="recommendationKey > 0">
+                                            <hr>
+                                        </template>
+                                        <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ recommendation.issuedOn }}</div>
+                                        <div v-if="recommendation.code">
+                                            <strong><VCIcon name="fa6-solid:code" /> Code</strong>
+                                            {{ recommendation.code.display || recommendation.code.code }}
+                                        </div>
+                                        <div v-if="recommendation.priority">
+                                            <strong><VCIcon name="fa6-solid:clock" /> Priorität</strong>
+                                            {{ recommendation.priority.display || recommendation.priority.code }}
+                                        </div>
+                                        <div v-if="recommendation.supportingVariants">
+                                            <strong><VCIcon name="fa6-solid:circle-check" /> Stützende molekulare Alterationen</strong><br>
+                                            <template
+                                                v-for="(el, elKey) in recommendation.supportingVariants"
+                                                :key="elKey"
+                                            >
+                                                <p>&bull; {{ el.display || el.gene?.display || el.variant?.id }}</p>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        v-if="item.rebiopsyRequests || item.histologyReevaluationRequests"
+                        class="flex flex-wrap -mx-2 mt-2"
+                    >
+                        <div
+                            v-if="item.rebiopsyRequests"
+                            class="flex-1 basis-0 px-2"
+                        >
+                            <div class="entity-card">
+                                <div class="text-center mb-3">
+                                    <strong>Rebiopsie-Anforderungen</strong>
+                                </div>
+                                <template
+                                    v-for="request in item.rebiopsyRequests"
+                                    :key="request.id"
+                                >
+                                    <div>
+                                        <strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ request.issuedOn }}
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        <div
+                            v-if="item.histologyReevaluationRequests"
+                            class="flex-1 basis-0 px-2"
+                        >
+                            <div class="entity-card">
+                                <div class="text-center mb-3">
+                                    <strong>Histologie-Reevaluierungen</strong>
+                                </div>
+                                <template
+                                    v-for="request in item.histologyReevaluationRequests"
+                                    :key="request.id"
+                                >
+                                    <div>
+                                        <strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ request.issuedOn }}
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <template v-if="record.claims && record.claims.length > 0">
+        <h5 class="section-label mb-2">
+            Kostenübernahme-Anträge
+        </h5>
+        <div class="mb-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            <template
+                v-for="item in record.claims"
+                :key="item.id"
+            >
+                <div class="entity-card">
+                    <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.issuedOn }}</div>
+                    <div v-if="item.stage">
+                        <strong><VCIcon name="fa6-solid:layer-group" /> Stufe</strong>
+                        {{ item.stage.display || item.stage.code }}
+                    </div>
+                    <div v-if="item.requestedMedication && item.requestedMedication.length > 0">
+                        <strong><VCIcon name="fa6-solid:pills" /> Beantragte Medikation</strong>
+                        <DCodingCommaList :items="item.requestedMedication" />
+                    </div>
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <template v-if="record.claimResponses && record.claimResponses.length > 0">
+        <h5 class="section-label mb-2">
+            Antworten auf Kostenübernahme-Anträge
+        </h5>
+        <div class="mb-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            <template
+                v-for="item in record.claimResponses"
+                :key="item.id"
+            >
+                <div class="entity-card">
+                    <div><strong><VCIcon name="fa6-solid:clock" /> Datum</strong> {{ item.issuedOn }}</div>
+                    <div v-if="item.status">
+                        <strong><VCIcon name="fa6-solid:circle-check" /> Status</strong>
+                        {{ item.status.display || item.status.code }}
+                    </div>
+                    <div v-if="item.statusReason && item.statusReason.length > 0">
+                        <strong><VCIcon name="fa6-solid:circle-info" /> Status Grund</strong>
+                        <DCodingCommaList :items="item.statusReason" />
                     </div>
                 </div>
             </template>

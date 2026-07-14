@@ -52,28 +52,38 @@ export default defineComponent({
 
         const navItems = computed<NavigationItem[]>(() => {
             const base = `/mtb/query/${props.entity.id}/patients/${entity.value?.patient.id}`;
-            return [
+            const items: NavigationItem[] = [
                 {
-                    name: 'Anamnese', 
-                    icon: 'fa6-solid:bars', 
-                    url: base, 
+                    name: 'Anamnese',
+                    icon: 'fa6-solid:bars',
+                    url: base,
                 },
                 {
-                    name: 'Diagnostik', 
-                    icon: 'fa6-solid:stethoscope', 
-                    url: `${base}/diagnostics`, 
+                    name: 'Diagnostik',
+                    icon: 'fa6-solid:stethoscope',
+                    url: `${base}/diagnostics`,
                 },
                 {
-                    name: 'Beschlüsse', 
-                    icon: 'fa6-solid:gavel', 
-                    url: `${base}/plans`, 
+                    name: 'Beschlüsse',
+                    icon: 'fa6-solid:gavel',
+                    url: `${base}/plans`,
                 },
                 {
-                    name: 'Follow-UP', 
-                    icon: 'fa6-solid:circle-arrow-up', 
-                    url: `${base}/follow-up`, 
+                    name: 'Follow-UP',
+                    icon: 'fa6-solid:circle-arrow-up',
+                    url: `${base}/follow-up`,
                 },
             ];
+
+            if (entity.value?.metadata) {
+                items.push({
+                    name: 'Metadaten',
+                    icon: 'fa6-solid:shield-halved',
+                    url: `${base}/metadata`,
+                });
+            }
+
+            return items;
         });
 
         return {
