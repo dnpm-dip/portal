@@ -81,6 +81,21 @@ export default defineNuxtPlugin({
                             ],
                         },
                     },
+                    {
+                        name: 'Clients',
+                        type: 'link',
+                        url: 'clients',
+                        icon: 'fa6-solid:cube',
+                        meta: {
+                            [PageMetaKey.REQUIRED_LOGGED_IN]: true,
+                            [PageMetaKey.REQUIRED_PERMISSIONS]: [
+                                AuthupPermissionName.CLIENT_CREATE,
+                                AuthupPermissionName.CLIENT_UPDATE,
+                                AuthupPermissionName.CLIENT_DELETE,
+                                AuthupPermissionName.CLIENT_READ,
+                            ],
+                        },
+                    },
                 ],
             },
         );
