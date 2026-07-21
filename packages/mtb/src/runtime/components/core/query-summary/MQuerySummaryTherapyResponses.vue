@@ -16,14 +16,17 @@ import { VCTableSortIndicators } from '@vuecs/table';
 import type { SortDescriptor, TableColumn, TableSortState } from '@vuecs/table';
 import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
 import {
+    type Coding,
     QueryEventBusEventName,
     type ResourceCollectionLoadMeta,
     injectQueryEventBus,
+    toCodingGroup,
     useQueryFilterStore,
 } from '@dnpm-dip/core';
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCAlert } from '@vuecs/elements';
 import { VCPlaceholder } from '@vuecs/placeholder';
+import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QueryTherapyResponse } from '../../../domains';
 import MGeneAlterationText from '../MGeneAlterationText.vue';
@@ -186,6 +189,19 @@ export default defineComponent({
             void refresh();
         };
 
+        const handleMedicationClick = (coding: Coding) => {
+            const group = toCodingGroup([coding]);
+
+            if (queryFilterStore.hasItem(QueryFilterURLKey.THERAPY_IMPLEMENTED, group)) {
+                queryFilterStore.setItems(QueryFilterURLKey.THERAPY_IMPLEMENTED, []);
+            } else {
+                queryFilterStore.setItems(QueryFilterURLKey.THERAPY_IMPLEMENTED, [group]);
+            }
+
+            queryFilterStore.setActive('used');
+            queryFilterStore.commit();
+        };
+
         return {
             items,
             busy,
@@ -197,6 +213,7 @@ export default defineComponent({
             load,
             onSortUpdate,
             resetSort,
+            handleMedicationClick,
         };
     },
 });
@@ -286,7 +303,12 @@ export default defineComponent({
                         v-for="(item,key) in (row as QueryTherapyResponse).medications"
                         :key="key"
                     >
-                        <DCodingText :entity="item" />
+                        <a
+                            href="javascript:void(0)"
+                            @click.prevent="handleMedicationClick(item)"
+                        >
+                            <DCodingText :entity="item" />
+                        </a>
                     </li>
                 </ul>
             </template>
