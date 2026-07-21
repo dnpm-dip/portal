@@ -29,7 +29,9 @@ export default defineNuxtComponent({
         const config = useRuntimeConfig();
 
         const generatedUrl = computed(() => {
-            const link = new URL('authorize', config.public.apiUrl as string);
+            const apiUrl = config.public.apiUrl as string;
+            const baseUrl = apiUrl.endsWith('/') ? apiUrl : `${apiUrl}/`;
+            const link = new URL('authorize', baseUrl);
             link.searchParams.set('client_id', props.entity.id);
             link.searchParams.set('response_type', 'code');
 
@@ -53,10 +55,10 @@ export default defineNuxtComponent({
             }
         };
 
-        const query : BuildInput<ClientScope> = {
+        const query = computed<BuildInput<ClientScope>>(() => ({
             filter: { client_id: props.entity.id },
             include: ['scope'],
-        };
+        }));
 
         return {
             toggleScope,
