@@ -1,5 +1,63 @@
 # @dnpm-dip/portal
 
+## [2.0.0](https://github.com/dnpm-dip/portal/compare/v1.34.0...v2.0.0) (2026-07-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ui:** retire Bootstrap-compat layer for VC components + Tailwind ([#1243](https://github.com/dnpm-dip/portal/issues/1243))
+* **ui:** @dnpm-dip/core no longer exports DNav and the nav helper module.
+
+### Features
+
+* bump authup & common token hook ([26df00d](https://github.com/dnpm-dip/portal/commit/26df00dc87e3c07ec47d9268187d68cc975d0dca))
+* migrate UI to rapiq v2 and [@authup](https://github.com/authup) beta.54 ([#1270](https://github.com/dnpm-dip/portal/issues/1270)) ([a5e3c4c](https://github.com/dnpm-dip/portal/commit/a5e3c4c7077a592bd0b57705d86d1efb9b84a921)), closes [#1269](https://github.com/dnpm-dip/portal/issues/1269)
+* mvh changes ([#1045](https://github.com/dnpm-dip/portal/issues/1045)) ([910ad96](https://github.com/dnpm-dip/portal/commit/910ad96c153648807ba7a8f5bad5174ee4c0f363))
+* **portal:** OAuth2 authorization-code (PKCE) login ([#1252](https://github.com/dnpm-dip/portal/issues/1252)) ([2070f24](https://github.com/dnpm-dip/portal/commit/2070f248178ce2780f243674342fb3621a079e3a))
+* show total in response distribution bar ([#1123](https://github.com/dnpm-dip/portal/issues/1123)) ([b9c4daf](https://github.com/dnpm-dip/portal/commit/b9c4daf4c4c57dabd51bcdbaeff65aaac4d5e913))
+* **ui:** migrate to vuecs new majors + Tailwind v4 + validup-vue + authup beta.44 ([#1219](https://github.com/dnpm-dip/portal/issues/1219)) ([8091031](https://github.com/dnpm-dip/portal/commit/8091031e9609bfeb64dc8676eb5b2af5bd8959f7))
+
+
+### Bug Fixes
+
+* **deps:** bump (dev-) dependencies ([8184011](https://github.com/dnpm-dip/portal/commit/818401134f1f2ae35bd67efa31cc96bef25c654d))
+* **deps:** bump [@authup](https://github.com/authup) packages to v1.0.0-beta.52 ([#1258](https://github.com/dnpm-dip/portal/issues/1258)) ([e219630](https://github.com/dnpm-dip/portal/commit/e219630951624999527deb45da1587b3e10d2b5d))
+* **deps:** bump @authup/* to 1.0.0-beta.50 + hapic v3 ([#1244](https://github.com/dnpm-dip/portal/issues/1244)) ([04af2e5](https://github.com/dnpm-dip/portal/commit/04af2e502112e48cdcfada2f704d0c401f789272))
+* **deps:** bump authup to v1.0.0-beta.28 ([438a5a5](https://github.com/dnpm-dip/portal/commit/438a5a52e2ed1acbdbc01b838be6e722b46a97cd))
+* **deps:** bump the minorandpatch group across 1 directory with 10 updates ([#1138](https://github.com/dnpm-dip/portal/issues/1138)) ([631a93e](https://github.com/dnpm-dip/portal/commit/631a93e9bde0bd6033b069efbe33178812af26c3))
+* **deps:** bump the minorandpatch group across 1 directory with 11 updates ([#1133](https://github.com/dnpm-dip/portal/issues/1133)) ([70e39dc](https://github.com/dnpm-dip/portal/commit/70e39dcda239a9036e27cf458071937b99aec523))
+* **deps:** bump the minorandpatch group across 1 directory with 11 updates ([#1152](https://github.com/dnpm-dip/portal/issues/1152)) ([ab4dab0](https://github.com/dnpm-dip/portal/commit/ab4dab0e888fbea0c37f7a9591fe7b822231d908))
+* **deps:** bump the minorandpatch group across 1 directory with 12 updates ([#1174](https://github.com/dnpm-dip/portal/issues/1174)) ([308d434](https://github.com/dnpm-dip/portal/commit/308d434c583df1a96c04408db2ecbea81df4cc9a))
+* **deps:** bump the minorandpatch group across 1 directory with 13 updates ([#1067](https://github.com/dnpm-dip/portal/issues/1067)) ([5f6a7dc](https://github.com/dnpm-dip/portal/commit/5f6a7dc1bb5c03d2e462dc6b17692375f6cc3acb))
+* **deps:** bump the minorandpatch group across 1 directory with 13 updates ([#1078](https://github.com/dnpm-dip/portal/issues/1078)) ([021fa77](https://github.com/dnpm-dip/portal/commit/021fa774afd9c60fe53d612dbdd7caed7c9ef248))
+* **deps:** bump the minorandpatch group across 1 directory with 13 updates ([#1093](https://github.com/dnpm-dip/portal/issues/1093)) ([d713a24](https://github.com/dnpm-dip/portal/commit/d713a24131a2e7fcd3d125acdbe907c0ab3af392))
+* **deps:** bump the minorandpatch group across 1 directory with 19 updates ([#1198](https://github.com/dnpm-dip/portal/issues/1198)) ([dec2a66](https://github.com/dnpm-dip/portal/commit/dec2a669520b16cd199abf5521566b86791b3f24))
+* **deps:** bump the minorandpatch group across 1 directory with 20 updates ([#1121](https://github.com/dnpm-dip/portal/issues/1121)) ([3a29fb4](https://github.com/dnpm-dip/portal/commit/3a29fb462c2689452f762954c83e821e4ff86d05))
+* **deps:** bump the minorandpatch group across 1 directory with 23 updates ([#1044](https://github.com/dnpm-dip/portal/issues/1044)) ([4f807e2](https://github.com/dnpm-dip/portal/commit/4f807e2b199c95778cc850aa0127843e8a01ca7f))
+* **deps:** bump the minorandpatch group across 1 directory with 23 updates ([#1251](https://github.com/dnpm-dip/portal/issues/1251)) ([b35fe1d](https://github.com/dnpm-dip/portal/commit/b35fe1d709213f0d42c70984311db3121a4b0f31))
+* **deps:** bump the minorandpatch group across 1 directory with 26 updates ([#1166](https://github.com/dnpm-dip/portal/issues/1166)) ([2949cab](https://github.com/dnpm-dip/portal/commit/2949cabfe88c4841f19347499c20b4297b24cf37))
+* **deps:** bump the minorandpatch group across 1 directory with 28 updates ([#1245](https://github.com/dnpm-dip/portal/issues/1245)) ([ece6b99](https://github.com/dnpm-dip/portal/commit/ece6b99832e224052bc761959d8f289d43541406))
+* **deps:** bump the minorandpatch group across 1 directory with 6 updates ([#1054](https://github.com/dnpm-dip/portal/issues/1054)) ([7c2b3b2](https://github.com/dnpm-dip/portal/commit/7c2b3b273bf99188eec7281862e97b4bb642b8f2))
+* **deps:** bump the minorandpatch group across 1 directory with 8 updates ([#1145](https://github.com/dnpm-dip/portal/issues/1145)) ([91fc60a](https://github.com/dnpm-dip/portal/commit/91fc60ac778b6ad4fc675bf4907a9fd240fae646))
+* **deps:** bump the minorandpatch group across 1 directory with 9 updates ([#1207](https://github.com/dnpm-dip/portal/issues/1207)) ([d66741b](https://github.com/dnpm-dip/portal/commit/d66741bc4faa9264b189401138e1a989f7c1be29))
+* **portal:** send realm hint on OAuth2 authorize request ([3840594](https://github.com/dnpm-dip/portal/commit/3840594c661847cbbd255e1fd5182420f03c5168))
+
+
+### Code Refactoring
+
+* **ui:** retire Bootstrap-compat layer for VC components + Tailwind ([#1243](https://github.com/dnpm-dip/portal/issues/1243)) ([f8277e8](https://github.com/dnpm-dip/portal/commit/f8277e8021a341a77138e3376bac1e40316c27dd))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @dnpm-dip/core bumped from ^1.35.0 to ^2.0.0
+    * @dnpm-dip/kit bumped from ^1.28.1 to ^2.0.0
+    * @dnpm-dip/mtb bumped from ^1.35.0 to ^2.0.0
+    * @dnpm-dip/rd bumped from ^1.34.0 to ^2.0.0
+    * @dnpm-dip/theme bumped from ^1.35.0 to ^2.0.0
+
 ## [1.34.0](https://github.com/dnpm-dip/portal/compare/v1.33.0...v1.34.0) (2025-08-06)
 
 

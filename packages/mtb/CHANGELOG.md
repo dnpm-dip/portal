@@ -1,5 +1,83 @@
 # Changelog
 
+## [2.0.0](https://github.com/dnpm-dip/portal/compare/v1.35.0...v2.0.0) (2026-07-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ui:** retire Bootstrap-compat layer for VC components + Tailwind ([#1243](https://github.com/dnpm-dip/portal/issues/1243))
+* **ui:** @dnpm-dip/core no longer exports DNav and the nav helper module.
+
+### Features
+
+* apply ZPM feedback to MTB query summary and search form ([#1225](https://github.com/dnpm-dip/portal/issues/1225)) ([a560bfe](https://github.com/dnpm-dip/portal/commit/a560bfefa11aceb1e39b0e294026918e241af580))
+* **core:** customizable column labels and per-level config for DKVTable ([#1209](https://github.com/dnpm-dip/portal/issues/1209)) ([bf0be8e](https://github.com/dnpm-dip/portal/commit/bf0be8e8809a074d1f8a554e2de8edf8baaff8f1))
+* initial gene alteration distribution view ([572ad23](https://github.com/dnpm-dip/portal/commit/572ad231eba707afcccbbe80d3dd9f4c7a6615cd))
+* initial gene-alterations & therapy-response-infos table ([2aa5ff0](https://github.com/dnpm-dip/portal/commit/2aa5ff0f8bb69cf21a469d76efcc5572013f9601))
+* migrate UI to rapiq v2 and [@authup](https://github.com/authup) beta.54 ([#1270](https://github.com/dnpm-dip/portal/issues/1270)) ([a5e3c4c](https://github.com/dnpm-dip/portal/commit/a5e3c4c7077a592bd0b57705d86d1efb9b84a921)), closes [#1269](https://github.com/dnpm-dip/portal/issues/1269)
+* **mtb:** adjust api and domain entities due api changes ([f03a7fc](https://github.com/dnpm-dip/portal/commit/f03a7fc9246fd6e3183b3c623670e2ae70d37063))
+* **mtb:** collapsible search criteria sections in MSearchForm ([d9ade60](https://github.com/dnpm-dip/portal/commit/d9ade606183658d203fb76bd271cb0f3b45fd097))
+* **mtb:** make therapy response medications clickable to filter ([c6187c8](https://github.com/dnpm-dip/portal/commit/c6187c8d7b5cee1bf34b299209e8ae745429a877))
+* **mtb:** render complete patient record per ETL schema ([#1261](https://github.com/dnpm-dip/portal/issues/1261)) ([40c1dd0](https://github.com/dnpm-dip/portal/commit/40c1dd0ae1d56f64a1febbc4d2a58f8ddb8cca28))
+* **mtb:** support QueryGeneAlteration object keys in variant distributions ([#1191](https://github.com/dnpm-dip/portal/issues/1191)) ([9010f5f](https://github.com/dnpm-dip/portal/commit/9010f5f41fd57241affae8304e3076a6469e0b2e))
+* pagination capabilities for gene-alterations & therapy-infos view ([666fd27](https://github.com/dnpm-dip/portal/commit/666fd27106de7729ab503b2f3ab477ad5f2c845c))
+* **portal:** OAuth2 authorization-code (PKCE) login ([#1252](https://github.com/dnpm-dip/portal/issues/1252)) ([2070f24](https://github.com/dnpm-dip/portal/commit/2070f248178ce2780f243674342fb3621a079e3a))
+* **query:** move summary sidebar into secondary horizontal nav ([#1202](https://github.com/dnpm-dip/portal/issues/1202)) ([b7f437e](https://github.com/dnpm-dip/portal/commit/b7f437e931c88cab7701a3fefa0f4d51f2b96eec))
+* refactored views in mtb medication section ([9827c04](https://github.com/dnpm-dip/portal/commit/9827c04e00e49061dd1c2032b207d83db5580b73))
+* remove alternative therapy response views ([a5fa516](https://github.com/dnpm-dip/portal/commit/a5fa516a5b2d97db9bcd035e34b65096aaf8c23c))
+* remove score-based default sorting from query summary tables ([#1189](https://github.com/dnpm-dip/portal/issues/1189)) ([ac37d0f](https://github.com/dnpm-dip/portal/commit/ac37d0f36b5233185d0b75c573b112dc195b1cb0))
+* show total in response distribution bar ([#1123](https://github.com/dnpm-dip/portal/issues/1123)) ([b9c4daf](https://github.com/dnpm-dip/portal/commit/b9c4daf4c4c57dabd51bcdbaeff65aaac4d5e913))
+* skeleton loading views for mtb/rd summary/patients ([#1186](https://github.com/dnpm-dip/portal/issues/1186)) ([a58a566](https://github.com/dnpm-dip/portal/commit/a58a5661202b817c3b9d13a74b372c40c2eb2d11))
+* sortable gene-alteration and therapy-response table with Sort I… ([#1180](https://github.com/dnpm-dip/portal/issues/1180)) ([3e3832a](https://github.com/dnpm-dip/portal/commit/3e3832a9322cdc3102fbfc7b0b6d152915eb0767))
+* **ui:** migrate to vuecs new majors + Tailwind v4 + validup-vue + authup beta.44 ([#1219](https://github.com/dnpm-dip/portal/issues/1219)) ([8091031](https://github.com/dnpm-dip/portal/commit/8091031e9609bfeb64dc8676eb5b2af5bd8959f7))
+* unified query filter box controls with active indicator and reset ([#1201](https://github.com/dnpm-dip/portal/issues/1201)) ([8b3b832](https://github.com/dnpm-dip/portal/commit/8b3b832414d0ee0cf0758097202153da29905344))
+
+
+### Bug Fixes
+
+* add score column & updated therapy responses api path ([aad0b44](https://github.com/dnpm-dip/portal/commit/aad0b4427ac1750a8160107c44e640ada2d8d165))
+* change tags button color ([cf5f455](https://github.com/dnpm-dip/portal/commit/cf5f455c589f463d606400cafc901c0ded292a66))
+* **deps:** bump (dev-) dependencies ([8184011](https://github.com/dnpm-dip/portal/commit/818401134f1f2ae35bd67efa31cc96bef25c654d))
+* **deps:** bump [@authup](https://github.com/authup) packages to v1.0.0-beta.52 ([#1258](https://github.com/dnpm-dip/portal/issues/1258)) ([e219630](https://github.com/dnpm-dip/portal/commit/e219630951624999527deb45da1587b3e10d2b5d))
+* **deps:** bump @authup/* to 1.0.0-beta.50 + hapic v3 ([#1244](https://github.com/dnpm-dip/portal/issues/1244)) ([04af2e5](https://github.com/dnpm-dip/portal/commit/04af2e502112e48cdcfada2f704d0c401f789272))
+* **deps:** bump @nuxt/kit in the majorprod group across 1 directory ([#1111](https://github.com/dnpm-dip/portal/issues/1111)) ([0c076da](https://github.com/dnpm-dip/portal/commit/0c076da557a0b0115cb8d58de6066b8f39a24ba5))
+* **deps:** bump authup to v1.0.0-beta.28 ([438a5a5](https://github.com/dnpm-dip/portal/commit/438a5a52e2ed1acbdbc01b838be6e722b46a97cd))
+* **deps:** bump the minorandpatch group across 1 directory with 10 updates ([#1138](https://github.com/dnpm-dip/portal/issues/1138)) ([631a93e](https://github.com/dnpm-dip/portal/commit/631a93e9bde0bd6033b069efbe33178812af26c3))
+* **deps:** bump the minorandpatch group across 1 directory with 11 updates ([#1133](https://github.com/dnpm-dip/portal/issues/1133)) ([70e39dc](https://github.com/dnpm-dip/portal/commit/70e39dcda239a9036e27cf458071937b99aec523))
+* **deps:** bump the minorandpatch group across 1 directory with 11 updates ([#1152](https://github.com/dnpm-dip/portal/issues/1152)) ([ab4dab0](https://github.com/dnpm-dip/portal/commit/ab4dab0e888fbea0c37f7a9591fe7b822231d908))
+* **deps:** bump the minorandpatch group across 1 directory with 12 updates ([#1174](https://github.com/dnpm-dip/portal/issues/1174)) ([308d434](https://github.com/dnpm-dip/portal/commit/308d434c583df1a96c04408db2ecbea81df4cc9a))
+* **deps:** bump the minorandpatch group across 1 directory with 19 updates ([#1198](https://github.com/dnpm-dip/portal/issues/1198)) ([dec2a66](https://github.com/dnpm-dip/portal/commit/dec2a669520b16cd199abf5521566b86791b3f24))
+* **deps:** bump the minorandpatch group across 1 directory with 20 updates ([#1121](https://github.com/dnpm-dip/portal/issues/1121)) ([3a29fb4](https://github.com/dnpm-dip/portal/commit/3a29fb462c2689452f762954c83e821e4ff86d05))
+* **deps:** bump the minorandpatch group across 1 directory with 23 updates ([#1251](https://github.com/dnpm-dip/portal/issues/1251)) ([b35fe1d](https://github.com/dnpm-dip/portal/commit/b35fe1d709213f0d42c70984311db3121a4b0f31))
+* **deps:** bump the minorandpatch group across 1 directory with 26 updates ([#1166](https://github.com/dnpm-dip/portal/issues/1166)) ([2949cab](https://github.com/dnpm-dip/portal/commit/2949cabfe88c4841f19347499c20b4297b24cf37))
+* **deps:** bump the minorandpatch group across 1 directory with 28 updates ([#1245](https://github.com/dnpm-dip/portal/issues/1245)) ([ece6b99](https://github.com/dnpm-dip/portal/commit/ece6b99832e224052bc761959d8f289d43541406))
+* **deps:** bump the minorandpatch group across 1 directory with 8 updates ([#1145](https://github.com/dnpm-dip/portal/issues/1145)) ([91fc60a](https://github.com/dnpm-dip/portal/commit/91fc60ac778b6ad4fc675bf4907a9fd240fae646))
+* **deps:** bump the minorandpatch group across 1 directory with 9 updates ([#1207](https://github.com/dnpm-dip/portal/issues/1207)) ([d66741b](https://github.com/dnpm-dip/portal/commit/d66741bc4faa9264b189401138e1a989f7c1be29))
+* don't show score ([e8ba5be](https://github.com/dnpm-dip/portal/commit/e8ba5be13f2213fbe70fbfe738e4e58abf0e1983))
+* flex wrap site list in query overview ([9110d4b](https://github.com/dnpm-dip/portal/commit/9110d4b51017c0846b083f0b2740253aab4f36d7))
+* minor naming changes for therapy response infos view ([59c4260](https://github.com/dnpm-dip/portal/commit/59c4260c9a3b8cba6c23f2200182a412cd9b1b0c))
+* **mtb:** align query summary with updated result-set API ([403dbef](https://github.com/dnpm-dip/portal/commit/403dbeff868fd8083c212f15c71584ebb69dc237))
+* paginate therapy responses and gene alterations via api ([a874cee](https://github.com/dnpm-dip/portal/commit/a874ceed96944942d2f867070cb39e5bcb679a6b))
+* reading and submitting dnaChange & proteinChange ([#1137](https://github.com/dnpm-dip/portal/issues/1137)) ([7a0a64b](https://github.com/dnpm-dip/portal/commit/7a0a64b2bad494d7e1e6381a973711cc00654e4d))
+* rename negated query property to wildtype ([736c84b](https://github.com/dnpm-dip/portal/commit/736c84bb05f6cb5a90dde1f756a8735cc5f02d30))
+* rendering gene alteration as string ([9c744b4](https://github.com/dnpm-dip/portal/commit/9c744b41e7df3a012ca5feec097a98ba53cf0416))
+* rendering gene alteration text ([17f97bf](https://github.com/dnpm-dip/portal/commit/17f97bfc66a7e41aa18b5f394642e7b164d83379))
+* rendering item.medicationRecommendations in plans view ([5dfc52f](https://github.com/dnpm-dip/portal/commit/5dfc52f30e59b40bf5484e62c3fad39c1d741d0a))
+* sorting for therapy response table ([263104d](https://github.com/dnpm-dip/portal/commit/263104d81be5d39eeafc1456852faabcc0efcce3))
+
+
+### Code Refactoring
+
+* **ui:** retire Bootstrap-compat layer for VC components + Tailwind ([#1243](https://github.com/dnpm-dip/portal/issues/1243)) ([f8277e8](https://github.com/dnpm-dip/portal/commit/f8277e8021a341a77138e3376bac1e40316c27dd))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/core bumped from ^1.35.0 to ^2.0.0
+    * @dnpm-dip/kit bumped from ^1.28.1 to ^2.0.0
+
 ## [1.35.0](https://github.com/dnpm-dip/portal/compare/v1.34.0...v1.35.0) (2025-08-06)
 
 
