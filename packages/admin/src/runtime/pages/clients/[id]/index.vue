@@ -40,7 +40,7 @@ export default defineNuxtComponent({
         </h6>
         <AClientForm
             :entity="entity"
-            :realm-id="entity.realm_id"
+            :realm-id="entity.realmId"
             @updated="handleUpdated"
             @failed="handleFailed"
         />
