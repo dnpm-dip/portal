@@ -50,7 +50,7 @@ export default defineNuxtComponent({
     <template v-if="entity.protocol === 'ldap'">
         <AIdentityProviderLdapForm
             :entity="entity"
-            :realm-id="entity.realm_id"
+            :realm-id="entity.realmId"
             @updated="handleUpdated"
             @failed="handleFailed"
         />
@@ -59,7 +59,7 @@ export default defineNuxtComponent({
         <AIdentityProviderOAuth2Form
             :api-url="apiUrl"
             :entity="entity"
-            :realm-id="entity.realm_id"
+            :realm-id="entity.realmId"
             @updated="handleUpdated"
             @failed="handleFailed"
         />

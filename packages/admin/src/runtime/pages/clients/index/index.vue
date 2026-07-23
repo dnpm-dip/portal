@@ -13,7 +13,7 @@ import {
     storeToRefs,
     usePermissionCheck,
 } from '@authup/client-web-kit';
-import type { BuildInput } from 'rapiq';
+import type { EntityListQueryInput } from '@authup/client-web-kit';
 import { VCButton } from '@vuecs/button';
 import { VCIcon } from '@vuecs/icon';
 import { VCTimeago } from '@vuecs/timeago';
@@ -42,7 +42,7 @@ export default defineNuxtComponent({
         const store = injectStore();
         const { realmManagementId } = storeToRefs(store);
 
-        const query : BuildInput<Client> = { filter: { realm_id: [realmManagementId.value, null] } };
+        const query : EntityListQueryInput<Client> = { filters: { realmId: [realmManagementId.value, null] } };
 
         const hasEditPermission = usePermissionCheck({ name: PermissionName.CLIENT_UPDATE });
         const hasDropPermission = usePermissionCheck({ name: PermissionName.CLIENT_DELETE });
@@ -61,25 +61,25 @@ export default defineNuxtComponent({
                 cellClass: 'text-center',
             },
             {
-                key: 'is_confidential',
-                label: 'Vertraulich',
+                key: 'authMethod',
+                label: 'Auth-Methode',
                 headerClass: 'text-center',
                 cellClass: 'text-center',
             },
             {
-                key: 'built_in',
+                key: 'builtIn',
                 label: 'Integriert',
                 headerClass: 'text-center',
                 cellClass: 'text-center',
             },
             {
-                key: 'created_at',
+                key: 'createdAt',
                 label: 'Erstelldatum',
                 headerClass: 'text-center',
                 cellClass: 'text-center',
             },
             {
-                key: 'updated_at',
+                key: 'updatedAt',
                 label: 'Aktualisierungsdatum',
                 headerClass: 'text-center',
                 cellClass: 'text-center',
@@ -128,8 +128,8 @@ export default defineNuxtComponent({
                 :busy="props.busy"
             >
                 <template #cell-name="{ row }: { row: any }">
-                    <template v-if="row.display_name">
-                        {{ row.display_name }} <span class="text-fg-muted">({{ row.name }})</span>
+                    <template v-if="row.displayName">
+                        {{ row.displayName }} <span class="text-fg-muted">({{ row.name }})</span>
                     </template>
                     <template v-else>
                         {{ row.name }}
@@ -141,23 +141,22 @@ export default defineNuxtComponent({
                         :class="row.active ? 'text-success-600' : 'text-error-600'"
                     />
                 </template>
-                <template #cell-is_confidential="{ row }: { row: any }">
+                <template #cell-authMethod="{ row }: { row: any }">
+                    <span class="rounded-full border border-border bg-bg px-2 py-0.5 text-xs">
+                        {{ row.authMethod }}
+                    </span>
+                </template>
+                <template #cell-builtIn="{ row }: { row: any }">
                     <VCIcon
-                        :name="row.is_confidential ? 'fa6-solid:check' : 'fa6-solid:xmark'"
-                        :class="row.is_confidential ? 'text-success-600' : 'text-error-600'"
+                        :name="row.builtIn ? 'fa6-solid:check' : 'fa6-solid:xmark'"
+                        :class="row.builtIn ? 'text-success-600' : 'text-error-600'"
                     />
                 </template>
-                <template #cell-built_in="{ row }: { row: any }">
-                    <VCIcon
-                        :name="row.built_in ? 'fa6-solid:check' : 'fa6-solid:xmark'"
-                        :class="row.built_in ? 'text-success-600' : 'text-error-600'"
-                    />
+                <template #cell-createdAt="{ row }: { row: any }">
+                    <VCTimeago :datetime="row.createdAt" />
                 </template>
-                <template #cell-created_at="{ row }: { row: any }">
-                    <VCTimeago :datetime="row.created_at" />
-                </template>
-                <template #cell-updated_at="{ row }: { row: any }">
-                    <VCTimeago :datetime="row.updated_at" />
+                <template #cell-updatedAt="{ row }: { row: any }">
+                    <VCTimeago :datetime="row.updatedAt" />
                 </template>
                 <template #cell-options="{ row }: { row: any }">
                     <div class="flex items-center gap-1">

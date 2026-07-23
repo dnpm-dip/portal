@@ -35,8 +35,8 @@ export default defineNuxtComponent({
         <template #item="{ data }">
             <div class="flex flex-col w-full">
                 <div>
-                    <template v-if="data.display_name">
-                        <strong>{{ data.display_name }}</strong> ({{ data.name }})
+                    <template v-if="data.displayName">
+                        <strong>{{ data.displayName }}</strong> ({{ data.name }})
                     </template>
                     <template v-else>
                         <strong>{{ data.name }}</strong>

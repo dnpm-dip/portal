@@ -14,7 +14,7 @@ import {
     storeToRefs,
     usePermissionCheck,
 } from '@authup/client-web-kit';
-import type { BuildInput } from 'rapiq';
+import type { EntityListQueryInput } from '@authup/client-web-kit';
 import { VCButton } from '@vuecs/button';
 import { VCIcon } from '@vuecs/icon';
 import { VCTimeago } from '@vuecs/timeago';
@@ -43,7 +43,7 @@ export default defineNuxtComponent({
         const store = injectStore();
         const { realmManagementId } = storeToRefs(store);
 
-        const query : BuildInput<User> = { filter: { realm_id: [realmManagementId.value, null] } };
+        const query : EntityListQueryInput<User> = { filters: { realmId: [realmManagementId.value, null] } };
 
         const hasEditPermission = usePermissionCheck({ name: PermissionName.USER_UPDATE });
         const hasDropPermission = usePermissionCheck({ name: PermissionName.USER_DELETE });
@@ -56,13 +56,13 @@ export default defineNuxtComponent({
                 cellClass: 'text-left',
             },
             {
-                key: 'created_at',
+                key: 'createdAt',
                 label: 'Erstelldatum',
                 headerClass: 'text-center',
                 cellClass: 'text-center',
             },
             {
-                key: 'updated_at',
+                key: 'updatedAt',
                 label: 'Aktualisierungsdatum',
                 headerClass: 'text-left',
                 cellClass: 'text-left',
@@ -112,11 +112,11 @@ export default defineNuxtComponent({
                 :columns="columns"
                 :busy="props.busy"
             >
-                <template #cell-created_at="{ row }: { row: any }">
-                    <VCTimeago :datetime="row.created_at" />
+                <template #cell-createdAt="{ row }: { row: any }">
+                    <VCTimeago :datetime="row.createdAt" />
                 </template>
-                <template #cell-updated_at="{ row }: { row: any }">
-                    <VCTimeago :datetime="row.updated_at" />
+                <template #cell-updatedAt="{ row }: { row: any }">
+                    <VCTimeago :datetime="row.updatedAt" />
                 </template>
                 <template #cell-options="{ row }: { row: any }">
                     <div class="flex items-center gap-1">

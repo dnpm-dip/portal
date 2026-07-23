@@ -3,7 +3,7 @@
 import { AClientScopes } from '@authup/client-web-kit';
 import type { Client, ClientScope } from '@authup/core-kit';
 import { VCFormGroup, VCFormInput, VCFormSwitch } from '@vuecs/forms';
-import type { BuildInput } from 'rapiq';
+import type { EntityListQueryInput } from '@authup/client-web-kit';
 import { computed, ref } from 'vue';
 import type { PropType } from 'vue';
 import { useRuntimeConfig } from '#app';
@@ -55,9 +55,9 @@ export default defineNuxtComponent({
             }
         };
 
-        const query = computed<BuildInput<ClientScope>>(() => ({
-            filter: { client_id: props.entity.id },
-            include: ['scope'],
+        const query = computed<EntityListQueryInput<ClientScope>>(() => ({
+            filters: { clientId: props.entity.id },
+            relations: ['scope'],
         }));
 
         return {
