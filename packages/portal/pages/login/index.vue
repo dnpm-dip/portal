@@ -1,5 +1,5 @@
 <script lang="ts">
-import { CLIENT_WEB_NAME, REALM_MASTER_NAME } from '@authup/core-kit';
+import { REALM_MASTER_NAME } from '@authup/core-kit';
 import {
     buildAuthorizeURL,
     createPKCE,
@@ -37,16 +37,21 @@ export default defineNuxtComponent({
         const apiClient = injectHTTPClient();
 
         // Configurable per deployment (AUTHUP_CLIENT_ID); defaults to the
-        // Authup built-in "web" client. The client must register
-        // `<portal-origin>/login/callback` as a redirect URI.
-        const clientId = (runtimeConfig.public.authupClientId as string) || CLIENT_WEB_NAME;
+        // Authup built-in "admin-console" system client (Authup releases after
+        // v1.0.0-beta.58 no longer provision the former shared "web" client;
+        // deployments still running an older Authup set AUTHUP_CLIENT_ID=web).
+        // The portal origin must be listed in Authup's TRUSTED_ORIGINS (or be
+        // the publicUrl origin) so `<portal-origin>/login/callback` is covered
+        // by the client's redirect allowlist.
+        const clientId = (runtimeConfig.public.authupClientId as string) || 'admin-console';
 
-        // A name-identified client (e.g. the built-in "web") is only resolvable
-        // with a realm hint — every realm ships its own "web" client, so Authup
-        // rejects the authorize request ("A realm is required to resolve a client
-        // by name.") without one. `realm_id` accepts a realm UUID or name; dnpm-dip
-        // runs a single (master) realm, so we default to REALM_MASTER_NAME and
-        // allow an override per deployment (AUTHUP_REALM_ID).
+        // A name-identified client (e.g. the built-in "admin-console") is only
+        // resolvable with a realm hint — every realm ships a client with that
+        // name, so Authup rejects the authorize request ("A realm is required
+        // to resolve a client by name.") without one. `realm_id` accepts a
+        // realm UUID or name; dnpm-dip runs a single (master) realm, so we
+        // default to REALM_MASTER_NAME and allow an override per deployment
+        // (AUTHUP_REALM_ID).
         const realmId = (runtimeConfig.public.authupRealmId as string) || REALM_MASTER_NAME;
 
         const busy = ref(false);

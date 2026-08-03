@@ -75,9 +75,11 @@ export default defineNuxtConfig({
             apiUrl: process.env.API_URL || 'https://dnpm-dip.net/api/',
             authupUrl: process.env.AUTHUP_URL || 'https://dnpm-dip.net/auth/',
             // OAuth2 client used for the authorization-code (PKCE) login flow.
-            // Defaults to Authup's built-in "web" client (CLIENT_WEB_NAME) at the
-            // call site; override per deployment. The client must register
-            // `<portal-origin>/login/callback` as an allowed redirect URI.
+            // Defaults to Authup's built-in "admin-console" system client at the
+            // call site; override per deployment (deployments on Authup
+            // <= v1.0.0-beta.58 set AUTHUP_CLIENT_ID=web). The portal origin
+            // must be listed in Authup's TRUSTED_ORIGINS so the redirect to
+            // `<portal-origin>/login/callback` is allowed.
             authupClientId: process.env.AUTHUP_CLIENT_ID,
             // Realm hint for resolving a name-identified client on `/authorize`
             // (Authup requires it). Accepts a realm UUID or name; defaults to
