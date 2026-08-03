@@ -50,8 +50,8 @@
     },
     "dependencies": {
         "@authup/client-web-kit-theme": "^1.0.0-beta.54",
-        "@vuecs/design": "^1.0.8",
-        "@vuecs/theme-tailwind": "^6.1.1"
+        "@vuecs/design": "^1.1.0",
+        "@vuecs/theme-tailwind": "^6.4.0"
     },
     "peerDependencies": {
         "@vuecs/core": "^3.x",
