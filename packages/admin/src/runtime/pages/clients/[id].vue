@@ -44,9 +44,11 @@ export default defineComponent({
         const entity = ref(null) as unknown as Ref<Client>;
 
         try {
-            entity.value = await authup
+            const { data } = await authup
                 .client
                 .getOne(route.params.id as string, { fields: ['+secret'] });
+
+            entity.value = data;
         } catch {
             await navigateTo({ path: '/admin/clients' });
             throw createError({});

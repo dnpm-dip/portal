@@ -20,6 +20,48 @@
 - Lint: `npx eslint --fix path/to/changed/file1.ts path/to/changed/file2.ts`
 - Fix any build or lint errors before considering a task complete.
 
+## Dependencies
+
+`npm install` runs **without `--force`** and without `--legacy-peer-deps`. If it
+ERESOLVEs, fix the actual conflict — both flags produce a tree that disagrees
+with the manifests. Historically `--force` was required here; it papered over a
+tree in which `pinia`, `validup`, `@validup/vue` and `@authup/client-web-kit`
+were each installed as **five nested per-workspace copies** instead of one
+hoisted copy. Those packages hand state through Vue's `provide`/`inject`, so a
+duplicated copy silently splits the singleton (two Pinia instances, two authup
+stores). After a dependency bump, verify the tree is flat:
+
+```bash
+find packages/*/node_modules -maxdepth 2 -type d \
+    \( -name pinia -o -name validup -o -name vue -o -name client-web-kit \)
+```
+
+Anything printed is a split singleton. An incremental `npm install` will not
+re-hoist an already-nested layout — that needs
+`rm -rf node_modules packages/*/node_modules package-lock.json && npm install`.
+Never hand-resolve a `package-lock.json` conflict; regenerate it.
+
+The `@authup/*` packages pin their peers tightly, so bumping them drags the
+whole client stack (`@vuecs/*`, `validup`, `@ilingo/*`, `pinia`, `vue`,
+`tailwindcss`) along. Read the target release's peer ranges before bumping:
+
+```bash
+npm view @authup/client-web-kit@<version> peerDependencies --json
+```
+
+## Authup API Shapes
+
+Entity **record** endpoints return an envelope, not the bare record — every
+`getOne` / `create` / `update` / `delete` on an `@authup/core-http-kit` entity
+API resolves to `{ data, meta }`, mirroring the collection endpoints:
+
+```ts
+const { data } = await authup.user.getOne(id, { fields: ['+email'] });
+entity.value = data;
+```
+
+Protocol surfaces (token, introspect, authorize, logout, userinfo) stay flat.
+
 ## Commit Messages
 
 This project uses conventional commits enforced by commitlint (`@tada5hi/commitlint-config`).

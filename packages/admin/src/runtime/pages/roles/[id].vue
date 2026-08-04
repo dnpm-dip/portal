@@ -49,9 +49,11 @@ export default defineComponent({
         const entity = ref(null) as unknown as Ref<Role>;
 
         try {
-            entity.value = await authup
+            const { data } = await authup
                 .role
                 .getOne(route.params.id as string);
+
+            entity.value = data;
         } catch {
             await navigateTo({ path: '/admin/roles' });
             throw createError({});

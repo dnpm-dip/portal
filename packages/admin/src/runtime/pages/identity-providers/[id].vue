@@ -44,9 +44,11 @@ export default defineComponent({
         const entity = ref(null) as unknown as Ref<IdentityProvider>;
 
         try {
-            entity.value = await authup
+            const { data } = await authup
                 .identityProvider
                 .getOne(route.params.id as string);
+
+            entity.value = data;
         } catch {
             await navigateTo({ path: '/admin/identity-providers' });
             throw createError({});
