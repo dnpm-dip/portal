@@ -48,7 +48,7 @@ Application:
 packages/portal/
 ├── app.vue              — Root component
 ├── nuxt.config.ts       — Nuxt configuration
-├── pages/               — Route pages (index, login, logout, settings)
+├── pages/               — Route pages (index, login, logout)
 ├── components/          — Layout components (header, footer, sidebar)
 ├── stores/              — Pinia stores (modules store)
 ├── plugins/             — Nuxt plugins (vuecs, ilingo, chart.js, module registration)

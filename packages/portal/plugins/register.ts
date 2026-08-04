@@ -12,7 +12,7 @@ import type { NavigationItem } from '@vuecs/navigation';
 import type { Pinia } from 'pinia';
 import { injectStore } from '@authup/client-web-kit';
 import { defineNuxtPlugin } from '#app';
-import { Navigation, provideNavigation } from '../core';
+import { Navigation, provideNavigation, useAccountConsoleURL } from '../core';
 import { useModuleStore } from '../stores/modules';
 
 declare module '#app' {
@@ -70,7 +70,7 @@ export default defineNuxtPlugin<Record<string, any>>({
         const authStore = injectStore(nuxt.$pinia as Pinia);
         const moduleStore = useModuleStore(nuxt.$pinia as Pinia);
 
-        const navigation = new Navigation(authStore);
+        const navigation = new Navigation(authStore, { accountURL: useAccountConsoleURL() });
         provideNavigation(navigation, nuxt.vueApp);
 
         nuxt.hook('register', (context: ModuleMeta) => {

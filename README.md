@@ -52,8 +52,9 @@ The portal is configured at runtime via environment variables (pass them with `d
 |----------|---------|-------------|
 | `NUXT_PUBLIC_API_URL` | `https://dnpm-dip.net/api/` | REST API base URL |
 | `NUXT_PUBLIC_AUTHUP_URL` | `https://dnpm-dip.net/auth/` | Authup base URL |
-| `NUXT_PUBLIC_AUTHUP_CLIENT_ID` | `web` | OAuth2 client used for the login (authorization-code) flow |
+| `NUXT_PUBLIC_AUTHUP_CLIENT_ID` | `admin-console` | OAuth2 client used for the login (authorization-code) flow |
 | `NUXT_PUBLIC_AUTHUP_REALM_ID` | `master` | Realm (UUID or name) that owns the OAuth2 client |
+| `NUXT_PUBLIC_ACCOUNT_URL` | `<NUXT_PUBLIC_AUTHUP_URL>/account` | Account console (self-service) base URL |
 | `NUXT_PUBLIC_COOKIE_DOMAIN` | — | Cookie domain for the auth session |
 
 #### Authentication
@@ -65,14 +66,29 @@ and redirects to Authup's `/authorize` endpoint, where the login form and the co
 identity providers live. Authup redirects back to `<portal-origin>/login/callback`, and the
 `@authup/client-web-nuxt` routing interceptor exchanges the authorization code for a session.
 
-The OAuth client is configurable via `NUXT_PUBLIC_AUTHUP_CLIENT_ID` (default: `web`, the
-Authup built-in web client). The configured client **must** register
-`<portal-origin>/login/callback` as an allowed redirect URI, or Authup rejects the redirect.
+The OAuth client is configurable via `NUXT_PUBLIC_AUTHUP_CLIENT_ID` (default: `admin-console`,
+an Authup built-in system client; Authup ≤ `1.0.0-beta.58` instead shipped a shared `web`
+client). The configured client **must** register `<portal-origin>/login/callback` as an allowed
+redirect URI, or Authup rejects the redirect.
 
-A name-identified client (such as the built-in `web`) exists in every realm, so the authorize
-request carries a realm hint — `NUXT_PUBLIC_AUTHUP_REALM_ID` (default: `master`, the single
-DNPM:DIP realm), a realm UUID or name — otherwise Authup responds with _"A realm is required to
-resolve a client by name."_
+A name-identified client (such as the built-in `admin-console`) exists in every realm, so the
+authorize request carries a realm hint — `NUXT_PUBLIC_AUTHUP_REALM_ID` (default: `master`, the
+single DNPM:DIP realm), a realm UUID or name — otherwise Authup responds with _"A realm is
+required to resolve a client by name."_
+
+#### Account & self-service
+
+The portal has no settings area. Profile, password, authenticators, sessions and connected
+applications are managed in Authup's **account console**, served by server-core on the IdP
+origin (Authup ≥ `1.0.0-beta.59`) — the sidebar's _Konto_ entry links straight to it. Point
+`NUXT_PUBLIC_ACCOUNT_URL` elsewhere if the console is not reachable under
+`<NUXT_PUBLIC_AUTHUP_URL>/account`.
+
+The link carries the portal origin as `?ref=…` so the account console can render a back link.
+Authup validates it against the trusted app origins, which the portal origin already has to be
+part of for the login callback. The realm's built-in `account-console` client must also not be
+denied by an access policy, or the console answers with _access denied_ instead of signing the
+visitor in.
 
 ### Development 
 To start the portal with the associated modules such as rd, mtb, etc, the following steps must be performed in sequence.

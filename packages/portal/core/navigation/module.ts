@@ -17,6 +17,15 @@ const TopDefaultName = 'Home';
 
 export const LayoutTopNavigationRegistryId = 'top';
 
+export type NavigationOptions = {
+    /**
+     * Absolute URL of the Authup account console. The portal has no
+     * settings area of its own; self-service (profile, password,
+     * authenticators, sessions, applications) lives on the IdP origin.
+     */
+    accountURL?: string
+};
+
 export class Navigation {
     protected topElements: NavigationItem[];
 
@@ -26,7 +35,7 @@ export class Navigation {
 
     protected initialized: boolean;
 
-    constructor(store: Store) {
+    constructor(store: Store, options: NavigationOptions = {}) {
         this.store = store;
         this.initialized = false;
 
@@ -52,13 +61,15 @@ export class Navigation {
                     icon: 'fa6-solid:right-to-bracket',
                     meta: { [PageMetaKey.REQUIRED_LOGGED_OUT]: true },
                 },
-                {
-                    name: 'Settings',
-                    type: 'link',
-                    url: '/settings',
-                    icon: 'fa6-solid:gear',
+                // Leaves the portal: the account console is served by Authup
+                // on the IdP origin and links back here via the `ref` origin.
+                ...(options.accountURL ? [{
+                    name: 'Konto',
+                    type: 'link' as const,
+                    url: options.accountURL,
+                    icon: 'fa6-solid:user',
                     meta: { [PageMetaKey.REQUIRED_LOGGED_IN]: true },
-                },
+                }] : []),
                 {
                     name: 'Logout',
                     type: 'link',
