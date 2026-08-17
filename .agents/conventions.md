@@ -49,6 +49,34 @@ whole client stack (`@vuecs/*`, `validup`, `@ilingo/*`, `pinia`, `vue`,
 npm view @authup/client-web-kit@<version> peerDependencies --json
 ```
 
+### The `vue` override must never be pinned to a literal
+
+Root `package.json` keeps a single-version override for `vue`, written as a
+**reference to the root devDependency**, never as a hard-coded version:
+
+```jsonc
+"overrides": { "vue": "$vue" },
+"devDependencies": { "vue": "^3.5.41" }
+```
+
+A literal (`"vue": "3.5.40"`) desyncs the moment dependabot bumps `vue` in the
+workspace manifests — it only touches `dependencies`, never `overrides`. The
+override then forces `vue`/`@vue/runtime-*` to the old patch while
+`@vue/reactivity` hoists to the new one, and npm nests **three** copies of
+`@vue/reactivity`. That breaks types, not just runtime: `@vue/runtime-dom`
+writes its `RefUnwrapBailTypes` DOM bail-out into *its own* nested copy, while
+`ref()`'s `UnwrapRef` reads the copy under `@vue/runtime-core`. Without the
+bail-out, `UnwrapRef<HTMLCanvasElement>` deep-maps the DOM interface into an
+anonymous structural type, and every `ref<HTMLElement>().value` stops being
+assignable to `Element` — surfacing as an inscrutable multi-screen TS2345 in an
+unrelated component. Verify after any `vue` bump:
+
+```bash
+find node_modules -name reactivity -type d -path "*@vue*"
+```
+
+More than one line printed means the override is out of sync.
+
 ## Authup API Shapes
 
 Entity **record** endpoints return an envelope, not the bare record — every
