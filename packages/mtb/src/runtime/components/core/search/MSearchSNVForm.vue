@@ -9,9 +9,10 @@
 import {
     HGVS_CODE_REGEX,
 } from '@dnpm-dip/core';
+import { defineIssueItem } from '@ebec/core';
 import { IFieldValidation } from '@ilingo/validup-vue';
 import { useValidup } from '@validup/vue';
-import { Container, ValidupError, defineIssueItem } from 'validup';
+import { Container, ValidupError } from 'validup';
 import type { Validator } from 'validup';
 import {
     type PropType,

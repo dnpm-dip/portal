@@ -90,6 +90,29 @@ entity.value = data;
 
 Protocol surfaces (token, introspect, authorize, logout, userinfo) stay flat.
 
+## The Issue Model Lives in `@ebec/core`
+
+Since validup 2.x, the issue vocabulary (`Issue`, `IssueItem`, `IssueGroup`,
+`IssueCode`, `defineIssueItem`, `defineIssueGroup`) is owned by `@ebec/core`,
+not by `validup`. A hand-rolled validator that raises its own issue imports the
+factory from there and keeps `ValidupError` from `validup`:
+
+```ts
+import { defineIssueItem } from '@ebec/core';
+import { Container, ValidupError } from 'validup';
+
+throw new ValidupError([
+    defineIssueItem({ path: [], message: '…' }),
+]);
+```
+
+`validup` still owns `Container`, `Validator`, `ValidupError`, `OptionalValue`
+and adds `createValidupError(received, code, message, …)` as sugar for the
+single-issue case — that one needs a `code`, so it only saves the import when
+`IssueCode` is already in scope. Any package that constructs issues therefore
+declares `@ebec/core` itself (`mtb`, `rd`); consuming an issue off a caught
+`ValidupError` needs no new dependency.
+
 ## Commit Messages
 
 This project uses conventional commits enforced by commitlint (`@tada5hi/commitlint-config`).
