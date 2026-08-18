@@ -44,7 +44,7 @@ jobs:
                 if: steps.release.outputs.releases_created == 'true'
                 uses: ./.github/actions/build
 
-            -   uses: tada5hi/action-docker-image-publish@v3
+            -   uses: tada5hi/craneship@v4
                 if: steps.release.outputs.releases_created == 'true'
                 with:
                     registryTag: |
@@ -53,6 +53,6 @@ jobs:
 
             -   name: Publish
                 if: steps.release.outputs.releases_created == 'true'
-                run: npx workspaces-publish
+                run: npm run publish:packages
                 env:
                     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
