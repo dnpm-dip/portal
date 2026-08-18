@@ -6,9 +6,6 @@ import { de } from 'date-fns/locale/de';
 import vuecs from '@vuecs/core';
 import dnpmTheme, { clientWebKitTheme } from '@dnpm-dip/theme';
 import fontAwesome from '@vuecs/icons-font-awesome';
-import { addCollection } from '@iconify/vue';
-import faBrands from '@iconify-json/fa6-brands/icons.json';
-import faSolid from '@iconify-json/fa6-solid/icons.json';
 import installButton from '@vuecs/button';
 import installElements from '@vuecs/elements';
 import installForms from '@vuecs/forms';
@@ -22,8 +19,11 @@ import installTimeago from '@vuecs/timeago';
 
 import { defineNuxtPlugin } from '#app';
 
-addCollection(faSolid);
-addCollection(faBrands);
+// Registers the icons `NuxtIconBundle` (see `nuxt.config.ts`) scanned out of
+// the sources — only those, instead of the two full Font Awesome collections.
+// It calls `addIcon` on the same `@iconify/vue` store `<VCIcon>` resolves
+// against, so this stays a drop-in for the former `addCollection` calls.
+import 'virtual:nuxt-icon-bundle/register';
 
 export default defineNuxtPlugin({
     name: 'vuecs',

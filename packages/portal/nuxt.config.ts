@@ -1,12 +1,55 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import type { ModuleOptions } from '@authup/client-web-nuxt';
 import path from 'node:path';
+import { NuxtIconBundle } from '@nuxt/icon/vite';
 import tailwindcss from '@tailwindcss/vite';
+
+const repositoryRoot = path.join(__dirname, '..', '..');
 
 export default defineNuxtConfig({
     vite: {
         plugins: [
             tailwindcss(),
+            // Bundle only the Font Awesome icons this UI actually renders.
+            // Registering the full `fa6-solid` + `fa6-brands` collections used
+            // to ship ~429 KB gzip on every page load for ~290 icons in use.
+            // The virtual register module below feeds `addIcon` from
+            // `@iconify/vue` — the very store `<VCIcon>` resolves against — so
+            // no component changes are needed.
+            //
+            // The glob list is load-bearing and fails *silently*: a path that
+            // stops matching yields an empty icon slot in the browser, never a
+            // build error. Scanning must therefore cover every place an icon
+            // name can be written:
+            //  - the portal's own template tree,
+            //  - `src/` of every sibling package — `admin`, `mtb` and `rd`
+            //    are registered from `../<name>/src/module`, and `core`/`kit`
+            //    are aliased to `../<name>/src`, so the sources (not the
+            //    dists) are what the portal builds,
+            //  - `@authup/client-web-kit`, whose components and
+            //    identity-provider preset tables carry icon names,
+            //  - `@vuecs/icons-font-awesome`, whose preset supplies the vuecs
+            //    behavioral defaults (pagination arrows, submit button, alert,
+            //    collapse chevrons). Those names exist in no repo source file.
+            // `.ts` must be listed explicitly — the plugin scans
+            // `.vue`/`.jsx`/`.tsx` by default, while nav item tables and preset
+            // maps are plain TS modules.
+            NuxtIconBundle({
+                cwd: repositoryRoot,
+                scan: {
+                    globInclude: [
+                        'packages/portal/{app,error}.vue',
+                        'packages/portal/{components,config,core,layouts,middleware,pages,plugins,stores}/**/*.{vue,ts}',
+                        'packages/{admin,core,kit,mtb,rd,theme}/src/**/*.{vue,ts}',
+
+                        'node_modules/@authup/client-web-kit/dist/**/*.mjs',
+                        'node_modules/@vuecs/icons-font-awesome/dist/*.mjs',
+                    ],
+                    // The default excludes `node_modules` and `dist`, which
+                    // would drop the two paths above.
+                    globExclude: [],
+                },
+            }),
         ],
     },
 

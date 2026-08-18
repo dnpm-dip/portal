@@ -85,8 +85,33 @@ Provides helper functions and types for feature modules to register themselves i
   first, per-package installs after).
 - **Light/dark color mode** via `@vuecs/nuxt` (`useColorMode`, `.dark` class on
   `<html>`); chrome colors are `--dnpm-*` tokens that flip with the mode.
-- **Icons** via `<VCIcon>` + Iconify (`fa6-solid` / `fa6-brands` collections,
-  registered with `addCollection` in the vuecs plugin).
+- **Icons** via `<VCIcon>` + Iconify (`fa6-solid` / `fa6-brands`). Only the
+  icons the UI actually renders are shipped: `NuxtIconBundle` from
+  `@nuxt/icon/vite` (configured in `packages/portal/nuxt.config.ts`) scans the
+  sources for `fa6-*:*` literals and emits a virtual module that
+  `packages/portal/plugins/vuecs.ts` pulls in via
+  `import 'virtual:nuxt-icon-bundle/register'`. It registers through `addIcon`
+  on the same `@iconify/vue` store `<VCIcon>` resolves against — components need
+  no change.
+
+  **The `scan.globInclude` list is load-bearing and fails silently.** A source
+  tree or dependency that is not scanned yields an empty icon slot in the
+  browser, never a build error — and an SSR-rendered page cannot prove
+  otherwise, since `@iconify/vue` resolves client-side and emits empty `<svg>`
+  shells either way. Extend the list whenever an icon name can appear somewhere
+  new:
+  - a new top-level directory under `packages/portal/`,
+  - a new `@dnpm-dip/*` package (all of them are built from `src`, not `dist`),
+  - a dependency that names icons — today `@authup/client-web-kit` (components
+    and identity-provider preset tables) and `@vuecs/icons-font-awesome` (the
+    vuecs behavioral defaults: pagination arrows, submit button, alert,
+    collapse chevrons — 11 names that exist in no repo source file).
+
+  `.ts` is listed explicitly; the plugin's default covers `.vue`/`.jsx`/`.tsx`
+  only, and nav item tables and preset maps are plain TS modules. Verify against
+  the build log — `Nuxt Icon bundled N icons with X KB` — and cross-check `N`
+  against `grep -rhoE "fa6-(solid|brands):[a-z0-9-]+" <scanned paths> | sort -u
+  | wc -l`. A low `N` means a glob is wrong.
 - **Forms & validation**: validup (`@validup/vue` + `@validup/zod`) with
   `@ilingo/vue` 6 translations (`packages/portal/plugins/ilingo.ts`).
 - **Chart.js** for data visualization
