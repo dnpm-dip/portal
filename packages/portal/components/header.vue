@@ -6,7 +6,7 @@ import { VCIcon } from '@vuecs/icon';
 import { StoreAuthStatus, injectStore } from '@authup/client-web-kit';
 import { useColorMode } from '#imports';
 import { defineNuxtComponent } from '#app';
-import { LayoutTopNavigationRegistryId, injectNavigation } from '../core';
+import { LayoutTopNavigationRegistryId, injectNavigation, useAccountConsoleURL } from '../core';
 import LogoSvg from './svg/LogoSvg.vue';
 
 export default defineNuxtComponent({
@@ -39,7 +39,15 @@ export default defineNuxtComponent({
             isDark.value = !isDark.value;
         };
 
+        // Leaves the portal: self-service (profile, password, authenticators,
+        // sessions, applications) lives in Authup's account console on the IdP
+        // origin, so this is a plain anchor rather than a <NuxtLink>. It is the
+        // only entry point — the sidebar carries no account entry, so the one
+        // link that leaves for the IdP origin sits in one place.
+        const accountURL = useAccountConsoleURL()();
+
         return {
+            accountURL,
             authenticated,
             user,
             toggleNav,
@@ -110,6 +118,18 @@ export default defineNuxtComponent({
                                     class="vc-nav-link"
                                 >
                                     <span>{{ user.displayName ? user.displayName : user.name }}</span>
+                                </a>
+                            </li>
+                            <li
+                                v-if="accountURL"
+                                class="vc-nav-item"
+                            >
+                                <a
+                                    :href="accountURL"
+                                    class="vc-nav-link"
+                                    aria-label="Konto"
+                                >
+                                    <VCIcon name="fa6-solid:user-gear" />
                                 </a>
                             </li>
                             <li class="vc-nav-item">

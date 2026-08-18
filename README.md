@@ -80,15 +80,23 @@ required to resolve a client by name."_
 
 The portal has no settings area. Profile, password, authenticators, sessions and connected
 applications are managed in Authup's **account console**, served by server-core on the IdP
-origin (Authup ≥ `1.0.0-beta.59`) — the sidebar's _Konto_ entry links straight to it. Point
-`NUXT_PUBLIC_ACCOUNT_URL` elsewhere if the console is not reachable under
-`<NUXT_PUBLIC_AUTHUP_URL>/account`.
+origin (Authup ≥ `1.0.0-beta.59`). The header's account icon (visible while signed in) links
+straight to it, and is the only entry point — the sidebar carries no account entry, so the one
+link that leaves for the IdP origin sits in one place. Point `NUXT_PUBLIC_ACCOUNT_URL` elsewhere
+if the console is not reachable under `<NUXT_PUBLIC_AUTHUP_URL>/account`; with neither that nor
+`NUXT_PUBLIC_AUTHUP_URL` configured, the icon is hidden rather than pointing nowhere.
 
 The link carries the portal origin as `?ref=…` so the account console can render a back link.
 Authup validates it against the trusted app origins, which the portal origin already has to be
 part of for the login callback. The realm's built-in `account-console` client must also not be
 denied by an access policy, or the console answers with _access denied_ instead of signing the
 visitor in.
+
+It also carries `&realmId=…` (`NUXT_PUBLIC_AUTHUP_REALM_ID`, the same realm the login flow uses).
+The two origins hold independent sessions and the portal's outlives the IdP's — its token was
+minted earlier and is held client-side — so the icon keeps rendering after the Authup session is
+gone. The console applies the hint only when it sees an unauthenticated visitor, and then starts
+the authorization-code flow against that realm instead of presenting a realm chooser.
 
 ### Development 
 To start the portal with the associated modules such as rd, mtb, etc, the following steps must be performed in sequence.
