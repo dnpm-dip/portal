@@ -4,7 +4,7 @@
 
 **Goal:** Split `@dnpm-dip/core` into `kit` / `http-kit` / `vue`, rename today's `kit` to `nuxt-kit`, and give every package a real Vitest suite backed by a transport-level fake HTTP client.
 
-**Architecture:** Test infrastructure lands **first**, inside the existing `core` package, so the 295-file import rewrite that follows has a regression net. The fake client is a subclass of the real client with only hapic's `MemoryTransport` swapped in, so hooks, header merging, auth attachment and the error pipeline all still run. Only then do the packages split; the specs move with their subjects and their assertions do not change.
+**Architecture:** Test infrastructure lands **first**, inside the existing `core` package, so the 121-file import rewrite that follows has a regression net. The fake client is a subclass of the real client with only hapic's `MemoryTransport` swapped in, so hooks, header merging, auth attachment and the error pipeline all still run. Only then do the packages split; the specs move with their subjects and their assertions do not change.
 
 **Tech Stack:** TypeScript (ESM, `strict`, `noUncheckedIndexedAccess`), Vue 3, Nuxt 4, Vitest 4, `@vue/test-utils`, happy-dom, hapic 3, Pinia 4, Nx, tsdown.
 
@@ -1821,7 +1821,7 @@ them here.
 ### Task 9: Rewrite the consumers and retire `core`
 
 **Files:**
-- Modify: ~295 files across `packages/{admin,mtb,rd,portal}` importing `@dnpm-dip/core`
+- Modify: 121 tracked source files across `packages/{admin,mtb,rd,portal}` importing `@dnpm-dip/core` (mtb 49, rd 31, admin 28, portal 13)
 - Modify: `packages/{admin,mtb,rd,portal}/package.json` (dependencies)
 - Modify: `packages/portal/nuxt.config.ts` (alias, css)
 - Modify: `packages/{mtb,rd,admin}/test/vitest.config.ts` (alias)

@@ -263,7 +263,7 @@ are hand-edited beyond adding and removing package entries.
 
 | Risk | Mitigation |
 | --- | --- |
-| 295 files import `@dnpm-dip/core` and must be rewritten. | Mechanical, fanned out across agents, verified by build + `nuxt typecheck` + lint rather than by inspection. |
+| 121 tracked source files import `@dnpm-dip/core` and must be rewritten. | Mechanical, fanned out across agents, verified by build + `nuxt typecheck` + lint rather than by inspection. |
 | Dependency churn corrupting the tree. | One `npm install` at the end, never incremental during dev. Then the flat-tree check from `.agents/conventions.md`: `pinia`, `validup`, `vue`, `client-web-kit` must not appear nested under `packages/*/node_modules`. |
 | `@dnpm-dip/core` vanishes from npm. | Accepted and explicitly decided by the maintainer. |
 | A split barrel silently drops an export. | The portal build and `nuxt typecheck` cover the app; each new package's `index.ts` is diffed against the old `core` barrel. |
