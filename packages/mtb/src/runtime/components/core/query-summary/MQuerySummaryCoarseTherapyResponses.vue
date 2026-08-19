@@ -60,6 +60,9 @@ export default defineComponent({
         const offset = ref(0);
         const limit = ref(50);
         const sortBy = ref<TableSortState>([]);
+        const error = ref<Error | null>(null);
+
+        let revision = 0;
 
         const fields : TableColumn[] = [
             {
@@ -131,8 +134,12 @@ export default defineComponent({
         ];
 
         const refresh = async (): Promise<void> => {
+            revision += 1;
+            const current = revision;
+
             busy.value = true;
             try {
+                error.value = null;
                 const sort: Record<string, 'asc' | 'desc'> = {};
                 sortBy.value.forEach((s: SortDescriptor) => {
                     if (s.direction) {
@@ -157,12 +164,24 @@ export default defineComponent({
                 };
 
                 const response = await api.query.getCoarseTherapyResponses(props.queryId, meta);
+                if (revision !== current) {
+                    return;
+                }
+
                 total.value = response.size ?? response.entries.length;
                 limit.value = response.limit ?? limit.value;
                 offset.value = response.offset ?? offset.value;
                 items.value = response.entries;
+            } catch (e) {
+                if (revision !== current) {
+                    return;
+                }
+
+                error.value = e instanceof Error ? e : new Error('Therapie-Ansprechen konnte nicht geladen werden.');
             } finally {
-                busy.value = false;
+                if (revision === current) {
+                    busy.value = false;
+                }
             }
         };
 
@@ -230,6 +249,7 @@ export default defineComponent({
         return {
             items,
             busy,
+            error,
             total,
             offset,
             limit,
@@ -245,8 +265,16 @@ export default defineComponent({
 });
 </script>
 <template>
+    <VCAlert
+        v-if="error"
+        color="error"
+        variant="soft"
+        size="sm"
+    >
+        Daten konnten nicht geladen werden.
+    </VCAlert>
     <table
-        v-if="busy && total === 0"
+        v-if="!error && busy && total === 0"
         class="w-full"
     >
         <thead>
@@ -279,7 +307,7 @@ export default defineComponent({
             </tr>
         </tbody>
     </table>
-    <div v-show="!busy || total > 0">
+    <div v-show="!error && (!busy || total > 0)">
         <VCAlert
             color="warning"
             variant="soft"
