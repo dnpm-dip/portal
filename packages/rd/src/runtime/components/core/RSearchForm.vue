@@ -117,13 +117,13 @@ export default defineComponent({
 
                 if (criteria.value.hpoTerms) {
                     for (const term of criteria.value.hpoTerms) {
-                        hpoTerms.value.push(`${term.code}`);
+                        hpoTerms.value.push(term.code);
                     }
                 }
 
                 if (criteria.value.diagnoses) {
                     for (const diagnosis of criteria.value.diagnoses) {
-                        categories.value.push(`${parseCategory(diagnosis as Coding).value}`);
+                        categories.value.push(parseCategory(diagnosis as Coding).value);
                     }
                 }
             }
@@ -187,7 +187,7 @@ export default defineComponent({
                 payload.diagnoses = [];
 
                 for (const category of categories.value) {
-                    const id = `${category}`;
+                    const id = category;
                     const index = id.indexOf(':::');
 
                     payload.diagnoses.push({

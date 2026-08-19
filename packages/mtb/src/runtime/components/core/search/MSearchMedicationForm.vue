@@ -64,7 +64,7 @@ export default defineComponent({
         const drugLabels = new Map<string, string>();
 
         const transformCodings = (coding: ValueSetCoding) => {
-            drugLabels.set(`${coding.code}`, coding.display || `${coding.code}`);
+            drugLabels.set(coding.code, coding.display || coding.code);
 
             return {
                 value: coding.code,
@@ -92,7 +92,11 @@ export default defineComponent({
                     drug.system &&
                     drug.system.includes('atc')
                 ) {
+                    // `props.drugs` is `Coding[]` (`Coding<S = any>` defaults `code` to `any`).
+                    // eslint-disable-next-line unicorn/no-useless-template-literals
                     drugLabels.set(`${drug.code}`, drug.display || `${drug.code}`);
+                    // Same `Coding<any>` reasoning: `form.atcDrugs` is `string[]`.
+                    // eslint-disable-next-line unicorn/no-useless-template-literals
                     form.atcDrugs.push(`${drug.code}`);
                 } else {
                     form.customDrugs.push({
@@ -129,6 +133,8 @@ export default defineComponent({
                 });
             }
             for (const drug of form.customDrugs) {
+                // `drug.value` is `FormOption`'s `AcceptableValue` union, not statically a string.
+                // eslint-disable-next-line unicorn/no-useless-template-literals
                 drugs.push({ code: `${drug.value}` });
             }
 

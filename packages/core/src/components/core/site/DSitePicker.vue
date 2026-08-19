@@ -53,6 +53,8 @@ export default defineComponent({
 
         const init = () => {
             if (props.modelValue) {
+                // `Coding<S = any>` defaults `code` to `any`; wrapper guarantees a real string here.
+                // eslint-disable-next-line unicorn/no-useless-template-literals
                 current.value = props.modelValue.map((coding) => `${coding.code}`);
 
                 return;
@@ -68,6 +70,8 @@ export default defineComponent({
                 const option = items.value.find((item) => item.value === value);
 
                 return {
+                    // `value` is `unknown[]`-derived (`any`); wrapper normalizes it to a real string.
+                    // eslint-disable-next-line unicorn/no-useless-template-literals
                     code: `${value}`,
                     display: option ? option.label : undefined,
                 } satisfies Coding;

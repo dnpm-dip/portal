@@ -23,13 +23,10 @@ function extendQueryParts(
 export function serializeURLQueryRecord(record: URLQueryRecord) : string {
     const parts : string[] = [];
 
-    for (const key of Object.keys(record)) {
-        const value = record[key];
-
+    for (const [key, value] of Object.entries(record)) {
         if (isObject(value)) {
             const childRecord = value as Record<string, URlQueryRecordScalarValue>;
-            for (const childKey of Object.keys(childRecord)) {
-                const childValue = childRecord[childKey];
+            for (const [childKey, childValue] of Object.entries(childRecord)) {
                 if (childValue === undefined) {
                     continue;
                 }

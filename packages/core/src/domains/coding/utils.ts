@@ -49,8 +49,7 @@ export function extractCodeFromCodingsRecord(
 ): Record<string, any> {
     const output : Record<string, any> = {};
 
-    for (const key of Object.keys(input)) {
-        const value = input[key];
+    for (const [key, value] of Object.entries(input)) {
         if (Array.isArray(value)) {
             output[key] = value
                 .filter((v) => isCoding(v))
@@ -78,9 +77,7 @@ function isFormSelectOption(input: unknown) : input is FormSelectOption {
 
 export function buildCodingsRecord(input: Record<string, any>) : Record<string, any> {
     const output : Record<string, any> = {};
-    for (const key of Object.keys(input)) {
-        const value = input[key];
-
+    for (const [key, value] of Object.entries(input)) {
         if (Array.isArray(value)) {
             output[key] = value.map((v) => ({ code: isFormSelectOption(v) ? v.value : v } satisfies Coding));
             continue;

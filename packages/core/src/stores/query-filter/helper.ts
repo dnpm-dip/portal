@@ -29,8 +29,7 @@ export function buildQueryFilterURLValue(items: QueryFilterItem[]) {
 export function buildQueryFiltersURLRecord(items: QueryFilters) {
     const output : Record<string, string> = {};
 
-    for (const key of Object.keys(items)) {
-        const filterItems = items[key];
+    for (const [key, filterItems] of Object.entries(items)) {
         if (!filterItems) {
             continue;
         }

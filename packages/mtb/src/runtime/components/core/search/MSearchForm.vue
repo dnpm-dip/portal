@@ -141,11 +141,11 @@ export default defineComponent({
 
             if (criteria.value) {
                 if (criteria.value.tumorEntities) {
-                    diagnoses.value = criteria.value.tumorEntities.map((item) => `${item.code}`);
+                    diagnoses.value = criteria.value.tumorEntities.map((item) => item.code);
                 }
 
                 if (criteria.value.tumorMorphologies) {
-                    tumorMorphologies.value = criteria.value.tumorMorphologies.map((item) => `${item.code}`);
+                    tumorMorphologies.value = criteria.value.tumorMorphologies.map((item) => item.code);
                 }
 
                 if (criteria.value.medication) {
@@ -163,7 +163,7 @@ export default defineComponent({
                 }
 
                 if (criteria.value.responses) {
-                    responses.value = criteria.value.responses.map((item) => `${item.code}`);
+                    responses.value = criteria.value.responses.map((item) => item.code);
                 }
 
                 if (

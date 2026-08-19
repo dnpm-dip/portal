@@ -26,6 +26,8 @@ export default defineComponent({
                 return props.item.label;
             }
 
+            // Index is a number; the wrapper coerces it to a string for display.
+            // eslint-disable-next-line unicorn/no-useless-template-literals
             return `${(props.item.index ?? 0) + 1}`;
         });
 

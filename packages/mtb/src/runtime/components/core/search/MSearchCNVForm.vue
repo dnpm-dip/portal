@@ -42,6 +42,8 @@ export default defineComponent({
             if (!props.entity) return;
 
             if (props.entity.copyNumberType) {
+                // Generic defaults to `Coding` (`code: any`); wrapper guarantees a real string here.
+                // eslint-disable-next-line unicorn/no-useless-template-literals
                 form.copyNumberType = props.entity.copyNumberType.map((coding) => `${coding.code}`);
             }
         };
@@ -54,7 +56,7 @@ export default defineComponent({
 
         const transformCodings = (coding: ValueSetCoding) => ({
             value: coding.code,
-            label: coding.display ? `${coding.display}` : coding.code,
+            label: coding.display ? coding.display : coding.code,
         });
 
         const isEditing = computed(() => !!entityRef.value);

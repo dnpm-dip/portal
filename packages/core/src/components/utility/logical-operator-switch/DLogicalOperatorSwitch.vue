@@ -20,7 +20,7 @@ export default defineComponent({
     props: { modelValue: { type: String as PropType<`${LogicalOperator}`> } },
     emits: ['update:modelValue'],
     setup(props, { emit }) {
-        const operator = ref<`${LogicalOperator}`>(`${LogicalOperator.OR}`);
+        const operator = ref<`${LogicalOperator}`>(LogicalOperator.OR);
         const operatorProp = toRef(props, 'modelValue');
         if (operatorProp.value) {
             operator.value = operatorProp.value;

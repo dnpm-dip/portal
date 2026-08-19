@@ -126,12 +126,14 @@ const component = defineComponent({
 
         const handlePreparedQueryDeleted = (data: PreparedQuery) => {
             if (
-                preparedQuery.value &&
-                preparedQuery.value.id === data.id
+                !preparedQuery.value ||
+                preparedQuery.value.id !== data.id
             ) {
-                preparedQuery.value = undefined;
-                criteria.value = undefined;
+                return;
             }
+
+            preparedQuery.value = undefined;
+            criteria.value = undefined;
         };
 
         return {

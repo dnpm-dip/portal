@@ -34,8 +34,8 @@ export function stringifyResourceCollectionMeta(meta: ResourceCollectionLoadMeta
         if (sort) {
             const items = [];
 
-            for (const key of Object.keys(sort)) {
-                if (sort[key] === ResourceCollectionSortDirection.DESC) {
+            for (const [key, value] of Object.entries(sort)) {
+                if (value === ResourceCollectionSortDirection.DESC) {
                     items.push(`-${key}`);
                 } else {
                     items.push(`${key}`);

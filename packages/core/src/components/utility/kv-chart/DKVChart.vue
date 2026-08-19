@@ -76,6 +76,8 @@ const component = defineComponent({
             labels: items.value.map((item) => {
                 let text : string;
                 if (typeof item.value === 'number') {
+                    // Label generator can return undefined; wrapper stringifies to "undefined" for `text: string`.
+                    // eslint-disable-next-line unicorn/no-useless-template-literals
                     text = `${generateChartLabelsForKeyValueRecord(item)}`;
                 } else if (isConceptCount(item)) {
                     text = `${generateChartLabelsForKeyValueRecord(item, { codingVerbose: props.codingVerboseLabel })} (${item.value.percent.toFixed(1)}%)`;

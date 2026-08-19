@@ -66,6 +66,9 @@ export default defineComponent({
             }
 
             const index = props.items.findIndex(
+                // `selected.value` narrows to `string` above, but TS drops that
+                // narrowing across this closure, so it's still `string | null` here.
+                // eslint-disable-next-line unicorn/no-useless-template-literals
                 (_el, id) => id === Number.parseInt(`${selected.value}`, 10),
             );
 
@@ -81,6 +84,9 @@ export default defineComponent({
                 return;
             }
 
+            // `val` is `string | number` (the `''` guard only excludes `undefined`);
+            // wrapper performs a real number-to-string coercion, not a redundant widening.
+            // eslint-disable-next-line unicorn/no-useless-template-literals
             selected.value = `${val}`;
 
             render();

@@ -40,7 +40,7 @@ export default defineComponent({
         };
 
         const id = computed(() => {
-            if (Number.isInteger(props.index)) {
+            if (Number.isSafeInteger(props.index)) {
                 return props.index + 1;
             }
 
