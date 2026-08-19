@@ -233,9 +233,18 @@ their own module client (`new MTBAPIClient(fakeClient)`).
 - **Framework:** Vitest, `environment: 'happy-dom'`, `plugins: [vue()]`.
 - **Layout:** `test/unit/**/*.spec.ts` per package, mirroring `src/`, with
   shared helpers in `test/utils/`.
-- **Resolution:** each `test/vitest.config.ts` aliases `@dnpm-dip/*` to the
-  sibling package's `src/`. Tests therefore need no prior build and cannot go
-  stale against `dist` — a failure mode this repo has hit before.
+- **Resolution:** `admin`, `mtb` and `rd` alias `@dnpm-dip/*` to the sibling
+  package's `src/` in their `test/vitest.config.ts`, so those three suites need
+  no prior build and cannot go stale against `dist` — a failure mode this repo
+  has hit before. Alias keys must be ordered longest-first (`…/testing` before
+  the bare package), because Vite matches prefixes in declaration order.
+  **This does not extend to `kit`, `http-kit` and `vue` themselves.** Their own
+  suites declare no such alias and resolve `@dnpm-dip/*` through the npm
+  workspace symlink into the dependency's built `dist/`. `kit` has no internal
+  dependency so it is unaffected, but `http-kit` (which imports `kit`) and `vue`
+  (which imports both) genuinely require their upstream packages to be built
+  first — verified by moving `packages/kit/dist` aside, which fails
+  `http-kit`'s suite with `Failed to resolve entry for package "@dnpm-dip/kit"`.
 - **Assertions:** behavioural only — emitted events, requests actually
   dispatched (via `client.requests`), rendered text, conditional branches. No
   DOM snapshots; the UI is restyled often enough that snapshots would be noise.
