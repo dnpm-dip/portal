@@ -9,10 +9,10 @@ import { computed, defineComponent } from 'vue';
 import type { Coding, KeyValueRecord, MinMaxRange } from '../../../domains';
 import { isConceptCount } from '../../../domains';
 import {
-    generateRandomColorTuple, 
-    getColorInRange, 
+    generateRandomColorTuple,
+    getColorInRange,
     rgbToHex,
-} from '../../../utils';
+} from '@dnpm-dip/kit';
 import { VCAlert } from '@vuecs/elements';
 import { DChart } from '../chart';
 import { generateChartLabelsForKeyValueRecord } from '../chart/utils';

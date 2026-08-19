@@ -1,4 +1,4 @@
-import { hasOwnProperty, isObject } from '../../utils';
+import { hasOwnProperty, isObject } from '@dnpm-dip/kit';
 import type { HTTPClientErrorPayload } from './types';
 
 export function isAPIClientErrorPayload(input: unknown) : input is HTTPClientErrorPayload {

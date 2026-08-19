@@ -5,7 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { isObject } from '../utils';
+import { isObject } from '@dnpm-dip/kit';
 import type { DistributionQuantities } from './types';
 
 export function isDistributionQuantities(input: unknown) : input is DistributionQuantities {

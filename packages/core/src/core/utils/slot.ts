@@ -1,5 +1,5 @@
+import { hasOwnProperty } from '@dnpm-dip/kit';
 import type { Slot, Slots, VNode } from 'vue';
-import { hasOwnProperty } from '../../utils';
 
 export function hasNormalizedSlot(
     name : string,

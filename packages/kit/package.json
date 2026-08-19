@@ -1,0 +1,40 @@
+{
+    "name": "@dnpm-dip/kit",
+    "type": "module",
+    "version": "0.0.0",
+    "description": "Framework-free utilities for DNPM:DIP apps and packages.",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs"
+        }
+    },
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist/"
+    ],
+    "scripts": {
+        "build:types": "tsc --emitDeclarationOnly -p tsconfig.build.json",
+        "build:js": "tsdown",
+        "build": "npm run build:js && npm run build:types",
+        "test": "vitest run --config test/vitest.config.ts"
+    },
+    "author": {
+        "name": "Peter Placzek",
+        "email": "peter.placzek1996@gmail.com",
+        "url": "https://github.com/tada5hi"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/dnpm-dip/portal/issues"
+    },
+    "homepage": "https://github.com/dnpm-dip/portal#readme",
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "smob": "^1.6.2"
+    }
+}

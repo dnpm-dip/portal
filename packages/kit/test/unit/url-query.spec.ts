@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { serializeURLQueryRecord } from '../../../src/utils/url-query';
+import { serializeURLQueryRecord } from '../../src';
 
 describe('serializeURLQueryRecord', () => {
     it('should serialize a flat record', () => {

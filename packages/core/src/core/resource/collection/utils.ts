@@ -1,5 +1,5 @@
-import type { URLQueryRecord } from '../../../utils';
-import { serializeURLQueryRecord } from '../../../utils';
+import type { URLQueryRecord } from '@dnpm-dip/kit';
+import { serializeURLQueryRecord } from '@dnpm-dip/kit';
 import { ResourceCollectionSortDirection } from '../constants';
 import type { ResourceCollectionEventsType, ResourceCollectionLoadMeta } from './types';
 

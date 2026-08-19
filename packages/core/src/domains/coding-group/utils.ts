@@ -1,4 +1,4 @@
-import { isObject } from '../../utils';
+import { isObject } from '@dnpm-dip/kit';
 import type { Coding } from '../coding';
 import type { CodingGroup } from './types';
 

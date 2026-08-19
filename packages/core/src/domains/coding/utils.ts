@@ -1,5 +1,5 @@
 import type { FormOption } from '@vuecs/forms';
-import { isObject } from '../../utils';
+import { isObject } from '@dnpm-dip/kit';
 import type { Coding } from './types';
 
 export function isCoding(input: unknown) : input is Coding {

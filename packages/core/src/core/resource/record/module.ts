@@ -10,7 +10,7 @@ import type {
     ResourceRecordManagerContext,
     ResourceRecordManagerOutput,
 } from './types';
-import { hasOwnProperty } from '../../../utils';
+import { hasOwnProperty } from '@dnpm-dip/kit';
 
 export function createResourceRecordManager<
     T extends ObjectLiteral = ObjectLiteral,

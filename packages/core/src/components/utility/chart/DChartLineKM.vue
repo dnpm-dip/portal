@@ -12,7 +12,7 @@ import {
     generateRandomColorTuple,
     getColorInRange,
     rgbToHex,
-} from '../../../utils';
+} from '@dnpm-dip/kit';
 import type { KMSurvivalReport } from './types';
 
 const TIME_UNIT_LABELS : Record<string, string> = {

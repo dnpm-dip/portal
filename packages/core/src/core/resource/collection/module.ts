@@ -11,7 +11,7 @@ import type {
     ResourceCollectionManagerContext,
     ResourceCollectionManagerOutput,
 } from './types';
-import { hasOwnProperty } from '../../../utils';
+import { hasOwnProperty } from '@dnpm-dip/kit';
 
 export function createResourceCollectionManager<
     T extends ObjectLiteral = ObjectLiteral,

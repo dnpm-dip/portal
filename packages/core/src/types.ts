@@ -9,7 +9,7 @@ import type { NavigationItem } from '@vuecs/navigation';
 import type { ModuleType } from './constants';
 import type { HTTPClient, PageMetaKey } from './core';
 
-export type ObjectLiteral = Record<string, any>;
+export type { ObjectLiteral } from '@dnpm-dip/kit';
 export type InstallOptions = {
     baseURL: string,
     httpClient?: HTTPClient

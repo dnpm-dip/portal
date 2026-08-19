@@ -1,4 +1,4 @@
-import { isObject } from '../../utils';
+import { isObject } from '@dnpm-dip/kit';
 
 export type MinMaxRange = {
     min: number,

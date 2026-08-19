@@ -1,3 +1,4 @@
+export * from '@dnpm-dip/kit';
 export * from './core';
 export * from './constants';
 export * from './components';
