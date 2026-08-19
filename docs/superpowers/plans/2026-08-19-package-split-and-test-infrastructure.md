@@ -13,7 +13,7 @@
 ## Global Constraints
 
 - **Node.js `>=24.0.0`**. Package manager is npm with workspaces.
-- **`npm install` runs plain** — never `--force`, never `--legacy-peer-deps`. Only ONE install happens in this plan (Task 1). After it, run the flat-tree check; anything printed is a split singleton:
+- **`npm install` runs plain** — never `--force`, never `--legacy-peer-deps`. Only ONE install changes THIRD-PARTY dependencies (Task 1); the installs in Tasks 5-9 exist solely to create workspace symlinks for new packages and are required. After each, run the flat-tree check; anything printed is a split singleton:
   ```bash
   find packages/*/node_modules -maxdepth 2 -type d \
       \( -name pinia -o -name validup -o -name vue -o -name client-web-kit \)
@@ -851,7 +851,8 @@ git commit -m "test(core): cover domain api url construction and resource meta"
 **Interfaces:**
 - Consumes: `createFakeClient`, `FakeHandlerMap` from Task 1.
 - Produces:
-  - `mountComponent(component: Component, props?: Record<string, any>, handlers?: FakeHandlerMap): { wrapper: VueWrapper, client: FakeClient, pinia: Pinia }`
+  - `mountComponent(component: Component, props?: Record<string, any>, handlers?: FakeHandlerMap, options?: MountOptions): { wrapper: VueWrapper, client: FakeClient, pinia: Pinia }`
+  - `type MountOptions = { onApp?: (app: App, client: FakeClient) => void }` — runs BEFORE mount
   - `InstallOptions` gains `httpClient?: HTTPClient`
   - `BaseHTTPClientInstallOptions` gains `client?: HTTPClient`
 
@@ -957,17 +958,28 @@ import { createFakeClient as createFakeAuthupClient } from '@authup/core-http-ki
 import { mount } from '@vue/test-utils';
 import vuecs from '@vuecs/core';
 import { createPinia } from 'pinia';
-import type { Component } from 'vue';
+import type { App, Component } from 'vue';
 import { install } from '../install';
 import { createFakeClient } from './module';
+import type { FakeClient } from './module';
 import type { FakeHandlerMap } from './types';
 
 const noop = () => undefined;
+
+export type MountOptions = {
+    /**
+     * Runs against the app BEFORE mount, so whatever it provides is visible
+     * to the component's setup(). Feature modules use it to provide their own
+     * client on top of the base one — providing after mount would be too late.
+     */
+    onApp?: (app: App, client: FakeClient) => void
+};
 
 export function mountComponent(
     component: Component,
     props: Record<string, any> = {},
     handlers: FakeHandlerMap = {},
+    options: MountOptions = {},
 ) {
     const pinia = createPinia();
     const client = createFakeClient({ handlers });
@@ -1014,6 +1026,9 @@ export function mountComponent(
                     baseURL: 'http://core.fake.test',
                     httpClient: client,
                 }],
+                // 5. Caller hook — LAST, so the base client is already
+                //    provided, but still before mount, so setup() sees it.
+                { install: (app: App) => options.onApp?.(app, client) },
             ],
         },
     });
@@ -1170,14 +1185,22 @@ export function mountModuleComponent(
     props: Record<string, any> = {},
     handlers: FakeHandlerMap = {},
 ) {
-    const mounted = mountComponent(component, props, handlers);
-    const moduleClient = new MTBAPIClient(mounted.client);
+    let moduleClient : MTBAPIClient | undefined;
 
-    provideHTTPClient(moduleClient, mounted.wrapper.vm.$.appContext.app);
+    const mounted = mountComponent(component, props, handlers, {
+        onApp: (app, client) => {
+            moduleClient = new MTBAPIClient(client);
+            provideHTTPClient(moduleClient, app);
+        },
+    });
 
-    return { ...mounted, moduleClient };
+    return { ...mounted, moduleClient: moduleClient as MTBAPIClient };
 }
 ```
+
+The module client MUST be provided through `onApp`, not after `mountComponent`
+returns: a component that injects it in `setup()` runs during mount, so a later
+`provide` would arrive too late and the inject would throw.
 
 `MTBAPIClient` already takes an injected `HTTPClient` in its constructor, so
 the fake needs no module-side change at all.
@@ -1499,7 +1522,28 @@ git mv packages/core/src/testing      packages/http-kit/src/testing
 for f in module types error helper constants; do
     git mv "packages/core/src/core/http-client/$f.ts" "packages/http-kit/src/client/$f.ts"
 done
+```
 
+`types.ts` carries one type that must NOT go with it:
+`BaseHTTPClientInstallOptions` is an install-time option consumed by
+`install.ts`, which stays in the Vue package. Move that declaration back into
+`packages/core/src/core/http-client/types.ts` (recreating the file with just
+that type), leaving `HTTPClientOptions`, `HTTPClientErrorIssue` and
+`HTTPClientErrorPayload` in http-kit:
+
+```ts
+// packages/core/src/core/http-client/types.ts — recreated, Vue-side only
+import type { HTTPClient } from '@dnpm-dip/http-kit';
+
+export type BaseHTTPClientInstallOptions = {
+    baseURL?: string,
+    client?: HTTPClient
+};
+```
+
+Then move the resource utilities:
+
+```bash
 git mv packages/core/src/core/resource/collection/utils.ts packages/http-kit/src/resource/collection-utils.ts
 git mv packages/core/src/core/resource/record/utils.ts     packages/http-kit/src/resource/record-utils.ts
 ```
