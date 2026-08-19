@@ -338,13 +338,17 @@ describe('FakeClient', () => {
     it('should answer a routed request and record it', async () => {
         const client = createFakeClient({
             handlers: {
-                'GET /mtb/sites': () => ({ entries: [{ code: 'site-a' }], size: 1 }),
+                'GET /mtb/sites': () => ({
+                    local: { code: 'site-a', display: 'Standort A' },
+                    others: [{ code: 'site-b', display: 'Standort B' }],
+                }),
             },
         });
 
         const response = await client.site.getItems('mtb');
 
-        expect(response.entries).toHaveLength(1);
+        expect(response.local.code).toBe('site-a');
+        expect(response.others).toHaveLength(1);
         expect(client.requests).toHaveLength(1);
         expect(client.requests[0]?.method).toBe('GET');
     });
@@ -571,19 +575,25 @@ describe('SiteAPI', () => {
     it('should address the use-case scoped sites endpoint', async () => {
         const client = createFakeClient({
             handlers: {
-                'GET /mtb/sites': () => ({ entries: [{ code: 'a', display: 'A' }], size: 1 }),
+                'GET /mtb/sites': () => ({
+                    local: { code: 'a', display: 'A' },
+                    others: [{ code: 'b', display: 'B' }],
+                }),
             },
         });
 
         const response = await client.site.getItems('mtb');
 
         expect(client.requests[0]?.url).toContain('/mtb/sites');
-        expect(response.entries[0]?.code).toBe('a');
+        expect(response.local.code).toBe('a');
+        expect(response.others).toHaveLength(1);
     });
 
     it('should scope by the given use case', async () => {
         const client = createFakeClient({
-            handlers: { 'GET /rd/sites': () => ({ entries: [], size: 0 }) },
+            handlers: {
+                'GET /rd/sites': () => ({ local: { code: 'a' }, others: [] }),
+            },
         });
 
         await client.site.getItems('rd');
@@ -592,6 +602,13 @@ describe('SiteAPI', () => {
     });
 });
 ```
+
+**`SiteAPI` is the one collection-shaped endpoint that is NOT a
+`ResourceCollectionResponse`.** It returns `SiteResponse = { local: Coding,
+others: Coding[] }`. Every fixture must match its method's DECLARED return type
+— a fixture invented from prose passes trivially, because the fake echoes
+whatever the handler returns, and then the spec asserts the fake rather than the
+API. Read the return type before writing each fixture.
 
 Create `packages/core/test/unit/domains/query.spec.ts`:
 

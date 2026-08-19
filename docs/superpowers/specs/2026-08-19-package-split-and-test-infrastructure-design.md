@@ -181,7 +181,12 @@ Surface:
 1. **Collection shape.** Portal's wire format is
    `{ entries, size?, limit?, offset? }` (`domains/types.ts`), not hub's
    `{ data, meta }`. The default fallback handler returns
-   `{ entries: [], size: 0 }`.
+   `{ entries: [], size: 0 }`. This is the shape of `ResourceCollectionResponse<T>`
+   and covers the majority of endpoints, but it is **not universal**: `SiteAPI`
+   returns `SiteResponse = { local: Coding, others: Coding[] }`. The fallback is
+   only for unmatched routes — every explicit handler fixture must match its
+   method's declared return type, or the spec asserts the fake's echo instead of
+   the API.
 2. **Error payload.** Portal's is `{ issues: [{ severity, details }] }`
    (`HTTPClientErrorPayload`), not hub's `{ message }`. Error helpers and any
    `RESPONSE_ERROR` hook align to `issues`.
