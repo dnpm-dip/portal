@@ -2,7 +2,7 @@ import type { Ref, VNodeChild } from 'vue';
 import { computed, isRef, ref } from 'vue';
 import { renderError } from '../../error';
 import { hasNormalizedSlot, normalizeSlot } from '../../utils';
-import type { ObjectLiteral } from '../../../types';
+import type { ObjectLiteral } from '@dnpm-dip/kit';
 import { ResourceSlotName } from '../constants';
 import type {
     ResourceRecordDefaultSlotProps,

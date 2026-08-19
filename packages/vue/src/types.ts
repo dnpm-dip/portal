@@ -6,14 +6,13 @@
  */
 
 import type { NavigationItem } from '@vuecs/navigation';
-import type { HTTPClient } from '@dnpm-dip/http-kit';
+import type { IHTTPClient } from '@dnpm-dip/http-kit';
 import type { ModuleType } from './constants';
 import type { PageMetaKey } from './core';
 
-export type { ObjectLiteral } from '@dnpm-dip/kit';
 export type InstallOptions = {
     baseURL: string,
-    httpClient?: HTTPClient
+    httpClient?: IHTTPClient
 };
 
 export type NavigationItemMeta = {

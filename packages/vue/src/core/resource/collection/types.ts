@@ -7,7 +7,7 @@ import type {
     VNodeChild,
 } from 'vue';
 import type { ResourceCollectionEventsType, ResourceCollectionLoadMeta } from '@dnpm-dip/http-kit';
-import type { ObjectLiteral } from '../../../types';
+import type { ObjectLiteral } from '@dnpm-dip/kit';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
 import type { ResourceSlotName } from '../constants';
 

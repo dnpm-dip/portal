@@ -3,7 +3,6 @@ import type { Ref, VNodeArrayChildren, VNodeChild } from 'vue';
 import { isRef, ref, watch } from 'vue';
 import { renderError } from '../../error';
 import { hasNormalizedSlot, normalizeSlot } from '../../utils';
-import type { ObjectLiteral } from '../../../types';
 import { ResourceSlotName } from '../constants';
 import type {
     ResourceCollectionDefaultSlotProps,
@@ -11,6 +10,7 @@ import type {
     ResourceCollectionManagerContext,
     ResourceCollectionManagerOutput,
 } from './types';
+import type { ObjectLiteral } from '@dnpm-dip/kit';
 import { hasOwnProperty } from '@dnpm-dip/kit';
 
 export function createResourceCollectionManager<

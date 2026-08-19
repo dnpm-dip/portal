@@ -13,7 +13,7 @@ import {
     watch,
 } from 'vue';
 import { VCButton } from '@vuecs/button';
-import { LogicalOperator } from '../../../constants';
+import { LogicalOperator } from '@dnpm-dip/http-kit';
 
 export default defineComponent({
     components: { VCButton },

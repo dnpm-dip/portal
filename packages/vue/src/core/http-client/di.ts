@@ -1,5 +1,5 @@
 import type { App } from 'vue';
-import type { HTTPClient } from '@dnpm-dip/http-kit';
+import type { IHTTPClient } from '@dnpm-dip/http-kit';
 import { inject } from '../inject';
 import { provide } from '../provide';
 
@@ -9,12 +9,12 @@ export function isHTTPIClientInjected(app?: App) {
     return !!inject(APIClientSymbol, app);
 }
 
-export function provideHTTPClient(client: HTTPClient, app?: App) {
+export function provideHTTPClient(client: IHTTPClient, app?: App) {
     provide(APIClientSymbol, client, app);
 }
 
-export function injectHTTPClient(app?: App) {
-    const instance = inject<HTTPClient>(APIClientSymbol, app);
+export function injectHTTPClient(app?: App) : IHTTPClient {
+    const instance = inject<IHTTPClient>(APIClientSymbol, app);
     if (!instance) {
         throw new Error('The APIClient is not set.');
     }

@@ -5,11 +5,11 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import type { Client as BaseClient } from 'hapic';
 import { injectHTTPClientAuthenticationHook } from '@authup/client-web-kit';
 import type { App } from 'vue';
+import type { IHTTPClient } from '@dnpm-dip/http-kit';
 
-export function setupBaseHTTPClient(app: App, client: BaseClient) {
+export function setupBaseHTTPClient(app: App, client: IHTTPClient) {
     const tokenHook = injectHTTPClientAuthenticationHook(app);
     tokenHook.attach(client);
 }
