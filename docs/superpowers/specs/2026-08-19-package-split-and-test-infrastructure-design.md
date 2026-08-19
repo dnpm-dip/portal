@@ -99,6 +99,7 @@ It lives in `vue`.
 | `core/src/constants.ts` | `LogicalOperator` -> `http-kit`; `ModuleType`, `QueryFilterURLKey` -> `vue`. |
 | `core/src/types.ts` | `ObjectLiteral` -> `kit`; the rest -> `vue`. |
 | `core/http-client/index.ts` | Barrel splits across `http-kit` and `vue`. |
+| `core/resource/{collection,record}/types.ts` | `ResourceCollectionEventsType`, `ResourceCollectionLoadMeta` and `ResourceRecordEventsType` -> `http-kit/src/resource/types.ts`; the Vue-bound manager/slot types stay. Discovered during implementation, not in the original content map: `defineResourceCollectionEvents` and `defineResourceRecordEvents` move to `http-kit` and must return exactly these types. Duplicating them would drift, and importing them from `core` would invert the dependency direction. |
 
 ## Interfaces
 
