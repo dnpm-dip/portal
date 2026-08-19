@@ -19,5 +19,6 @@ export type KMDataItem = {
 export type KMSurvivalReport = {
     data: KMDataItem[],
     grouping: Coding,
-    survivalType: Coding
+    survivalType: Coding,
+    timeUnit?: string
 };
