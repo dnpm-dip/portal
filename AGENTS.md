@@ -22,7 +22,7 @@ npm run dev                # Start portal dev server (Nuxt HMR)
 
 ```bash
 npm run dev --workspace=packages/portal       # Dev server
-npm run build --workspace=packages/core       # Build a specific package
+npm run build --workspace=packages/vue        # Build a specific package
 npm run test --workspace=packages/mtb         # Test a specific package
 ```
 

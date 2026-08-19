@@ -21,12 +21,15 @@ This repository contains the Portal of DNPM:DIP.
 
 The repository contains the following packages:
 
-- **@dnpm-dip/core**: This package contains common constants, functions, types, ...
-- **@dnpm-dip/kit**: This package contains utilities to register dnpm dip modules to the portal.
-- **@dnpm-dip/portal**: This package contains the User Interface (UI).
+- **@dnpm-dip/kit**: Framework-free utilities shared by the other packages (no Vue, no Nuxt).
+- **@dnpm-dip/nuxt-kit**: Utilities to register dnpm dip modules into the portal (Nuxt module registration).
+- **@dnpm-dip/http-kit**: HTTP client, domain models and `I*API` interfaces for talking to the DNPM:DIP API.
+- **@dnpm-dip/vue**: Vue components, composables, stores and services shared across the portal and its modules.
+- **@dnpm-dip/theme**: Tailwind v4 / vuecs theme — design tokens and chrome styles.
 - **@dnpm-dip/admin**: This package contains the admin module.
 - **@dnpm-dip/rd**: This package contains the module for Rare Diseases (RD).
 - **@dnpm-dip/mtb**: This package contains the module for Molecular Tumor Boards (MTBs).
+- **@dnpm-dip/portal**: This package contains the User Interface (UI).
 
 ## Usage
 

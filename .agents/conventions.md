@@ -5,7 +5,7 @@
 | Tool             | Purpose                                           |
 |------------------|---------------------------------------------------|
 | Nx               | Monorepo task runner (dependency-ordered builds)   |
-| tsdown           | Library package bundling (core, kit)               |
+| tsdown           | Library package bundling (kit, http-kit, vue, nuxt-kit, theme) |
 | Nuxt 4           | Portal application framework                       |
 | Vitest           | Test runner                                        |
 | ESLint v10       | Linting (`@tada5hi/eslint-config`, flat config)    |
@@ -77,6 +77,24 @@ find node_modules -name reactivity -type d -path "*@vue*"
 
 More than one line printed means the override is out of sync.
 
+## Package Boundaries
+
+`kit` and `http-kit` are framework-free by design: neither may import `vue`,
+`pinia`, `@vuecs/*`, `@authup/client-web-kit`, `vue-chartjs` or `chart.js`.
+Vue-facing code (components, composables, stores, DI) belongs in `vue`
+instead. Verify with:
+
+```bash
+grep -rnE "from '(vue|pinia|@vuecs/|@authup/client-web-kit|vue-chartjs|chart\.js)'" packages/kit/src packages/http-kit/src
+```
+
+A clean run prints nothing.
+
+`vue` may *import* another package's types (e.g. from `@authup/client-web-kit`)
+but must never *re-export* them. Re-exporting the same named type from two
+packages makes a mechanical import rewrite (e.g. a future package split)
+ambiguous about which package a consumer should import it from.
+
 ## Authup API Shapes
 
 Entity **record** endpoints return an envelope, not the bare record — every
@@ -127,7 +145,7 @@ Common types:
 - `chore` — Maintenance tasks
 - `test` — Adding or updating tests
 
-Scopes typically match package names: `core`, `portal`, `mtb`, `rd`, `admin`, `kit`, `deps`.
+Scopes typically match package names: `kit`, `http-kit`, `vue`, `nuxt-kit`, `theme`, `portal`, `mtb`, `rd`, `admin`, `deps`.
 
 ## Code Style
 
@@ -147,7 +165,7 @@ Scopes typically match package names: `core`, `portal`, `mtb`, `rd`, `admin`, `k
 
 - Use Vue 3 Composition API (`<script setup>`)
 - Use Pinia for state management
-- Feature modules register themselves via `kit` helpers
+- Feature modules register themselves via `nuxt-kit` helpers
 - Pages are auto-routed by Nuxt file-based routing
 - Plugins in `packages/portal/plugins/` handle global setup
 - **Always use explicit component imports.** Import `@vuecs/*` components where you use them
@@ -166,7 +184,7 @@ Scopes typically match package names: `core`, `portal`, `mtb`, `rd`, `admin`, `k
 - Use **ESM** and modern TypeScript/JavaScript
 - Maintain consistency with existing naming and architectural conventions
 - Before adding new code, study surrounding patterns and naming conventions
-- Respect separation of concerns: shared logic → `core`, module registration → `kit`, domain UI → feature modules, app shell → `portal`
+- Respect separation of concerns: framework-free utilities → `kit`, HTTP client & domain models → `http-kit`, shared Vue components/stores → `vue`, module registration → `nuxt-kit`, domain UI → feature modules, app shell → `portal`
 - Prefer editing existing files over creating new ones
 - Keep changes minimal and focused on the task at hand
 
@@ -193,7 +211,7 @@ patterns instead of inventing new ones — and when refactoring an old view, mig
   on `h5`/`h6`/`span` hosts. No `<hr>` separators between sections; use margins.
 - **Cards/panels**: `.entity-card` (theme-owned chrome: `--vc-radius-md` ≈ 6px radius, soft shadow). Never add inline
   `style="max-width: ..."`; lay out card groups with `grid gap-3 md:grid-cols-2 xl:grid-cols-3`.
-- **Facts (label-over-value)**: `DFact` from `@dnpm-dip/core` (`label`, optional `icon`, value via slot).
+- **Facts (label-over-value)**: `DFact` from `@dnpm-dip/vue` (`label`, optional `icon`, value via slot).
   Use for entity metadata rows and fact grids instead of `<strong>Label</strong> value` lines.
 - **Chips/pills**: `rounded-full border border-border bg-bg px-2 py-0.5 text-xs` for code/term chips;
   status pills use tinted surfaces (`bg-success-500/10 text-success-600`, `bg-error-500/10 text-error-600`).
@@ -220,6 +238,6 @@ patterns instead of inventing new ones — and when refactoring an old view, mig
 
 The `mtb` and `rd` feature modules expose parallel UI patterns (filters, query pages, summary views). When changing one, check the other for the equivalent component and mirror the change so the two modules stay consistent in behavior and appearance.
 
-- Naming parallels: `MQuery*` (mtb) ↔ `RQuery*` (rd), both consuming shared components from `core` (e.g. `DQueryFilterBox`).
+- Naming parallels: `MQuery*` (mtb) ↔ `RQuery*` (rd), both consuming shared components from `vue` (e.g. `DQueryFilterBox`).
 - Before finishing a task touching one module, grep the other for the matching component (`MQueryDiagnosisFilter` → `RQueryDiagnosisFilter`, etc.) and apply equivalent changes.
 - If a pattern only makes sense in one module, document why in a comment or commit message.

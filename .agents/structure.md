@@ -6,19 +6,21 @@ It is built on Nuxt 4 (Vue 3) with a modular architecture where domain-specific 
 ## Applications
 
 | Name                                    | Type        | Description                                                    |
-|-----------------------------------------|-------------|----------------------------------------------------------------|
+|-----------------------------------------|-------------|------------------------------------------------------------------|
 | [portal](../packages/portal)            | Nuxt App    | Main web application — routes, layouts, plugins, and assets.   |
 
 ## Packages & Libraries
 
-| Name                                    | Type        | Description                                                    |
-|-----------------------------------------|-------------|----------------------------------------------------------------|
-| [core](../packages/core)                | Library     | Shared components, composables, domain models, services, stores, and utilities. |
-| [kit](../packages/kit)                  | Library     | Utilities for registering feature modules into the portal.     |
-| [theme](../packages/theme)              | Library     | Tailwind v4 / vuecs theme — design tokens, chrome styles, Bootstrap-compat shims. |
-| [admin](../packages/admin)              | Module      | Admin functionality (auto-installed as Nuxt module).           |
-| [mtb](../packages/mtb)                  | Module      | Molecular Tumor Board module (auto-installed as Nuxt module).  |
-| [rd](../packages/rd)                    | Module      | Rare Diseases module (auto-installed as Nuxt module).          |
+| Name                                        | Type        | Description                                                    |
+|----------------------------------------------|-------------|------------------------------------------------------------------|
+| [kit](../packages/kit)                      | Library     | Framework-free utilities (no Vue, no Nuxt) shared by every other package. |
+| [http-kit](../packages/http-kit)            | Library     | HTTP client, domain models and `I*API` interfaces for the DNPM:DIP API; ships a `./testing` fake client. |
+| [vue](../packages/vue)                      | Library     | Vue components, composables, stores, services and DI; ships a `./testing` mount harness. |
+| [nuxt-kit](../packages/nuxt-kit)            | Library     | Utilities for registering feature modules into the portal (Nuxt module registration). |
+| [theme](../packages/theme)                  | Library     | Tailwind v4 / vuecs theme — design tokens, chrome styles, Bootstrap-compat shims. |
+| [admin](../packages/admin)                  | Module      | Admin functionality (auto-installed as Nuxt module).           |
+| [mtb](../packages/mtb)                      | Module      | Molecular Tumor Board module (auto-installed as Nuxt module).  |
+| [rd](../packages/rd)                        | Module      | Rare Diseases module (auto-installed as Nuxt module).          |
 
 ## Package Dependency Layers
 
@@ -29,17 +31,21 @@ Internal `@dnpm-dip/*` dependencies are declared in each package's `package.json
 Foundation (no internal deps):
   kit
   theme
+  nuxt-kit
 
 Layer 1:
-  core → kit
+  http-kit → kit
+
+Layer 2:
+  vue → kit, http-kit
 
 Feature Modules:
-  admin → core, kit
-  mtb   → core, kit
-  rd    → core, kit
+  admin → kit, http-kit, vue, nuxt-kit
+  mtb   → kit, http-kit, vue, nuxt-kit
+  rd    → kit, http-kit, vue, nuxt-kit
 
 Application:
-  portal → core, kit, theme, admin, mtb, rd
+  portal → kit, http-kit, vue, nuxt-kit, theme, admin, mtb, rd
 ```
 
 ## Portal Structure
@@ -58,19 +64,37 @@ packages/portal/
 └── public/              — Static files
 ```
 
-## Core Package Structure
+## `http-kit` Package Structure
+
+Framework-free — no Vue, Pinia, or `@vuecs/*` import may appear here (see
+[conventions.md](conventions.md#package-boundaries)).
 
 ```
-packages/core/src/
-├── components/          — Reusable Vue components
-├── composables/         — Vue 3 composition functions
-├── domains/             — Domain models (patient, query, site, coding, etc.)
-├── services/            — API services (HTTP client via Authup)
-├── stores/              — Pinia stores (query-filter, query-session)
-├── utils/               — Utility functions
-├── types.ts             — Type definitions
-├── constants.ts         — Constants
-└── index.ts             — Main export
+packages/http-kit/src/
+├── client/               — HTTPClient (wraps hapic), errors, module helpers
+├── domains/              — Domain models + I*API interfaces (patient, query, site,
+│                            coding, codesystem, valueset, prepared-query, ...)
+├── resource/              — Collection/record response-shape helpers
+├── testing/               — createFakeClient, fakeResponse, matchRoute (`./testing` export)
+├── constants.ts
+└── index.ts              — Main export
+```
+
+## `vue` Package Structure
+
+```
+packages/vue/src/
+├── components/            — Reusable Vue components (domain-entity renderers + utility components)
+├── composables/           — Vue 3 composition functions (e.g. toast)
+├── core/                  — HTTP client DI (inject/provide), error handling, layout, resource helpers
+├── services/               — Query event bus and similar app services
+├── stores/                — Pinia stores (query-filter, query-session)
+├── testing/                — mountComponent mount harness (`./testing` export)
+├── utils/                  — Utility functions
+├── install.ts             — Nuxt/Vue plugin install()
+├── types.ts                — Type definitions
+├── constants.ts            — Constants
+└── index.ts                — Main export
 ```
 
 ## Feature Module Structure
@@ -91,8 +115,10 @@ packages/{module}/
 
 ## Separation of Concerns
 
-- **Domain logic & shared components** → `packages/core`
-- **Module registration utilities** → `packages/kit`
+- **Framework-free shared utilities** → `packages/kit`
+- **HTTP client & domain models** → `packages/http-kit`
+- **Shared Vue components, stores & composables** → `packages/vue`
+- **Nuxt module registration utilities** → `packages/nuxt-kit`
 - **Design tokens, theme & chrome CSS** → `packages/theme`
 - **Feature-specific UI** → `packages/admin`, `packages/mtb`, `packages/rd`
 - **App shell & routing** → `packages/portal`

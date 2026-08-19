@@ -2,23 +2,26 @@
 
 ## Overview
 
-The DNPM:DIP Portal follows a modular Nuxt 4 architecture where the main application (`portal`) acts as a shell that loads domain-specific feature modules (`admin`, `mtb`, `rd`) at build time. Shared logic lives in `core` and `kit`; the Tailwind/vuecs theme lives in `theme`.
+The DNPM:DIP Portal follows a modular Nuxt 4 architecture where the main application (`portal`) acts as a shell that loads domain-specific feature modules (`admin`, `mtb`, `rd`) at build time. Framework-free shared logic lives in `kit`; the HTTP client and domain models live in `http-kit`; shared Vue components, stores and composables live in `vue`; Nuxt module-registration helpers live in `nuxt-kit`; the Tailwind/vuecs theme lives in `theme`.
 
 ## Layered Architecture
 
 ```
 ┌─────────────────────────────────────────────┐
-│  Portal (Nuxt App Shell)                    │
-│  Routes, layouts, plugins, middleware        │
-├─────────────┬─────────────┬─────────────────┤
-│  admin      │  mtb        │  rd             │
-│  (module)   │  (module)   │  (module)       │
-├─────────────┴─────────────┴─────────────────┤
-│  core (shared library)                       │
-│  Components, composables, domains, services  │
-├──────────────────────┬───────────────────────┤
-│  kit (registration)  │  theme (Tailwind/vuecs)│
-└──────────────────────┴───────────────────────┘
+│  Portal (Nuxt App Shell)                     │
+│  Routes, layouts, plugins, middleware         │
+├─────────────┬─────────────┬──────────────────┤
+│  admin      │  mtb        │  rd              │
+│  (module)   │  (module)   │  (module)        │
+├─────────────┴─────────────┴──────────────────┤
+│  vue (shared Vue library)                     │
+│  Components, composables, stores, DI          │
+├───────────────────────────────────────────────┤
+│  http-kit (HTTP client, domain models, I*API)  │
+├───────────────┬────────────────┬───────────────┤
+│  kit (utils)  │  nuxt-kit      │  theme        │
+│               │  (registration)│  (Tailwind)   │
+└───────────────┴────────────────┴───────────────┘
 ```
 
 ### 1. Portal — App Shell
@@ -33,20 +36,32 @@ The DNPM:DIP Portal follows a modular Nuxt 4 architecture where the main applica
 
 Each module (`admin`, `mtb`, `rd`) is a Nuxt module that auto-installs into the portal:
 - Registers its own pages and components at runtime
-- Uses the `kit` package to register navigation items and routes
-- Depends on `core` for shared components, composables, and API services
+- Uses the `nuxt-kit` package to register navigation items and routes
+- Depends on `vue` for shared components, composables and stores, and on `http-kit` for domain models and the HTTP client
 
-### 3. Core — Shared Library
+### 3. http-kit — HTTP Client & Domain Models
 
-The heart of the codebase. Contains:
+Framework-free (no Vue — see [conventions.md](conventions.md#package-boundaries)). Contains:
+- **Client**: `HTTPClient`, wrapping `hapic`, plus its errors and module helpers
+- **Domains**: TypeScript types, `I*API` interfaces and domain models for medical entities (patients, queries, sites, coding systems, code systems, value sets, prepared queries, etc.)
+- **Resource helpers**: shared collection/record response-shape utilities
+- **Testing**: a `./testing` export — `createFakeClient`, `fakeResponse`, `matchRoute` (see [testing.md](testing.md))
+
+### 4. vue — Shared Vue Library
+
+Contains:
 - **Components**: Reusable Vue components for rendering domain entities
 - **Composables**: Vue 3 composition API hooks for common logic
-- **Domains**: TypeScript types and interfaces for medical domain models (patients, queries, sites, coding systems, etc.)
-- **Services**: HTTP client wrappers for backend API communication
 - **Stores**: Pinia stores for state management (query filters, query sessions)
-- **Utils**: Shared utility functions
+- **Core**: HTTP client dependency injection (inject/provide), error handling, layout and resource helpers
+- **Services**: app-level services such as the query event bus
+- **Testing**: a `./testing` export — the `mountComponent` mount harness (see [testing.md](testing.md))
 
-### 4. Kit — Module Registration
+### 5. kit — Framework-Free Utilities
+
+Small utilities (color conversion, debouncing, URL query helpers, object/type guards, ...) with no Vue, Pinia or Nuxt dependency. Consumed by `http-kit`, `vue` and the feature modules.
+
+### 6. nuxt-kit — Module Registration
 
 Provides helper functions and types for feature modules to register themselves into the portal (navigation items, routes, module metadata).
 
@@ -54,7 +69,7 @@ Provides helper functions and types for feature modules to register themselves i
 
 - **Pinia** is used for global state management
 - Key stores: query-filter store, query-session store, modules store
-- Stores are defined in `core` and `portal` packages
+- Stores are defined in `vue` and `portal` packages
 
 ## Authentication
 
@@ -101,7 +116,8 @@ Provides helper functions and types for feature modules to register themselves i
   shells either way. Extend the list whenever an icon name can appear somewhere
   new:
   - a new top-level directory under `packages/portal/`,
-  - a new `@dnpm-dip/*` package (all of them are built from `src`, not `dist`),
+  - a new `@dnpm-dip/*` package (`kit`, `http-kit`, `vue`, `nuxt-kit`, `admin`,
+    `mtb`, `rd`, `theme` — all of them are built from `src`, not `dist`),
   - a dependency that names icons — today `@authup/client-web-kit` (components
     and identity-provider preset tables) and `@vuecs/icons-font-awesome` (the
     vuecs behavioral defaults: pagination arrows, submit button, alert,
@@ -119,7 +135,17 @@ Provides helper functions and types for feature modules to register themselves i
 ## Build & Deployment
 
 - **Nx** orchestrates monorepo builds with dependency-ordered execution and caching
-- **tsdown** builds library packages (`core`, `kit`, `theme`)
+- **tsdown** builds library packages (`kit`, `http-kit`, `vue`, `nuxt-kit`, `theme`)
 - **Nuxt** builds the portal application
+- **`nuxt-module-build` (mkdist)** builds the feature modules (`admin`, `mtb`, `rd`) —
+  **and this is a second silent-failure hazard, the same class as the
+  `NuxtIconBundle` glob above.** mkdist transpiles each source file in
+  isolation; it does not resolve imports, so a module that does not exist
+  still transpiles cleanly and the package's `build` script exits `0`. This
+  was verified on this branch: `npm run build --workspace=packages/admin`
+  returned `0` while `admin` still imported the deleted `@dnpm-dip/core`.
+  These three packages' **test suites** — which actually load the module
+  graph — are the real gate, not their `build` script. See
+  [testing.md](testing.md) for how the tests are wired.
 - **Docker** (Node 24 Alpine) for production deployment
 - Container runs on port 3000
