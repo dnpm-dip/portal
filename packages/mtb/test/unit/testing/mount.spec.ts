@@ -36,7 +36,18 @@ describe('mountModuleComponent', () => {
     });
 
     it('routes a component-injected request through the fake client', async () => {
-        const { client } = mountModuleComponent(Probe, {}, { 'GET /mtb/queries/:id': () => ({ id: 'q-1' }) });
+        const { client } = mountModuleComponent(Probe, {}, {
+            'GET /mtb/queries/:id': () => ({
+                id: 'q-1',
+                submittedAt: '2026-01-01T00:00:00Z',
+                querier: 'querier-1',
+                mode: { code: 'local' },
+                criteria: {},
+                expiresAfter: 3600,
+                lastUpdate: '2026-01-01T00:00:00Z',
+                peers: [],
+            }),
+        });
 
         await flushPromises();
 
@@ -45,7 +56,18 @@ describe('mountModuleComponent', () => {
     });
 
     it('provides the same module client instance the harness returns', () => {
-        const { moduleClient } = mountModuleComponent(Probe, {}, { 'GET /mtb/queries/:id': () => ({ id: 'q-1' }) });
+        const { moduleClient } = mountModuleComponent(Probe, {}, {
+            'GET /mtb/queries/:id': () => ({
+                id: 'q-1',
+                submittedAt: '2026-01-01T00:00:00Z',
+                querier: 'querier-1',
+                mode: { code: 'local' },
+                criteria: {},
+                expiresAfter: 3600,
+                lastUpdate: '2026-01-01T00:00:00Z',
+                peers: [],
+            }),
+        });
 
         expect(injectedClient).toBe(moduleClient);
     });
