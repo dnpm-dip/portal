@@ -4,11 +4,18 @@ import { createFakeClient, fakeResponse } from '../../../src/testing';
 
 describe('FakeClient', () => {
     it('should answer a routed request and record it', async () => {
-        const client = createFakeClient({ handlers: { 'GET /mtb/sites': () => ({ entries: [{ code: 'site-a' }], size: 1 }) } });
+        const client = createFakeClient({
+            handlers: {
+                'GET /mtb/sites': () => ({
+                    local: { code: 'site-a' },
+                    others: [],
+                }),
+            },
+        });
 
         const response = await client.site.getItems('mtb');
 
-        expect(response.entries).toHaveLength(1);
+        expect(response.local).toEqual({ code: 'site-a' });
         expect(client.requests).toHaveLength(1);
         expect(client.requests[0]?.method).toBe('GET');
     });

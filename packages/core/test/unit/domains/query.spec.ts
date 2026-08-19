@@ -11,7 +11,7 @@ describe('QueryAPI', () => {
     });
 
     it('should read the patient filter of a query', async () => {
-        const client = createFakeClient({ handlers: { 'GET /mtb/queries/:id/filters/patient': () => ({ gender: { items: [] } }) } });
+        const client = createFakeClient({ handlers: { 'GET /mtb/queries/:id/filters/patient': () => ({ gender: [{ code: 'male' }] }) } });
 
         await client.query.getPatientFilter('mtb', 'q-1');
 
