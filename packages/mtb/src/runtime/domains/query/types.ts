@@ -8,7 +8,13 @@ import type {
     KeyValueRecords,
     QueryBase,
     QueryRequestMode,
+    QuerySummaryDemographics,
+    ResourceCollectionLoadMeta,
+    ResourceCollectionResponse,
 } from '@dnpm-dip/http-kit';
+import type { URLQueryRecord } from '@dnpm-dip/kit';
+import type { KMSurvivalReport } from '@dnpm-dip/vue';
+import type { PatientMatch, PatientRecord } from '../patient';
 
 import type { QueryMutationType } from './constants';
 
@@ -154,3 +160,25 @@ export type QueryGeneAlterationInfo = {
     count: number,
     supporting: boolean
 };
+
+export interface IQueryAPI {
+    submit(query: QuerySessionCreate) : Promise<QuerySession>;
+    getOne(id: string) : Promise<QuerySession>;
+    update(id: string, query?: QuerySessionCreate) : Promise<QuerySession>;
+    getDiagnosisFilter(id: string) : Promise<QueryDiagnosisFilter>;
+    getTherapyImplementedFilter(id: string) : Promise<QueryTherapyImplementedFilter>;
+    getTherapyRecommendedFilter(id: string) : Promise<QueryTherapyRecommendedFilter>;
+    getPatients(id: string, meta?: ResourceCollectionLoadMeta) : Promise<ResourceCollectionResponse<PatientMatch>>;
+    getPatientRecord(queryId: string, patientId: string) : Promise<PatientRecord>;
+    getKaplanMeierStatistics(queryId: string, type?: string, grouping?: string) : Promise<KMSurvivalReport>;
+    getTherapyResponses(queryId: string, meta?: ResourceCollectionLoadMeta) : Promise<ResourceCollectionResponse<QueryTherapyResponse>>;
+    getCoarseTherapyResponses(queryId: string, meta?: ResourceCollectionLoadMeta) : Promise<ResourceCollectionResponse<QueryCoarseTherapyResponse>>;
+    getGeneAlterationInfos(queryId: string, meta?: ResourceCollectionLoadMeta) : Promise<ResourceCollectionResponse<QueryGeneAlterationInfo>>;
+    getGeneAlterationDistributions(
+        queryId: string,
+        meta?: ResourceCollectionLoadMeta,
+    ) : Promise<ResourceCollectionResponse<QuerySummaryGeneAlterationDistribution>>;
+    getTumorDiagnostics(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryTumorDiagnostics>;
+    getMedication(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryMedication>;
+    getDemographics(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryDemographics>;
+}

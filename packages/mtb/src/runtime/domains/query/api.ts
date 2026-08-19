@@ -10,11 +10,12 @@ import { BaseAPI, QueryRequestMode } from '@dnpm-dip/http-kit';
 import { serializeURLQueryRecord } from '@dnpm-dip/kit';
 import type { PatientMatch, PatientRecord } from '../patient';
 import type {
+    IQueryAPI,
     QueryCoarseTherapyResponse,
-    QueryDiagnosisFilter, 
-    QueryGeneAlterationInfo, 
+    QueryDiagnosisFilter,
+    QueryGeneAlterationInfo,
     QuerySession,
-    QuerySessionCreate, 
+    QuerySessionCreate,
     QuerySummaryGeneAlterationDistribution,
     QuerySummaryMedication,
     QuerySummaryTumorDiagnostics,
@@ -23,7 +24,7 @@ import type {
     QueryTherapyResponse,
 } from './types';
 
-export class QueryAPI extends BaseAPI {
+export class QueryAPI extends BaseAPI implements IQueryAPI {
     /**
      * Create a query session.
      *

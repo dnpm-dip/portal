@@ -1,7 +1,11 @@
 import type { IHTTPClient } from '@dnpm-dip/http-kit';
 import type { ConnectionReport } from '../../domains/connection-report';
 
-export class AdminHTTPClient {
+export interface IAdminAPIClient {
+    getConnectionReport() : Promise<ConnectionReport>;
+}
+
+export class AdminHTTPClient implements IAdminAPIClient {
     protected client: IHTTPClient;
 
     constructor(client: IHTTPClient) {

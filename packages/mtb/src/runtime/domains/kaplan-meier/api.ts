@@ -7,10 +7,11 @@
 
 import { BaseAPI } from '@dnpm-dip/http-kit';
 import type {
+    IKaplanMeierAPI,
     KaplanMeierOptionsResponse,
 } from './types';
 
-export class KaplanMeierAPI extends BaseAPI {
+export class KaplanMeierAPI extends BaseAPI implements IKaplanMeierAPI {
     async getOptions() : Promise<KaplanMeierOptionsResponse> {
         const response = await this.client.get('mtb/kaplan-meier/config');
         return response.data;

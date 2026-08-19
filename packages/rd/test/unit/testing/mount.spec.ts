@@ -6,7 +6,7 @@ import {
     expect,
     it,
 } from 'vitest';
-import type { RDHTTPClient } from '../../../src/runtime/core';
+import type { IRDHTTPClient } from '../../../src/runtime/core';
 import { injectHTTPClient } from '../../../src/runtime/core';
 import { mountModuleComponent } from '../../utils';
 
@@ -19,7 +19,7 @@ import { mountModuleComponent } from '../../utils';
  * every component spec pass while silently testing nothing. This spec fails
  * loudly for that case.
  */
-let injectedClient: RDHTTPClient | undefined;
+let injectedClient: IRDHTTPClient | undefined;
 
 const Probe = defineComponent({
     setup() {

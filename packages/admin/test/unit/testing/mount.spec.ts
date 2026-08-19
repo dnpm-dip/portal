@@ -6,7 +6,7 @@ import {
     expect,
     it,
 } from 'vitest';
-import type { AdminHTTPClient } from '../../../src/runtime/core/http-client';
+import type { IAdminAPIClient } from '../../../src/runtime/core/http-client';
 import { injectHTTPClient } from '../../../src/runtime/core/http-client';
 import { mountModuleComponent } from '../../utils';
 
@@ -19,7 +19,7 @@ import { mountModuleComponent } from '../../utils';
  * every component spec pass while silently testing nothing. This spec fails
  * loudly for that case.
  */
-let injectedClient: AdminHTTPClient | undefined;
+let injectedClient: IAdminAPIClient | undefined;
 
 const Probe = defineComponent({
     setup() {

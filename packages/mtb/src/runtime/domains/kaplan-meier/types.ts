@@ -16,3 +16,7 @@ export type KaplanMeierDefaults = {
 export type KaplanMeierOptionsResponse = ResourceCollectionResponse<KaplanMeierOptions> & {
     defaults: KaplanMeierDefaults
 };
+
+export interface IKaplanMeierAPI {
+    getOptions() : Promise<KaplanMeierOptionsResponse>;
+}
