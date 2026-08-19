@@ -1,7 +1,7 @@
 import { useToast as useVuecsToast } from '@vuecs/overlays';
 import { isClientError } from 'hapic';
 import { isObject } from 'smob';
-import { APIClientErrorIssueSeverity, extractAPIClientErrorIssues } from '../core';
+import { APIClientErrorIssueSeverity, extractAPIClientErrorIssues } from '@dnpm-dip/http-kit';
 
 type LegacyVariant = 'success' | 'danger' | 'warning' | 'info' | 'primary' | 'secondary' | 'light' | 'dark';
 type VuecsColor = 'neutral' | 'primary' | 'info' | 'success' | 'warning' | 'error';

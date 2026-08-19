@@ -2,7 +2,7 @@ import { isClientError } from 'hapic';
 import { h } from 'vue';
 import type { VNodeArrayChildren, VNodeChild } from 'vue';
 import { VCAlert } from '@vuecs/elements';
-import { APIClientErrorIssueSeverity, extractAPIClientErrorIssues } from '../http-client';
+import { APIClientErrorIssueSeverity, extractAPIClientErrorIssues } from '@dnpm-dip/http-kit';
 import { hasNormalizedSlot, normalizeSlot } from '../utils';
 import type {
     ErrorCollectionSlotProps,

@@ -4,10 +4,9 @@ import { mount } from '@vue/test-utils';
 import vuecs from '@vuecs/core';
 import { createPinia } from 'pinia';
 import type { App, Component } from 'vue';
+import { createFakeClient } from '@dnpm-dip/http-kit/testing';
+import type { FakeClient, FakeHandlerMap } from '@dnpm-dip/http-kit/testing';
 import { install } from '../install';
-import { createFakeClient } from './module';
-import type { FakeClient } from './module';
-import type { FakeHandlerMap } from './types';
 
 const noop = () => undefined;
 

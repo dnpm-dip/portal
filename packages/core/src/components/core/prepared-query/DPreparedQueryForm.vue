@@ -16,8 +16,8 @@ import {
     toRef,
     watch,
 } from 'vue';
-import type { PreparedQuery } from '../../../domains';
-import { PreparedQueryAPI } from '../../../domains';
+import type { PreparedQuery } from '@dnpm-dip/http-kit';
+import { PreparedQueryAPI } from '@dnpm-dip/http-kit';
 import { injectHTTPClient } from '../../../core';
 
 class PreparedQueryValidator extends Container<{ name: string }> {

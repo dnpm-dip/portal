@@ -6,7 +6,7 @@ import {
     expect,
     it,
 } from 'vitest';
-import type { HTTPClient } from '../../../src/core';
+import type { HTTPClient } from '@dnpm-dip/http-kit';
 import { injectHTTPClient } from '../../../src/core';
 import { mountComponent } from '../../../src/testing';
 

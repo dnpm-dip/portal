@@ -46,6 +46,7 @@
         "access": "public"
     },
     "dependencies": {
+        "@dnpm-dip/http-kit": "^0.0.0",
         "@dnpm-dip/kit": "^0.0.0",
         "@posva/event-emitter": "^1.0.3",
         "hapic": "^3.0.2",

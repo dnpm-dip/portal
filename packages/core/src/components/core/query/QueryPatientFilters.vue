@@ -8,8 +8,8 @@ import {
 } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core';
-import type { Coding, PatientFilter } from '../../../domains';
-import { isCoding, toCoding } from '../../../domains';
+import type { Coding, PatientFilter } from '@dnpm-dip/http-kit';
+import { isCoding, toCoding } from '@dnpm-dip/http-kit';
 import { QueryEventBusEventName, injectQueryEventBus } from '../../../services';
 import { useQueryFilterStore } from '../../../stores';
 import QueryFilterBox from './QueryFilterBox.vue';

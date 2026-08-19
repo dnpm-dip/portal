@@ -1,7 +1,7 @@
 <script lang="ts">
 import { type Component, type PropType, defineComponent } from 'vue';
 import { QueryFilterURLKey } from '../../../constants';
-import type { Coding, QuerySummaryDemographics } from '../../../domains';
+import type { Coding, QuerySummaryDemographics } from '@dnpm-dip/http-kit';
 import { useQueryFilterStore } from '../../../stores';
 import { DKVChartTableSwitch } from '../../utility';
 

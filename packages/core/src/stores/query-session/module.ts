@@ -6,7 +6,7 @@
  */
 
 import { ref } from 'vue';
-import type { QueryBase } from '../../domains';
+import type { QueryBase } from '@dnpm-dip/http-kit';
 import { QueryEventBusEventName } from '../../services';
 import type { StoreCreateOptions } from '../types';
 

@@ -6,8 +6,8 @@ import type {
 import { merge } from 'smob';
 import type { Component, PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
-import type { Coding, KeyValueRecord, MinMaxRange } from '../../../domains';
-import { isConceptCount } from '../../../domains';
+import type { Coding, KeyValueRecord, MinMaxRange } from '@dnpm-dip/http-kit';
+import { isConceptCount } from '@dnpm-dip/http-kit';
 import {
     generateRandomColorTuple,
     getColorInRange,

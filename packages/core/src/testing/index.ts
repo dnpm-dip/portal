@@ -1,4 +1,2 @@
-export * from './matcher';
-export * from './module';
+export * from '@dnpm-dip/http-kit/testing';
 export * from './mount';
-export * from './types';

@@ -12,7 +12,7 @@ import {
     ref,
     watch,
 } from 'vue';
-import type { KeyValueRecord } from '../../../domains';
+import type { KeyValueRecord } from '@dnpm-dip/http-kit';
 import { QueryEventBusEventName, injectQueryEventBus } from '../../../services';
 import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils';
 

@@ -17,7 +17,7 @@ import {
     watch,
 } from 'vue';
 import { injectHTTPClient } from '../../../core';
-import type { Coding } from '../../../domains';
+import type { Coding } from '@dnpm-dip/http-kit';
 
 export default defineComponent({
     components: { VCFormSelectSearch },

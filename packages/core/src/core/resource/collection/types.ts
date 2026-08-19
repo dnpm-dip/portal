@@ -1,22 +1,17 @@
 import type {
-    EmitsOptions, 
-    MaybeRef, 
-    Ref, 
+    EmitsOptions,
+    MaybeRef,
+    Ref,
     SetupContext,
-    Slots, 
+    Slots,
     VNodeChild,
 } from 'vue';
+import type { ResourceCollectionEventsType, ResourceCollectionLoadMeta } from '@dnpm-dip/http-kit';
 import type { ObjectLiteral } from '../../../types';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
-import type { ResourceCollectionSortDirection, ResourceSlotName } from '../constants';
+import type { ResourceSlotName } from '../constants';
 
-export type ResourceCollectionLoadMeta = {
-    limit?: number,
-    offset?: number,
-    total?: number,
-    filters?: Record<string, any>,
-    sort?: Record<string, `${ResourceCollectionSortDirection}`>,
-};
+export type { ResourceCollectionEventsType, ResourceCollectionLoadMeta };
 
 export type ResourceCollectionLoadResponse<
     DATA extends ObjectLiteral = ObjectLiteral,
@@ -26,13 +21,6 @@ export type ResourceCollectionLoadResponse<
 };
 
 type EmitFn<T = EmitsOptions> = SetupContext<T>['emit'];
-
-export type ResourceCollectionEventsType<T> = {
-    failed: (data: Error) => true,
-    created: (data: T) => true,
-    deleted: (data: T) => true,
-    updated: (data: T) => true
-};
 
 export type ResourceCollectionManagerContext<
     T extends ObjectLiteral = ObjectLiteral,

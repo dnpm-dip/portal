@@ -5,8 +5,8 @@ import {
     createResourceRecordManager,
     injectHTTPClient,
 } from '../../../core';
-import { ValidationAPI } from '../../../domains';
-import type { ValidationReport } from '../../../domains';
+import { ValidationAPI } from '@dnpm-dip/http-kit';
+import type { ValidationReport } from '@dnpm-dip/http-kit';
 
 export default defineComponent({
     props: {

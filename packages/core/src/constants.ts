@@ -5,14 +5,11 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
+export { LogicalOperator } from '@dnpm-dip/http-kit';
+
 export enum ModuleType {
     DEFAULT = 'default',
     USE_CASE = 'useCase',
-}
-
-export enum LogicalOperator {
-    AND = 'and',
-    OR = 'or',
 }
 
 export enum QueryFilterURLKey {

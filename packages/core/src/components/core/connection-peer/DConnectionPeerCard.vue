@@ -9,8 +9,8 @@
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
 import { VCIcon } from '@vuecs/icon';
-import type { ConnectionPeer } from '../../../domains';
-import { ConnectionPeerStatus } from '../../../domains';
+import type { ConnectionPeer } from '@dnpm-dip/http-kit';
+import { ConnectionPeerStatus } from '@dnpm-dip/http-kit';
 
 export default defineComponent({
     components: { VCIcon },

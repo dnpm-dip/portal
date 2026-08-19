@@ -1,4 +1,4 @@
-import type { Coding } from '../../../domains';
+import type { Coding } from '@dnpm-dip/http-kit';
 
 export type KMSurvivalRate = {
     censored: boolean,

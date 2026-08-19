@@ -13,7 +13,7 @@ import type {
     _ExtractGettersFromSetupStore,
     _ExtractStateFromSetupStore,
 } from 'pinia';
-import type { Coding, CodingGroup } from '../../domains';
+import type { Coding, CodingGroup } from '@dnpm-dip/http-kit';
 
 import type { createQueryFilterStore } from './module';
 

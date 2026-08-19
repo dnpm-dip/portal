@@ -7,7 +7,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
-import type { Coding } from '../../../domains';
+import type { Coding } from '@dnpm-dip/http-kit';
 import { DCommaList } from '../../utility';
 
 export default defineComponent({

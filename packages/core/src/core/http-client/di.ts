@@ -1,7 +1,7 @@
 import type { App } from 'vue';
+import type { HTTPClient } from '@dnpm-dip/http-kit';
 import { inject } from '../inject';
 import { provide } from '../provide';
-import type { HTTPClient } from './module';
 
 export const APIClientSymbol = Symbol.for('APIClient');
 

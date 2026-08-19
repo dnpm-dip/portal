@@ -1,28 +1,23 @@
 import type {
-    EmitsOptions, 
-    MaybeRef, 
-    Ref, 
-    SetupContext, 
-    Slots, 
+    EmitsOptions,
+    MaybeRef,
+    Ref,
+    SetupContext,
+    Slots,
     VNodeChild,
 } from 'vue';
+import type { ResourceRecordEventsType } from '@dnpm-dip/http-kit';
 import type { ObjectLiteral } from '../../../types';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
 import type { ResourceSlotName } from '../constants';
+
+export type { ResourceRecordEventsType };
 
 export type ResourceRecordManagerLoadFn<
     DATA extends ObjectLiteral = ObjectLiteral,
 > = (id: string) => Promise<DATA | undefined>;
 
 type EmitFn<T = EmitsOptions> = SetupContext<T>['emit'];
-
-export type ResourceRecordEventsType<T> = {
-    failed: (data: Error) => true,
-    created: (data: T) => true,
-    deleted: (data: T) => true,
-    updated: (data: T) => true,
-    resolved: (_data?: T) => true
-};
 
 export type ResourceRecordManagerContext<
     T extends ObjectLiteral = ObjectLiteral,

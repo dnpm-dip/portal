@@ -8,7 +8,7 @@ import {
     ref,
 } from 'vue';
 import DValidationReport from './DValidationReport';
-import type { ValidationReportInfo } from '../../../domains';
+import type { ValidationReportInfo } from '@dnpm-dip/http-kit';
 
 export default defineComponent({
     components: {

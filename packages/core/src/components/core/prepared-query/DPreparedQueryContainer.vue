@@ -8,7 +8,7 @@ import {
 import { VCButton } from '@vuecs/button';
 import { VCIcon } from '@vuecs/icon';
 import { VCModal, VCModalContent } from '@vuecs/overlays';
-import type { PreparedQuery } from '../../../domains';
+import type { PreparedQuery } from '@dnpm-dip/http-kit';
 import DPreparedQueries from './DPreparedQueries';
 import DPreparedQuery from './DPreparedQuery';
 import DPreparedQueryForm from './DPreparedQueryForm.vue';

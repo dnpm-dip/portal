@@ -6,7 +6,7 @@
  */
 
 import type { EventEmitter } from '@posva/event-emitter';
-import type { QueryBase } from '../../domains';
+import type { QueryBase } from '@dnpm-dip/http-kit';
 import type { QueryEventBusEventName } from './constants';
 
 export type QueryEventBusEvents = {

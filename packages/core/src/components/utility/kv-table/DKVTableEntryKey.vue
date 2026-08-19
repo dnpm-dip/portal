@@ -7,7 +7,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
-import type { KeyValueRecord } from '../../../domains';
+import type { KeyValueRecord } from '@dnpm-dip/http-kit';
 import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
 
 export default defineComponent({

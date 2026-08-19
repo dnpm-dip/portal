@@ -6,7 +6,7 @@
  */
 
 import type { App } from 'vue';
-import { HTTPClient as Client } from './module';
+import { HTTPClient as Client } from '@dnpm-dip/http-kit';
 import { setupBaseHTTPClient } from './setup';
 import { isHTTPIClientInjected, provideHTTPClient } from './di';
 import type { BaseHTTPClientInstallOptions } from './types';

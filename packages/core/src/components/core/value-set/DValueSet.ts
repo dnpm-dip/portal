@@ -5,7 +5,7 @@ import {
     createResourceRecordManager,
     injectHTTPClient,
 } from '../../../core';
-import type { ValueSet } from '../../../domains';
+import type { ValueSet } from '@dnpm-dip/http-kit';
 
 export default defineComponent({
     props: {

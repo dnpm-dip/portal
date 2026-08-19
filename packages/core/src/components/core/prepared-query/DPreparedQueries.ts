@@ -5,11 +5,10 @@ import type {
 } from '../../../core';
 import {
     createResourceCollectionManager,
-    defineResourceCollectionEvents,
     injectHTTPClient,
 } from '../../../core';
-import type { PreparedQuery } from '../../../domains';
-import { PreparedQueryAPI } from '../../../domains';
+import type { PreparedQuery } from '@dnpm-dip/http-kit';
+import { PreparedQueryAPI, defineResourceCollectionEvents } from '@dnpm-dip/http-kit';
 
 export default defineComponent({
     props: {

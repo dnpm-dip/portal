@@ -12,7 +12,7 @@ import {
     ref,
 } from 'vue';
 import { VCIcon } from '@vuecs/icon';
-import type { KeyValueRecord } from '../../../domains';
+import type { KeyValueRecord } from '@dnpm-dip/http-kit';
 import { DKVChart } from '../kv-chart';
 import { DKVTable } from '../kv-table';
 import type { DKVTableColumnsFn } from '../kv-table/types';

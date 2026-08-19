@@ -1,5 +1,5 @@
 import type { Slots } from 'vue';
-import type { APIClientErrorIssueSeverity } from '../http-client';
+import type { APIClientErrorIssueSeverity } from '@dnpm-dip/http-kit';
 
 export type ErrorRenderContext = {
     slots: Slots,

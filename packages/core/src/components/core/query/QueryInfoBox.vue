@@ -10,8 +10,8 @@ import { VCAlert } from '@vuecs/elements';
 import { VCLink } from '@vuecs/link';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
-import type { QueryBase } from '../../../domains';
-import { ConnectionPeerStatus } from '../../../domains';
+import type { QueryBase } from '@dnpm-dip/http-kit';
+import { ConnectionPeerStatus } from '@dnpm-dip/http-kit';
 
 export default defineComponent({
     components: { VCAlert, VCLink },

@@ -8,8 +8,8 @@
 import type { TableColumn } from '@vuecs/table';
 import type { PropType } from 'vue';
 import { computed, defineComponent } from 'vue';
-import type { Coding, KeyValueRecord } from '../../../domains';
-import { isCoding, isConceptCount, isMinMaxRange } from '../../../domains';
+import type { Coding, KeyValueRecord } from '@dnpm-dip/http-kit';
+import { isCoding, isConceptCount, isMinMaxRange } from '@dnpm-dip/http-kit';
 import { generateChartLabelsForKeyValueRecord } from '../chart/utils';
 import DKVTableEntry from './DKVTableEntry.vue';
 import type { DKVTableColumnKey, DKVTableColumnsFn } from './types';

@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineComponent } from 'vue';
-import type { Patient } from '../../../domains';
+import type { Patient } from '@dnpm-dip/http-kit';
 import DFact from '../../utility/DFact.vue';
 import DCodingText from '../coding/DCodingText';
 

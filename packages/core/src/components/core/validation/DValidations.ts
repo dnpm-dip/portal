@@ -9,8 +9,8 @@ import type { SlotsType } from 'vue';
 import { defineComponent } from 'vue';
 import type { ResourceCollectionSlots } from '../../../core';
 import { createResourceCollectionManager, injectHTTPClient } from '../../../core';
-import type { ValidationReportInfo } from '../../../domains';
-import { ValidationAPI } from '../../../domains';
+import type { ValidationReportInfo } from '@dnpm-dip/http-kit';
+import { ValidationAPI } from '@dnpm-dip/http-kit';
 
 export default defineComponent({
     props: {

@@ -6,7 +6,7 @@
  */
 
 import { type PropType, computed, defineComponent } from 'vue';
-import type { Coding } from '../../../domains';
+import type { Coding } from '@dnpm-dip/http-kit';
 
 export default defineComponent({
     props: {

@@ -1,4 +1,4 @@
-import { isCoding, isMinMaxRange } from '../../../domains';
+import { isCoding, isMinMaxRange } from '@dnpm-dip/http-kit';
 
 type ChartLabelsGenerateOptions = {
     codingVerbose?: boolean

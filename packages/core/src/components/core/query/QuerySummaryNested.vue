@@ -12,7 +12,7 @@ import {
     defineComponent,
     ref,
 } from 'vue';
-import type { Coding, DistributionNestedElements, KeyValueChildrenRecord } from '../../../domains';
+import type { Coding, DistributionNestedElements, KeyValueChildrenRecord } from '@dnpm-dip/http-kit';
 import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils';
 
 export default defineComponent({
