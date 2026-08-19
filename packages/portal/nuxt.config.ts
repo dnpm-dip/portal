@@ -107,7 +107,7 @@ export default defineNuxtConfig({
 
     alias: {
         '@dnpm-dip/core': path.join(__dirname, '..', 'core', 'src'),
-        '@dnpm-dip/kit': path.join(__dirname, '..', 'kit', 'src'),
+        '@dnpm-dip/nuxt-kit': path.join(__dirname, '..', 'nuxt-kit', 'src'),
     },
 
     runtimeConfig: {

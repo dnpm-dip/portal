@@ -34,7 +34,7 @@
         "@authup/core-kit": "^1.0.0-beta.62",
         "@authup/client-web-kit": "^1.0.0-beta.62",
         "@dnpm-dip/core": "^1.11.0",
-        "@dnpm-dip/kit": "^1.10.0",
+        "@dnpm-dip/nuxt-kit": "^1.10.0",
         "@nuxt/kit": "^4.5.2",
         "@vuecs/table": "^1.6.1",
         "@vuecs/timeago": "^2.2.0",
