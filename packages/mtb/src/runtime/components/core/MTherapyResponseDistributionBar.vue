@@ -20,7 +20,7 @@ type Item = {
 export default defineComponent({
     props: {
         distribution: {
-            type: Object as PropType<DistributionConceptsCount<Coding<string>>>,
+            type: Object as PropType<DistributionConceptsCount<Coding<string> | string>>,
             required: true,
         },
     },
@@ -41,8 +41,8 @@ export default defineComponent({
                     title = element.key.display || element.key.code;
                     code = element.key.code;
                 } else {
-                    title = `${element.key}`;
-                    code = `${element.key}`;
+                    title = element.key;
+                    code = element.key;
                 }
 
                 output.push({

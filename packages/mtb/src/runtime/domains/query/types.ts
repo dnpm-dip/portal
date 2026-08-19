@@ -105,14 +105,13 @@ export type QuerySession = QueryBase<QueryCriteria>;
 export type QueryGeneAlterationSNV<T = Coding> = {
     gene: T,
     type: `${QueryMutationType.SNV}`,
-    dnaChange: string,
-    proteinChange: string,
+    proteinChange?: string,
 };
 
 export type QueryGeneAlterationCNV<T = Coding> = {
     gene: T,
     type: `${QueryMutationType.CNV}`,
-    copyNumberType: T
+    copyNumberType: T | string
 };
 
 export type QueryGeneAlterationFusion<T = Coding> = {
@@ -127,10 +126,25 @@ export type QueryTherapyResponse = {
     tumorEntity: Coding,
     medications: Coding[],
     supportingAlteration: QueryGeneAlteration,
+    levelsOfEvidence?: Coding[],
     count: number,
-    orr: number,
-    responseDistribution: DistributionConceptsCount<Coding>,
-    meanDuration: number
+    orr?: number,
+    dcr?: number,
+    responseDistribution: DistributionConceptsCount<Coding | string>,
+    meanDuration?: number
+};
+
+export type QueryCoarseTherapyResponse = {
+    tumorEntity: Coding,
+    medications: Coding[],
+    supportingAlterations?: QueryGeneAlteration[],
+    levelsOfEvidence?: Coding[],
+    count: number,
+    countResponderPFSRatio: number,
+    orr?: number,
+    dcr?: number,
+    responseDistribution: DistributionConceptsCount<Coding | string>,
+    meanDuration?: number
 };
 
 export type QueryGeneAlterationInfo = {

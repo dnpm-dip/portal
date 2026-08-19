@@ -1,5 +1,5 @@
 <!--
-  - Copyright (c) 2024.
+  - Copyright (c) 2026.
   - Author Peter Placzek (tada5hi)
   - For the full copyright and license information,
   - view the LICENSE file that was distributed with this source code.
@@ -29,7 +29,7 @@ import { VCAlert } from '@vuecs/elements';
 import { VCPlaceholder } from '@vuecs/placeholder';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
-import type { QueryTherapyResponse } from '../../../domains';
+import type { QueryCoarseTherapyResponse } from '../../../domains';
 import MGeneAlterationText from '../MGeneAlterationText.vue';
 import MTherapyResponseDistributionBar from '../MTherapyResponseDistributionBar.vue';
 
@@ -54,7 +54,7 @@ export default defineComponent({
         const queryEventBus = injectQueryEventBus();
         const queryFilterStore = useQueryFilterStore();
 
-        const items = ref<QueryTherapyResponse[]>([]);
+        const items = ref<QueryCoarseTherapyResponse[]>([]);
         const busy = ref(false);
         const total = ref(0);
         const offset = ref(0);
@@ -76,11 +76,10 @@ export default defineComponent({
                 cellClass: 'text-left',
             },
             {
-                key: 'supportingAlteration',
-                label: 'Stützende Variante',
+                key: 'supportingAlterations',
+                label: 'Stützende Varianten',
                 headerClass: 'text-left',
                 cellClass: 'text-left',
-                sortable: true,
             },
             {
                 key: 'levelsOfEvidence',
@@ -91,6 +90,13 @@ export default defineComponent({
             {
                 key: 'count',
                 label: 'Anzahl Therapien',
+                headerClass: 'text-center',
+                cellClass: 'text-center align-middle',
+                sortable: true,
+            },
+            {
+                key: 'countResponderPFSRatio',
+                label: 'Responder (Von-Hoff-PFS-Ratio)',
                 headerClass: 'text-center',
                 cellClass: 'text-center align-middle',
                 sortable: true,
@@ -135,10 +141,6 @@ export default defineComponent({
                                 sort['tumorEntity.display'] = s.direction;
                                 break;
                             }
-                            case 'supportingAlteration': {
-                                sort['supportingAlteration.gene.display'] = s.direction;
-                                break;
-                            }
                             default: {
                                 sort[s.key] = s.direction;
                                 break;
@@ -154,7 +156,7 @@ export default defineComponent({
                     sort: Object.keys(sort).length > 0 ? sort : undefined,
                 };
 
-                const response = await api.query.getTherapyResponses(props.queryId, meta);
+                const response = await api.query.getCoarseTherapyResponses(props.queryId, meta);
                 total.value = response.size ?? response.entries.length;
                 limit.value = response.limit ?? limit.value;
                 offset.value = response.offset ?? offset.value;
@@ -285,6 +287,7 @@ export default defineComponent({
             class="mb-3"
         >
             Bitte beachten: Ein Patient kann mehrere unterschiedliche Therapieumsetzungen erhalten haben.
+            Die Zeilen sind ausschließlich nach Entität &amp; Medikation gruppiert, stützende Varianten sind aggregiert.
         </VCAlert>
 
         <VCPagination
@@ -316,15 +319,39 @@ export default defineComponent({
             @update:sort="onSortUpdate"
         >
             <template #cell-tumorEntity="{ row }: { row: any }">
-                <DCodingText :entity="(row as QueryTherapyResponse).tumorEntity" />
+                <DCodingText :entity="(row as QueryCoarseTherapyResponse).tumorEntity" />
             </template>
-            <template #cell-supportingAlteration="{ row }: { row: any }">
-                <MGeneAlterationText :entity="(row as QueryTherapyResponse).supportingAlteration" />
+            <template #cell-supportingAlterations="{ row }: { row: any }">
+                <ul
+                    v-if="(row as QueryCoarseTherapyResponse).supportingAlterations?.length"
+                    class="column"
+                >
+                    <li
+                        v-for="(item,key) in (row as QueryCoarseTherapyResponse).supportingAlterations"
+                        :key="key"
+                    >
+                        <MGeneAlterationText :entity="item" />
+                    </li>
+                </ul>
+                <span
+                    v-else
+                    class="text-fg-muted"
+                >—</span>
+            </template>
+            <template #cell-levelsOfEvidence="{ row }: { row: any }">
+                <DCodingCommaList
+                    v-if="(row as QueryCoarseTherapyResponse).levelsOfEvidence?.length"
+                    :items="(row as QueryCoarseTherapyResponse).levelsOfEvidence || []"
+                />
+                <span
+                    v-else
+                    class="text-fg-muted"
+                >—</span>
             </template>
             <template #cell-medications="{ row }: { row: any }">
                 <ul class="column">
                     <li
-                        v-for="(item,key) in (row as QueryTherapyResponse).medications"
+                        v-for="(item,key) in (row as QueryCoarseTherapyResponse).medications"
                         :key="key"
                     >
                         <a
@@ -336,27 +363,17 @@ export default defineComponent({
                     </li>
                 </ul>
             </template>
-            <template #cell-levelsOfEvidence="{ row }: { row: any }">
-                <DCodingCommaList
-                    v-if="(row as QueryTherapyResponse).levelsOfEvidence?.length"
-                    :items="(row as QueryTherapyResponse).levelsOfEvidence || []"
-                />
-                <span
-                    v-else
-                    class="text-fg-muted"
-                >—</span>
-            </template>
             <template #cell-orr="{ row }: { row: any }">
-                {{ formatNumber((row as QueryTherapyResponse).orr, 0) }}
+                {{ formatNumber((row as QueryCoarseTherapyResponse).orr, 0) }}
             </template>
             <template #cell-dcr="{ row }: { row: any }">
-                {{ formatNumber((row as QueryTherapyResponse).dcr, 0) }}
+                {{ formatNumber((row as QueryCoarseTherapyResponse).dcr, 0) }}
             </template>
             <template #cell-meanDuration="{ row }: { row: any }">
-                {{ formatNumber((row as QueryTherapyResponse).meanDuration) }}
+                {{ formatNumber((row as QueryCoarseTherapyResponse).meanDuration) }}
             </template>
             <template #cell-responseDistribution="{ row }: { row: any }">
-                <MTherapyResponseDistributionBar :distribution="(row as QueryTherapyResponse).responseDistribution" />
+                <MTherapyResponseDistributionBar :distribution="(row as QueryCoarseTherapyResponse).responseDistribution" />
             </template>
             <VCTableEmpty />
         </VCTable>

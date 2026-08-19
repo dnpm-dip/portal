@@ -9,6 +9,7 @@ import {
 import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
 import type { PatientMatch, PatientRecord } from '../patient';
 import type {
+    QueryCoarseTherapyResponse,
     QueryDiagnosisFilter, 
     QueryGeneAlterationInfo, 
     QuerySession,
@@ -110,6 +111,14 @@ export class QueryAPI extends BaseAPI {
         meta: ResourceCollectionLoadMeta = {},
     ) : Promise<ResourceCollectionResponse<QueryTherapyResponse>> {
         const response = await this.client.get(`mtb/queries/${queryId}/therapy-responses${stringifyResourceCollectionMeta(meta)}`);
+        return response.data;
+    }
+
+    async getCoarseTherapyResponses(
+        queryId: string,
+        meta: ResourceCollectionLoadMeta = {},
+    ) : Promise<ResourceCollectionResponse<QueryCoarseTherapyResponse>> {
+        const response = await this.client.get(`mtb/queries/${queryId}/coarse-therapy-responses${stringifyResourceCollectionMeta(meta)}`);
         return response.data;
     }
 
