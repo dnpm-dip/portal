@@ -15,6 +15,16 @@ import {
 } from '../../../utils';
 import type { KMSurvivalReport } from './types';
 
+const TIME_UNIT_LABELS : Record<string, string> = {
+    seconds: 'Sekunden',
+    minutes: 'Minuten',
+    hours: 'Stunden',
+    days: 'Tage',
+    weeks: 'Wochen',
+    months: 'Monate',
+    years: 'Jahre',
+};
+
 const component = defineComponent({
     components: { ChartLine: Line },
     props: {
@@ -60,7 +70,16 @@ const component = defineComponent({
 
         const data = computed<ChartData<'line'>>(() => ({ datasets: datasets.value }));
 
-        const options : ChartOptions<'line'> = {
+        const timeUnitLabel = computed(() => {
+            const { timeUnit } = props.report;
+            if (!timeUnit) {
+                return undefined;
+            }
+
+            return TIME_UNIT_LABELS[timeUnit.toLowerCase()] || timeUnit;
+        });
+
+        const options = computed<ChartOptions<'line'>>(() => ({
             responsive: true,
             scales: {
                 x: {
@@ -69,7 +88,7 @@ const component = defineComponent({
                     title: {
                         display: true,
                         align: 'center',
-                        text: 'Zeit (Wochen)',
+                        text: timeUnitLabel.value ? `Zeit (${timeUnitLabel.value})` : 'Zeit',
                     },
                 },
                 y: {
@@ -83,7 +102,7 @@ const component = defineComponent({
                     },
                 },
             },
-        };
+        }));
 
         return {
             data,
