@@ -5,8 +5,8 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { ModuleType, PageMetaKey } from '@dnpm-dip/core';
-import type { ModuleMeta } from '@dnpm-dip/core';
+import { ModuleType, PageMetaKey } from '@dnpm-dip/vue';
+import type { ModuleMeta } from '@dnpm-dip/vue';
 import type { HookResult } from '@nuxt/schema';
 import { defineNuxtPlugin } from '#imports';
 import { PermissionName } from '../domains';

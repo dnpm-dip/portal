@@ -6,7 +6,7 @@ import type {
     Patient,
     PatientMatchBase,
     Reference,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/http-kit';
 import type { Case } from '../case';
 import type { Diagnosis } from '../diagnosis';
 import type { NGSReport } from '../ngs-report';

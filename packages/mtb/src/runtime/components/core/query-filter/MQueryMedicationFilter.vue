@@ -16,13 +16,15 @@ import {
 } from 'vue';
 import {
     type CodingGroup,
+    isCodingGroup,
+    toCodingGroup,
+} from '@dnpm-dip/http-kit';
+import {
     DQueryFilterBox,
     QueryEventBusEventName,
     injectQueryEventBus,
-    isCodingGroup,
-    toCodingGroup,
     useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QueryTherapyRecommendedFilter } from '../../../domains';

@@ -10,10 +10,10 @@ import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
     DQuerySummaryDemographics,
     QueryEventBusEventName,
-    type QuerySummaryDemographics,
     injectQueryEventBus,
     useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
+import type { QuerySummaryDemographics } from '@dnpm-dip/http-kit';
 import { VCAlert } from '@vuecs/elements';
 import { VCPlaceholder } from '@vuecs/placeholder';
 import { defineComponent, onUnmounted, ref } from 'vue';

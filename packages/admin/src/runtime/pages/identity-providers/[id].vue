@@ -13,7 +13,7 @@ import {
     PageNavigationTopID, 
     extendRefRecord, 
     useToast,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { injectHTTPClient } from '@authup/client-web-kit';
 import { computed, defineComponent, ref } from 'vue';
 import type { Ref } from 'vue';

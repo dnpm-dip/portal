@@ -7,7 +7,7 @@ import type {
     PatientMatchBase,
     Period,
     Reference,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/http-kit';
 import type { QueryCriteria } from '../query';
 
 /**

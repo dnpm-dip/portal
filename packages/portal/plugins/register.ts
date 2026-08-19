@@ -5,8 +5,8 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import type { ModuleMeta, NavigationItemMeta } from '@dnpm-dip/core';
-import { PageMetaKey } from '@dnpm-dip/core';
+import type { ModuleMeta, NavigationItemMeta } from '@dnpm-dip/vue';
+import { PageMetaKey } from '@dnpm-dip/vue';
 import type { HookResult } from '@nuxt/schema';
 import type { NavigationItem } from '@vuecs/navigation';
 import type { Pinia } from 'pinia';

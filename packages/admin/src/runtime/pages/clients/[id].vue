@@ -14,7 +14,7 @@ import {
     PageNavigationTopID,
     extendRefRecord,
     useToast,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { computed, defineComponent, ref } from 'vue';
 import type { Ref } from 'vue';
 import { VCNavItems } from '@vuecs/navigation';

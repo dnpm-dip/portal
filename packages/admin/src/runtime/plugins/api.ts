@@ -1,4 +1,4 @@
-import { injectHTTPClient } from '@dnpm-dip/core';
+import { injectHTTPClient } from '@dnpm-dip/vue';
 import { AdminHTTPClient, provideHTTPClient } from '../core';
 import { defineNuxtPlugin } from '#app';
 

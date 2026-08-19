@@ -100,7 +100,7 @@
 </template>
 <script lang="ts">
 import { computed } from 'vue';
-import { ModuleType, PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
+import { ModuleType, PageMetaKey, PageNavigationTopID } from '@dnpm-dip/vue';
 import { storeToRefs } from '@authup/client-web-kit';
 import { defineNuxtComponent, definePageMeta } from '#imports';
 import ModuleMetaCard from '../components/ModuleMetaCard.vue';

@@ -10,8 +10,11 @@ export default defineConfig({
     plugins: [vue()],
     resolve: {
         alias: {
-            '@dnpm-dip/core/testing': path.resolve(__dirname, '../../core/src/testing'),
-            '@dnpm-dip/core': path.resolve(__dirname, '../../core/src'),
+            '@dnpm-dip/vue/testing': path.resolve(__dirname, '../../vue/src/testing'),
+            '@dnpm-dip/http-kit/testing': path.resolve(__dirname, '../../http-kit/src/testing'),
+            '@dnpm-dip/vue': path.resolve(__dirname, '../../vue/src'),
+            '@dnpm-dip/http-kit': path.resolve(__dirname, '../../http-kit/src'),
+            '@dnpm-dip/kit': path.resolve(__dirname, '../../kit/src'),
         },
     },
 });

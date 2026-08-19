@@ -5,7 +5,7 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import { type Coding, type DistributionConceptsCount, isCoding } from '@dnpm-dip/core';
+import { type Coding, type DistributionConceptsCount, isCoding } from '@dnpm-dip/http-kit';
 import { type PropType, computed, defineComponent } from 'vue';
 import { RecistColor } from '../../domains';
 

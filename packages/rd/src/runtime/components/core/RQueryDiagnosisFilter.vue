@@ -7,10 +7,12 @@ import {
 } from 'vue';
 import {
     type Coding,
-    DQueryFilterBox,
     isCoding,
+} from '@dnpm-dip/http-kit';
+import {
+    DQueryFilterBox,
     useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { QueryURLFilterKey } from '../../constants';
 import { injectHTTPClient } from '../../core';
 import type { QueryDiagnosisFilter } from '../../domains';

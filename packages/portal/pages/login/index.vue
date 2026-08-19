@@ -7,7 +7,7 @@ import {
     injectHTTPClient,
     saveAuthorizationRequest,
 } from '@authup/client-web-kit';
-import { PageMetaKey, useToast } from '@dnpm-dip/core';
+import { PageMetaKey, useToast } from '@dnpm-dip/vue';
 import { VCButton } from '@vuecs/button';
 import { VCIcon } from '@vuecs/icon';
 import { ref } from 'vue';

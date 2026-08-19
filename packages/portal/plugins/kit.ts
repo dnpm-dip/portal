@@ -1,4 +1,4 @@
-import { install } from '@dnpm-dip/core';
+import { install } from '@dnpm-dip/vue';
 import { defineNuxtPlugin, useRuntimeConfig } from '#app';
 
 export default defineNuxtPlugin({

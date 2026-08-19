@@ -6,7 +6,7 @@
   -->
 
 <script lang="ts">
-import { DConnectionPeerCard } from '@dnpm-dip/core';
+import { DConnectionPeerCard } from '@dnpm-dip/vue';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#imports';
 import type { QuerySession } from '../../../../domains';

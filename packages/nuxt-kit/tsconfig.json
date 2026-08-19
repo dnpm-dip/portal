@@ -1,10 +1,5 @@
 {
     "extends": "../../tsconfig.json",
-    "compilerOptions": {
-        "paths": {
-            "@dnpm-dip/core": ["../core/src"]
-        }
-    },
     "include": [
         "src/**/*"
     ]

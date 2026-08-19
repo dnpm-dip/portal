@@ -2,7 +2,7 @@
 
 import { AClientForm } from '@authup/client-web-kit';
 import type { Client } from '@authup/core-kit';
-import { PageMetaKey } from '@dnpm-dip/core';
+import { PageMetaKey } from '@dnpm-dip/vue';
 import type { PropType } from 'vue';
 import { defineNuxtComponent, definePageMeta } from '#imports';
 

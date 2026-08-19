@@ -93,7 +93,7 @@ export default defineNuxtConfig({
         // nested vuecs deps. The theme package absorbed all the former
         // local assets/css/* project stylesheets.
         '@/assets/css/tailwind.css',
-        '@dnpm-dip/core/../dist/index.css',
+        '@dnpm-dip/vue/../dist/index.css',
         // Self-hosted webfonts — the theme's font stacks (Nunito body,
         // Asap headings) were declared but no @font-face ever shipped;
         // without these the UI silently falls back to the browser
@@ -106,7 +106,9 @@ export default defineNuxtConfig({
     ],
 
     alias: {
-        '@dnpm-dip/core': path.join(__dirname, '..', 'core', 'src'),
+        '@dnpm-dip/kit': path.join(__dirname, '..', 'kit', 'src'),
+        '@dnpm-dip/http-kit': path.join(__dirname, '..', 'http-kit', 'src'),
+        '@dnpm-dip/vue': path.join(__dirname, '..', 'vue', 'src'),
         '@dnpm-dip/nuxt-kit': path.join(__dirname, '..', 'nuxt-kit', 'src'),
     },
 

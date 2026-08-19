@@ -7,11 +7,13 @@
 
 <script lang="ts">
 import {
-    DCollectionTransform,
-    DValueSet,
     type ValueSetCoding,
     toCoding,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/http-kit';
+import {
+    DCollectionTransform,
+    DValueSet,
+} from '@dnpm-dip/vue';
 import { VCFormSelectSearch } from '@vuecs/forms';
 import {
     type PropType, 

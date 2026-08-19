@@ -6,22 +6,20 @@
   -->
 
 <script lang="ts">
+import type { Coding, ConnectionPeer, ValueSetCoding } from '@dnpm-dip/http-kit';
+import type { FormTabInput } from '@dnpm-dip/vue';
 import {
-    type Coding,
-    type ConnectionPeer,
-    type FormTabInput,
-    type ValueSetCoding,
-} from '@dnpm-dip/core';
+    LogicalOperator,
+    QueryRequestMode,
+} from '@dnpm-dip/http-kit';
 import {
     DCollectionTransform,
     DFormTabGroups,
     DLoadingModal,
     DSitePicker,
     DValueSet,
-    LogicalOperator,
-    QueryRequestMode,
     useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { VCButton } from '@vuecs/button';
 import {
     VCFormCheckbox,

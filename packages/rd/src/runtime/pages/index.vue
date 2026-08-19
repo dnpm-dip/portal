@@ -1,5 +1,9 @@
 <script lang="ts">
-import { DPreparedQueryContainer, PageMetaKey, useToast } from '@dnpm-dip/core';
+import {
+    DPreparedQueryContainer,
+    PageMetaKey,
+    useToast,
+} from '@dnpm-dip/vue';
 import type { ClientError } from 'hapic';
 import { defineNuxtComponent, definePageMeta, navigateTo } from '#imports';
 import SearchForm from '../components/core/RSearchForm.vue';

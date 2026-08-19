@@ -1,5 +1,6 @@
-import { createFakeClient, mountComponent } from '@dnpm-dip/core/testing';
-import type { FakeHandlerMap } from '@dnpm-dip/core/testing';
+import { createFakeClient } from '@dnpm-dip/http-kit/testing';
+import { mountComponent } from '@dnpm-dip/vue/testing';
+import type { FakeHandlerMap } from '@dnpm-dip/http-kit/testing';
 import type { Component } from 'vue';
 import { MTBAPIClient, provideHTTPClient } from '../../src/runtime/core/http-client';
 

@@ -6,13 +6,12 @@
   -->
 
 <script lang="ts">
+import type { Coding, ValueSetCoding } from '@dnpm-dip/http-kit';
 import {
-    type Coding,
-    DCollectionTransform, 
-    DTags, 
-    DValueSet, 
-    type ValueSetCoding,
-} from '@dnpm-dip/core';
+    DCollectionTransform,
+    DTags,
+    DValueSet,
+} from '@dnpm-dip/vue';
 import { VCButton } from '@vuecs/button';
 import { 
     type FormOption, 

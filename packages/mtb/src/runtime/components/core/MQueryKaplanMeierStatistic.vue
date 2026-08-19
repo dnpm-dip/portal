@@ -11,7 +11,7 @@ import {
     type KMSurvivalReport,
     QueryEventBusEventName,
     injectQueryEventBus,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import {
     defineComponent,
     onUnmounted,

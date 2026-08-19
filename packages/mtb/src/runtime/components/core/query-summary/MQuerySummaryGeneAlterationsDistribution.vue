@@ -13,7 +13,7 @@ import {
     QueryEventBusEventName,
     injectQueryEventBus,
     useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { VCAlert } from '@vuecs/elements';
 import { VCPlaceholder } from '@vuecs/placeholder';
 import { defineComponent, onUnmounted, ref } from 'vue';

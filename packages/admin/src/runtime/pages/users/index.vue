@@ -10,7 +10,7 @@ import {
     PageMetaKey, 
     PageNavigationTopID, 
     useToast,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { VCNavItems } from '@vuecs/navigation';
 import type { User } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';

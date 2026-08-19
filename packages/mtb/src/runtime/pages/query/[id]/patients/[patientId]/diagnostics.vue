@@ -1,5 +1,5 @@
 <script lang="ts">
-import { DCommaList, DExpandableContent } from '@dnpm-dip/core';
+import { DCommaList, DExpandableContent } from '@dnpm-dip/vue';
 import { VCAlert } from '@vuecs/elements';
 import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';

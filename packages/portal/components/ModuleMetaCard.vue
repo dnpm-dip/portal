@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { usePermissionCheck } from '@authup/client-web-kit';
-import { type ModuleMeta, PageMetaKey } from '@dnpm-dip/core';
+import { type ModuleMeta, PageMetaKey } from '@dnpm-dip/vue';
 import { VCLink } from '@vuecs/link';
 import { type PropType, computed, defineComponent } from 'vue';
 

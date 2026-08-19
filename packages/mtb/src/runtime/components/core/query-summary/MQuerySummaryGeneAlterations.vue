@@ -14,13 +14,13 @@ import {
 } from 'vue';
 import { VCTableSortIndicators } from '@vuecs/table';
 import type { SortDescriptor, TableColumn, TableSortState } from '@vuecs/table';
-import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
-import {
-    QueryEventBusEventName,
-    type ResourceCollectionLoadMeta,
-    injectQueryEventBus,
-    useQueryFilterStore,
-} from '@dnpm-dip/core';
+import { 
+    DCodingText, 
+    QueryEventBusEventName, 
+    injectQueryEventBus, 
+    useQueryFilterStore, 
+} from '@dnpm-dip/vue';
+import type { ResourceCollectionLoadMeta } from '@dnpm-dip/http-kit';
 import type { PaginationMeta } from '@vuecs/pagination';
 import { injectHTTPClient } from '../../../core/http-client';
 import type { QueryGeneAlterationInfo } from '../../../domains';

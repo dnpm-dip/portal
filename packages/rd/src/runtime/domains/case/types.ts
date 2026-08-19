@@ -1,4 +1,4 @@
-import type { ExternalId, Patient } from '@dnpm-dip/core';
+import type { ExternalId, Patient } from '@dnpm-dip/http-kit';
 import type { Diagnosis } from '../diagnosis';
 
 type Period = {

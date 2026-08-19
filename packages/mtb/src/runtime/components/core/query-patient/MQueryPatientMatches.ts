@@ -5,8 +5,10 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import type { ObjectLiteral, PatientMatchBase, ResourceCollectionSlots } from '@dnpm-dip/core';
-import { createResourceCollectionManager } from '@dnpm-dip/core';
+import type { PatientMatchBase } from '@dnpm-dip/http-kit';
+import type { ObjectLiteral } from '@dnpm-dip/kit';
+import type { ResourceCollectionSlots } from '@dnpm-dip/vue';
+import { createResourceCollectionManager } from '@dnpm-dip/vue';
 import type { PropType, SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
 import { injectHTTPClient } from '../../../core/http-client';

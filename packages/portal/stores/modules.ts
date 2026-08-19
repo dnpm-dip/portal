@@ -1,4 +1,4 @@
-import type { ModuleMeta } from '@dnpm-dip/core';
+import type { ModuleMeta } from '@dnpm-dip/vue';
 import { defineStore } from 'pinia';
 
 const useModuleStore = defineStore(

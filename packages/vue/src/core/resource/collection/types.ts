@@ -11,8 +11,6 @@ import type { ObjectLiteral } from '@dnpm-dip/kit';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
 import type { ResourceSlotName } from '../constants';
 
-export type { ResourceCollectionEventsType, ResourceCollectionLoadMeta };
-
 export type ResourceCollectionLoadResponse<
     DATA extends ObjectLiteral = ObjectLiteral,
 > = {

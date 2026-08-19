@@ -3,7 +3,7 @@
 import { AIdentityProviderLdapForm, AIdentityProviderOAuth2Form } from '@authup/client-web-kit';
 import type { IdentityProvider } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
-import { PageMetaKey } from '@dnpm-dip/core';
+import { PageMetaKey } from '@dnpm-dip/vue';
 import type { PropType } from 'vue';
 import { useRuntimeConfig } from '#app';
 import { defineNuxtComponent, definePageMeta } from '#imports';

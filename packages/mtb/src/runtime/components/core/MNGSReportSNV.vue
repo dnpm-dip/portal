@@ -1,5 +1,5 @@
 <script lang="ts">
-import { DCodingCommaList } from '@dnpm-dip/core';
+import { DCodingCommaList } from '@dnpm-dip/vue';
 import type { PropType } from 'vue';
 import { defineComponent } from 'vue';
 import type { NGSReportSNV } from '../../domains';

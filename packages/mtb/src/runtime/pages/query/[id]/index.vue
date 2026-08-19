@@ -1,13 +1,13 @@
 <script lang="ts">
 import { computed, ref, resolveComponent } from 'vue';
+import type { QueryBase } from '@dnpm-dip/http-kit';
 import {
     DQueryFilterContainer,
     DQueryInfoBox,
     DQueryPatientFilters,
-    type QueryBase,
-    injectQueryEventBus,
-} from '@dnpm-dip/core';
-import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
+    QueryEventBusEventName, 
+    injectQueryEventBus, 
+} from '@dnpm-dip/vue';
 import type { PropType } from 'vue';
 import { VCButton } from '@vuecs/button';
 import { VCIcon } from '@vuecs/icon';

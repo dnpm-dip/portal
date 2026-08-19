@@ -1,4 +1,4 @@
-import type { Coding, Patient, Reference } from '@dnpm-dip/core';
+import type { Coding, Patient, Reference } from '@dnpm-dip/http-kit';
 
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-rd-model/blob/main/dto_model/src/main/scala/de/dnpm/dip/rd/model/Observations.scala

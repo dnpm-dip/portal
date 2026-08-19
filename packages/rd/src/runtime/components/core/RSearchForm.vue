@@ -1,20 +1,22 @@
 <script lang="ts">
+import type {
+    CodeRecord,
+    Coding,
+    ConnectionPeer,
+    ValueSetCoding,
+} from '@dnpm-dip/http-kit';
 import {
-    type CodeRecord,
-    type Coding,
-    type ConnectionPeer,
     DLoadingModal,
     type FormTabInput,
-    type ValueSetCoding,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import {
     DCollectionTransform,
     DFormTabGroups,
     DSitePicker,
     DValueSet,
-    QueryRequestMode,
     useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
+import { QueryRequestMode } from '@dnpm-dip/http-kit';
 import { VCButton } from '@vuecs/button';
 import { VCFormSelect, VCFormSelectSearch } from '@vuecs/forms';
 import type { FormOption } from '@vuecs/forms';

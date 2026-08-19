@@ -1,9 +1,9 @@
 import type {
-    Coding, 
-    Patient, 
-    Period, 
+    Coding,
+    Patient,
+    Period,
     Reference,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/http-kit';
 
 /**
  * @see https://github.com/KohlbacherLab/dnpm-dip-rd-model/blob/main/dto_model/src/main/scala/de/dnpm/dip/rd/model/RDTherapy.scala

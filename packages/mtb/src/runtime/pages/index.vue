@@ -1,5 +1,9 @@
 <script lang="ts">
-import { DPreparedQueryContainer, PageMetaKey, useToast } from '@dnpm-dip/core';
+import {
+    DPreparedQueryContainer,
+    PageMetaKey,
+    useToast,
+} from '@dnpm-dip/vue';
 import { VCAlert } from '@vuecs/elements';
 import { VCIcon } from '@vuecs/icon';
 import type { ClientError } from 'hapic';

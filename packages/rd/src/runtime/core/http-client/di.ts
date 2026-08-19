@@ -1,5 +1,5 @@
 import type { App } from 'vue';
-import { inject, provide } from '@dnpm-dip/core';
+import { inject, provide } from '@dnpm-dip/vue';
 import type { RDHTTPClient as HTTPClient } from './module';
 
 export const HTTPClientSymbol = Symbol.for('RDHTTPClient');

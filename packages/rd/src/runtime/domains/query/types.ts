@@ -6,7 +6,7 @@ import type {
     QueryBase,
     QueryRequestMode,
     QuerySummaryBase,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/http-kit';
 
 export type VariantCriteria = 'gene' |
 'cDNAChange' |

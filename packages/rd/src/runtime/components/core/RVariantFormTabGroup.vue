@@ -1,10 +1,10 @@
 <script lang="ts">
 import {
     type CodeSystemConcept,
-    type FormTab,
     HGVS_CODE_REGEX,
     transformConceptToFormSelectOption,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/http-kit';
+import type { FormTab } from '@dnpm-dip/vue';
 import { defineIssueItem } from '@ebec/core';
 import { IFieldValidation } from '@ilingo/validup-vue';
 import { useValidup } from '@validup/vue';
@@ -20,7 +20,7 @@ import {
 } from 'vue';
 import { VCButton } from '@vuecs/button';
 import { VCFormGroup, VCFormInput, VCFormSelectSearch } from '@vuecs/forms';
-import { DCodeSystem, DCollectionTransform } from '@dnpm-dip/core';
+import { DCodeSystem, DCollectionTransform } from '@dnpm-dip/vue';
 import type { QueryCriteriaVariant } from '../../domains';
 
 const hgvsValidator: Validator = (ctx) => {

@@ -6,7 +6,7 @@
   -->
 
 <script lang="ts">
-import { DFact } from '@dnpm-dip/core';
+import { DFact } from '@dnpm-dip/vue';
 import { VCButton } from '@vuecs/button';
 import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';

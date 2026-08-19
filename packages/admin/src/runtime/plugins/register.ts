@@ -6,7 +6,7 @@
  */
 
 import { PermissionName as AuthupPermissionName } from '@authup/core-kit';
-import { type ModuleMeta, PageMetaKey } from '@dnpm-dip/core';
+import { type ModuleMeta, PageMetaKey } from '@dnpm-dip/vue';
 import type { HookResult } from '@nuxt/schema';
 import { defineNuxtPlugin } from '#imports';
 

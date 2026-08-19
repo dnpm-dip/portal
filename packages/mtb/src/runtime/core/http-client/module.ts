@@ -1,8 +1,8 @@
 import {
-    type HTTPClient,
+    type IHTTPClient,
     PreparedQueryAPI,
     ValidationAPI,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/http-kit';
 import {
     KaplanMeierAPI,
     QueryAPI,
@@ -17,7 +17,7 @@ export class MTBAPIClient {
 
     readonly validation : ValidationAPI;
 
-    constructor(client: HTTPClient) {
+    constructor(client: IHTTPClient) {
         this.kaplanMeier = new KaplanMeierAPI({ client });
         this.preparedQuery = new PreparedQueryAPI({ client, useCase: 'mtb' });
         this.query = new QueryAPI({ client });

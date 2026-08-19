@@ -11,8 +11,6 @@ import type { ObjectLiteral } from '@dnpm-dip/kit';
 import type { ErrorCollectionSlotProps, ErrorSlotProps } from '../../error';
 import type { ResourceSlotName } from '../constants';
 
-export type { ResourceRecordEventsType };
-
 export type ResourceRecordManagerLoadFn<
     DATA extends ObjectLiteral = ObjectLiteral,
 > = (id: string) => Promise<DATA | undefined>;

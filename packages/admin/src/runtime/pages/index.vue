@@ -6,7 +6,7 @@
   -->
 <script lang="ts">
 import { usePermissionCheck } from '@authup/client-web-kit';
-import { DConnectionPeerCard } from '@dnpm-dip/core';
+import { DConnectionPeerCard } from '@dnpm-dip/vue';
 import { VCAlert } from '@vuecs/elements';
 import { VCIcon } from '@vuecs/icon';
 import { defineNuxtComponent } from '#imports';

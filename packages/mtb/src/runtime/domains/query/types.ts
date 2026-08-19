@@ -3,12 +3,12 @@ import type {
     Coding,
     Distribution,
     DistributionConceptsCount,
-    DistributionNested, 
+    DistributionNested,
     KeyValueRecord,
     KeyValueRecords,
     QueryBase,
     QueryRequestMode,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/http-kit';
 
 import type { QueryMutationType } from './constants';
 
