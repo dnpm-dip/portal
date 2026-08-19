@@ -27,6 +27,7 @@
         "prepack": "nuxt-module-build build",
         "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
         "lint": "eslint .",
+        "test": "vitest run --config test/vitest.config.ts",
         "test:watch": "vitest watch"
     },
     "dependencies": {
@@ -41,6 +42,8 @@
     },
     "devDependencies": {
         "@nuxt/module-builder": "^1.0.2",
+        "@vue/test-utils": "^2.4.6",
+        "happy-dom": "^20.0.0",
         "nuxt": "^4.5.2"
     }
 }
