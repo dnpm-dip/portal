@@ -8,7 +8,7 @@ import type { InstallOptions } from './types';
 export function install(app: App, options: InstallOptions) : void {
     app.component('DKVTable', DKVTable);
 
-    installHTTPClient(app, { baseURL: options.baseURL });
+    installHTTPClient(app, { baseURL: options.baseURL, client: options.httpClient });
 
     const queryEventBus = createQueryEventBus();
     provideQueryEventBus(queryEventBus, app);

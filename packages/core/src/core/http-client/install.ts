@@ -16,7 +16,7 @@ export function installHTTPClient(app: App, options: BaseHTTPClientInstallOption
         return;
     }
 
-    const client = new Client({ baseURL: options.baseURL });
+    const client = options.client || new Client({ baseURL: options.baseURL });
 
     setupBaseHTTPClient(app, client);
 

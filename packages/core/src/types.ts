@@ -7,11 +7,12 @@
 
 import type { NavigationItem } from '@vuecs/navigation';
 import type { ModuleType } from './constants';
-import type { PageMetaKey } from './core';
+import type { HTTPClient, PageMetaKey } from './core';
 
 export type ObjectLiteral = Record<string, any>;
 export type InstallOptions = {
-    baseURL: string
+    baseURL: string,
+    httpClient?: HTTPClient
 };
 
 export type NavigationItemMeta = {
