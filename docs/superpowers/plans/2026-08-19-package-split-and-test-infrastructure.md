@@ -1959,7 +1959,22 @@ npx nuxt typecheck --workspace=packages/portal
 grep -rn "@dnpm-dip/core" packages --include="*.ts" --include="*.vue" --include="*.json" | grep -v node_modules
 ```
 
-Expected: everything exits 0 and the final `grep` prints NOTHING.
+Expected: build, test and typecheck exit 0, and the final `grep` prints NOTHING.
+
+**`npm run lint` does NOT exit clean, and is not expected to.** The repository
+carries **34 pre-existing eslint errors** across 19 files
+(`unicorn/no-useless-template-literals` x33,
+`unicorn/prefer-number-is-safe-integer` x1) that predate this branch. The gate
+is therefore **"no NEW errors attributable to this branch"**, not "zero errors".
+Verify it that way:
+
+```bash
+comm -12 <(git diff --name-only <merge-base>..HEAD | sort)          <(npm run lint 2>&1 | grep -E "^/.*/(packages|docs)/"            | sed "s|$(pwd)/||" | sort -u)
+```
+
+Expected: EMPTY. Any file listed is one this branch touched AND that lints
+dirty — that IS a finding. Note that four of the erroring files move packages in
+Phase 2, so their errors follow them to new paths and the baseline stays 34.
 
 - [ ] **Step 6: Commit**
 
@@ -2206,7 +2221,6 @@ Each command must pass before the branch is considered complete:
 ```bash
 npm run build
 npm run test
-npm run lint
 npx nuxt typecheck --workspace=packages/portal
 grep -rn "@dnpm-dip/core" packages --include="*.ts" --include="*.vue" --include="*.json" | grep -v node_modules
 find packages/*/node_modules -maxdepth 2 -type d \
@@ -2215,9 +2229,18 @@ grep -rnE "from '(vue|pinia|@vuecs/|@authup/client-web-kit)'" packages/kit/src p
 find node_modules -name reactivity -type d -path "*@vue*"
 ```
 
-Expected: the four commands exit 0; the four `grep`/`find` checks print
+Expected: the three commands exit 0; the four `grep`/`find` checks print
 NOTHING (a single line from the last one is correct — more than one means the
 `vue` override desynced).
+
+Lint is verified DIFFERENTIALLY, not absolutely — the repo has 34 pre-existing
+errors that predate this branch (see Task 9 Step 5). Run:
+
+```bash
+comm -12 <(git diff --name-only $(git merge-base master HEAD)..HEAD | sort)          <(npm run lint 2>&1 | grep -E "^/.*/(packages|docs)/"            | sed "s|$(pwd)/||" | sort -u)
+```
+
+Expected: EMPTY. A non-empty result means this branch introduced lint debt.
 
 - [ ] **Step 2: Confirm the docs match reality**
 
