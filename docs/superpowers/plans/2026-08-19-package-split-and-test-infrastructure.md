@@ -2055,6 +2055,10 @@ edit any other version value.
 - `.agents/conventions.md` — add a short section stating the package boundary
   invariant: nothing in `kit` or `http-kit` may import `vue`, `pinia`,
   `@vuecs/*` or `@authup/client-web-kit`, with the grep that checks it.
+- `README.md:25` — still describes `@dnpm-dip/kit` as "utilities to register
+  dnpm dip modules to the portal". That is now `@dnpm-dip/nuxt-kit`; the `kit`
+  name belongs to the framework-free utilities. Update the package table to the
+  final eight-package set.
 
 - [ ] **Step 5: Commit**
 
