@@ -8,14 +8,20 @@
         ".": {
             "component": "root"
         },
-        "packages/core": {
-            "component": "core"
+        "packages/admin": {
+            "component": "admin"
+        },
+        "packages/http-kit": {
+            "component": "http-kit"
         },
         "packages/kit": {
             "component": "kit"
         },
         "packages/mtb": {
             "component": "mtb"
+        },
+        "packages/nuxt-kit": {
+            "component": "nuxt-kit"
         },
         "packages/portal": {
             "component": "portal"
@@ -25,6 +31,9 @@
         },
         "packages/theme": {
             "component": "theme"
+        },
+        "packages/vue": {
+            "component": "vue"
         }
     },
     "plugins": [
@@ -38,12 +47,15 @@
             "groupName": "main",
             "components": [
                 "root",
-                "core",
+                "admin",
+                "http-kit",
                 "kit",
                 "mtb",
+                "nuxt-kit",
                 "portal",
                 "rd",
-                "theme"
+                "theme",
+                "vue"
             ]
         }
     ],

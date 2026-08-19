@@ -23,9 +23,10 @@ export default defineNuxtConfig({
             // name can be written:
             //  - the portal's own template tree,
             //  - `src/` of every sibling package — `admin`, `mtb` and `rd`
-            //    are registered from `../<name>/src/module`, and `core`/`kit`
-            //    are aliased to `../<name>/src`, so the sources (not the
-            //    dists) are what the portal builds,
+            //    are registered from `../<name>/src/module`, and `kit`,
+            //    `http-kit`, `vue` and `nuxt-kit` are aliased to
+            //    `../<name>/src`, so the sources (not the dists) are what
+            //    the portal builds,
             //  - `@authup/client-web-kit`, whose components and
             //    identity-provider preset tables carry icon names,
             //  - `@vuecs/icons-font-awesome`, whose preset supplies the vuecs
@@ -40,7 +41,7 @@ export default defineNuxtConfig({
                     globInclude: [
                         'packages/portal/{app,error}.vue',
                         'packages/portal/{components,config,core,layouts,middleware,pages,plugins,stores}/**/*.{vue,ts}',
-                        'packages/{admin,core,kit,mtb,rd,theme}/src/**/*.{vue,ts}',
+                        'packages/{admin,http-kit,kit,mtb,nuxt-kit,rd,theme,vue}/src/**/*.{vue,ts}',
 
                         'node_modules/@authup/client-web-kit/dist/**/*.mjs',
                         'node_modules/@vuecs/icons-font-awesome/dist/*.mjs',
