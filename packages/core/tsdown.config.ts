@@ -3,7 +3,7 @@ import Vue from 'unplugin-vue/rolldown';
 import pkg from './package.json' with { type: 'json' };
 
 export default defineConfig({
-    entry: 'src/index.ts',
+    entry: ['src/index.ts', 'src/testing/index.ts'],
     format: 'esm',
     dts: false,
     sourcemap: true,

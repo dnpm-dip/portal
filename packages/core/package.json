@@ -9,6 +9,10 @@
             "types": "./dist/index.d.ts",
             "import": "./dist/index.mjs"
         },
+        "./testing": {
+            "types": "./dist/testing/index.d.ts",
+            "import": "./dist/testing/index.mjs"
+        },
         "./index.css": "./dist/index.css"
     },
     "module": "./dist/index.mjs",
@@ -19,7 +23,8 @@
     "scripts": {
         "build:types": "vue-tsc --declaration --emitDeclarationOnly -p tsconfig.build.json",
         "build:js": "tsdown",
-        "build": "npm run build:js && npm run build:types"
+        "build": "npm run build:js && npm run build:types",
+        "test": "vitest run --config test/vitest.config.ts"
     },
     "keywords": [],
     "author": {
@@ -69,6 +74,8 @@
         "@vuecs/timeago": "^2.2.0",
         "@validup/vue": "^2.0.1",
         "@validup/zod": "^2.0.1",
+        "@vue/test-utils": "^2.4.6",
+        "happy-dom": "^20.0.0",
         "ilingo": "^6.2.0",
         "pinia": "^4.0.3",
         "validup": "^2.0.1",

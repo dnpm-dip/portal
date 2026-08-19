@@ -1,7 +1,7 @@
-import type { RequestBaseOptions } from 'hapic';
+import type { ClientOptionsInput } from 'hapic';
 import type { APIClientErrorIssueSeverity } from './constants';
 
-export type HTTPClientOptions = RequestBaseOptions;
+export type HTTPClientOptions = ClientOptionsInput;
 
 export type HTTPClientErrorIssue = {
     severity: APIClientErrorIssueSeverity,
