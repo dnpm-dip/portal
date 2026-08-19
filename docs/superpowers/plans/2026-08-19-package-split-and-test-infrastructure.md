@@ -2052,6 +2052,11 @@ edit any other version value.
   `test/vitest.config.ts`, the `src`-aliasing that removes the build
   prerequisite, `createFakeClient` with its handler-map syntax, `mountComponent`
   and the install-order constraint, and the behavioural-assertions-only rule.
+- `.agents/architecture.md` — document that `nuxt-module-build` (mkdist), used by
+  `admin`/`mtb`/`rd`, **transpiles without resolving imports**, so those packages'
+  `build` scripts exit 0 on a nonexistent import. Their test suites are the real
+  gate. This is a second silent-failure mechanism alongside the `NuxtIconBundle`
+  `globInclude` one already documented there.
 - `.agents/conventions.md` — add a short section stating the package boundary
   invariant: nothing in `kit` or `http-kit` may import `vue`, `pinia`,
   `@vuecs/*` or `@authup/client-web-kit`, with the grep that checks it.
@@ -2236,6 +2241,18 @@ find node_modules -name reactivity -type d -path "*@vue*"
 Expected: the three commands exit 0; the four `grep`/`find` checks print
 NOTHING (a single line from the last one is correct — more than one means the
 `vue` override desynced).
+
+**`npm run build` is NOT a sufficient gate for `packages/admin`.** Verified
+during Task 8: `npm run build --workspace=packages/admin` exits 0 even while
+admin imports a package that does not exist, because `nuxt-module-build`
+(mkdist) transpiles without resolving imports. Only admin's **test** run
+surfaces an unresolved import. Treat `npm run test` as the authoritative gate
+for admin, and never conclude from a green build that its imports resolve.
+Add this explicit check:
+
+```bash
+grep -rn "@dnpm-dip/core" packages/admin/src && echo "STALE IMPORT" || echo "clean"
+```
 
 Lint is verified DIFFERENTIALLY, not absolutely — the repo has 34 pre-existing
 errors that predate this branch (see Task 9 Step 5). Run:
