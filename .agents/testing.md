@@ -176,6 +176,25 @@ HTTP request that `happy-dom` aborts at teardown. Stubbing by component
 *name* (rather than relying on a global registration) is required because it
 also catches the `VCIcon` that `@vuecs/button` imports directly.
 
+### Globally-resolved components do not resolve under the harness
+
+`install()` registers exactly **one** global component (`DKVTable`). The
+portal's `app.use(vuecs, ...)` chain — which is what makes `VCTable`,
+`VCTableEmpty`, `VCPagination` and `VCFormCheckbox` resolvable in the running
+app — is deliberately **not** part of `mountComponent`. Any component that
+resolves a `VC*` globally instead of importing it (the `VCTable` family by
+[convention](conventions.md#vue--nuxt-conventions), plus anything that has
+drifted from the explicit-import rule) therefore renders as an unresolved
+element in a spec.
+
+The consequence is a real constraint on what a spec may assert: rendered rows,
+checkbox labels and pagination controls are **not reachable**. This is why the
+mtb/rd filter specs assert on `instance.vm.*` and `client.requests`, and on
+wrapper elements the component's own template owns (e.g. `.form-check`), rather
+than on the vuecs children. Adding an assertion on a `VC*` child requires
+installing that vuecs package in the harness first — do that deliberately, not
+by reflex.
+
 ## Per-Module Test Helpers
 
 `admin`, `mtb` and `rd` each add a `test/utils/index.ts` with two thin
