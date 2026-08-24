@@ -27,6 +27,19 @@ describe('matchRoute', () => {
         expect(match).toBeNull();
     });
 
+    it('should match the method case-insensitively', () => {
+        const handler = () => ({});
+        const match = matchRoute('GET', '/mtb/sites', { 'get /mtb/sites': handler });
+
+        expect(match?.handler).toBe(handler);
+    });
+
+    it('should skip a handler key that carries no method', () => {
+        const match = matchRoute('GET', '/mtb/sites', { '/mtb/sites': () => ({}) });
+
+        expect(match).toBeNull();
+    });
+
     it('should prefer a specific pattern over the catch-all regardless of key order', () => {
         const specific = () => ({ picked: 'specific' });
         const match = matchRoute('GET', '/mtb/sites', {
