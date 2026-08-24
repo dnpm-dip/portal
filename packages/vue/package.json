@@ -76,6 +76,7 @@
         "@vuecs/timeago": "^2.2.0",
         "@validup/vue": "^2.0.1",
         "@validup/zod": "^2.0.1",
+        "@vitejs/plugin-vue": "^6.0.8",
         "@vue/test-utils": "^2.4.6",
         "happy-dom": "^20.0.0",
         "ilingo": "^6.2.0",
@@ -112,6 +113,12 @@
         "validup": "^2.x",
         "vue": "^3.x",
         "vue-chartjs": "^5.3.4",
+        "@vue/test-utils": "^2.x",
         "zod": "^4.x"
+    },
+    "peerDependenciesMeta": {
+        "@vue/test-utils": {
+            "optional": true
+        }
     }
 }

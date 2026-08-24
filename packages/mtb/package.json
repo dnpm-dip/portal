@@ -44,6 +44,7 @@
         "@ilingo/vue": "^6.1.1",
         "@nuxt/module-builder": "^1.0.2",
         "@types/node": "^26.2.0",
+        "@vitejs/plugin-vue": "^6.0.8",
         "@vue/test-utils": "^2.4.6",
         "@vuecs/forms": "^5.4.1",
         "@vuecs/overlays": "^1.3.0",

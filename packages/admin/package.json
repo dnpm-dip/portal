@@ -44,6 +44,7 @@
     },
     "devDependencies": {
         "@nuxt/module-builder": "^1.0.2",
+        "@vitejs/plugin-vue": "^6.0.8",
         "@vue/test-utils": "^2.4.6",
         "happy-dom": "^20.0.0",
         "nuxt": "^4.5.2"

@@ -31,6 +31,11 @@
         "url": "https://github.com/tada5hi"
     },
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dnpm-dip/portal.git",
+        "directory": "packages/http-kit"
+    },
     "bugs": {
         "url": "https://github.com/dnpm-dip/portal/issues"
     },
