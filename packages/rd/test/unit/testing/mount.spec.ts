@@ -53,6 +53,9 @@ describe('mountModuleComponent', () => {
 
         expect(client.requests).toHaveLength(1);
         expect(client.requests[0]?.method).toBe('GET');
+        // The rd prefix proves the request came through the module client,
+        // not through the bare fake client the harness also provides.
+        expect(client.requests[0]?.url).toContain('/rd/queries/q-1');
     });
 
     it('provides the same module client instance the harness returns', () => {

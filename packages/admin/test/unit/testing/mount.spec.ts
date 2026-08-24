@@ -7,7 +7,8 @@ import {
     it,
 } from 'vitest';
 import type { IAdminAPIClient } from '../../../src/runtime/core/http-client';
-import { injectHTTPClient } from '../../../src/runtime/core/http-client';
+import { AdminHTTPClient, injectHTTPClient } from '../../../src/runtime/core/http-client';
+import type { ConnectionReport } from '../../../src/runtime/domains';
 import { mountModuleComponent } from '../../utils';
 
 /**
@@ -20,6 +21,16 @@ import { mountModuleComponent } from '../../utils';
  * loudly for that case.
  */
 let injectedClient: IAdminAPIClient | undefined;
+
+const report : ConnectionReport = {
+    peers: [],
+    self: {
+        site: { code: 'site-self' },
+        status: 'online',
+        details: 'ok',
+    },
+    createdAt: '2026-01-01T00:00:00Z',
+};
 
 const Probe = defineComponent({
     setup() {
@@ -36,37 +47,19 @@ describe('mountModuleComponent', () => {
     });
 
     it('routes a component-injected request through the fake client', async () => {
-        const { client } = mountModuleComponent(Probe, {}, {
-            'GET /admin/connection-report': () => ({
-                peers: [],
-                self: {
-                    site: { code: 'site-self' }, 
-                    status: 'online', 
-                    details: 'ok', 
-                },
-                createdAt: '2026-01-01T00:00:00Z',
-            }),
-        });
+        const { client } = mountModuleComponent(Probe, {}, { 'GET /admin/connection-report': () => report });
 
         await flushPromises();
 
         expect(client.requests).toHaveLength(1);
         expect(client.requests[0]?.method).toBe('GET');
+        expect(client.requests[0]?.url).toMatch(/\/admin\/connection-report$/);
     });
 
     it('provides the same module client instance the harness returns', () => {
-        const { moduleClient } = mountModuleComponent(Probe, {}, {
-            'GET /admin/connection-report': () => ({
-                peers: [],
-                self: {
-                    site: { code: 'site-self' }, 
-                    status: 'online', 
-                    details: 'ok', 
-                },
-                createdAt: '2026-01-01T00:00:00Z',
-            }),
-        });
+        const { moduleClient } = mountModuleComponent(Probe, {}, { 'GET /admin/connection-report': () => report });
 
+        expect(moduleClient).toBeInstanceOf(AdminHTTPClient);
         expect(injectedClient).toBe(moduleClient);
     });
 });

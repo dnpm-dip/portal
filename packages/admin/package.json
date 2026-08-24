@@ -28,7 +28,7 @@
         "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
         "lint": "eslint .",
         "test": "vitest run --config test/vitest.config.ts",
-        "test:watch": "vitest watch"
+        "test:watch": "vitest watch --config test/vitest.config.ts"
     },
     "dependencies": {
         "@authup/core-kit": "^1.0.0-beta.62",
