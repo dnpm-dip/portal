@@ -62,14 +62,15 @@ which fails with `Failed to resolve entry for package "@dnpm-dip/kit"`.
 `npm run build` (or at least building `kit` and `http-kit`) is therefore
 still a real prerequisite for `http-kit`'s and `vue`'s own test runs.
 
-**The alias keys must be ordered longest-first.** Vite/Vitest resolves alias
-keys by matching prefixes in the order they are declared, and the first match
-wins. `@dnpm-dip/vue/testing` and `@dnpm-dip/http-kit/testing` are themselves
-prefixed by `@dnpm-dip/vue` and `@dnpm-dip/http-kit`, so the `/testing`
-sub-path entries must come first in the object — otherwise an import of
-`@dnpm-dip/vue/testing` would match the bare `@dnpm-dip/vue` alias first and
-resolve to `.../vue/src/testing`'s *parent* incorrectly (or fail to resolve
-the `/testing` export at all).
+**The `/testing` entries are explicit, not load-bearing ordering.** Vite
+matches an alias key with `importee === pattern || importee.startsWith(pattern
++ '/')` and then rewrites by *prefix substitution*, so the bare
+`@dnpm-dip/vue` alias alone already resolves `@dnpm-dip/vue/testing` correctly
+to `.../vue/src/testing`. The dedicated `/testing` keys are kept because they
+document the two subpath exports at the point of use — they are not
+compensating for a resolution failure, and reordering them changes nothing.
+Keep them first anyway: it reads longest-first, which is the habit that *is*
+required for alias sets where the replacement paths diverge.
 
 ## Test File Conventions
 
@@ -162,8 +163,11 @@ previous one being in place:
      `timer: !isServer`, suppressing the token-refresh timer. Without it,
      every spec that mounts a component leaks a live timer past teardown.
 4. **the portal's `install`** — provides the fake `HTTPClient` explicitly as
-   `httpClient`. Providing it before this step would be silently ignored;
-   `install`'s early-return only picks up a client passed at this call.
+   `httpClient`. `installHTTPClient` is **first-provide-wins**: it early-returns
+   when a client is already injected on the app, so it only installs
+   `options.client` because nothing has provided one yet at this point. Provide
+   a client *before* this step and that one stays and the fake is dropped —
+   which is why the harness passes the fake here rather than pre-providing it.
 5. **the caller's `onApp` hook** — runs last, after the base client is
    already provided but still before `mount()` (so a component's `setup()`
    sees whatever the hook provides). Feature modules use this slot to layer
