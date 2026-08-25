@@ -27,7 +27,8 @@ npm run test --workspace=packages/admin
 
 ## No Build Prerequisite (for `admin`, `mtb`, `rd`)
 
-The three feature modules do **not** require the workspace to be built first.
+The three feature modules do **not** require the workspace to be built first
+— but they do require `.nuxt/tsconfig.json`, see the caveat below.
 Each one's `test/vitest.config.ts` aliases every `@dnpm-dip/*` import
 straight to the sibling package's `src/`, e.g.
 (`packages/mtb/test/vitest.config.ts`):
@@ -61,6 +62,26 @@ their own test suite can resolve those imports — verified by moving
 which fails with `Failed to resolve entry for package "@dnpm-dip/kit"`.
 `npm run build` (or at least building `kit` and `http-kit`) is therefore
 still a real prerequisite for `http-kit`'s and `vue`'s own test runs.
+
+**The alias removes the *build* prerequisite, not the `.nuxt` one.**
+`packages/{admin,mtb,rd}/tsconfig.json` is just `{"extends":
+"./.nuxt/tsconfig.json"}`, and `.nuxt/` is gitignored and generated. Vite
+resolves the nearest `tsconfig.json` while transforming each spec, so on a
+tree where it has never been generated every spec dies at transform time with:
+
+```
+[TSCONFIG_ERROR] Failed to load tsconfig '.nuxt/tsconfig.json': Tsconfig not found
+```
+
+reported as `Tests no tests` rather than as a failure. Regenerate it with
+`npx nuxt-module-build prepare` in the package (~1s, idempotent); each
+module's own `build` script runs it too, and `dev:prepare` covers it.
+
+This bites CI harder than a workstation, where the directory usually survives
+from an earlier run: a fresh checkout has no `.nuxt`, and restoring a cached
+`dist/` does **not** bring it back, because it is not part of that output.
+`.github/workflows/main.yml`'s test job regenerates it explicitly for exactly
+this reason.
 
 **The `/testing` entries are explicit, not load-bearing ordering.** Vite
 matches an alias key with `importee === pattern || importee.startsWith(pattern

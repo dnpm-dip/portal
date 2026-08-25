@@ -74,5 +74,16 @@ jobs:
             - name: Build
               uses: ./.github/actions/build
 
+            # Each feature module's tsconfig.json extends ./.nuxt/tsconfig.json,
+            # which its build script generates but which is NOT part of the
+            # cached dist/ output — so on a cache hit the build is skipped and
+            # the file is absent, and every spec fails to transform. Cheap
+            # (~1s each) and idempotent, so just regenerate it.
+            - name: Generate module types
+              run: |
+                  for pkg in admin mtb rd; do
+                      npm exec --workspace="packages/$pkg" -- nuxt-module-build prepare
+                  done
+
             - name: Test
               run: npm run test
