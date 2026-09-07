@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/mtb",
     "type": "module",
-    "version": "1.35.0",
+    "version": "2.0.0",
     "private": true,
     "description": "Molecular Tumor Board (MTB) module for the DNPM:DIP Portal.",
     "repository": {
@@ -31,10 +31,10 @@
     },
     "dependencies": {
         "@authup/client-web-kit": "^1.0.0-beta.62",
-        "@dnpm-dip/http-kit": "^0.0.0",
-        "@dnpm-dip/kit": "^0.0.0",
+        "@dnpm-dip/http-kit": "^0.0.1",
+        "@dnpm-dip/kit": "^1.0.0",
         "@dnpm-dip/nuxt-kit": "^1.28.1",
-        "@dnpm-dip/vue": "^1.35.0",
+        "@dnpm-dip/vue": "^1.35.1",
         "@nuxt/kit": "^4.5.2"
     },
     "devDependencies": {

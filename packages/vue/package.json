@@ -1,6 +1,6 @@
 {
     "name": "@dnpm-dip/vue",
-    "version": "1.35.0",
+    "version": "1.35.1",
     "type": "module",
     "description": "Vue components, composables, stores and services for DNPM DIP.",
     "exports": {
@@ -46,8 +46,8 @@
         "access": "public"
     },
     "dependencies": {
-        "@dnpm-dip/http-kit": "^0.0.0",
-        "@dnpm-dip/kit": "^0.0.0",
+        "@dnpm-dip/http-kit": "^0.0.1",
+        "@dnpm-dip/kit": "^1.0.0",
         "@posva/event-emitter": "^1.0.3",
         "hapic": "^3.0.2",
         "smob": "^1.6.2",
