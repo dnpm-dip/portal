@@ -8,7 +8,7 @@
 <script lang="ts">
 import {
     HGVS_CODE_REGEX,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/http-kit';
 import { defineIssueItem } from '@ebec/core';
 import { IFieldValidation } from '@ilingo/validup-vue';
 import { useValidup } from '@validup/vue';

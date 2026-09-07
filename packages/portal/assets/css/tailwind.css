@@ -41,11 +41,16 @@
 @source "../..";
 
 /*
- * The four sibling WORKSPACE packages render their own `.vue` SFC
- * templates (and `.ts` hyperscript that emits class strings) inside the
- * portal app — scanned via their local `src` trees (which also keeps
- * Nuxt HMR rebuilding utilities while editing them). Miss one and that
- * module renders with `vc-*` defaults / no Tailwind styling.
+ * The sibling WORKSPACE packages render their own `.vue` SFC templates
+ * (and `.ts` hyperscript that emits class strings) inside the portal
+ * app — scanned via their local `src` trees (which also keeps Nuxt HMR
+ * rebuilding utilities while editing them). Miss one and that module
+ * renders with `vc-*` defaults / no Tailwind styling — silently, since
+ * a missing `@source` path is not a build error.
+ *
+ * Keep this list in lockstep with `NuxtIconBundle`'s `scan.globInclude`
+ * in `nuxt.config.ts`: both enumerate the same eight packages, and both
+ * fail silently when one is missing.
  *
  * EXTERNAL deps (@authup/client-web-kit dist, @vuecs element class
  * maps) are NOT scanned here — those scopes belong to the theme's
@@ -53,7 +58,11 @@
  * anchors them at the hoisted root node_modules. If npm ever nests
  * those packages portal-locally instead, re-add local anchors there.
  */
-@source "../../../core/src";
 @source "../../../admin/src";
+@source "../../../http-kit/src";
+@source "../../../kit/src";
 @source "../../../mtb/src";
+@source "../../../nuxt-kit/src";
 @source "../../../rd/src";
+@source "../../../theme/src";
+@source "../../../vue/src";

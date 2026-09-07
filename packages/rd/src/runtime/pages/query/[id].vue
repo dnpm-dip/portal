@@ -1,11 +1,11 @@
 <script lang="ts">
 import {
-    PageMetaKey, 
-    QueryEventBusEventName, 
-    injectQueryEventBus, 
-    useQuerySessionStore, 
+    PageMetaKey,
+    QueryEventBusEventName,
+    injectQueryEventBus,
+    useQuerySessionStore,
     useToast,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import {
     defineComponent, 
     onMounted, 

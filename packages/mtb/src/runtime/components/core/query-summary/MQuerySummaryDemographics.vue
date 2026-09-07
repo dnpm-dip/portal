@@ -7,13 +7,13 @@
 
 <script lang="ts">
 import { wrapFnWithBusyState } from '@authup/client-web-kit';
+import type { QuerySummaryDemographics } from '@dnpm-dip/http-kit';
 import {
     DQuerySummaryDemographics,
     QueryEventBusEventName,
-    type QuerySummaryDemographics,
     injectQueryEventBus,
     useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { VCAlert } from '@vuecs/elements';
 import { VCPlaceholder } from '@vuecs/placeholder';
 import { defineComponent, onUnmounted, ref } from 'vue';

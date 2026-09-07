@@ -5,8 +5,12 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { injectHTTPClient, injectQueryEventBus, useQuerySessionStore } from '@dnpm-dip/core';
-import { QueryEventBusEventName } from '@dnpm-dip/core/services/query-event-bus/constants';
+import { 
+    QueryEventBusEventName, 
+    injectHTTPClient, 
+    injectQueryEventBus, 
+    useQuerySessionStore, 
+} from '@dnpm-dip/vue';
 import type { Pinia } from 'pinia';
 import { defineNuxtPlugin } from '#app';
 

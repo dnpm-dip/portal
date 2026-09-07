@@ -1,4 +1,4 @@
-import { injectHTTPClient } from '@dnpm-dip/core';
+import { injectHTTPClient } from '@dnpm-dip/vue';
 import { MTBAPIClient, provideHTTPClient } from '../core/http-client';
 import { defineNuxtPlugin } from '#app';
 

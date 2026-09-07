@@ -8,10 +8,12 @@
 <script lang="ts">
 import {
     type CodeSystemConcept,
+    transformConceptToFormSelectOption,
+} from '@dnpm-dip/http-kit';
+import {
     DCodeSystem,
     DCollectionTransform,
-    transformConceptToFormSelectOption,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { VCFormSelectSearch } from '@vuecs/forms';
 import {
     type PropType, 

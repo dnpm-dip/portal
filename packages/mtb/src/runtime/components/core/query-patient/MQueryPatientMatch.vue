@@ -6,7 +6,7 @@
   -->
 
 <script lang="ts">
-import { DFact } from '@dnpm-dip/core';
+import { DFact } from '@dnpm-dip/vue';
 import { VCButton } from '@vuecs/button';
 import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';
@@ -46,7 +46,7 @@ export default defineComponent({
         };
 
         const id = computed(() => {
-            if (typeof props.index === 'number' && Number.isInteger(props.index)) {
+            if (typeof props.index === 'number' && Number.isSafeInteger(props.index)) {
                 return props.index + 1;
             }
 

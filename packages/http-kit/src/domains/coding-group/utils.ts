@@ -1,0 +1,19 @@
+import { isObject } from '@dnpm-dip/kit';
+import type { Coding } from '../coding';
+import type { CodingGroup } from './types';
+
+export function isCodingGroup(input: unknown) : input is CodingGroup {
+    return isObject(input) &&
+        typeof input.id === 'string' &&
+        Array.isArray(input.children);
+}
+
+export function toCodingGroup(items: Coding[]) : CodingGroup {
+    return {
+        id: items
+            .map((item) => `${item.code}`)
+            .sort()
+            .join('::'),
+        children: items,
+    };
+}

@@ -27,13 +27,16 @@
         "prepack": "nuxt-module-build build",
         "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
         "lint": "eslint .",
-        "test:watch": "vitest watch"
+        "test": "vitest run --config test/vitest.config.ts",
+        "test:watch": "vitest watch --config test/vitest.config.ts"
     },
     "dependencies": {
         "@authup/core-kit": "^1.0.0-beta.62",
         "@authup/client-web-kit": "^1.0.0-beta.62",
-        "@dnpm-dip/core": "^1.11.0",
-        "@dnpm-dip/kit": "^1.10.0",
+        "@dnpm-dip/http-kit": "^0.0.0",
+        "@dnpm-dip/kit": "^0.0.0",
+        "@dnpm-dip/nuxt-kit": "^1.10.0",
+        "@dnpm-dip/vue": "^1.35.0",
         "@nuxt/kit": "^4.5.2",
         "@vuecs/table": "^1.6.1",
         "@vuecs/timeago": "^2.2.0",
@@ -41,6 +44,9 @@
     },
     "devDependencies": {
         "@nuxt/module-builder": "^1.0.2",
+        "@vitejs/plugin-vue": "^6.0.8",
+        "@vue/test-utils": "^2.4.6",
+        "happy-dom": "^20.0.0",
         "nuxt": "^4.5.2"
     }
 }

@@ -1,10 +1,10 @@
 <script lang="ts">
 import {
-    DCodingCommaList, 
-    DCodingText, 
-    DCommaList, 
+    DCodingCommaList,
+    DCodingText,
+    DCommaList,
     DPatient,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';

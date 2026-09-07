@@ -1,10 +1,10 @@
 <script lang="ts">
+import type { CodeSystemConcept } from '@dnpm-dip/http-kit';
 import {
-    type CodeSystemConcept,
     DCodeSystem,
-    DCollectionTransform, 
+    DCollectionTransform,
     type FormTabInput,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { VCButton } from '@vuecs/button';
 import { 
     VCFormCheckbox, 

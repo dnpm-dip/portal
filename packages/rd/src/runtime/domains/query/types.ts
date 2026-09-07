@@ -6,7 +6,12 @@ import type {
     QueryBase,
     QueryRequestMode,
     QuerySummaryBase,
-} from '@dnpm-dip/core';
+    QuerySummaryDemographics,
+    ResourceCollectionLoadMeta,
+    ResourceCollectionResponse,
+} from '@dnpm-dip/http-kit';
+import type { URLQueryRecord } from '@dnpm-dip/kit';
+import type { PatientMatch, PatientRecord } from '../patient';
 
 export type VariantCriteria = 'gene' |
 'cDNAChange' |
@@ -61,3 +66,15 @@ export type QuerySummaryDiagnostics = {
 export type QuerySummary = QuerySummaryBase & {
     diagnostics: QuerySummaryDiagnostics
 };
+
+export interface IQueryAPI {
+    submit(query: QuerySessionCreate) : Promise<QuerySession>;
+    getOne(id: string) : Promise<QuerySession>;
+    update(id: string, query?: Partial<QuerySessionCreate>) : Promise<QuerySession>;
+    getDiagnosisFilter(id: string) : Promise<QueryDiagnosisFilter>;
+    getHpoFilter(id: string) : Promise<QueryHpoFilter>;
+    getPatients(id: string, meta?: ResourceCollectionLoadMeta) : Promise<ResourceCollectionResponse<PatientMatch>>;
+    getDemographics(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryDemographics>;
+    getDiagnostics(queryId: string, query?: URLQueryRecord) : Promise<QuerySummaryDiagnostics>;
+    getPatientRecord(queryId: string, patientId: string) : Promise<PatientRecord>;
+}

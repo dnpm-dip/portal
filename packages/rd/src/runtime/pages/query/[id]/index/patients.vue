@@ -8,7 +8,7 @@ import {
     QueryEventBusEventName,
     injectQueryEventBus,
     useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import {
     type PropType,
     type Ref,

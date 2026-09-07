@@ -1,14 +1,25 @@
 import {
-    type HTTPClient,
+    type IHTTPClient,
+    type IPreparedQueryAPI,
+    type IValidationAPI,
     PreparedQueryAPI,
     ValidationAPI,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/http-kit';
 import {
+    type IKaplanMeierAPI,
+    type IQueryAPI,
     KaplanMeierAPI,
     QueryAPI,
 } from '../../domains';
 
-export class MTBAPIClient {
+export interface IMTBAPIClient {
+    readonly kaplanMeier : IKaplanMeierAPI;
+    readonly preparedQuery : IPreparedQueryAPI;
+    readonly query : IQueryAPI;
+    readonly validation : IValidationAPI;
+}
+
+export class MTBAPIClient implements IMTBAPIClient {
     readonly kaplanMeier : KaplanMeierAPI;
 
     readonly preparedQuery : PreparedQueryAPI;
@@ -17,7 +28,7 @@ export class MTBAPIClient {
 
     readonly validation : ValidationAPI;
 
-    constructor(client: HTTPClient) {
+    constructor(client: IHTTPClient) {
         this.kaplanMeier = new KaplanMeierAPI({ client });
         this.preparedQuery = new PreparedQueryAPI({ client, useCase: 'mtb' });
         this.query = new QueryAPI({ client });

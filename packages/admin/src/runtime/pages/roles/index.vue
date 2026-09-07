@@ -12,7 +12,7 @@ import {
     PageMetaKey, 
     PageNavigationTopID, 
     useToast,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { VCNavItems } from '@vuecs/navigation';
 import { definePageMeta } from '#imports';
 import { defineNuxtComponent } from '#app';

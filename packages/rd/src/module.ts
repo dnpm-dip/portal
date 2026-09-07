@@ -1,4 +1,4 @@
-import { registerPages } from '@dnpm-dip/kit';
+import { registerPages } from '@dnpm-dip/nuxt-kit';
 import {
     addPlugin,
     createResolver,

@@ -11,6 +11,8 @@ const startYear = 2023;
 const year = computed(() => {
     const current = new Date().getFullYear();
 
+    // `startYear` is a number; wrapper coerces it so both ternary branches return `string`.
+    // eslint-disable-next-line unicorn/no-useless-template-literals
     return current === startYear ? `${startYear}` : `${startYear}-${current}`;
 });
 

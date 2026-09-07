@@ -10,17 +10,19 @@ import { wrapFnWithBusyState } from '@authup/client-web-kit';
 import {
     type Coding,
     type ConceptCountValue,
+    type KeyValueRecord,
+    isCoding,
+    toCodingGroup,
+} from '@dnpm-dip/http-kit';
+import {
     DKVChart,
     DKVChartTableSwitch,
     DQuerySummaryGrouped,
     DQuerySummaryNested,
-    type KeyValueRecord,
     QueryEventBusEventName,
     injectQueryEventBus,
-    isCoding,
-    toCodingGroup,
     useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { VCAlert } from '@vuecs/elements';
 import { VCPlaceholder } from '@vuecs/placeholder';
 import {

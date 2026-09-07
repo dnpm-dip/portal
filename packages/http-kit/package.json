@@ -1,0 +1,50 @@
+{
+    "name": "@dnpm-dip/http-kit",
+    "type": "module",
+    "version": "0.0.0",
+    "description": "HTTP client, domain models and interfaces for DNPM:DIP.",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs"
+        },
+        "./testing": {
+            "types": "./dist/testing/index.d.ts",
+            "import": "./dist/testing/index.mjs"
+        }
+    },
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist/"
+    ],
+    "scripts": {
+        "build:types": "tsc --emitDeclarationOnly -p tsconfig.build.json",
+        "build:js": "tsdown",
+        "build": "npm run build:js && npm run build:types",
+        "test": "vitest run --config test/vitest.config.ts"
+    },
+    "author": {
+        "name": "Peter Placzek",
+        "email": "peter.placzek1996@gmail.com",
+        "url": "https://github.com/tada5hi"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dnpm-dip/portal.git",
+        "directory": "packages/http-kit"
+    },
+    "bugs": {
+        "url": "https://github.com/dnpm-dip/portal/issues"
+    },
+    "homepage": "https://github.com/dnpm-dip/portal#readme",
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@dnpm-dip/kit": "^0.0.0",
+        "hapic": "^3.0.2"
+    }
+}

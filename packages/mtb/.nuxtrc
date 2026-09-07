@@ -1,4 +1,6 @@
 imports.autoImport=false
 typescript.includeWorkspace=true
-alias.@dnpm-dip/core=../../core/src
 alias.@dnpm-dip/kit=../../kit/src
+alias.@dnpm-dip/http-kit=../../http-kit/src
+alias.@dnpm-dip/vue=../../vue/src
+alias.@dnpm-dip/nuxt-kit=../../nuxt-kit/src

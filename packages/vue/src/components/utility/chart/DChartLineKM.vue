@@ -1,0 +1,121 @@
+<script lang="ts">
+import type {
+    ChartData, 
+    ChartDataset, 
+    ChartOptions, 
+    Point,
+} from 'chart.js';
+import type { Component, PropType } from 'vue';
+import { computed, defineComponent } from 'vue';
+import { Line } from 'vue-chartjs';
+import {
+    generateRandomColorTuple,
+    getColorInRange,
+    rgbToHex,
+} from '@dnpm-dip/kit';
+import type { KMSurvivalReport } from './types';
+
+const TIME_UNIT_LABELS : Record<string, string> = {
+    seconds: 'Sekunden',
+    minutes: 'Minuten',
+    hours: 'Stunden',
+    days: 'Tage',
+    weeks: 'Wochen',
+    months: 'Monate',
+    years: 'Jahre',
+};
+
+const component = defineComponent({
+    components: { ChartLine: Line },
+    props: {
+        report: {
+            required: true,
+            type: Object as PropType<KMSurvivalReport>,
+        },
+    },
+    setup(props) {
+        const [start, end] = generateRandomColorTuple(2);
+
+        const datasets = computed<ChartDataset<'line'>[]>(() => props.report.data.map((item, key) => {
+            const data : Point[] = [];
+
+            for (const rate of item.value.survivalRates) {
+                data.push({
+                    x: rate.time,
+                    y: Number(rate.survRate.toFixed(2)),
+                });
+            }
+
+            const color = rgbToHex(getColorInRange({
+                start,
+                end,
+                rangeMax: props.report.data.length,
+                rangeValue: key,
+            }));
+
+            return {
+                type: 'line',
+                label: `${item.key} (median: ${item.value.medianSurvivalTime})`,
+                backgroundColor: color,
+                borderColor: color,
+                fill: false,
+                stepped: 'middle',
+                pointHitRadius: 0,
+                pointBorderWidth: 2,
+                hoverBorderWidth: 2,
+                pointStyle: 'cross',
+                data,
+            } satisfies ChartDataset<'line'>;
+        }));
+
+        const data = computed<ChartData<'line'>>(() => ({ datasets: datasets.value }));
+
+        const timeUnitLabel = computed(() => {
+            const { timeUnit } = props.report;
+            if (!timeUnit) {
+                return undefined;
+            }
+
+            return TIME_UNIT_LABELS[timeUnit.toLowerCase()] || timeUnit;
+        });
+
+        const options = computed<ChartOptions<'line'>>(() => ({
+            responsive: true,
+            scales: {
+                x: {
+                    type: 'linear',
+                    grace: '0%',
+                    title: {
+                        display: true,
+                        align: 'center',
+                        text: timeUnitLabel.value ? `Zeit (${timeUnitLabel.value})` : 'Zeit',
+                    },
+                },
+                y: {
+                    min: 0.0,
+                    max: 1.1,
+                    ticks: { stepSize: 0.1 },
+                    title: {
+                        display: true,
+                        align: 'center',
+                        text: 'Überlebenswahrscheinlichkeit',
+                    },
+                },
+            },
+        }));
+
+        return {
+            data,
+            options,
+        };
+    },
+});
+
+export default component as Component;
+</script>
+<template>
+    <ChartLine
+        :options="options"
+        :data="data"
+    />
+</template>

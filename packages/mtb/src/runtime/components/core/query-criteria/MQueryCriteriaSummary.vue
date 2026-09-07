@@ -5,7 +5,7 @@
   - view the LICENSE file that was distributed with this source code.
   -->
 <script lang="ts">
-import { DCodingText } from '@dnpm-dip/core';
+import { DCodingText } from '@dnpm-dip/vue';
 import { VCBadge } from '@vuecs/elements';
 import { VCIcon } from '@vuecs/icon';
 import { type PropType, defineComponent } from 'vue';

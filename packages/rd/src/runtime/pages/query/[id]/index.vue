@@ -5,7 +5,7 @@ import {
     DQueryPatientFilters,
     QueryEventBusEventName,
     injectQueryEventBus,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import type { PropType } from 'vue';
 import { computed, ref, resolveComponent } from 'vue';
 import { VCButton } from '@vuecs/button';

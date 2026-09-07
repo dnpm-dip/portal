@@ -5,7 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import { inject, provide } from '@dnpm-dip/core';
+import { inject, provide } from '@dnpm-dip/vue';
 import type { App } from 'vue';
 import type { Navigation } from './module';
 

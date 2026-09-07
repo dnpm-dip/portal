@@ -12,7 +12,7 @@ import {
     PageNavigationTopID, 
     extendRefRecord, 
     useToast,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import type { User } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
 import { computed, defineComponent, ref } from 'vue';

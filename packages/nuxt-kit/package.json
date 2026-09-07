@@ -1,0 +1,47 @@
+{
+    "name": "@dnpm-dip/nuxt-kit",
+    "type": "module",
+    "version": "1.28.1",
+    "description": "Kit for DNPM:DIP apps and packages.",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs"
+        }
+    },
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist/"
+    ],
+    "scripts": {
+        "build:types": "tsc --emitDeclarationOnly -p tsconfig.build.json",
+        "build:js": "tsdown",
+        "build": "npm run build:js && npm run build:types"
+    },
+    "keywords": [],
+    "author": {
+        "name": "Peter Placzek",
+        "email": "peter.placzek1996@gmail.com",
+        "url": "https://github.com/tada5hi"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dnpm-dip/portal.git",
+        "directory": "packages/nuxt-kit"
+    },
+    "bugs": {
+        "url": "https://github.com/dnpm-dip/portal/issues"
+    },
+    "homepage": "https://github.com/dnpm-dip/portal#readme",
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@nuxt/schema": "^4.1.3",
+        "@nuxt/kit": "^4.5.2",
+        "ufo": "^1.6.2"
+    }
+}

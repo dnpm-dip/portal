@@ -23,9 +23,10 @@ export default defineNuxtConfig({
             // name can be written:
             //  - the portal's own template tree,
             //  - `src/` of every sibling package — `admin`, `mtb` and `rd`
-            //    are registered from `../<name>/src/module`, and `core`/`kit`
-            //    are aliased to `../<name>/src`, so the sources (not the
-            //    dists) are what the portal builds,
+            //    are registered from `../<name>/src/module`, and `kit`,
+            //    `http-kit`, `vue` and `nuxt-kit` are aliased to
+            //    `../<name>/src`, so the sources (not the dists) are what
+            //    the portal builds,
             //  - `@authup/client-web-kit`, whose components and
             //    identity-provider preset tables carry icon names,
             //  - `@vuecs/icons-font-awesome`, whose preset supplies the vuecs
@@ -40,7 +41,7 @@ export default defineNuxtConfig({
                     globInclude: [
                         'packages/portal/{app,error}.vue',
                         'packages/portal/{components,config,core,layouts,middleware,pages,plugins,stores}/**/*.{vue,ts}',
-                        'packages/{admin,core,kit,mtb,rd,theme}/src/**/*.{vue,ts}',
+                        'packages/{admin,http-kit,kit,mtb,nuxt-kit,rd,theme,vue}/src/**/*.{vue,ts}',
 
                         'node_modules/@authup/client-web-kit/dist/**/*.mjs',
                         'node_modules/@vuecs/icons-font-awesome/dist/*.mjs',
@@ -93,7 +94,7 @@ export default defineNuxtConfig({
         // nested vuecs deps. The theme package absorbed all the former
         // local assets/css/* project stylesheets.
         '@/assets/css/tailwind.css',
-        '@dnpm-dip/core/../dist/index.css',
+        '@dnpm-dip/vue/../dist/index.css',
         // Self-hosted webfonts — the theme's font stacks (Nunito body,
         // Asap headings) were declared but no @font-face ever shipped;
         // without these the UI silently falls back to the browser
@@ -106,8 +107,10 @@ export default defineNuxtConfig({
     ],
 
     alias: {
-        '@dnpm-dip/core': path.join(__dirname, '..', 'core', 'src'),
         '@dnpm-dip/kit': path.join(__dirname, '..', 'kit', 'src'),
+        '@dnpm-dip/http-kit': path.join(__dirname, '..', 'http-kit', 'src'),
+        '@dnpm-dip/vue': path.join(__dirname, '..', 'vue', 'src'),
+        '@dnpm-dip/nuxt-kit': path.join(__dirname, '..', 'nuxt-kit', 'src'),
     },
 
     runtimeConfig: {

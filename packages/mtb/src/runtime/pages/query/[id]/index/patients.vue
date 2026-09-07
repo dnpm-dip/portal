@@ -1,5 +1,5 @@
 <script lang="ts">
-import { QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore } from '@dnpm-dip/core';
+import { QueryEventBusEventName, injectQueryEventBus, useQueryFilterStore } from '@dnpm-dip/vue';
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCAlert } from '@vuecs/elements';
 import { VCIcon } from '@vuecs/icon';

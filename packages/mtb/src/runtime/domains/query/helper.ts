@@ -5,7 +5,7 @@
  * view the LICENSE file that was distributed with this source code.
  */
 
-import type { Coding } from '@dnpm-dip/core';
+import type { Coding } from '@dnpm-dip/http-kit';
 import type { QueryGeneAlteration, QueryGeneAlterationCriteria } from './types';
 
 function codingToString(coding: Coding): string {

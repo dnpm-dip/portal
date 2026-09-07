@@ -15,13 +15,15 @@ import {
 } from 'vue';
 import {
     type Coding,
+    isCoding,
+    toCoding,
+} from '@dnpm-dip/http-kit';
+import {
     DQueryFilterBox,
     QueryEventBusEventName,
     injectQueryEventBus,
-    isCoding,
-    toCoding,
     useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { QueryFilterURLKey } from '../../../constants';
 import { injectHTTPClient } from '../../../core/http-client';
 

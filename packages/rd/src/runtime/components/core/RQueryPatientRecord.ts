@@ -1,7 +1,7 @@
-import type { ResourceRecordSlots } from '@dnpm-dip/core';
+import type { ResourceRecordSlots } from '@dnpm-dip/vue';
 import {
     createResourceRecordManager,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import type { SlotsType } from 'vue';
 import { defineComponent, toRef } from 'vue';
 import { injectHTTPClient } from '../../core';

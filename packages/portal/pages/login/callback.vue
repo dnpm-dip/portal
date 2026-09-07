@@ -1,6 +1,6 @@
 <script lang="ts">
 import { VCIcon } from '@vuecs/icon';
-import { PageMetaKey } from '@dnpm-dip/core';
+import { PageMetaKey } from '@dnpm-dip/vue';
 import { defineNuxtComponent, navigateTo } from '#app';
 import { definePageMeta } from '#imports';
 

@@ -1,10 +1,14 @@
-import type { HTTPClient } from '@dnpm-dip/core';
+import type { IHTTPClient } from '@dnpm-dip/http-kit';
 import type { ConnectionReport } from '../../domains/connection-report';
 
-export class AdminHTTPClient {
-    protected client: HTTPClient;
+export interface IAdminAPIClient {
+    getConnectionReport() : Promise<ConnectionReport>;
+}
 
-    constructor(client: HTTPClient) {
+export class AdminHTTPClient implements IAdminAPIClient {
+    protected client: IHTTPClient;
+
+    constructor(client: IHTTPClient) {
         this.client = client;
     }
 

@@ -1,0 +1,16 @@
+{
+    "extends": "../../tsconfig.build.json",
+    "compilerOptions": {
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "declarationDir": "./dist",
+        "emitDeclarationOnly": true,
+        "noEmitOnError": false,
+        "isolatedModules": true,
+        "allowSyntheticDefaultImports": true,
+        "importHelpers": true
+    },
+    "include": [
+        "src/**/*.ts"
+    ]
+}

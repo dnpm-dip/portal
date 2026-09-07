@@ -1,5 +1,5 @@
 <script lang="ts">
-import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
+import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/vue';
 import { defineNuxtComponent } from '#app';
 import { definePageMeta, navigateTo } from '#imports';
 

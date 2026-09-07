@@ -2,7 +2,7 @@
 import { AClientForm, injectStore, storeToRefs } from '@authup/client-web-kit';
 import type { Client } from '@authup/core-kit';
 import { PermissionName } from '@authup/core-kit';
-import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/core';
+import { PageMetaKey, PageNavigationTopID } from '@dnpm-dip/vue';
 import { defineNuxtComponent, navigateTo } from '#app';
 import { definePageMeta } from '#imports';
 

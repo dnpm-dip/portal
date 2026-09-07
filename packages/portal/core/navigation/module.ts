@@ -9,8 +9,8 @@ import type { Store } from '@authup/client-web-kit';
 import { StoreAuthStatus } from '@authup/client-web-kit';
 import type { IdentityPolicyData } from '@authup/access';
 import { BuiltInPolicyType, PolicyData } from '@authup/access';
-import type { NavigationItemMeta } from '@dnpm-dip/core';
-import { PageMetaKey } from '@dnpm-dip/core';
+import type { NavigationItemMeta } from '@dnpm-dip/vue';
+import { PageMetaKey } from '@dnpm-dip/vue';
 import type { NavigationItem } from '@vuecs/navigation';
 
 const TopDefaultName = 'Home';

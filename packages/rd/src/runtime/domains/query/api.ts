@@ -2,12 +2,14 @@ import {
     type QuerySummaryDemographics,
     type ResourceCollectionLoadMeta,
     type ResourceCollectionResponse,
-    type URLQueryRecord,
     stringifyResourceCollectionMeta,
-} from '@dnpm-dip/core';
-import { BaseAPI, QueryRequestMode, serializeURLQueryRecord } from '@dnpm-dip/core';
+} from '@dnpm-dip/http-kit';
+import type { URLQueryRecord } from '@dnpm-dip/kit';
+import { BaseAPI, QueryRequestMode } from '@dnpm-dip/http-kit';
+import { serializeURLQueryRecord } from '@dnpm-dip/kit';
 import type { PatientMatch, PatientRecord } from '../patient';
 import type {
+    IQueryAPI,
     QueryDiagnosisFilter,
     QueryHpoFilter,
     QuerySession,
@@ -15,7 +17,7 @@ import type {
     QuerySummaryDiagnostics,
 } from './types';
 
-export class QueryAPI extends BaseAPI {
+export class QueryAPI extends BaseAPI implements IQueryAPI {
     /**
      * Create a query session.
      *

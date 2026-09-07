@@ -14,16 +14,18 @@ import {
 } from 'vue';
 import { VCTableSortIndicators } from '@vuecs/table';
 import type { SortDescriptor, TableColumn, TableSortState } from '@vuecs/table';
-import DCodingText from '@dnpm-dip/core/components/core/coding/DCodingText';
+import { 
+    DCodingCommaList, 
+    DCodingText, 
+    QueryEventBusEventName, 
+    injectQueryEventBus, 
+    useQueryFilterStore, 
+} from '@dnpm-dip/vue';
 import {
     type Coding,
-    DCodingCommaList,
-    QueryEventBusEventName,
     type ResourceCollectionLoadMeta,
-    injectQueryEventBus,
     toCodingGroup,
-    useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/http-kit';
 import type { PaginationMeta } from '@vuecs/pagination';
 import { VCAlert } from '@vuecs/elements';
 import { VCPlaceholder } from '@vuecs/placeholder';

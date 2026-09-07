@@ -1,5 +1,5 @@
 <script lang="ts">
-import { DCodingCommaList, DCommaList } from '@dnpm-dip/core';
+import { DCodingCommaList, DCommaList } from '@dnpm-dip/vue';
 import { VCIcon } from '@vuecs/icon';
 import type { PropType } from 'vue';
 import { defineNuxtComponent } from '#app';

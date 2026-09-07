@@ -6,22 +6,20 @@
   -->
 
 <script lang="ts">
+import type { Coding, ConnectionPeer, ValueSetCoding } from '@dnpm-dip/http-kit';
+import type { FormTabInput } from '@dnpm-dip/vue';
 import {
-    type Coding,
-    type ConnectionPeer,
-    type FormTabInput,
-    type ValueSetCoding,
-} from '@dnpm-dip/core';
+    LogicalOperator,
+    QueryRequestMode,
+} from '@dnpm-dip/http-kit';
 import {
     DCollectionTransform,
     DFormTabGroups,
     DLoadingModal,
     DSitePicker,
     DValueSet,
-    LogicalOperator,
-    QueryRequestMode,
     useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import { VCButton } from '@vuecs/button';
 import {
     VCFormCheckbox,
@@ -141,11 +139,11 @@ export default defineComponent({
 
             if (criteria.value) {
                 if (criteria.value.tumorEntities) {
-                    diagnoses.value = criteria.value.tumorEntities.map((item) => `${item.code}`);
+                    diagnoses.value = criteria.value.tumorEntities.map((item) => item.code);
                 }
 
                 if (criteria.value.tumorMorphologies) {
-                    tumorMorphologies.value = criteria.value.tumorMorphologies.map((item) => `${item.code}`);
+                    tumorMorphologies.value = criteria.value.tumorMorphologies.map((item) => item.code);
                 }
 
                 if (criteria.value.medication) {
@@ -163,7 +161,7 @@ export default defineComponent({
                 }
 
                 if (criteria.value.responses) {
-                    responses.value = criteria.value.responses.map((item) => `${item.code}`);
+                    responses.value = criteria.value.responses.map((item) => item.code);
                 }
 
                 if (

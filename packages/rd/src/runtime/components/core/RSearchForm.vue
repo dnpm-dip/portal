@@ -1,20 +1,22 @@
 <script lang="ts">
+import type {
+    CodeRecord,
+    Coding,
+    ConnectionPeer,
+    ValueSetCoding,
+} from '@dnpm-dip/http-kit';
 import {
-    type CodeRecord,
-    type Coding,
-    type ConnectionPeer,
     DLoadingModal,
     type FormTabInput,
-    type ValueSetCoding,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
 import {
     DCollectionTransform,
     DFormTabGroups,
     DSitePicker,
     DValueSet,
-    QueryRequestMode,
     useQueryFilterStore,
-} from '@dnpm-dip/core';
+} from '@dnpm-dip/vue';
+import { QueryRequestMode } from '@dnpm-dip/http-kit';
 import { VCButton } from '@vuecs/button';
 import { VCFormSelect, VCFormSelectSearch } from '@vuecs/forms';
 import type { FormOption } from '@vuecs/forms';
@@ -117,13 +119,13 @@ export default defineComponent({
 
                 if (criteria.value.hpoTerms) {
                     for (const term of criteria.value.hpoTerms) {
-                        hpoTerms.value.push(`${term.code}`);
+                        hpoTerms.value.push(term.code);
                     }
                 }
 
                 if (criteria.value.diagnoses) {
                     for (const diagnosis of criteria.value.diagnoses) {
-                        categories.value.push(`${parseCategory(diagnosis as Coding).value}`);
+                        categories.value.push(parseCategory(diagnosis as Coding).value);
                     }
                 }
             }
@@ -187,7 +189,7 @@ export default defineComponent({
                 payload.diagnoses = [];
 
                 for (const category of categories.value) {
-                    const id = `${category}`;
+                    const id = category;
                     const index = id.indexOf(':::');
 
                     payload.diagnoses.push({

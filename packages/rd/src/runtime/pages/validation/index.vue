@@ -8,7 +8,7 @@
 import { defineComponent } from 'vue';
 import { VCAlert } from '@vuecs/elements';
 import { VCIcon } from '@vuecs/icon';
-import { DValidationReportCard, DValidations } from '@dnpm-dip/core';
+import { DValidationReportCard, DValidations } from '@dnpm-dip/vue';
 
 export default defineComponent({
     components: {

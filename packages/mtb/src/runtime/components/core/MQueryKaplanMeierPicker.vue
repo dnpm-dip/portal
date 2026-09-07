@@ -6,7 +6,7 @@
   -->
 
 <script lang="ts">
-import { type Coding } from '@dnpm-dip/core';
+import type { Coding } from '@dnpm-dip/http-kit';
 import { VCFormGroup, VCFormSelect } from '@vuecs/forms';
 import { computed, defineComponent, ref } from 'vue';
 import { injectHTTPClient } from '../../core/http-client';
@@ -41,7 +41,7 @@ export default defineComponent({
 
         const transformCoding = (coding: Coding) => ({
             value: coding.code,
-            label: coding.display ? `${coding.display}` : coding.code,
+            label: coding.display ? coding.display : coding.code,
         });
 
         const typeOptions = computed(() => data.value.map((v) => transformCoding(v.key)));
