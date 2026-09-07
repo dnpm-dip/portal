@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/http-kit",
     "type": "module",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "HTTP client, domain models and interfaces for DNPM:DIP.",
     "exports": {
         "./package.json": "./package.json",
@@ -44,7 +44,7 @@
         "access": "public"
     },
     "dependencies": {
-        "@dnpm-dip/kit": "^0.0.0",
+        "@dnpm-dip/kit": "^1.0.0",
         "hapic": "^3.0.2"
     }
 }
