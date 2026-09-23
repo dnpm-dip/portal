@@ -27,7 +27,8 @@ describe('DKVTable', () => {
         const text = wrapper.text();
 
         expect(text).toContain('Weiblich');
-        expect(text).toContain('2.00');
+        expect(wrapper.findAll('td').map((el) => el.text())).toContain('2');
+        expect(text).not.toContain('2.00');
         expect(text).toContain('66.6%');
         expect(text).toContain('Männlich');
         expect(text).toContain('33.4%');
