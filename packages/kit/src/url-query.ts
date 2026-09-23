@@ -13,10 +13,10 @@ function extendQueryParts(
 ) {
     if (Array.isArray(value)) {
         for (const item of value) {
-            parts.push(`${key}=${item}`);
+            parts.push(`${key}=${encodeURIComponent(item)}`);
         }
     } else {
-        parts.push(`${key}=${value}`);
+        parts.push(`${key}=${encodeURIComponent(value)}`);
     }
 }
 

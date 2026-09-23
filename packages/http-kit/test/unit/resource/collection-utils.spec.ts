@@ -38,7 +38,7 @@ describe('stringifyResourceCollectionMeta', () => {
             },
         });
 
-        expect(output).toContain('sort=-createdAt,name');
+        expect(new URLSearchParams(output).get('sort')).toBe('-createdAt,name');
     });
 
     it('should spread filters into top level query parameters', () => {
