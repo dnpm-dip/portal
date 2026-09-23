@@ -13,14 +13,11 @@ import { VCIcon } from '@vuecs/icon';
 import type { QuerySession } from '../../../../../domains';
 import MQuerySummaryCoarseTherapyResponses
     from '../../../../../components/core/query-summary/MQuerySummaryCoarseTherapyResponses.vue';
-import MQuerySummaryTherapyResponses
-    from '../../../../../components/core/query-summary/MQuerySummaryTherapyResponses.vue';
 
 export default defineComponent({
     components: {
         VCIcon,
         MQuerySummaryCoarseTherapyResponseInfos: MQuerySummaryCoarseTherapyResponses,
-        MQuerySummaryTherapyResponseInfos: MQuerySummaryTherapyResponses,
     },
     props: {
         entity: {
@@ -37,12 +34,6 @@ export default defineComponent({
                 <VCIcon name="fa6-solid:layer-group" /> Nach Entität &amp; Medikation
             </h6>
             <MQuerySummaryCoarseTherapyResponseInfos :query-id="entity.id" />
-        </div>
-        <div>
-            <h6 class="section-label">
-                <VCIcon name="fa6-solid:dna" /> Nach stützender Variante
-            </h6>
-            <MQuerySummaryTherapyResponseInfos :query-id="entity.id" />
         </div>
     </div>
 </template>

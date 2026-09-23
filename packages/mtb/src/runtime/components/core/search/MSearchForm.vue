@@ -578,7 +578,7 @@ export default defineComponent({
                                                     v-model="responses"
                                                     :options="options"
                                                     :close-on-select="true"
-                                                    placeholder="RECIST"
+                                                    placeholder="RECIST/RANO"
                                                 />
                                             </template>
                                         </DCollectionTransform>
@@ -587,7 +587,7 @@ export default defineComponent({
                                         <VCFormSelectSearch
                                             :options="[]"
                                             :disabled="true"
-                                            placeholder="RECIST"
+                                            placeholder="RECIST/RANO"
                                         />
                                     </template>
                                 </DValueSet>
