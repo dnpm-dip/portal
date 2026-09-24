@@ -13,4 +13,10 @@ describe('serializeURLQueryRecord', () => {
     it('should return an empty string for an empty record', () => {
         expect(serializeURLQueryRecord({})).toBe('');
     });
+
+    it('should percent-encode values so a literal + survives as %2B', () => {
+        const qs = serializeURLQueryRecord({ therapy: { medication: 'L01XX|atc+L01EX|atc' } });
+        expect(qs).toBe('therapy[medication]=L01XX%7Catc%2BL01EX%7Catc');
+        expect(new URLSearchParams(qs).get('therapy[medication]')).toBe('L01XX|atc+L01EX|atc');
+    });
 });

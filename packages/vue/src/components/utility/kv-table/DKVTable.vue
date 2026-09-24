@@ -96,13 +96,13 @@ export default defineComponent({
                 // Label generator can return undefined; wrapper stringifies to "undefined" for `key: string`.
                 // eslint-disable-next-line unicorn/no-useless-template-literals
                 key = `${generateChartLabelsForKeyValueRecord(item)}`;
-                value = item.value.toFixed(2);
+                value = Number(item.value.toFixed(2));
                 percent = '?%';
             } else if (isConceptCount(item)) {
                 // Same as above: label generator can return undefined; `key` requires `string`.
                 // eslint-disable-next-line unicorn/no-useless-template-literals
                 key = `${generateChartLabelsForKeyValueRecord(item, { codingVerbose: props.codingVerboseLabel })}`;
-                value = item.value.count.toFixed(2);
+                value = Number(item.value.count.toFixed(2));
                 percent = `${item.value.percent.toFixed(1)}%`;
             } else {
                 key = 'unknown';
