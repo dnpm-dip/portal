@@ -1,5 +1,21 @@
 # @dnpm-dip/core
 
+## [1.35.1](https://github.com/dnpm-dip/portal/compare/v1.35.0...v1.35.1) (2026-09-24)
+
+
+### Bug Fixes
+
+* **deps:** bump authup packages to v1.0.0-beta.67 ([#1314](https://github.com/dnpm-dip/portal/issues/1314)) ([e251ed8](https://github.com/dnpm-dip/portal/commit/e251ed8986aad42f48aeaa7b36f03a6d3ee8336a))
+* mtb query feedback (filter encoding, therapy responses, count formatting) ([#1313](https://github.com/dnpm-dip/portal/issues/1313)) ([f03b07e](https://github.com/dnpm-dip/portal/commit/f03b07e69ce67ea085355854f4dcce4effefff9a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/http-kit bumped from ^0.0.0 to ^1.0.0
+    * @dnpm-dip/kit bumped from ^0.0.0 to ^1.0.0
+
 ## [1.35.0](https://github.com/dnpm-dip/portal/compare/v1.34.0...v1.35.0) (2025-08-06)
 
 
