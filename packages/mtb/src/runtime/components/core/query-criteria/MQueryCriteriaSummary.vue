@@ -46,7 +46,7 @@ export default defineComponent({
             <div class="flex flex-row flex-wrap gap-3">
                 <template
                     v-for="(item, index) in entity.geneAlterations.items"
-                    :key="item.gene"
+                    :key="index"
                 >
                     <template v-if="index > 0">
                         <div

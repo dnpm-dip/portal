@@ -1,8 +1,8 @@
 /*
  * Tailwind v4 entry for @dnpm-dip/portal.
  *
- * Pulls in the DNPM DIP theme (tailwindcss + @vuecs/design +
- * theme-tailwind + the kit theme + compat layer + migrated chrome
+ * Pulls in the DNPM DIP theme (the authup kit theme — tailwindcss +
+ * @vuecs/design + theme-tailwind — plus the DNPM tokens and chrome
  * stylesheets), then declares this app's local `@source` scopes so the
  * JIT picks up class-name tokens it can't reach via the theme alone.
  */
@@ -53,10 +53,10 @@
  * fail silently when one is missing.
  *
  * EXTERNAL deps (@authup/client-web-kit dist, @vuecs element class
- * maps) are NOT scanned here — those scopes belong to the theme's
- * vendored kit-theme cascade (@dnpm-dip/theme src/index.css), which
- * anchors them at the hoisted root node_modules. If npm ever nests
- * those packages portal-locally instead, re-add local anchors there.
+ * maps) are NOT scanned here — @authup/client-web-kit-theme declares
+ * those scopes relative to its own location in the hoisted root
+ * node_modules. If npm ever nests those packages portal-locally
+ * instead, add local anchors here.
  */
 @source "../../../admin/src";
 @source "../../../http-kit/src";

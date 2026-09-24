@@ -144,7 +144,7 @@ export default defineNuxtComponent({
                             <strong><VCIcon name="fa6-solid:pills" /> Medikation</strong>
                             <template
                                 v-for="(el, idx) in item.history[0].medication"
-                                :key="el"
+                                :key="idx"
                             >
                                 {{ idx > 0 ? ', ' : '' }} {{ el.display || el.code }}
                             </template>
