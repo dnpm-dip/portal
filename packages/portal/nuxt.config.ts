@@ -132,10 +132,10 @@ export default defineNuxtConfig({
             // REALM_MASTER_NAME at the call site.
             authupRealmId: process.env.AUTHUP_REALM_ID,
             // Self-service account console (profile, password, authenticators,
-            // sessions, applications), served by Authup's server-core on the
-            // IdP origin as of v1.0.0-beta.59. The portal has no settings area
+            // sessions, applications), served under `/console/account` on the
+            // IdP origin as of v1.0.0-beta.64. The portal has no settings area
             // of its own and links here instead. Empty falls back to
-            // `<authupUrl>/account` at the call site; override per deployment
+            // `<authupUrl>/console/account` at the call site; override per deployment
             // (NUXT_PUBLIC_ACCOUNT_URL at container runtime).
             accountUrl: process.env.ACCOUNT_URL || '',
             cookieDomain: process.env.COOKIE_DOMAIN,

@@ -29,7 +29,7 @@ export default defineComponent({
                     <strong>Betroffene Gene</strong>
                     <template
                         v-for="(item, idx) in entity.reportedAffectedGenes"
-                        :key="item"
+                        :key="idx"
                     >
                         {{ idx > 0 ? ', ' : '' }} {{ item.display || item.code }}
                     </template>
@@ -56,7 +56,7 @@ export default defineComponent({
                     <strong>Kopienzahl (LoH)</strong>
                     <template
                         v-for="(item, idx) in entity.copyNumberNeutralLoH"
-                        :key="item"
+                        :key="idx"
                     >
                         {{ idx > 0 ? ', ' : '' }} {{ item.display || item.code }}
                     </template>

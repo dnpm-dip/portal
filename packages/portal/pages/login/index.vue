@@ -63,7 +63,7 @@ export default defineNuxtComponent({
             try {
                 const pkce = await createPKCE();
                 const state = createState();
-                const redirectUri = `${window.location.origin}/login/callback`;
+                const callbackURL = new URL('/login/callback', window.location.origin);
 
                 // Preserve the post-login destination AND any sibling query
                 // params on the login URL (e.g. /login?redirect=/mtb&x=1 → /mtb?x=1).
@@ -85,13 +85,19 @@ export default defineNuxtComponent({
                     target = `${url.pathname}${url.search}${url.hash}`;
                 }
 
+                // The destination rides in the redirect_uri's own query; the
+                // @authup/client-web-nuxt interceptor reads it back on /login/callback.
+                if (target) {
+                    callbackURL.searchParams.set('redirect', target);
+                }
+                const redirectUri = callbackURL.href;
+
                 saveAuthorizationRequest({
                     state,
                     code_verifier: pkce.code_verifier,
                     redirect_uri: redirectUri,
                     client_id: clientId,
                     realm_id: realmId,
-                    target,
                 });
 
                 window.location.href = buildAuthorizeURL({
