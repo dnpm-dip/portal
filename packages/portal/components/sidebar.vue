@@ -39,6 +39,7 @@ export default defineNuxtComponent({
         const sideItemsWatch = [
             () => store.status,
             () => store.userId,
+            () => store.permissionRevision,
         ];
 
         return {

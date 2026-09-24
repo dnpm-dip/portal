@@ -32,6 +32,7 @@ export default defineNuxtComponent({
         const topItemsWatch = [
             () => store.status,
             () => store.userId,
+            () => store.permissionRevision,
         ];
 
         const { isDark } = useColorMode();

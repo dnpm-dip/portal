@@ -61,6 +61,7 @@
         "@vuecs/table": "^1.6.2",
         "@vuecs/theme-tailwind": "^6.5.0",
         "@vuecs/timeago": "^2.2.1",
+        "@vuecs/tree": "^1.0.0",
         "chart.js": "^4.5.0",
         "date-fns": "^4.4.0",
         "hapic": "^3.0.2",
@@ -73,6 +74,6 @@
         "validup": "^2.0.1",
         "vue": "^3.5.43",
         "vue-router": "^5.3.1",
-        "zod": "^4.3.6"
+        "zod": "^4.6.5"
     }
 }

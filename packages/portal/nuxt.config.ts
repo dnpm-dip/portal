@@ -60,6 +60,9 @@ export default defineNuxtConfig({
 {
     apiURLRuntimeKey: 'authupUrl',
     cookieDomainRuntimeKey: 'cookieDomain',
+    // COOKIE_DOMAIN may widen the session cookies to a parent domain
+    // shared with other authup clients; the prefix keeps them apart.
+    cookiePrefix: 'dnpm_',
 } satisfies ModuleOptions,
         ],
         '../admin/src/module',
