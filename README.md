@@ -71,13 +71,20 @@ identity providers live. Authup redirects back to `<portal-origin>/login/callbac
 
 The OAuth client is configurable via `NUXT_PUBLIC_AUTHUP_CLIENT_ID` (default: `admin-console`,
 an Authup built-in system client; Authup ≤ `1.0.0-beta.58` instead shipped a shared `web`
-client). The configured client **must** register `<portal-origin>/login/callback` as an allowed
-redirect URI, or Authup rejects the redirect.
+client). A custom client **must** allow both `<portal-origin>/login/callback` and
+`<portal-origin>/login/callback?redirect=*`. The second pattern carries the post-login
+destination when signing in from a protected page. Deployments that registered only the
+exact callback URI must add this pattern when upgrading, or deep-link sign-ins are rejected.
 
 A name-identified client (such as the built-in `admin-console`) exists in every realm, so the
 authorize request carries a realm hint — `NUXT_PUBLIC_AUTHUP_REALM_ID` (default: `master`, the
 single DNPM:DIP realm), a realm UUID or name — otherwise Authup responds with _"A realm is
 required to resolve a client by name."_
+
+The portal uses Authup beta.68 and namespaces its session cookies with `dnpm_`,
+so a deployment sharing an origin with Authup's hosted consoles keeps the application
+and IdP sessions separate. Existing portal sessions must sign in again after this upgrade.
+Navigation follows Authup's refreshed authorization verdicts through `permissionRevision`.
 
 #### Account & self-service
 

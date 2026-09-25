@@ -56,11 +56,12 @@ export default defineNuxtConfig({
 
     modules: [
         [
-            '@authup/client-web-nuxt', 
-{
-    apiURLRuntimeKey: 'authupUrl',
-    cookieDomainRuntimeKey: 'cookieDomain',
-} satisfies ModuleOptions,
+            '@authup/client-web-nuxt',
+            {
+                apiURLRuntimeKey: 'authupUrl',
+                cookieDomainRuntimeKey: 'cookieDomain',
+                cookiePrefix: 'dnpm_',
+            } satisfies ModuleOptions,
         ],
         '../admin/src/module',
         '../mtb/src/module',

@@ -63,12 +63,11 @@ export default defineNuxtComponent({
             try {
                 const pkce = await createPKCE();
                 const state = createState();
-                const redirectUri = `${window.location.origin}/login/callback`;
+                const callbackURL = new URL('/login/callback', window.location.origin);
 
                 // Preserve the post-login destination AND any sibling query
                 // params on the login URL (e.g. /login?redirect=/mtb&x=1 → /mtb?x=1).
                 const { redirect, ...rest } = route.query;
-                let target: string | undefined;
                 if (typeof redirect === 'string') {
                     const url = new URL(redirect, window.location.origin);
                     for (const [key, value] of Object.entries(rest)) {
@@ -82,8 +81,9 @@ export default defineNuxtComponent({
                             url.searchParams.set(key, value);
                         }
                     }
-                    target = `${url.pathname}${url.search}${url.hash}`;
+                    callbackURL.searchParams.set('redirect', `${url.pathname}${url.search}${url.hash}`);
                 }
+                const redirectUri = callbackURL.href;
 
                 saveAuthorizationRequest({
                     state,
@@ -91,7 +91,6 @@ export default defineNuxtComponent({
                     redirect_uri: redirectUri,
                     client_id: clientId,
                     realm_id: realmId,
-                    target,
                 });
 
                 window.location.href = buildAuthorizeURL({
