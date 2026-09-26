@@ -57,7 +57,7 @@ The portal is configured at runtime via environment variables (pass them with `d
 | `NUXT_PUBLIC_AUTHUP_URL` | `https://dnpm-dip.net/auth/` | Authup base URL |
 | `NUXT_PUBLIC_AUTHUP_CLIENT_ID` | `admin-console` | OAuth2 client used for the login (authorization-code) flow |
 | `NUXT_PUBLIC_AUTHUP_REALM_ID` | `master` | Realm (UUID or name) that owns the OAuth2 client |
-| `NUXT_PUBLIC_ACCOUNT_URL` | `<NUXT_PUBLIC_AUTHUP_URL>/account` | Account console (self-service) base URL |
+| `NUXT_PUBLIC_ACCOUNT_URL` | `<NUXT_PUBLIC_AUTHUP_URL>/console/account` | Account console (self-service) base URL |
 | `NUXT_PUBLIC_COOKIE_DOMAIN` | — | Cookie domain for the auth session |
 
 #### Authentication
@@ -93,7 +93,7 @@ applications are managed in Authup's **account console**, served by server-core 
 origin (Authup ≥ `1.0.0-beta.59`). The header's account icon (visible while signed in) links
 straight to it, and is the only entry point — the sidebar carries no account entry, so the one
 link that leaves for the IdP origin sits in one place. Point `NUXT_PUBLIC_ACCOUNT_URL` elsewhere
-if the console is not reachable under `<NUXT_PUBLIC_AUTHUP_URL>/account`; with neither that nor
+if the console is not reachable under `<NUXT_PUBLIC_AUTHUP_URL>/console/account`; with neither that nor
 `NUXT_PUBLIC_AUTHUP_URL` configured, the icon is hidden rather than pointing nowhere.
 
 The link carries the portal origin as `?ref=…` so the account console can render a back link.

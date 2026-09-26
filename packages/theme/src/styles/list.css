@@ -1,16 +1,8 @@
 /*
- * Vendored from @authup/client-web-kit-theme `styles/list.css` (missing
- * from the published tarball — see index.css), with one deliberate
- * delta: upstream still targets the pre-vuecs-major class names
- * (`.list`, `.list-item`, …), but @vuecs/list and the kit components
- * (ARoleUserAssignments, AIdentityProviderRoleAssignments, …) now emit
- * `vc-list`, `vc-list-item`, `vc-list-body`, `vc-list-no-more`. The JS
- * theme (@vuecs/theme-tailwind) only supplies layout utilities for
- * these elements — the row chrome (background, border, shadow) below is
- * what makes list items stand out from the page background.
- *
- * Portal-owned list markup (`.list` / `.list-body` / `.list-item` in
- * the query/patient templates) keeps its own chrome in styles/list.css.
+ * Row chrome for `@vuecs/list` (the kit's assignment lists render it).
+ * @vuecs/theme-tailwind only supplies layout utilities for these
+ * elements; the background, border and shadow below make list items
+ * stand out from the page background.
  */
 
 .vc-list .vc-list-item {

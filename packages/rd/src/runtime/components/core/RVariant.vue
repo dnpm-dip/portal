@@ -100,7 +100,7 @@ export default defineComponent({
 
                     <template
                         v-for="(item, idx) in entity.publications"
-                        :key="item"
+                        :key="idx"
                     >
                         {{ idx > 0 ? ', ' : '' }} {{ item.extId ? item.extId.value : item.type }}
                     </template>

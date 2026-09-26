@@ -11,7 +11,7 @@ import type { AccountConsoleURLOptions } from './types';
 
 /**
  * Build a link into the account console, the self-service surface served
- * by Authup's server-core on the IdP origin (Authup >= 1.0.0-beta.59).
+ * under `/console/account` on the IdP origin (Authup >= 1.0.0-beta.64).
  *
  * The portal origin rides along as `ref`, which the account console renders
  * as a back link after validating it against the trusted app origins. The
@@ -50,7 +50,7 @@ export function useAccountConsoleURL() : (options?: AccountConsoleURLOptions) =>
 
     const authupUrl = ((runtimeConfig.public.authupUrl as string | undefined) ?? '')
         .replace(/\/+$/, '');
-    const baseUrl = ((runtimeConfig.public.accountUrl as string | undefined) || (authupUrl ? `${authupUrl}/account` : ''))
+    const baseUrl = ((runtimeConfig.public.accountUrl as string | undefined) || (authupUrl ? `${authupUrl}/console/account` : ''))
         .replace(/\/+$/, '');
 
     const realmIdDefault = (runtimeConfig.public.authupRealmId as string | undefined) || REALM_MASTER_NAME;

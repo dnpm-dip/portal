@@ -2,56 +2,24 @@
  * @dnpm-dip/theme — app-level layer on top of
  * `@authup/client-web-kit-theme`.
  *
- * Cascade order (apps consume this file; the kit theme's cascade
- * is included transitively):
- *   1. tailwindcss            — via the kit theme
- *   2. @vuecs/design          — via the kit theme
- *   3. @vuecs/theme-tailwind  — via the kit theme
- *   4. dnpm tokens            — project palette / chrome / typography
- *   5. dnpm compat layer      — Bootstrap-shaped class shims (@apply'd
- *                                from Tailwind utilities). Phased out
- *                                as templates migrate to <VCButton> /
- *                                <VCAlert> / etc.
+ * Cascade order (apps consume this file):
+ *   1. @authup/client-web-kit-theme — tailwindcss, @vuecs/design,
+ *      @vuecs/theme-tailwind, @vuecs/tree structure, `--authup-*` tokens
+ *      and kit-component styles; declares the layer order
+ *      `theme, vuecs, authup, base, components, utilities` and the
+ *      class-based `dark:` variant
+ *   2. dnpm tokens — project palette / chrome / typography
+ *   3. dnpm chrome — header, navbar, sidebar, footer, domain styles
  */
 
-/*
- * Kit-theme CSS cascade — inlined.
- *
- * Upstream packaging bug: @authup/client-web-kit-theme@1.0.0-beta.44
- * ships `files: ["dist", "src/index.css"]` but its `src/index.css`
- * `@import`s `./styles/list.css` + `./styles/form-validation.css`,
- * which are NOT in the published tarball. authup's own apps never hit
- * this because they alias the workspace `src`; an external consumer
- * resolving the published `style` export fails with
- * "Can't resolve './styles/list.css'". Until a fixed beta ships, the
- * kit theme's CSS cascade is reproduced here and the two kit-component
- * stylesheets are vendored (styles/kit-*.css). The JS theme
- * (`clientWebKitTheme()`) is still consumed from npm — see index.ts +
- * plugins/vuecs.ts.
- */
-@layer theme, vuecs, base, components, utilities;
-
-@import "tailwindcss";
-@import "@vuecs/design";
-@import "@vuecs/theme-tailwind";
-
-@custom-variant dark (&:where(.dark, .dark *));
+@import "@authup/client-web-kit-theme";
 
 /*
- * `@source` declarations for what THIS theme is responsible for: its
- * own class strings plus the vendored kit-theme's scan scopes (the
- * kit components' dist + the vuecs element class maps). Consumer apps
- * own their template-tree and dependency scan scopes in their per-app
- * CSS entry (packages/portal/assets/css/tailwind.css) — do not
- * duplicate them here.
- *
- * NOTE: `@source` only takes file-system globs relative to this
- * stylesheet — bare package specifiers are NOT resolved (a bare name
- * is treated as a literal sub-path glob and silently scans nothing).
+ * The kit theme scans the kit dist and the hoisted `@vuecs/*` class maps
+ * itself; this theme only adds its own class strings. `@source` takes
+ * file-system globs relative to this stylesheet, never package specifiers.
  */
 @source ".";
-@source "../../../node_modules/@authup/client-web-kit/dist";
-@source "../../../node_modules/@vuecs";
 
 /*
  * Project font stacks at the Tailwind theme level — anything that
@@ -68,8 +36,7 @@
     --default-font-family: var(--font-sans);
 }
 
-@import "./styles/kit-list.css";
-@import "./styles/kit-form-validation.css";
+@import "./styles/list.css";
 
 /* ------------------------------------------------------------------
    DNPM DIP design tokens
