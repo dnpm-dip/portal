@@ -165,7 +165,7 @@ export class Navigation {
 
         if (canPass) {
             if (item.children) {
-                item.children = await this.reduce(item.children);
+                return { ...item, children: await this.reduce(item.children) };
             }
 
             return item;

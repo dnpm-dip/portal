@@ -68,7 +68,6 @@ export default defineNuxtComponent({
                 // Preserve the post-login destination AND any sibling query
                 // params on the login URL (e.g. /login?redirect=/mtb&x=1 → /mtb?x=1).
                 const { redirect, ...rest } = route.query;
-                let target: string | undefined;
                 if (typeof redirect === 'string') {
                     const url = new URL(redirect, window.location.origin);
                     for (const [key, value] of Object.entries(rest)) {
@@ -82,13 +81,7 @@ export default defineNuxtComponent({
                             url.searchParams.set(key, value);
                         }
                     }
-                    target = `${url.pathname}${url.search}${url.hash}`;
-                }
-
-                // The destination rides in the redirect_uri's own query; the
-                // @authup/client-web-nuxt interceptor reads it back on /login/callback.
-                if (target) {
-                    callbackURL.searchParams.set('redirect', target);
+                    callbackURL.searchParams.set('redirect', `${url.pathname}${url.search}${url.hash}`);
                 }
                 const redirectUri = callbackURL.href;
 
