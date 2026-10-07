@@ -42,7 +42,7 @@
         "@ilingo/validup-vue": "^1.2.0",
         "@ilingo/vue": "^6.1.1",
         "@nuxt/module-builder": "^1.0.2",
-        "@types/node": "^26.2.0",
+        "@types/node": "^26.6.4",
         "@vitejs/plugin-vue": "^6.0.8",
         "@vue/test-utils": "^2.4.6",
         "@vuecs/forms": "^5.4.2",
