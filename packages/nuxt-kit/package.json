@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/nuxt-kit",
     "type": "module",
-    "version": "1.28.1",
+    "version": "1.28.2",
     "description": "Kit for DNPM:DIP apps and packages.",
     "exports": {
         "./package.json": "./package.json",
