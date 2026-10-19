@@ -23,7 +23,7 @@
         "@authup/client-web-kit-theme": "^1.0.0-beta.68",
         "@authup/client-web-nuxt": "^1.0.0-beta.68",
         "@authup/core-http-kit": "^1.0.0-beta.68",
-        "@authup/core-kit": "^1.0.0-beta.68",
+        "@authup/core-kit": "^1.0.0-beta.69",
         "@authup/kit": "^1.0.0-beta.68",
         "@dnpm-dip/http-kit": "^0.0.0",
         "@dnpm-dip/kit": "^0.0.0",
