@@ -41,7 +41,7 @@
         "@ilingo/validup-vue": "^1.2.0",
         "@ilingo/vue": "^6.1.1",
         "@nuxt/icon": "^2.5.0",
-        "@pinia/nuxt": "^1.0.2",
+        "@pinia/nuxt": "^1.0.3",
         "@tailwindcss/vite": "^4.3.3",
         "@validup/vue": "^2.0.1",
         "@validup/zod": "^2.0.1",
@@ -69,14 +69,14 @@
         "date-fns": "^4.4.0",
         "hapic": "^3.0.2",
         "ilingo": "^6.2.0",
-        "nuxt": "^4.6.1",
+        "nuxt": "^4.6.2",
         "pinia": "^4.0.3",
-        "sass": "^1.105.1",
+        "sass": "^1.105.2",
         "sass-loader": "^17.0.0",
         "tailwindcss": "^4.3.3",
         "validup": "^2.0.1",
-        "vue": "^3.5.43",
+        "vue": "^3.5.44",
         "vue-router": "^5.3.1",
-        "zod": "^4.6.6"
+        "zod": "^4.6.7"
     }
 }
