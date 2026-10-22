@@ -18,13 +18,13 @@
         "test": "nuxt prepare && vitest run --config test/vitest.config.ts"
     },
     "devDependencies": {
-        "@authup/access": "^1.0.0-beta.68",
-        "@authup/client-web-kit": "^1.0.0-beta.68",
-        "@authup/client-web-kit-theme": "^1.0.0-beta.68",
-        "@authup/client-web-nuxt": "^1.0.0-beta.68",
-        "@authup/core-http-kit": "^1.0.0-beta.68",
-        "@authup/core-kit": "^1.0.0-beta.68",
-        "@authup/kit": "^1.0.0-beta.68",
+        "@authup/access": "^1.0.0-beta.71",
+        "@authup/client-web-kit": "^1.0.0-beta.71",
+        "@authup/client-web-kit-theme": "^1.0.0-beta.71",
+        "@authup/client-web-nuxt": "^1.0.0-beta.71",
+        "@authup/core-http-kit": "^1.0.0-beta.71",
+        "@authup/core-kit": "^1.0.0-beta.71",
+        "@authup/kit": "^1.0.0-beta.71",
         "@dnpm-dip/http-kit": "^0.0.0",
         "@dnpm-dip/kit": "^0.0.0",
         "@dnpm-dip/mtb": "^1.35.0",
@@ -70,13 +70,13 @@
         "hapic": "^3.0.2",
         "ilingo": "^6.2.0",
         "nuxt": "^4.6.1",
-        "pinia": "^4.0.3",
+        "pinia": "^4.1.0",
         "sass": "^1.105.1",
         "sass-loader": "^17.0.0",
         "tailwindcss": "^4.3.3",
         "validup": "^2.0.1",
-        "vue": "^3.5.43",
-        "vue-router": "^5.3.1",
+        "vue": "^3.5.44",
+        "vue-router": "^5.4.0",
         "zod": "^4.6.6"
     }
 }

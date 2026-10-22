@@ -29,7 +29,7 @@
         "test": "vitest run --config test/vitest.config.ts"
     },
     "dependencies": {
-        "@authup/client-web-kit": "^1.0.0-beta.68",
+        "@authup/client-web-kit": "^1.0.0-beta.71",
         "@dnpm-dip/http-kit": "^0.0.0",
         "@dnpm-dip/kit": "^0.0.0",
         "@dnpm-dip/nuxt-kit": "^1.28.1",
@@ -55,7 +55,7 @@
         "ilingo": "^6.2.0",
         "nuxt": "^4.6.1",
         "validup": "^2.0.1",
-        "vue": "^3.5.43",
+        "vue": "^3.5.44",
         "vue-chartjs": "^5.3.4",
         "zod": "^4.6.6"
     }
