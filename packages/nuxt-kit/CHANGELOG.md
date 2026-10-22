@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.28.2](https://github.com/dnpm-dip/portal/compare/v1.28.1...v1.28.2) (2026-10-22)
+
+
+### Bug Fixes
+
+* **deps:** bump the minorandpatch group across 1 directory with 16 updates ([#1325](https://github.com/dnpm-dip/portal/issues/1325)) ([2f912f2](https://github.com/dnpm-dip/portal/commit/2f912f221b16e3a22132a526a5fd46bece4fb258))
+
 ## [1.28.1](https://github.com/dnpm-dip/portal/compare/v1.28.0...v1.28.1) (2025-08-06)
 
 
