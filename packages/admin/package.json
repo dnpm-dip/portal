@@ -31,8 +31,8 @@
         "test:watch": "vitest watch --config test/vitest.config.ts"
     },
     "dependencies": {
-        "@authup/core-kit": "^1.0.0-beta.68",
-        "@authup/client-web-kit": "^1.0.0-beta.68",
+        "@authup/core-kit": "^1.0.0-beta.71",
+        "@authup/client-web-kit": "^1.0.0-beta.71",
         "@dnpm-dip/http-kit": "^0.0.0",
         "@dnpm-dip/kit": "^0.0.0",
         "@dnpm-dip/nuxt-kit": "^1.10.0",
@@ -40,7 +40,7 @@
         "@nuxt/kit": "^4.6.1",
         "@vuecs/table": "^1.6.2",
         "@vuecs/timeago": "^2.2.1",
-        "vue": "^3.5.43"
+        "vue": "^3.5.44"
     },
     "devDependencies": {
         "@nuxt/module-builder": "^1.0.2",
