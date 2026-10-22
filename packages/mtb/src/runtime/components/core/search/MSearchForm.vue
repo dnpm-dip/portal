@@ -6,7 +6,7 @@
   -->
 
 <script lang="ts">
-import type { Coding, ConnectionPeer, ValueSetCoding } from '@dnpm-dip/http-kit';
+import type { Coding, ValueSetCoding } from '@dnpm-dip/http-kit';
 import type { FormTabInput } from '@dnpm-dip/vue';
 import {
     LogicalOperator,
@@ -16,7 +16,6 @@ import {
     DCollectionTransform,
     DFormTabGroups,
     DLoadingModal,
-    DSitePicker,
     DValueSet,
     useQueryFilterStore,
 } from '@dnpm-dip/vue';
@@ -49,7 +48,6 @@ import MSearchMedicationForm from './MSearchMedicationForm.vue';
 
 export default defineComponent({
     components: {
-        DSitePicker,
         MSearchMedicationForm,
         MMutationTabGroup,
         DFormTabGroups,
@@ -67,7 +65,6 @@ export default defineComponent({
         criteria: { type: Object as PropType<QueryCriteria | null> },
         queryId: { type: String },
         queryMode: { type: String as PropType<QueryRequestMode> },
-        queryPeers: { type: Array as PropType<ConnectionPeer[]> },
     },
     emits: [
         'failed',
@@ -82,11 +79,9 @@ export default defineComponent({
         const apiClient = injectHTTPClient();
 
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
-        const modeSites = ref<Coding[]>([]);
         const modeOptions : FormOption[] = [
             { value: QueryRequestMode.LOCAL, label: 'Lokal: eigener Standort' },
             { value: QueryRequestMode.FEDERATED, label: 'Föderiert: alle Standorte' },
-            { value: QueryRequestMode.CUSTOM, label: 'Nutzer-definiert: gezielte Standort-Auswahl' },
         ];
 
         const busy = ref(false);
@@ -122,11 +117,9 @@ export default defineComponent({
             busy.value = true;
 
             if (props.queryMode) {
-                mode.value = props.queryMode;
-            }
-
-            if (props.queryPeers) {
-                modeSites.value = props.queryPeers.map((peer) => peer.site);
+                mode.value = props.queryMode === QueryRequestMode.CUSTOM ?
+                    QueryRequestMode.FEDERATED :
+                    props.queryMode;
             }
 
             diagnoses.value = [];
@@ -289,7 +282,6 @@ export default defineComponent({
                     query = await apiClient.query.update(props.queryId, {
                         criteria: payload,
                         mode: { code: mode.value },
-                        sites: modeSites.value,
                     });
 
                     emit('updated', query);
@@ -297,7 +289,6 @@ export default defineComponent({
                     query = await apiClient.query.submit({
                         criteria: payload,
                         mode: { code: mode.value },
-                        sites: modeSites.value,
                     });
 
                     emit('created', query);
@@ -340,7 +331,6 @@ export default defineComponent({
 
             mode,
             modeOptions,
-            modeSites,
 
             medicationDrugs,
             medicationUsage,
@@ -626,14 +616,6 @@ export default defineComponent({
                         :options="modeOptions"
                         :option-default="false"
                     />
-
-                    <template v-if="mode === 'custom'">
-                        <DSitePicker
-                            v-model="modeSites"
-                            class="mt-3"
-                            :use-case="'mtb'"
-                        />
-                    </template>
                 </div>
             </div>
 

@@ -2,7 +2,6 @@
 import type {
     CodeRecord,
     Coding,
-    ConnectionPeer,
     ValueSetCoding,
 } from '@dnpm-dip/http-kit';
 import {
@@ -12,7 +11,6 @@ import {
 import {
     DCollectionTransform,
     DFormTabGroups,
-    DSitePicker,
     DValueSet,
     useQueryFilterStore,
 } from '@dnpm-dip/vue';
@@ -37,7 +35,6 @@ import RVariantFormTabGroup from './RVariantFormTabGroup.vue';
 export default defineComponent({
     components: {
         DLoadingModal,
-        DSitePicker,
         RVariantFormTabGroup,
         DFormTabGroups,
         DCollectionTransform,
@@ -51,7 +48,6 @@ export default defineComponent({
         criteria: { type: Object as PropType<QueryCriteria | null> },
         queryId: { type: String },
         queryMode: { type: String as PropType<QueryRequestMode> },
-        queryPeers: { type: Array as PropType<ConnectionPeer[]> },
     },
     emits: [
         'failed',
@@ -66,11 +62,9 @@ export default defineComponent({
         const apiClient = injectHTTPClient();
 
         const mode = ref<QueryRequestMode>(QueryRequestMode.FEDERATED);
-        const modeSites = ref<Coding[]>([]);
         const modeOptions : FormOption[] = [
             { value: QueryRequestMode.LOCAL, label: 'Lokal' },
             { value: QueryRequestMode.FEDERATED, label: 'Föderiert' },
-            { value: QueryRequestMode.CUSTOM, label: 'Benutzerdefiniert' },
         ];
 
         const busy = ref(false);
@@ -95,11 +89,9 @@ export default defineComponent({
             variants.value = [];
 
             if (props.queryMode) {
-                mode.value = props.queryMode;
-            }
-
-            if (props.queryPeers) {
-                modeSites.value = props.queryPeers.map((peer) => peer.site);
+                mode.value = props.queryMode === QueryRequestMode.CUSTOM ?
+                    QueryRequestMode.FEDERATED :
+                    props.queryMode;
             }
 
             if (criteria.value) {
@@ -223,7 +215,6 @@ export default defineComponent({
                     query = await apiClient.query.update(props.queryId, {
                         criteria: payload,
                         mode: { code: mode.value },
-                        sites: modeSites.value,
                     });
 
                     emit('updated', query);
@@ -231,7 +222,6 @@ export default defineComponent({
                     query = await apiClient.query.submit({
                         criteria: payload,
                         mode: { code: mode.value },
-                        sites: modeSites.value,
                     });
 
                     emit('created', query);
@@ -252,7 +242,6 @@ export default defineComponent({
 
         return {
             mode,
-            modeSites,
             modeOptions,
 
             busy,
@@ -376,14 +365,6 @@ export default defineComponent({
                     :options="modeOptions"
                     :option-default="false"
                 />
-
-                <template v-if="mode === 'custom'">
-                    <DSitePicker
-                        v-model="modeSites"
-                        class="mt-3"
-                        :use-case="'rd'"
-                    />
-                </template>
             </div>
 
             <div

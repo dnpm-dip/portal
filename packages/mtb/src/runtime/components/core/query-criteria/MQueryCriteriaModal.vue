@@ -95,7 +95,6 @@ export default defineComponent({
             <div class="px-4 py-3">
                 <MSearchForm
                     :query-mode="entity.mode.code"
-                    :query-peers="entity.peers"
                     :query-id="entity.id"
                     :criteria="entity.criteria"
                     :prepared-query-id="preparedQueryId"

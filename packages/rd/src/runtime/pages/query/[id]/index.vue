@@ -244,7 +244,6 @@ export default defineNuxtComponent({
                 <div class="px-4 py-3">
                     <SearchForm
                         :query-mode="entity.mode.code"
-                        :query-peers="entity.peers"
                         :query-id="entity.id"
                         :criteria="entity.criteria"
                         :prepared-query-id="preparedQueryId"
