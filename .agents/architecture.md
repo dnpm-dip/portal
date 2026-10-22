@@ -98,6 +98,17 @@ Provides helper functions and types for feature modules to register themselves i
   (modal/toast), navigation (v4 registry model), placeholder, timeago, elements.
   Installed and themed in `packages/portal/plugins/vuecs.ts` (`app.use(vuecs, ...)`
   first, per-package installs after).
+
+  **Overlay hosts are load-bearing and fail silently.** `useToast()` and
+  `useAlertDialog()` only queue requests; a host component mounted once in the
+  layout drains the queue. Without the host nothing errors — a toast never shows,
+  and a confirm promise never settles, so the awaiting action simply does
+  nothing. `packages/portal/layouts/default.vue` therefore mounts both
+  `<VCToastProvider>`/`<VCToaster>` and `<VCAlertDialogProvider>`. The alert
+  dialog host is required by `@authup/client-web-kit`: every removal toggle
+  (`AToggleButton` with `with-prompt`, e.g. `AUserRoleAssignment`),
+  `AEntityDelete`, IdP role mappings and user authenticators confirm through it.
+  A layout that renders these components must mount the same hosts.
 - **Light/dark color mode** via `@vuecs/nuxt` (`useColorMode`, `.dark` class on
   `<html>`); chrome colors are `--dnpm-*` tokens that flip with the mode.
 - **Icons** via `<VCIcon>` + Iconify (`fa6-solid` / `fa6-brands`). Only the
