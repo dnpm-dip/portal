@@ -158,6 +158,7 @@ export type QueryGeneAlterationInfo = {
     alteration: QueryGeneAlteration,
     gene: Coding,
     count: number,
+    supportingCount: number,
     supporting: boolean
 };
 
