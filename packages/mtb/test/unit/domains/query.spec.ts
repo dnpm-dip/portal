@@ -240,6 +240,7 @@ describe('mtb QueryAPI', () => {
                     alteration: { gene: { code: 'BRAF' }, type: 'SNV' },
                     gene: { code: 'BRAF' },
                     count: 2,
+                    supportingCount: 1,
                     supporting: true,
                 },
             ],

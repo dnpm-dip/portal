@@ -260,6 +260,10 @@ export default defineComponent({
                     :name="row.supporting ? 'fa6-solid:check' : 'fa6-solid:xmark'"
                     :class="row.supporting ? 'text-success-600' : 'text-error-600'"
                 />
+                <span
+                    v-if="row.supporting"
+                    class="ms-1"
+                >({{ row.supportingCount }})</span>
             </template>
             <VCTableEmpty />
         </VCTable>

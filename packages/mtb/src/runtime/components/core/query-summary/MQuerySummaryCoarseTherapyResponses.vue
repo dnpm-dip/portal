@@ -101,7 +101,7 @@ export default defineComponent({
             },
             {
                 key: 'countResponderPFSRatio',
-                label: 'Anzahl von Hoff-Ratio ≥ 1,3',
+                label: 'Anteil von Hoff-Ratio ≥ 1,3 (%)',
                 headerClass: 'text-center',
                 cellClass: 'text-center align-middle',
                 sortable: true,
