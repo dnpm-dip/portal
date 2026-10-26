@@ -75,6 +75,15 @@ export default defineNuxtComponent({
             Die Abfrage kann nachfolgend angepasst werden.
         </VCAlert>
 
+        <VCAlert
+            color="info"
+            variant="soft"
+            size="sm"
+            class="mb-3"
+        >
+            Aufgrund von Code-Änderungen zwischen den ATC-Katalogversionen werden Wirkstoffe z.T. mehrfach angezeigt.
+        </VCAlert>
+
         <DPreparedQueryContainer
             use-case="mtb"
             @submitted="handleSubmitted"
