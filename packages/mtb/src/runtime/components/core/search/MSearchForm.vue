@@ -30,6 +30,7 @@ import type { FormOption } from '@vuecs/forms';
 import { VCIcon } from '@vuecs/icon';
 import {
     type PropType,
+    computed,
     reactive,
     toRef,
     watch,
@@ -264,8 +265,10 @@ export default defineComponent({
             emit('save', buildCriteria());
         };
 
+        const hasCriteria = computed(() => Object.keys(buildCriteria()).length > 0);
+
         const submit = async () => {
-            if (busy.value) return;
+            if (busy.value || !hasCriteria.value) return;
 
             busy.value = true;
             // await new Promise((resolve) => setTimeout(resolve, 10_000));
@@ -337,6 +340,7 @@ export default defineComponent({
             medicationInCombination,
 
             busy,
+            hasCriteria,
 
             expanded,
             toggleExpanded,
@@ -639,6 +643,7 @@ export default defineComponent({
                     type="button"
                     color="primary"
                     class="min-w-36"
+                    :disabled="!hasCriteria"
                     :loading="busy"
                     @click.prevent="submit()"
                 >
