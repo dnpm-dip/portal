@@ -61,5 +61,12 @@
     },
     "lint-staged": {
         "*.{js,mjs,cjs,ts,vue}": "npm run lint:fix"
+    },
+    "allowScripts": {
+        "@parcel/watcher@2.6.0": true,
+        "esbuild@0.28.2": true,
+        "esbuild@0.25.12": true,
+        "fsevents@2.3.3": true,
+        "nx@23.3.0": true
     }
 }
