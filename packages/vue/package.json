@@ -54,8 +54,8 @@
         "ufo": "^1.6.2"
     },
     "devDependencies": {
-        "@authup/core-http-kit": "^1.0.0-beta.71",
-        "@authup/client-web-kit": "^1.0.0-beta.71",
+        "@authup/core-http-kit": "^1.0.0-beta.72",
+        "@authup/client-web-kit": "^1.0.0-beta.72",
         "chart.js": "^4.5.1",
         "@ilingo/validup": "^1.2.0",
         "@ilingo/validup-vue": "^1.2.0",
@@ -87,8 +87,8 @@
         "zod": "^4.6.6"
     },
     "peerDependencies": {
-        "@authup/core-http-kit": "^1.0.0-beta.71",
-        "@authup/client-web-kit": "^1.0.0-beta.71",
+        "@authup/core-http-kit": "^1.0.0-beta.72",
+        "@authup/client-web-kit": "^1.0.0-beta.72",
         "chart.js": "^4.4.3",
         "@ilingo/validup": "^1.x",
         "@ilingo/validup-vue": "^1.2.0",

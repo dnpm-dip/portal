@@ -76,6 +76,16 @@ Provides helper functions and types for feature modules to register themselves i
 - **Authup** framework handles authentication and session management
 - OAuth/OIDC support
 - HTTP client (`hapic`) is configured with Authup tokens
+- **Permission checks name a definition's owner.** Since authup beta.72 a bare
+  name resolves the *global* definition only. The dnpm-dip permissions
+  (`mtb_*`, `rd_*`, `connection_report_read`) exist as master-realm rows on
+  older deployments and as global rows once provisioned against beta.72.
+  `packages/portal/plugins/permission.ts` therefore wraps
+  `store.permissionEvaluator` so that an owner-less check accepts the global
+  definition, or else the one the session realm owns. Route meta, navigation
+  items, `ModuleMetaCard` and `usePermissionCheck` all go through that
+  evaluator, so keep writing bare names. Pass an explicit `realmId`/`clientId`
+  only to pin a different owner.
 
 ## API Communication
 
