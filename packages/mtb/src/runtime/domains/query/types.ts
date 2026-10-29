@@ -29,7 +29,11 @@ export type QuerySummaryGeneAlterationDistribution = KeyValueRecord<string, Dist
 
 type MedicationRecommendations = {
     overallDistribution: DistributionNested<Coding>,
-    distributionBySupportingVariant: KeyValueRecords<QueryGeneAlteration, Distribution<string[]>>
+    distributionBySupportingVariant: KeyValueRecord<
+        QueryGeneAlteration | { gene: Coding },
+        Distribution<Coding[]>,
+        KeyValueRecords<QueryGeneAlteration, Distribution<Coding[]>>
+    >[]
 };
 
 type MedicationTherapies = {

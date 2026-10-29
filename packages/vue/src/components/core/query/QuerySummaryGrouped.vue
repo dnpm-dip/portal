@@ -1,5 +1,5 @@
 <script lang="ts">
-import { VCFormSelectSearch } from '@vuecs/forms';
+import { VCFormGroup, VCFormSelectSearch } from '@vuecs/forms';
 import type { FormOption } from '@vuecs/forms';
 import type {
     PropType,
@@ -19,7 +19,7 @@ import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils'
 type LabelFn = (item: KeyValueRecord<unknown, unknown>) => string | undefined;
 
 export default defineComponent({
-    components: { VCFormSelectSearch },
+    components: { VCFormGroup, VCFormSelectSearch },
     props: {
         label: {
             type: String,
@@ -39,7 +39,7 @@ export default defineComponent({
             default: undefined,
         },
     },
-    setup(props) {
+    setup(props, { expose }) {
         const queryEventBus = injectQueryEventBus();
         const id = ref(undefined) as Ref<string | number | undefined>;
         const item = ref(null) as Ref<KeyValueRecord<unknown, unknown> | null>;
@@ -73,14 +73,13 @@ export default defineComponent({
             );
 
             const found = index !== -1 ? props.items[index] : undefined;
-            if (found) {
-                item.value = found;
-            }
+            item.value = found || null;
         };
 
         watch(id, (val) => {
             if (typeof val === 'undefined' || val === '') {
                 selected.value = null;
+                render();
                 return;
             }
 
@@ -103,6 +102,8 @@ export default defineComponent({
         };
 
         init();
+        watch(() => props.items, () => render());
+        expose({ reset: init });
 
         const removeSessionHandler = queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => render());
         const removeFiltersHandler = queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => render());

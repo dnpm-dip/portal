@@ -80,6 +80,7 @@ export default defineComponent({
         });
         const recommendedVNode = ref<null | typeof DQuerySummaryNested>(null);
         const recommendedByVariantVNode = ref<null | typeof DQuerySummaryGrouped>(null);
+        const recommendedAlterationVNode = ref<null | typeof DQuerySummaryGrouped>(null);
         const usedVNode = ref<null | typeof DQuerySummaryNested>(null);
 
         const handleRecommendationClick = (
@@ -114,6 +115,7 @@ export default defineComponent({
                     recommendedByVariantVNode.value
                 ) {
                     recommendedByVariantVNode.value.reset();
+                    recommendedAlterationVNode.value?.reset();
                 }
             }
         };
@@ -171,10 +173,10 @@ export default defineComponent({
             }
 
             if (item.key && typeof item.key === 'object') {
-                // The supporting-variant key is a bare `{ gene: Coding }` (no
-                // type-discriminated SNV/CNV/Fusion shape), so resolve the gene
-                // directly; queryGeneAlterationToString would otherwise hit its
-                // `default` branch and render '???'.
+                if ('type' in item.key) {
+                    return queryGeneAlterationToString(item.key as QueryGeneAlteration);
+                }
+
                 const key = item.key as { gene?: Coding };
                 if (isCoding(key.gene)) {
                     return key.gene.display || key.gene.code;
@@ -193,6 +195,7 @@ export default defineComponent({
 
             recommendedVNode,
             recommendedByVariantVNode,
+            recommendedAlterationVNode,
             variantLabelFn,
             handleRecommendationClick,
 
@@ -220,25 +223,37 @@ export default defineComponent({
                             ref="recommendedByVariantVNode"
                             :select-first="true"
                             :items="data.recommendations.distributionBySupportingVariant"
-                            :label="'Variante'"
-                            :placeholder="'Variante auswählen'"
+                            :label="'Gen'"
+                            :placeholder="'Gen auswählen'"
                             :label-fn="variantLabelFn"
                         >
-                            <template #default="{ item }">
-                                <p class="text-start mb-2">
-                                    Gesamtzahl Empfehlungen nach ausgewählter stützender molekularer Alteration: N = {{ item.value.total }}
-                                </p>
-                                <DKVChartTableSwitch
-                                    :type="'bar'"
-                                    :data="item.value.elements"
-                                    :clickable="true"
-                                    :key-label="'Wirkstoff'"
-                                    :value-label="'Anzahl Empfehlungen [n]'"
-                                    :percent-label="'Anteil Empfehlungen (basierend auf Variante) [%]'"
-                                    :x-axis-label="'Anzahl Empfehlungen [n]'"
-                                    :y-axis-label="'Wirkstoff'"
-                                    @clicked="(keys: Coding[]) => handleRecommendationClick(keys, 'recommendedByVariant')"
-                                />
+                            <template #default="{ item: gene }">
+                                <DQuerySummaryGrouped
+                                    :key="variantLabelFn(gene)"
+                                    ref="recommendedAlterationVNode"
+                                    :select-first="true"
+                                    :items="[{ key: 'Alle Alterationen', value: gene.value }, ...(gene.children || [])]"
+                                    :label="'Alteration'"
+                                    :placeholder="'Alteration auswählen'"
+                                    :label-fn="variantLabelFn"
+                                >
+                                    <template #default="{ item }">
+                                        <p class="text-start mb-2">
+                                            Gesamtzahl Empfehlungen nach ausgewählter stützender molekularer Alteration: N = {{ item.value.total }}
+                                        </p>
+                                        <DKVChartTableSwitch
+                                            :type="'bar'"
+                                            :data="item.value.elements"
+                                            :clickable="true"
+                                            :key-label="'Wirkstoff'"
+                                            :value-label="'Anzahl Empfehlungen [n]'"
+                                            :percent-label="'Anteil Empfehlungen (basierend auf Variante) [%]'"
+                                            :x-axis-label="'Anzahl Empfehlungen [n]'"
+                                            :y-axis-label="'Wirkstoff'"
+                                            @clicked="(keys: Coding[]) => handleRecommendationClick(keys, 'recommendedByVariant')"
+                                        />
+                                    </template>
+                                </DQuerySummaryGrouped>
                             </template>
                         </DQuerySummaryGrouped>
                     </template>
