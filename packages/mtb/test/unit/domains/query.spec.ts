@@ -320,11 +320,22 @@ describe('mtb QueryAPI', () => {
                 },
                 distributionBySupportingVariant: [
                     {
-                        key: { gene: { code: 'BRAF' }, type: 'SNV' },
+                        key: { gene: { code: 'BRAF' } },
                         value: {
                             total: 1,
-                            elements: [{ key: ['L01EC02'], value: { count: 1, percent: 100 } }],
+                            elements: [{ key: [{ code: 'L01EC02' }], value: { count: 1, percent: 100 } }],
                         },
+                        children: [{
+                            key: {
+                                gene: { code: 'BRAF' },
+                                type: 'SNV',
+                                proteinChange: 'V600E',
+                            },
+                            value: {
+                                total: 1,
+                                elements: [{ key: [{ code: 'L01EC02' }], value: { count: 1, percent: 100 } }],
+                            },
+                        }],
                     },
                 ],
             },

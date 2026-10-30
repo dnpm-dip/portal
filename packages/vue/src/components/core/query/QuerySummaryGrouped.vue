@@ -1,5 +1,6 @@
 <script lang="ts">
-import { VCFormSelectSearch } from '@vuecs/forms';
+import { VCFormGroup, VCFormSelectSearch } from '@vuecs/forms';
+import { isEqual } from 'smob';
 import type { FormOption } from '@vuecs/forms';
 import type {
     PropType,
@@ -19,7 +20,7 @@ import { generateChartLabelsForKeyValueRecord } from '../../utility/chart/utils'
 type LabelFn = (item: KeyValueRecord<unknown, unknown>) => string | undefined;
 
 export default defineComponent({
-    components: { VCFormSelectSearch },
+    components: { VCFormGroup, VCFormSelectSearch },
     props: {
         label: {
             type: String,
@@ -39,9 +40,9 @@ export default defineComponent({
             default: undefined,
         },
     },
-    setup(props) {
+    setup(props, { expose }) {
         const queryEventBus = injectQueryEventBus();
-        const id = ref(undefined) as Ref<string | number | undefined>;
+        const id = ref(undefined) as Ref<string | number | null | undefined>;
         const item = ref(null) as Ref<KeyValueRecord<unknown, unknown> | null>;
 
         const options = computed<FormOption[]>(() => {
@@ -57,52 +58,33 @@ export default defineComponent({
             }));
         });
 
-        const selected = ref<string | null>(null);
-
-        const render = () => {
-            if (!props.items || selected.value === null) {
-                item.value = null;
-                return;
-            }
-
-            const index = props.items.findIndex(
-                // `selected.value` narrows to `string` above, but TS drops that
-                // narrowing across this closure, so it's still `string | null` here.
-                // eslint-disable-next-line unicorn/no-useless-template-literals
-                (_el, id) => id === Number.parseInt(`${selected.value}`, 10),
-            );
-
-            const found = index !== -1 ? props.items[index] : undefined;
-            if (found) {
-                item.value = found;
-            }
+        const select = (index: number) => {
+            item.value = props.items?.[index] || null;
+            id.value = item.value ? index : undefined;
         };
 
         watch(id, (val) => {
-            if (typeof val === 'undefined' || val === '') {
-                selected.value = null;
-                return;
-            }
-
-            // `val` is `string | number` (the `''` guard only excludes `undefined`);
-            // wrapper performs a real number-to-string coercion, not a redundant widening.
-            // eslint-disable-next-line unicorn/no-useless-template-literals
-            selected.value = `${val}`;
-
-            render();
+            select(val === null || typeof val === 'undefined' || val === '' ? -1 : Number(val));
         });
 
-        const init = () => {
-            if (!props.selectFirst || !props.items || props.items.length === 0) {
+        const reset = () => select(props.selectFirst ? 0 : -1);
+        const render = () => {
+            if (!item.value) {
+                reset();
                 return;
             }
 
-            id.value = 0;
-            selected.value = '0';
-            render();
+            const index = props.items?.findIndex((entry) => isEqual(entry.key, item.value?.key)) ?? -1;
+            if (index === -1) {
+                reset();
+            } else {
+                select(index);
+            }
         };
 
-        init();
+        reset();
+        watch(() => props.items, render);
+        expose({ reset });
 
         const removeSessionHandler = queryEventBus.on(QueryEventBusEventName.SESSION_UPDATED, () => render());
         const removeFiltersHandler = queryEventBus.on(QueryEventBusEventName.FILTERS_COMMITED, () => render());
