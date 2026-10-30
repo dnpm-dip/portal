@@ -156,6 +156,46 @@ describe('MQuerySummaryMedication', () => {
         wrapper.unmount();
     });
 
+    it('should preserve the selected gene and alteration when refreshed results are reordered', async () => {
+        const entity = structuredClone(summary);
+        const { wrapper, eventBus } = await mountSummary(entity);
+        const selectors = () => wrapper.findAllComponents(DQuerySummaryGrouped);
+        selectors()[1]!.findComponent(VCFormSelectSearch).vm.$emit('update:modelValue', 1);
+        await flushPromises();
+
+        const pten = entity.recommendations.distributionBySupportingVariant[0]!;
+        entity.recommendations.distributionBySupportingVariant.reverse();
+        pten.children!.reverse();
+        pten.children![1]!.value.total = 7;
+        eventBus.emit(QueryEventBusEventName.SESSION_UPDATED);
+        await flushPromises();
+
+        expect(selectors()[0]!.findComponent(VCFormSelectSearch).props('modelValue')).toBe(1);
+        expect(selectors()[1]!.findComponent(VCFormSelectSearch).props('modelValue')).toBe(2);
+        expect(wrapper.findAll('.entity-card')[0]!.text()).toContain('N = 7');
+        wrapper.unmount();
+    });
+
+    it.each([1, 2])('should return to gene totals when selected alteration %i disappears', async (index) => {
+        const entity = structuredClone(summary);
+        const { wrapper, eventBus } = await mountSummary(entity);
+        wrapper.findAllComponents(DQuerySummaryGrouped)[1]!
+            .findComponent(VCFormSelectSearch).vm.$emit('update:modelValue', index);
+        await flushPromises();
+
+        entity.recommendations.distributionBySupportingVariant[0]!.children!.splice(index - 1, 1);
+        eventBus.emit(QueryEventBusEventName.SESSION_UPDATED);
+        await flushPromises();
+
+        expect(wrapper.findAllComponents(DQuerySummaryGrouped)[1]!
+            .findComponent(VCFormSelectSearch).props('modelValue')).toBe(0);
+        expect(wrapper.findAll('.entity-card')[0]!.text()).toContain('N = 2');
+        expect(wrapper.findComponent(DKVChartTableSwitch).props('data')).toEqual(
+            entity.recommendations.distributionBySupportingVariant[0]!.value.elements,
+        );
+        wrapper.unmount();
+    });
+
     it('should still apply the medication filter from an alteration distribution', async () => {
         const { wrapper, store } = await mountSummary();
         wrapper.findAllComponents(DQuerySummaryGrouped)[1]!
