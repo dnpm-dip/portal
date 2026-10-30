@@ -1,5 +1,26 @@
 # @dnpm-dip/core
 
+## [1.35.1](https://github.com/dnpm-dip/portal/compare/v1.35.0...v1.35.1) (2026-10-30)
+
+
+### Bug Fixes
+
+* bump authup to v1.0.0-beta.71 and mount alert dialog provider ([#1333](https://github.com/dnpm-dip/portal/issues/1333)) ([0e14e29](https://github.com/dnpm-dip/portal/commit/0e14e29650ded45af710834ae691ff8d7c4fb630))
+* bump authup to v1.0.0-beta.72 and resolve realm-owned permissions ([#1338](https://github.com/dnpm-dip/portal/issues/1338)) ([235127f](https://github.com/dnpm-dip/portal/commit/235127fb95acdaf295037b380986d868ba33b77e))
+* **deps:** bump authup packages to v1.0.0-beta.67 ([#1314](https://github.com/dnpm-dip/portal/issues/1314)) ([e251ed8](https://github.com/dnpm-dip/portal/commit/e251ed8986aad42f48aeaa7b36f03a6d3ee8336a))
+* **deps:** bump the minorandpatch group across 1 directory with 16 updates ([#1325](https://github.com/dnpm-dip/portal/issues/1325)) ([2f912f2](https://github.com/dnpm-dip/portal/commit/2f912f221b16e3a22132a526a5fd46bece4fb258))
+* migrate Authup integration to beta.68 ([#1318](https://github.com/dnpm-dip/portal/issues/1318)) ([d7e8983](https://github.com/dnpm-dip/portal/commit/d7e89838b662a1afe0e205338b91f86d69afb32c))
+* mtb query feedback (filter encoding, therapy responses, count formatting) ([#1313](https://github.com/dnpm-dip/portal/issues/1313)) ([f03b07e](https://github.com/dnpm-dip/portal/commit/f03b07e69ce67ea085355854f4dcce4effefff9a))
+* **mtb:** enable alteration-level medication distribution navigation ([#1339](https://github.com/dnpm-dip/portal/issues/1339)) ([f7498fa](https://github.com/dnpm-dip/portal/commit/f7498faa82f9ebeea6902635e5fbbbe7b87e9468))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/http-kit bumped from ^0.0.0 to ^1.0.0
+    * @dnpm-dip/kit bumped from ^0.0.0 to ^1.0.0
+
 ## [1.35.0](https://github.com/dnpm-dip/portal/compare/v1.34.0...v1.35.0) (2025-08-06)
 
 
