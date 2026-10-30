@@ -42,7 +42,7 @@ export default defineComponent({
     },
     setup(props, { expose }) {
         const queryEventBus = injectQueryEventBus();
-        const id = ref(undefined) as Ref<string | number | undefined>;
+        const id = ref(undefined) as Ref<string | number | null | undefined>;
         const item = ref(null) as Ref<KeyValueRecord<unknown, unknown> | null>;
 
         const options = computed<FormOption[]>(() => {
@@ -64,7 +64,7 @@ export default defineComponent({
         };
 
         watch(id, (val) => {
-            select(typeof val === 'undefined' || val === '' ? -1 : Number(val));
+            select(val === null || typeof val === 'undefined' || val === '' ? -1 : Number(val));
         });
 
         const reset = () => select(props.selectFirst ? 0 : -1);

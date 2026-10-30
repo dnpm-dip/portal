@@ -50,6 +50,18 @@ describe('DQuerySummaryGrouped', () => {
         wrapper.unmount();
     });
 
+    it.each([null, undefined, ''])('should clear the selection when the control emits %s', async (value) => {
+        const { wrapper } = mountComponent(DQuerySummaryGrouped, { items, selectFirst: true });
+        wrapper.findComponent(VCFormSelectSearch).vm.$emit('update:modelValue', 1);
+        await flushPromises();
+
+        wrapper.findComponent(VCFormSelectSearch).vm.$emit('update:modelValue', value);
+        await flushPromises();
+        expect(wrapper.vm.item).toBeNull();
+        expect(wrapper.findComponent(VCFormSelectSearch).props('modelValue')).toBeUndefined();
+        wrapper.unmount();
+    });
+
     it('should clear a removed selection without selectFirst', async () => {
         const { wrapper } = mountComponent(DQuerySummaryGrouped, { items });
         wrapper.findComponent(VCFormSelectSearch).vm.$emit('update:modelValue', 1);
