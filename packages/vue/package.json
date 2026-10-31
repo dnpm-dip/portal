@@ -78,7 +78,7 @@
         "@validup/zod": "^2.0.1",
         "@vitejs/plugin-vue": "^6.0.10",
         "@vue/test-utils": "^2.4.6",
-        "happy-dom": "^20.0.0",
+        "happy-dom": "^21.0.4",
         "ilingo": "^6.2.0",
         "pinia": "^4.1.0",
         "validup": "^2.0.1",
