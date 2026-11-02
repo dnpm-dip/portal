@@ -55,7 +55,7 @@
         "@validup/vue": "^2.0.1",
         "@validup/zod": "^2.0.1",
         "chart.js": "^4.5.0",
-        "happy-dom": "^20.0.0",
+        "happy-dom": "^21.0.4",
         "ilingo": "^6.2.0",
         "nuxt": "^4.6.1",
         "validup": "^2.0.1",
