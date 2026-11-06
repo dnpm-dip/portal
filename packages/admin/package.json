@@ -37,9 +37,9 @@
         "@dnpm-dip/kit": "^0.0.0",
         "@dnpm-dip/nuxt-kit": "^1.10.0",
         "@dnpm-dip/vue": "^1.35.0",
-        "@nuxt/kit": "^4.6.1",
-        "@vuecs/table": "^1.6.2",
-        "@vuecs/timeago": "^2.2.1",
+        "@nuxt/kit": "^4.6.4",
+        "@vuecs/table": "^1.6.3",
+        "@vuecs/timeago": "^2.2.2",
         "vue": "^3.5.44"
     },
     "devDependencies": {
@@ -47,6 +47,6 @@
         "@vitejs/plugin-vue": "^6.0.10",
         "@vue/test-utils": "^2.4.6",
         "happy-dom": "^20.0.0",
-        "nuxt": "^4.6.1"
+        "nuxt": "^4.6.4"
     }
 }
