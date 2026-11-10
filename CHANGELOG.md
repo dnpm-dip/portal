@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.0](https://github.com/dnpm-dip/portal/compare/v2.0.0...v2.0.0) (2026-11-10)
+
+
+### Bug Fixes
+
+* **deps:** adapt publish script to monoship 2.2 cli ([5793f89](https://github.com/dnpm-dip/portal/commit/5793f893a78283e5587734a785ff4842c0473830))
+
 ## [2.0.0](https://github.com/dnpm-dip/portal/compare/v1.35.0...v2.0.0) (2026-11-10)
 
 
