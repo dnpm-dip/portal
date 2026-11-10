@@ -56,7 +56,7 @@
         "test": "npx nx run-many -t test",
         "lint": "eslint",
         "lint:fix": "npm run lint -- --fix",
-        "publish:packages": "monoship publish",
+        "publish:packages": "monoship",
         "prepare": "husky"
     },
     "lint-staged": {
