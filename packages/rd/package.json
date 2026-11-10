@@ -52,7 +52,7 @@
         "@vuecs/placeholder": "^1.1.1",
         "@validup/vue": "^2.0.1",
         "@validup/zod": "^2.0.2",
-        "happy-dom": "^20.0.0",
+        "happy-dom": "^21.0.4",
         "ilingo": "^6.2.0",
         "nuxt": "^4.6.4",
         "validup": "^2.0.1",
