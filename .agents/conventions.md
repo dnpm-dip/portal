@@ -131,6 +131,20 @@ single-issue case — that one needs a `code`, so it only saves the import when
 declares `@ebec/core` itself (`mtb`, `rd`); consuming an issue off a caught
 `ValidupError` needs no new dependency.
 
+## Releases: One Version for Every Package
+
+All ten release-please components (root + nine packages) release together at the **same version**, as in authup.
+`release-please-config.json` gets there with a top-level `release-as`, plus `updateAllPackages: true` on the
+`node-workspace` plugin so packages without commits of their own are released too.
+
+The `linked-versions` plugin alone does **not** do this here: with `"include-component-in-tag": false` every
+component resolves to an empty name, so the plugin logs `Found 0 group components for main` and each package gets
+its own bump (seen in release PR #1291: 2.0.0, 1.0.0, 1.28.2 and 1.35.1 side by side).
+
+**`release-as` has to be raised for the next release.** After a release ships, set it to the version that comes
+next (`2.0.1`, `2.1.0`, `3.0.0`, … chosen from the commits since), otherwise release-please keeps proposing the
+version that was just released. Commit types still drive the CHANGELOG, not the number.
+
 ## Commit Messages
 
 This project uses conventional commits enforced by commitlint (`@tada5hi/commitlint-config`).
