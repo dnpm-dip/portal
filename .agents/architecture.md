@@ -168,5 +168,5 @@ Provides helper functions and types for feature modules to register themselves i
   These three packages' **test suites** — which actually load the module
   graph — are the real gate, not their `build` script. See
   [testing.md](testing.md) for how the tests are wired.
-- **Docker** (Node 24 Alpine) for production deployment
+- **Docker** (Node 26 Alpine) for production deployment
 - Container runs on port 3000
