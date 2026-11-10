@@ -20,7 +20,8 @@
     "module": "./dist/module.mjs",
     "types": "./dist/types.d.mts",
     "files": [
-        "dist"
+        "dist",
+        "assets"
     ],
     "scripts": {
         "build": "nuxt-module-build prepare && nuxt-module-build build",

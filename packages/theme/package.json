@@ -19,7 +19,8 @@
     "files": [
         "dist",
         "src/index.css",
-        "src/styles"
+        "src/styles",
+        "assets"
     ],
     "scripts": {
         "build": "tsdown"

@@ -1,0 +1,21 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dnpm-logo-title">
+    <title id="dnpm-logo-title">DNPM:DIP logo: a double helix with a graphite and a coral strand joined by mauve base-pair rungs</title>
+    <style>
+.dnpm-logo-g{stroke:#2B2F36}.dnpm-logo-gf{fill:#2B2F36}
+@media (prefers-color-scheme: dark){.dnpm-logo-g{stroke:#AEB2B5}.dnpm-logo-gf{fill:#AEB2B5}}
+</style>
+    <g transform="translate(44 10.4) scale(4.2)" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#C7B1BD" stroke-width="2">
+        <path d="M13 6H27" opacity="0.9"><animate attributeName="opacity" values="0;0;0.9" keyTimes="0;0.25;1" dur="1.8s" fill="freeze"/></path>
+        <path d="M14.5 10H25.5" opacity="0.9"><animate attributeName="opacity" values="0;0;0.9" keyTimes="0;0.32;1" dur="1.8s" fill="freeze"/></path>
+        <path d="M14.5 22H25.5" opacity="0.9"><animate attributeName="opacity" values="0;0;0.9" keyTimes="0;0.39;1" dur="1.8s" fill="freeze"/></path>
+        <path d="M12.5 28H27.5" opacity="0.9"><animate attributeName="opacity" values="0;0;0.9" keyTimes="0;0.46;1" dur="1.8s" fill="freeze"/></path>
+        <path d="M14.5 34H25.5" opacity="0.9"><animate attributeName="opacity" values="0;0;0.9" keyTimes="0;0.53;1" dur="1.8s" fill="freeze"/></path>
+        <path d="M14.5 46H25.5" opacity="0.9"><animate attributeName="opacity" values="0;0;0.9" keyTimes="0;0.60;1" dur="1.8s" fill="freeze"/></path>
+        <path d="M13 50H27" opacity="0.9"><animate attributeName="opacity" values="0;0;0.9" keyTimes="0;0.67;1" dur="1.8s" fill="freeze"/></path>
+    </g>
+    <path class="dnpm-logo-g" d="M29 2 C29 16, 11 14, 11 28 C11 42, 29 40, 29 54" stroke-width="3.5" pathLength="100" stroke-dasharray="100" stroke-dashoffset="0"><animate attributeName="stroke-dashoffset" values="-100;0" dur="1.4s" fill="freeze"/></path>
+    <path d="M11 2 C11 16, 29 14, 29 28 C29 42, 11 40, 11 54" stroke="#F65552" stroke-width="3.5" pathLength="100" stroke-dasharray="100" stroke-dashoffset="0"><animate attributeName="stroke-dashoffset" values="100;0" dur="1.4s" fill="freeze"/></path>
+    
+    </g>
+</svg>

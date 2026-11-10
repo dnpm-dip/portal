@@ -1,0 +1,90 @@
+<svg width="960" height="430" viewBox="0 0 960 430" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="qr-title qr-desc" class="qr-root">
+<title id="qr-title">An RD query, from search to patient record</title>
+<desc id="qr-desc">On /rd the Suche page (RSearchForm, needs rd_query_submit) posts the criteria and a mode (local for the own site or federated for all sites) to rd/queries and gets a query with an id and expiresAfter. Changing the criteria later sends PUT rd/queries/:id. The query pages under /rd/query/:id() then read everything below rd/queries/:id: the diagnosis and HPO filter options, the demographics and diagnostics summaries, and patient-matches and patient-record/:pid. The query session store tracks the query and fires SESSION_EXPIRING five minutes before it expires; the portal plugin then fetches the query again and tracks it anew.</desc>
+<style>
+    .qr-root {
+        --panel: #F7F6F7; --card: #FFFFFF; --edge: #DAD4D8; --ink: #2B2F36; --muted: #646973; --line: #8F8A8E;
+        --coral: #C93A37; --coral-soft: #FDEDED; --coral-edge: #EFA7A5;
+        --mauve: #84586F; --mauve-soft: #F6EFF3; --mauve-edge: #D9C4D0;
+        --slate: #2B2F36; --slate-soft: #EEF0F2; --slate-edge: #BFC5CC;
+    }
+    @media (prefers-color-scheme: dark) {
+        .qr-root {
+            --panel: #13161B; --card: #1B1F26; --edge: #313741; --ink: #E7E8EA; --muted: #A2A7AF; --line: #737A84;
+            --coral: #F98583; --coral-soft: #351E21; --coral-edge: #7C3A3A;
+            --mauve: #D6C0CC; --mauve-soft: #2A2330; --mauve-edge: #584A5C;
+            --slate: #C7CCD4; --slate-soft: #222831; --slate-edge: #454D59;
+        }
+    }
+    .qr-panel { fill: var(--panel); }
+    .qr-t { font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); font-size: 13px; }
+    .qr-m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: var(--ink); }
+    .qr-h1 { font-size: 18px; font-weight: 600; }
+    .qr-h2 { font-size: 14.5px; font-weight: 600; }
+    .qr-sub { fill: var(--muted); }
+    .qr-eb { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; letter-spacing: 0.06em; fill: var(--muted); }
+    .qr-c-coral { fill: var(--coral); } .qr-c-mauve { fill: var(--mauve); } .qr-c-muted { fill: var(--muted); }
+    .qr-b-neutral { fill: var(--card); stroke: var(--edge); }
+    .qr-b-coral { fill: var(--coral-soft); stroke: var(--coral-edge); }
+    .qr-b-mauve { fill: var(--mauve-soft); stroke: var(--mauve-edge); }
+    .qr-b-slate { fill: var(--slate-soft); stroke: var(--slate-edge); }
+    .qr-ln { fill: none; stroke: var(--line); stroke-width: 1.6; }
+    .qr-ln-coral { fill: none; stroke: var(--coral); stroke-width: 1.8; }
+    .qr-ln-mauve { fill: none; stroke: var(--mauve); stroke-width: 1.6; }
+    .qr-dash { stroke-dasharray: 5 4; }
+    .qr-ah { fill: var(--line); } .qr-ah-coral { fill: var(--coral); } .qr-ah-mauve { fill: var(--mauve); }
+    .qr-dot-coral { fill: var(--coral); } .qr-dot-slate { fill: var(--slate); } .qr-dot-mauve { fill: var(--mauve); }
+    .qr-badge { fill: var(--slate); } .qr-badge-t { fill: var(--panel); font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; }
+</style>
+<defs>
+    <marker id="qr-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="qr-ah"/></marker>
+    <marker id="qr-a-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="qr-ah-coral"/></marker>
+    <marker id="qr-a-mauve" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="qr-ah-mauve"/></marker>
+</defs>
+<rect x="0" y="0" width="960" height="430" rx="16" class="qr-panel"/>
+<text x="32" y="42" class="qr-t qr-h1">An RD query, from search to patient record</text>
+<text x="32" y="64" class="qr-t qr-sub">Every request goes to API_URL/rd/…; the query id is the handle for all of them.</text>
+<rect x="32" y="92" width="230" height="150" rx="10" class="qr-b-neutral" stroke-width="1.2"/>
+<text x="48" y="114" class="qr-eb">/rd · Suche</text>
+<text x="48" y="134" class="qr-t qr-h2">RSearchForm</text>
+<text x="48" y="154" class="qr-m qr-c-coral">rd_query_submit</text>
+<text x="48" y="173" class="qr-t qr-sub">mode: local (own site)</text>
+<text x="48" y="192" class="qr-t qr-sub">or federated (all sites)</text>
+<path d="M262 150 H306" class="qr-ln-coral" marker-end="url(#qr-a-coral)"/>
+<text x="270" y="140" class="qr-m qr-c-muted">POST</text>
+<rect x="318" y="92" width="260" height="150" rx="10" class="qr-b-coral" stroke-width="1.2"/>
+<text x="334" y="114" class="qr-eb">rd/queries</text>
+<text x="334" y="134" class="qr-t qr-h2">Query { id, expiresAfter }</text>
+<text x="334" y="154" class="qr-m">PUT rd/queries/:id</text>
+<text x="334" y="173" class="qr-t qr-sub">same form, changed criteria</text>
+<text x="334" y="192" class="qr-m">then /rd/query/:id()</text>
+<rect x="630" y="84" width="298" height="78" rx="10" class="qr-b-slate" stroke-width="1.2"/>
+<text x="646" y="106" class="qr-eb">filters</text>
+<text x="646" y="128" class="qr-m">…/filters/diagnosis</text>
+<text x="646" y="147" class="qr-m">…/filters/hpo</text>
+<path d="M578 167 H604 V123 H628" class="qr-ln" marker-end="url(#qr-a)"/>
+<rect x="630" y="174" width="298" height="78" rx="10" class="qr-b-slate" stroke-width="1.2"/>
+<text x="646" y="196" class="qr-eb">summary</text>
+<text x="646" y="218" class="qr-m">…/demographics</text>
+<text x="646" y="237" class="qr-m">…/diagnostics</text>
+<path d="M578 167 H604 V213 H628" class="qr-ln" marker-end="url(#qr-a)"/>
+<rect x="630" y="264" width="298" height="78" rx="10" class="qr-b-slate" stroke-width="1.2"/>
+<text x="646" y="286" class="qr-eb">patients</text>
+<text x="646" y="308" class="qr-m">…/patient-matches</text>
+<text x="646" y="327" class="qr-m">…/patient-record/:pid</text>
+<path d="M578 167 H604 V303 H628" class="qr-ln" marker-end="url(#qr-a)"/>
+<rect x="32" y="280" width="546" height="128" rx="12" class="qr-b-mauve" stroke-width="1.2"/>
+<text x="48" y="304" class="qr-eb">query session · @dnpm-dip/vue + portal plugin</text>
+<rect x="48" y="318" width="162" height="70" rx="10" class="qr-b-neutral" stroke-width="1.2"/>
+<text x="60" y="342" class="qr-m">track(query)</text>
+<text x="60" y="366" class="qr-t qr-sub">querySession store</text>
+<path d="M210 353 H222" class="qr-ln-mauve" marker-end="url(#qr-a-mauve)"/>
+<rect x="224" y="318" width="162" height="70" rx="10" class="qr-b-neutral" stroke-width="1.2"/>
+<text x="236" y="342" class="qr-m">SESSION_EXPIRING</text>
+<text x="236" y="366" class="qr-t qr-sub">5 min before expiry</text>
+<path d="M386 353 H398" class="qr-ln-mauve" marker-end="url(#qr-a-mauve)"/>
+<rect x="400" y="318" width="162" height="70" rx="10" class="qr-b-neutral" stroke-width="1.2"/>
+<text x="412" y="342" class="qr-m">GET rd/queries/:id</text>
+<text x="412" y="366" class="qr-t qr-sub">then track() again</text>
+<path d="M481 388 V398 H129 V390" class="qr-ln-mauve qr-dash" marker-end="url(#qr-a-mauve)"/>
+</svg>

@@ -1,0 +1,106 @@
+<svg width="960" height="500" viewBox="0 0 960 500" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="mr-title mr-desc" class="mr-root">
+<title id="mr-title">How a feature module plugs into the portal</title>
+<desc id="mr-desc">The mtb Nuxt module does three things in module.ts. First, registerPages from @dnpm-dip/nuxt-kit turns runtime/pages into routes under /mtb at build time. Second, its api plugin runs after the portal plugin dnpm:kit, wraps the base HTTP client that carries the Authup bearer token in an MTBAPIClient, and calls the DNPM:DIP API at mtb/queries. Third, its register plugin runs after dnpm:register and calls the register hook with the name MTB, the base URL /mtb/ and menu items; the portal adds MTB to the top bar and shows the Suche entry only with mtb_query_submit. admin and rd do the same.</desc>
+<style>
+    .mr-root {
+        --panel: #F7F6F7; --card: #FFFFFF; --edge: #DAD4D8; --ink: #2B2F36; --muted: #646973; --line: #8F8A8E;
+        --coral: #C93A37; --coral-soft: #FDEDED; --coral-edge: #EFA7A5;
+        --mauve: #84586F; --mauve-soft: #F6EFF3; --mauve-edge: #D9C4D0;
+        --slate: #2B2F36; --slate-soft: #EEF0F2; --slate-edge: #BFC5CC;
+    }
+    @media (prefers-color-scheme: dark) {
+        .mr-root {
+            --panel: #13161B; --card: #1B1F26; --edge: #313741; --ink: #E7E8EA; --muted: #A2A7AF; --line: #737A84;
+            --coral: #F98583; --coral-soft: #351E21; --coral-edge: #7C3A3A;
+            --mauve: #D6C0CC; --mauve-soft: #2A2330; --mauve-edge: #584A5C;
+            --slate: #C7CCD4; --slate-soft: #222831; --slate-edge: #454D59;
+        }
+    }
+    .mr-panel { fill: var(--panel); }
+    .mr-t { font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); font-size: 13px; }
+    .mr-m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: var(--ink); }
+    .mr-h1 { font-size: 18px; font-weight: 600; }
+    .mr-h2 { font-size: 14.5px; font-weight: 600; }
+    .mr-sub { fill: var(--muted); }
+    .mr-eb { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; letter-spacing: 0.06em; fill: var(--muted); }
+    .mr-c-coral { fill: var(--coral); } .mr-c-mauve { fill: var(--mauve); } .mr-c-muted { fill: var(--muted); }
+    .mr-b-neutral { fill: var(--card); stroke: var(--edge); }
+    .mr-b-coral { fill: var(--coral-soft); stroke: var(--coral-edge); }
+    .mr-b-mauve { fill: var(--mauve-soft); stroke: var(--mauve-edge); }
+    .mr-b-slate { fill: var(--slate-soft); stroke: var(--slate-edge); }
+    .mr-ln { fill: none; stroke: var(--line); stroke-width: 1.6; }
+    .mr-ln-coral { fill: none; stroke: var(--coral); stroke-width: 1.8; }
+    .mr-ln-mauve { fill: none; stroke: var(--mauve); stroke-width: 1.6; }
+    .mr-dash { stroke-dasharray: 5 4; }
+    .mr-ah { fill: var(--line); } .mr-ah-coral { fill: var(--coral); } .mr-ah-mauve { fill: var(--mauve); }
+    .mr-dot-coral { fill: var(--coral); } .mr-dot-slate { fill: var(--slate); } .mr-dot-mauve { fill: var(--mauve); }
+    .mr-badge { fill: var(--slate); } .mr-badge-t { fill: var(--panel); font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; }
+</style>
+<defs>
+    <marker id="mr-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mr-ah"/></marker>
+    <marker id="mr-a-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mr-ah-coral"/></marker>
+    <marker id="mr-a-mauve" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="mr-ah-mauve"/></marker>
+</defs>
+<rect x="0" y="0" width="960" height="500" rx="16" class="mr-panel"/>
+<text x="32" y="42" class="mr-t mr-h1">How a feature module plugs into the portal</text>
+<text x="32" y="64" class="mr-t mr-sub">packages/mtb/src/module.ts. admin and rd follow the same three steps.</text>
+<rect x="32" y="88" width="276" height="394" rx="10" class="mr-b-coral" stroke-width="1.2"/>
+<text x="48" y="110" class="mr-eb">@dnpm-dip/mtb · nuxt module</text>
+<rect x="46" y="122" width="248" height="66" rx="8" class="mr-b-neutral" stroke-width="1.2"/>
+<circle cx="64" cy="144" r="10" class="mr-badge"/>
+<text x="64" y="148" class="mr-badge-t" text-anchor="middle">1</text>
+<text x="82" y="148" class="mr-m">registerPages({</text>
+<text x="82" y="168" class="mr-m">baseURL: '/mtb/' })</text>
+<path d="M294 155 H346" class="mr-ln-coral" marker-end="url(#mr-a-coral)"/>
+<rect x="46" y="252" width="248" height="66" rx="8" class="mr-b-neutral" stroke-width="1.2"/>
+<circle cx="64" cy="274" r="10" class="mr-badge"/>
+<text x="64" y="278" class="mr-badge-t" text-anchor="middle">2</text>
+<text x="82" y="278" class="mr-m">addPlugin(</text>
+<text x="82" y="298" class="mr-m">'runtime/plugins/api')</text>
+<path d="M294 285 H346" class="mr-ln-coral" marker-end="url(#mr-a-coral)"/>
+<rect x="46" y="382" width="248" height="66" rx="8" class="mr-b-neutral" stroke-width="1.2"/>
+<circle cx="64" cy="404" r="10" class="mr-badge"/>
+<text x="64" y="408" class="mr-badge-t" text-anchor="middle">3</text>
+<text x="82" y="408" class="mr-m">addPlugin(</text>
+<text x="82" y="428" class="mr-m">'runtime/plugins/register')</text>
+<path d="M294 415 H346" class="mr-ln-coral" marker-end="url(#mr-a-coral)"/>
+<rect x="358" y="96" width="276" height="118" rx="10" class="mr-b-mauve" stroke-width="1.2"/>
+<text x="374" y="118" class="mr-eb">build time · nuxt-kit</text>
+<text x="374" y="138" class="mr-t mr-h2">Pages become routes</text>
+<text x="374" y="158" class="mr-t">scans runtime/pages/**</text>
+<text x="374" y="177" class="mr-t">prefixes every path with /mtb</text>
+<text x="374" y="196" class="mr-t">adds them in pages:extend</text>
+<path d="M634 155 H674" class="mr-ln" marker-end="url(#mr-a)"/>
+<rect x="686" y="96" width="242" height="118" rx="10" class="mr-b-slate" stroke-width="1.2"/>
+<text x="702" y="118" class="mr-eb">portal router</text>
+<text x="702" y="138" class="mr-t mr-h2">Routes</text>
+<text x="702" y="158" class="mr-m">/mtb</text>
+<text x="702" y="177" class="mr-m">/mtb/query/:id()/summary/…</text>
+<text x="702" y="196" class="mr-m">/mtb/validation</text>
+<rect x="358" y="226" width="276" height="118" rx="10" class="mr-b-mauve" stroke-width="1.2"/>
+<text x="374" y="248" class="mr-eb">runtime · after dnpm:kit</text>
+<text x="374" y="268" class="mr-t mr-h2">Module API client</text>
+<text x="374" y="288" class="mr-t">injectHTTPClient(): base client</text>
+<text x="374" y="307" class="mr-t">Authup bearer token attached</text>
+<text x="374" y="326" class="mr-t">new MTBAPIClient(client)</text>
+<path d="M634 285 H674" class="mr-ln" marker-end="url(#mr-a)"/>
+<rect x="686" y="226" width="242" height="118" rx="10" class="mr-b-slate" stroke-width="1.2"/>
+<text x="702" y="248" class="mr-eb">DNPM:DIP API (API_URL)</text>
+<text x="702" y="268" class="mr-t mr-h2">Requests</text>
+<text x="702" y="288" class="mr-m">POST mtb/queries</text>
+<text x="702" y="307" class="mr-m">GET mtb/queries/:id/…</text>
+<text x="702" y="326" class="mr-m">GET mtb/kaplan-meier/config</text>
+<rect x="358" y="356" width="276" height="118" rx="10" class="mr-b-mauve" stroke-width="1.2"/>
+<text x="374" y="378" class="mr-eb">runtime · after dnpm:register</text>
+<text x="374" y="398" class="mr-t mr-h2">Module registers itself</text>
+<text x="374" y="418" class="mr-t">callHook('register', meta)</text>
+<text x="374" y="437" class="mr-t">name 'MTB', baseURL '/mtb/'</text>
+<text x="374" y="456" class="mr-t">menu items with permissions</text>
+<path d="M634 415 H674" class="mr-ln" marker-end="url(#mr-a)"/>
+<rect x="686" y="356" width="242" height="118" rx="10" class="mr-b-slate" stroke-width="1.2"/>
+<text x="702" y="378" class="mr-eb">portal navigation</text>
+<text x="702" y="398" class="mr-t mr-h2">MTB in the top bar</text>
+<text x="702" y="418" class="mr-t mr-c-coral">Suche: mtb_query_submit</text>
+<text x="702" y="437" class="mr-t mr-sub">Validierungsmeldungen:</text>
+<text x="702" y="456" class="mr-m">mtb_validation_* (3)</text>
+</svg>

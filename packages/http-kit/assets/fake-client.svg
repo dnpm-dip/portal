@@ -1,0 +1,96 @@
+<svg width="960" height="404" viewBox="0 0 960 404" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fc-title fc-desc" class="fc-root">
+<title id="fc-title">createFakeClient: the real client over a fake transport</title>
+<desc id="fc-desc">A spec calls a domain API such as client.site.getItems with the use case mtb. The FakeClient is a real HTTPClient whose hapic transport is a MemoryTransport, so no network is used, and the base URL defaults to http://fake.test. Every call is recorded in client.requests with method, URL, params, body and headers. matchRoute then picks a handler: a specific pattern such as GET /mtb/sites first, then the * catch-all, then the fallback that returns an empty collection. Data returned by a handler resolves with status 200; a fakeResponse with an error status goes through the hapic error pipeline and rejects with a client error.</desc>
+<style>
+    .fc-root {
+        --panel: #F7F6F7; --card: #FFFFFF; --edge: #DAD4D8; --ink: #2B2F36; --muted: #646973; --line: #8F8A8E;
+        --coral: #C93A37; --coral-soft: #FDEDED; --coral-edge: #EFA7A5;
+        --mauve: #84586F; --mauve-soft: #F6EFF3; --mauve-edge: #D9C4D0;
+        --slate: #2B2F36; --slate-soft: #EEF0F2; --slate-edge: #BFC5CC;
+    }
+    @media (prefers-color-scheme: dark) {
+        .fc-root {
+            --panel: #13161B; --card: #1B1F26; --edge: #313741; --ink: #E7E8EA; --muted: #A2A7AF; --line: #737A84;
+            --coral: #F98583; --coral-soft: #351E21; --coral-edge: #7C3A3A;
+            --mauve: #D6C0CC; --mauve-soft: #2A2330; --mauve-edge: #584A5C;
+            --slate: #C7CCD4; --slate-soft: #222831; --slate-edge: #454D59;
+        }
+    }
+    .fc-panel { fill: var(--panel); }
+    .fc-t { font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); font-size: 13px; }
+    .fc-m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: var(--ink); }
+    .fc-h1 { font-size: 18px; font-weight: 600; }
+    .fc-h2 { font-size: 14.5px; font-weight: 600; }
+    .fc-sub { fill: var(--muted); }
+    .fc-eb { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; letter-spacing: 0.06em; fill: var(--muted); }
+    .fc-c-coral { fill: var(--coral); } .fc-c-mauve { fill: var(--mauve); } .fc-c-muted { fill: var(--muted); }
+    .fc-b-neutral { fill: var(--card); stroke: var(--edge); }
+    .fc-b-coral { fill: var(--coral-soft); stroke: var(--coral-edge); }
+    .fc-b-mauve { fill: var(--mauve-soft); stroke: var(--mauve-edge); }
+    .fc-b-slate { fill: var(--slate-soft); stroke: var(--slate-edge); }
+    .fc-ln { fill: none; stroke: var(--line); stroke-width: 1.6; }
+    .fc-ln-coral { fill: none; stroke: var(--coral); stroke-width: 1.8; }
+    .fc-ln-mauve { fill: none; stroke: var(--mauve); stroke-width: 1.6; }
+    .fc-dash { stroke-dasharray: 5 4; }
+    .fc-ah { fill: var(--line); } .fc-ah-coral { fill: var(--coral); } .fc-ah-mauve { fill: var(--mauve); }
+    .fc-dot-coral { fill: var(--coral); } .fc-dot-slate { fill: var(--slate); } .fc-dot-mauve { fill: var(--mauve); }
+    .fc-badge { fill: var(--slate); } .fc-badge-t { fill: var(--panel); font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; }
+</style>
+<defs>
+    <marker id="fc-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="fc-ah"/></marker>
+    <marker id="fc-a-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="fc-ah-coral"/></marker>
+    <marker id="fc-a-mauve" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="fc-ah-mauve"/></marker>
+</defs>
+<rect x="0" y="0" width="960" height="404" rx="16" class="fc-panel"/>
+<text x="32" y="42" class="fc-t fc-h1">createFakeClient: the real client over a fake transport</text>
+<text x="32" y="64" class="fc-t fc-sub">hapic runs its full request and error pipeline; only the network is replaced.</text>
+<rect x="32" y="120" width="184" height="96" rx="10" class="fc-b-neutral" stroke-width="1.2"/>
+<text x="48" y="142" class="fc-eb">your spec</text>
+<text x="48" y="164" class="fc-m">await client.site</text>
+<text x="56" y="183" class="fc-m">  .getItems('mtb')</text>
+<path d="M216 168 H248" class="fc-ln" marker-end="url(#fc-a)"/>
+<rect x="260" y="104" width="204" height="128" rx="10" class="fc-b-mauve" stroke-width="1.2"/>
+<text x="276" y="126" class="fc-eb">FakeClient</text>
+<text x="276" y="146" class="fc-t fc-h2">HTTPClient + hapic</text>
+<text x="276" y="166" class="fc-m">MemoryTransport</text>
+<text x="276" y="185" class="fc-t fc-sub">no network</text>
+<text x="276" y="204" class="fc-m">http://fake.test</text>
+<path d="M362 232 V276" class="fc-ln fc-dash" marker-end="url(#fc-a)"/>
+<rect x="260" y="288" width="204" height="88" rx="10" class="fc-b-neutral" stroke-width="1.2"/>
+<text x="276" y="310" class="fc-eb">every call recorded</text>
+<text x="276" y="330" class="fc-t fc-h2">client.requests</text>
+<text x="276" y="350" class="fc-m">method url params body</text>
+<text x="508" y="94" class="fc-m">matchRoute(method, url)</text>
+<rect x="508" y="108" width="220" height="70" rx="10" class="fc-b-neutral" stroke-width="1.2"/>
+<circle cx="528" cy="130" r="10" class="fc-badge"/>
+<text x="528" y="134" class="fc-badge-t" text-anchor="middle">1</text>
+<text x="546" y="135" class="fc-m">'GET /mtb/sites'</text>
+<text x="522" y="160" class="fc-t fc-sub">specific pattern, :param captured</text>
+<path d="M486 143 H506" class="fc-ln" marker-end="url(#fc-a)"/>
+<rect x="508" y="190" width="220" height="70" rx="10" class="fc-b-neutral" stroke-width="1.2"/>
+<circle cx="528" cy="212" r="10" class="fc-badge"/>
+<text x="528" y="216" class="fc-badge-t" text-anchor="middle">2</text>
+<text x="546" y="217" class="fc-m">'*'</text>
+<text x="522" y="242" class="fc-t fc-sub">only when no pattern matches</text>
+<path d="M486 225 H506" class="fc-ln" marker-end="url(#fc-a)"/>
+<rect x="508" y="272" width="220" height="70" rx="10" class="fc-b-neutral" stroke-width="1.2"/>
+<circle cx="528" cy="294" r="10" class="fc-badge"/>
+<text x="528" y="298" class="fc-badge-t" text-anchor="middle">3</text>
+<text x="546" y="299" class="fc-m">fallback</text>
+<text x="522" y="324" class="fc-m fc-sub">{ entries: [], size: 0 }</text>
+<path d="M486 307 H506" class="fc-ln" marker-end="url(#fc-a)"/>
+<path d="M464 168 H486 V307" class="fc-ln"/>
+<path d="M486 143 V307" class="fc-ln"/>
+<path d="M728 178 H748 V142 H764" class="fc-ln" marker-end="url(#fc-a)"/>
+<path d="M748 178 V282 H764" class="fc-ln-coral" marker-end="url(#fc-a-coral)"/>
+<rect x="776" y="96" width="152" height="96" rx="10" class="fc-b-slate" stroke-width="1.2"/>
+<text x="792" y="118" class="fc-eb">handler data</text>
+<text x="792" y="138" class="fc-t fc-h2">200 OK</text>
+<text x="792" y="158" class="fc-t fc-sub">resolves</text>
+<rect x="776" y="220" width="152" height="128" rx="10" class="fc-b-coral" stroke-width="1.2"/>
+<text x="792" y="242" class="fc-eb">fakeResponse</text>
+<text x="792" y="262" class="fc-t fc-h2">500, 404, …</text>
+<text x="792" y="282" class="fc-t fc-sub">hapic error</text>
+<text x="792" y="301" class="fc-t fc-sub">rejects:</text>
+<text x="792" y="320" class="fc-m">isClientError</text>
+</svg>

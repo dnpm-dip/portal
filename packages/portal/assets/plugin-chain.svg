@@ -1,0 +1,96 @@
+<svg width="960" height="444" viewBox="0 0 960 444" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pc-title pc-desc" class="pc-root">
+<title id="pc-title">Portal plugins and the order they run in</title>
+<desc id="pc-desc">The Authup Nuxt module comes first. dnpm:ilingo, dnpm:kit and dnpm:permission run after it. vuecs runs after Authup and dnpm:ilingo. dnpm:kit calls install() from @dnpm-dip/vue to provide the HTTP client and the query stores; dnpm:register and the query-session-store plugin run after it. Each feature module (admin, mtb, rd) adds an api plugin that runs after dnpm:kit and a register plugin that runs after dnpm:register. The chartjs plugin has no dependencies.</desc>
+<style>
+    .pc-root {
+        --panel: #F7F6F7; --card: #FFFFFF; --edge: #DAD4D8; --ink: #2B2F36; --muted: #646973; --line: #8F8A8E;
+        --coral: #C93A37; --coral-soft: #FDEDED; --coral-edge: #EFA7A5;
+        --mauve: #84586F; --mauve-soft: #F6EFF3; --mauve-edge: #D9C4D0;
+        --slate: #2B2F36; --slate-soft: #EEF0F2; --slate-edge: #BFC5CC;
+    }
+    @media (prefers-color-scheme: dark) {
+        .pc-root {
+            --panel: #13161B; --card: #1B1F26; --edge: #313741; --ink: #E7E8EA; --muted: #A2A7AF; --line: #737A84;
+            --coral: #F98583; --coral-soft: #351E21; --coral-edge: #7C3A3A;
+            --mauve: #D6C0CC; --mauve-soft: #2A2330; --mauve-edge: #584A5C;
+            --slate: #C7CCD4; --slate-soft: #222831; --slate-edge: #454D59;
+        }
+    }
+    .pc-panel { fill: var(--panel); }
+    .pc-t { font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); font-size: 13px; }
+    .pc-m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: var(--ink); }
+    .pc-h1 { font-size: 18px; font-weight: 600; }
+    .pc-h2 { font-size: 14.5px; font-weight: 600; }
+    .pc-sub { fill: var(--muted); }
+    .pc-eb { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; letter-spacing: 0.06em; fill: var(--muted); }
+    .pc-c-coral { fill: var(--coral); } .pc-c-mauve { fill: var(--mauve); } .pc-c-muted { fill: var(--muted); }
+    .pc-b-neutral { fill: var(--card); stroke: var(--edge); }
+    .pc-b-coral { fill: var(--coral-soft); stroke: var(--coral-edge); }
+    .pc-b-mauve { fill: var(--mauve-soft); stroke: var(--mauve-edge); }
+    .pc-b-slate { fill: var(--slate-soft); stroke: var(--slate-edge); }
+    .pc-ln { fill: none; stroke: var(--line); stroke-width: 1.6; }
+    .pc-ln-coral { fill: none; stroke: var(--coral); stroke-width: 1.8; }
+    .pc-ln-mauve { fill: none; stroke: var(--mauve); stroke-width: 1.6; }
+    .pc-dash { stroke-dasharray: 5 4; }
+    .pc-ah { fill: var(--line); } .pc-ah-coral { fill: var(--coral); } .pc-ah-mauve { fill: var(--mauve); }
+    .pc-dot-coral { fill: var(--coral); } .pc-dot-slate { fill: var(--slate); } .pc-dot-mauve { fill: var(--mauve); }
+    .pc-badge { fill: var(--slate); } .pc-badge-t { fill: var(--panel); font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; }
+</style>
+<defs>
+    <marker id="pc-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="pc-ah"/></marker>
+    <marker id="pc-a-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="pc-ah-coral"/></marker>
+    <marker id="pc-a-mauve" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="pc-ah-mauve"/></marker>
+</defs>
+<rect x="0" y="0" width="960" height="444" rx="16" class="pc-panel"/>
+<text x="32" y="42" class="pc-t pc-h1">Portal plugins and the order they run in</text>
+<text x="32" y="64" class="pc-t pc-sub">Each arrow points from a plugin to one that declares dependsOn on it.</text>
+<rect x="78" y="126" width="104" height="24" rx="12" class="pc-b-neutral" stroke-width="1.2"/>
+<text x="130" y="142.2" class="pc-t" text-anchor="middle">→ runs after</text>
+<rect x="32" y="210" width="196" height="92" rx="10" class="pc-b-slate" stroke-width="1.2"/>
+<text x="48" y="232" class="pc-eb">@authup/client-web-nuxt</text>
+<text x="48" y="252" class="pc-t pc-h2">Authup session</text>
+<text x="48" y="272" class="pc-t pc-sub">login, token, permissions</text>
+<rect x="32" y="328" width="196" height="92" rx="10" class="pc-b-neutral" stroke-width="1.2"/>
+<text x="48" y="350" class="pc-eb">chartjs</text>
+<text x="48" y="370" class="pc-t pc-h2">Chart.js setup</text>
+<text x="48" y="390" class="pc-t pc-sub">no dependencies</text>
+<rect x="268" y="92" width="196" height="92" rx="10" class="pc-b-neutral" stroke-width="1.2"/>
+<text x="284" y="114" class="pc-eb">dnpm:ilingo</text>
+<text x="284" y="134" class="pc-t pc-h2">Translations</text>
+<text x="284" y="154" class="pc-t pc-sub">@ilingo/vue, de and en</text>
+<rect x="268" y="210" width="196" height="92" rx="10" class="pc-b-mauve" stroke-width="1.2"/>
+<text x="284" y="232" class="pc-eb">dnpm:kit</text>
+<text x="284" y="252" class="pc-t pc-h2">HTTP client, stores</text>
+<text x="284" y="272" class="pc-t pc-sub">install() from @dnpm-dip/vue</text>
+<rect x="268" y="328" width="196" height="92" rx="10" class="pc-b-neutral" stroke-width="1.2"/>
+<text x="284" y="350" class="pc-eb">dnpm:permission</text>
+<text x="284" y="370" class="pc-t pc-h2">Realm-aware checks</text>
+<text x="284" y="390" class="pc-t pc-sub">global or session realm</text>
+<rect x="504" y="92" width="196" height="92" rx="10" class="pc-b-neutral" stroke-width="1.2"/>
+<text x="520" y="114" class="pc-eb">vuecs</text>
+<text x="520" y="134" class="pc-t pc-h2">Themes, icons, forms</text>
+<text x="520" y="154" class="pc-t pc-sub">after authup and ilingo</text>
+<rect x="504" y="210" width="196" height="92" rx="10" class="pc-b-mauve" stroke-width="1.2"/>
+<text x="520" y="232" class="pc-eb">dnpm:register</text>
+<text x="520" y="252" class="pc-t pc-h2">Module navigation</text>
+<text x="520" y="272" class="pc-t pc-sub">top bar, sidebar, store</text>
+<rect x="504" y="328" width="196" height="92" rx="10" class="pc-b-neutral" stroke-width="1.2"/>
+<text x="520" y="350" class="pc-eb">query-session-store</text>
+<text x="520" y="370" class="pc-t pc-h2">Query refresh</text>
+<text x="520" y="390" class="pc-t pc-sub">GET :useCase/queries/:id</text>
+<rect x="740" y="210" width="196" height="140" rx="10" class="pc-b-coral" stroke-width="1.2"/>
+<text x="756" y="232" class="pc-eb">admin · mtb · rd</text>
+<text x="756" y="252" class="pc-t pc-h2">Module plugins</text>
+<text x="756" y="272" class="pc-m">plugins/api</text>
+<text x="756" y="291" class="pc-t pc-sub">after dnpm:kit</text>
+<text x="756" y="310" class="pc-m">plugins/register</text>
+<text x="756" y="329" class="pc-t pc-sub">after dnpm:register</text>
+<path d="M228 256 H266" class="pc-ln" marker-end="url(#pc-a)"/>
+<path d="M248 256 V138 H266" class="pc-ln" marker-end="url(#pc-a)"/>
+<path d="M248 256 V374 H266" class="pc-ln" marker-end="url(#pc-a)"/>
+<path d="M464 138 H502" class="pc-ln" marker-end="url(#pc-a)"/>
+<path d="M464 256 H502" class="pc-ln-mauve" marker-end="url(#pc-a-mauve)"/>
+<path d="M484 256 V374 H502" class="pc-ln-mauve" marker-end="url(#pc-a-mauve)"/>
+<path d="M700 256 H738" class="pc-ln-coral" marker-end="url(#pc-a-coral)"/>
+<path d="M366 210 V198 H780 V208" class="pc-ln-coral pc-dash" marker-end="url(#pc-a-coral)"/>
+</svg>

@@ -1,0 +1,86 @@
+<svg width="960" height="444" viewBox="0 0 960 444" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="pr-title pr-desc" class="pr-root">
+<title id="pr-title">registerPages({ baseURL: '/mtb/' })</title>
+<desc id="pr-desc">registerPages from @dnpm-dip/nuxt-kit reads the files under packages/mtb/src/runtime/pages and adds routes below /mtb in the pages:extend hook. index.vue becomes /mtb, validation/index.vue becomes /mtb/validation, query/[id].vue becomes /mtb/query/:id(), and files in the query/[id] folder become its child routes, for example summary/medication and patients/:patientId()/plans. Brackets follow Nuxt: [id] is a parameter, [[id]] an optional one, [...slug] a catch-all, and index maps to the parent path.</desc>
+<style>
+    .pr-root {
+        --panel: #F7F6F7; --card: #FFFFFF; --edge: #DAD4D8; --ink: #2B2F36; --muted: #646973; --line: #8F8A8E;
+        --coral: #C93A37; --coral-soft: #FDEDED; --coral-edge: #EFA7A5;
+        --mauve: #84586F; --mauve-soft: #F6EFF3; --mauve-edge: #D9C4D0;
+        --slate: #2B2F36; --slate-soft: #EEF0F2; --slate-edge: #BFC5CC;
+    }
+    @media (prefers-color-scheme: dark) {
+        .pr-root {
+            --panel: #13161B; --card: #1B1F26; --edge: #313741; --ink: #E7E8EA; --muted: #A2A7AF; --line: #737A84;
+            --coral: #F98583; --coral-soft: #351E21; --coral-edge: #7C3A3A;
+            --mauve: #D6C0CC; --mauve-soft: #2A2330; --mauve-edge: #584A5C;
+            --slate: #C7CCD4; --slate-soft: #222831; --slate-edge: #454D59;
+        }
+    }
+    .pr-panel { fill: var(--panel); }
+    .pr-t { font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); font-size: 13px; }
+    .pr-m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: var(--ink); }
+    .pr-h1 { font-size: 18px; font-weight: 600; }
+    .pr-h2 { font-size: 14.5px; font-weight: 600; }
+    .pr-sub { fill: var(--muted); }
+    .pr-eb { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; letter-spacing: 0.06em; fill: var(--muted); }
+    .pr-c-coral { fill: var(--coral); } .pr-c-mauve { fill: var(--mauve); } .pr-c-muted { fill: var(--muted); }
+    .pr-b-neutral { fill: var(--card); stroke: var(--edge); }
+    .pr-b-coral { fill: var(--coral-soft); stroke: var(--coral-edge); }
+    .pr-b-mauve { fill: var(--mauve-soft); stroke: var(--mauve-edge); }
+    .pr-b-slate { fill: var(--slate-soft); stroke: var(--slate-edge); }
+    .pr-ln { fill: none; stroke: var(--line); stroke-width: 1.6; }
+    .pr-ln-coral { fill: none; stroke: var(--coral); stroke-width: 1.8; }
+    .pr-ln-mauve { fill: none; stroke: var(--mauve); stroke-width: 1.6; }
+    .pr-dash { stroke-dasharray: 5 4; }
+    .pr-ah { fill: var(--line); } .pr-ah-coral { fill: var(--coral); } .pr-ah-mauve { fill: var(--mauve); }
+    .pr-dot-coral { fill: var(--coral); } .pr-dot-slate { fill: var(--slate); } .pr-dot-mauve { fill: var(--mauve); }
+    .pr-badge { fill: var(--slate); } .pr-badge-t { fill: var(--panel); font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; }
+</style>
+<defs>
+    <marker id="pr-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="pr-ah"/></marker>
+    <marker id="pr-a-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="pr-ah-coral"/></marker>
+    <marker id="pr-a-mauve" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="pr-ah-mauve"/></marker>
+</defs>
+<rect x="0" y="0" width="960" height="444" rx="16" class="pr-panel"/>
+<text x="32" y="42" class="pr-t pr-h1">registerPages({ baseURL: '/mtb/' })</text>
+<text x="32" y="64" class="pr-t pr-sub">Files under src/runtime/pages become Nuxt routes below the module’s base URL.</text>
+<rect x="32" y="84" width="404" height="300" rx="12" class="pr-b-neutral" stroke-width="1.2"/>
+<text x="48" y="108" class="pr-eb">packages/mtb/src/runtime/pages</text>
+<rect x="524" y="84" width="404" height="300" rx="12" class="pr-b-slate" stroke-width="1.2"/>
+<text x="540" y="108" class="pr-eb">routes · children nest under /mtb/query/:id()</text>
+<rect x="46" y="124" width="376" height="34" rx="8" class="pr-b-mauve" stroke-width="1.2"/>
+<text x="60" y="145" class="pr-m">index.vue</text>
+<rect x="538" y="124" width="376" height="34" rx="8" class="pr-b-neutral" stroke-width="1.2"/>
+<text x="552" y="145" class="pr-m">/mtb</text>
+<path d="M422 141 H536" class="pr-ln-coral" marker-end="url(#pr-a-coral)"/>
+<rect x="46" y="174" width="376" height="34" rx="8" class="pr-b-mauve" stroke-width="1.2"/>
+<text x="60" y="195" class="pr-m">validation/index.vue</text>
+<rect x="538" y="174" width="376" height="34" rx="8" class="pr-b-neutral" stroke-width="1.2"/>
+<text x="552" y="195" class="pr-m">/mtb/validation</text>
+<path d="M422 191 H536" class="pr-ln" marker-end="url(#pr-a)"/>
+<rect x="46" y="224" width="376" height="34" rx="8" class="pr-b-mauve" stroke-width="1.2"/>
+<text x="60" y="245" class="pr-m">query/[id].vue</text>
+<rect x="538" y="224" width="376" height="34" rx="8" class="pr-b-neutral" stroke-width="1.2"/>
+<text x="552" y="245" class="pr-m">/mtb/query/:id()</text>
+<path d="M422 241 H536" class="pr-ln" marker-end="url(#pr-a)"/>
+<rect x="46" y="274" width="376" height="34" rx="8" class="pr-b-mauve" stroke-width="1.2"/>
+<text x="60" y="295" class="pr-m">query/[id]/index/summary/medication.vue</text>
+<rect x="566" y="274" width="348" height="34" rx="8" class="pr-b-neutral" stroke-width="1.2"/>
+<text x="580" y="295" class="pr-m">summary/medication</text>
+<path d="M552 258 V291 H564" class="pr-ln"/>
+<path d="M422 291 H564" class="pr-ln" marker-end="url(#pr-a)"/>
+<rect x="46" y="324" width="376" height="34" rx="8" class="pr-b-mauve" stroke-width="1.2"/>
+<text x="60" y="345" class="pr-m">query/[id]/patients/[patientId]/plans.vue</text>
+<rect x="566" y="324" width="348" height="34" rx="8" class="pr-b-neutral" stroke-width="1.2"/>
+<text x="580" y="345" class="pr-m">patients/:patientId()/plans</text>
+<path d="M552 308 V341 H564" class="pr-ln"/>
+<path d="M422 341 H564" class="pr-ln" marker-end="url(#pr-a)"/>
+<rect x="32" y="400" width="108" height="24" rx="12" class="pr-b-neutral" stroke-width="1.2"/>
+<text x="86" y="416.2" class="pr-m" text-anchor="middle">[id] → :id()</text>
+<rect x="150" y="400" width="115" height="24" rx="12" class="pr-b-neutral" stroke-width="1.2"/>
+<text x="207.5" y="416.2" class="pr-m" text-anchor="middle">[[id]] → :id?</text>
+<rect x="275" y="400" width="181" height="24" rx="12" class="pr-b-neutral" stroke-width="1.2"/>
+<text x="365.5" y="416.2" class="pr-m" text-anchor="middle">[...slug] → :slug(.*)*</text>
+<rect x="466" y="400" width="159" height="24" rx="12" class="pr-b-neutral" stroke-width="1.2"/>
+<text x="545.5" y="416.2" class="pr-m" text-anchor="middle">index → parent path</text>
+</svg>

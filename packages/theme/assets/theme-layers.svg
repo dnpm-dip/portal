@@ -1,0 +1,87 @@
+<svg width="960" height="500" viewBox="0 0 960 500" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tl-title tl-desc" class="tl-root">
+<title id="tl-title">What @import "@dnpm-dip/theme" stacks up</title>
+<desc id="tl-desc">From the bottom: @authup/client-web-kit-theme brings tailwindcss, the @vuecs/design tokens and @vuecs/theme-tailwind. @dnpm-dip/theme adds an @theme block with the Nunito and Asap fonts, an @layer base with the --dnpm-* brand and chrome tokens, a primary scale mixed from the graphite brand colour and the .dark overrides, and the layout and component styles. The portal imports it from assets/css/tailwind.css. Brand tokens: coral #F65552, slate #2B2F36 (#C7CCD4 in dark mode), mauve #C7B1BD, silver #AEB2B5. In JavaScript, register clientWebKitTheme() before dnpmTheme() so the DNPM theme wins.</desc>
+<style>
+    .tl-root {
+        --panel: #F7F6F7; --card: #FFFFFF; --edge: #DAD4D8; --ink: #2B2F36; --muted: #646973; --line: #8F8A8E;
+        --coral: #C93A37; --coral-soft: #FDEDED; --coral-edge: #EFA7A5;
+        --mauve: #84586F; --mauve-soft: #F6EFF3; --mauve-edge: #D9C4D0;
+        --slate: #2B2F36; --slate-soft: #EEF0F2; --slate-edge: #BFC5CC;
+    }
+    @media (prefers-color-scheme: dark) {
+        .tl-root {
+            --panel: #13161B; --card: #1B1F26; --edge: #313741; --ink: #E7E8EA; --muted: #A2A7AF; --line: #737A84;
+            --coral: #F98583; --coral-soft: #351E21; --coral-edge: #7C3A3A;
+            --mauve: #D6C0CC; --mauve-soft: #2A2330; --mauve-edge: #584A5C;
+            --slate: #C7CCD4; --slate-soft: #222831; --slate-edge: #454D59;
+        }
+    }
+    .tl-panel { fill: var(--panel); }
+    .tl-t { font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); font-size: 13px; }
+    .tl-m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: var(--ink); }
+    .tl-h1 { font-size: 18px; font-weight: 600; }
+    .tl-h2 { font-size: 14.5px; font-weight: 600; }
+    .tl-sub { fill: var(--muted); }
+    .tl-eb { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; letter-spacing: 0.06em; fill: var(--muted); }
+    .tl-c-coral { fill: var(--coral); } .tl-c-mauve { fill: var(--mauve); } .tl-c-muted { fill: var(--muted); }
+    .tl-b-neutral { fill: var(--card); stroke: var(--edge); }
+    .tl-b-coral { fill: var(--coral-soft); stroke: var(--coral-edge); }
+    .tl-b-mauve { fill: var(--mauve-soft); stroke: var(--mauve-edge); }
+    .tl-b-slate { fill: var(--slate-soft); stroke: var(--slate-edge); }
+    .tl-ln { fill: none; stroke: var(--line); stroke-width: 1.6; }
+    .tl-ln-coral { fill: none; stroke: var(--coral); stroke-width: 1.8; }
+    .tl-ln-mauve { fill: none; stroke: var(--mauve); stroke-width: 1.6; }
+    .tl-dash { stroke-dasharray: 5 4; }
+    .tl-ah { fill: var(--line); } .tl-ah-coral { fill: var(--coral); } .tl-ah-mauve { fill: var(--mauve); }
+    .tl-dot-coral { fill: var(--coral); } .tl-dot-slate { fill: var(--slate); } .tl-dot-mauve { fill: var(--mauve); }
+    .tl-badge { fill: var(--slate); } .tl-badge-t { fill: var(--panel); font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; }
+</style>
+<defs>
+    <marker id="tl-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="tl-ah"/></marker>
+    <marker id="tl-a-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="tl-ah-coral"/></marker>
+    <marker id="tl-a-mauve" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="tl-ah-mauve"/></marker>
+</defs>
+<rect x="0" y="0" width="960" height="500" rx="16" class="tl-panel"/>
+<text x="32" y="42" class="tl-t tl-h1">What @import "@dnpm-dip/theme" stacks up</text>
+<text x="32" y="64" class="tl-t tl-sub">Read bottom to top: each layer builds on the one below it.</text>
+<rect x="32" y="84" width="540" height="70" rx="10" class="tl-b-coral" stroke-width="1.2"/>
+<text x="48" y="106" class="tl-eb">portal</text>
+<text x="48" y="126" class="tl-m">assets/css/tailwind.css</text>
+<text x="48" y="144" class="tl-t tl-sub">@import "@dnpm-dip/theme"; @source for every package</text>
+<rect x="32" y="164" width="540" height="70" rx="10" class="tl-b-neutral" stroke-width="1.2"/>
+<text x="48" y="186" class="tl-eb">styles/</text>
+<text x="48" y="206" class="tl-m">layout: body, header, navbar, sidebar, footer</text>
+<text x="48" y="224" class="tl-t tl-sub">card, pagination, list, domain</text>
+<rect x="32" y="244" width="540" height="70" rx="10" class="tl-b-mauve" stroke-width="1.2"/>
+<text x="48" y="266" class="tl-eb">@layer base</text>
+<text x="48" y="286" class="tl-m">--dnpm-* brand and chrome tokens</text>
+<text x="48" y="304" class="tl-t tl-sub">--vc-color-primary-* mixed from graphite, .dark</text>
+<rect x="32" y="324" width="540" height="70" rx="10" class="tl-b-neutral" stroke-width="1.2"/>
+<text x="48" y="346" class="tl-eb">@theme</text>
+<text x="48" y="366" class="tl-m">--font-sans: Nunito</text>
+<text x="48" y="384" class="tl-t tl-sub">--font-heading: Asap</text>
+<rect x="32" y="404" width="540" height="70" rx="10" class="tl-b-slate" stroke-width="1.2"/>
+<text x="48" y="426" class="tl-eb">@authup/client-web-kit-theme</text>
+<text x="48" y="446" class="tl-m">tailwindcss, @vuecs/design tokens</text>
+<text x="48" y="464" class="tl-t tl-sub">@vuecs/theme-tailwind</text>
+<rect x="604" y="84" width="324" height="236" rx="12" class="tl-b-neutral" stroke-width="1.2"/>
+<text x="620" y="108" class="tl-eb">brand tokens</text>
+<rect x="620" y="128" width="26" height="26" rx="6" fill="#F65552"/>
+<rect x="650" y="128" width="26" height="26" rx="6" fill="#F65552" stroke="#0D1117" stroke-opacity="0.25"/>
+<text x="688" y="146" class="tl-m">--dnpm-brand-coral</text>
+<rect x="620" y="168" width="26" height="26" rx="6" fill="#2B2F36"/>
+<rect x="650" y="168" width="26" height="26" rx="6" fill="#C7CCD4" stroke="#0D1117" stroke-opacity="0.25"/>
+<text x="688" y="186" class="tl-m">--dnpm-brand-slate</text>
+<rect x="620" y="208" width="26" height="26" rx="6" fill="#C7B1BD"/>
+<rect x="650" y="208" width="26" height="26" rx="6" fill="#C7B1BD" stroke="#0D1117" stroke-opacity="0.25"/>
+<text x="688" y="226" class="tl-m">--dnpm-brand-mauve</text>
+<rect x="620" y="248" width="26" height="26" rx="6" fill="#AEB2B5"/>
+<rect x="650" y="248" width="26" height="26" rx="6" fill="#AEB2B5" stroke="#0D1117" stroke-opacity="0.25"/>
+<text x="688" y="266" class="tl-m">--dnpm-brand-silver</text>
+<text x="620" y="300" class="tl-t tl-sub">light · dark: slate flips under .dark</text>
+<rect x="604" y="336" width="324" height="118" rx="10" class="tl-b-coral" stroke-width="1.2"/>
+<text x="620" y="358" class="tl-eb">JavaScript side</text>
+<text x="620" y="378" class="tl-t tl-h2">Theme order matters</text>
+<text x="620" y="398" class="tl-m">themes: [clientWebKitTheme(),</text>
+<text x="686" y="417" class="tl-m">dnpmTheme()]  // wins</text>
+</svg>

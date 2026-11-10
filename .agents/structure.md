@@ -22,6 +22,20 @@ It is built on Nuxt 4 (Vue 3) with a modular architecture where domain-specific 
 | [mtb](../packages/mtb)                      | Module      | Molecular Tumor Board module (auto-installed as Nuxt module).  |
 | [rd](../packages/rd)                        | Module      | Rare Diseases module (auto-installed as Nuxt module).          |
 
+## README Assets
+
+Every README has its images next to it: the root in `.github/assets/`, each package in `packages/<name>/assets/`
+(listed in that package's `files`, so the images also ship in the npm tarball). Package READMEs reference them as
+`./assets/...`; npm resolves that against `repository.directory`, so keep that field correct.
+
+- `logo.svg` is **one file copied into every location** (root + all nine packages). Change it in one place, then
+  copy it over the others — `md5 .github/assets/logo.svg packages/*/assets/logo.svg` must print one hash.
+- Diagrams (`module-registration.svg`, `plugin-chain.svg`, `fake-client.svg`, `install-chain.svg`,
+  `page-routes.svg`, `theme-layers.svg`, `query-flow.svg`, `connection-report.svg`) name real routes, endpoints
+  and permissions. When one of those changes, update the diagram, its `<desc>` and the README `alt` text with it.
+- Diagram colours are CSS variables redefined under `@media (prefers-color-scheme: dark)`, and every label sits on
+  a panel, so they read on GitHub light/dark and on npm's always-light page. Check new SVGs in both schemes.
+
 ## Package Dependency Layers
 
 Changes to a lower-layer package affect all packages above it. Build order follows these layers.

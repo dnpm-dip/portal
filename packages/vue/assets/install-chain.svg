@@ -1,0 +1,103 @@
+<svg width="960" height="420" viewBox="0 0 960 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ic-title ic-desc" class="ic-root">
+<title id="ic-title">What install() sets up, and what has to come first</title>
+<desc id="ic-desc">Install order: pinia, then @vuecs/core, then @authup/client-web-kit, then install(app, options) from @dnpm-dip/vue, then the module clients such as MTBAPIClient. install() registers DKVTable as the only global component. It installs the HTTP client: if one is already provided it is kept, otherwise it creates an HTTPClient for the base URL and attaches the Authup token hook. It creates the query event bus, which fires SESSION_EXPIRING five minutes before a query expires, and installs the queryFilter and querySession Pinia stores, which share that bus.</desc>
+<style>
+    .ic-root {
+        --panel: #F7F6F7; --card: #FFFFFF; --edge: #DAD4D8; --ink: #2B2F36; --muted: #646973; --line: #8F8A8E;
+        --coral: #C93A37; --coral-soft: #FDEDED; --coral-edge: #EFA7A5;
+        --mauve: #84586F; --mauve-soft: #F6EFF3; --mauve-edge: #D9C4D0;
+        --slate: #2B2F36; --slate-soft: #EEF0F2; --slate-edge: #BFC5CC;
+    }
+    @media (prefers-color-scheme: dark) {
+        .ic-root {
+            --panel: #13161B; --card: #1B1F26; --edge: #313741; --ink: #E7E8EA; --muted: #A2A7AF; --line: #737A84;
+            --coral: #F98583; --coral-soft: #351E21; --coral-edge: #7C3A3A;
+            --mauve: #D6C0CC; --mauve-soft: #2A2330; --mauve-edge: #584A5C;
+            --slate: #C7CCD4; --slate-soft: #222831; --slate-edge: #454D59;
+        }
+    }
+    .ic-panel { fill: var(--panel); }
+    .ic-t { font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); font-size: 13px; }
+    .ic-m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: var(--ink); }
+    .ic-h1 { font-size: 18px; font-weight: 600; }
+    .ic-h2 { font-size: 14.5px; font-weight: 600; }
+    .ic-sub { fill: var(--muted); }
+    .ic-eb { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; letter-spacing: 0.06em; fill: var(--muted); }
+    .ic-c-coral { fill: var(--coral); } .ic-c-mauve { fill: var(--mauve); } .ic-c-muted { fill: var(--muted); }
+    .ic-b-neutral { fill: var(--card); stroke: var(--edge); }
+    .ic-b-coral { fill: var(--coral-soft); stroke: var(--coral-edge); }
+    .ic-b-mauve { fill: var(--mauve-soft); stroke: var(--mauve-edge); }
+    .ic-b-slate { fill: var(--slate-soft); stroke: var(--slate-edge); }
+    .ic-ln { fill: none; stroke: var(--line); stroke-width: 1.6; }
+    .ic-ln-coral { fill: none; stroke: var(--coral); stroke-width: 1.8; }
+    .ic-ln-mauve { fill: none; stroke: var(--mauve); stroke-width: 1.6; }
+    .ic-dash { stroke-dasharray: 5 4; }
+    .ic-ah { fill: var(--line); } .ic-ah-coral { fill: var(--coral); } .ic-ah-mauve { fill: var(--mauve); }
+    .ic-dot-coral { fill: var(--coral); } .ic-dot-slate { fill: var(--slate); } .ic-dot-mauve { fill: var(--mauve); }
+    .ic-badge { fill: var(--slate); } .ic-badge-t { fill: var(--panel); font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; }
+</style>
+<defs>
+    <marker id="ic-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="ic-ah"/></marker>
+    <marker id="ic-a-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="ic-ah-coral"/></marker>
+    <marker id="ic-a-mauve" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="ic-ah-mauve"/></marker>
+</defs>
+<rect x="0" y="0" width="960" height="420" rx="16" class="ic-panel"/>
+<text x="32" y="42" class="ic-t ic-h1">What install() sets up, and what has to come first</text>
+<text x="32" y="64" class="ic-t ic-sub">The order is the one the portal plugins and the mountComponent test harness use.</text>
+<rect x="32" y="80" width="124" height="62" rx="10" class="ic-b-neutral" stroke-width="1.2"/>
+<circle cx="52" cy="101" r="10" class="ic-badge"/>
+<text x="52" y="105" class="ic-badge-t" text-anchor="middle">1</text>
+<text x="68" y="106" class="ic-m">pinia</text>
+<text x="48" y="130" class="ic-t ic-sub">stores need an app</text>
+<path d="M156 111 H169" class="ic-ln" marker-end="url(#ic-a)"/>
+<rect x="170" y="80" width="150" height="62" rx="10" class="ic-b-neutral" stroke-width="1.2"/>
+<circle cx="190" cy="101" r="10" class="ic-badge"/>
+<text x="190" y="105" class="ic-badge-t" text-anchor="middle">2</text>
+<text x="206" y="106" class="ic-m">@vuecs/core</text>
+<text x="186" y="130" class="ic-t ic-sub">first install wins</text>
+<path d="M320 111 H333" class="ic-ln" marker-end="url(#ic-a)"/>
+<rect x="334" y="80" width="226" height="62" rx="10" class="ic-b-neutral" stroke-width="1.2"/>
+<circle cx="354" cy="101" r="10" class="ic-badge"/>
+<text x="354" y="105" class="ic-badge-t" text-anchor="middle">3</text>
+<text x="370" y="106" class="ic-m">@authup/client-web-kit</text>
+<text x="350" y="130" class="ic-t ic-sub">provides the token hook</text>
+<path d="M560 111 H573" class="ic-ln" marker-end="url(#ic-a)"/>
+<rect x="574" y="80" width="196" height="62" rx="10" class="ic-b-mauve" stroke-width="1.2"/>
+<circle cx="594" cy="101" r="10" class="ic-badge"/>
+<text x="594" y="105" class="ic-badge-t" text-anchor="middle">4</text>
+<text x="610" y="106" class="ic-m">install(app, opts)</text>
+<text x="590" y="130" class="ic-t ic-sub">@dnpm-dip/vue</text>
+<path d="M770 111 H783" class="ic-ln" marker-end="url(#ic-a)"/>
+<rect x="784" y="80" width="144" height="62" rx="10" class="ic-b-coral" stroke-width="1.2"/>
+<circle cx="804" cy="101" r="10" class="ic-badge"/>
+<text x="804" y="105" class="ic-badge-t" text-anchor="middle">5</text>
+<text x="820" y="106" class="ic-m">module clients</text>
+<text x="800" y="130" class="ic-t ic-sub">MTBAPIClient, …</text>
+<path d="M672 142 V170" class="ic-ln-mauve" marker-end="url(#ic-a-mauve)"/>
+<rect x="32" y="182" width="896" height="214" rx="12" class="ic-b-mauve" stroke-width="1.2"/>
+<text x="48" y="206" class="ic-eb">inside install()</text>
+<rect x="48" y="220" width="206" height="160" rx="10" class="ic-b-neutral" stroke-width="1.2"/>
+<text x="64" y="248" class="ic-t ic-h2">Global component</text>
+<text x="64" y="276" class="ic-m">DKVTable</text>
+<text x="64" y="297" class="ic-t ic-sub">the only global one;</text>
+<text x="64" y="318" class="ic-t ic-sub">import everything else</text>
+<path d="M254 300 H265" class="ic-ln-mauve" marker-end="url(#ic-a-mauve)"/>
+<rect x="266" y="220" width="206" height="160" rx="10" class="ic-b-neutral" stroke-width="1.2"/>
+<text x="282" y="248" class="ic-t ic-h2">HTTP client</text>
+<text x="282" y="276" class="ic-t ic-sub">already provided?</text>
+<text x="282" y="297" class="ic-t ic-sub">keep it (first wins)</text>
+<text x="282" y="318" class="ic-m">else new HTTPClient</text>
+<text x="282" y="339" class="ic-t ic-sub">+ Authup token hook</text>
+<path d="M472 300 H483" class="ic-ln-mauve" marker-end="url(#ic-a-mauve)"/>
+<rect x="484" y="220" width="206" height="160" rx="10" class="ic-b-neutral" stroke-width="1.2"/>
+<text x="500" y="248" class="ic-t ic-h2">Query event bus</text>
+<text x="500" y="276" class="ic-m">createQueryEventBus()</text>
+<text x="500" y="297" class="ic-t ic-sub">SESSION_EXPIRING fires</text>
+<text x="500" y="318" class="ic-t ic-sub">5 min before expiry</text>
+<path d="M690 300 H701" class="ic-ln-mauve" marker-end="url(#ic-a-mauve)"/>
+<rect x="702" y="220" width="206" height="160" rx="10" class="ic-b-neutral" stroke-width="1.2"/>
+<text x="718" y="248" class="ic-t ic-h2">Pinia stores</text>
+<text x="718" y="276" class="ic-m">queryFilter</text>
+<text x="718" y="297" class="ic-m">querySession</text>
+<text x="718" y="318" class="ic-t ic-sub">both share the bus</text>
+</svg>

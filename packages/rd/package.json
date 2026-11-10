@@ -7,7 +7,7 @@
     "repository": {
         "type": "git",
         "url": "git+https://github.com/dnpm-dip/portal.git",
-        "directory": "packages/rare-diseases"
+        "directory": "packages/rd"
     },
     "license": "MIT",
     "exports": {
@@ -19,7 +19,8 @@
     "module": "./dist/module.mjs",
     "types": "./dist/types.d.mts",
     "files": [
-        "dist"
+        "dist",
+        "assets"
     ],
     "scripts": {
         "build": "nuxt-module-build prepare && nuxt-module-build build",

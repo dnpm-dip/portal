@@ -1,0 +1,96 @@
+<svg width="960" height="420" viewBox="0 0 960 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cr-title cr-desc" class="cr-root">
+<title id="cr-title">The admin module</title>
+<desc id="cr-desc">The admin module adds /admin with five menu entries: Overview needs no permission, but its connection report is only shown with connection_report_read; Identitätsanbieter, Benutzer, Rollen and Clients need the matching Authup identity_provider, user, role and client permissions. The overview fetches GET admin/connection-report and shows a ConnectionReport: the local site as self and each peer site with its status online or offline.</desc>
+<style>
+    .cr-root {
+        --panel: #F7F6F7; --card: #FFFFFF; --edge: #DAD4D8; --ink: #2B2F36; --muted: #646973; --line: #8F8A8E;
+        --coral: #C93A37; --coral-soft: #FDEDED; --coral-edge: #EFA7A5;
+        --mauve: #84586F; --mauve-soft: #F6EFF3; --mauve-edge: #D9C4D0;
+        --slate: #2B2F36; --slate-soft: #EEF0F2; --slate-edge: #BFC5CC;
+    }
+    @media (prefers-color-scheme: dark) {
+        .cr-root {
+            --panel: #13161B; --card: #1B1F26; --edge: #313741; --ink: #E7E8EA; --muted: #A2A7AF; --line: #737A84;
+            --coral: #F98583; --coral-soft: #351E21; --coral-edge: #7C3A3A;
+            --mauve: #D6C0CC; --mauve-soft: #2A2330; --mauve-edge: #584A5C;
+            --slate: #C7CCD4; --slate-soft: #222831; --slate-edge: #454D59;
+        }
+    }
+    .cr-panel { fill: var(--panel); }
+    .cr-t { font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: var(--ink); font-size: 13px; }
+    .cr-m { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: var(--ink); }
+    .cr-h1 { font-size: 18px; font-weight: 600; }
+    .cr-h2 { font-size: 14.5px; font-weight: 600; }
+    .cr-sub { fill: var(--muted); }
+    .cr-eb { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; letter-spacing: 0.06em; fill: var(--muted); }
+    .cr-c-coral { fill: var(--coral); } .cr-c-mauve { fill: var(--mauve); } .cr-c-muted { fill: var(--muted); }
+    .cr-b-neutral { fill: var(--card); stroke: var(--edge); }
+    .cr-b-coral { fill: var(--coral-soft); stroke: var(--coral-edge); }
+    .cr-b-mauve { fill: var(--mauve-soft); stroke: var(--mauve-edge); }
+    .cr-b-slate { fill: var(--slate-soft); stroke: var(--slate-edge); }
+    .cr-ln { fill: none; stroke: var(--line); stroke-width: 1.6; }
+    .cr-ln-coral { fill: none; stroke: var(--coral); stroke-width: 1.8; }
+    .cr-ln-mauve { fill: none; stroke: var(--mauve); stroke-width: 1.6; }
+    .cr-dash { stroke-dasharray: 5 4; }
+    .cr-ah { fill: var(--line); } .cr-ah-coral { fill: var(--coral); } .cr-ah-mauve { fill: var(--mauve); }
+    .cr-dot-coral { fill: var(--coral); } .cr-dot-slate { fill: var(--slate); } .cr-dot-mauve { fill: var(--mauve); }
+    .cr-badge { fill: var(--slate); } .cr-badge-t { fill: var(--panel); font-family: ui-sans-serif, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; }
+</style>
+<defs>
+    <marker id="cr-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="cr-ah"/></marker>
+    <marker id="cr-a-coral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="cr-ah-coral"/></marker>
+    <marker id="cr-a-mauve" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="cr-ah-mauve"/></marker>
+</defs>
+<rect x="0" y="0" width="960" height="420" rx="16" class="cr-panel"/>
+<text x="32" y="42" class="cr-t cr-h1">The admin module</text>
+<text x="32" y="64" class="cr-t cr-sub">Authup administration plus a live view of which DNPM:DIP sites this node can reach.</text>
+<rect x="32" y="84" width="360" height="312" rx="12" class="cr-b-neutral" stroke-width="1.2"/>
+<text x="48" y="108" class="cr-eb">/admin · menu entry → permission</text>
+<rect x="46" y="122" width="332" height="40" rx="8" class="cr-b-coral" stroke-width="1.2"/>
+<text x="60" y="147" class="cr-t cr-h2">Overview</text>
+<text x="364" y="147" class="cr-m cr-sub" text-anchor="end">report: connection_report_read</text>
+<rect x="46" y="174" width="332" height="40" rx="8" class="cr-b-slate" stroke-width="1.2"/>
+<text x="60" y="199" class="cr-t cr-h2">Identitätsanbieter</text>
+<text x="364" y="199" class="cr-m cr-sub" text-anchor="end">identity_provider_*</text>
+<rect x="46" y="226" width="332" height="40" rx="8" class="cr-b-slate" stroke-width="1.2"/>
+<text x="60" y="251" class="cr-t cr-h2">Benutzer</text>
+<text x="364" y="251" class="cr-m cr-sub" text-anchor="end">user_*</text>
+<rect x="46" y="278" width="332" height="40" rx="8" class="cr-b-slate" stroke-width="1.2"/>
+<text x="60" y="303" class="cr-t cr-h2">Rollen</text>
+<text x="364" y="303" class="cr-m cr-sub" text-anchor="end">role_*</text>
+<rect x="46" y="330" width="332" height="40" rx="8" class="cr-b-slate" stroke-width="1.2"/>
+<text x="60" y="355" class="cr-t cr-h2">Clients</text>
+<text x="364" y="355" class="cr-m cr-sub" text-anchor="end">client_*</text>
+<path d="M392 143 H440" class="cr-ln-coral" marker-end="url(#cr-a-coral)"/>
+<text x="400" y="134" class="cr-m cr-c-muted">GET</text>
+<rect x="452" y="84" width="476" height="312" rx="12" class="cr-b-coral" stroke-width="1.2"/>
+<text x="468" y="108" class="cr-eb">admin/connection-report</text>
+<text x="912" y="108" class="cr-m cr-sub" text-anchor="end">ConnectionReport</text>
+<path d="M690 252 L562 184.8" class="cr-ln"/>
+<path d="M690 252 L690 162.39999999999998" class="cr-ln"/>
+<path d="M690 252 L818 184.8" class="cr-ln-coral cr-dash"/>
+<path d="M690 252 L562 319.2" class="cr-ln"/>
+<path d="M690 252 L690 341.6" class="cr-ln"/>
+<path d="M690 252 L818 319.2" class="cr-ln"/>
+<rect x="628" y="230" width="124" height="44" rx="22" class="cr-b-slate" stroke-width="1.2"/>
+<text x="690" y="250" class="cr-t cr-h2" text-anchor="middle">self</text>
+<text x="690" y="266" class="cr-t cr-sub" text-anchor="middle">this site</text>
+<rect x="470" y="150" width="120" height="36" rx="18" class="cr-b-neutral" stroke-width="1.2"/>
+<circle cx="488" cy="168" r="5" class="cr-dot-slate"/>
+<text x="500" y="172.5" class="cr-t">peer · online</text>
+<rect x="630" y="122" width="120" height="36" rx="18" class="cr-b-neutral" stroke-width="1.2"/>
+<circle cx="648" cy="140" r="5" class="cr-dot-slate"/>
+<text x="660" y="144.5" class="cr-t">peer · online</text>
+<rect x="790" y="150" width="120" height="36" rx="18" class="cr-b-neutral" stroke-width="1.2"/>
+<circle cx="808" cy="168" r="5" class="cr-dot-coral"/>
+<text x="820" y="172.5" class="cr-t">peer · offline</text>
+<rect x="470" y="318" width="120" height="36" rx="18" class="cr-b-neutral" stroke-width="1.2"/>
+<circle cx="488" cy="336" r="5" class="cr-dot-slate"/>
+<text x="500" y="340.5" class="cr-t">peer · online</text>
+<rect x="630" y="346" width="120" height="36" rx="18" class="cr-b-neutral" stroke-width="1.2"/>
+<circle cx="648" cy="364" r="5" class="cr-dot-slate"/>
+<text x="660" y="368.5" class="cr-t">peer · online</text>
+<rect x="790" y="318" width="120" height="36" rx="18" class="cr-b-neutral" stroke-width="1.2"/>
+<circle cx="808" cy="336" r="5" class="cr-dot-slate"/>
+<text x="820" y="340.5" class="cr-t">peer · online</text>
+</svg>
