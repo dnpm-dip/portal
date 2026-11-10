@@ -1,7 +1,7 @@
 {
     "name": "@dnpm-dip/theme",
     "type": "module",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "DNPM DIP theme for vuecs components, built on top of @vuecs/theme-tailwind.",
     "license": "MIT",
     "exports": {

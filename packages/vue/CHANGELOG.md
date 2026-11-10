@@ -1,5 +1,15 @@
 # @dnpm-dip/core
 
+## [2.0.1](https://github.com/dnpm-dip/portal/compare/v2.0.0...v2.0.1) (2026-11-10)
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @dnpm-dip/http-kit bumped from ^2.0.0 to ^2.0.1
+    * @dnpm-dip/kit bumped from ^2.0.0 to ^2.0.1
+
 ## [2.0.0](https://github.com/dnpm-dip/portal/compare/v1.35.0...v2.0.0) (2026-11-10)
 
 
