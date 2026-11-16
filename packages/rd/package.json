@@ -30,7 +30,7 @@
         "test": "vitest run --config test/vitest.config.ts"
     },
     "dependencies": {
-        "@authup/client-web-kit": "^1.0.0-beta.74",
+        "@authup/client-web-kit": "^1.0.0-beta.75",
         "@dnpm-dip/http-kit": "^2.0.0",
         "@dnpm-dip/kit": "^2.0.0",
         "@dnpm-dip/nuxt-kit": "^2.0.0",
