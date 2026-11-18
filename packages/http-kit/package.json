@@ -46,6 +46,6 @@
     },
     "dependencies": {
         "@dnpm-dip/kit": "^2.0.0",
-        "hapic": "^3.0.2"
+        "hapic": "^3.1.0"
     }
 }
