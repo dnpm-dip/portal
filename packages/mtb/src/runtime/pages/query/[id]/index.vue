@@ -107,7 +107,12 @@ export default defineNuxtComponent({
             {
                 name: 'Therapie Responses', 
                 icon: 'fa6-solid:comment-medical', 
-                url: `/mtb/query/${props.entity.id}/summary/therapy-responses`, 
+                url: `/mtb/query/${props.entity.id}/summary/therapy-responses`,
+            },
+            {
+                name: 'Überlebensbericht',
+                icon: 'fa6-solid:book-open',
+                url: `/mtb/query/${props.entity.id}/summary/survival-report`,
             },
         ]);
 
