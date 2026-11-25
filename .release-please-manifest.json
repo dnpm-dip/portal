@@ -1,12 +1,12 @@
 {
     ".": "2.0.0",
-    "packages/admin": "2.0.0",
-    "packages/http-kit": "2.0.0",
-    "packages/kit": "2.0.0",
-    "packages/mtb": "2.0.0",
-    "packages/nuxt-kit": "2.0.0",
-    "packages/portal": "2.0.0",
-    "packages/rd": "2.0.0",
-    "packages/theme": "2.0.0",
-    "packages/vue": "2.0.0"
+    "packages/admin": "2.0.1",
+    "packages/http-kit": "2.0.1",
+    "packages/kit": "2.0.1",
+    "packages/mtb": "2.0.1",
+    "packages/nuxt-kit": "2.0.1",
+    "packages/portal": "2.0.1",
+    "packages/rd": "2.0.1",
+    "packages/theme": "2.0.1",
+    "packages/vue": "2.0.1"
 }

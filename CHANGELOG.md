@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.0](https://github.com/dnpm-dip/portal/compare/v2.0.0...v2.0.0) (2026-11-25)
+
+
+### Bug Fixes
+
+* **deps:** adapt publish script to monoship 2.2 cli ([5793f89](https://github.com/dnpm-dip/portal/commit/5793f893a78283e5587734a785ff4842c0473830))
+* **deps:** bump node-forge to 1.4.1 ([#1353](https://github.com/dnpm-dip/portal/issues/1353)) ([343bd62](https://github.com/dnpm-dip/portal/commit/343bd62405eb423d37e29bd755bbd92a80d755a3))
+
 ## [2.0.0](https://github.com/dnpm-dip/portal/compare/v1.35.0...v2.0.0) (2026-11-10)
 
 
